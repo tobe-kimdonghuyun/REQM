@@ -9,8 +9,8 @@
         
         this.on_create = function()
         {
-            this.set_name("Temp02");
-            this.set_titletext("Tab");
+            this.set_name("Temp07");
+            this.set_titletext("Master-Detail-H(n:n)");
             this.set_cssclass("frm_WF_Frame");
             if (Form == this.constructor)
             {
@@ -112,35 +112,84 @@
             obj.set_readonly("false");
             this.divSearch.addChild(obj.name, obj);
 
-            obj = new Tab("Tab00","0","60",null,null,"20","0",null,null,null,null,this);
+            obj = new Static("sta00","0","50","384","43",null,null,null,null,null,null,this);
             obj.set_taborder("1");
+            obj.set_text("서브타이틀");
+            obj.set_cssclass("sta_WF_Title");
             this.addChild(obj.name, obj);
 
-            obj = new Tabpage("Tabpage1",this.Tab00);
-            obj.set_text("Tabpage1");
-            obj.set_url("design::template/Temp16_1.xfdl");
-            this.Tab00.addChild(obj.name, obj);
+            obj = new Grid("grd00","0","93","48.10%",null,null,"0",null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.set_binddataset("ds_grid");
+            obj.set_autofittype("col");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"40\"/><Column size=\"48\"/><Column size=\"160\"/><Column size=\"60\"/></Columns><Rows><Row size=\"32\" band=\"head\"/><Row size=\"32\"/></Rows><Band id=\"head\"><Cell text=\"chk\" displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"No\"/><Cell col=\"2\" text=\"에디트\"/><Cell col=\"3\" text=\"필수\" cssclass=\"essential\"/></Band><Band id=\"body\"><Cell text=\"bind:chk\" displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"bind:No\" displaytype=\"text\"/><Cell col=\"2\" text=\"bind:Edi\" displaytype=\"editcontrol\" edittype=\"normal\"/><Cell col=\"3\" text=\"bind:Essential\" displaytype=\"text\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
 
-            obj = new Tabpage("Tabpage2",this.Tab00);
-            obj.set_text("Tabpage2");
-            obj.set_url("design::template/Temp16_2.xfdl");
-            this.Tab00.addChild(obj.name, obj);
+            obj = new Static("sta00_00","grd00:18.94999999999999","50","145","43",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_text("상세리스트");
+            obj.set_cssclass("sta_WF_SubTitle");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("grd00_00","grd00:20","93",null,null,"20","0",null,null,null,null,this);
+            obj.set_taborder("6");
+            obj.set_binddataset("ds_grid");
+            obj.set_autofittype("col");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"40\"/><Column size=\"48\"/><Column size=\"160\"/><Column size=\"60\"/></Columns><Rows><Row size=\"32\" band=\"head\"/><Row size=\"32\"/></Rows><Band id=\"head\"><Cell text=\"chk\" displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"No\"/><Cell col=\"2\" text=\"에디트\"/><Cell col=\"3\" text=\"필수\" cssclass=\"essential\"/></Band><Band id=\"body\"><Cell text=\"bind:chk\" displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"bind:No\" displaytype=\"text\"/><Cell col=\"2\" text=\"bind:Edi\" displaytype=\"editcontrol\" edittype=\"normal\"/><Cell col=\"3\" text=\"bind:Essential\" displaytype=\"text\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("div00",null,"60","285","33","grd00_00:19.049999999999955",null,null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_text("div00");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnCust01_00_00",null,"0","107","28","122",null,null,null,null,null,this.div00.form);
+            obj.set_taborder("0");
+            obj.set_text("엑셀업로드");
+            obj.set_fittocontents("width");
+            obj.set_cssclass("btn_WF_ExcelUp");
+            this.div00.addChild(obj.name, obj);
+
+            obj = new Button("btnCust00_00_00",null,"0","119","28","0",null,null,null,null,null,this.div00.form);
+            obj.set_taborder("1");
+            obj.set_text("엑셀다운로드");
+            obj.set_fittocontents("width");
+            obj.set_cssclass("btn_WF_ExcelSave");
+            this.div00.addChild(obj.name, obj);
+
+            obj = new Div("div00_00",null,"60","280","33","20",null,null,null,null,null,this);
+            obj.set_taborder("5");
+            obj.set_text("div00");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnCust01_00_00",null,"0","107","28","122",null,null,null,null,null,this.div00_00.form);
+            obj.set_taborder("0");
+            obj.set_text("엑셀업로드");
+            obj.set_fittocontents("width");
+            obj.set_cssclass("btn_WF_ExcelUp");
+            this.div00_00.addChild(obj.name, obj);
+
+            obj = new Button("btnCust00_00_00",null,"0","119","28","0",null,null,null,null,null,this.div00_00.form);
+            obj.set_taborder("1");
+            obj.set_text("엑셀다운로드");
+            obj.set_fittocontents("width");
+            obj.set_cssclass("btn_WF_ExcelSave");
+            this.div00_00.addChild(obj.name, obj);
             // Layout Functions
             //-- Default Layout : this.divSearch.form
             obj = new Layout("default","",0,0,this.divSearch.form,function(p){});
             this.divSearch.form.addLayout(obj.name, obj);
 
-            //-- Default Layout : this.Tab00.Tabpage1
-            obj = new Layout("default","",0,0,this.Tab00.Tabpage1.form,function(p){});
-            this.Tab00.Tabpage1.form.addLayout(obj.name, obj);
+            //-- Default Layout : this.div00.form
+            obj = new Layout("default","",0,0,this.div00.form,function(p){});
+            this.div00.form.addLayout(obj.name, obj);
 
-            //-- Default Layout : this.Tab00.Tabpage2
-            obj = new Layout("default","",0,0,this.Tab00.Tabpage2.form,function(p){});
-            this.Tab00.Tabpage2.form.addLayout(obj.name, obj);
+            //-- Default Layout : this.div00_00.form
+            obj = new Layout("default","",0,0,this.div00_00.form,function(p){});
+            this.div00_00.form.addLayout(obj.name, obj);
 
             //-- Default Layout : this
             obj = new Layout("default","",1050,736,this,function(p){});
-            obj.set_mobileorientation("landscape");
             this.addLayout(obj.name, obj);
             
             // BindItem Information
@@ -152,15 +201,14 @@
         
         this.loadPreloadList = function()
         {
-            this._addPreloadList("fdl","design::template/Temp16_1.xfdl");
-            this._addPreloadList("fdl","design::template/Temp16_2.xfdl");
+
         };
         
         // User Script
-        this.registerScript("Temp16.xfdl", function() {
+        this.registerScript("Temp07.xfdl", function() {
         /**
         *  PcMdi 프로젝트
-        *  @FileName 	Temp16.xfdl
+        *  @FileName 	Temp07.xfdl
         *  @Creator 	TOBESOFT
         *  @CreateDate 	2023/10/30
         *  @Desction
@@ -181,7 +229,6 @@
         this.form_onload = function(obj,e)
         {
         	this.gfnFormOnload(obj); //필수함수
-
         };
         /*******************************************************************************************************************************
          * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
@@ -232,7 +279,7 @@
             this.addEventHandler("onload",this.form_onload,this);
             this.divSearch.form.btn02.addEventHandler("onclick",this.Div00_Button01_onclick,this);
         };
-        this.loadIncludeScript("Temp16.xfdl");
+        this.loadIncludeScript("Temp07.xfdl");
         this.loadPreloadList();
         
         // Remove Reference

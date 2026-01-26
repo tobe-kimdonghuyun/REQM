@@ -9,8 +9,8 @@
         
         this.on_create = function()
         {
-            this.set_name("Temp02");
-            this.set_titletext("Tab");
+            this.set_name("Temp06");
+            this.set_titletext("Master-Detail-V(n:n)");
             this.set_cssclass("frm_WF_Frame");
             if (Form == this.constructor)
             {
@@ -112,35 +112,112 @@
             obj.set_readonly("false");
             this.divSearch.addChild(obj.name, obj);
 
-            obj = new Tab("Tab00","0","60",null,null,"20","0",null,null,null,null,this);
+            obj = new Static("sta00","0","50","342","43",null,null,null,null,null,null,this);
             obj.set_taborder("1");
+            obj.set_text("서브타이틀");
+            obj.set_cssclass("sta_WF_Title");
             this.addChild(obj.name, obj);
 
-            obj = new Tabpage("Tabpage1",this.Tab00);
-            obj.set_text("Tabpage1");
-            obj.set_url("design::template/Temp16_1.xfdl");
-            this.Tab00.addChild(obj.name, obj);
+            obj = new Div("divCmmnBtn",null,"60","572","28","20",null,null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_text("");
+            this.addChild(obj.name, obj);
 
-            obj = new Tabpage("Tabpage2",this.Tab00);
-            obj.set_text("Tabpage2");
-            obj.set_url("design::template/Temp16_2.xfdl");
-            this.Tab00.addChild(obj.name, obj);
+            obj = new Button("btnAdd",null,"0","72","28","307",null,null,null,null,null,this.divCmmnBtn.form);
+            obj.set_taborder("0");
+            obj.set_text("행추가");
+            obj.set_cssclass("btn_WF_Add");
+            obj.set_visible("false");
+            this.divCmmnBtn.addChild(obj.name, obj);
+
+            obj = new Button("btnDel",null,"0","72","28","232",null,null,null,null,null,this.divCmmnBtn.form);
+            obj.set_taborder("1");
+            obj.set_text("행삭제");
+            obj.set_cssclass("btn_WF_Delete");
+            obj.set_visible("false");
+            this.divCmmnBtn.addChild(obj.name, obj);
+
+            obj = new Button("btnExcelUp",null,"0","107","28","122",null,null,null,null,null,this.divCmmnBtn.form);
+            obj.set_taborder("2");
+            obj.set_text("엑셀업로드");
+            obj.set_fittocontents("width");
+            obj.set_cssclass("btn_WF_ExcelUp");
+            this.divCmmnBtn.addChild(obj.name, obj);
+
+            obj = new Button("btnExcelDown",null,"0","119","28","0",null,null,null,null,null,this.divCmmnBtn.form);
+            obj.set_taborder("3");
+            obj.set_text("엑셀다운로드");
+            obj.set_fittocontents("width");
+            obj.set_cssclass("btn_WF_ExcelSave");
+            this.divCmmnBtn.addChild(obj.name, obj);
+
+            obj = new Grid("grd00","0","93",null,null,"20","378",null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.set_binddataset("ds_grid");
+            obj.set_autofittype("col");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"40\"/><Column size=\"48\"/><Column size=\"160\"/><Column size=\"60\"/><Column size=\"80\"/><Column size=\"160\"/><Column size=\"120\"/><Column size=\"120\"/><Column size=\"120\"/><Column size=\"60\"/></Columns><Rows><Row size=\"32\" band=\"head\"/><Row size=\"32\"/></Rows><Band id=\"head\"><Cell text=\"chk\" displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"No\"/><Cell col=\"2\" text=\"에디트\"/><Cell col=\"3\" text=\"필수\" cssclass=\"essential\"/><Cell col=\"4\" text=\"숫자\"/><Cell col=\"5\" text=\"익스팬드\"/><Cell col=\"6\" text=\"콤보박스\"/><Cell col=\"7\" text=\"캘린더\"/><Cell col=\"8\" text=\"중앙정렬\"/><Cell col=\"9\" text=\"버튼\"/></Band><Band id=\"body\"><Cell text=\"bind:chk\" displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"bind:No\" displaytype=\"text\"/><Cell col=\"2\" text=\"bind:Edi\" displaytype=\"editcontrol\" edittype=\"normal\"/><Cell col=\"3\" text=\"bind:Essential\" displaytype=\"text\"/><Cell col=\"4\" text=\"bind:Num\" displaytype=\"number\"/><Cell col=\"5\" text=\"bind:Expand\" displaytype=\"editcontrol\" expandshow=\"show\" expandsize=\"30\" edittype=\"normal\"/><Cell col=\"6\" text=\"bind:Cmb\" displaytype=\"combocontrol\" edittype=\"combo\"/><Cell col=\"7\" text=\"bind:Cal\" displaytype=\"calendarcontrol\" edittype=\"date\" calendardateformat=\"yyyy-MM-dd\"/><Cell col=\"8\" text=\"bind:CenterAlign\" displaytype=\"text\"/><Cell col=\"9\" text=\"bind:Btn\" displaytype=\"buttoncontrol\" edittype=\"button\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("sta01","0","357","342","43",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_text("상세리스트");
+            obj.set_cssclass("sta_WF_SubTitle");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divCmmnBtn00",null,"367","572","28","20",null,null,null,null,null,this);
+            obj.set_taborder("5");
+            obj.set_text("");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnAdd",null,"0","72","28","307",null,null,null,null,null,this.divCmmnBtn00.form);
+            obj.set_taborder("0");
+            obj.set_text("행추가");
+            obj.set_cssclass("btn_WF_Add");
+            obj.set_visible("false");
+            this.divCmmnBtn00.addChild(obj.name, obj);
+
+            obj = new Button("btnDel",null,"0","72","28","232",null,null,null,null,null,this.divCmmnBtn00.form);
+            obj.set_taborder("1");
+            obj.set_text("행삭제");
+            obj.set_cssclass("btn_WF_Delete");
+            obj.set_visible("false");
+            this.divCmmnBtn00.addChild(obj.name, obj);
+
+            obj = new Button("btnExcelUp",null,"0","107","28","122",null,null,null,null,null,this.divCmmnBtn00.form);
+            obj.set_taborder("2");
+            obj.set_text("엑셀업로드");
+            obj.set_fittocontents("width");
+            obj.set_cssclass("btn_WF_ExcelUp");
+            this.divCmmnBtn00.addChild(obj.name, obj);
+
+            obj = new Button("btnExcelDown",null,"0","119","28","0",null,null,null,null,null,this.divCmmnBtn00.form);
+            obj.set_taborder("3");
+            obj.set_text("엑셀다운로드");
+            obj.set_fittocontents("width");
+            obj.set_cssclass("btn_WF_ExcelSave");
+            this.divCmmnBtn00.addChild(obj.name, obj);
+
+            obj = new Grid("grd01","0","400",null,null,"20","0",null,null,null,null,this);
+            obj.set_taborder("6");
+            obj.set_binddataset("ds_grid");
+            obj.set_autofittype("col");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"40\"/><Column size=\"48\"/><Column size=\"160\"/><Column size=\"60\"/><Column size=\"80\"/><Column size=\"160\"/><Column size=\"120\"/><Column size=\"120\"/><Column size=\"120\"/><Column size=\"60\"/></Columns><Rows><Row size=\"32\" band=\"head\"/><Row size=\"32\"/></Rows><Band id=\"head\"><Cell text=\"chk\" displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"No\"/><Cell col=\"2\" text=\"에디트\"/><Cell col=\"3\" text=\"필수\" cssclass=\"essential\"/><Cell col=\"4\" text=\"숫자\"/><Cell col=\"5\" text=\"익스팬드\"/><Cell col=\"6\" text=\"콤보박스\"/><Cell col=\"7\" text=\"캘린더\"/><Cell col=\"8\" text=\"중앙정렬\"/><Cell col=\"9\" text=\"버튼\"/></Band><Band id=\"body\"><Cell text=\"bind:chk\" displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"bind:No\" displaytype=\"text\"/><Cell col=\"2\" text=\"bind:Edi\" displaytype=\"editcontrol\" edittype=\"normal\"/><Cell col=\"3\" text=\"bind:Essential\" displaytype=\"text\"/><Cell col=\"4\" text=\"bind:Num\" displaytype=\"number\"/><Cell col=\"5\" text=\"bind:Expand\" displaytype=\"editcontrol\" expandshow=\"show\" expandsize=\"30\" edittype=\"normal\"/><Cell col=\"6\" text=\"bind:Cmb\" displaytype=\"combocontrol\" edittype=\"combo\"/><Cell col=\"7\" text=\"bind:Cal\" displaytype=\"calendarcontrol\" edittype=\"date\" calendardateformat=\"yyyy-MM-dd\"/><Cell col=\"8\" text=\"bind:CenterAlign\" displaytype=\"text\"/><Cell col=\"9\" text=\"bind:Btn\" displaytype=\"buttoncontrol\" edittype=\"button\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
             // Layout Functions
             //-- Default Layout : this.divSearch.form
             obj = new Layout("default","",0,0,this.divSearch.form,function(p){});
             this.divSearch.form.addLayout(obj.name, obj);
 
-            //-- Default Layout : this.Tab00.Tabpage1
-            obj = new Layout("default","",0,0,this.Tab00.Tabpage1.form,function(p){});
-            this.Tab00.Tabpage1.form.addLayout(obj.name, obj);
+            //-- Default Layout : this.divCmmnBtn.form
+            obj = new Layout("default","",0,0,this.divCmmnBtn.form,function(p){});
+            this.divCmmnBtn.form.addLayout(obj.name, obj);
 
-            //-- Default Layout : this.Tab00.Tabpage2
-            obj = new Layout("default","",0,0,this.Tab00.Tabpage2.form,function(p){});
-            this.Tab00.Tabpage2.form.addLayout(obj.name, obj);
+            //-- Default Layout : this.divCmmnBtn00.form
+            obj = new Layout("default","",0,0,this.divCmmnBtn00.form,function(p){});
+            this.divCmmnBtn00.form.addLayout(obj.name, obj);
 
             //-- Default Layout : this
             obj = new Layout("default","",1050,736,this,function(p){});
-            obj.set_mobileorientation("landscape");
             this.addLayout(obj.name, obj);
             
             // BindItem Information
@@ -152,15 +229,14 @@
         
         this.loadPreloadList = function()
         {
-            this._addPreloadList("fdl","design::template/Temp16_1.xfdl");
-            this._addPreloadList("fdl","design::template/Temp16_2.xfdl");
+
         };
         
         // User Script
-        this.registerScript("Temp16.xfdl", function() {
+        this.registerScript("Temp06.xfdl", function() {
         /**
         *  PcMdi 프로젝트
-        *  @FileName 	Temp16.xfdl
+        *  @FileName 	Temp06.xfdl
         *  @Creator 	TOBESOFT
         *  @CreateDate 	2023/10/30
         *  @Desction
@@ -181,7 +257,6 @@
         this.form_onload = function(obj,e)
         {
         	this.gfnFormOnload(obj); //필수함수
-
         };
         /*******************************************************************************************************************************
          * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
@@ -231,8 +306,16 @@
         {
             this.addEventHandler("onload",this.form_onload,this);
             this.divSearch.form.btn02.addEventHandler("onclick",this.Div00_Button01_onclick,this);
+            this.divCmmnBtn.form.btnAdd.addEventHandler("onclick",this.divCmmnBtn_btnAdd_onclick,this);
+            this.divCmmnBtn.form.btnDel.addEventHandler("onclick",this.divCmmnBtn_btnDel_onclick,this);
+            this.divCmmnBtn.form.btnExcelUp.addEventHandler("onclick",this.divCmmnBtn_btnExcelUp_onclick,this);
+            this.divCmmnBtn.form.btnExcelDown.addEventHandler("onclick",this.divCmmnBtn_btnExcelDown_onclick,this);
+            this.divCmmnBtn00.form.btnAdd.addEventHandler("onclick",this.divCmmnBtn_btnAdd_onclick,this);
+            this.divCmmnBtn00.form.btnDel.addEventHandler("onclick",this.divCmmnBtn_btnDel_onclick,this);
+            this.divCmmnBtn00.form.btnExcelUp.addEventHandler("onclick",this.divCmmnBtn_btnExcelUp_onclick,this);
+            this.divCmmnBtn00.form.btnExcelDown.addEventHandler("onclick",this.divCmmnBtn_btnExcelDown_onclick,this);
         };
-        this.loadIncludeScript("Temp16.xfdl");
+        this.loadIncludeScript("Temp06.xfdl");
         this.loadPreloadList();
         
         // Remove Reference

@@ -10,7 +10,7 @@
         this.on_create = function()
         {
             this.set_name("Temp02");
-            this.set_titletext("Tab");
+            this.set_titletext("Shuttle");
             this.set_cssclass("frm_WF_Frame");
             if (Form == this.constructor)
             {
@@ -112,31 +112,45 @@
             obj.set_readonly("false");
             this.divSearch.addChild(obj.name, obj);
 
-            obj = new Tab("Tab00","0","60",null,null,"20","0",null,null,null,null,this);
+            obj = new Static("sta00","0","50","342","43",null,null,null,null,null,null,this);
             obj.set_taborder("1");
+            obj.set_text("서브타이틀");
+            obj.set_cssclass("sta_WF_Title");
             this.addChild(obj.name, obj);
 
-            obj = new Tabpage("Tabpage1",this.Tab00);
-            obj.set_text("Tabpage1");
-            obj.set_url("design::template/Temp16_1.xfdl");
-            this.Tab00.addChild(obj.name, obj);
+            obj = new Grid("grd00","0","93","46.67%",null,null,"0",null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_binddataset("ds_grid");
+            obj.set_autofittype("col");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"40\"/><Column size=\"48\"/><Column size=\"160\"/><Column size=\"60\"/><Column size=\"80\"/><Column size=\"120\"/></Columns><Rows><Row size=\"32\" band=\"head\"/><Row size=\"32\"/></Rows><Band id=\"head\"><Cell text=\"chk\" displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"No\"/><Cell col=\"2\" text=\"에디트\"/><Cell col=\"3\" text=\"필수\" cssclass=\"essential\"/><Cell col=\"4\" text=\"숫자\"/><Cell col=\"5\" text=\"텍스트\"/></Band><Band id=\"body\"><Cell text=\"bind:chk\" displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"bind:No\" displaytype=\"text\"/><Cell col=\"2\" text=\"bind:Edi\" displaytype=\"editcontrol\" edittype=\"normal\"/><Cell col=\"3\" text=\"bind:Essential\" displaytype=\"text\"/><Cell col=\"4\" text=\"bind:Num\" displaytype=\"number\"/><Cell col=\"5\" text=\"bind:CenterAlign\" displaytype=\"text\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
 
-            obj = new Tabpage("Tabpage2",this.Tab00);
-            obj.set_text("Tabpage2");
-            obj.set_url("design::template/Temp16_2.xfdl");
-            this.Tab00.addChild(obj.name, obj);
+            obj = new Button("btn51","grd00:10","47%","29","29",null,null,null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.set_cssclass("btn_WF_Left");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btn54","grd00:10","btn51:4","29","29",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_cssclass("btn_WF_Right");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("sta00_00","btn51:9","50",null,"43","31",null,null,null,null,null,this);
+            obj.set_taborder("5");
+            obj.set_text("서브타이틀");
+            obj.set_cssclass("sta_WF_Title");
+            this.addChild(obj.name, obj);
+
+            obj = new Grid("grd01","btn51:10","93",null,null,"20","0",null,null,null,null,this);
+            obj.set_taborder("6");
+            obj.set_binddataset("ds_grid");
+            obj.set_autofittype("col");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"40\"/><Column size=\"48\"/><Column size=\"160\"/><Column size=\"60\"/><Column size=\"80\"/><Column size=\"120\"/></Columns><Rows><Row size=\"32\" band=\"head\"/><Row size=\"32\"/></Rows><Band id=\"head\"><Cell text=\"chk\" displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"No\"/><Cell col=\"2\" text=\"에디트\"/><Cell col=\"3\" text=\"필수\" cssclass=\"essential\"/><Cell col=\"4\" text=\"숫자\"/><Cell col=\"5\" text=\"텍스트\"/></Band><Band id=\"body\"><Cell text=\"bind:chk\" displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"bind:No\" displaytype=\"text\"/><Cell col=\"2\" text=\"bind:Edi\" displaytype=\"editcontrol\" edittype=\"normal\"/><Cell col=\"3\" text=\"bind:Essential\" displaytype=\"text\"/><Cell col=\"4\" text=\"bind:Num\" displaytype=\"number\"/><Cell col=\"5\" text=\"bind:CenterAlign\" displaytype=\"text\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
             // Layout Functions
             //-- Default Layout : this.divSearch.form
             obj = new Layout("default","",0,0,this.divSearch.form,function(p){});
             this.divSearch.form.addLayout(obj.name, obj);
-
-            //-- Default Layout : this.Tab00.Tabpage1
-            obj = new Layout("default","",0,0,this.Tab00.Tabpage1.form,function(p){});
-            this.Tab00.Tabpage1.form.addLayout(obj.name, obj);
-
-            //-- Default Layout : this.Tab00.Tabpage2
-            obj = new Layout("default","",0,0,this.Tab00.Tabpage2.form,function(p){});
-            this.Tab00.Tabpage2.form.addLayout(obj.name, obj);
 
             //-- Default Layout : this
             obj = new Layout("default","",1050,736,this,function(p){});
@@ -152,15 +166,14 @@
         
         this.loadPreloadList = function()
         {
-            this._addPreloadList("fdl","design::template/Temp16_1.xfdl");
-            this._addPreloadList("fdl","design::template/Temp16_2.xfdl");
+
         };
         
         // User Script
-        this.registerScript("Temp16.xfdl", function() {
+        this.registerScript("Temp15.xfdl", function() {
         /**
         *  PcMdi 프로젝트
-        *  @FileName 	Temp16.xfdl
+        *  @FileName 	Temp15.xfdl
         *  @Creator 	TOBESOFT
         *  @CreateDate 	2023/10/30
         *  @Desction
@@ -231,8 +244,9 @@
         {
             this.addEventHandler("onload",this.form_onload,this);
             this.divSearch.form.btn02.addEventHandler("onclick",this.Div00_Button01_onclick,this);
+            this.btn51.addEventHandler("onclick",this.Button02_onclick,this);
         };
-        this.loadIncludeScript("Temp16.xfdl");
+        this.loadIncludeScript("Temp15.xfdl");
         this.loadPreloadList();
         
         // Remove Reference
