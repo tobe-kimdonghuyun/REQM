@@ -8,6 +8,9 @@ if (nexacro.Environment)
         this.set_usehttpkeepalive("true");
         this.set_filesecurelevel("all");
         this.set_loadingimage("url(\'theme::PcMdi/images/loadingimage.gif\')");
+        this.set_enableaccessibility("true");
+        this.set_accessibilitytype("sensereader");
+        this.set_networksecurelevel("all");
     };
     env.on_initEvent = function ()
     {
