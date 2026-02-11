@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TOON Web Test</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 16px; }
+    textarea { width: 100%; height: 180px; }
+    button { margin: 6px 6px 6px 0; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    pre { background:#f6f6f6; padding:12px; overflow:auto; }
+  </style>
+</head>
+<body>
+  <h2>TOON Web Test</h2>
+
+  <div class="grid">
+    <div>
+      <h3>JSON</h3>
+      <textarea id="jsonArea"></textarea>
+      <div>
+        <button id="btnEncode">JSON → TOON</button>
+      </div>
+    </div>
+
+    <div>
+      <h3>TOON</h3>
+      <textarea id="toonArea"></textarea>
+      <div>
+        <button id="btnDecode">TOON → JSON</button>
+      </div>
+    </div>
+  </div>
+
+  <h3>결과</h3>
+  <pre id="out"></pre>
+
+  <script type="module">
+    // ✅ CDN ESM 로딩 (jsdelivr)
+    import { encode, decode } from "https://cdn.jsdelivr.net/npm/@toon-format/toon/+esm";
+
+    const sampleJson = {
+      users: [
+        { id: 1, name: "Alice", role: "admin", active: true },
+        { id: 2, name: "Bob", role: "user", active: true },
+        { id: 3, name: "Choi", role: "viewer", active: false }
+      ],
+      orders: [
+        { orderId: 1001, userId: 1, item: "Keyboard", qty: 1, price: 59000 },
+        { orderId: 1002, userId: 2, item: "Mouse", qty: 2, price: 18000 },
+        { orderId: 1003, userId: 2, item: "Monitor", qty: 1, price: 219000 },
+        { orderId: 1004, userId: 3, item: "USB-C Cable", qty: 3, price: 7000 }
+      ]
+    };
+
+    const jsonArea = document.getElementById("jsonArea");
+    const toonArea = document.getElementById("toonArea");
+    const out = document.getElementById("out");
+
+    jsonArea.value = JSON.stringify(sampleJson, null, 2);
+
+    const log = (msg) => out.textContent = msg;
+
+    document.getElementById("btnEncode").addEventListener("click", () => {
+      try {
+        const obj = JSON.parse(jsonArea.value);
+        const t = encode(obj);
+        toonArea.value = t;
+        log("encode OK");
+      } catch (e) {
+        log("encode FAIL: " + e.message);
+      }
+    });
+
+    document.getElementById("btnDecode").addEventListener("click", () => {
+      try {
+        const obj = decode(toonArea.value);
+        jsonArea.value = JSON.stringify(obj, null, 2);
+        log("decode OK");
+      } catch (e) {
+        log("decode FAIL: " + e.message);
+      }
+    });
+  </script>
+</body>
+</html>
