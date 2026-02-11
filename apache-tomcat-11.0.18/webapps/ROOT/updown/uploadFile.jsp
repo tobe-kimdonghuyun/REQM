@@ -26,26 +26,26 @@ limitations under the License.
 <%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
 <%@ page import="org.apache.commons.io.FilenameUtils"%>
 
-<%@ page import="javax.servlet.http.HttpServlet"%>
-<%@ page import="javax.servlet.http.HttpServletRequest"%>
-<%@ page import="javax.servlet.http.HttpServletResponse"%>
-<%@ page import="javax.servlet.ServletException"%>
+<%@ page import="jakarta.servlet.http.HttpServlet"%>
+<%@ page import="jakarta.servlet.http.HttpServletRequest"%>
+<%@ page import="jakarta.servlet.http.HttpServletResponse"%>
+<%@ page import="jakarta.servlet.ServletException"%>
 <%@ page import="java.io.IOException"%>
 <%@ page import="java.io.File"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Iterator"%>
 
-<%@ page import="com.nexacro.xapi.data.PlatformData" %>
-<%@ page import="com.nexacro.xapi.data.ColumnHeader" %>
-<%@ page import="com.nexacro.xapi.data.DataTypes" %>
-<%@ page import="com.nexacro.xapi.data.DataSet" %>
-<%@ page import="com.nexacro.xapi.data.DataSetList" %>
-<%@ page import="com.nexacro.xapi.data.VariableList" %>
-<%@ page import="com.nexacro.xapi.tx.PlatformException" %>
-<%@ page import="com.nexacro.xapi.tx.PlatformRequest" %>
-<%@ page import="com.nexacro.xapi.tx.HttpPlatformRequest" %>
-<%@ page import="com.nexacro.xapi.tx.HttpPlatformResponse" %>
-<%@ page import="com.nexacro.xapi.tx.PlatformType" %>
+<%@ page import="com.nexacro.java.xapi.data.PlatformData" %>
+<%@ page import="com.nexacro.java.xapi.data.ColumnHeader" %>
+<%@ page import="com.nexacro.java.xapi.data.DataTypes" %>
+<%@ page import="com.nexacro.java.xapi.data.DataSet" %>
+<%@ page import="com.nexacro.java.xapi.data.DataSetList" %>
+<%@ page import="com.nexacro.java.xapi.data.VariableList" %>
+<%@ page import="com.nexacro.java.xapi.tx.PlatformException" %>
+<%@ page import="com.nexacro.java.xapi.tx.PlatformRequest" %>
+<%@ page import="com.nexacro.java.xapi.tx.HttpPlatformRequest" %>
+<%@ page import="com.nexacro.java.xapi.tx.HttpPlatformResponse" %>
+<%@ page import="com.nexacro.java.xapi.tx.PlatformType" %>
 
 <%
 	//Check that we have a file upload request

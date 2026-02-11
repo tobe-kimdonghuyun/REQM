@@ -7,10 +7,10 @@
 <%@ page import="java.io.FileInputStream"%>
 <%@ page import="java.io.File"%>
 <%@ page import="java.io.IOException"%>
-<%@ page import="javax.servlet.ServletException"%>
-<%@ page import="javax.servlet.ServletOutputStream"%>
-<%@ page import="javax.servlet.http.HttpServletRequest"%>
-<%@ page import="javax.servlet.http.HttpServletResponse"%>
+<%@ page import="jakarta.servlet.ServletException"%>
+<%@ page import="jakarta.servlet.ServletOutputStream"%>
+<%@ page import="jakarta.servlet.http.HttpServletRequest"%>
+<%@ page import="jakarta.servlet.http.HttpServletResponse"%>
 
 <%
 	String contextRealPath = request.getSession().getServletContext().getRealPath("/");
