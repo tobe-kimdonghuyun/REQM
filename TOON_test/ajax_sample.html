@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax JSON 통신 샘플</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        #result-area {
+            border: 1px solid #ddd;
+            padding: 15px;
+            background-color: #fff;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .item {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+        .item:last-child {
+            border-bottom: none;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ajax JSON 통신 샘플</h1>
+    <p>아래 버튼을 클릭하여 <code>data.json</code> 파일의 내용을 불러옵니다.</p>
+
+    <button id="load-data-btn">데이터 불러오기</button>
+
+    <div id="result-area">
+        <p>결과가 여기에 표시됩니다...</p>
+    </div>
+
+    <script>
+        document.getElementById('load-data-btn').addEventListener('click', function() {
+            const resultArea = document.getElementById('result-area');
+            resultArea.innerHTML = '<p>데이터 로딩 중...</p>';
+
+            // fetch API를 사용한 Ajax 요청
+            fetch('data.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('네트워크 응답이 올바르지 않습니다.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('데이터 수신 성공:', data);
+                    
+                    let html = '<h3>수신된 데이터:</h3>';
+                    
+                    // JSON 데이터 파싱 및 표시
+                    if (data.status === 'success' && data.data.items) {
+                        html += '<ul>';
+                        data.data.items.forEach(item => {
+                            html += `
+                                <li class="item">
+                                    <strong>${item.name}</strong> (ID: ${item.id})<br>
+                                    카테고리: ${item.category}<br>
+                                    설명: ${item.description}
+                                </li>
+                            `;
+                        });
+                        html += '</ul>';
+                        
+                        html += '<h4>원본 JSON:</h4>';
+                        html += '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                    } else {
+                        html += '<p>데이터 형식이 예상과 다릅니다.</p>';
+                    }
+                    
+                    resultArea.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Fetch 에러:', error);
+                    resultArea.innerHTML = `<p style="color:red;">에러 발생: ${error.message}</p>`;
+                });
+        });
+    </script>
+
+</body>
+</html>
