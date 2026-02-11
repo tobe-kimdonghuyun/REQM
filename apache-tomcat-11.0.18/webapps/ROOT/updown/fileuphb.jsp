@@ -1,8 +1,8 @@
 <%@page import="sun.misc.*"%>
 <%@page import="java.io.*" %>
 <%@page import="java.util.Enumeration"%>
-<%@ page import="com.nexacro17.xapi.data.*" %>
-<%@ page import="com.nexacro17.xapi.tx.*" %>
+<%@ page import="com.nexacro.java.xapi.data.*" %>
+<%@ page import="com.nexacro.java.xapi.tx.*" %>
 <%@page import="java.net.URLEncoder"%>
 <%@page language="java" contentType="image/png;"%>
 <%
@@ -23,7 +23,7 @@ System.out.println("-----start MOBILE JSP-----");
 	{
 		String filename = dsx.getString(i,"FILENAME");
 		String content 	= dsx.getString(i,"CONTENT");		
-		byte[] b64val 	= enc.decodeBuffer(content);	//base64 µðÄÚ´õ¸¦ ÀÌ¿ëÇÏ¿© byte ÄÚµå·Î º¯È¯ 
+		byte[] b64val 	= enc.decodeBuffer(content);	//base64 ë””ì½”ë”ë¥¼ ì´ìš©í•˜ì—¬ byte ì½”ë“œë¡œ ë³€í™˜ 
 	//or
 	//	byte[] b64val2 	= dsx.getBlob(i,"CONTENT2");	
 

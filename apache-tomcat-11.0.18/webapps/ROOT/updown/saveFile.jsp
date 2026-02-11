@@ -10,10 +10,10 @@
 <%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
 <%@ page import="org.apache.commons.io.FilenameUtils"%>
 
-<%@ page import="javax.servlet.http.HttpServlet"%>
-<%@ page import="javax.servlet.http.HttpServletRequest"%>
-<%@ page import="javax.servlet.http.HttpServletResponse"%>
-<%@ page import="javax.servlet.ServletException"%>
+<%@ page import="jakarta.servlet.http.HttpServlet"%>
+<%@ page import="jakarta.servlet.http.HttpServletRequest"%>
+<%@ page import="jakarta.servlet.http.HttpServletResponse"%>
+<%@ page import="jakarta.servlet.ServletException"%>
 <%@ page import="java.io.IOException"%>
 <%@ page import="java.io.File"%>
 <%@ page import="java.util.*"%>
@@ -22,8 +22,8 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 
 
-<%@ page import="com.nexacro17.xapi.data.*"%>
-<%@ page import="com.nexacro17.xapi.tx.*"%>
+<%@ page import="com.nexacro.java.xapi.data.*"%>
+<%@ page import="com.nexacro.java.xapi.tx.*"%>
 
 <%
 PlatformData resData = new PlatformData();
