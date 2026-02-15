@@ -1,22 +1,18 @@
 <%@ page contentType="text/html;charset=utf-8" pageEncoding="utf-8" %>
 <%@ page language="java"%>
 <%@ page import="java.io.File"%>
-<%@ page import="java.io.IOException"%>
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="java.util.Enumeration"%>
+<%@ page import="org.apache.commons.fileupload.FileItem"%>
+<%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
+<%@ page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
 <%@ page import="java.util.Iterator"%>
 <%@ page import="java.util.List"%>
 
-<%@ page import="javax.servlet.ServletException"%>
-<%@ page import="javax.servlet.http.HttpServletRequest"%>
-<%@ page import="javax.servlet.http.HttpServletResponse"%>
+<%@ page import="jakarta.servlet.ServletException"%>
+<%@ page import="jakarta.servlet.http.HttpServletRequest"%>
+<%@ page import="jakarta.servlet.http.HttpServletResponse"%>
 
-<%@ page import="com.oreilly.servlet.*"%>
-<%@ page import="com.oreilly.servlet.MultipartRequest"%>
-<%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
-
-<%@ page import="com.nexacro17.xapi.tx.*" %>
-<%@ page import="com.nexacro17.xapi.data.*" %>
+<%@ page import="com.nexacro.java.xapi.tx.*" %>
+<%@ page import="com.nexacro.java.xapi.data.*" %>
 
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -41,8 +37,16 @@
 
 	try
 	{
-		MultipartRequest multi = new MultipartRequest(request, savePath, maxSize, "utf-8", new DefaultFileRenamePolicy());		
-		Enumeration files = multi.getFileNames();
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		factory.setSizeThreshold(4096);
+		factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		upload.setHeaderEncoding("utf-8");
+		upload.setSizeMax(maxSize);
+		upload.setFileSizeMax(maxSize);
+
+		List<FileItem> files = upload.parseRequest(request);
 		
 		DataSet ds = new DataSet("ds_uploadresult");
 
@@ -51,23 +55,30 @@
 		ds.addColumn(new ColumnHeader("fileType", DataTypes.STRING));
 		ds.addColumn(new ColumnHeader("savePath", DataTypes.STRING));
 		
-		while (files.hasMoreElements())
+		for (FileItem item : files)
 		{
-			String name = (String)files.nextElement();
+			if (item.isFormField())
+			{
+				continue;
+			}
 
-			String fileName = multi.getFilesystemName(name);
-			String type		= multi.getContentType(name);
+			String fileName = item.getName();
+			String type = item.getContentType();
 
-			File f = multi.getFile(name);
+			if (fileName == null || fileName.equals(""))
+			{
+				continue;
+			}
+
+			File f = new File(savePath, fileName);
+			item.write(f);
+			item.delete();
+
 			int row = ds.newRow(0);
 			ds.set(row, "fileName", fileName);
 			ds.set(row, "fileType", type);
-			
-			if (f != null)
-			{
-				ds.set(row, "savePath", f.getPath());
-				ds.set(row, "fileSize", f.length());
-			}
+			ds.set(row, "savePath", f.getPath());
+			ds.set(row, "fileSize", f.length());
 		}
 
 		resData.addDataSet(ds);

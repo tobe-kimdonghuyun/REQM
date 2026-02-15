@@ -4,15 +4,15 @@
 <%@ page import="java.io.FileInputStream" %>
 <%@ page import="java.io.FileOutputStream" %>
 <%@ page import="java.io.IOException" %>
-<%@ page import="com.nexacro.xapi.data.PlatformData" %>
-<%@ page import="com.nexacro.xapi.data.DataSet" %>
-<%@ page import="com.nexacro.xapi.data.DataSetList" %>
-<%@ page import="com.nexacro.xapi.data.VariableList" %>
-<%@ page import="com.nexacro.xapi.tx.PlatformException" %>
-<%@ page import="com.nexacro.xapi.tx.PlatformRequest" %>
-<%@ page import="com.nexacro.xapi.tx.HttpPlatformRequest" %>
-<%@ page import="com.nexacro.xapi.tx.HttpPlatformResponse" %>
-<%@ page import="com.nexacro.xapi.tx.PlatformType" %>
+<%@ page import="com.nexacro.java.xapi.data.PlatformData" %>
+<%@ page import="com.nexacro.java.xapi.data.DataSet" %>
+<%@ page import="com.nexacro.java.xapi.data.DataSetList" %>
+<%@ page import="com.nexacro.java.xapi.data.VariableList" %>
+<%@ page import="com.nexacro.java.xapi.tx.PlatformException" %>
+<%@ page import="com.nexacro.java.xapi.tx.PlatformRequest" %>
+<%@ page import="com.nexacro.java.xapi.tx.HttpPlatformRequest" %>
+<%@ page import="com.nexacro.java.xapi.tx.HttpPlatformResponse" %>
+<%@ page import="com.nexacro.java.xapi.tx.PlatformType" %>
 <% 
 	PlatformData xplatformData = new PlatformData();
 	HttpPlatformRequest platformRequest = new HttpPlatformRequest(request);

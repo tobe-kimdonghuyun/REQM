@@ -1,8 +1,8 @@
 <%@ page import = "java.io.*" %>
 <%@ page import = "java.util.*" %>
-<%@ page import="com.nexacro17.xapi.tx.*" %>
-<%@ page import="com.nexacro17.xapi.data.*" %>
-<%@ page import="com.nexacro17.xapi.data.datatype.*" %>
+<%@ page import="com.nexacro.java.xapi.tx.*" %>
+<%@ page import="com.nexacro.java.xapi.data.*" %>
+<%@ page import="com.nexacro.java.xapi.data.datatype.*" %>
 
 <%
 	String strCharset = "utf-8";
