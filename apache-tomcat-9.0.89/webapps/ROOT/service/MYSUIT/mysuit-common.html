@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>mysuit</title>
+
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+
+    <script type="text/javascript" src="./json2.js"></script>
+
+    <!-- <script type="text/javascript" src="./LX/ublocalExporter2.js"></script> -->
+    <script
+      type="text/javascript"
+      src="./LX/ublocalexporter.module.min.js"
+    ></script>
+
+    <script type="text/javascript" src="./mysuit-common.js"></script>
+
+    <script type="text/javascript">
+      // MYSUIT 레포트 호출
+      function fn_mysuit_Report(_objParam) {
+        if(!window.NEXACROHTML){
+          window.NEXACROHTML = {};
+        }
+        if(window.NEXACROWEBBROWSER) {
+        }else if(window.nexacro) {
+          var today = new Date();
+          var year = today.getFullYear();
+          var month = ('0' + (today.getMonth() + 1)).slice(-2);
+          var day = ('0' + today.getDate()).slice(-2);
+          var hours = ('0' + today.getHours()).slice(-2); 
+          var minutes = ('0' + today.getMinutes()).slice(-2);
+          var seconds = ('0'  + today.getSeconds()).slice(-2); 
+          var date = year + '-' + month  + '-' + day + ' ' + hours + ':' + minutes  + ':' + seconds;
+          var txt = "[MYSUIT_LOG] "+ date + "_fn_mysuit_Report call SUCCESS";
+          window.nexacro.fireUserNotify(txt);
+        } else {
+          window.document.title = "onload";
+        }
+        var objAppData = JSON.parse(decodeURIComponent(_objParam));
+
+        var objFormData = new Object();
+        objFormData.projectName = objAppData.projectName;
+        objFormData.formName = objAppData.formName;
+
+        var objDataset = new Object();
+        objDataset = fn_datasetToJsonString(objAppData.dataset);
+        var objParam = new Object();
+        objParam = objAppData.param;
+
+        objFormData.datasetList = objDataset;
+        objFormData.paramList = objParam;
+
+        if (objAppData.callType == "popup")
+          mysuitModule.gfn_reportCall(objFormData, objAppData.url);
+        else mysuitModule.gfn_reportCall_self(objFormData, objAppData.url);
+      }
+
+      // MYSUIT 멀티 레포트 호출
+      function fn_mysuit_Report_multi(_objParam, _objMultiData) {
+        if(!window.NEXACROHTML){
+          window.NEXACROHTML = {};
+        }
+        if(window.NEXACROWEBBROWSER) {
+        }else if(window.nexacro) {
+          var today = new Date();
+          var year = today.getFullYear();
+          var month = ('0' + (today.getMonth() + 1)).slice(-2);
+          var day = ('0' + today.getDate()).slice(-2);
+          var hours = ('0' + today.getHours()).slice(-2); 
+          var minutes = ('0' + today.getMinutes()).slice(-2);
+          var seconds = ('0'  + today.getSeconds()).slice(-2); 
+          var date = year + '-' + month  + '-' + day + ' ' + hours + ':' + minutes  + ':' + seconds;
+          var txt = "[MYSUIT_LOG] "+ date + "_fn_mysuit_Report_multi call SUCCESS";
+          window.nexacro.fireUserNotify(txt);
+        } else {
+          window.document.title = "onload";
+        }
+        var arrAppData = JSON.parse(decodeURIComponent(_objParam));
+        var arrParamList = new Array();
+        var objMultiData = new Object();
+
+        for (var i in arrAppData) {
+          var objAppData = arrAppData[i];
+
+          var objFormData = new Object();
+          objFormData.projectName = objAppData.projectName;
+          objFormData.formName = objAppData.formName;
+
+          var objDataset = new Object();
+          objDataset = fn_datasetToJsonString(objAppData.dataset);
+          var objParam = new Object();
+          objParam = objAppData.param;
+
+          var objParamTotal = new Object();
+
+          for (var dsName in objDataset) {
+            objParamTotal[dsName] = objDataset[dsName];
+          }
+
+          for (var paramName in objParam) {
+            objParamTotal[paramName] = objParam[paramName];
+          }
+          debugger;
+          objFormData.parameter = objParamTotal;
+          arrParamList.push(objFormData);
+        }
+        if (_objMultiData != undefined)
+          objMultiData = JSON.parse(decodeURIComponent(_objMultiData));
+
+        objMultiData.UB_FORMLIST_INFO = encodeURIComponent(
+          JSON.stringify(arrParamList)
+        );
+
+        if (objAppData.callType == "popup")
+          mysuitModule.gfn_reportCall(objMultiData, objAppData.url);
+        else mysuitModule.gfn_reportCall_self(objMultiData, objAppData.url);
+      }
+
+      //파일 다운로드
+      function fn_exportFile(_objParam) {
+        var arrAppData = JSON.parse(decodeURIComponent(_objParam));
+
+        var objMultiData = new Object();
+        var arrParamList = new Array();
+        for (var i in arrAppData) {
+          var objAppData = arrAppData[i];
+          var objDataset = new Object();
+          var objFormData = new Object();
+
+          objFormData.projectName = objAppData.projectName;
+          objFormData.formName = objAppData.formName;
+          objFormData.UB_EXPORT_FILE_NAME = objAppData.fileName;
+
+          objDataset = fn_datasetToJsonString(objAppData.dataset);
+          var objParam = new Object();
+          objParam = objAppData.param;
+
+          var objParamTotal = new Object();
+
+          for (var dsName in objDataset) {
+            objParamTotal[dsName] = objDataset[dsName];
+          }
+
+          for (var paramName in objParam) {
+            objParamTotal[paramName] = objParam[paramName];
+          }
+
+          objFormData.parameter = objParamTotal;
+          arrParamList.push(objFormData);
+        }
+
+        // objMultiData = {METHOD_NAME:"exportServerSide",CALL:"VIEWER5",FILE_TYPE:"exec"};
+        // objMultiData.EXPORT_RESULT_TYPE  = "FILE";          // FILE : Stream
+        // objMultiData.UB_EXPORT_FILE_TYPE = objParam.UB_EXPORT_FILE_TYPE;			// 파일 확장자
+        // objMultiData.EXCEL_SHEET_SPLIT_TYPE = objParam.EXCEL_SHEET_SPLIT_TYPE;		// 서식별로 sheet 분리
+        // objMultiData.EXCEL_SHEET_NAMES = objParam.EXCEL_SHEET_NAMES;			// sheet 네임 지정
+        // objMultiData.MULTI_FORM_TYPE     = "M";             // 멀티여부 필수 (M : 하나의 파일로 생성 , S : 각각의 파일로 생성)
+        // objMultiData.UB_FORMLIST_INFO    = JSON.stringify(arrParamList); // 멀티 레포트 호출 파라미터
+
+        objMultiData = {
+          METHOD_NAME: "exportServerSide",
+          CALL: "VIEWER5",
+          FILE_TYPE: "exec",
+        };
+
+        var objMultiParam = new Object();
+        objMultiParam = objAppData.multiParam;
+
+        for (var paramName in objMultiParam) {
+          objMultiData[paramName] = objMultiParam[paramName];
+        }
+
+        objMultiData.UB_FORMLIST_INFO = JSON.stringify(arrParamList); // 멀티 레포트 호출 파라미터
+
+        mysuitModule.gfn_exportServerSide(objMultiData, objAppData.url);
+      }
+
+      //파일 다운로드 멀티
+      function fn_exportFile_multi(_objParam, _objMultiData) {
+        var arrAppData = JSON.parse(decodeURIComponent(_objParam));
+
+        var objMultiData = new Object();
+        var arrParamList = new Array();
+        for (var i in arrAppData) {
+          var objAppData = arrAppData[i];
+          var objDataset = new Object();
+          var objFormData = new Object();
+
+          objFormData.projectName = objAppData.projectName;
+          objFormData.formName = objAppData.formName;
+          objFormData.url = objAppData.url;
+          objFormData.UB_EXPORT_FILE_NAME = objAppData.fileName;
+
+          objDataset = fn_datasetToJsonString(objAppData.dataset);
+          var objParam = new Object();
+          objParam = objAppData.param;
+
+          var objParamTotal = new Object();
+
+          for (var dsName in objDataset) {
+            objParamTotal[dsName] = objDataset[dsName];
+          }
+
+          for (var paramName in objParam) {
+            objParamTotal[paramName] = objParam[paramName];
+          }
+
+          objFormData.parameter = objParamTotal;
+          arrParamList.push(objFormData);
+        }
+        /*
+	// objMultiData = {METHOD_NAME:"exportServerSide",CALL:"VIEWER5",FILE_TYPE:"exec"}; 
+	// objMultiData.EXPORT_RESULT_TYPE  = "FILE";          // FILE : Stream 
+	// objMultiData.UB_EXPORT_FILE_TYPE = objParam.UB_EXPORT_FILE_TYPE;			// 파일 확장자
+	// objMultiData.EXCEL_SHEET_SPLIT_TYPE = objParam.EXCEL_SHEET_SPLIT_TYPE;		// 서식별로 sheet 분리
+	// objMultiData.EXCEL_SHEET_NAMES = objParam.EXCEL_SHEET_NAMES;			// sheet 네임 지정
+	// objMultiData.MULTI_FORM_TYPE     = "M";             // 멀티여부 필수 (M : 하나의 파일로 생성 , S : 각각의 파일로 생성) 
+	// objMultiData.UB_FORMLIST_INFO    = JSON.stringify(arrParamList); // 멀티 레포트 호출 파라미터
+	
+	 objMultiData = {METHOD_NAME:"exportServerSide",CALL:"VIEWER5",FILE_TYPE:"exec"}; 
+	
+	var objMultiParam   = new Object();
+	objMultiParam = objAppData.multiParam;
+	
+	for (var paramName in objMultiParam) {
+			objMultiData[paramName] = objMultiParam[paramName];
+	}
+	debugger;
+	*/
+
+        if (_objMultiData != undefined) {
+          objMultiData = JSON.parse(decodeURIComponent(_objMultiData));
+          objMultiData.METHOD_NAME = "exportServerSide";
+          objMultiData.CALL = "VIEWER5";
+          objMultiData.FILE_TYPE = "exec";
+        }
+        objMultiData.UB_FORMLIST_INFO = JSON.stringify(arrParamList); // 멀티 레포트 호출 파라미터
+        //objMultiData.UB_FORMLIST_INFO =  encodeURIComponent( JSON.stringify(arrParamList) );
+
+        mysuitModule.gfn_exportServerSide(objMultiData, objAppData.url);
+      }
+
+      // MYSUIT Localexporter
+      function fn_mysuit_LX(_objParam) {
+        //UBLocalExporter.setVersion("2.0");
+        //UBLocalExporter.initLoad(false);
+        if(!window.NEXACROHTML){
+          window.NEXACROHTML = {};
+        }
+        if(window.NEXACROWEBBROWSER) {
+        }else if(window.nexacro) {
+          var today = new Date();
+          var year = today.getFullYear();
+          var month = ('0' + (today.getMonth() + 1)).slice(-2);
+          var day = ('0' + today.getDate()).slice(-2);
+          var hours = ('0' + today.getHours()).slice(-2); 
+          var minutes = ('0' + today.getMinutes()).slice(-2);
+          var seconds = ('0'  + today.getSeconds()).slice(-2); 
+          var date = year + '-' + month  + '-' + day + ' ' + hours + ':' + minutes  + ':' + seconds;
+          var txt = "[MYSUIT_LOG] "+ date + "_fn_mysuit_LX call SUCCESS";
+          window.nexacro.fireUserNotify(txt);
+        } else {
+          window.document.title = "onload";
+        }
+        var arrAppData = JSON.parse(decodeURIComponent(_objParam));
+
+        mysuitModule.gfn_LX_Print(
+          arrAppData,
+          fn_LX_callback_succ,
+          fn_LX_callback_fail
+        );
+      }
+
+      function fn_mysuit_LX_updateChk(_objParam) {
+        //UBLocalExporter.setVersion("2.0");
+        //UBLocalExporter.initLoad(false);
+
+        var arrAppData = JSON.parse(decodeURIComponent(_objParam));
+
+        var pObject = new Object();
+        pObject.SERVER_URL_PATH = arrAppData.SERVER_URL_PATH;
+        pObject.COMMAND_TYPE = "UPDATE_STATUS";
+
+        UBLocalExporter.SendLocalPrintMulti(
+          pObject,
+          fn_LX_callback_succ,
+          fn_LX_callback_fail
+        );
+      }
+
+      //LocalExporter callbackSuccess
+      function fn_LX_callback_succ(_result) {
+        //console.log(" ============ fn_LX_callback_succ ============ ");
+        //console.log(JSON.stringify(_result));
+        if(!window.NEXACROHTML){
+          window.NEXACROHTML = {};
+        }
+        if(window.NEXACROWEBBROWSER) {
+        }else if(window.nexacro) {
+          var today = new Date();
+          var year = today.getFullYear();
+          var month = ('0' + (today.getMonth() + 1)).slice(-2);
+          var day = ('0' + today.getDate()).slice(-2);
+          var hours = ('0' + today.getHours()).slice(-2); 
+          var minutes = ('0' + today.getMinutes()).slice(-2);
+          var seconds = ('0'  + today.getSeconds()).slice(-2); 
+          var date = year + '-' + month  + '-' + day + ' ' + hours + ':' + minutes  + ':' + seconds;
+          var txt = "[MYSUIT_LOG] "+ date + "_fn_LX_callback_succ call SUCCESS";
+          window.nexacro.fireUserNotify(txt);
+        } else {
+          window.document.title = "onload";
+        }
+        if (typeof nexacro == "undefined") {
+          if (window.NEXACROWEBBROWSER) {
+            window.NEXACROWEBBROWSER.on_fire_onusernotify(
+              window.NEXACROWEBBROWSER,
+              JSON.stringify(_result)
+            );
+          } else {
+            console.log(JSON.stringify(_result));
+          }
+        } else if (nexacro) {
+          nexacro.fireUserNotify(JSON.stringify(_result));
+        }
+      }
+
+      //LocalExporter callbackFail
+      function fn_LX_callback_fail(_result) {
+        console.log(" ============ fn_LX_callback_fail ============ ");
+        if(!window.NEXACROHTML){
+          window.NEXACROHTML = {};
+        }
+        if(window.NEXACROWEBBROWSER) {
+
+        }else if(window.nexacro) {
+          var today = new Date();
+          var year = today.getFullYear();
+          var month = ('0' + (today.getMonth() + 1)).slice(-2);
+          var day = ('0' + today.getDate()).slice(-2);
+          var hours = ('0' + today.getHours()).slice(-2); 
+          var minutes = ('0' + today.getMinutes()).slice(-2);
+          var seconds = ('0'  + today.getSeconds()).slice(-2); 
+          var date = year + '-' + month  + '-' + day + ' ' + hours + ':' + minutes  + ':' + seconds;
+          var txt = "[MYSUIT_LOG] "+ date + "_fn_LX_callback_fail call SUCCESS";
+          window.nexacro.fireUserNotify(txt);
+        } else {
+          window.document.title = "onload";
+        }
+        if (typeof nexacro == "undefined") {
+          if (window.NEXACROWEBBROWSER) {
+            window.NEXACROWEBBROWSER.on_fire_onusernotify(
+              window.NEXACROWEBBROWSER,
+              JSON.stringify(_result)
+            );
+          } else {
+            console.log(JSON.stringify(_result));
+          }
+        } else if (nexacro) {
+          nexacro.fireUserNotify(JSON.stringify(_result));
+        }
+
+        if (UBLocalExporter.isExeCall(_result)) {
+          if (UBLocalExporter.isExeCall(_result)) {
+            // localexporter 작동불가 상태인 경우(websocket 통신불가) : true
+            console.log("재구동시작");
+
+            //LocalExporter 재구동 함수
+            UBLocalExporter.sendeCall(function (_result) {
+              console.log("재구동 완료 후 callback");
+              console.log(_result);
+              if (typeof nexacro == "undefined") {
+                if (window.NEXACROWEBBROWSER) {
+                  window.NEXACROWEBBROWSER.on_fire_onusernotify(
+                    window.NEXACROWEBBROWSER,
+                    JSON.stringify(_result)
+                  );
+                } else {
+                  console.log(JSON.stringify(_result));
+                }
+              } else if (nexacro) {
+                nexacro.fireUserNotify(JSON.stringify(_result));
+              }
+            });
+          }
+        }
+      }
+
+      function fn_datasetToJsonString(_objDataset) {
+        var rtnObj = new Object();
+
+        for (key in _objDataset) {
+          rtnObj[key] = JSON.stringify(_objDataset[key]);
+        }
+
+        return rtnObj;
+      }
+
+      function fn_callbackTest() {
+        for (var i = 0; i < 100; i++) {}
+        var _result = new Object();
+
+        if (typeof nexacro == "undefined") {
+          if (window.NEXACROWEBBROWSER) {
+            window.NEXACROWEBBROWSER.on_fire_onusernotify(
+              window.NEXACROWEBBROWSER,
+              JSON.stringify(_result)
+            );
+          } else {
+            console.log(JSON.stringify(_result));
+          }
+        } else if (nexacro) {
+          nexacro.fireUserNotify(JSON.stringify(_result));
+        }
+      }
+      
+      // PDF Viewer 호출
+      function fn_PDF_Viewer(_objParam){
+        var objAppData = JSON.parse(decodeURIComponent(_objParam));
+	
+        var objParam = new Object();
+        objParam = objAppData;
+
+        mysuitModule.gfn_PDF_Viewer(objParam, objAppData.url);
+      }
+
+      /* ****************************************************************** */
+
+      var gTestURL = "https://ubiform-dev.lis.seegenemedical.com";
+
+      function fn_htmlTest_Report() {
+        var objParam = new Object();
+        objParam.url = gTestURL + "/MYSUIT/UView5/index.jsp";
+        objParam.projectName = "ubstorm";
+        objParam.formName = "sample01";
+        //objParam.callType    = "popup"; // self:webview ,popup:OS Web browser [default:self]
+
+        objParam.dataset = new Object();
+
+        objParam.dataset.dataset_0 = fn_dataset(2);
+        objParam.dataset.dataset_1 = fn_dataset(5);
+        objParam.param = new Object();
+        objParam.param.TITLE_TEST = "TITLE";
+
+        fn_mysuit_Report(JSON.stringify(objParam));
+      }
+
+      function fn_htmlTest_Report_multi() {
+        var arrParam = new Array();
+
+        var objParam = new Object();
+        objParam.url = gTestURL + "/MYSUIT/UView5/index.jsp";
+        objParam.projectName = "Temp^ubstorm";
+        objParam.formName = "sample01";
+        //objParam.callType    = "popup"; // self:webview ,popup:OS Web browser [default:self]
+
+        objParam.dataset = new Object();
+        objParam.dataset.dataset_0 = fn_dataset(2);
+        objParam.dataset.dataset_1 = fn_dataset(5);
+        objParam.param = new Object();
+        objParam.param.TITLE_TEST = "TITLE";
+
+        arrParam.push(objParam);
+        arrParam.push(objParam);
+
+        fn_mysuit_Report_multi(JSON.stringify(arrParam));
+      }
+
+      function fn_htmlTest_ExportFile() {
+        var arrParam = new Array();
+
+        var objParam = new Object();
+        objParam.url = gTestURL + "/MYSUIT/ubiform.do";
+        objParam.projectName = "Temp^ubstorm";
+        objParam.formName = "sample01";
+        //objParam.callType    = "popup"; // self:webview ,popup:OS Web browser [default:self]
+
+        objParam.dataset = new Object();
+        objParam.dataset.dataset_0 = fn_dataset(2);
+        objParam.dataset.dataset_1 = fn_dataset(5);
+        objParam.param = new Object();
+        objParam.param.TITLE_TEST = "TITLE";
+
+        objParam.param.UB_EXPORT_FILE_TYPE = "EXCEL";
+
+        // Excel 관련 파라미터
+        objParam.param.EXCEL_SHEET_SPLIT_TYPE = "formPage"; // 서식별로 sheet 분리
+        objParam.param.EXCEL_SHEET_NAMES = "testSheet"; // sheet 네임 지정
+
+        arrParam.push(objParam);
+        //arrParam.push(objParam);
+
+        fn_exportFile(JSON.stringify(arrParam));
+      }
+
+      function fn_htmlTest_LX() {
+        var arrDataList = new Array();
+
+        var objMultiData = new Object();
+        var arrParamList = new Array();
+
+        var objFormData = new Object();
+        objFormData.projectName = "Temp^ubstorm";
+        objFormData.formName = "sample01";
+        objFormData.UBI_validationKey = "UBI_validationKey";
+
+        var objParam = new Object();
+        objParam.dataset_0 = JSON.stringify(fn_dataset(5));
+        objParam.Key_101 = "Test parameter data";
+
+        objFormData.parameter = objParam;
+        arrParamList.push(objFormData);
+        arrParamList.push(objFormData);
+
+        objMultiData.SERVER_URL_PATH = gTestURL + "/MYSUIT/ubiform.do";
+        //objMultiData.PAGE_SIZE_NAME      = "A4";            // Localexporter 용지 사이즈 설정
+
+        objMultiData.PDF_EXPORT_TYPE = "LOCAL_PRINT#";
+        objMultiData.MULTI_FORM_TYPE = "M"; // (필수) 멀티여부
+        objMultiData.UB_FORMLIST_INFO = JSON.stringify(arrParamList); // 멀티 레포트 호출 파라미터
+
+        arrDataList.push(objMultiData);
+        arrDataList.push(objMultiData);
+
+        fn_mysuit_LX(JSON.stringify(arrDataList));
+      }
+
+      function fn_htmlTest_LX_update() {
+        var pObject = new Object();
+        pObject.SERVER_URL_PATH = gTestURL + "/MYSUIT/ubiform.do"; // 유비폼 서버 서비스 호출 URL 설정
+
+        fn_mysuit_LX_updateChk(JSON.stringify(pObject));
+      }
+
+      // sample data 생성
+      function fn_dataset(_cnt) {
+        var arr = new Array();
+
+        for (var i = 0; i < _cnt; i++) {
+          var obj = new Object();
+          obj.col_0 = "col_" + i;
+          obj.col_1 = "테스트" + i;
+
+          arr.push(obj);
+        }
+
+        return arr;
+      }
+      function fn_MySuitLog(){
+        if(!window.NEXACROHTML){
+          window.NEXACROHTML = {};
+        }
+        if(window.NEXACROWEBBROWSER) {
+
+        }else if(window.nexacro) {
+          var today = new Date();
+          var year = today.getFullYear();
+          var month = ('0' + (today.getMonth() + 1)).slice(-2);
+          var day = ('0' + today.getDate()).slice(-2);
+          var hours = ('0' + today.getHours()).slice(-2); 
+          var minutes = ('0' + today.getMinutes()).slice(-2);
+          var seconds = ('0'  + today.getSeconds()).slice(-2); 
+          var date = year + '-' + month  + '-' + day + ' ' + hours + ':' + minutes  + ':' + seconds;
+          var txt = "[MYSUIT_LOG] "+ date + "_HTML_onload call SUCCESS";
+          window.nexacro.fireUserNotify(txt);
+        } else {
+          window.document.title = "onload";
+        }
+      }
+    </script>
+  </head>
+  <body onload="fn_MySuitLog()">
+    <!--
+	<div>
+		<button onclick="fn_htmlTest_Report()">Report TEST</button>
+		<button onclick="fn_htmlTest_Report_multi()">Report TEST(multi)</button>
+		<button onclick="fn_htmlTest_ExportFile()">FileDown TEST</button>
+		<button onclick="fn_htmlTest_LX()">LX TEST</button>
+		<button onclick="fn_htmlTest_LX_update()">LX update TEST2</button>
+	</div>
+-->
+  </body>
+</html>

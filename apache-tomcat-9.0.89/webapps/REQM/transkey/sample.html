@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="ko" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="/thirdparty/transkey/transkey.js"></script>
+<link rel="stylesheet" type="text/css" href="/thirdparty/transkey/transkey.css" /> 
+		
+</head>
+<body onload="initTranskey();">
+<form id="frm" method="post">
+<div>
+전체 키보드예제<input type="text" name="pwd1" id="pwd1" data-tk-kbdType="qwerty" data-tk-kbdxy="10 10" onclick="tk.onKeyboard(this);" /><span id="pwd1_tk_btn" data-tk-btnType="img">마우스 입력</span><input type="button" value="ajaxTest" onclick="ajaxTest('pwd1');"></input><br></br>
+숫자 키보드예제<input type="text" name="pwd2" id="pwd2" data-tk-kbdType="number" data-tk-kbdxy="10 10" onclick="tk.onKeyboard(this);" /><span id="pwd2_tk_btn">마우스 입력</span><input type="button" value="ajaxTest" onclick="ajaxTest('pwd2');"></input><br></br>
+</form>
+
+
+
+<script type="text/javascript">
+function ajaxTest(id){
+	var values = tk.inputFillEncData(document.getElementById(id));
+	var name = document.getElementById(id).name;
+	var hidden = values.hidden;
+	var hmac = values.hmac;
+	var frmId = use_form_id?"_"+document.getElementById("hidfrmId").value:"";
+	var request = new XMLHttpRequest();
+	
+	var id = document.getElementById(id).id;
+	var keyboardType = transkey[id].keyboardType;
+	var keyIndex = transkey[id].keyIndex;
+	var fieldType = transkey[id].fieldType;
+	var seedKey = document.getElementById("seedKey"+frmId).value;
+	var ExE2E = transkey[id].exE2E;
+	
+	//JSP로 보낼때
+	//request.open("POST", "sample.jsp", false);
+	//request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	//request.setRequestHeader("Cache-Control", "no-cache");
+	//if(ExE2E!="false") {
+	//	request.send("id=" + id + "&transkey_"+id+"_"+frmId+"=" + hidden + "&transkey_HM_"+id+"_"+frmId+"=" + hmac + "&keyboardType_" + id + "_"+frmId+"=" + keyboardType + "&keyIndex_" + id+"_"+frmId+"=" + keyIndex + "&fieldType_" + id + "_"+frmId+"=" + fieldType + "&seedKey_"+frmId+"="+ seedKey + "&initTime_"+frmId+"="+initTime + "&transkey_ExE2E_"+id+"_"+frmId+"="+ExE2E+"&hidfrmId="+frmId);
+	//} else {
+	//	request.send("id=" + id + "&transkey_"+id+"_"+frmId+"=" + hidden + "&transkey_HM_"+id+"_"+frmId+"=" + hmac + "&keyboardType_" + id + "_"+frmId+"=" + keyboardType + "&keyIndex_" + id+"_"+frmId+"=" + keyIndex + "&fieldType_" + id + "_"+frmId+"=" + fieldType + "&seedKey_"+frmId+"="+ seedKey + "&initTime_"+frmId+"="+initTime+"&hidfrmId="+frmId);
+	//}	
+	
+	//NEIS URL로 보낼 때
+	request.open("POST", "/cmc_sam_pl03_000.do", false);
+	request.setRequestHeader("Content-type", "application/json");
+	request.setRequestHeader("Cache-Control", "no-cache");
+	if(ExE2E!="false") {
+		var sendData = {"id":id, "transkey_pwd1_":hidden, "transkey_HM_pwd1_":hmac.toString(), "keyboardType_pwd1_":keyboardType, "keyIndex_pwd1_":keyIndex, "fieldType_pwd1_":fieldType, "seedKey_":seedKey, "initTime_":initTime, "transkey_ExE2E_pwd1_":ExE2E, "hidfrmId":frmId}
+		request.send(JSON.stringify(sendData));
+	} else {
+		var sendData = {"id":id, "transkey_pwd1_":hidden, "transkey_HM_pwd1_":hmac.toString(), "keyboardType_pwd1_":keyboardType, "keyIndex_pwd1_":keyIndex, "fieldType_pwd1_":fieldType, "seedKey_":seedKey, "initTime_":initTime, "hidfrmId":frmId}
+		request.send(JSON.stringify(sendData));
+	}	
+	
+	
+	//
+	
+	
+		
+}
+</script>
+</body>
+</html>

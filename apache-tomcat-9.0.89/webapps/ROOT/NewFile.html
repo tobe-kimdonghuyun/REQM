@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>JS File Download 예제</title>
+</head>
+<body>
+  <button id="downloadBtn">텍스트 파일 생성·다운로드</button>
+
+  <script>
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      // 1) 다운로드할 데이터 (여기서는 간단한 문자열)
+      const content = '안녕하세요!\n이것은 동적으로 생성된 텍스트 파일입니다.';
+      const blob = new Blob([content], { type: 'text/plain' });
+      
+      // 2) 가짜 링크(a) 생성
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'greeting.txt';  // 저장될 파일명
+      
+      // 3) 클릭 트리거
+      a.click();
+      
+      // 4) 메모리 해제
+      URL.revokeObjectURL(a.href);
+    });
+  </script>
+</body>
+</html>

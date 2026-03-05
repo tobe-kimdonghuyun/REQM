@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>nexacro noti</title>
+    
+    <script type="text/javascript">	
+	if (! window.NEXACROHTML) {
+		window.NEXACROHTML = {};
+	}
+	
+	var parentNexacro = null;
+    var bInit = false;
+    window.NEXACROHTML.Init = function(str) {
+
+        var loopCnt = 0;
+        var interval = setInterval(function() {            
+            parentNexacro = window.NEXACROWEBBROWSER;
+            //console.log("ParparentNexacroent:" + loopCnt + ":" + parentNexacro);      
+        if(loopCnt >= 10 || parentNexacro) {
+            bInit = true;
+            clearInterval(interval);
+            window.NEXACROHTML.FireUserNotify(str);
+          }
+            loopCnt++;
+        }, 10);
+    }
+	
+	window.NEXACROHTML.FireUserNotify = function(userdata)
+	{			
+		var pp = window.NEXACROWEBBROWSER;
+		if (pp) 
+		{		
+			pp.on_fire_onusernotify(pp, userdata);
+		} 
+		else if (typeof nexacro == "undefined") //windows runtime
+		{			
+			window.document.title = userdata;
+		}
+		else if (nexacro) //mobile runtime 
+		{ 		
+			nexacro.fireUserNotify(userdata);	
+		} 
+	}
+    function fn_test()
+    {
+    	window.NEXACROHTML.FireUserNotify("noti Html 에서 nexacro 값 전달");
+    	
+    }
+    
+    
+    </script>
+</head>
+<body>
+
+<input type="button" id="bnt_sa" value="nexacro로 전달" onclick="fn_test()">
+
+</body>
+</html>

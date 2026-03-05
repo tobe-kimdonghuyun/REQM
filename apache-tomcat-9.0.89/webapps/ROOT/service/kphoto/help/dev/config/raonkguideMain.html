@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<title>RAON K Developer Manual</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../../css/help.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="raonkhelp_content_right">
+<div class="right_con">
+    <div class="sdk_content">
+        <h3 class="title">설치 및 기본설정</h3><br />
+        <table class="h_table">
+            <caption>기본 설정 가이드</caption>
+            <colgroup>
+                <col style="!important;" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>
+                        <span class="firebrick">※ 제품을 연동하기 전 꼭 아래내용을 읽어주세요!</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="t_bg01">
+                        <pre class="pre">
+<span style="font-weight:bold; text-decoration:underline;">K Photo는 이미지를 편집하는 솔루션으로 다음과 같이 구성되어 있습니다.</span>
+
+<div class="cord" style="font-size:10pt;"> <span class="firebrick">- Client Module</span> : 화면 구성 및 파일을 전송하는 클라이언트쪽 모듈 [ Javascript, CSS, Images, XML, Agent ]
+ <span class="firebrick">- Server Module</span> : 클라이언트로 부터 전송된 파일을 서버쪽에 저장해 주는 모듈 [ .NET(ashx, dll), JAVA(jsp, jar) ]
+</div>
+
+<span style="font-weight:bold; text-decoration:underline;">* 설치규격</span>
+
+<div class="cord" style="font-size:10pt;"> <span class="firebrick">- 지원 운영체제</span> : Microsoft Windows 2000 Server 이상, Linux, Unix 등
+ <span class="firebrick">- 지원 웹 언어</span> : JSP JDK 1.5 이상 (JDK 1.4 별도문의), ASP, ASP.NET 2.0 이상
+ <span class="firebrick">- 지원 웹 서버</span> : JDK 1.5 이상 (JDK 1.4 별도문의)을 사용하는 WAS, Microsoft .NET Framework 2.0 이상을 사용하는 IIS
+ <span class="firebrick">- 지원 브라우저</span> : html5 스펙을 지원하는 브라우저(IE9 이하와 같이 html5스펙을 지원하지 않는 브라우저는 지원하지 않습니다.)
+</div>
+
+<span style="font-weight:bold; text-decoration:underline;">* K Photo 폴더 설명</span>
+
+<div class="cord" style="font-size:10pt;"> <span class="firebrick">- config</span>
+   K Photo의 환경설정을 담당하는 raonkphoto.config.xml 을 포함하고 있습니다.
+ <span class="firebrick">- css</span>
+   K Photo에 필요한 스타일시트 파일을 포함하고 있습니다.
+ <span class="firebrick">- raonkphotodata</span>
+   저장경로에 대한 별도 설정이 없다면, 기본적으로 파일이 저장되는 ROOT 경로입니다.
+ <span class="firebrick">- handler</span>
+   파일을 서버에 저장하는 서버 모듈을 포함하고 있습니다. (.NET, JAVA 모듈)
+ <span class="firebrick">- help</span>
+   K Photo의 개발자 가이드들을 포함하고 있습니다.
+ <span class="firebrick">- images</span>
+   K Photo에 필요한 이미지 파일을 포함하고 있습니다.
+ <span class="firebrick">- js</span>
+   K Photo에 필요한 자바스크립트 파일을 포함하고 있습니다.
+ <span class="firebrick">- sample</span>
+   K Photo의 기본 예제들을 포함하고 있습니다. (테스트 완료후 삭제 하십시오)
+</div>
+
+<span style="font-weight:bold; text-decoration:underline;">* 설치방법</span>
+
+<div class="cord" style="font-size:10pt;"> <span class="firebrick">1. config\raonkphoto.config.xml 설정</span>
+   RaonkPhoto > license > product_key, license_key_html5 에 발급받은 키를 설정합니다.
+
+ <span class="firebrick">2. K Photo Core 전체 폴더 업로드(하위폴더 및 파일포함)</span>
+   WEB서버와 WAS가 분리되어 있는 경우 handler, handler\JAVA, handler\.NET 폴더는 WAS서버에 업로드 합니다.
+   나머지 폴더는 WEB서버에 설치합니다.(WEB서버와 경로를 맞춰 WAS에 설치합니다.)
+
+ <span class="firebrick">3. 웹 언어별 설정</span>
+  1) ASP, ASP.NET :
+    config\raonkphoto.config.xml 설정 : RaonkPhoto > setting > save > upload > develop_langage 에 NET 으로 설정합니다.
+    (필요에 따라 handler_url을 설정합니다. ex: /handler/raonkhandler.ashx)
+    handler\.NET 폴더의 dll 파일들을 해당 사이트 bin 폴더에 복사한 후,
+    첨부된 web.config의 내용을 사이트 web.config 에 적용합니다.
+
+  2) JSP(JAVA) :
+    config\raonkphoto.config.xml 설정 : RaonkPhoto > setting > save > upload > develop_langage 에 JAVA 으로 설정합니다.
+    (필요에 따라 handler_url을 설정합니다. ex: /handler/raonkhandler.jsp)
+    handler\JAVA 폴더의 jar 파일들을 해당 사이트 WEB-INF\lib 폴더에 복사합니다.
+    jar 파일 변경시에는 서버를 재기동합니다.
+    (JAVA의 EXIF 추출 기능은 jdk 1.6이상에서만 지원합니다. 기능 활성화를 원하시면 1.6버전으로 컴파일된 jar를 고객센터로 요청하십시오.)
+
+ <span class="firebrick">4. 권한설정</span>
+  아래의 경로에 쓰기 권한을 추가합니다.
+     1) 환경 설정 정보가 저장되는 파일
+		ex) config\raonkphoto.config.xml
+     2) 파일이 업로드 되는 기본 폴더
+		ex) /raonkphotodata
+
+ <span class="firebrick">5. Sample Page 확인</span>
+  Web Server에 맞게 /kphoto/sample/index.html 연결
+     ex) http://localhost/kphoto/sample/index.html
+</div>
+
+<span style="font-weight:bold; text-decoration:underline;">* K Photo 서버 모듈 구성</span>
+
+<div class="cord" style="font-size:10pt;"> 기본적으로 파일을 업로드하면, 기본 설치폴더/raonkphotodata 하위에 파일이 업로드가 되며,
+ WEB 서버와 WAS가 분리된 경우 WAS쪽 /raonkphotodata 하위에 파일이 업로드 됩니다.
+ SetPhysicalPath 또는 SetVirtualPath 를 통하여 기본 저장 경로의 Root 폴더를 설정해야 합니다.
+
+ <span class="firebrick">(※ 설정한 Root 경로는 실제 물리적경로로 설정합니다.)</span>
+</div>
+
+<span style="font-weight:bold; text-decoration:underline;">* K Photo를 생성하는 기본 방법</span>
+
+<div class="cord" style="font-size:10pt;"> <span class="firebrick">1) Javascript file include</span>
+    &#60;head&#62;
+        ...
+    &#60;/head&#62; 태그 사이에 아래의 코드를 추가합니다.
+    &#60;script type="text/javascript" src="RAONKPhoto설치폴더URL/js/raonkphoto.js"&#62;
+
+ <span class="firebrick">2) 포토 객체 생성</span>
+    &#60;body&#62;...&#60;/body&#62; 태그 사이에 포토가 들어갈 위치에 포토 생성 코드를 삽입합니다.
+    &#60;script type="text/javascript"&#62;
+        var raonkParam = {
+            Id: '생성할 포토 이름'
+        };
+        new RAONKPhoto(raonkParam);
+    &#60;/script&#62;
+</div>
+
+<span style="font-weight:bold; text-decoration:underline;">* K Photo 환경 설정 방법</span>
+
+<div class="cord" style="font-size:10pt;"> <span class="firebrick">환경설정 방법은 Config xml 방식과 Javascript Property 방식을 지원합니다.</span>
+
+ 1) 클라이언트 가이드의 환경설정파일 부분을 참고하여,
+    /kphoto/config/raonkphoto.config.xml 파일에 설정 (기본 환경설정 파일이며, 다른 파일로 변경 가능합니다.)
+
+ 2) 클라이언트 가이드의 Properties 부분을 참고하여, 아래와 같이 설정 (이렇게 설정된 값이 Xml 설정방식보다 우선 적용됩니다.)
+    ex) 
+    var raonkParam = {
+        Id: 'photo1',
+        Width: '800px'
+    };
+    new RAONKPhoto(raonkParam);
+</div>
+                    </pre>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+</body>
+</html>
+

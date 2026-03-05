@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Window Promise Example</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .result-box { margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <h1>Parent Window</h1>
+    <p>Click the button below to open the child window. The open function returns a Promise that waits for the child to return data.</p>
+    
+    <button onclick="startProcess()">Open Child Window (Promise)</button>
+
+    <div id="result" class="result-box">
+        Result will appear here...
+    </div>
+
+    <script>
+        /**
+         * Opens a window and returns a Promise that resolves when the window sends back data
+         * or resolves with null if the window is closed without sending data.
+         * @param {string} url - The URL to open
+         * @param {string} windowName - The name of the window
+         * @param {string} windowFeatures - Window features (size, etc.)
+         * @returns {Promise<any>}
+         */
+        function openWindowPromise(url, windowName = '_blank', windowFeatures = 'width=400,height=300') {
+            return new Promise((resolve, reject) => {
+                const popup = window.open(url, windowName, windowFeatures);
+
+                if (!popup) {
+                    reject(new Error('Popup blocked or failed to open'));
+                    return;
+                }
+
+                // 1. Listen for messages from the popup
+                const messageHandler = (event) => {
+                    // In a real app, verify event.origin here for security!
+                    // if (event.origin !== "http://expected-origin.com") return;
+
+                    if (event.source === popup) {
+                        cleanup();
+                        resolve(event.data); // Resolve with the data sent
+                    }
+                };
+
+                // 2. Poll to see if the popup was closed manually
+                const closeCheckInterval = setInterval(() => {
+                    if (popup.closed) {
+                        cleanup();
+                        resolve(null); // Resolve with null if closed manually
+                    }
+                }, 500);
+
+                // Cleanup listeners and intervals
+                function cleanup() {
+                    window.removeEventListener('message', messageHandler);
+                    clearInterval(closeCheckInterval);
+                }
+
+                window.addEventListener('message', messageHandler);
+            });
+        }
+
+        // Usage Example
+        async function startProcess() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerText = "Waiting for child window...";
+            
+            try {
+                // Await the promise!
+                const data = await openWindowPromise('child.html', 'promisepopup');
+                
+                console.log("Promise resolved with:", data);
+                
+                if (data) {
+                    resultDiv.innerHTML = `<strong>Received Data:</strong> ${JSON.stringify(data)}`;
+                } else {
+                    resultDiv.innerHTML = `<em>Window closed without input.</em>`;
+                }
+            } catch (error) {
+                console.error(error);
+                resultDiv.innerText = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

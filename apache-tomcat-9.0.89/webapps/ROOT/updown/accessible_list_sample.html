@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웹 접근성 준수 리스트 이동 샘플</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', 'Dotum', sans-serif;
+            padding: 20px;
+        }
+        
+        /* 리스트 스타일 제거 및 기본 모양 설정 */
+        ul[role="list"] {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 300px;
+        }
+
+        /* 리스트 아이템 스타일 */
+        li[role="listitem"] {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            outline: none; /* 기본 outline 제거 후 focus 스타일 별도 지정 */
+        }
+
+        li[role="listitem"]:last-child {
+            border-bottom: none;
+        }
+
+        /* 포커스 되었을 때 스타일 (접근성을 위해 시각적으로 명확해야 함) */
+        li[role="listitem"]:focus {
+            background-color: #e0f7fa;
+            border-left: 4px solid #00acc1;
+            font-weight: bold;
+            color: #006064;
+        }
+
+        /* 마우스 호버 스타일 */
+        li[role="listitem"]:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>웹 접근성 리스트 이동 샘플</h1>
+    <p>아래 리스트는 <strong>방향키(위/아래)</strong>를 사용하여 항목 간 이동이 가능합니다.</p>
+    <p>첫 번째 항목에 포커스를 주려면 <strong>Tab</strong> 키를 누르세요.</p>
+
+    <!-- 
+        role="list": 스크린리더에게 리스트임을 명시
+        aria-label: 리스트의 용도 설명
+    -->
+    <ul id="accessList" role="list" aria-label="샘플 목록">
+        <!-- 
+            tabindex="0": 탭 키로 포커스 진입 가능 (초기 진입점) 
+        -->
+        <li role="listitem" tabindex="0">리스트 항목 1</li>
+        <!-- 
+            tabindex="-1": 탭 키로는 포커스 불가능하지만, JS로 focus() 호출 가능 
+        -->
+        <li role="listitem" tabindex="-1">리스트 항목 2</li>
+        <li role="listitem" tabindex="-1">리스트 항목 3</li>
+        <li role="listitem" tabindex="-1">리스트 항목 4</li>
+        <li role="listitem" tabindex="-1">리스트 항목 5</li>
+    </ul>
+
+    <!--script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const list = document.getElementById('accessList');
+            const items = list.querySelectorAll('li');
+
+            // 키보드 이벤트 핸들러
+            list.addEventListener('keydown', (e) => {
+                const activeItem = document.activeElement;
+                
+                // 현재 포커스된 요소가 리스트 아이템인지 확인
+                if (!Array.from(items).includes(activeItem)) return;
+
+                let nextItem = null;
+
+                switch (e.key) {
+                    case 'ArrowDown': // 아래 화살표
+                    case 'Down': // IE 호환성
+                        e.preventDefault(); // 스크롤 방지
+                        nextItem = activeItem.nextElementSibling;
+                        break;
+                    
+                    case 'ArrowUp': // 위 화살표
+                    case 'Up': // IE 호환성
+                        e.preventDefault();
+                        nextItem = activeItem.previousElementSibling;
+                        break;
+
+                    case 'Home': // Home 키 (첫 번째 항목으로 이동)
+                        e.preventDefault();
+                        nextItem = items[0];
+                        break;
+
+                    case 'End': // End 키 (마지막 항목으로 이동)
+                        e.preventDefault();
+                        nextItem = items[items.length - 1];
+                        break;
+                }
+
+                // 이동할 대상이 있으면 포커스 이동
+                if (nextItem) {
+                    changeFocus(activeItem, nextItem);
+                }
+            });
+
+            // 마우스 클릭 시에도 해당 아이템으로 포커스 및 tabindex 업데이트
+            items.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const currentActive = list.querySelector('li[tabindex="0"]');
+                    if (currentActive && currentActive !== e.currentTarget) {
+                        currentActive.setAttribute('tabindex', '-1');
+                    }
+                    e.currentTarget.setAttribute('tabindex', '0');
+                    e.currentTarget.focus();
+                });
+            });
+
+            // 포커스 변경 함수
+            function changeFocus(currentItem, nextItem) {
+                // 현재 아이템은 탭 순서에서 제외
+                currentItem.setAttribute('tabindex', '-1');
+                
+                // 다음 아이템을 탭 순서에 포함시키고 포커스
+                nextItem.setAttribute('tabindex', '0');
+                nextItem.focus();
+            }
+        });
+    </script-->
+
+</body>
+</html>

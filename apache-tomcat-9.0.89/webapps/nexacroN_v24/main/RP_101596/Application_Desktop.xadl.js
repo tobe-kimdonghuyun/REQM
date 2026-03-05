@@ -1,0 +1,70 @@
+(function()
+{
+    return function()  
+	{
+        this.on_loadAppVariables = function()
+        {		
+            var obj = null;
+			// global dataobject
+		
+            // global dataset
+
+            
+            // global variable
+
+            
+            obj = null;
+        };
+ 
+        // property, event, createMainFrame
+        this.on_initApplication = function()
+        {
+            // properties
+            this.set_id("Application_Desktop");
+            this.set_screenid("Desktop_screen");
+            this.set_licenseurl("http://172.10.12.45:9090/NexacroN_client_license.xml");
+
+            if (this._is_attach_childframe)
+            	return;
+        
+            // frame
+            var mainframe = this.createMainFrame("mainframe","0","0","1280","720",null,null,this);
+            mainframe.set_showtitlebar("true");
+            mainframe.set_showstatusbar("true");
+            mainframe.set_titletext("FullFrame");
+            mainframe.on_createBodyFrame = this.mainframe_createBodyFrame;        
+            // tray
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        this.mainframe_createBodyFrame = function()
+        {
+            var frame0 = new ChildFrame("WorkFrame",null,null,null,null,null,null,"Base::RP_101574_PS_UI_0024.xfdl",this);
+            frame0.set_showtitlebar("false");
+            frame0.set_showstatusbar("false");
+            this.addChild(frame0.name, frame0);
+            frame0.set_formurl("Base::RP_101574_PS_UI_0024.xfdl");
+
+            this.frame=frame0;
+        };
+        
+        this.on_initEvent = function()
+        {
+
+        };
+        
+        // script Compiler
+
+        this.checkLicense("http://172.10.12.45:9090/NexacroN_client_license.xml");
+        
+        this.loadPreloadList();
+
+        this.loadIncludeScript("Application_Desktop.xadl");
+    };
+}
+)();

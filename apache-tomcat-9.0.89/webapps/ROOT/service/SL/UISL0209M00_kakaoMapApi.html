@@ -1,0 +1,427 @@
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		    <style>
+			.map_wrap {
+			    position: relative;
+			    width: 100%;
+			    border:2px solid #777;
+			    border-radius:4px;
+			}
+
+			.title {
+			    font-weight: bold;
+			    display: block;
+			}
+
+			.hAddr {
+			    position: static;
+			    left: 10px;
+			    top: 10px;
+			    border-radius: 2px;
+			    background: #fff;
+			    background: rgba(255, 255, 255, 0.8);
+			    z-index: 30;
+			    padding: 5px;
+			}
+
+			#centerAddr {
+			    display: block;
+			    margin-top: 2px;
+			    font-weight: normal;
+			}
+
+			.bAddr {
+			    position: static;
+			    left: 10px;
+			    top: 10px;
+			    border-radius: 2px;
+			    background: #fff;
+			    background: rgba(255, 255, 255, 0.95);
+			    z-index: 30;
+			    padding: 5px;
+			}
+
+			.bAddr {
+			    padding: 16px 16px 16px 16px;
+			}
+
+			.bAddr hr {
+			    margin-top: 15px;
+			    margin-bottom: 15px;
+			}
+
+			.bAddr .close {
+				position:absolute;
+				top: 14px;
+				right:17px;
+				color:#888;
+				width:17px;
+				height:17px;
+				cursor:pointer;
+				z-index:50;
+				background:url(./images/close.png) no-repeat 40%;
+			}
+		
+			.bAddrItem {
+			    padding-left: 10px;
+			    padding-right: 40px;
+			    min-height:35px;
+			    background-repeat: no-repeat;
+			    background-position: 0 -2px;
+			}
+
+			.bAddrItem .title,
+			.bAddrItem .title a {
+			    font-size: 14px;
+			    line-height: 19px;
+			    color: #000;
+				
+			}
+			.bAddrItem .title a {
+			    text-decoration: none;
+			    z-index: 40;
+			}
+
+			.bAddrItem .titleSub {
+			    font-size: 12px;
+			    line-height: 16px;
+			    color: #555;
+			}
+/**			
+			.infoBox {
+				display: block;
+				color: #000;
+				font-size: 12px;
+				text-align: center;
+				height: 24px;
+				line-height:22px;
+				border-radius:4px;
+				padding:0px 10px;
+				background: #ffffff;
+			}
+*/			
+
+			.bAddrItem.typeNum {
+				position:relative;
+				padding-left:40px;
+			}
+			.bAddrItem.typeNum .numbering {
+				position:absolute;
+				top:0;
+				left:0;
+				text-align:right;
+				width:34px;
+				font-weight:700;
+				font-size:14px;
+			}
+			.bAddrItem.typeNum .numbering::after {
+				content:'.'
+			}
+			
+		</style>		
+	</head>
+	<body>
+		<div id="map" style="width:100%;height:100%;"></div>
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c807f7ce375c91c9c705837483b1b27d&libraries=services,drawing"></script>
+		<script>
+
+			// center : 씨젠의료재단 (37.5643760677938, 127.05512766029015)
+			// center  : 씨젠 대전충전검사센터 (36.35069714199285, 127.37185705963206)
+			// center : 포동마을회관 (35.7107403315943, 127.29472241817069), level:12
+			// center : 세종시첟 (36.480072228759994, 127.28915071620315 ),  level:10
+			// center : 학동역 (37.5142064294604, 127.031463762217)
+			// center : 서면역 (35.1576285700264, 129.0583757122978) 
+			var container = document.getElementById('map');
+			var options = {
+				  center: new kakao.maps.LatLng(37.5643760677938, 127.05512766029015)
+				, level: 7
+			};
+			var map = new kakao.maps.Map(container, options);
+
+			// 확대 축소 컨트롤
+			var zoomControl = new kakao.maps.ZoomControl();
+			map.addControl(zoomControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+			function fn_setCenter(y, x) {
+				if( !( y ==null || y ==undefined || y =="undefined" || new String(y).valueOf() == "undefined") )
+				{
+					var moveLatLon = new kakao.maps.LatLng(y, x);
+					map.setCenter(moveLatLon);
+				}
+			 };
+			// -------------------------------------------------------------------------------------------
+			// center_changed, zoom_changed, bounds_changed
+			//kakao.maps.event.addListener(map, "bounds_changed", function(){
+			//	fn_mapChangeCallScript();
+			//});			
+			
+			function fn_mapChangeCallScript(y, x){
+
+				// 화면 로딩시 center 변경
+				fn_setCenter(y,x);
+
+				var level 		= map.getLevel();		// 지도 Level
+				var center 	= map.getCenter();		// 지도중심좌표
+				var bounds	= map.getBounds();		// 지도영역
+				var swLatLng	= bounds.getSouthWest();	// 영역내 남서좌표
+				var neLatLng	= bounds.getNorthEast();	// 영역내 북동좌표
+			
+				var info = JSON.stringify({
+				       "svcId" 	: "changed"
+				     , "level"	: level
+				     , "center_x"	: center.getLng()
+				     , "center_y"	: center.getLat()
+				     , "sw_x"	: swLatLng.getLng()
+				     , "sw_y"	: swLatLng.getLat()
+				     , "ne_x"	: neLatLng.getLng()
+				     , "ne_y"	: neLatLng.getLat()
+				     , "init_x"	: x
+				     , "init_y"	: y
+				     , "ts"		: Date.now()
+				});
+				
+				nexacro.fireUserNotify(info);
+			};
+			
+			// ------------------------------------------------------------------------------------------- 마커
+			var imageSize		= new kakao.maps.Size(23, 26);
+			var imageOptions	= {offset : new kakao.maps.Point(12, 25)};
+			var overlay;
+
+			var markers 		= new Array();
+//			var infowindows	= new Array();
+			function fn_loadMarker(strPositions){
+
+				// 마커 초기화
+				if(markers.length > 0){
+					for(var i=0; i<markers.length; i++){
+						var marker = markers[i];
+						marker.setMap(null);
+					}
+					markers = new Array();
+				}
+//				if(infowindows.length > 0){
+//					infowindows	= new Array();
+//				}
+
+				// string으로 넘겨받았는데, obj으로 받네 ????
+				if(strPositions ==null || strPositions ==undefined || strPositions =="undefined" || new String(strPositions).valueOf() == "undefined" || strPositions =="")
+				{
+					return;
+				}
+				
+				var objPositions = JSON.parse(strPositions);
+
+				// 마커 생성
+				var tempTakchgrEmpNo ="";
+				for(var i=0; i<objPositions.length; i++)
+				{
+					
+					// center 이동
+					if(i ==0){
+						fn_setCenter(objPositions[i].mapCdntY, objPositions[i].mapCdntX);
+					}
+
+					// 마커 이미지
+					var markerImage 	= fn_getMarkerImage(objPositions[i]);
+					var marker		= new kakao.maps.Marker({
+										  map	: map
+										, position  : new kakao.maps.LatLng(objPositions[i].mapCdntY, objPositions[i].mapCdntX)
+										, image	: markerImage
+									   });
+									   
+					if(objPositions[i].viewInfoWindow){					
+						// 정보제공 레이어 팝업
+						marker.setZIndex(20);					
+						kakao.maps.event.addListener(marker, "click"		, fn_markerClickListener(objPositions[i], marker) );
+						
+						// 마커 인포
+//						var content = "<span class='infoBox'>"+ iMakerOrder +"</span>";
+//						var infowindow = new kakao.maps.InfoWindow({
+//							  position	: marker.getPosition()
+//							, content	: content
+//							, zIndex	: 10
+//						});
+//						infowindow.open(map, marker);
+
+					} else {
+						marker.setZIndex(10);
+					}
+
+					// 위치정보 셋팅
+//					infowindows.push(infowindow);
+					markers.push(marker);
+
+				}
+				
+				// 인포 박스
+//				fn_infowindowResize();
+			};
+
+			// 마커 이미지
+			function fn_getMarkerImage(objPosition){
+				var imageSrc = objPosition.markerImage;
+				return new kakao.maps.MarkerImage(imageSrc, imageSize, imageOptions);
+			};
+			
+			function fn_markerClickListener(objPosition, objMarker){
+
+				// marker mouse over 기능을 제거하고 CustomOverlay 사용 처리
+				return function(){
+					fn_getCustomOverlay(objPosition, objMarker);
+					
+					// debug
+					//var  html = fn_getCustomOverlay(objPosition, objMarker);
+					//var info = JSON.stringify({
+					//	  "svcId" 	: "markerClick"
+					//	, "html"  	:  html
+					//	, "ts"		: Date.now()
+					//});
+					//nexacro.fireUserNotify(info);
+				}				
+			};
+
+			function fn_infowindowResize(){
+				var infoBox = document.querySelectorAll('.infoBox');
+					infoBox.forEach(function(e) {
+						var w	= e.offsetWidth + 10;
+						var ml 	= w/2;
+						e.parentElement.style.top = "0px";
+						e.parentElement.style.left = "50%";
+						e.parentElement.style.marginLeft = -ml+"px";
+						e.parentElement.style.width = w+"px";
+						e.parentElement.previousSibling.style.display = "none";
+						e.parentElement.parentElement.style.border = "0px";
+						e.parentElement.parentElement.style.background = "unset";
+					});			
+			};
+
+			function fn_getCustomOverlay(objPosition, objMarker){
+				// 열려져 있는 거 삭제
+				fn_closeCustomOverlay();
+				
+				// 신규 overlay
+				var content = "<div class='map_wrap'>";
+				      content = content +"<div class='bAddr'>";
+				      content = content +	"<div class='close' onclick='fn_closeCustomOverlay()' title='닫기'></div>";
+				
+				      content = content +	"<div class='bAddrItem typeNum'>";
+				      content = content +   	"<span class='numbering'>"+ objPosition.visitOrder +"</span>";
+				      content = content +		"<div class='title'><a href='#none' onclick='javascript:fn_customerDetail(\""+objPosition.custCd+"\")'>"+objPosition.custNm +"</a></div>";
+				      content = content + 		( objPosition.asrtNm !=undefined ? "<div class='titleSub'>"+objPosition.asrtNm	+"</div>"  : "" );
+				      content = content +	"</div>";
+				      
+				      var groups = objPosition.groupInfoWindow;
+				      for(var i=0; i<groups.length; i++){
+					      group = groups[i];
+					      content = content +	"<hr style='border-top:1px solid #bdbdbd;'>";
+					      content = content +	"<div class='bAddrItem typeNum'>";
+					      content = content +   	"<span class='numbering'>"+ group.visitOrder +"</span>";
+					      content = content +		"<div class='title'><a href='#none' onclick='javascript:fn_customerDetail(\""+group.custCd+"\")'>"+group.custNm +"</a></div>";
+					      content = content + 		( group.asrtNm !=undefined 	? "<div class='titleSub'>"+group.asrtNm	+"</div>" : "" );
+					      content = content +	"</div>";
+				      }
+				content = content + "</div>";	// end bAddr
+				content = content + "</div>";	// end map_wrap
+				
+				overlay = new kakao.maps.CustomOverlay({
+					  content 	: content
+					, map	: map
+//					, position	: objMarker.getPosition()
+					, position   : new kakao.maps.LatLng(objPosition.mapCdntY, objPosition.mapCdntX)
+					, zIndex	: 30
+//					, xAnchor	: 0.5
+					, yAnchor	: 0
+				});
+				
+			};
+			
+			function fn_closeCustomOverlay(){
+				if(overlay != undefined){
+					overlay.setMap(null);
+				}
+			};
+			
+			function fn_customerDetail(custCd){
+				var info = JSON.stringify({
+					  "svcId" 		: "customerDetail"
+					, "custRefrDiv"  : "CUST"
+					, "custUkeyid"	: custCd
+					, "ts"		: Date.now()
+				});
+				nexacro.fireUserNotify(info);
+			};
+
+			// ------------------------------------------------------------------------------------------- 동선
+			// 사원의 동선 확인
+			var  arrCurrentPolyline = new Array();
+			function fn_loadMoveLine(strPositions){
+
+				// 동선 초기화
+				if(arrCurrentPolyline.length > 0){
+					arrCurrentPolyline.forEach(function(objCurrentPolyline){
+						objCurrentPolyline.setMap(null);
+					});
+				}
+				
+				var objPositions = JSON.parse(strPositions);
+				
+				for(var p=0; p<objPositions.length; p++){
+					var objEmpPosition = objPositions[p];
+					var strColor 	= objEmpPosition.lineColor;
+					var arrPositions	= objEmpPosition.positions;
+					
+					if(arrPositions.length > 1) {
+						// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
+						var linePath = new Array();
+						for(var i=0; i<arrPositions.length; i++){
+							var position = new kakao.maps.LatLng(arrPositions[i].mapCdntY, arrPositions[i].mapCdntX);
+							linePath.push(position);
+						} // end for
+						
+						// 지도에 표시할 선을 생성합니다
+						var polyline = new kakao.maps.Polyline({
+							  path		: linePath 		// 선을 구성하는 좌표배열 입니다
+							, strokeWeight	: 5 			// 선의 두께 입니다
+							, strokeColor	: strColor 		// 선의 색깔입니다
+							, strokeOpacity	: 0.7 		// 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+							, strokeStyle	: 'solid' 		// 선의 스타일입니다
+							, endArrow	: true		// 화살표 여부 
+						});
+
+						// 지도에 선을 표시합니다
+						polyline.setMap(map); 
+						arrCurrentPolyline.push(polyline);
+					} // end if
+
+				} // for
+
+
+				// debug
+//				var info = JSON.stringify({
+//					  "svcId" 			: "debug"
+//					, "arrCurrentPolyline"	: arrCurrentPolyline.length
+//				});
+//				nexacro.fireUserNotify(info);
+				
+			};
+			
+			// 사원별 고객의 마커와 동선을 함께 출력
+			// 동선확인 버큰 클릭
+			function fn_loadEmpMapInfoCallScript(strMarkers, strLines){
+				fn_closeCustomOverlay();
+				fn_loadMarker(strMarkers);
+				fn_loadMoveLine(strLines);
+			};
+			
+			function fn_viewMarkerInfo(strPosition){
+				var objPosition = JSON.parse(strPosition);
+				fn_setCenter(objPosition.mapCdntY, objPosition.mapCdntX);
+				fn_getCustomOverlay(objPosition);
+			};
+			
+		</script> 
+	</body>
+</html>
+

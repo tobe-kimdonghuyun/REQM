@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Focus Border Color</title>
+    <style>
+      div {
+        width: 200px;
+        height: 100px;
+        border: 2px solid black;
+        padding: 10px;
+        outline: none; /* 기본 포커스 스타일 제거 */
+      }
+
+      div:focus {
+        border-color: red; /* 포커스가 갔을 때의 border 색상 */
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        const myDiv = document.getElementById("myDiv")
+        myDiv.addEventListener("focus", () => {
+          myDiv.classList.add("focused")
+        })
+        myDiv.addEventListener("blur", () => {
+          myDiv.classList.remove("focused")
+        })
+      })
+    </script>
+  </head>
+  <body>
+    <div tabindex="0">이 `div`를 클릭하면 포커스가 됩니다.</div>
+    <div id="myDiv" tabindex="1">이 `div`를 클릭하면 포커스가 됩니다.</div>
+  </body>
+</html>

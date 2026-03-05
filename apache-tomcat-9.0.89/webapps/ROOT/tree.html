@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>체크박스가 포함된 테이블</title>
+  </head>
+  <script>
+    const treeItems = document.querySelectorAll('[role="treeitem"]');
+
+treeItems.forEach(item => {
+  item.addEventListener('keydown', e => {
+    const current = document.activeElement;
+    const items = Array.from(treeItems);
+    const currentIndex = items.indexOf(current);
+
+    switch (e.key) {
+      case 'ArrowDown':
+        if (currentIndex < items.length - 1) items[currentIndex + 1].focus();
+        break;
+      case 'ArrowUp':
+        if (currentIndex > 0) items[currentIndex - 1].focus();
+        break;
+      case 'ArrowRight':
+        if (current.getAttribute('aria-expanded') === 'false') {
+          current.setAttribute('aria-expanded', 'true');
+        }
+        break;
+      case 'ArrowLeft':
+        if (current.getAttribute('aria-expanded') === 'true') {
+          current.setAttribute('aria-expanded', 'false');
+        }
+        break;
+    }
+  });
+});
+
+    // 트리 항목을 클릭했을 때 포커스를 이동시키는 이벤트 리스너 추가
+    treeItems.forEach(item => {
+      item.addEventListener('click', () => {
+        item.focus();
+      });
+    });
+  </script>
+  <body>
+    <div role="tree" aria-label="폴더 목록">
+        <div role="treeitem" aria-expanded="true" tabindex="0">📁 문서
+          <div role="group">
+            <div role="treeitem" tabindex="-1">📄 보고서.docx</div>
+            <div role="treeitem" tabindex="-1">📄 계획서.xlsx</div>
+          </div>
+        </div>
+        <div role="treeitem" aria-expanded="false" tabindex="-1">📁 사진</div>
+      </div>
+      
+  </body>
+</html>
+

@@ -1,0 +1,912 @@
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+<meta http-equiv="Expires" content="-1" />
+
+<title></title>
+<style type='text/css'>
+html, body {width:100%; height:100%; margin:0; border:0; padding:0; overflow:hidden }
+body { background-color:#ffffff; }
+</style>
+
+<script language="JavaScript" type="text/javascript">
+
+/*
+ * rMateChartH5 version : 6.0
+ * NEXACRO version : 14
+ * last modified : 2020.09.21
+ */
+ 
+// from WebIF.js
+if (!window.TOBEHTML) {
+	window.TOBEHTML = {};
+}
+
+var rMateChartH5License;
+var rMateChartID;
+var rMateChartVars;
+var invokeData;
+
+function rMateChartAppendJs(url, themeUrl) {
+	var oXmlHttp;
+	if (window.ActiveXObject) {
+		try {
+			oXmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch(e) {
+			try {
+				oXmlHttp = ActiveXObject("Microsoft.XMLHTTP");
+			} catch(e1) {
+				alert('XMLHttpRequest create error');
+				return;
+			}
+		}
+	} else if (window.XMLHttpRequest) // Gecko
+		oXmlHttp = new XMLHttpRequest() ;
+	else {
+		alert('XMLHttpRequest create error');
+		return;
+	}
+
+	oXmlHttp.onreadystatechange = function() {
+		if (oXmlHttp.readyState == 4) {
+			if (oXmlHttp.status == 200 || oXmlHttp.status == 304) {
+				IncludeJS("rmateh5js", url, oXmlHttp.responseText);
+				//2020.09.21 LGK 6.0의 경우 theme를 등록하기 위해서는 create 전에 해야합니다.
+				rMateChartAppendThemeJs(themeUrl);
+
+				rMateChartH5.dataEditorUrl = dataEditorUrl;
+				rMateChartH5.create(rMateChartID, "chartHolder", rMateChartVars, "100%", "100%");
+			} else {
+				alert("rmateh5js "+ url);
+				alert('XML request error: ' + oXmlHttp.statusText + ' (' + oXmlHttp.status + ')');
+			}
+		}
+	}
+	oXmlHttp.open('GET', url, false);
+	oXmlHttp.send(null);
+}
+
+function rMateChartAppendJsPDF(url) {
+	var oXmlHttp;
+	if (window.ActiveXObject) {
+		try {
+			oXmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch(e) {
+			try {
+				oXmlHttp = ActiveXObject("Microsoft.XMLHTTP");
+			} catch(e1) {
+				alert('XMLHttpRequest create error');
+				return;
+			}
+		}
+	} else if (window.XMLHttpRequest) // Gecko
+		oXmlHttp = new XMLHttpRequest() ;
+	else {
+		alert('XMLHttpRequest create error');
+		return;
+	}
+
+	oXmlHttp.onreadystatechange = function() {
+		if (oXmlHttp.readyState == 4) {
+			if (oXmlHttp.status == 200 || oXmlHttp.status == 304) {
+				IncludeJS("rmateh5jspdf", url, oXmlHttp.responseText);
+			} else {
+				alert("rmateh5jspdf "+ url);
+				alert('XML request error: ' + oXmlHttp.statusText + ' (' + oXmlHttp.status + ')');
+			}
+		}
+	}
+	oXmlHttp.open('GET', url, false);
+	oXmlHttp.send(null);
+}
+
+function rMateChartAppendJsPDFPlugin(url) {
+	var oXmlHttp;
+	if (window.ActiveXObject) {
+		try {
+			oXmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch(e) {
+			try {
+				oXmlHttp = ActiveXObject("Microsoft.XMLHTTP");
+			} catch(e1) {
+				alert('XMLHttpRequest create error');
+				return;
+			}
+		}
+	} else if (window.XMLHttpRequest) // Gecko
+		oXmlHttp = new XMLHttpRequest() ;
+	else {
+		alert('XMLHttpRequest create error');
+		return;
+	}
+
+	oXmlHttp.onreadystatechange = function() {
+		if (oXmlHttp.readyState == 4) {
+			if (oXmlHttp.status == 200 || oXmlHttp.status == 304) {
+				IncludeJS("rmateh5jspdfplugin", url, oXmlHttp.responseText);
+			} else {
+				alert("rmateh5jspdfplugin "+ url);
+				alert('XML request error: ' + oXmlHttp.statusText + ' (' + oXmlHttp.status + ')');
+			}
+		}
+	}
+	oXmlHttp.open('GET', url, false);
+	oXmlHttp.send(null);
+}
+
+function rMateChartAppendThemeJs(url) {
+	var oXmlHttp;
+	if (window.ActiveXObject) {
+		try {
+			oXmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch(e) {
+			try {
+				oXmlHttp = ActiveXObject("Microsoft.XMLHTTP");
+			} catch(e1) {
+				alert('XMLHttpRequest create error');
+				return;
+			}
+		}
+	} else if (window.XMLHttpRequest) // Gecko
+		oXmlHttp = new XMLHttpRequest() ;
+	else {
+		alert('XMLHttpRequest create error');
+		return;
+	}
+
+	oXmlHttp.onreadystatechange = function() {
+		if (oXmlHttp.readyState == 4) {
+			if (oXmlHttp.status == 200 || oXmlHttp.status == 304) {
+				IncludeJS("rmateh5themejs", url, oXmlHttp.responseText);
+				rMateChartH5.registerTheme(rMateChartH5.themes);
+			} else {
+				alert('XML request error: ' + oXmlHttp.statusText + ' (' + oXmlHttp.status + ')');
+			}
+		}
+	}
+	oXmlHttp.open('GET', url, false);
+	oXmlHttp.send(null);
+}
+
+
+function IncludeJS(sId, fileUrl, source) {
+	if ((source != null) && (!document.getElementById( sId ))) {
+		var oHead = document.getElementsByTagName('HEAD').item(0);
+		var oScript = document.createElement("script");
+		oScript.language = "javascript";
+		oScript.type = "text/javascript";
+		oScript.id = sId;
+		oScript.defer = true;
+		oScript.text = source;
+		oHead.appendChild(oScript);
+	}
+}
+function rMateChartSetLicense(str) {
+//	alert("asdxc");
+	rMateChartH5License = str;
+}
+
+var dataEditorUrl = "";
+var themeUrl = "";
+
+function rMateChartCreate(id, h5root, chartVars, w, h, bgColor) {
+//alert("rMateChartCreate id:"+id+" h5root:"+h5root+" chartVars:"+chartVars);
+	rMateChartID = id;
+	rMateChartVars = decodeURIComponent(chartVars);
+
+	var cssurl = decodeURIComponent(h5root) + "/Assets/Css/rMateChartH5.css";
+	var h5url = decodeURIComponent(h5root) + "/JS/rMateChartH5.js";
+	var jspdf = decodeURIComponent(h5root) + "/JS/jspdf.js";
+	var jspdfPlugin = decodeURIComponent(h5root) + "/JS/jspdf.plugin.addimage.js";
+	//2015.04.15 JH
+	//데이터에디터 사용을 위해 추가
+	dataEditorUrl = decodeURIComponent(h5root) + "/JS/editablegrid-2.0.1.js";	
+
+	//2016.11.04 KJH
+	//테마 추가
+	themeUrl = decodeURIComponent(h5root) + "/Assets/Theme/theme.js";	
+
+	// load css
+	var page = document.getElementsByTagName('HEAD')[0],
+		cssElem = document.createElement('link');
+        cssElem.setAttribute('rel', 'stylesheet');
+        cssElem.setAttribute('type', 'text/css');
+        cssElem.setAttribute('href', cssurl);
+	page.appendChild(cssElem);
+
+	rMateChartAppendJs(h5url, themeUrl);
+	rMateChartAppendJsPDF(jspdf);
+	rMateChartAppendJsPDFPlugin(jspdfPlugin);
+
+	//rMateChartAppendThemeJs(themeUrl);
+}
+
+function rMateChartSetLayoutURL(urlstr) {
+	document.getElementById(rMateChartID).setLayoutURL(urlstr);
+}
+
+function rMateChartSetDataURL(urlstr) {
+	document.getElementById(rMateChartID).setDataURL(urlstr);
+}
+
+function rMateChartSetLayout(str) {
+	document.getElementById(rMateChartID).setLayout(str);
+}
+
+function rMateChartSetData(dd) {
+  if (typeof(dd) == "string" && dd.indexOf("[") == 0)
+    dd = eval(dd);
+	document.getElementById(rMateChartID).setData(dd);
+}
+
+function rMateChartSetSlideLayoutSet(set) {
+  if (typeof(set) == "string" && set.indexOf("[") == 0)
+    set = eval(set);
+	document.getElementById(rMateChartID).setSlideLayoutSet(set);
+}
+
+function rMateChartSetSlideDataSet(dd) {
+  if (typeof(dd) == "string" && dd.indexOf("[") == 0)
+    dd = eval(dd);
+	document.getElementById(rMateChartID).setSlideDataSet(dd);
+}
+
+
+function rMateChartSetDataDrilldown(dd) {
+  if (typeof(dd) == "string" && dd.indexOf("[") == 0)
+    dd = eval(dd);
+	document.getElementById(rMateChartID).setDataDrilldown(dd);
+}
+
+function rMateChartGetDataDrilldownDepth() {
+	return document.getElementById(rMateChartID).getDrillDownDepth();
+}
+
+function rMateChartSaveAsImage() {
+	var base64src = rMateChartGetSnapshot(); // 차트의 이미지 데이터
+
+	if (base64src) {
+		var holder = document.getElementById("chartHolder"),
+			holderW = holder.offsetWidth + 10, // chartHolder width
+			holderH = holder.offsetHeight + 30; // chartHolder height
+		// 이미지를 저장할 수 있는 팝업 창 띄우기
+		var imageWindow = window.open("","_blank","width="+holderW+", height="+holderH); // 이미지가 저장될 팝업 생성
+		imageWindow.document.write("<img src='"+base64src+"'/>");
+		imageWindow.document.write("<div style='font:100%/1.4 Verdana, Arial, Helvetica, sans-serif;'>Mouse Right Click -> Save as Image<div>");
+	}
+}
+
+function rMateChartGetSnapshotHtml() {
+	document.frmRead.invokeData.value = "";
+	invokeData = document.frmRead.invokeData.value;
+
+	var agent = navigator.userAgent;
+	if (agent.indexOf("MSIE") > -1 && document.documentMode && document.documentMode < 9) {
+		alert("현재 브라우져에서는 이미지 변환 기능은 지원되지 않습니다.");
+		return null;
+	}
+
+	var	base64src = document.getElementById(rMateChartID).saveAsImage(); // 차트의 이미지 데이터
+	document.frmRead.invokeData.value = base64src;
+	invokeData = document.frmRead.invokeData.value;
+
+	return base64src;
+}
+
+function rMateChartLegendAllCheck(b) {
+	document.getElementById(rMateChartID).legendAllCheck(b);
+}
+
+function rMateChartShowAdditionalPreloader() {
+	document.getElementById(rMateChartID).showAdditionalPreloader();
+}
+
+function rMateChartRemoveAdditionalPreloader() {
+	document.getElementById(rMateChartID).removeAdditionalPreloader();
+}
+
+//2015.04.15 JH
+//DataEditor 관련 함수 추가
+function rMateChartShowDataEditor(){
+	document.getElementById(rMateChartID).showDataEditor();
+}
+
+function rMateChartRemoveDataEditor(){
+	document.getElementById(rMateChartID).removeDataEditor();
+}
+
+function rMateChartGetChartData() {
+	document.frmRead.invokeData.value = "";
+	
+	var	data = document.getElementById(rMateChartID).getChartData(); // 차트의 데이터
+
+	var str= "";
+	var item;
+	for(var i=0; i<data.length; i++) {
+		item = data[i];
+		for(var p in item) {
+			str += p + " : " + item[p] + "\r";
+		}
+	}
+
+	document.frmRead.invokeData.value = str;
+
+	return str;
+}
+
+//2016.09.21 KJH
+//hasNoData 추가
+function rMateChartHasNoData(b) {
+	document.getElementById(rMateChartID).hasNoData(b);
+}
+
+//2016.1013 KJH
+//downloadToLocal 추가
+function rMateChartDownloadlToLocal(n , t , u){
+	rMateChartH5.downloadToLocal(n,t,u,function(){
+		return document.getElementById(rMateChartID).saveAsImage();
+	});
+}
+
+//2016.11.04 KJH
+//rMateChartSetTheme 추가
+function rMateChartSetTheme(n) {
+	document.getElementById(rMateChartID).setTheme(n);
+}
+
+var rMateInvokeID = 0;
+function nexacroCallMethod(funcName) {
+	var param = "";
+	var ret;
+	var hr;
+	var boundArgs = arguments;
+
+	param = "<invoke name=\"" + funcName + "\" returntype=\"xml\">";
+	if (boundArgs.length <= 1)
+		param += "<arguments></arguments></invoke>";
+	else {
+		param += "<arguments>";
+		for (var i = 1; i < boundArgs.length; i++) {
+			param += rMateChartEncodeXML(boundArgs[i]);
+		}
+		param += "</arguments></invoke>";
+	}
+	document.frmRead.invokeData.value = param;
+	invokeData = document.frmRead.invokeData.value;
+	
+	rMateInvokeID++;
+	var pp = window.NEXACROWEBBROWSER;
+	if (pp) {
+		// Web Browser, iOS nexacro Browser, Android Default Web Browser, iOS Default WebBrowser 
+		pp.on_fire_onusernotify(pp, "invoked" + rMateInvokeID);
+	} else if(typeof nexacro == "undefined"){
+		 // Windows nexacro Browser 
+		window.document.title = "invoked" + rMateInvokeID;
+	}else{
+		// Android nexacro Browser, macOS nexacro Browser 
+		nexacro.fireUserNotify("invoked" + rMateInvokeID + "&" + param);
+	}
+}
+
+function rMateChartEncodeXML(value) {
+	var xstr;
+	if (value == null)
+		return "<null/>";
+
+	switch(typeof(value)) {
+		case "number" :
+			return "<number>" + value + "</number>";
+		case "string" :
+			return "<string>"+ escape(value) + "</string>";
+		case "boolean" :
+			if (value)
+				return "<true/>";
+			else
+				return "<false/>";
+		case "object" :
+			if (value.length) {	// for array
+				xstr = "<array>";
+				for (var iii = 0; iii < value.length; iii++) {
+					xstr += "<property id=\"" + iii + "\">";
+					xstr += rMateChartEncodeXML(value[iii]);
+					xstr += "</property>";
+				}
+				xstr += "</array>";
+			} else {
+				xstr = "<object>";
+				for(var propName in value) {
+					xstr += "<property id=\"" + propName + "\">";
+					xstr += rMateChartEncodeXML(value[propName]);
+					xstr += "</property>";
+				}
+				xstr += "</object>";
+			}
+			return xstr;
+		default :
+			alert("rMateChartEncodeXML unknown type:"+typeof(value));
+			return "<undefined/>";
+	}
+	return "<undefined/>";
+}
+<!-- 시스템 기본 정의 설정 끝  -->
+
+<!-- 사용자 정의 설정 시작 -->
+
+// 차트메뉴에 설정할 데이터
+//2016.10.13 KJH
+//차트 메뉴기능 추가
+var menus = {
+	options : {
+		textField : "name", // 메뉴에 출력할 메뉴 아이템의 문자열
+		callbackField : "callback" // 메뉴 아이템 클릭 시 실행할 콜백 함수
+	}, 
+	items : [
+		{
+			name : "PNG 저장",
+			callback : function(){
+				/**
+				 * rMateChartH5 - 저장되어지는 파일 명
+				 * png - 확장자
+				 * http://../downloadLocal.jsp - IE 9 혹은 로컬 다운로드를 지원하지 않는 브라우저를 위한 다운로드 jsp 서버 경로
+				 * function(){ .. } - 다운받으려는 데이터 base64 인코딩 하여 반환하는 함수
+				 */
+				rMateChartH5.downloadToLocal("rMateChartH5", "png", "http://demo.riamore.net/demo/chart/downloadLocal.jsp", function(){
+					return document.getElementById(rMateChartID).saveAsImage();
+				});
+			}
+		},{
+			name : "PDF 저장",
+			callback : function(){
+				/**
+				 * rMateChartH5 - 저장되어지는 파일 명
+				 * pdf - 확장자
+				 * http://../downloadLocal.jsp - IE 9 혹은 로컬 다운로드를 지원하지 않는 브라우저를 위한 다운로드 jsp 서버 경로
+				 * function(){ .. } - 다운받으려는 데이터 base64 인코딩 하여 반환하는 함수
+				 */
+				rMateChartH5.downloadToLocal("rMateChartH5", "pdf", "http://demo.riamore.net/demo/chart/downloadLocal.jsp", function(){
+					return document.getElementById(rMateChartID).getSnapshot("jpeg"); // jpeg만 지원
+				});
+			}
+		}
+	]
+};
+
+
+
+function rMateChartOnLoad(param) {
+	if (param)
+		nexacroCallMethod("rMateChartOnLoad", param);
+	else
+		nexacroCallMethod("rMateChartOnLoad");
+}
+
+/*
+// 챠트에서 item클릭시 불려지는 함수 설정
+// layout XML 에서 Chart 속성을 넣을때 itemClickJsFunction를 주고,만든 javascript 함수명을 넣어줍니다
+// 예) <Column3DChart showDataTips="true" itemClickJsFunction="chartClick">
+//
+// 파라메터 설명
+// seriesId : layout XML에서 부여한 series의 id가 있을 경우, 해당 id를 보내줍니다.
+// displayText : 화면상에 보여주는 dataTip(마우스 올라갔을때 보여주는 박스-tooltip)의 내용
+// index : 클릭된 item(막대나 파이조각등)의 index 번호 - 맨 왼쪽 또는 맨 위 것이 0번입니다
+// data : 해당 item의 값을 표현하기 위해 입력된 data(row값에 해당 - data로 입력된 종류에 따라 XML의 내용 또는 배열이 됩니다)
+// values : 해당 item의 값 (배열로 전달되며, 챠트 종류에 따라 아래와 같이 들어옵니다.)
+            BarSeries     0:x축값 1:y축값
+            ColumnSeries  0:x축값 1:y축값
+            AreaSeries    0:x축값 1:y축값
+            BubbleSeries  0:x축값 1:y축값 2:radius값
+            LineSeries    0:x축값 1:y축값
+            HLOCSeries    0:x축값 1:open값 2:low값 3:high값 4:close값
+            PieSeries     0:값
+*/
+function chartClick(seriesId, displayText, index, data, values) {
+	nexacroCallMethod("chartClick", seriesId, displayText, index, data, values);
+	//alert("seriesId:"+seriesId+"\ndisplayText:"+displayText+"\nindex:"+index+"\ndata:"+data+"\nvalues:"+values);
+}
+
+function dataChange(seriesId, displayName, index, data, values){
+	if(rMateChartGetDataDrilldownDepth() < 1)
+		nexacroCallMethod("dataChange", seriesId, displayName, index, data.dataField, values);
+}
+
+var gv_arrMean = new Array();
+var gv_arrDiff = new Array();
+function fn_clearMeanData() {
+	gv_arrMean = new Array();
+	gv_arrDiff = new Array();
+	
+	tId = "";
+	tCount = 0;
+}
+
+function fn_setMeanData(arrMean, arrDiff, nSize)
+{	
+	
+	for (var i=0; i<nSize; i++)
+	{
+		gv_arrMean.push(arrMean[i]);
+		gv_arrDiff.push(arrDiff[i]);
+		//alert(i + ", Mean"+arrMean[i]);	
+	}
+}
+/*
+// ------------------------- 폴라계열 수치 필드 사용자 정의 함수 -----------------------------------------------------
+// 칼럼, 파이, 바 챠트에서 labelPosition 속성을 설정한 경우 수치 필드를 사용자 정의하는 함수입니다.
+// layout XML 에서 Series 속성을 넣을때 labelJsFunction 주고, 만든 javascript 함수명을 넣어줍니다
+//
+// 예) <Pie2DSeries field="Profit" nameField="Month" labelPosition="inside" labelJsFunction="pieSeriesLabelFunc">
+//
+// 파라메터 설명
+// seriesId : 해당 시리즈의 아이디.
+// index : 해당 아이템의 인덱스.
+// data : 해당 item의 값을 표현하기 위해 입력된 data(row값에 해당 - data로 입력된 종류에 따라 XML의 내용 또는 배열이 됩니다)
+// values : 해당 item의 값 (배열로 전달되며, 챠트 종류에 따라 아래와 같이 들어옵니다.)
+            PieSeries     0:값 1:퍼센트값
+//
+// 참고 : 수치필드 사용자 정의 시엔 <br>태그와 같은 html형식의 코딩 삽입이 불가능합니다.
+*/
+
+var tId = "";
+var tCount = 0;
+function axisLabelFuncQC(id, value) {
+	// HTML5 모드일 경우 Form의 함수를 실행
+	var pp = window.NEXACROWEBBROWSER;
+	
+	if (pp) {
+		return pp.parent.axisLabelFuncQC(seriesId, index, data, values);
+	}
+
+	if (tId != id) {
+		tCount = 0;
+		tId = id;
+	}
+	tCount++;
+	
+	var cCount = (tCount % 9);
+	
+	if (cCount == 0 || cCount == 1) return "";
+	if (cCount == 2) return "-3SD";
+	if (cCount == 3) return "-2SD";
+	if (cCount == 4) return "-1SD";
+	if (cCount == 5) return "Mean";
+	if (cCount == 6) return "1SD";
+	if (cCount == 7) return "2SD";
+	if (cCount == 8) return "3SD";
+	
+	return "";
+	
+//	var fixCnt = 0;
+//	var arr = (value+"").split(".");
+//	var fixCnt = (arr.length == 1) ? 0 : arr[1].length;
+//	
+//	var mean = parseFloat(gv_arrMean[id]);
+//	var diff = parseFloat(gv_arrDiff[id]);
+//
+//	if (fixCnt == 0) {
+//		if (diff > 0 && diff < 1) {
+//			fixCnt = 1;
+//		} else {
+//			var _diff = diff % 1;
+//			fixCnt = (diff > 0 && diff < 1) ? 1 : 0;
+//		}
+//	}
+////	fixCnt = 2;
+//	
+//	var val = (value).toFixed(fixCnt);
+//	
+//	var pVal1 = (mean + (diff * 1)).toFixed(fixCnt);
+//	var pVal2 = (mean + (diff * 2)).toFixed(fixCnt);
+//	var pVal3 = (mean + (diff * 3)).toFixed(fixCnt);
+//	var bVal0 = (mean).toFixed(fixCnt);
+//	var mVal1 = (mean + (diff * -1)).toFixed(fixCnt);
+//	var mVal2 = (mean + (diff * -2)).toFixed(fixCnt);
+//	var mVal3 = (mean + (diff * -3)).toFixed(fixCnt);
+//	
+////	if (id == '0') {
+////		alert("id : "+ id +"\ngv_arrMean[id] : "+ gv_arrMean[id] +", gv_arrDiff[id] : "+ gv_arrDiff[id] +"\nmean : "+ mean +", diff : "+ diff +"\nvalue : "+ value +", val : "+ val +", pVal1 : "+ pVal1 +", pVal2 : "+ pVal2 +", pVal3 : "+ pVal3 +"\nbVal0 : "+ bVal0 +"\nmVal1 : "+ mVal1 +", mVal2 : "+ mVal2 +", mVal3 : "+ mVal3 +"\nfixCnt : "+ fixCnt +", _diff : "+ _diff);
+////	}
+//	
+//	if (val == pVal3) {
+//		return "3SD";
+//	}
+//	
+//	if (val == pVal2) {
+//		return "2SD";
+//	}
+//	
+//	if (val == pVal1) {
+//		return "1SD";
+//	}
+//	
+//	if (val == bVal0) {
+//		return "Mean";
+//	}
+//	
+//	if (val == mVal1) {
+//		return "-1SD";
+//	}
+//	
+//	if (val == mVal2) {
+//		return "-2SD";
+//	}
+//	
+//	if (val == mVal3) {
+//		return "-3SD";
+//	}
+//	
+////	if (value*1000 == gv_arrMean[id]*1000+gv_arrDiff[id]*1000*3)
+////	{
+////		return "3SD " + value;
+////	}
+////
+////	if (value*1000 == gv_arrMean[id]*1000+gv_arrDiff[id]*1000*2)
+////	{
+////		return "2SD " + value;
+////	}
+////	
+////	if (value*1000 == gv_arrMean[id]*1000+gv_arrDiff[id]*1000)
+////	{
+////		//if (id==2)	alert("1SD"); 
+////		return "1SD " + value;
+////	}
+////	
+////	if (value*1000 == gv_arrMean[id]*1000)
+////	{
+////		//if (id==1)	alert("Mean:"+gv_arrMean[1] + ", value:"+value); 
+////		return "Mean " + value;
+////	}
+////	
+////	if (value*1000 == gv_arrMean[id]*1000-gv_arrDiff[id]*1000)
+////	{
+////		return "-1SD " + value;
+////	}
+////	
+////	if (value*1000 == gv_arrMean[id]*1000-gv_arrDiff[id]*1000*2)
+////	{
+////		return "-2SD " + value;
+////	}
+////	
+////	if (value*1000 == gv_arrMean[id]*1000-gv_arrDiff[id]*1000*3)
+////	{
+////		return "-3SD " + value;
+////	}
+//	
+//	return "";
+}
+
+function axisHLabelFuncQC(id, value) {
+
+	// HTML5 모드일 경우 Form의 함수를 실행
+	var pp = window.NEXACROWEBBROWSER;
+	if (pp) {
+		return pp.parent.axisHLabelFuncQC(id, value);
+	}
+	/*
+	var str = value;
+	var len = str.length;
+	var filterStr = "";
+	
+	for(var i = 0 ; i < len ; i++)
+	{
+		filterStr += str.substring(i, i + 1) + "\n";
+	}
+	return filterStr;
+	*/
+	/* 20240422 - 윤영호 : 차수까지 표기
+	if (value.length < 4) {
+		return value;
+	} else {
+		return value.substring(0);
+	}
+	*/
+	return value
+}
+/*
+// ------------------------- 수치 필드 사용자 정의 함수 -----------------------------------------------------
+// 챠트의 시리즈에서 labelPosition 속성을 설정한 경우 수치 필드를 사용자 정의하는 함수입니다.
+// layout XML 에서 Series 속성을 넣을때 라벨펑션을 설정하고 속성 값으로 javascript 함수명을 넣어줍니다
+//
+// 예) <Column2DSeries yField="Profit" labelPosition="outside" outsideLabelJsFunction="seriesLabelFunc">
+//
+// 파라메터 설명
+// seriesID : 해당 시리즈의 ID.
+// index : 해당 시리즈 아이템의 인덱스.
+// data : 해당 item의 값을 표현하기 위해 입력된 data(row값에 해당 - data로 입력된 종류에 따라 XML의 내용 또는 배열이 됩니다)
+// values : 해당 item의 값 (배열로 전달되며, 챠트 종류에 따라 아래와 같이 들어옵니다.)
+
+			Pie2DSeries,Pie3DSeries			0:값 1:퍼센트값
+			Bubble3DSeries,Matrix2DSeries   0:x축값 1:y축값 2:z값
+
+			Pie,Bubble시리즈를 제외한 모든 시리즈   0:x축값 1:y축값 2:min값
+			* min값은 type을 '100%' 또는 'stacked' 인 경우만 유효합니다. 쌓아올릴 경우 해당 데이터의 시작값을 의미합니다.
+//
+*/
+function seriesLabelFunc(seriesID, index, data, values) {
+	// HTML5 모드일 경우 Form의 함수를 실행
+	var pp = window.NEXACROWEBBROWSER;
+	if (pp) {
+		return pp.parent.seriesLabelFunc(seriesID, index, data, values);
+	}
+
+	var strColName = seriesID.replace("data", "view");
+	var str = eval("data."+ strColName);
+	str = (str == null) ? "" : str;
+	
+	return str;
+
+	// Runtime 모드일 경우 실행
+//	return "$" + values[1];
+}
+
+/*
+// ------------------------- 스택 타입의 토탈 필드 사용자 정의 함수 -----------------------------------------------------
+// 차트의 SeriesSet 에서 showTotalLabel 속성을 설정한 경우 토탈 필드를 사용자 정의하는 함수입니다.
+// layout XML 에서 Series 속성을 넣을때 labelJsFunction 주고, 만든 javascript 함수명을 넣어줍니다
+//
+// 예) <Column2DSet showTotalLabel="true" totalLabelJsFunction="totalLabelFunc">
+//
+// 파라메터 설명
+// index : 해당 시리즈 아이템의 인덱스.
+// data : 해당 item의 값을 표현하기 위해 입력된 data(row값에 해당 - data로 입력된 종류에 따라 XML의 내용 또는 배열이 됩니다)
+// total : 총 합계 값.
+*/
+function totalLabelFunc(index, data, total) {
+	// HTML5 모드일 경우 Form의 함수를 실행
+	var pp = window.NEXACROWEBBROWSER;
+	if (pp) {
+		return pp.parent.totalLabelFunc(index, data, total);
+	}
+
+	// Runtime 모드일 경우 실행
+	return "$" + total;
+}
+
+/*
+// ------------------------- 데이터팁 사용자 정의 함수 -----------------------------------------------------
+// 챠트에서 showDataTips="true" 설정 후 마우스 오버 시 보이는 데이터팁 정의
+// layout XML 에서 Chart 속성을 넣을때 dataTipJsFunction를 주고, 만든 javascript 함수명을 넣어줍니다
+// 예) <Column3DChart showDataTips="true" dataTipJsFunction를="dataTipFunc">
+//
+// 파라메터 설명
+// seriesId : layout XML에서 부여한 series의 id가 있을 경우, 해당 id를 보내줍니다.
+// seriesName : 시리즈의 displayName 으로 정의한 시리즈 이름을 보내줍니다.
+// xName : X 축에 displayName 을 정의하였다면 X축의 displayName을 보내줍니다.
+// yName : Y 축에 displayName 을 정의하였다면 Y축의 displayName을 보내줍니다.
+// data : 해당 item의 값을 표현하기 위해 입력된 data(row값에 해당 - data로 입력된 종류에 따라 XML의 내용 또는 배열이 됩니다)
+// values : 해당 item의 값 (배열로 전달되며, 챠트 종류에 따라 아래와 같이 들어옵니다.)
+            BarSeries     0:x축값 1:y축값
+            ColumnSeries  0:x축값 1:y축값
+            AreaSeries    0:x축값 1:y축값
+            BubbleSeries  0:x축값 1:y축값 2:radius값
+            LineSeries    0:x축값 1:y축값
+            HLOCSeries    0:x축값 1:open값 2:low값 3:high값 4:close값
+            PieSeries     0:값 1:퍼센트값 2:nameFiled명
+*/
+
+function dataTipFuncQC(seriesId, seriesName, index, xName, yName, data, values) {
+	// HTML5 모드일 경우 Form의 함수를 실행
+	var pp = window.NEXACROWEBBROWSER;
+	if (pp) {
+		return pp.parent.dataTipFunc(seriesId, seriesName, index, xName, yName, data, values);
+	}
+	// rMateChartEncodeXML(boundArgs[i])
+	//var str = (new XMLSerializer()).serializeToString(data);
+	//var str = rMateChartEncodeXML(data["items"].length);
+	//var str = rMateChartEncodeXML(data.view0) + ", index : " + index;
+	//var str = eval("rMateChartEncodeXML(data.view"+index+")");
+	
+//	alert("seriesId : "+ seriesId +", seriesName : "+ seriesName +", xName : "+ xName +", yName : "+ yName);
+//	var strColName = seriesName.substring(0, seriesName.indexOf("(")-1);
+//	var str = eval("data.view"+strColName);
+	var strColName = seriesId.replace("data", "view");
+	var str = "";
+//	str = eval("data."+ strColName);
+	str = "<div style='color:#FF0000; font-weight: bold;'>"+ eval("data."+ strColName) +"</div><br />"+ seriesName;
+	return str;
+
+	// Runtime 모드일 경우 실행
+	//var str = "<table border='1' borderColor='#cc7722' cellpadding='0' cellspacing='0'>";
+	//str += "<tr>";
+	//str += "<td align='center'>이미지</td><td align='cneter'><img src='http://www.riamore.net/image/leftlogo.gif'></td>";
+	//str += "</tr>";
+	//str += "<tr>";
+	//str += "<td align='center'>" + "series ID" + "</td><td align='center'>" + seriesId + "</td>";
+	//str += "</tr>";
+	//str += "<tr>";
+	//str += "<td align='center'>" + "displayName" + "</td><td align='center'>" + seriesName + "</td>";
+	//str += "</tr>";
+	//str += "<tr>";
+	//str += "<td align='center'>" + "item Index" + "</td><td align='center'>" + index + "</td>";
+	//str += "</tr>";
+	//str += "<tr>";
+	//str += "<td align='center'>" + "X축 이름" + "</td><td align='center'>" + xName + "</td>";
+	//str += "</tr>";
+	//str += "<tr>";
+	//str += "<td align='center'>" + "Y축 이름" + "</td><td align='center'>" + yName + "</td>";
+	//str += "</tr>";
+	
+	//str += "<tr>";
+	//str += "<td align='center'>" + "X축 값M" + "</td><td align='center'>" + values[0] + "</td>";
+	//str += "</tr>";
+	//str += "<tr>";
+	//str += "<td align='center'>" + "Y축 값M" + "</td><td align='center'>" + data.view0 + "</td>";
+	//str += "</tr>";
+	//str += "<tr>";
+	
+	//str += "<td align='center'>" + "합 계" + "</td><td align='center'>" + getSum(data) + "</td>";
+	//str += "</tr>";
+	//str += "</table>";
+//	return str;
+}
+
+function fn_displayEndCall()
+{
+	nexacroCallMethod("fn_afterChartDraw");
+}
+
+
+function getSum(values) {
+	var sum = 0;
+	for(var v in values) {
+		sum += Number(values[v]) || 0;
+	}
+	return sum;
+}
+
+/*
+// -------------------- 채우기 색 사용자 정의 함수 ----------------------------------------------------------------
+// 차트의 채우기 색을 특정 조건에 따라 지정하는 사용자 정의 함수입니다.
+// layout XML 에서 Series 속성을 넣을 때 fillJsFunction 을 주고, 만든 javascript 함수명을 넣어줍니다.
+//
+// 예) <Pie2DSeries field="Profit" fillJsFunction="fillJsFunc">
+//
+// 파라메터 설명
+// seriesId : 해당 아이템의 아이디.
+// index : 해당 아이템의 인덱스.
+// data : 해당 item의 값을 표현하기 위해 입력된 data(row값에 해당 - data로 입력된 종류에 따라 XML의 내용 또는 배열이 됩니다)
+// values : 해당 item의 값 (배열로 전달되며, 차트 종류에 따라 아래와 같이 들어옵니다.)
+            Bar2D(3D)Series     0:x축값 1:y축값
+            Column2D(3D)Series  0:x축값 1:y축값
+            Area2DSeries    0:x축값 1:y축값
+            Bubble3DSeries  0:x축값 1:y축값 2:radius값
+            Line2DSeries    0:x축값 1:y축값
+            HLOCSeries    0:x축값 1:open값 2:low값 3:high값 4:close값
+            Pie2D(3D)Series     0:값 1:퍼센트값 2:nameField명
+
+**
+// From-To Chart 에서 minField 를 지정했다면 values 의 마지막 인덱스 값에 minField 값이 들어옵니다.
+*/
+function fillJsFunc(seriesId, index, data, values) {
+	// HTML5 모드일 경우 Form의 함수를 실행
+	var pp = window.NEXACROWEBBROWSER;
+	if (pp) {
+		return pp.parent.fillJsFunc(seriesId, index, data, values);
+	}
+
+	// Runtime 모드일 경우 실행
+	if (values[1] > 2000)
+		return "0xFF3366";
+	else if (values[1] > 1000)
+		return "0xFFFF33";
+	else
+		return "0xFF9999";
+}
+
+<!-- 사용자 정의 설정 끝  -->
+
+</script>
+</head>
+
+<body>
+	<div id="chartHolder" style="width:100%; height:100%;"></div>
+	<form name="frmRead">
+		<input type="hidden" name="invokeData" id="invokeData">
+	</form>
+</body>
+</html>

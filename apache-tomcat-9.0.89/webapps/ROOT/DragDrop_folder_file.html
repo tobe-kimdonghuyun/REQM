@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="dropArea"
+        style="width: 300px; height: 150px; border: 2px dashed #000; text-align: center; line-height: 150px;">
+        Drag & Drop Files or Folders Here
+    </div>
+    
+    <!-- 트리 구조가 표시될 영역 -->
+    <div id="fileTree"></div>
+    
+    <!-- 업로드 버튼 -->
+    <button id="uploadBtn" disabled>Upload Files</button>
+
+    <div id="output"></div>
+    
+    <script type="text/javascript">
+        const dropArea = document.getElementById('dropArea');
+        const fileTree = document.getElementById('fileTree');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const output = document.getElementById('output');
+
+        let filesToUpload = [];  // 업로드할 파일을 저장할 배열
+
+        // 드래그 앤 드롭 기본 동작 방지
+        dropArea.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropArea.style.backgroundColor = '#e0e0e0';
+        });
+
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.style.backgroundColor = '';
+        });
+
+        dropArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropArea.style.backgroundColor = '';
+
+            const items = event.dataTransfer.items;
+            fileTree.innerHTML = '';  // 기존 트리 초기화
+            filesToUpload = [];  // 파일 배열 초기화
+
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i].webkitGetAsEntry();
+                if (item) {
+                    if (item.isFile) {
+                        item.file((file) => {
+                            addFileToTree(file, null, '');
+                            uploadBtn.disabled = false;
+                        });
+                    } else if (item.isDirectory) {
+                        readDirectory(item, null, item.name);
+                    }
+                }
+            }
+
+            if (filesToUpload.length === 0) {
+                uploadBtn.disabled = true;
+            }
+        });
+
+        // 폴더 내부 파일을 재귀적으로 읽기 (상대 경로 유지)
+        function readDirectory(directoryEntry, parentElement, path) {
+            const dirReader = directoryEntry.createReader();
+            const dirElement = createTreeElement(directoryEntry.name, true);
+
+            if (parentElement) {
+                parentElement.appendChild(dirElement);
+            } else {
+                fileTree.appendChild(dirElement);
+            }
+
+            dirReader.readEntries((entries) => {
+                entries.forEach((entry) => {
+                    const fullPath = `${path}/${entry.name}`;
+                    if (entry.isFile) {
+                        entry.file((file) => {
+                            addFileToTree(file, dirElement, fullPath);
+                            uploadBtn.disabled = false;
+                        });
+                    } else if (entry.isDirectory) {
+                        readDirectory(entry, dirElement, fullPath);  // 폴더 내부의 또 다른 폴더
+                    }
+                });
+            });
+        }
+
+        // 파일 트리에 파일 추가 및 경로 추적
+        function addFileToTree(file, parentElement, path) {
+            const fileElement = createTreeElement(file.name, false);
+
+            if (parentElement) {
+                parentElement.appendChild(fileElement);
+            } else {
+                fileTree.appendChild(fileElement);
+            }
+
+            filesToUpload.push({ file, path });  // 업로드할 파일과 경로를 함께 저장
+        }
+
+        // 트리 구조의 HTML 요소 생성
+        function createTreeElement(name, isDirectory) {
+            const element = document.createElement('div');
+            element.style.marginLeft = '20px';
+            element.textContent = isDirectory ? `📁 ${name}` : `📄 ${name}`;
+            return element;
+        }
+
+        // 파일 업로드 처리
+        uploadBtn.addEventListener('click', () => {
+            const formData = new FormData();
+
+            console.log(filesToUpload)
+
+            // 모든 파일을 formData에 추가 (파일과 경로를 함께 전송)
+            filesToUpload.forEach(({ file, path }) => {
+                formData.append('files', file, path);  // 경로를 포함해 전송
+            });
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.text())
+                .then(result => {
+                    output.innerHTML += `<p>${result}</p>`;
+                    uploadBtn.disabled = true;  // 업로드 후 버튼 비활성화
+                })
+                .catch(error => {
+                    console.error('Error uploading files:', error);
+                });
+        });
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<title>nexacro Test Page</title>
+<body>
+
+	
+	<img src="./camera.JPG" id="gura" width="100%" height="100%"
+		onmouseenter="zoomIn(event)" onmouseleave="zoomOut(event)" />
+	<script>
+		var rightLeft = 0;
+
+		var moveRight = function() {
+			rightLeft = rightLeft + 100;
+			document.querySelector("#gura").style.marginLeft = rightLeft + "px";
+		};
+
+		var moveLeft = function() {
+			rightLeft = rightLeft - 100;
+			document.querySelector("#gura").style.marginLeft = rightLeft + "px";
+		};
+
+		var upDown = 0;
+
+		var moveUp = function() {
+			upDown = upDown - 100;
+			document.querySelector("#gura").style.marginTop = upDown + "px";
+		};
+
+		var moveDown = function() {
+			upDown = upDown + 100;
+			document.querySelector("#gura").style.marginTop = upDown + "px";
+		};
+
+		var imgDegree = 0;
+
+		var turnR = function() {
+			imgDegree = imgDegree + 90;
+			console.log("imgDegree :" + imgDegree);
+			document.querySelector("#gura").style.transform = "rotate("
+					+ imgDegree + "deg)";
+		};
+		var turnL = function() {
+			imgDegree = imgDegree - 90;
+			console.log("imgDegree :" + imgDegree);
+			document.querySelector("#gura").style.transform = "rotate("
+					+ imgDegree + "deg)";
+		};
+
+		function zoomIn(event) {
+			event.target.style.transform = "scale(1.5)";
+			event.target.style.zIndex = 1;
+			event.target.style.transition = "all 0.5s";
+		}
+
+		function zoomOut(event) {
+			event.target.style.transform = "scale(1)";
+			event.target.style.zIndex = 0;
+			event.target.style.transition = "all 0.5s";
+		}
+
+		var zoomIn2 = function() {
+			const imgBox = document.getElementById('gura');
+			console.log(imgBox);
+			imgBox.style.transform = "scale(1.5)";
+		}
+
+		var zoomOut2 = function() {
+			const imgBox = document.getElementById('gura');
+			console.log(imgBox);
+			imgBox.style.transform = "scale(1)";
+		}
+	</script>
+	<style>
+		#gura {
+			margin-top: 200px;
+			margin-left: 200px
+		}
+	</style>
+</body>
+</html>

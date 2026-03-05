@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SMF TTS</title>
+    <meta charset="utf-8"/>
+    <style>
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:13px;">
+<div id="warning">
+    <h1 style="font-weight:500;">Speech Recognition Speech SDK not found
+        (microsoft.cognitiveservices.speech.sdk.bundle.js missing).</h1>
+</div>
+
+<!-- Speech SDK reference sdk. -->
+<script src="https://aka.ms/csspeech/jsbrowserpackageraw"></script>
+
+<!-- Speech SDK USAGE -->
+<script>
+    // subscription key and region for speech services.
+    var subscriptionKey = "25bfb17211d64444a674026084eb5c3b";
+    var serviceRegion = "koreacentral";
+    var SpeechSDK;
+    var synthesizer = null;
+    var rate = null; // 말하기 속도
+
+    // config
+    let speechConfig;
+
+    // config
+    let nexacroTTSCallback;
+
+    // 로딩 시 처리
+    document.addEventListener("DOMContentLoaded", function () {
+        initSpeechConfig();
+        setSynthesizer();
+
+        if (!!window.SpeechSDK) {
+            SpeechSDK = window.SpeechSDK;
+
+            document.getElementById('warning').style.display = 'none';
+
+            // in case we have a function for getting an authorization token, call it.
+            if (typeof RequestAuthorizationToken === "function") {
+                var a = RequestAuthorizationToken();
+                window.console.log(a);
+            }
+        }
+    });
+
+    // Speech Config 초기화
+    function initSpeechConfig() {
+        speechConfig = SpeechSDK.SpeechConfig.fromSubscription(subscriptionKey, serviceRegion);
+        speechConfig.speechSynthesisVoiceName = "ko-KR-SunHiNeural";
+        //speechConfig.speechSynthesisOutputFormat = SpeechSDK.SpeechSynthesisOutputFormat.Riff8Khz8BitMonoMULaw; // https://learn.microsoft.com/ko-kr/javascript/api/microsoft-cognitiveservices-speech-sdk/speechsynthesisoutputformat?view=azure-node-latest
+    }
+
+    // Synthesizer 셋팅
+    function setSynthesizer() {
+        //if(typeof synthesizer === 'undefined' || synthesizer === null)
+        synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig, SpeechSDK.AudioConfig.fromDefaultSpeakerOutput());
+    }
+
+    // 문자열의 숫자 여부 체크
+    function isNumeric(str) {
+        if (typeof str != "string") return false // we only process strings!  
+        return  !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+                !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+    }
+
+    // 숫자의 양의 숫자 체크
+    function isPositiveNumber(number) {
+        if (typeof number === 'undefined' || number === null) return false;
+
+        return !isNaN(Number(number)) && Number(number) > 0;
+    }
+
+    // TTS
+    function tts(inputText, rateParam) {
+        if(typeof rateParam === 'undefined' || rateParam === null || !isPositiveNumber(rateParam) || rateParam < 0.5 || rateParam > 2) rateParam = 1.5;
+        rate = rateParam;
+
+        if (subscriptionKey === "" || subscriptionKey === "subscription") {
+            alert("Please enter your Microsoft Cognitive Services Speech subscription key!");
+            return;
+        }
+
+        setSynthesizer();
+
+        let objResult = {"result" : "", "errorYn" : "N"};
+
+        let numberConvertInpuText = "";
+
+        for (let i = 0; i < inputText.length; i++) {
+            var curChar = inputText.charAt(i);
+            var preChar = inputText.charAt(i-1);
+            var nextChar = inputText.charAt(i+1);
+
+            if(curChar == '1'){
+                if(!isNumeric(preChar) && !isNumeric(nextChar)) {
+                    numberConvertInpuText += "하나";
+                    continue;
+                }
+            }
+            
+            if(curChar == '2'){
+                if(!isNumeric(preChar) && !isNumeric(nextChar)) {
+                    numberConvertInpuText += "둘";
+                    continue;
+                }
+            }
+            
+            numberConvertInpuText += curChar;
+        }
+
+        numberConvertInpuText = numberConvertInpuText.replaceAll(" ", " ,");
+
+        synthesizer.speakSsmlAsync(
+            convertSSML(numberConvertInpuText),
+            function (result) {
+                objResult.result = result;
+
+                if (result.reason === SpeechSDK.ResultReason.Canceled) {
+                    objResult.errorYn = "Y";
+                }
+                nexacroTTSCallback(objResult);
+                window.console.log(result);
+                synthesizer.close();
+                synthesizer = undefined;
+            },
+            function (err) {
+                objResult.errorYn = "Y";
+                nexacroTTSCallback(objResult);
+                window.console.log(err);
+
+                synthesizer.close();
+                synthesizer = undefined;
+            });
+    }
+
+    // TTS Custom을 위한 SSML 설정 - TTS Speech rate 변경
+    function convertSSML(text) {
+        const VOICE_NAME = "ko-KR-GookMinNeural";
+        var result ='<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="ko-KR">' +
+    '                      <voice name="' + VOICE_NAME + '">' +
+    '                         <prosody rate="' + rate + '">' +
+    '                             '+ text +
+    '                         </prosody>' +
+    '                     </voice>' +
+    '                </speak>';
+        return result;
+    }
+
+    function setCallback(fnTTSCallback) {
+        nexacroTTSCallback = fnTTSCallback;
+    }
+
+</script>
+</body>
+</html>

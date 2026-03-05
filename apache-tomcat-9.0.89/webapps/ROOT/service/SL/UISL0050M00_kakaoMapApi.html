@@ -1,0 +1,868 @@
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		    <style>
+/*		    
+			.map_wrap {
+			    position: relative;
+			    width: 100%;
+			    border:2px solid #777;
+			    border-radius:4px;
+			}
+*/
+			.map_wrap {
+			    position: relative;
+			    width: 100%;
+			    border:0px solid #cccccc;
+			    border-radius:4px;
+			    font-size:14px;
+			    font-family:'Malgun Gothic',dotum,'돋움',sans-serif;
+			}
+			
+			.title {
+			    font-weight: bold;
+			    display: block;
+			}
+
+			.hAddr {
+			    position: static;
+			    left: 10px;
+			    top: 10px;
+			    border-radius: 2px;
+			    background: #fff;
+			    background: rgba(255, 255, 255, 0.8);
+			    z-index: 30;
+			    padding: 5px;
+			}
+
+			#centerAddr {
+			    display: block;
+			    margin-top: 2px;
+			    font-weight: normal;
+			}
+
+			.bAddr {
+			    position: static;
+			    left: 10px;
+			    top: 10px;
+			    border-radius: 2px;
+			    background: #fff;
+			    background: rgba(255, 255, 255, 0.95);
+			    z-index: 30;
+			    padding: 5px;
+			}
+
+			.bAddr {
+			    padding: 16px 16px 16px 16px;
+			}
+
+			.bAddr hr {
+			    margin-top: 15px;
+			    margin-bottom: 15px;
+			}
+
+			.close {
+				position:absolute;
+				top: 14px;
+				right:17px;
+				color:#888;
+				width:17px;
+				height:17px;
+				cursor:pointer;
+				background:url(./images/close.png) no-repeat 40%;
+			}
+		
+			.bAddrItem {
+			    padding-left: 40px;
+			    padding-right: 40px;
+			    min-height:35px;
+			    background-repeat: no-repeat;
+			    background-position: 0 -2px;
+			}
+
+			.bAddrItem.type1 {
+			    background-image: url(./images/type_customer.png);
+			}
+
+			.bAddrItem.type2 {
+			    background-image: url(./images/type_hospital.png);
+			}
+
+			.bAddrItem.type3 {
+			    background-image: url(./images/type_latency.png);
+			}
+
+			.bAddrItem.type4 {
+			    background-image: url(./images/type_other.png);
+			}
+
+			.bAddrItem .title,
+			.bAddrItem .title a {
+			    font-size: 14px;
+			    line-height: 19px;
+			    color: #000;
+				
+			}
+			.bAddrItem .title a {
+			    text-decoration: none;
+			    z-index: 40;
+			}
+
+			.bAddrItem .titleSub {
+			    font-size: 12px;
+			    line-height: 16px;
+			    color: #555;
+			}
+
+			/** ------------ 검색 ---------------------------------------------------------------------------- */
+			.bAddrItemIW {
+			    padding: 6px 6px;
+			    min-height:35px;
+			    background-repeat: no-repeat;
+			    background-position: 0 -2px;
+			}
+
+			.bAddrItemIW .title,
+			.bAddrItemIW .title a {
+			    font-size: 14px;
+			    line-height: 25px;
+			    color: #000;
+			    white-space : nowrap;
+			}
+			.bAddrItemIW .title a {
+			    text-decoration: none;
+			    z-index: 40;
+			}
+
+			.bAddrItemIW .titleSub {
+			    font-size: 13px;
+			    line-height: 18px;
+			    color: #555;
+			    white-space : nowrap;
+			}
+
+			.bg_white {background:#fff;}
+			#placesList{list-style: none;padding: 0 0 0 5px;}
+			#placesList li {list-style: none;}
+			#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+			#placesList .item span {display: block;margin-top:4px;}
+			#placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+			#placesList .item .info{padding:3px 0px 10px 45px;}
+			#placesList .info .title1 {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size:14px}
+			#placesList .info .gray {color:#8a8a8a;}
+			#placesList .info .jibun {padding-left:30px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+			#placesList .info .tel {color:#009900;}
+			#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0px 0px 0px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+			#placesList .item .marker_1 {background-position: 0 -10px;}
+			#placesList .item .marker_2 {background-position: 0 -56px;}
+			#placesList .item .marker_3 {background-position: 0 -102px}
+			#placesList .item .marker_4 {background-position: 0 -148px;}
+			#placesList .item .marker_5 {background-position: 0 -194px;}
+			#placesList .item .marker_6 {background-position: 0 -240px;}
+			#placesList .item .marker_7 {background-position: 0 -286px;}
+			#placesList .item .marker_8 {background-position: 0 -332px;}
+			#placesList .item .marker_9 {background-position: 0 -378px;}
+			#placesList .item .marker_10 {background-position: 0 -423px;}
+			#placesList .item .marker_11 {background-position: 0 -470px;}
+			#placesList .item .marker_12 {background-position: 0 -516px;}
+			#placesList .item .marker_13 {background-position: 0 -562px;}
+			#placesList .item .marker_14 {background-position: 0 -608px;}
+			#placesList .item .marker_15 {background-position: 0 -654px;}
+			#pagination {margin:10px auto;text-align: center;}
+			#pagination a {display:inline-block;margin-right:10px;font-size:16px;text-decoration: none;}
+			#pagination .on {font-weight: bold; cursor: pointer;color:#777;}
+
+		</style>		
+	</head>
+	<body>
+		<div class="map_wrap">
+			<!-- <div id="map" style="width:100%;height:100%;"></div> -->
+			<!-- 지도 -->
+			 <div id="map" style="position:relative;width:100%;height:100%;"></div>
+			  <!-- 검색 -->
+			    <div id="search_wrap" class="bg_white" style="vertical-align:middle;text-align:center;position:absolute;top:0;left:0;height:35px;width:340px;margin:10px 0px 0px 5px;padding:1px;background:rgba(255, 255, 255, 0.7); z-index: 1;border-top-left-radius: 10px;border-top-right-radius: 10px;border-bottom:2px solid #7B4D3F;">
+					<input onkeyup="checkSearchPlaces();" type="text" value="" id="keyword" style="border: 1px solid #BDBDBD;border-radius: 4px;height:30px; line-height:30px; width:150px;padding:0 8px;margin:0;outline:none;"/>
+					<button onClick="searchPlaces();" 	    id="btnSubmit" style="border: 1px solid #BDBDBD;border-radius: 4px;height:30px; line-height:30px; width:70px;padding:0 8px;margin:0;cursor:pointer;">조회</button>
+					<button onClick="fn_resetSearchInfo();" id="btnReset"   style="border: 1px solid #BDBDBD;border-radius: 4px;height:30px; line-height:30px; width:70px;padding:0 8px;margin:0;cursor:pointer;">초기화</button>
+			  </div>
+			  
+			<!-- 검색 결과 -->
+			<div id="menu_wrap" class="bg_white" style="position:absolute;top:50;left:0;bottom:0;width:340px;margin:0px 0px 33px 5px;padding:1px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
+				<ul id="placesList"></ul>
+				<div id="pagination"></div>
+			</div>			 
+		</div>
+		
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c807f7ce375c91c9c705837483b1b27d&libraries=services,clusterer"></script>
+		<script>
+
+			var container = document.getElementById('map');
+			var options = {
+				  center: new kakao.maps.LatLng(37.5643760677938, 127.05512766029015)
+				, level: 9
+			};
+			var map 		= new kakao.maps.Map(container, options);
+			
+			// -------------------------------------------------------------------------------------------
+			// center_changed, zoom_changed, bounds_changed
+			kakao.maps.event.addListener(map, "bounds_changed", function(){
+				fn_mapChangeCallScript();
+			});			
+
+			// 확대 축소 컨트롤
+			var zoomControl = new kakao.maps.ZoomControl();
+			map.addControl(zoomControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+			function fn_mapChangeCallScript(y, x){
+
+				// 화면 로딩시 center 변경
+				fn_setCenter(y,x);
+
+				var level 		= map.getLevel();		// 지도 Level
+				var center 	= map.getCenter();		// 지도중심좌표
+				var bounds	= map.getBounds();		// 지도영역
+				var swLatLng	= bounds.getSouthWest();	// 영역내 남서좌표
+				var neLatLng	= bounds.getNorthEast();	// 영역내 북동좌표
+			
+				var info = JSON.stringify({
+				       "svcId" 	: "changed"
+				     , "level"	: level
+				     , "center_x"	: center.getLng()
+				     , "center_y"	: center.getLat()
+				     , "sw_x"	: swLatLng.getLng()
+				     , "sw_y"	: swLatLng.getLat()
+				     , "ne_x"	: neLatLng.getLng()
+				     , "ne_y"	: neLatLng.getLat()
+				     , "init_x"	: x
+				     , "init_y"	: y
+				     , "ts"		: Date.now()
+				});
+				
+				nexacro.fireUserNotify(info);
+			};
+
+			function fn_setCenter(y, x) {
+				if( !( y ==null || y ==undefined || y =="undefined" || new String(y).valueOf() == "undefined") )
+				{
+					var moveLatLon = new kakao.maps.LatLng(y, x);
+					map.setCenter(moveLatLon);
+				}
+			 };
+			
+			// -------------------------------------------------------------------------------------------
+			// 마커 이미지로 사용할 배열
+			//var imageSize		= new kakao.maps.Size(34, 39);
+			//var imageOptions	= {offset : new kakao.maps.Point(16, 38)};
+			
+			var markerImageInfoMap = new Map();
+			markerImageInfoMap.set("CUST"		, {"width":34 , "height":39 ,"x":16 , "y":38 , "url":"./images/type_customer.png"  	});		// 고객
+			markerImageInfoMap.set("LTCY_HOSP"	, {"width":34 , "height":39 ,"x":16 , "y":38 , "url":"./images/type_latency.png"  	});		// 잠재고객
+			markerImageInfoMap.set("OTHER"		, {"width":34 , "height":39 ,"x":16 , "y":38 , "url":"./images/type_other.png"  		});		// 포함되지 않을 때 ( else )
+			markerImageInfoMap.set("HOSP"		, {"width":34 , "height":39 ,"x":16 , "y":38 , "url":"./images/type_hospital.png"  	});		// 타수탁기관 사용하지 않는 병원
+			// 타수탁기관 마커 (이미지 크기가 달라서 타수탁기관코드로 정리
+			markerImageInfoMap.set("HOSP_10"		, {"width":60 , "height":58 ,"x":30 , "y":57 , "url":"./images/markerTrstinst_10.png"  	});	// 분소.특영
+			markerImageInfoMap.set("HOSP_20"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_20.png"  	});	// 녹십자
+			markerImageInfoMap.set("HOSP_30"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_30.png"  	});	// SCL
+			markerImageInfoMap.set("HOSP_40"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_40.png"  	});	// 삼광
+			markerImageInfoMap.set("HOSP_50"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_50.png"  	});	// 이원
+			markerImageInfoMap.set("HOSP_60"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_60.png"  	});	// 랩지
+			markerImageInfoMap.set("HOSP_70"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_70.png"  	});	// NTL
+			markerImageInfoMap.set("HOSP_80"		, {"width":68 , "height":58 ,"x":34 , "y":57 , "url":"./images/markerTrstinst_80.png"  	});	// 유투바이오
+			markerImageInfoMap.set("HOSP_90"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_90.png"  	});	// 신원
+			markerImageInfoMap.set("HOSP_100"		, {"width":80 , "height":58 ,"x":40 , "y":57 , "url":"./images/markerTrstinst_100.png"  	});	// 이화검진센터
+			markerImageInfoMap.set("HOSP_110"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_110.png"  	});	// KCL
+			markerImageInfoMap.set("HOSP_120"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_120.png"  	});	// SQL
+			markerImageInfoMap.set("HOSP_130"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_130.png"  	});	// 한국필
+			markerImageInfoMap.set("HOSP_140"		, {"width":56 , "height":58 ,"x":28 , "y":57 , "url":"./images/markerTrstinst_140.png"  	});	// 다이오진
+			markerImageInfoMap.set("HOSP_150"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_150.png"  	});	// 랩케어
+			markerImageInfoMap.set("HOSP_160"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_160.png"  	});	// 참빛
+			markerImageInfoMap.set("HOSP_170"		, {"width":104 , "height":58 ,"x":52 , "y":57 , "url":"./images/markerTrstinst_170.png"  	});	// 참진단검사의학과
+			markerImageInfoMap.set("HOSP_180"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_180.png"  	});	// 신프로
+			markerImageInfoMap.set("HOSP_190"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_190.png"  	});	// 이기은
+			markerImageInfoMap.set("HOSP_200"		, {"width":56 , "height":58 ,"x":28 , "y":57 , "url":"./images/markerTrstinst_200.png"  	});	// 아벨리노
+			markerImageInfoMap.set("HOSP_210"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_210.png"  	});	// BML
+			markerImageInfoMap.set("HOSP_220"		, {"width":80 , "height":58 ,"x":40 , "y":57 , "url":"./images/markerTrstinst_220.png"  	});	// 장원의료재단
+			markerImageInfoMap.set("HOSP_900"		, {"width":52 , "height":58 ,"x":26 , "y":57 , "url":"./images/markerTrstinst_900.png"  	});	// 기타
+			
+			var overlay;
+			// 마커 클러스터러를 생성합니다 
+			var clusterer = new kakao.maps.MarkerClusterer({
+				  map		 : map 			// 마커들을 클러스터로 관리하고 표시할 지도 객체 
+				, averageCenter : true 	// 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+				, minLevel		 : 0 			// 클러스터 할 최소 지도 레벨 
+				, minClusterSize  : 1000000
+			});
+
+			// -------------------------------- objPositions[idx] -------------------------------------------------------------
+			//			{"custRefrDiv"	:"HOSP"
+			//			,"custUkeyid"	:"EEAA37FDBF36F341E053363264644C98"
+			//			,"custNm"		:"서울성심병원"
+			//			,"careInstNo"	:""
+			//			,"asrtCd"		:"11"
+			//			,"asrtNm"		:"종합병원"
+			//			,"zipcd"		:"02488"
+			//			,"addr"		:"서울특별시 동대문구 왕산로 259 서울성심병원 (청량리동)"
+			//			,"telno"		:"02-966-1616"
+			//			,"hmpgUl"		:"http://www.sshosp.co.kr"
+			//			,"mapCdntX"	:"127.0497296"
+			//			,"mapCdntY"	:"37.5843076"}
+			// ------------------------------------------------------------------------------------------------------------------
+
+			var markers 	= new Array();
+			function fn_loadMapInfo(objPositions){ 
+
+				// 검색마커정보 리셋
+				fn_resetSearchInfo();
+
+				// 클러스터, 마커 초기화
+				if(markers.length > 0){
+					// clusterer.clear(); // 안되는 것 같다.
+					clusterer.removeMarkers(markers, false);
+					markers = new Array();
+				}
+				// overlay 초기화
+				fn_closeCustomOverlay();
+
+				// string으로 넘겨받았는데, obj으로 받네 ????
+				if(objPositions ==null || objPositions ==undefined || objPositions =="undefined" || new String(objPositions).valueOf() == "undefined" || objPositions =="")
+				{
+					return;
+				}
+
+				// 마커 생성
+				for(var i=0; i<objPositions.length; i++)
+				{
+					// 마커 이미지
+					var markerImage 	= fn_getMarkerImage( objPositions[i] );
+					var marker		= new kakao.maps.Marker({
+										  map	: map
+										, position 	: new kakao.maps.LatLng(objPositions[i].mapCdntY, objPositions[i].mapCdntX)
+										, image	: markerImage
+									   });
+					
+					if(objPositions[i].viewInfoWindow){
+						// 정보제공 레이어 팝업
+						marker.setZIndex(30);
+						kakao.maps.event.addListener(marker, "click"		, fn_makerClickListener(objPositions[i], marker) );
+					} else {
+						// clusterer에 정보제공
+						marker.setZIndex(20);	
+					}						
+					// ------------------------------------------------------------------------------------------------------------------------------------------
+
+					// 마커 생성
+					markers.push(marker);
+				}
+
+				// 클러스터러에 마커들을 추가합니다
+				clusterer.addMarkers(markers, false); 
+				
+			};
+			
+			
+			// 마커 이미지 정보
+			function fn_getMarkerImage(objPosition){
+			
+				var objMakerImageInfo = fn_getMarkerImageInfo(objPosition);
+				
+				var imageSize		= new kakao.maps.Size(objMakerImageInfo.width, objMakerImageInfo.height);
+				var imageOptions	= {offset : new kakao.maps.Point(objMakerImageInfo.x, objMakerImageInfo.y)};
+				var imageSrc 		= objMakerImageInfo.url;
+				
+				return new kakao.maps.MarkerImage(imageSrc, imageSize, imageOptions);
+			};
+			
+			function fn_getMarkerImageInfo(objPosition){
+				var key = "OTHER";
+				var custRefrDiv		= objPosition.custRefrDiv;
+				if(custRefrDiv !=undefined)
+				{
+					if (custRefrDiv == "HOSP"){
+						// 병원은 타수탁기관으로 마커 변경
+						key = custRefrDiv;
+						if(objPosition.trstInstCd !=undefined && objPosition.trstInstCd  !=null && objPosition.trstInstCd !="" ){
+							key = "HOSP_"+objPosition.trstInstCd;
+						}
+					} else {
+						key = custRefrDiv;
+					}
+				}
+				
+				return markerImageInfoMap.get(key);
+			};
+			
+			function fn_makerClickListener(objPosition, objMarker){
+
+				// marker mouse over 기능을 제거하고 CustomOverlay 사용 처리
+				return function(){
+					fn_getCustomOverlay(objPosition, objMarker);
+					
+					// debug
+					//var  html = fn_getCustomOverlay(objPosition, objMarker);
+					//var info = JSON.stringify({
+					//	  "svcId" 	: "markerClick"
+					//	, "html"  	:  html
+					//	, "ts"		: Date.now()
+					//});
+					//nexacro.fireUserNotify(info);
+				}				
+			};
+			
+			function fn_getCustomOverlay(objPosition, objMarker){
+				// 열려져 있는 거 삭제
+				fn_closeCustomOverlay();
+				
+				// 신규 overlay
+				var content = "<div class='map_wrap'>";
+				      content = content +"<div class='bAddr'>";
+				      content = content +	"<div class='close' onclick='fn_closeCustomOverlay()' title='닫기'></div>";
+				
+				      content = content +	"<div class='bAddrItem "+fn_getMarkerType(objPosition.custRefrDiv)+"'>";
+				      //content = content +	"<div class='bAddrItem' style='background-image: url("+fn_getBackgroudUrl(objPosition)+")'>";
+				      content = content +		"<div class='title'><a href='#none' onclick='javascript:fn_customerDetail(\""+objPosition.custRefrDiv+"\",\""+objPosition.custUkeyid+"\")'>"+objPosition.custNm+"</a></div>";
+				      content = content + 		( objPosition.asrtNm !=undefined 	? "<div class='titleSub'>"+objPosition.asrtNm	+"</div>"  : "" );
+				      content = content + 		( objPosition.trstInstNm !=undefined 	? "<div class='titleSub'>"+objPosition.trstInstNm	+"</div>"  : "" );
+				      content = content +	"</div>";
+				      
+				      var groups = objPosition.groupInfoWindow;
+				      for(var i=0; i<groups.length; i++){
+					      group = groups[i];
+					      content = content +	"<hr style='border-top:1px solid #bdbdbd;'>";
+					      content = content +	"<div class='bAddrItem "+fn_getMarkerType(group.custRefrDiv)+"'>";
+					      //content = content +	"<div class='bAddrItem' style='background-image: url("+fn_getBackgroudUrl(objPosition)+")'>";
+					      content = content +		"<div class='title'><a href='#none' onclick='javascript:fn_customerDetail(\""+group.custRefrDiv+"\",\""+group.custUkeyid+"\")'>"+group.custNm+"</a></div>";
+					      content = content + 		( group.asrtNm !=undefined 	? "<div class='titleSub'>"+group.asrtNm	+"</div>" : "" );
+					      content = content + 		( group.trstInstNm !=undefined 	? "<div class='titleSub'>"+group.trstInstNm	+"</div>" : "" );
+					      content = content +	"</div>";
+				      }
+				content = content + "</div>";	// end bAddr
+				content = content + "</div>";	// end map_wrap
+				
+				overlay = new kakao.maps.CustomOverlay({
+					  content 	: content
+					, map	: map
+					, position	: objMarker.getPosition()
+					, zIndex	: 40
+//					, xAnchor	: 0.5
+					, yAnchor	: 0
+				});
+				
+			};
+
+			function fn_getMarkerType(custRefrDiv){
+
+				var markerType	= "type4";
+				if(custRefrDiv !=undefined)
+				{
+					if (     custRefrDiv == "CUST") 		markerType = "type1";
+					else if(custRefrDiv == "HOSP") 		markerType = "type2";
+					else if(custRefrDiv == "LTCY_HOSP") 	markerType = "type3";
+				}				
+				return markerType;
+			};
+
+			function fn_getBackgroudUrl(objPosition){
+				var objMakerImageInfo = fn_getMarkerImageInfo(objPosition);
+				return objMakerImageInfo.url;		// background-image: url(./images/type_customer.png);
+			};
+
+			function fn_closeCustomOverlay(){
+				if(overlay != undefined){
+					overlay.setMap(null);
+				}
+				
+				// 검색 정보 layer 닫기
+				fn_closeClickInfowindow();
+				fn_closeSearchInfowindow();
+			};
+			
+			function fn_customerDetail(custRefrDiv, custUkeyid){
+				var info = JSON.stringify({
+					  "svcId" 		: "customerDetail"
+					, "custRefrDiv"  	: custRefrDiv
+					, "custUkeyid"	: custUkeyid
+					, "ts"			: Date.now()
+				});
+				nexacro.fireUserNotify(info);
+			};
+
+// --  검색화면 출력용 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			// 주소-좌표 변환 객체를 생성합니다
+			var geocoder = new kakao.maps.services.Geocoder();
+			// 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+			var clickInfowindow = new kakao.maps.InfoWindow({zindex:40}); 			
+			// 지도를 클릭한 위치에 표출할 마커입니다
+			var clickMarker = new kakao.maps.Marker({ 
+			    // 지도 중심좌표에 마커를 생성합니다 
+			    position: map.getCenter()
+			}); 
+			function searchDetailAddrFromCoords(coords, callback) {
+			    // 좌표로 법정동 상세 주소 정보를 요청합니다
+			    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+			};
+			function fn_getInfowindowContent(zipCode, road_address , address, pointX, pointY, placeName){
+
+				fn_closeCustomOverlay();	// 조회 마커오버레이
+
+				  // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다.
+				  //var content =               "<div class='bAddr'>";
+				  var content =               "<div class=''>";
+					content = content +	"<div class='bAddrItemIW'>";
+					content = content +	"<div class='close' onclick='fn_closeSearchInfowindow()' title='닫기'></div>";
+					
+					if(placeName !=undefined && placeName !='undefined'){
+						content = content +		"<div class='title'>"+ placeName+"</div>";
+						content = content +		"<div class='titleSub'>"+ (!!zipCode ? "("+zipCode+")" : "") +" "+ (!!road_address? road_address : address) +"</div>";
+					}else{
+						content = content +		"<div class='title'>"+ (!!zipCode ? "("+zipCode+")" : "") +" "+ (!!road_address? road_address : address) +"</div>";
+					}
+					content = content +		"<div class='titleSub'>"+ (!!road_address? address : "") +"</div>";
+//					content = content +		"<div class='titleSub'> X : "+ pointX +"</div>" ;
+//					content = content +		"<div class='titleSub'> Y : "+ pointY +"</div>";
+					content = content +	"</div>";
+					content = content +"</div>";
+				return content;
+		};			
+
+// --  검색하기 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		// 장소 검색 객체를 생성합니다  ----------------------------------------------------------------------------
+		var ps = new kakao.maps.services.Places(); 
+		// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+		var searchInfowindow = new kakao.maps.InfoWindow({zIndex:40});
+		//   ----------------------------------------------------------------------------------------------------------------
+		// 마커를 담을 배열입니다
+		var searchMarkers = [];
+		// 키워드 검색을 요청하는 함수입니다
+		function checkSearchPlaces(){
+			if(window.event.keyCode == 13){
+				searchPlaces();
+			}
+		};		
+		function searchPlaces() {
+		    var keyword = document.getElementById('keyword').value;
+		    if (!keyword.replace(/^\s+|\s+$/g, '')) {
+			//alert('키워드를 입력해주세요!');
+			var info = JSON.stringify({"svcId": "message", "messageId":"00142"});
+			nexacro.fireUserNotify(info);
+			return false;
+		    }
+		    
+		    //clickMarker.setMap(null); 
+		    //fn_closeClickInfowindow();
+		    //searchInfowindow.close();
+		    fn_resetSearchInfo();
+		    
+		    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+		    ps.keywordSearch( keyword, placesSearchCB); 
+		};
+		
+		// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+		function placesSearchCB(data, status, pagination) {
+		    if (status === kakao.maps.services.Status.OK) {
+
+			// 정상적으로 검색이 완료됐으면
+			// 검색 목록과 마커를 표출합니다
+			displayPlaces(data);
+			
+		   // debug
+//		    var info = JSON.stringify({
+//					       "svcId"	: "places"
+//					     , "data"	: JSON.stringify(data)
+//		    });
+//		    nexacro.fireUserNotify(info);
+		    // -----------------------------------------------------------------
+
+			// 페이지 번호를 표출합니다
+			displayPagination(pagination);
+
+		    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+
+			//alert('검색 결과가 존재하지 않습니다.');
+			var info = JSON.stringify({"svcId": "message", "messageId":"00012"});
+			nexacro.fireUserNotify(info);			
+			return;
+
+		    } else if (status === kakao.maps.services.Status.ERROR) {
+
+			//alert('검색 결과 중 오류가 발생했습니다.');
+			var info = JSON.stringify({"svcId": "message", "messageId":"02056"});
+			nexacro.fireUserNotify(info);
+			return;
+		    }
+		};
+		
+		// 검색 결과 목록과 마커를 표출하는 함수입니다
+		function displayPlaces(places) {
+
+		    var listEl = document.getElementById('placesList'), 
+		    menuEl = document.getElementById('menu_wrap'),
+		    fragment = document.createDocumentFragment(), 
+		    bounds = new kakao.maps.LatLngBounds(), 
+		    listStr = '';
+		    
+		    // 검색 결과 목록에 추가된 항목들을 제거합니다
+		    removeAllChildNods(listEl);
+
+		    // 지도에 표시되고 있는 마커를 제거합니다
+		    removeMarker();
+		    
+		    for ( var i=0; i<places.length; i++ ) {
+
+		   // debug
+//		    var info = JSON.stringify({
+//					       "svcId"	: "place"
+//					     , "data"	: JSON.stringify(places[i])
+//		    });
+//		    nexacro.fireUserNotify(info);
+                    // -----------------------------------------------------------------
+
+			// 마커를 생성하고 지도에 표시합니다
+			var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
+			    marker = addMarker(placePosition, i), 
+			    itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+
+			// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+			// LatLngBounds 객체에 좌표를 추가합니다
+			bounds.extend(placePosition);
+
+			(function(marker, place) {
+			
+			    //kakao.maps.event.addListener(marker, 'mouseover', function() {
+			    kakao.maps.event.addListener(marker, 'click', function() {
+				clickMarker.setMap(null);
+				fn_closeClickInfowindow();
+				fn_closeSearchInfowindow();
+				displayInfowindow(marker, place);
+			    });
+
+			  //  kakao.maps.event.addListener(marker, 'mouseout', function() {
+			//	searchInfowindow.close();
+			  //  });
+
+			  //itemEl.onmouseover =  function () {
+			  itemEl.onclick =  function () {
+				fn_setCenter(place.y,  place.x);
+				map.setLevel(map.getLevel());	// 현재 level 적용
+				
+				clickMarker.setMap(null);
+			        fn_closeClickInfowindow();
+			        fn_closeSearchInfowindow();
+				displayInfowindow(marker, place);
+			  };
+
+			   // itemEl.onmouseout =  function () {
+			//	searchInfowindow.close();
+			  //  };
+			  
+			//})(marker, places[i].place_name);
+			})(marker, places[i]);
+
+			fragment.appendChild(itemEl);
+		    }
+
+		    // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
+		    listEl.appendChild(fragment);
+		    menuEl.scrollTop = 0;
+
+		    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+		    map.setBounds(bounds);
+		};
+
+		// 검색결과 항목을 Element로 반환하는 함수입니다
+		function getListItem(index, places) {
+
+		    var el = document.createElement('li'),
+		    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>'
+				+ '<div class="info">'
+				+ '   <span class="title title1">' + places.place_name + '</span>';
+		    if (places.road_address_name) {
+			itemStr += '    <span>' + places.road_address_name + '</span>' 
+				      + '   <span class="jibun gray">' +  places.address_name  + '</span>';
+		    } else {
+			itemStr += '    <span>' +  places.address_name  + '</span>'; 
+		    }
+				 
+		      //itemStr += '  <span class="tel">' + places.phone  + '</span>';
+		      //itemStr += '  <span class="tel">' + places.x  + '</span>';
+		      //itemStr += '  <span class="tel">' + places.y  + '</span>';
+		      itemStr +='</div>';           // end div info
+
+		    el.innerHTML  = itemStr;
+		    el.className = 'item';
+
+		    return el;
+		};
+
+		// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+		function addMarker(position, idx, title) {
+		    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+			imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
+			imgOptions =  {
+			    spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+			    spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+			    offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+			},
+			markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+			marker = new kakao.maps.Marker({
+					      position	: position
+					    , image		: markerImage
+					    , zIndex	: 10
+				});
+
+		    marker.setMap(map); // 지도 위에 마커를 표출합니다
+		    searchMarkers.push(marker);  // 배열에 생성된 마커를 추가합니다
+
+		    return marker;
+		};
+		
+
+		// 지도 위에 표시되고 있는 검색마커를 모두 제거합니다
+		function removeMarker() {
+		    for ( var i = 0; i < searchMarkers.length; i++ ) {
+			searchMarkers[i].setMap(null);
+		    }   
+		    searchMarkers = [];
+		};
+
+		// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
+		function displayPagination(pagination) {
+		    var paginationEl = document.getElementById('pagination'),
+			fragment = document.createDocumentFragment(),
+			i; 
+
+		    // 기존에 추가된 페이지번호를 삭제합니다
+		    while (paginationEl.hasChildNodes()) {
+			paginationEl.removeChild (paginationEl.lastChild);
+		    }
+
+		    for (i=1; i<=pagination.last; i++) {
+			var el = document.createElement('a');
+			el.href = "#";
+			el.innerHTML = i;
+
+			if (i===pagination.current) {
+			    el.className = 'on';
+			} else {
+			    el.onclick = (function(i) {
+				return function() {
+				    clickMarker.setMap(null); 
+				    fn_closeClickInfowindow();
+				    fn_closeSearchInfowindow();
+				    // 페이지 이동
+				    pagination.gotoPage(i);
+				}
+			    })(i);
+			}
+
+			fragment.appendChild(el);
+		    }
+		    paginationEl.appendChild(fragment);
+		};
+
+		// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+		// 인포윈도우에 장소명을 표시합니다
+		function displayInfowindow(marker, place) {
+
+		   // debug -----------------------------------------------------------------
+//		    var info = JSON.stringify({
+//					       "svcId"	: "displayInfowindow"
+//					     , "data"	: JSON.stringify(place)
+//		    });
+//		    nexacro.fireUserNotify(info);
+		    // -----------------------------------------------------------------
+
+			searchDetailAddrFromCoords(marker.getPosition(), function(result, status) {
+
+				   // debug -----------------------------------------------------------------
+//				    var info = JSON.stringify({
+//							       "svcId"	: "searchDetailAddrFromCoords"
+//							     , "data"	: JSON.stringify(result)
+//				    });
+//				    nexacro.fireUserNotify(info);
+				    // -----------------------------------------------------------------
+
+				// 검색시 우편번호가 없어서 조회 처리
+				var zipCode 		="";
+				var extraRoadAddr 	= "";
+				if(result !=undefined && result.length > 0 && result[0].road_address !=undefined){
+					zipCode = !!result[0].road_address ? result[0].road_address.zone_no : result[0].address.zip_code;
+					if(!!result[0].road_address && result[0].road_address.bname !== '' && /[동|로|가]$/g.test(result[0].road_address.bname)){
+						extraRoadAddr += result[0].road_address.bname;
+					 }
+					 var buildingName	= !!result[0].road_address ? result[0].road_address.building_name	: "";
+					 if(buildingName !== ""){
+						extraRoadAddr += (extraRoadAddr !== '' ? ', ' + buildingName : buildingName);
+					 }
+					 if(extraRoadAddr !== ""){
+						extraRoadAddr = ' (' + extraRoadAddr + ')';
+					 }
+				 }	
+
+				 // 정보 출력
+				  var content = '<div style="padding:5px;z-index:1;">' 
+						   + fn_getInfowindowContent(zipCode
+											   , (!!place.road_address_name ? place.road_address_name + extraRoadAddr :  place.address_name)
+											   , (!!place.road_address_name ? place.address_name :  "") 
+											   , place.x
+											   , place.y
+											   , place.place_name)
+						   + '</div>';
+
+				    searchInfowindow.setContent(content);
+				    searchInfowindow.open(map, marker);
+
+				   // 정보 callback
+				    var info = JSON.stringify({
+				                               "svcId"	: "info"
+							     , "y" 		: place.y
+							     , "x" 		: place.x
+							     , "zipCode"	: zipCode
+							     , "address"	: (!!place.road_address_name ? place.road_address_name + extraRoadAddr : place.address_name) 
+							     , "addr"	: JSON.stringify(place)
+				    });
+				    nexacro.fireUserNotify(info);
+			    });
+		};
+
+		 // 검색결과 목록의 자식 Element를 제거하는 함수입니다
+		function removeAllChildNods(el) {   
+		    while (el.hasChildNodes()) {
+			el.removeChild (el.lastChild);
+		    }
+		};
+		
+		function fn_resetSearchInfo(){
+		
+		    document.getElementById('keyword').value = "";
+		    
+		    // 검색 결과 목록에 추가된 항목들을 제거합니다
+		    var listEl = document.getElementById('placesList')
+		    removeAllChildNods(listEl);	
+		    // 기존에 추가된 페이지번호를 삭제합니다
+		    var paginationEl = document.getElementById('pagination');	
+		    while (paginationEl.hasChildNodes()) {
+			paginationEl.removeChild (paginationEl.lastChild);
+		    }		    
+		    // 지도에 표시되고 있는 마커를 제거합니다
+		    removeMarker();		    
+		    
+		    // 기타 정보 제거
+		    clickMarker.setMap(null); 
+		    fn_closeClickInfowindow(); 
+		    fn_closeSearchInfowindow();
+		   
+		};
+		
+		function fn_closeClickInfowindow(){
+			clickInfowindow.close(); 
+		};
+		
+		function fn_closeSearchInfowindow(){
+			searchInfowindow.close();
+		};
+
+
+		</script> 
+	</body>
+</html>
+

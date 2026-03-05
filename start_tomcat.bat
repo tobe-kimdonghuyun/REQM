@@ -3,7 +3,7 @@ REM start_tomcat.bat - Start Tomcat in the current CMD/Terminal (no new window)
 REM Update the paths below if your Tomcat or JDK are installed elsewhere.
 
 setlocal
-set "CATALINA_HOME=D:\git_prj\REQM\apache-tomcat-11.0.18"
+set "CATALINA_HOME=D:\git_prj\REQM\apache-tomcat-9.0.89"
 set "JAVA_HOME=C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10"
 set "PATH=%JAVA_HOME%\bin;%PATH%"
 

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Last Modified</title>
+</head>
+<body>
+
+    <h1>Select a file to check last modified date</h1>
+    <input type="file" id="fileInput">
+    <p id="fileInfo"></p>
+
+    <script>
+        // 파일 선택 이벤트 처리
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0]; // 선택한 첫 번째 파일
+            
+            if (file) {
+                const lastModifiedDate = new Date(file.lastModified); // 파일의 lastModified 값을 Date 객체로 변환
+                const formattedDate = lastModifiedDate.toLocaleString(); // 읽기 쉬운 형식으로 변환
+
+                // 파일 정보 표시
+                document.getElementById('fileInfo').textContent = `File: ${file.name}, Last Modified: ${formattedDate}`;
+            } else {
+                document.getElementById('fileInfo').textContent = 'No file selected';
+            }
+        });
+    </script>
+
+</body>
+</html>

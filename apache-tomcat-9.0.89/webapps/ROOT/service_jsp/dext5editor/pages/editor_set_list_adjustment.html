@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set Numbering</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <script type="text/javascript">
+        document.write('<scr' + 'ipt src="../config/editor_crossdomain_config.js?t=' + (new Date).getTime() + '" type="text/javascript"><\/scr' + 'ipt>');
+    </script>
+
+    <script type="text/javascript">
+        var DEXTTOP = parent;
+        var Dext5LayerFrame = DEXTTOP.DEXTDOC.getElementById("dext_frame_" + DEXTTOP.G_CURREDITOR.ID);
+        if (DEXTTOP.G_CURREDITOR.dialogWindow != null) {
+            DEXTTOP = Dext5LayerFrame.contentWindow.DEXTTOP;
+        }
+        var Dext5LayerWin = Dext5LayerFrame.contentWindow;
+
+        document.write('<link href="' + Dext5LayerWin._dext_editor._config.popupCssUrl + '?t=' + DEXTTOP.DEXT5.UrlStamp + '" rel="stylesheet" type="text/css" />');
+        if (Dext5LayerWin._dext_editor._config.customCssUrlDetailApply == "1") {
+            document.write('<link href="' + Dext5LayerWin._dext_editor._config.style.customCssUrl + "?t=" + DEXTTOP.DEXT5.UrlStamp + '" rel="stylesheet" type="text/css" />');
+        }
+        document.write('<scr' + 'ipt src="' + Dext5LayerWin._dext_editor._config.dialogJSUrl + '?t=' + DEXTTOP.DEXT5.UrlStamp + '" type="text/javascript"><\/scr' + 'ipt>');
+    </script>
+    <style>
+        .mobile .no_a {
+            width: 90% !important;
+        }
+
+            .mobile .no_a ul {
+                display: none !important;
+            }
+
+            .mobile .no_a input {
+                width: 100% !important;
+                box-sizing: border-box;
+                height: 20px !important;
+            }
+    </style>
+    <script type="text/javascript">
+        function page_loaded_event() {
+            var _skin_name = LayerWin._dext_editor._config.style.skinName;
+            document.getElementById('keditor_dialog_box').className = 'DEXT_fiVe_ED_Popup_Type03 DEXT_fiVe_PUi_' + _skin_name;
+
+            var span_title = document.getElementById('span_title');
+            var list_title = document.getElementById('list_title');
+            var text_title = document.getElementById('text_title');
+            var check_label = document.getElementById('check_label');
+            var list_checkBox = document.getElementById('include_list');
+            var list_position = document.getElementById('list_position');   // 글머리 위치
+            var list_position_unit = document.getElementById('options');    // 글머리 위치 단위
+            var text_inoutdent = document.getElementById('text_inoutdent'); // 텍스트 내어쓰기
+            var text_inoutdent_unit = document.getElementById('options2');  // 텍스트 단위
+            var val_up = document.getElementById('val_up'); // 글머리 버튼
+            var val_down = document.getElementById('val_down'); // 글머리 버튼
+            var val_up2 = document.getElementById('val_up2');   // 텍스트 버튼
+            var val_down2 = document.getElementById('val_down2');   // 텍스트 버튼
+            var span_ok = document.getElementById('span_ok');
+            var span_cancel = document.getElementById('span_cancel');
+            var ok_btn = document.getElementById('ok_btn');
+            
+            span_title.innerHTML = LayerWin.dext5_lang.set_list_adjustment.title;
+
+            span_ok.innerHTML = LayerWin.dext5_lang.set_list_adjustment.btn_ok;
+            span_ok.parentNode.title = LayerWin.dext5_lang.set_list_adjustment.btn_ok;
+            span_cancel.innerHTML = LayerWin.dext5_lang.set_list_adjustment.btn_cancel;
+            span_cancel.parentNode.title = LayerWin.dext5_lang.set_list_adjustment.btn_cancel;
+
+            document.title = LayerWin.dext5_lang.set_list_adjustment.frame_title;
+
+            var _orderedListObj = DEXTTOP.G_CURREDITOR.orderedListObj;
+            var _currNode = _orderedListObj.selectedNode;
+            var _listPos;
+            var _listPosUnit;
+            var _textPos;
+            var _textPosUnit;
+            if (_currNode) {    
+                _listPos = DEXTTOP.G_CURREDITOR.orderedListObj.changeListPos;
+                _listPosUnit = DEXTTOP.G_CURREDITOR.orderedListObj.changeListUnit;
+                _textPos = DEXTTOP.G_CURREDITOR.orderedListObj.changeTextPos;
+                _textPosUnit = DEXTTOP.G_CURREDITOR.orderedListObj.changeTextUnit;
+
+                if (_currNode.parentNode.tagName == 'OL') {
+                    list_title.innerHTML = LayerWin.dext5_lang.set_list_adjustment.list_position_num;
+                    list_checkBox.innerHTML = LayerWin.dext5_lang.set_list_adjustment.list_position_num_check;
+                    check_label.title = LayerWin.dext5_lang.set_list_adjustment.list_check_label;
+                } else if (_currNode.parentNode.tagName == 'UL') {
+                    list_title.innerHTML = LayerWin.dext5_lang.set_list_adjustment.list_position_sym;
+                    list_checkBox.innerHTML = LayerWin.dext5_lang.set_list_adjustment.list_position_sym_check;
+                    check_label.title = LayerWin.dext5_lang.set_list_adjustment.list_check_label;
+                }
+
+                text_title.innerHTML = LayerWin.dext5_lang.set_list_adjustment.text_inoutdent;
+            }
+
+            //  적용된 단위에 따라 팝업창에 처음 나타나는 단위 변경 및 드롭메뉴에 없는 단위 입력시 단위 추가
+            var l_unit = false;
+            var t_unit = false;
+            for (var i = 0; i < list_position_unit.length; i++) {
+                
+                if (_listPosUnit == list_position_unit[i].value) {
+                    list_position_unit.value = _listPosUnit
+                    l_unit = true;
+                }
+            }
+            for (var i = 0; i < text_inoutdent_unit.length; i++) {
+
+                if (_textPosUnit == text_inoutdent_unit[i].value) {
+                    text_inoutdent_unit.value = _textPosUnit
+                    t_unit = true;
+                }
+            }
+            // margin값을 가져올때 select에 없는 단위일 경우 단위 추가
+            if (!l_unit) {    
+                var selectTag = document.getElementById('options');
+                var temp = selectTag.lastElementChild;
+                var option = new Option(_listPosUnit, _listPosUnit);
+
+                selectTag.add(option);
+                selectTag.add(temp);
+                selectTag.value = _listPosUnit;
+            }
+            if (!t_unit) {
+                var selectTag = document.getElementById('options2');
+                var temp = selectTag.lastElementChild;
+                var option = new Option(_textPosUnit, _textPosUnit);
+
+                selectTag.add(option);
+                selectTag.add(temp);
+                selectTag.value = _textPosUnit;
+            }
+
+            list_position.value = _listPos;
+            text_inoutdent.value = _textPos;
+
+            var click_event_val_plus = (function () {
+                return function (event) {
+                    LayerWin.click_plus_func(list_position, null, 1, function () {
+                    }); DEXTTOP.DEXT5.util.stopEvent(event);
+                }
+            })();
+            var click_event_val_minus = (function () {
+                return function (event) {
+                    LayerWin.click_minus_func(list_position, null, 1, null, function () {
+                    }); DEXTTOP.DEXT5.util.stopEvent(event);
+                }
+            })();
+
+            var click_event_val_plus2 = (function () {
+                return function (event) {
+                    LayerWin.click_plus_func(text_inoutdent, null, 1, function () {
+                    }); DEXTTOP.DEXT5.util.stopEvent(event);
+                }
+            })();
+            var click_event_val_minus2 = (function () {
+                return function (event) {
+                    //switch (text_inoutdent.value.toString()) {
+                    //    case '0':
+                    //    case '00': return;
+                    //}
+                    LayerWin.click_minus_func(text_inoutdent, 0, 1, null, function () {
+                    }); DEXTTOP.DEXT5.util.stopEvent(event);
+                }
+            })();
+
+            DEXTTOP.DEXT5.util.addEvent(val_up, "click", click_event_val_plus);
+            DEXTTOP.DEXT5.util.addEvent(val_down, "click", click_event_val_minus);
+            DEXTTOP.DEXT5.util.addEvent(val_up2, "click", click_event_val_plus2);
+            DEXTTOP.DEXT5.util.addEvent(val_down2, "click", click_event_val_minus2);
+            DEXTTOP.DEXT5.util.addEvent(ok_btn, 'click', function () {
+
+                var convertPos = true;
+                var convertInoutdent = true;
+
+                var oldPos = DEXTTOP.G_CURREDITOR.orderedListObj.changeListPos + DEXTTOP.G_CURREDITOR.orderedListObj.changeListUnit;
+                var currPos = list_position.value + list_position_unit.value;
+                var oldInoutdent = DEXTTOP.G_CURREDITOR.orderedListObj.changeTextPos + DEXTTOP.G_CURREDITOR.orderedListObj.changeTextUnit;
+                var currInoutdent = text_inoutdent.value + text_inoutdent_unit.value;
+
+                if (oldPos == currPos) {
+                    convertPos = false;
+                } else {
+                    DEXTTOP.G_CURREDITOR.orderedListObj.changeListPos = list_position.value;
+                    DEXTTOP.G_CURREDITOR.orderedListObj.changeListUnit = list_position_unit.value;
+                }
+
+                if (oldInoutdent == currInoutdent) {
+                    convertInoutdent = false;
+                } else {
+                    DEXTTOP.G_CURREDITOR.orderedListObj.changeTextPos = text_inoutdent.value;
+                    DEXTTOP.G_CURREDITOR.orderedListObj.changeTextUnit = text_inoutdent_unit.value;
+                }
+                
+                var posUnit = document.getElementById('options');
+                _orderedListObj.changeListUnit = posUnit.value;
+                
+                var textUnit = document.getElementById('options2');
+                _orderedListObj.changeTextUnit = textUnit.value;
+                
+                set_list_adjustment_ok(convertPos, convertInoutdent);
+            });
+
+            if (LayerDoc.compatMode == "BackCompat") {
+                var inputs = document.getElementsByTagName('input');
+                for (var i = 0; i < inputs.length; i++) {
+                    if (inputs[i].type == 'text') {
+                        inputs[i].style.height = '20px';
+                    }
+                }
+            }
+            var header = LayerWin.getElementsByClass('EdiTor_Popup_header', document);
+            header[0].onselectstart = function () { return false; };
+
+            setCursorPos(document.getElementById('radio_row'), false, false);
+            LayerWin.setFocusFirstAndLast(document, document.getElementById('radio_row'));
+        }
+
+        // select
+        function selectUnit(select) {
+            var _id;
+            if (select.id == 'options') {
+                _id = 'list_unit';
+            } else if(select.id == 'options2'){
+                _id = 'position_unit';
+            }
+            var customInput = document.getElementById(_id);
+            //var selectTag = document.getElementById('options');
+            if (select.value === '직접입력') {
+                customInput.style.display = 'inline-block';
+                select.style.display = 'none';
+                customInput.focus();
+            } else {
+                customInput.style.display = 'none';
+                select.style.display = 'inline-block';
+            }
+        }
+        function customUnit(e) {
+            var customInput = document.getElementById('list_unit');
+            var select = getPreviousElementSibling(e)
+            var temp = select.lastElementChild;
+            if (e.value) {
+                var newOption = new Option(e.value, e.value);
+                //selectTag.remove(selectTag.lastElementChild);
+                select.add(newOption);
+                select.add(temp);
+                select.value = e.value;
+                e.style.display = 'none';
+                select.style.display = 'inline-block';
+            }
+        }
+
+        function getPreviousElementSibling(element) {
+            var sibling = element.previousSibling;
+            while (sibling && sibling.nodeType !== 1) {
+                sibling = sibling.previousSibling;
+            }
+            return sibling;
+        }
+
+    </script>
+</head>
+<body style="margin:0px; padding:0px; " onload="page_loaded_event(); page_dialog_loaded_event();">
+    <div class="" id="keditor_dialog_box">
+        <!-- Header -->
+        <div class="EdiTor_Popup_header">
+            <span class="subject" id="span_title">목록 들여쓰기 조정</span><span class="text">DEXT5 Editor</span>
+            <div class="close">
+                <a href="javascript:event_popup_close();" title="close"></a>
+            </div>
+        </div>
+        <!-- // Header -->
+        <!-- Contents / general -->
+        <div class="EdiTor_Popup_contents view">
+            <div class="contents">
+                <div class="con">
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td style="width: 50%;">
+                                    <span id="list_title">글머리 위치</span>
+                                </td>
+                                <td>
+                                    <div class="no_a" style="display: inline-block;">
+                                        <input id="list_position" name="list_position" type="text" class="con_input" />
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)" id="val_up" style="cursor:pointer;">
+                                                    <img src="../images/editor/dialog/btn/editor_ta_btn.gif" width="15" height="10" alt="up" />
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" id="val_down" style="cursor:pointer;">
+                                                    <img src="../images/editor/dialog/btn/editor_ba_btn.gif" width="15" height="10" alt="down" />
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div style="display: inline-block; width: 72px; height: 22px; overflow: hidden">
+                                        <select id="options" onchange="selectUnit(this)">
+                                            <option value="px">px</option>
+                                            <option value="pt">pt</option>
+                                            <option value="cm">cm</option>
+                                            <option value="mm">mm</option>
+                                        </select>
+                                        <input id="list_unit" name="list_unit" type="text" class="con_input" style="display: none; width: 65px;" onblur="customUnit(this)"/>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="width: 300px;">
+                                        <input name="list_all_select" id="list_all_select" type="checkbox">
+                                        <label id="check_label" style="vertical-align:middle;" for="list_all_select">
+                                            <span id="include_list"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 40%" ;>
+                                    <span id="text_title">텍스트 들여쓰기 &nbsp; </span>
+                                </td>
+                                <td>
+                                    <div class="no_a" style="display: inline-block;">
+                                        <input id="text_inoutdent" name="text_inoutdent" type="text" class="con_input" />
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)" id="val_up2" style="cursor:pointer;">
+                                                    <img src="../images/editor/dialog/btn/editor_ta_btn.gif" width="15" height="10" alt="up" />
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" id="val_down2" style="cursor:pointer;">
+                                                    <img src="../images/editor/dialog/btn/editor_ba_btn.gif" width="15" height="10" alt="down" />
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div style="display: inline-block; width: 72px; height: 22px; overflow: hidden">
+                                        <select id="options2" onchange="selectUnit(this)">
+                                            <option value="px">px</option>
+                                            <option value="pt">pt</option>
+                                            <option value="cm">cm</option>
+                                            <option value="mm">mm</option>
+                                        </select>
+                                        <input id="position_unit" name="position_unit" type="text" class="con_input" style="display: none; width: 65px;" onblur="customUnit(this)" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- // Contents -->
+        <!-- Footer -->
+        <div class="EdiTor_Popup_footer">
+            <a id="ok_btn" class="confirm" href="javascript:void(0);">
+                <span id="span_ok"></span>
+            </a>
+            <a href="javascript:event_dext_close();" class="cancel">
+                <span id="span_cancel"></span>
+            </a>
+        </div>
+        <!-- // Footer -->
+    </div>
+</body>
+</html>

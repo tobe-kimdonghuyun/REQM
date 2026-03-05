@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CKEditor 4 – editor</title>
+    <script src="./ckeditor.js"></script>
+    <style type="text/css">
+    html, body{
+    	margin: 0;
+    	height: 100%;
+    	overflow: hidden;
+    }
+    </style>
+</head>
+<body>
+	<button onclick="getData();">test</button>
+    <textarea name="content" id="editor">
+    </textarea>
+    <script>
+    	// ToolBar 관련 setting -> ./config.js
+    	//filebrowserUploadUrl: "/image"  // 파일업로드를 위한 URL
+	    CKEDITOR.replace('editor', {
+	        uploadUrl: "/2022_POC_LOTTECHEM/service/dragImg.jsp"  // 이게 드래그 드롭을 위한 URL
+	        	    	
+	    });
+	    
+	    CKEDITOR.on( 'instanceReady' , function(evt) {
+	    	evt.editor.execCommand('maximize');
+	    });
+	    
+	    function setData(str)
+	    {
+	        CKEDITOR.instances.editor.setData(str);
+	    }
+	    
+	    function getData()
+	    {
+	        return CKEDITOR.instances.editor.getData();
+	    }         
+	    
+	    function setFocus()
+	    {
+	    	CKEDITOR.instances.editor.focus();
+	    }
+    </script>
+</body>
+</html>

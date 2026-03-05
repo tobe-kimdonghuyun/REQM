@@ -1,0 +1,159 @@
+<html>
+	<meta id="viewport" name="viewport" />
+	<meta http-equiv="X-UA-Compatible" content="IE=8"/>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="user-scalable=1, initial-scale=0.5, ">
+	<head>
+		<style>
+	button.ex {
+		height: 100px;
+    width: 100px;
+	background-Color:yellow;	
+	}
+</style>
+	<script>
+		function fn_test()
+		{	
+			alert(window.navigator.userAgent);
+		} 
+		function pageprint()
+		{
+			//window.open("http://172.g10.12.45:8080/local.html");
+			console.log("onfocus");
+			//D:\apache-tomcat-9.0.0.M4\webapps\nexacro17.1.3\22041301_1000\devPackMobile\Deploy\ 
+		}
+		
+		// 주민번호 정규식 패턴
+		const ssnPattern = /^\d{6}-\d{7}$/;  // YYMMDD-GXXXXXX 형식
+		const ssnPatternNoDash = /^\d{13}$/;  // 하이픈 없는 13자리
+		
+		// 주민번호 입력 시 자동 포맷팅 (하이픈 자동 삽입)
+		function formatSSN(input) {
+			// 숫자만 추출
+			let value = input.value.replace(/[^0-9]/g, '');
+			
+			// 최대 13자리까지만 허용
+			if (value.length > 13) {
+				value = value.substring(0, 13);
+			}
+			
+			// 6자리 이상이면 하이픈 추가
+			if (value.length > 6) {
+				value = value.substring(0, 6) + '-' + value.substring(6);
+			}
+			
+			input.value = value;
+		}
+		
+		// 주민번호 유효성 검증
+		function validateSSN(input) {
+			const value = input.value.trim();
+			const msgElement = document.getElementById('ssnValidationMsg');
+			
+			// 빈 값은 통과 (필수 입력이 아닐 수 있음)
+			if (value === '') {
+				input.style.borderColor = '#ccc';
+				if (msgElement) msgElement.textContent = '';
+				return true;
+			}
+			
+			// 정규식 검증
+			if (ssnPattern.test(value)) {
+				input.style.borderColor = 'green';
+				if (msgElement) {
+					msgElement.textContent = '✓ 올바른 형식입니다.';
+					msgElement.style.color = 'green';
+				}
+				return true;
+			} else {
+				input.style.borderColor = 'red';
+				if (msgElement) {
+					msgElement.textContent = '✗ 올바른 형식이 아닙니다. (YYMMDD-GXXXXXX)';
+					msgElement.style.color = 'red';
+				}
+				return false;
+			}
+		}
+		
+		// 페이지 로드 시 주민번호 입력 필드에 이벤트 리스너 추가
+		window.addEventListener('DOMContentLoaded', function() {
+			const ssnInput = document.getElementById('ssnInput');
+			if (ssnInput) {
+				// 입력 시 자동 포맷팅
+				ssnInput.addEventListener('input', function() {
+					formatSSN(this);
+				});
+				
+				// 포커스 아웃 시 검증
+				ssnInput.addEventListener('blur', function() {
+					validateSSN(this);
+				});
+				
+				// 붙여넣기 시에도 포맷팅
+				ssnInput.addEventListener('paste', function(e) {
+					setTimeout(() => {
+						formatSSN(this);
+						validateSSN(this);
+					}, 0);
+				});
+			}
+		});
+	
+	</script>
+<body style="overscroll-behavior:none;"> 
+
+<input type="button" onclick="fn_test()"/>
+<div title="툴팁" aria-label="라벨">
+</div>
+
+<h2>주민번호 입력</h2>
+<div style="margin: 20px 0;">
+	<label for="ssnInput">주민번호: </label>
+	<input type="text" 
+		   id="ssnInput" 
+		   name="ssn" 
+		   placeholder="YYMMDD-GXXXXXX"   
+		   maxlength="14"
+		   style="padding: 8px; font-size: 14px; border: 2px solid #ccc; border-radius: 4px; width: 200px;">
+	<p style="font-size: 12px; color: #666; margin-top: 5px;">
+		형식: YYMMDD-GXXXXXX (예: 901231-1234567)
+	</p>
+	<p id="ssnValidationMsg" style="font-size: 12px; margin-top: 5px;"></p>
+</div>
+
+<h1 style="white-space: pre-line;">pc</h1>
+<p><a href="http://172.10.12.45:9090/nexacroN/main_21/RP_104582/quickview.html?screenid=Desktop_screen&formname=FrameBase::Form_Work.xfdl">http://172.10.12.45:9090/nexacroN/main_21/RP_104582/quickview.html?screenid=Desktop_screen&formname=FrameBase::Form_Work.xfdl</a></p></br>
+<p><a href="http://172.10.12.45:9090/nexacroN/21.0.0.1920/nice_1920/quickview.html?screenid=Desktop_screen&formname=Base::RP_104305_test001.xfdl">nice_1920/RP_104305_test001.xfdl</a></p></br>
+    <p><a href="http://172.10.12.45:9090/nexacroN/21.0.0.1920/RP_104199/quickview.html?screenid=Desktop_screen&formname=Base::RP_104209_testRadio.xfdl">RP_104209_testRadio.xfdl</a></p></br>						
+	<h1>android</h1>
+	
+
+	<p><a href="http://172.10.12.45:9090/nexacroN_v24/24.0.0.701/1900test_v24/index.html">24.0.0.701/RP_103317</a></p></br>
+	
+	<h1>iOS</h1>
+	<p><a href="http://172.10.12.45:9090/nexacroN/21.0.0.900/RP_103760/launch.html">21.0.0.900/RP_103760</a></p></br>
+	
+	<p><a href="http://172.10.13.14:8080/testipad/index.html">cs서버</a></p></br>
+		<p><a href="http://59.10.169.82:9900/NexacroN/setupN/v24/2025.8.26.1(24.0.0.800)">2025.8.26.1(24.0.0.800)</a></p></br>
+	<p><a href="http://172.10.12.45:9090/nexacroN/NexacroN_Linux_Arm64_GTK4.tar">NexacroN_Linux_Arm64_GTK4.tar</a></p></br>
+	<p><a href="">./nexacro -K "RP_10378_1" -S http://172.10.12.45:9090/nexacroN_v24/24.0.0.900/Deploy/_ios_/storageLinux/start_ios.json</a></p></br>  59.10.169.81
+	<h2>리눅스 명령어</h2></br>
+	./nexacro -K "RP_103792_900" -S http://172.10.12.45:9090/nexacroN_v24/24.0.0.900/test_linux/Deploy/_ios_/start_ios.json</br>
+	<h2>리눅스 명령어</h2></br>
+	./nexacro -K "RP_103792_900" -S http://172.10.12.45:9090/nexacroN_v24/24.0.0.900/testSample1/Deploy/_ios_/start_ios.json</br>
+	<h2>리눅스 명령어</h2></br>
+	./nexacro -K "RP_10378_3" -S https://nxs.tobesoft.com/storage/start_linux.json</br>
+
+	<h2>리눅스 명령어</h2>
+
+	"C:\Program Files (x86)\TOBESOFT\Nexacro N\21\nexacro.exe"  -K 'testTrace4' -S 'http://172.10.12.45:9090/nexacroN_v24/24.0.0.900/test_linux/storageLinux/_ios_/start_ios.json' -SM 'none'
+	%USERAPP% 리눅스 경로
+/home/[계정명]/.local/share/app.nexacro/[-K 키값]
+* 명령어 : cd ~/.local 접근
+
+cache 경로
+/home/[계정명]/.cache/app.nexacro/[-K 키값]
+* 명령어 : cd ~/.cache 접근
+
+	</body>
+	</html>

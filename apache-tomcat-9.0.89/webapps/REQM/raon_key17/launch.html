@@ -1,0 +1,162 @@
+<!-- DOCTYPE : DOCTYPE declaration -->
+<!DOCTYPE html>
+<html lang="ko"> <!-- LANGUAGE : locale setting (value of location property in Environment) -->
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="user-scalable=1, initial-scale=0.1, width=device-width, target-densitydpi=device-dpi">
+	<!-- META_CHECKVERSION : Add if value of checkversion property in Envrionment is true -->
+	<!-- <script type="text/javascript" src="/html/includeTransKey.js"></script>	 -->
+	<!-- FAVICON : favion setting (value of icon property in Environment. add to value of icon property in Environment) -->
+<!--    	<script type="text/javascript" src="/transkey/transkey.js"></script> 
+    <link rel="stylesheet" type="text/css" href="/transkey/transkey.css" /> -->
+ 	<script type="text/javascript" src="/transkey_mobile/transkey.js"></script> 
+    <link rel="stylesheet" type="text/css" href="/transkey_mobile/transkey.css" />
+	
+	<!-- USERFONT_STYLE : userfont style setting (value of userfontid property in Environment. crate contents contained in xfont file specified userfontid property in Environment) -->
+    <style id="userfont">
+        @font-face {
+          font-family : 'NotoSansKR-Regular';
+          font-style : normal;
+          font-weight : 400;
+          src : local(./_resource_/_font_/NotoSansKR-Regular.otf);
+          src : url(./_resource_/_font_/NotoSansKR-Regular.otf) format('opentype'),
+        	url(./_resource_/_font_/NotoSansKR-Regular.woff2) format('woff2'),
+        	url(./_resource_/_font_/NotoSansKR-Regular.woff) format('woff');
+        }
+        @font-face {
+          font-family : 'NotoSansKR-Medium';
+          font-style : normal;
+          font-weight : 500;
+          src : local(./_resource_/_font_/NotoSansKR-Medium.otf);
+          src : url(./_resource_/_font_/NotoSansKR-Medium.otf) format('opentype')
+        }
+        @font-face {
+          font-family : 'NotoSansKR-Bold';
+          font-style : normal;
+          font-weight : 700;
+          src : local(./_resource_/_font_/NotoSansKR-Bold.otf);
+          src : url(./_resource_/_font_/NotoSansKR-Bold.otf) format('opentype'),
+        	url(./_resource_/_font_/NotoSansKR-Bold.woff2) format('woff2'),
+        	url(./_resource_/_font_/NotoSansKR-Bold.woff) format('woff');
+        }
+        </style>
+	
+	<!-- FRAMEWORK_LIBRARY : framework lodaing path (list of scripts files in the Framework.json file) -->
+    <script src="./nexacrolib/framework/Framework.js"></script>
+	
+	<!-- COMPONENTS_LIBRARY : commonent lodaing path (list of script file in json file specified in the TypeDefinition module) -->
+    <script src="./nexacrolib/component/CompBase.js"></script>
+    <script src="./nexacrolib/component/ComComp.js"></script>
+    <script src="./nexacrolib/component/Grid.js"></script>
+    <script src="./nexacrolib/component/DeviceAPI.js"></script>
+    <script src="./nexacrolib/component/Accessibility.js"></script>
+    <script src="./nexacrolib/component/eduFcmPrototype/ast_script.js"></script>
+    <script src="./nexacrolib/component/eduFcmPrototype/nfn_script.js"></script>
+    <script src="./nexacrolib/component/eduFcmPrototype/rsz_script.js"></script>
+    <script src="./nexacrolib/component/eduFcmPrototype/vld_script.js"></script>
+    <script src="./nexacrolib/component/eduFcmPrototype/prj_script.js"></script>
+    <script src="./nexacrolib/component/eduFcmPrototype/svc_script.js"></script>
+    <script src="./nexacrolib/component/eduFcmPrototype/utl_script.js"></script>
+    <script src="./nexacrolib/component/eduFcmPrototype/sm_script.js"></script>
+    <script src="./nexacrolib/component/extPrototype/neis_pa.js"></script>
+    <script src="./nexacrolib/component/extPrototype/neis_pa_imsi.js"></script>
+    <script src="./nexacrolib/component/Raon/Raonkey.js"></script>
+    <script src="./nexacrolib/component/ListView.js"></script>
+	
+	<!-- ENVIRONMENT_LIBRARY : application environment path (path of Environment.xml.js) -->
+    <script src="./environment.xml.js"></script>
+	<script type="text/javascript">
+		util = {}
+		util.getParam = function(sname){
+			var params = location.search.substr(location.search.indexOf("?")+1);
+			var sval="";
+			params=params.split("&");
+			for(var i=0; i<params.length; i++){
+				temp = params[i].split("=");
+				if(temp[0]==sname){sval=temp[1];}
+			}
+			return sval;
+		}
+		
+		//============================================================
+		//   모바일앱과의 통신용 - End
+		//============================================================
+		function fnRecvDataFromApp(sData)
+		{
+			if(nexacro.getApplication().afnRecvDataFromApp)
+			{
+				nexacro.getApplication().afnRecvDataFromApp(sData);
+			}
+		}
+		
+		function fnSendDataToApp(sData)
+		{
+			// 모바일앱에서 가이드 한 대로 통신을 실행
+		}
+		//============================================================
+		//   모바일앱과의 통신용 - End
+		//============================================================
+		
+	</script>	
+	<title></title>
+</head>
+<body style="margin:0;border:none;-ms-touch-action:none;" onload="oninitframework()">
+	<div tabIndex="-1" aria-hidden="true"></div> <!-- 웹접근성 '문서끝' 현상-->
+	<script>
+	function oninitframework()
+	{
+		<!-- parameter information -->
+		var urlParams = {};
+		(function () {
+			var match,
+			pl     = /\+/g,
+			search = /([^&=]+)=?([^&]*)/g,
+			decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+			query  = window.location.search.substring(1);
+			while (match = search.exec(query)) { urlParams[decode(match[1])] = decode(match[2]); }
+			})();
+			
+		nexacro._launch_screenid = urlParams.screenid;
+		<!-- SCREEN_INFORMATION : create screen information defined in Environment > ScreenDefinition -->
+		var screeninfo = [
+        {"id":"ScreenDeskTop","type":"desktop","locale":"ko_KR","enableaccessibility":"false","accessibilitydescreadtype":"label,action,description","accessibilityheadingnexthotkey":"ALT+1","accessibilityheadingprevhotkey":"ALT+2","key":"NEIS","tracemode":"new","accessibilitytype":"standard","themeid":"theme::blue","initvaluefileid":"initvalue::accessbility.xiv","xadl":"test_raon.xadl.js"},
+        {"id":"mobile","type":"mobile_medium","userzoom":"false","loadingimage":"url(\'theme://images/loading.gif\')","accessibilitytype":"standard","key":"NEIS","themeid":"theme::blue","initvaluefileid":"initvalue::accessbility.xiv","xadl":"test_raon.xadl.js"},
+        {"id":"tablet","type":"mobile_large","loadingimage":"url(\'theme://images/loading.gif\')","key":"NEIS","themeid":"theme::blue","initvaluefileid":"initvalue::accessbility.xiv","xadl":"test_raon.xadl.js"}
+		];
+		
+		nexacro._initHTMLSysEvent(window, document);
+		nexacro._initEnvironment(screeninfo);
+		
+		if(util.getParam("eduDgtlOpsUserScCd")){
+			nexacro.setInitialVariable("application", "gv_eduDgtlOpsUserScCd", util.getParam("eduDgtlOpsUserScCd"));
+		}		
+		
+		if(util.getParam("subsys")){
+			nexacro.setInitialVariable("environment", "ev_subSystemGb", util.getParam("subsys"));
+		}				
+		if(util.getParam("screenid")){
+		    var isMobile = util.getParam("screenid").indexOf("mobile") > -1?"Y":"N"; 
+			nexacro.setInitialVariable("environment", "ev_isMobile", isMobile);
+		}
+		if(util.getParam("menuType")){
+			nexacro.setInitialVariable("environment", "ev_menuType", util.getParam("menuType"));
+		}
+		
+		<!-- create internal iframe -->
+		<!-- USERFONT_INFORMATION : userfontid property is specified in the Environment -->
+		nexacro._prepareManagerFrame(onloadframework, [{family:'NotoSansKR-Regular', style:'normal', weight:400},{family:'NotoSansKR-Medium', style:'normal', weight:500},{family:'NotoSansKR-Bold', style:'normal', weight:700}]);
+	}
+	function onloadframework()
+	{
+		<!-- application loading -->
+		nexacro._loadADL();
+	}
+	function onfinalframework()
+	{
+		<!-- application exit -->
+	}
+	</script>
+</body>
+</html>  
+  

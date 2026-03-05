@@ -3,7 +3,7 @@ setlocal
 
 REM ===== Tomcat/JDK 경로 설정 =====
 set "SCRIPT_DIR=%~dp0"
-set "CATALINA_HOME=%SCRIPT_DIR%apache-tomcat-11.0.18"
+set "CATALINA_HOME=%SCRIPT_DIR%apache-tomcat-9.0.89"
 set "JAVA_HOME=C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10"
 
 REM ===== 필수 경로 확인 =====

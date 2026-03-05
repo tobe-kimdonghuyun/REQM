@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Upload</title>
+  </head>
+  <body>
+    <input type="file" id="fileInput" />
+    <input type="button" onclick="fn_set()"/>
+    <input type="text" id="txt1" value="" maxlength="9"/>
+    <textarea id="editor"
+            rows="5"
+            style="width:100%;box-sizing:border-box;"
+            placeholder="내용을 입력하세요..."></textarea>
+      <button onclick="saveLogs()">로그 저장하기</button>
+            <script>
+     
+      function fn_set(){
+        document.getElementById("txt1").value="AAA\rBBB\nCCC\r";
+        
+        console.log(document.getElementById("txt1").value.length);
+        document.getElementById("editor").value="AAA\rBBB\nCCC\r";
+         console.log(document.getElementById("editor").value.length);
+         console.log("로그저장1");
+         console.log("로그저장2");
+         console.log("로그저장3");
+         console.log("로그저장4");
+         console.log("로그저장5");
+      }
+      let logs = [];
+
+console.log = function (args) {
+  const message = args;
+  logs.push(message);
+  window.originalLog && window.originalLog(args);
+};
+const winston = require("winston");
+
+const logger = winston.createLogger({
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: "app.log" })
+  ]
+});
+
+logger.info("정보 로그");
+logger.error("에러 로그");
+// 로그 저장하기 버튼 동작 예시
+function saveLogs() {
+  const blob = new Blob([logs.join("\n")], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "console_logs.txt";
+  link.click();
+}
+    </script>
+  </body>
+</html>

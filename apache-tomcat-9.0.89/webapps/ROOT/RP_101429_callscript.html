@@ -1,0 +1,85 @@
+<!Doctype html>
+<html>
+    <head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <title>TEST</title>
+        <script type="text/javascript">
+
+
+function setOption(vJson){
+	
+	document.getElementById("fsetOption").value = vJson;
+}
+function setRdFileNm(vJson){
+	
+	document.getElementById("fsetRdFileNm").value = vJson;
+}
+function setRdPrint(vJson){
+	
+	document.getElementById("fsetRdPrint").value = vJson;
+}
+function setToolbar(vJson,vJson2){
+	
+	document.getElementById("fsetToolbar").value = vJson+":"+vJson2;
+}
+function OpenAppendFile(vJson){
+	
+	document.getElementById("fOpenAppendFile").value = encodeURIComponent(vJson);
+}
+function OpenFile(){
+	
+	document.getElementById("fOpenFile").value = "callscript 반응";
+}
+function setUrl(vJson){
+	
+	document.getElementById("fsetUrl").value = vJson;
+}
+function fn_nexa_content(a){
+	
+	return "nexacro callScript로 에서 받은 값을 다시 던지기 : "+a;
+}
+function setParam(vJson){
+	
+	document.getElementById("fsetParam").value = vJson;
+}
+function testFunction(_arg_RdOption,_arg_RdFileNm,_arg_RdPrint,_arg_RdEnable,_arg_RdToolbar,_arg_RdMrdList,_arg_MrdName,_arg_RdAppendReport,_arg_RdParam,_arg_RdOpenAppendFile,_arg_RdOpenFile,_arg_RdUrl){
+    // 아래의 로직은 원래 Report.js에서 코딩되어있는데  nexacro쪽에서 로직 수행하지 않고 html에서 로직 수행하는 걸로 변경
+	setOption(_arg_RdOption);
+	setRdFileNm(_arg_RdFileNm);
+	setRdPrint(_arg_RdPrint);
+	if(_arg_RdToolbar){
+        var str1 = "";
+        if(_arg_RdEnable){
+            str1 = "S";
+        }else{
+            str1 = "N";
+        }   
+        setToolbar(_arg_RdToolbar,str1);    
+    }
+    if(_arg_RdOpenAppendFile){
+        OpenAppendFile(_arg_RdOpenAppendFile);
+    }else {
+        OpenFile(_arg_RdOpenFile);
+	    setUrl(_arg_RdUrl);
+	    setParam(_arg_RdParam);
+    }
+}  
+	
+
+
+        </script>   
+    </head>
+    <body>
+        <input type = "text" id = "fsetOption"/></br>
+        <input type = "text" id = "fsetRdFileNm"/></br>
+        <input type = "text" id = "fsetRdPrint"/></br>
+        <input type = "text" id = "fsetToolbar"/></br>
+        <input type = "text" id = "fOpenAppendFile"/></br>
+        <input type = "text" id = "fsetUrl"/></br>
+        <input type = "text" id = "fOpenFile"/></br>
+        <input type = "text" id = "fsetParam"/></br>
+
+        </body>
+</html>

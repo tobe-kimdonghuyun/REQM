@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendar Test - Accessible Date Picker</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; color: #333; margin: 32px; }
+    .container { position: relative; display: block; color: #555; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+    label { display: inline-block; margin-bottom: 6px; font-weight: bold; }
+    input[type="date"] { padding: 8px 10px; font-size: 16px; }
+    button { padding: 8px 12px; font-size: 16px; margin-left: 6px; }
+    #date-help { font-size: 14px; color: #555; margin-top: 8px; }
+    #dateStatus { margin-top: 8px; font-size: 14px; }
+    form { margin-top: 8px; }
+  </style>
+</head>
+<body> 
+    <h1 id="datePickerLabel" style="font-size: 22px;">input type="date" 일반적인 동작 테스트 </h1>
+<input type="date"/>
+  <main class="container" role="group" aria-labelledby="datePickerLabel">
+    <h1 id="datePickerLabel" style="font-size: 22px;">날짜 선택</h1>
+    <form id="dateForm" novalidate>
+      <div>
+        <label for="appointment-date">예약 날짜</label>
+      </div>
+      <div>
+        <input
+          type="date"
+          id="appointment-date"
+          name="appointment-date"
+          aria-describedby="date-help"
+          required
+          placeholder="YYYY-MM-DD"
+          pattern="\d{4}-\d{2}-\d{2}"
+        />
+        <button type="button" id="openCalendarBtn" aria-controls="appointment-date" aria-label="달력 열기">달력 열기</button>
+        <button type="button" id="todayBtn" aria-label="오늘 날짜로 설정">오늘</button>
+      </div>
+      <div id="date-help">
+        형식: YYYY-MM-DD. 키보드 ↑/↓ 로 날짜를 조정할 수 있습니다.
+      </div>
+      <div id="dateStatus" role="status" aria-live="polite"></div>
+      <div style="margin-top:12px;">
+        <button type="submit" aria-label="선택한 날짜로 제출">제출</button>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    (function() {
+      var input = document.getElementById('appointment-date');
+      var openBtn = document.getElementById('openCalendarBtn');
+      var todayBtn = document.getElementById('todayBtn');
+      var form = document.getElementById('dateForm');
+      var status = document.getElementById('dateStatus');
+
+      function pad2(n){ return (n < 10 ? '0' : '') + n; }
+      function formatDateYYYYMMDD(d){
+        var y = d.getFullYear();
+        var m = pad2(d.getMonth() + 1);
+        var day = pad2(d.getDate());
+        return y + '-' + m + '-' + day;
+      }
+
+      // 오늘 버튼: Date 객체로 오늘 날짜 설정
+      todayBtn.addEventListener('click', function(){
+        var today = new Date();
+        input.value = formatDateYYYYMMDD(today);
+        status.textContent = '오늘 날짜로 설정됨: ' + input.value;
+        input.dispatchEvent(new Event('change'));
+      });
+
+      // 달력 열기: 지원 시 showPicker(), 아니면 포커스
+      openBtn.addEventListener('click', function(){
+        if (typeof input.showPicker === 'function') {
+          try { input.showPicker(); return; } catch(e) {}
+        }
+        input.focus();
+      });
+
+      // 기본 유효성 + 접근성 상태 안내
+      form.addEventListener('submit', function(e){
+        if (!input.checkValidity()) {
+          e.preventDefault();
+          var msg = '유효한 날짜를 입력하세요. 형식: YYYY-MM-DD';
+          status.textContent = msg;
+          input.setAttribute('aria-invalid', 'true');
+          input.focus();
+        } else {
+          input.removeAttribute('aria-invalid');
+          status.textContent = '제출됨: ' + input.value;
+        }
+      });
+
+      // 브라우저가 date 미지원 시 접근성 보완: placeholder 안내 강화
+      (function ensureSupport(){
+        var test = document.createElement('input');
+        test.setAttribute('type','date');
+        if (test.type !== 'date') {
+          var help = document.getElementById('date-help');
+          if (help) help.textContent = '브라우저가 달력을 지원하지 않습니다. YYYY-MM-DD 형식으로 입력해주세요.';
+        }
+      })();
+
+    })();
+  </script>
+</body>
+</html>
+

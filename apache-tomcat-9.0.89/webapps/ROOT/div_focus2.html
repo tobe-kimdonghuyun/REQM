@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>커스텀 Tab 이동 예시</title>
+    <style>
+      .box {
+        width: 200px;
+        height: 100px;
+        margin: 20px;
+        padding: 20px;
+        background-color: lightblue;
+        text-align: center;
+        line-height: 100px;
+      }
+      .focused {
+        border: 2px solid red;
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box" tabindex="-1" role="heading" aria-level="1">
+      첫 번째 DIV heading level1
+    </div>
+    <div class="box" tabindex="-1" role="heading" aria-level="2">
+      두 번째 DIV heading level2
+    </div>
+    <div class="box" tabindex="-1" role="heading" aria-level="3">
+      세 번째 DIV heading level3
+    </div>
+    <div class="box" tabindex="-1" role="heading" aria-level="4">
+        <div class="box" tabindex="-1" role="heading" aria-level="4">
+      네 번째 DIV heading level4
+    </div>
+
+    <script>
+      const boxes = document.querySelectorAll(".box")
+      let currentIndex = 0
+
+      // 첫 번째 div에 포커스 설정
+      boxes[currentIndex].classList.add("focused")
+      boxes[currentIndex].focus()
+
+      // keydown 이벤트로 Tab 키 감지 및 포커스 이동
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Tab") {
+          event.preventDefault() // 기본 Tab 동작 막기
+
+          // 기존 포커스 제거
+          boxes[currentIndex].classList.remove("focused")
+
+          // Shift 키가 눌렸다면 역방향으로 이동
+          if (event.shiftKey) {
+            currentIndex = (currentIndex - 1 + boxes.length) % boxes.length
+          } else {
+            currentIndex = (currentIndex + 1) % boxes.length
+          }
+
+          // 새 포커스 설정
+          boxes[currentIndex].classList.add("focused")
+          boxes[currentIndex].focus()
+        }
+      })
+    </script>
+  </body>
+</html>

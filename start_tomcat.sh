@@ -2,7 +2,7 @@
 # start_tomcat.sh - Start Tomcat in current shell (for WSL/Git-Bash/Unix)
 # Adjust the paths below to match your environment (WSL paths used as example).
 
-CATALINA_HOME="/mnt/d/git_prj/REQM/apache-tomcat-11.0.18"
+CATALINA_HOME="/mnt/d/git_prj/REQM/apache-tomcat-9.0.89"
 export CATALINA_HOME
 
 JAVA_HOME="/mnt/c/Program Files/Java/jdk-21"

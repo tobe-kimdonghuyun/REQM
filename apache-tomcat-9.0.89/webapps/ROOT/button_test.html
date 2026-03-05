@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Button with Dynamic Events</title>
+  </head>
+  <body>
+    <button id="dynamicButton">Click me!</button>
+	<button onclick="createFocusDiv()">div 생성</button>
+ 	<div id="message-area" style="margin-top: 20px;"></div>
+    <script>
+    function createFocusDiv() {
+        const div = document.createElement("div");
+        div.textContent = "이 div를 클릭하거나 탭으로 포커스를 주세요";
+        div.style.border = "2px solid black";
+        div.style.padding = "10px";
+        div.style.marginTop = "10px";
+        div.tabIndex = 0; // 포커스를 받을 수 있도록 설정
+
+        // onfocus 이벤트 동적 설정
+        div.addEventListener("focus", function () {
+          const msg = document.createElement("p");
+          msg.textContent = "포커스가 div에 들어왔습니다!";
+          document.getElementById("message-area").appendChild(msg);
+        });
+
+        document.body.appendChild(div);
+      }
+      // 버튼 요소를 가져옵니다.
+      const button = document.getElementById("dynamicButton")
+
+      // onkeydown 이벤트 설정
+      button.onkeydown = function (event) {
+        console.log(
+          "onkeydown event.key : " +
+            event.key +
+            ", event.keyCode : " +
+            event.keyCode
+        )
+      }
+
+      // onkeyup 이벤트 설정
+      button.onkeyup = function (event) {
+        console.log(
+          "onkeyup event.key : " +
+            event.key +
+            ", event.keyCode : " +
+            event.keyCode
+        )
+      }
+		
+      // click 이벤트 설정
+      button.onclick = function () {
+        console.log("Button clicked!")
+      }
+    </script>
+  </body>
+</html>

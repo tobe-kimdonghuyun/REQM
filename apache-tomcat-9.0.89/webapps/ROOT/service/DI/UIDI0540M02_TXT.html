@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>Download Text File</title>
+</head>
+<body>
+   <input type="file" id="fileInput" style="display: none;"/>
+    <script type="text/javascript">
+    alert("xxxxx");
+        function downloadTxtFile(content, filename) {
+		var fileInput = document.getElementById('fileInput');
+		fileInput.click();
+
+		fileInput.addEventListener('change', function(event) {
+		    var selectedFile = event.target.files[0];
+                    console.log('선택된 파일:', selectedFile);
+		    var blob = new Blob([content], { type: 'text/plain' });
+		    var link = document.createElement('a');
+		    link.href = window.URL.createObjectURL(blob);
+		    link.download = filename;
+		    link.click();
+		});
+          
+        } 
+
+        function triggerDownload() {
+	    var content = "Hello, Nexacro!";
+            var filename = "example.txt";
+	    downloadTxtFile(content, filename);
+        }
+    </script>
+</body>
+</html>

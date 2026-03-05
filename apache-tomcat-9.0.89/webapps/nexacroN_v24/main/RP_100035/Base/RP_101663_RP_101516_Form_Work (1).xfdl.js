@@ -1,0 +1,176 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("Form_Work");
+            this.set_titletext("Form_Work");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1300,1270);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("ds_list", this);
+            obj._setContents("<ColumnInfo><Column id=\"idx\" type=\"STRING\" size=\"256\"/><Column id=\"ymd\" type=\"STRING\" size=\"256\"/><Column id=\"goods\" type=\"STRING\" size=\"256\"/><Column id=\"version\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"idx\">722</Col><Col id=\"ymd\">20241029</Col><Col id=\"goods\">043</Col><Col id=\"version\">2024.10.29.1</Col><Col id=\"gubun\">001</Col></Row><Row><Col id=\"idx\">550</Col><Col id=\"ymd\">20210902</Col><Col id=\"goods\">043</Col><Col id=\"version\">2021.09.02</Col><Col id=\"gubun\">001</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Button("Button00","71","45","839","72",null,null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_text("본문의 제목이 되는 콘텐츠 블록에 대하여 <h*> 태그 제공");
+            obj.set_accessibilityrole("heading1");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static00","70","170","490","92",null,null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text("heading level1-1");
+            obj.set_font("60px/normal \"NotoSansKR\",\"Noto Sans KR\"");
+            obj.set_accessibilityrole("heading1");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01_00","190","282","626","87",null,null,null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_text("heading level2-1");
+            obj.set_font("50px/normal \"NotoSansKR\",\"Noto Sans KR\"");
+            obj.set_accessibilityrole("heading2");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01","300","389","626","97",null,null,null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.set_text("heading level3-1");
+            obj.set_font("40px/normal \"NotoSansKR\",\"Noto Sans KR\"");
+            obj.set_accessibilityrole("heading3");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01_01","400","506","626","97",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_text("heading level4-1");
+            obj.set_font("30px/normal \"NotoSansKR\",\"Noto Sans KR\"");
+            obj.set_accessibilityrole("heading4");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01_02","300","623","626","97",null,null,null,null,null,null,this);
+            obj.set_taborder("5");
+            obj.set_text("heading level3-2");
+            obj.set_font("40px/normal \"NotoSansKR\",\"Noto Sans KR\"");
+            obj.set_accessibilityrole("heading3");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01_02_00","300","740","626","97",null,null,null,null,null,null,this);
+            obj.set_taborder("6");
+            obj.set_text("heading level3-3");
+            obj.set_font("40px/normal \"NotoSansKR\",\"Noto Sans KR\"");
+            obj.set_accessibilityrole("heading3");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01_00_00","190","857","626","87",null,null,null,null,null,null,this);
+            obj.set_taborder("7");
+            obj.set_text("heading level2-2");
+            obj.set_font("50px/normal \"NotoSansKR\",\"Noto Sans KR\"");
+            obj.set_accessibilityrole("heading2");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01_02_00_00","300","964","626","97",null,null,null,null,null,null,this);
+            obj.set_taborder("8");
+            obj.set_text("heading level3-4");
+            obj.set_font("40px/normal \"NotoSansKR\",\"Noto Sans KR\"");
+            obj.set_accessibilityrole("heading3");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01_01_00","400","1081","626","97",null,null,null,null,null,null,this);
+            obj.set_taborder("9");
+            obj.set_text("heading level4-2");
+            obj.set_font("30px/normal \"NotoSansKR\",\"Noto Sans KR\"");
+            obj.set_accessibilityrole("heading4");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01_02_00_00_00","300","1198","626","97",null,null,null,null,null,null,this);
+            obj.set_taborder("10");
+            obj.set_text("heading level3-5");
+            obj.set_font("40px/normal \"NotoSansKR\",\"Noto Sans KR\"");
+            obj.set_accessibilityrole("heading3");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01_00_00_00","190","1315","626","87",null,null,null,null,null,null,this);
+            obj.set_taborder("11");
+            obj.set_text("heading level2-3");
+            obj.set_font("50px/normal \"NotoSansKR\",\"Noto Sans KR\"");
+            obj.set_accessibilityrole("heading2");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01_00_00_00_00","190","1422","626","87",null,null,null,null,null,null,this);
+            obj.set_taborder("12");
+            obj.set_text("heading level2-4");
+            obj.set_font("50px/normal \"NotoSansKR\",\"Noto Sans KR\"");
+            obj.set_accessibilityrole("heading2");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static00_00","70","1529","490","92",null,null,null,null,null,null,this);
+            obj.set_taborder("13");
+            obj.set_text("heading level1-2");
+            obj.set_font("60px/normal \"NotoSansKR\",\"Noto Sans KR\"");
+            obj.set_accessibilityrole("heading1");
+            this.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","Desktop_screen",1300,1270,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("RP_101663_RP_101516_Form_Work (1).xfdl", function() {
+
+        this.Static01_onclick = function(obj,e)
+        {
+
+        };
+
+        this.Form_Work_onload = function(obj,e)
+        {
+
+        };
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.Form_Work_onload,this);
+            this.Static01_00.addEventHandler("onclick",this.Static01_onclick,this);
+            this.Static01.addEventHandler("onclick",this.Static01_onclick,this);
+            this.Static01_01.addEventHandler("onclick",this.Static01_onclick,this);
+            this.Static01_02.addEventHandler("onclick",this.Static01_onclick,this);
+            this.Static01_02_00.addEventHandler("onclick",this.Static01_onclick,this);
+            this.Static01_00_00.addEventHandler("onclick",this.Static01_onclick,this);
+            this.Static01_02_00_00.addEventHandler("onclick",this.Static01_onclick,this);
+            this.Static01_01_00.addEventHandler("onclick",this.Static01_onclick,this);
+            this.Static01_02_00_00_00.addEventHandler("onclick",this.Static01_onclick,this);
+            this.Static01_00_00_00.addEventHandler("onclick",this.Static01_onclick,this);
+            this.Static01_00_00_00_00.addEventHandler("onclick",this.Static01_onclick,this);
+        };
+        this.loadIncludeScript("RP_101663_RP_101516_Form_Work (1).xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

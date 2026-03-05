@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkbox Example</title>
+</head>
+<body>
+
+    <label for="myCheckbox">Click me:</label>
+    <input type="checkbox" id="myCheckbox">
+	
+    <form>
+        <label>
+            <input type="radio" name="option" value="Option 1"> 옵션 1
+        </label>
+        <label>
+            <input type="radio" name="option" value="Option 2"> 옵션 2
+        </label>
+        <label>
+            <input type="radio" name="option" value="Option 3"> 옵션 3
+        </label>
+    </form>
+    <p id="output"></p>
+    
+    <script>
+        // JavaScript로 체크박스 클릭 이벤트 연결
+        const checkbox = document.getElementById('myCheckbox');
+        
+        checkbox.addEventListener('click', function() {
+            if (checkbox.checked) {
+                alert('Checkbox is checked!');
+            } else {
+                alert('Checkbox is unchecked!');
+            }
+        });
+        const radioButtons = document.querySelectorAll('input[name="option"]');
+        const output = document.getElementById('output');
+
+        // 각 라디오 버튼에 클릭 이벤트 리스너 추가
+        radioButtons.forEach(radio => {
+            radio.addEventListener('click', function () {
+                output.textContent = `선택된 옵션: ${radio.value}`;
+            });
+        });
+    </script>
+
+</body>
+</html>

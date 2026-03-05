@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<title>SMF STT</title>
+<script type="text/javascript">
+	if(!window.NEXACROHTML) {
+		window.NEXACROHTML = {};
+	}
+	if(window.NEXACROWEBBROWSER) {
+		window.NEXACROWEBBROWSER.on_fire_onusernotify(window.NEXACROWEBBROWSER, "onload_NEXACROWEBBROWSER");
+	} else if(window.nexacro) {
+		window.nexacro.fireUserNotify("onload_nexacro");
+	} else {
+		window.document.title = "onload";
+	}
+
+	var logText = "";
+	var grammarIndex;
+	var debugLog = true;
+
+	// 초기화
+	function fnInit(grammarIndex, bDebugLog) {
+		fnSetDebugLog(bDebugLog);
+
+		init(grammarIndex);
+	};
+
+	// STT start
+	function fnStt() {
+		logText = "";
+		stt(true);
+	};
+
+	// STT Stop
+	function fnSttStop() {
+		logText = "";
+		sttStop();
+	};
+
+	// Grammar Index 가져오기
+	function fnGetGrammarIndex() {
+		fnLog("grammarIndex : " + grammarIndex, "fnGetGrammarIndex");
+		return grammarIndex;
+	};
+
+	// Grammar Index 셋팅
+	function fnSetGrammar(grammarIndex) {
+		fnLog("grammarIndex : " + grammarIndex, "fnSetGrammar");
+		setGrammar(grammarIndex);
+	};
+
+	// 넥사크로에 메시지 보내기
+	function fnSendMessage(txt, caller, bLog) {
+		if(bLog != false)
+			fnLog(txt, caller);
+
+		window.nexacro.fireUserNotify(txt);
+	};
+
+	// STT 콜백 호출
+	function fnSttCallback(obj) {
+		var result = JSON.stringify(obj);
+		fnLog("result : " + result, "fnSttCallback", false);
+		fnSendMessage("[RESULT]" + result, "fnSttCallback");
+	};
+
+	// 로그 가져오기
+	function fnGetLog() {
+		fnLog("fnGetLog : " + logText, "fnGetLog");
+		return logText;
+	};
+
+	// 로그 텍스트 셋팅
+	function fnSetLogText(log) {
+		logText = log;
+	};
+
+	var logTexts = [];
+
+	// 로그 출력
+	function fnLog(txt, caller, isSendMessage) {
+		_fnLog("LOG", txt, caller, isSendMessage)
+	};
+
+	// 로그 DB 저장
+	function fnLogDB(txt, caller) {
+		_fnLog("LOGDB", txt, caller, true)
+	};
+
+	// 로그 출력 공통
+	function _fnLog(type, txt, caller, isSendMessage) {
+		const textLog = document.getElementById('log');
+
+		if(logTexts.length >= 5) logTexts.shift();
+
+		txt = "[" + caller + "] " + txt
+		logTexts.push(txt);
+
+		var textTmp = "";
+		for(var i=0; i<logTexts.length; i++)
+			textTmp += "\n" + logTexts[i];
+
+		textTmp = textTmp.substr(1);
+
+		textLog.value = textTmp;
+		textLog.scrollTop = textLog.scrollHeight;
+
+		if(debugLog && (isSendMessage != false)) fnSendMessage("[" + type + "]" + txt, "fnLog", false);
+ 
+		window.console.log(txt);
+	};
+
+	// 디버깅 로그 셋팅
+	function fnSetDebugLog(bDebugLog) {
+		debugLog = bDebugLog;
+	}
+</script>
+
+</head>
+<body style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:13px;">
+<form>
+	<textarea id="log" name="log" rows="10" cols="80"></textarea>
+</form>
+<!-- Speech SDK reference sdk. -->
+<script src="https://aka.ms/csspeech/jsbrowserpackageraw"></script>
+
+<!-- 단어 유서도 평가 Lib -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/levenshtein/1.0.5/levenshtein.min.js"
+        integrity="sha512-33ylHAa4zDN8/pTirwhJNeRSO59Le/klF+6oEwgBMOpWpwVa4b0dNKXuzB3TrIWqI/Rff9iDczybhFPCeVGDrw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="./script.js" type="module"></script>
+</body>
+</html>

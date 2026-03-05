@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<title>CodePen - Voice Recording Demo</title>
+<link rel="stylesheet" href="./style.css">
+<script type="text/javascript">
+	if(!window.NEXACROHTML) {
+		window.NEXACROHTML = {};
+	}
+	if(window.NEXACROWEBBROWSER) {
+		window.NEXACROWEBBROWSER.on_fire_onusernotify(window.NEXACROWEBBROWSER, "onload_NEXACROWEBBROWSER");
+	} else if(window.nexacro) {
+		window.nexacro.fireUserNotify("onload_nexacro");
+	} else {
+		window.document.title = "onload";
+	}
+
+	function fnSetHtml(sHtml) {
+		var element = document.body;
+		 element.innerHTML = sHtml;
+	};
+</script>
+<script type="text/javascript">
+class VoiceRecorder {
+	constructor() {
+		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+			console.log("getUserMedia supported")
+		} else {
+			console.log("getUserMedia is not supported on your browser!")
+		}
+
+		this.mediaRecorder
+		this.stream
+		this.chunks = []
+		this.isRecording = false
+
+		this.recorderRef = document.querySelector("#recorder")
+		this.playerRef = document.querySelector("#player")
+		this.startRef = document.querySelector("#start")
+		this.stopRef = document.querySelector("#stop")
+
+		this.startRef.onclick = this.startRecording.bind(this)
+		this.stopRef.onclick = this.stopRecording.bind(this)
+
+		this.constraints = {
+			audio: true,
+			video: false
+		}
+
+		this.audioURL;
+
+		this.begin = 0;
+		this.end = 0;
+		this.duration = 0;
+	}
+
+	handleSuccess(stream) {
+		this.begin = new Date(); // 측정 시작
+		this.end = 0;
+		this.duration = 0;
+
+		this.stream = stream
+		this.stream.oninactive = () => {
+			console.log("Stream ended!")
+		};
+		this.recorderRef.srcObject = this.stream
+		this.mediaRecorder = new MediaRecorder(this.stream)
+		console.log(this.mediaRecorder)
+		this.mediaRecorder.ondataavailable = this.onMediaRecorderDataAvailable.bind(this)
+		this.mediaRecorder.onstop = this.onMediaRecorderStop.bind(this)
+		this.recorderRef.play()
+		this.mediaRecorder.start()
+	}
+
+	handleError(error) {
+		console.log("navigator.getUserMedia error: ", error)
+	}
+
+	onMediaRecorderDataAvailable(e) { this.chunks.push(e.data) }
+
+	onMediaRecorderStop(e) { 
+		//const blob = new Blob(this.chunks, { 'type': 'audio/mpeg; codecs=opus' })
+		this.end = new Date(); // 측정 끝
+		this.duration = (this.begin !== 0 && this.end !== 0) ? Math.round((this.end - this.begin)/1000) : 0;
+
+		//alert(this.duration);
+		
+		const blob = new Blob(this.chunks, { 'type': 'audio/wav;' })
+
+		//document.getElementById('voiceBlob').value = blob;
+
+		blob.lastModifiedDate = new Date();
+		blob.name = "test.wav";
+
+		sendAudioFile(blob, this.duration);
+
+		this.audioURL = window.URL.createObjectURL(blob)
+
+		var file = new File([blob], blob.name);
+
+		//window.open(this.audioURL);
+		//
+		//window.URL.revokeObjectURL(this.audioURL);
+
+		this.playerRef.src = this.audioURL
+		this.chunks = []
+		this.stream.getAudioTracks().forEach(track => track.stop())
+		this.stream = null
+	}
+
+	startRecording() {
+		if (this.isRecording) return;
+		this.isRecording = true;
+		this.startRef.innerHTML = 'Recording...';
+		this.playerRef.src = '';
+		navigator.mediaDevices
+			.getUserMedia(this.constraints)
+			.then(this.handleSuccess.bind(this))
+			.catch(this.handleError.bind(this))
+	}
+	
+	stopRecording() {
+		if (!this.isRecording) return;
+		this.isRecording = false;
+		this.startRef.innerHTML = 'Record';
+		this.recorderRef.pause();
+		this.mediaRecorder.stop();
+		console.log("audioURL: ", this.audioURL);
+	}
+};
+
+window.voiceRecorder = new VoiceRecorder();
+window.headersJSON = {};
+
+var svcGroup;
+var svcUpUrl;
+var lisJWT;
+var lisUserID;
+
+function startRecording() {
+	window.voiceRecorder.startRecording();
+};
+
+function stopRecording() {
+	window.voiceRecorder.stopRecording();
+};
+
+function getAudioURL() {
+	//alert(window.voiceRecorder.audioURL);
+	return window.voiceRecorder.audioURL;
+};
+
+function sendAudioFile(blob, duration) {
+	var url = svcUpUrl;
+
+	var file = new File([blob], blob.name);
+
+	const formData = new FormData();
+	formData.append('files', file);
+	formData.append('serviceType', svcGroup);
+	formData.append('detailSavePath', "/tmp");
+
+	fetch(url, {
+		method: "POST",
+		mode: 'cors', // no-cors, cors, *same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: window.headersJSON,
+        redirect: 'follow', // manual, *follow, error
+        referrer: 'no-referrer', // no-referrer, *client
+        body: formData, // body data type must match "Content-Type" header
+	})
+	.then(res => res.json())
+	.then(data => {
+		var fileId = "";
+		if(!(data === "" || data.result === "" || data.result[0] === "" || data.result[0].fileId === "")) fileId = data.result[0].fileId;
+		//alert(fileId);
+		window.nexacro.fireUserNotify("FILEID:" + fileId + "|DURATION:" + duration);
+	})
+	.catch(err => {
+		console.log(err);
+		window.nexacro.fireUserNotify("err : ", err)
+	});
+};
+
+function init(sSvcGroup, sSvcUpUrl, sLisJWT, sLisUserID) {
+	svcGroup = sSvcGroup;
+	svcUpUrl = sSvcUpUrl;
+	lisJWT = sLisJWT;
+	lisUserID = sLisUserID;
+
+	window.headersJSON = { "LIS-JWT" : sLisJWT, "LIS-User-ID" : sLisUserID };
+};
+
+function getLIS_JWT() {
+	return lisJWT;
+};
+
+function getLIS_User_ID() {
+	return lisUserID;
+};
+
+</script>
+</head>
+<body>
+<div class="container">
+	<h1>VOICE RECORDING DEMO FTW, BRO</h1>
+	<span>Recorder</span>
+	<audio id="recorder" muted hidden></audio>
+	<div>
+		<button id="start">Record</button>
+		<button id="stop">Stop Recording</button>
+	</div>
+	<span>Saved Recording</span>
+	<audio id="player" controls></audio>
+</div>
+<script type="text/javascript">
+	window.voiceRecorder = new VoiceRecorder();
+</script>
+</body>
+</html>

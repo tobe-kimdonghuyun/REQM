@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="icon" type="image/x-icon" href="./img/titlebar_icon.ico">
+  <title>nexacro 설치 및 appliction 구동</title> 
+  <style>
+    div.container {
+      position: relative;
+      align-content: center;
+      text-align: center;
+      display: block;
+      color: #555;
+      top:50px;
+    }
+    div.errorDiv {
+      position: relative;
+      align-content: center;
+      text-align: center;
+      display: block;
+    }
+    div.debugDiv {
+      position: relative;
+      align-content: center;
+      display: block;
+    }
+  
+  .button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #f0ad4e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 24px;
+    padding: 20px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  .button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  .button:hover span {
+    padding-right: 25px;
+  }
+  
+  .button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+  
+  .txt {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    border: none;
+    color: #555;
+    text-align: center;
+    font-size: 24px;
+    padding: 20px;
+    width: 400px;
+    transition: all 0.5s;
+    margin: 10px;
+  }
+  .disabled {
+    opacity: 1;
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #ccc;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 24px;
+    padding: 20px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: default;
+    margin: 5px;
+    pointer-events: none;
+    text-decoration: none;
+  }
+  .info {
+    display: inline-block;
+    color: #fff;
+    text-align: left;
+    font-size: 24px;
+    background-color: #2196F3;
+    width:700px;
+    padding: 20px;
+    margin: 10px;
+  }
+  .warnnig {
+    display: inline-block;
+    color: #fff;
+    text-align: left;
+    font-size: 24px;
+    background-color: #d9534f;
+    padding: 20px;
+    margin: 5px;
+  }
+  </style>
+
+ <script language="javascript">
+ 
+ /**
+ *  화면 CallBack --> html 페이지 변경
+ */
+ function fnNexaCallBack(strType,strMsg,downURL)
+ {
+ 	switch(strType) 
+ 	{
+ 	// new Launcher 설치 완료
+ 	case "newlanucher" :			
+ 		var aDom = document.getElementById("linklaucher");
+ 		aDom.className = "disabled";
+ 		aDom.innerHTML = "설치완료";
+ 		break;
+ 		
+ 	// Nexacro engine 설치 완료
+ 	case "nexacro" :				
+ 		var aDom = document.getElementById("linkEngine");
+ 		aDom.className = "disabled";
+ 		aDom.innerHTML = "설치완료";
+ 		break;
+ 	
+ 	// engine 미설치
+ 	case "EngineDownload" :			
+ 		var divCon = document.getElementById("errorDiv")
+ 		divCon.innerHTML = "<H3>"+strMsg+"</H3>";
+		divCon = document.getElementById("linkEngine");
+ 		divCon.href = downURL;
+ 		break;
+ 	
+ 	// TPLService 미설치
+ 	case "TPLDownloadNewLauncher" :	
+ 		var divCon = document.getElementById("errorDiv")
+ 		divCon.innerHTML = "<H3>"+ strMsg +"</H3>";
+ 		break;
+ 	
+ 	// 처리완료
+ 	case "close" :					
+ 		var divCon = document.getElementById("errorDiv")
+ 		divCon.innerHTML = "<H3>"+ strMsg +"</H3>";
+ 		break;
+ 		
+ 	// 오류 발생
+ 	case "error" :					
+ 		var divCon = document.getElementById("errorDiv")
+ 		divCon.innerHTML = "<H3>"+strMsg+"</H3>";
+ 		break;
+ 	default :
+ 	}
+ }
+ </script>
+ 
+ <script type="text/javascript" src="./newLauncher.js" charset="UTF-8">
+ </script>  
+ 
+</head>
+<body>
+<div id="container" class="container">
+  <div id="contents">
+    <div id="divtxt" class="divtxt">
+      <span class="info">
+	자동으로 파일이 다운로드 되지 않을 경우 설치 버튼을 눌러<br> 파일을 다운로드 후 설치를 진행에 주시기 바랍니다.
+      </span>
+      <p style="font-size: 24px;"><span>설치 후에는 <strong class="warnnig">새로고침</strong> 또는 <strong class="warnnig">재접속</strong>하여 확인하시기 바랍니다.</span></p>
+
+		<table style="border: 2px solid red; margin:auto; width:700px; height:150px">
+			<tr>
+				<td>
+					<b>설치 후 오류시 조치사항</b></br>
+					1. 설치시, 실행중인 모든 프로그램을 종료한 후 설치해 주세요.</br>
+					2. 처음 접속시 정상 작동하지 않을 경우 단축아이콘을 관리자 권한으로 실행 해주세요.</br>
+					3. VCRUNTIME140_1.dll 관련 오류문구가 출력될시 아래 URL의 프로그램을 설치해주세요.</br>
+						X86 <a href = "https://aka.ms/vs/17/release/vc_redist.x86.exe">https://aka.ms/vs/17/release/vc_redist.x86.exe</a></br>
+						X64 <a href = "https://aka.ms/vs/17/release/vc_redist.x64.exe">https://aka.ms/vs/17/release/vc_redist.x64.exe</a></br>
+						<!--출처 : https://learn.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170-->
+					4. Nexacro Engine [설치]버튼으로 설치되지 않을 경우에는 아래 URL을 Click하여<br> 프로그램을 설치해주세요.<br>
+						X86 <a href = "./engine/NexacroN_SetupRuntime_x86.exe">32운영체제용 설치</a></br>						
+				</td>
+			</tr>
+		</table>	  
+		<br>	  
+    </div>  
+    <div id="installFile">
+      <div id="launcher">
+        <span class="txt" >New Launcher</span>
+        <a id="linklaucher" class="button" href="./engine/TPLSvc_Setup.exe">설치</a>
+      </div>
+      <div id="nexacro">
+        <span class="txt">Nexacro Engine</span>
+
+	<script language="javascript">
+	if (strEngineFileName == "NexacroN_SetupRuntime_x86.exe") {
+		document.write ('<a id="linkEngine" class="button" href="./engine/NexacroN_SetupRuntime_x86.exe">설치</a>');
+	}else {
+		document.write ('<a id="linkEngine" class="button" href="./engine/NexacroN_SetupRuntime_x64.exe">설치</a>');
+	}
+	</script>
+
+      </div>
+    </div>
+  </div>
+  <div id="errorDiv" class="errorDiv">
+  </div>
+</div>
+<br><br>
+<div id="debugDiv" align="center">
+    <!-- result -->
+    <textarea id="debugTextBox" rows="50" cols="100" style="display:none;"></textarea>
+</div>
+</body>
+</html>

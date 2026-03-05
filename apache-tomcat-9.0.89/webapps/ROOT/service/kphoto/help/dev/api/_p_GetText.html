@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<title>K Photo Developer Manual</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link href="../../css/help.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="raonkhelp_content_right">
+<div class="right_con">           
+    <h3 class="title">K Photo :: Config :: GetText</h3>
+    <p class="ttl">GetText</p>
+    <p class="txt">
+        이미지에 추가된 텍스트를 뽑을지를 설정합니다.
+    </p>
+    <p class="mttl01">remarks</p>               
+    <p class="txt">
+        기본값은 "1"이며, "0"으로 설정 시 이미지에 추가된 텍스트를 뽑지 않습니다.<br />
+    </p>    
+    <p class="mttl01">sample code</p>             
+    <div class="cord">
+        <pre class="pre">
+&#60;script type="text/javascript" src="kphoto/js/raonkphoto.js"&#62;&#60;/script&#62;	
+
+&#60;script type="text/javascript"&#62;
+    function RAONKPHOTO_OnSaveComplete(photoID, returnObject){
+        //이미지 저장 후 이미지에 추가 된 텍스트 보여주는 예제
+        var text = "";
+
+        if (returnObject.text) {
+            var len = returnObject.text.length;
+            for (var i = 0; i < len; i++){
+                text += 'text ' + i + ' -> ' + returnObject.text[i] + '\n';
+            }
+        } else{
+            text = "추가 된 텍스트가 없습니다.";
+        }
+        alert(text);
+    }
+&#60;/script&#62;
+
+&#60;!-- ..... 생략 ..... --&#62;
+ 
+&#60;div style="width:800px;height:200px"&#62;  
+    &#60;script type="text/javascript"&#62;
+        var paramObj = {
+            Id: 'photo1',
+
+            //이미지에 추가 된 텍스트를 뽑도록 설정합니다.
+            GetText: '1'
+        };
+
+        new RAONKPhoto(paramObj);
+    &#60;/script&#62;
+&#60;/div&#62;
+        </pre>  
+    </div>                   
+    </div>
+</div>
+</body>
+</html>
+
