@@ -1,0 +1,458 @@
+(function()
+{
+    return function(nexacro, system, trace)
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("fileupdown");
+            this.set_titletext("New Form");
+            if (nexacro.Form == this.constructor)
+            {
+                this._setFormPosition(840,560);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new nexacro.Dataset("dsUpload", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [{"id" : "CHK","size" : "256","type" : "STRING"},{"id" : "FILE_NAME","size" : "256","type" : "STRING"},{"id" : "FILE_URL","size" : "256","type" : "STRING"},{"id" : "FILE_ID","size" : "256","type" : "STRING"},{"id" : "DEPTH","size" : "256","type" : "STRING"},{"id" : "STATUS","size" : "256","type" : "STRING"},{"id" : "FiLE_SIZE","size" : "256","type" : "STRING"}]}});
+            this.addChild(obj.name, obj);
+
+
+            obj = new nexacro.Dataset("dsDownload", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [{"id" : "CHK","size" : "256","type" : "STRING"},{"id" : "FILE_NAME","size" : "256","type" : "STRING"},{"id" : "FILE_URL","size" : "256","type" : "STRING"},{"id" : "DEPTH","size" : "256","type" : "STRING"},{"id" : "STATUS","size" : "256","type" : "STRING"},{"id" : "FiLE_SIZE","size" : "256","type" : "STRING"}]}});
+            this.addChild(obj.name, obj);
+
+
+            obj = new nexacro.Dataset("dsUpResult", this);
+            obj._setContents({});
+            this.addChild(obj.name, obj);
+
+
+            obj = new nexacro.Dataset("Dataset03", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [{"id" : "IDX","size" : "5","type" : "string"},{"id" : "ObjectName","size" : "100","type" : "string"},{"id" : "ObjectID","size" : "200","type" : "string"},{"id" : "TestType","size" : "8","type" : "string"},{"id" : "TestObject","size" : "10","type" : "string"},{"id" : "TestValue","size" : "100","type" : "string"},{"id" : "ResultValue","size" : "10","type" : "string"}]}});
+            this.addChild(obj.name, obj);
+
+
+            obj = new nexacro.FileDownTransfer("fileDownTrans", this);
+            this.addChild(obj.name, obj);
+
+
+            obj = new nexacro.FileUpTransfer("fileUpTrans", this);
+            this.addChild(obj.name, obj);
+
+
+            obj = new nexacro.FileDialog("fileDialog", this);
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new nexacro.Button("btnAdd","10","32","47","31",null,null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_text("추가");
+            this.addChild(obj.name, obj);
+
+            obj = new nexacro.Grid("Grid00","10","71","820","201",null,null,null,null,null,null,this);
+            obj.set_autofittype("col");
+            obj.set_binddataset("dsUpload");
+            obj.set_nodatatext("파일을 드래그하여 첨부 할 수 있습니다.");
+            obj.set_taborder("1");
+            obj._setContents("<Formats><Format id=\"default\"><Columns><Column band=\"left\" size=\"25\"/><Column size=\"152\"/><Column size=\"320\"/><Column size=\"58\"/></Columns><Rows><Row band=\"head\" size=\"24\"/><Row size=\"24\"/></Rows><Band id=\"head\"><Cell displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"FILE_NAME\"/><Cell col=\"2\" text=\"FILE_URL\"/><Cell col=\"3\" text=\"SIZE\"/></Band><Band id=\"body\"><Cell displaytype=\"checkboxcontrol\" edittype=\"checkbox\" text=\"bind:CHK\"/><Cell col=\"1\" displaytype=\"normal\" edittype=\"none\" text=\"bind:FILE_NAME\" treelevel=\"bind:DEPTH\"/><Cell col=\"2\" text=\"bind:FILE_URL\"/><Cell col=\"3\" text=\"bind:FiLE_SIZE\" treelevel=\"bind:DEPTH\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
+
+            obj = new nexacro.Button("btnSave","60","33","110","31",null,null,null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_text("정상 전송-promise");
+            this.addChild(obj.name, obj);
+
+            obj = new nexacro.ProgressBar("ProgressBar00","630","30","200","31",null,null,null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.set_min("0");
+            obj.set_max("100");
+            this.addChild(obj.name, obj);
+
+            obj = new nexacro.TextArea("TextArea00","12","289","818","151",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
+            this.addChild(obj.name, obj);
+
+            obj = new nexacro.Button("Button00","173","32","157","34",null,null,null,null,null,null,this);
+            obj.set_taborder("5");
+            obj.set_text("errorcode 음수로  던질경우");
+            this.addChild(obj.name, obj);
+
+            obj = new nexacro.Button("Button00_00","332","32","138","34",null,null,null,null,null,null,this);
+            obj.set_taborder("6");
+            obj.set_text("jsp에서 500에러 발생시");
+            this.addChild(obj.name, obj);
+
+            obj = new nexacro.Button("btnSave00","475","33","145","31",null,null,null,null,null,null,this);
+            obj.set_taborder("7");
+            obj.set_text("callbackTest");
+            this.addChild(obj.name, obj);
+
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new nexacro.Layout("default","",840,560,this,function(p){});
+            obj.set_mobileorientation("landscape");
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("FileUpTransfer_FileDownTransfer_Sample04.xfdl", function(nexacro, system, trace) {
+        this.saveUrl = "http://172.10.12.45:9090/updown/";
+        this.folderName = "fileSample";	//file directory
+        this.flg = "promise";
+        this.btnSave_onclick = function(obj,e)
+        {
+        	const returntype = "promise";
+        	nexacro.setHTTPHeaderVariable("dynamicHTTP", "new value");
+        	this.TextArea00.deleteText();
+        	var ret = this.uploadfile_temp("test1",returntype);
+        	//const req = this.fileUpTrans.upload(this.saveUrl +"fileUpload_postdatatest3_code_100.jsp?filefolder="+this.folderName, returntype);
+        	if (ret)
+        	{
+        		ret.then(res => {
+        			trace("✅ 전송완료 : req.then 이후 확인 res = ["+res+"]\n");
+        			this.TextArea00.insertText("✅ 전송완료 : req.then 이후 확인 res = ["+res+"]\n");
+        			//this.callbackFunction(ErrorCode, errormessage);
+
+        		}).catch(err =>
+        			{this.TextArea00.insertText(" upload-promise error:"+ err.ErrorMsg+", ret : "+ret+"\n");
+        		}).finally(() => {
+        			this.TextArea00.insertText("finally download-promise end\n");
+        		});
+        	}
+        	else
+        		this.TextArea00.insertText("return upload-promise error ret : "+ret+"\n");
+        };
+        this.btnSave00_onclick = function(obj,e)
+        {
+        	const returntype = "promise";
+        	this.TextArea00.deleteText();
+        	const serviceID = "test4";
+        	this.TextArea00.insertText("respone로 담긴 ErrorCode, ErrorMsg값을 promise에서 받아서 처리하는 테스트\n");
+        	var ret = this.uploadfile_temp("test4",returntype);
+        	if (ret)
+        	{
+        		ret.then(([ErrorCode, ErrorMsg])=> {
+        			this.TextArea00.insertText("✅ 전송완료 : req.then 이후 확인 ErrorCode= ["+ErrorCode+"], ErrorCode= ["+ErrorMsg+"]\n");
+        			this.callbackFunction(serviceID, ErrorCode, errormessage);
+
+        		}).catch(err => this.TextArea00.insertText("upload-promise error:"+ err.ErrorMsg+"\n"));
+
+        	}
+        	else
+        		this.TextArea00.insertText("return upload-promise error ret : "+ret+"\n");
+        };
+
+        this.callbackFunction = function(serviceID, ErrorCode, ErrorMsg)
+        {
+        	//trace("Promise Form callbackFunction : ", "serviceId-"+svcId, "errorCode-"+err, "errorMsg-"+msg);
+        	this.TextArea00.insertText("Promise Form callbackFunction 실행  serviceID : ["+serviceID+"], errorcode : ["+ErrorCode+"], errormessage : ["+ErrorMsg+"]\n");
+        };
+        this.callbackFunction1 = function(errorcode, errormessage)
+        {
+        	//trace("Promise Form callbackFunction : ", "serviceId-"+svcId, "errorCode-"+err, "errorMsg-"+msg);
+        	trace("Promise Form callbackFunction : ", "errorcode-",errorcode, "errormessage-",errormessage);
+        };
+
+        this.Button00_onclick = function(obj,e)
+        {
+        	const returntype = "promise";
+        	this.TextArea00.deleteText();
+        	this.TextArea00.insertText("errorcode 음수로  던질경우 테스트 시작\n");
+        	var ret = this.uploadfile_temp("test2",this.flg);
+        	//const req =  this.fileUpTrans.upload(this.saveUrl +"fileUpload_postdatatest3_errorcode.jsp?filefolder="+this.folderName, returntype);
+        	if (ret)
+        	{
+        		ret.then(res => {
+        			this.TextArea00.insertText("✅ 전송완료 : req.then 이후 확인 errorcode= ["+res+"]\n");
+        			//this.callbackFunction(ErrorCode, errormessage);
+
+        		}).catch(err => this.TextArea00.insertText("upload-promise error:"+ err.ErrorMsg+"\n"));
+
+        	}
+        	else
+        		this.TextArea00.insertText("return upload-promise error ret : "+ret+"\n");
+        }
+
+        this.Button00_00_onclick = function(obj,e)
+        {
+        	const returntype = "promise";
+        	this.TextArea00.deleteText();
+        	this.TextArea00.insertText("jsp에서 500에러 발생시 테스트시작 \n");
+        	var ret = this.uploadfile_temp("test3",returntype);
+        	//const req = this.fileUpTrans.upload(this.saveUrl +"fileUpload_postdatatest3_httpcode_error.jsp?filefolder="+this.folderName, returntype);
+        	if (ret)
+        	{
+        		ret.then(res => {
+        			this.TextArea00.insertText("✅ 전송완료 : req.then 이후 확인 res= ["+res+"]\n");
+        			//this.callbackFunction(ErrorCode, errormessage);
+
+        		}).catch(err => this.TextArea00.insertText("  upload-promise error:"+ err.ErrorMsg+"\n"));
+
+        	}
+        	else
+        		this.TextArea00.insertText("return upload-promise error ret : "+ret+"\n");
+        };
+        this.btnAdd_onclick = function(obj,e)
+        {
+        	this.fileDialog.open('nexacro', FileDialog.MULTILOAD);
+        };
+
+
+
+        this.uploadfile_temp = function(flag,returntype)
+        {
+        	this.fileUpTrans.clearPostDataList();
+
+        	var arrNameList = new Array();
+        	for(var i=0; i<this.dsDownload.getRowCount(); i++)
+        	{
+        		//fileDownload_postdatatestAll.jsp -> request.getParameter("filenamelist");
+        		arrNameList[i] = this.dsDownload.getColumn(i, "FILE_NAME");
+        	}
+
+        	this.fileUpTrans.setPostData(
+        		"filefolder",
+        		"fileSample"
+        	);
+        	//var arrNameList = this.fileDownTrans.getPostData("filenamelist");
+        	this.fileUpTrans.setPostData(
+        		"filenamelist",
+        		arrNameList
+        	);
+
+        	//file upload
+        	if(flag == "test1")
+        		return this.fileUpTrans.upload(this.saveUrl +"fileUpload_postdatatest3_code_100.jsp?filefolder="+this.folderName, returntype);
+        	else if(flag == "test2")
+        		return this.fileUpTrans.upload(this.saveUrl +"fileUpload_postdatatest3_errorcode.jsp?filefolder="+this.folderName, returntype);
+        	else if(flag == "test3")
+        		return this.fileUpTrans.upload(this.saveUrl +"fileUpload_postdatatest3_httpcode_error.jsp?filefolder="+this.folderName, returntype);
+        	else if(flag == "test4")
+        		return this.fileUpTrans.upload(this.saveUrl +"fileUpload_postdatatest_code_1.jsp?filefolder="+this.folderName, returntype);
+        }
+        this.fileDialog_onclose = function(obj,e)
+        {
+        	if(this.gfnIsNull(e.virtualfiles))
+        	{
+        		return;
+        	}
+
+        	this.addFileList(e.virtualfiles);
+        };
+
+        this.fileList_onsuccess = function(obj, e)
+        {
+        	//getFileSize() call --> reason : 9
+        	if (e.reason == 9)
+        	{
+        		var nRowIdx = this.dsUpload.addRow();
+        		this.dsUpload.setColumn(nRowIdx, "FILE_NAME", obj.filename);
+        		this.dsUpload.setColumn(nRowIdx, "FiLE_SIZE", this.cutFileSize(e.filesize));
+        		this.dsUpload.setColumn(nRowIdx, "FILE_URL",  obj.fullpath);
+        		this.dsUpload.setColumn(nRowIdx, "FILE_ID",	  obj.name);
+
+        		//this.fullFilesize += e.filesize;
+
+        		if(this.ProgressBar00.pos > 0)
+        		{
+        			this.ProgressBar00.set_pos(0);
+        		}
+        	}
+        }
+        this.gfnIsNull = function (Val)
+        {
+        	if (new String(Val).valueOf() == "undefined") return true;
+        	if (Val == null) return true;
+        	if (("x" + Val == "xNaN") && (new String(Val.length).valueOf() == "undefined")) return true;
+        	if (Val.length == 0) return true;
+
+        	return false;
+        }
+        this.addFileList = function(filelists)
+        {
+        	//array type virtualfile List
+        	var vFile;
+        	var len = filelists.length;
+        	for (var i = 0; i < len; i++)
+        	{
+        		vFile = filelists[i];
+        		this.fileUpTrans.addFile(vFile.name,vFile);
+
+        		vFile.addEventHandler("onsuccess", this.fileList_onsuccess, this);
+        		vFile.addEventHandler("onerror", this.fileList_onerror, this);
+
+        		vFile.open(null, VirtualFile.openRead);
+        		vFile.getFileSize();	//return file size
+        		//vFile.close();
+        	}
+        }
+        this.cutFileSize = function(filesize)
+        {
+        	var sOutput = filesize + " bytes";
+        	for (var aMultiples = ["KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"], nMultiple = 0, nApprox = filesize / 1024; nApprox > 1; nApprox /= 1024, nMultiple++)
+        	{
+        		sOutput = nApprox.toFixed(3) + " " + aMultiples[nMultiple];
+        	}
+        	return sOutput;
+        };
+        this.fileUpTrans_onerror = function(obj,e)
+        {
+        	this.TextArea00.insertText("this.fileUpTrans_onerror e.statuscode : "+e.statuscode+", e.errortype : "+e.errortype+", e.errormsg : "+e.errormsg);
+        };
+
+        this.fileUpTrans_onprogress = function(obj,e)
+        {
+        	var rtnPercent = this.fnGetPercent(e.loaded,e.total);
+
+        	this.ProgressBar00.set_pos(rtnPercent);
+        };
+
+        this.fileUpTrans_onsuccess = function(obj,e)
+        {
+        	this.TextArea00.insertText("fileUpTrans_onsuccess e.code : "+e.code+", e.message : "+e.message+"\n");
+        	var objCallDs = e.datasets[0];
+        	var sFileid = "";
+        	for(var i=0; i<objCallDs.getRowCount(); i++)
+        	{
+        		sFileid = this.dsUpload.getColumn(i,"FILE_ID");
+        		this.fileUpTrans.removeFile(sFileid);			//filelist remove1
+
+        		this.dsUpload.setColumn(i,"FILE_URL",objCallDs.getColumn(i,"savePath"));
+        		this.dsUpload.setColumn(i,"FILE_ID", "");
+        	}
+
+        	//alert("전송완료"+objCallDs.getColumn(0,"httpheadervalue"));
+        	trace("전송완료 ");
+        };
+
+        this.fnGetPercent = function(nload,nTotal)
+        {
+        	//일부값 ÷ 전체값 X 100
+        	var nCurPercent = (nload / nTotal) * 100;
+        	return nCurPercent;
+        };
+        this.Button05_onclick = function(obj,e)
+        {
+        	/*
+        	trace("start upload-promise");
+        	const req = this.uploadfile("promise");
+        	trace("run upload-promise");
+        	if (req)
+        	{
+        		req.then(([errorcode,errormessage]) => {
+        			trace("✅ 사용자 조회 완료: req.then 이후 확인 errorcode= [",errorcode,"], errormessage = [",errormessage ,"]");
+        			this.callbackFunction1(errorcode, errormessage);
+
+        		}).catch(err => trace(sID,"  upload-promise error:", err.errorMsg));
+
+        	}
+        	else
+        		trace("return upload-promise error");
+        	*/
+        	this.TextArea00.deleteText();
+        	this.TextArea00.insertText("start upload-promise");
+        	const retP = this.uploadfile("promise");
+        	this.TextArea00("\nrun upload-promise");
+        	if (retP)
+        	{
+        		retP.then(ret => {
+        			this.TextArea00.insertText("\nthen upload-success=" + ret);
+        		}).catch(err => {
+        			this.TextArea00.insertText("\natch upload-error=" + err);
+        		}).finally(() => {
+        			this.TextArea00.insertText("\nfinally upload-promise end");
+        		});
+        	}
+        	else
+        		this.TextArea00.insertText("\nreturn upload-promise error");
+        };
+
+
+        // this.uploadfile = function(returntype)
+        // {
+        // 	this.fileUpTrans.clearPostDataList();
+        //
+        // 	var arrNameList = new Array();
+        // 	for(var i=0; i<this.dsDownload.getRowCount(); i++)
+        // 	{
+        // 		//fileDownload_postdatatestAll.jsp -> request.getParameter("filenamelist");
+        // 		arrNameList[i] = this.dsDownload.getColumn(i, "FILE_NAME");
+        // 	}
+        //
+        // 	this.fileUpTrans.setPostData(
+        // 		"filefolder",
+        // 		"fileSample"
+        // 	);
+        // 	//var arrNameList = this.fileDownTrans.getPostData("filenamelist");
+        // 	this.fileUpTrans.setPostData(
+        // 		"filenamelist",
+        // 		arrNameList
+        // 	);
+        //
+        // 	//file upload
+        // 	return this.fileUpTrans.upload(this.saveUrl +"fileUpload_postdatatest3.jsp?filefolder="+this.folderName, returntype);
+        // }
+        // this.Button00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+        // {
+        //
+        //  	this.TextArea00.deleteText();
+        //  	const res = this.fileUpTrans.getAllResponseHeaders();
+        //   	if (!res)
+        //  		return;
+        //
+        //   	Object.keys(res).forEach(key => {
+        // 		const value = res[key];
+        //   		if(key == "jsp_header"){
+        //   			trace(`${key} : ${value}`);
+        //   			this.TextArea00.insertText('getResponseHeader(' + key + ') => ' + this.fileUpTrans.getResponseHeader(key)+"\n");
+        //   		}
+        //   	});
+        //
+        // };
+
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.btnAdd.addEventHandler("onclick",this.btnAdd_onclick,this);
+            this.Grid00.addEventHandler("oncelldblclick",this.Grid00_oncelldblclick,this);
+            this.Grid00.addEventHandler("ondrop",this.Grid00_ondrop,this);
+            this.btnSave.addEventHandler("onclick",this.btnSave_onclick,this);
+            this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
+            this.Button00_00.addEventHandler("onclick",this.Button00_00_onclick,this);
+            this.btnSave00.addEventHandler("onclick",this.btnSave00_onclick,this);
+            this.fileDownTrans.addEventHandler("onerror",this.fileDownTrans_onerror,this);
+            this.fileDownTrans.addEventHandler("onprogress",this.fileDownTrans_onprogress,this);
+            this.fileDownTrans.addEventHandler("onsuccess",this.fileDownTrans_onsuccess,this);
+            this.fileUpTrans.addEventHandler("onerror",this.fileUpTrans_onerror,this);
+            this.fileUpTrans.addEventHandler("onprogress",this.fileUpTrans_onprogress,this);
+            this.fileUpTrans.addEventHandler("onsuccess",this.fileUpTrans_onsuccess,this);
+            this.fileDialog.addEventHandler("onclose",this.fileDialog_onclose,this);
+        };
+
+        this.loadIncludeScript("FileUpTransfer_FileDownTransfer_Sample04.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();
