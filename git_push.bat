@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 setlocal
 
 :: 인자값 확인

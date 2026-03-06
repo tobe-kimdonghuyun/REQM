@@ -11,9 +11,11 @@ copy /Y "%DEPLOY_SRC%\NexacroN_Deploy_JAVA.jar" "%DEPLOY_DST%NexacroN_Deploy_JAV
 copy /Y "%DEPLOY_SRC%\log4j2.xml"              "%DEPLOY_DST%log4j2.xml"              >nul
 echo     - start-jar.bat, NexacroN_Deploy_JAVA.jar, log4j2.xml 복사 완료
 
-REM ===== JAVA_HOME 확인 =====
-if "%JAVA_HOME%" == "" (
-    echo [오류] 환경 변수 JAVA_HOME 이 설정되지 않았습니다.
+REM ===== JAVA_HOME 설정 (상대 경로) =====
+set "JAVA_HOME=%~dp0JDK"
+if not exist "%JAVA_HOME%\bin\java.exe" (
+    echo [오류] JDK 폴더를 찾을 수 없거나 java.exe가 존재하지 않습니다: %JAVA_HOME%
+    pause
     exit /b 1
 )
 
