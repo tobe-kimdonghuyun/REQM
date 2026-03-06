@@ -1,0 +1,446 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sem_srsrm01_m00" width="1200" height="745" titletext="지하수수질검사결과관리" onload="fnOnload" nHeight="754">
+    <Layouts>
+      <Layout height="745" width="1200" screenid="ScreenDeskTop">
+        <Static id="sta00" taborder="3" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="divTitle" taborder="0" left="0" top="sta00:0" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="지하수수질검사결과관리" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="600" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta01" taborder="4" left="0" top="divTitle:0" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="divSearch" taborder="1" left="0" top="sta01:0" height="70" cssclass="div_WF_Search" right="0" accessibilityenable="false" accessibilityrole="none" text="">
+          <Layouts>
+            <Layout initvalueid="ivDivAccessibilityOff">
+              <Button id="btnSearch" taborder="8" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="divSearch_btnSearch_onclick" initvalueid="ivBtnAccessibilityButton"/>
+              <Static id="staBizNm" taborder="0" text="사업명" left="0" top="20" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOff" width="77"/>
+              <Combo id="cboBizNm" taborder="1" left="staBizNm:0" height="30" innerdataset="dsBizList" codecolumn="bizSn" datacolumn="bizNm" index="0" readonly="false" top="20" value="" initvalueid="ivCmbReadOnly" accessibilitylabel="사업명" onclick="Common_onclick" text="" width="200" onitemchanged="divSearch_cboBizNm_onitemchanged" displaynulltext="- 선택 -"/>
+              <Static id="staAyr" taborder="2" text="년도" left="cboBizNm:0" top="20" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOff" width="63"/>
+              <Combo id="cboAyr" taborder="3" left="staAyr:0" width="120" height="30" innerdataset="dsAyrList" codecolumn="ayr" datacolumn="ayr" index="0" readonly="false" top="20" initvalueid="ivCmbReadOnly" accessibilitylabel="년도" text="" displaynulltext="- 선택 -"/>
+              <Static id="staQtrScCd" taborder="4" text="분기" left="cboAyr:0" top="20" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOff" width="63"/>
+              <Combo id="cboQtrScCd" taborder="5" left="staQtrScCd:0" width="120" height="30" innerdataset="dsQtrScCd" codecolumn="unyCdValue" datacolumn="unyCdValueNm" index="0" readonly="false" top="20" initvalueid="ivCmbReadOnly" accessibilitylabel="분기" text=""/>
+              <Static id="staShlNm" taborder="6" text="학교명" left="cboQtrScCd:0" top="20" height="30" initvalueid="ivStcAccessibilityOff" width="77" cssclass="sta_WF_Searchtxt01"/>
+              <Combo id="cboShlNm" taborder="7" left="staShlNm:0" width="200" height="30" innerdataset="dsShlList" codecolumn="shlCd" datacolumn="shlNm" index="0" readonly="false" top="20" initvalueid="ivCmbReadOnly" accessibilitylabel="학교명" text="" value=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta02" taborder="5" left="0" top="divSearch:0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Grid id="grdMain" taborder="2" left="0" top="sta02:0" height="480" autofittype="col" right="0" binddataset="dsMain" selecttype="cell" initvalueid="ivGrdAccessibilityOn" oncellclick="grdMain_oncellclick" accessibilitylabel="지하수수질검사결과표(발주기관명,검사대상학교,검사년도,분기,전체검사여부,작성여부)">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="129"/>
+                <Column size="193"/>
+                <Column size="109"/>
+                <Column size="113"/>
+                <Column size="143"/>
+                <Column size="92"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="발주기관명"/>
+                <Cell col="1" text="검사대상학교" cssclass="LineNo"/>
+                <Cell col="2" text="검사년도"/>
+                <Cell col="3" text="분기"/>
+                <Cell col="4" text="전체검사여부"/>
+                <Cell col="5" text="작성여부"/>
+              </Band>
+              <Band id="body">
+                <Cell textAlign="center" text="bind:slctnInstNm"/>
+                <Cell col="1" cssclass="LineNo" textAlign="center" text="bind:shlNm" textDecoration="none"/>
+                <Cell col="2" textAlign="center" text="bind:ayr"/>
+                <Cell col="3" calendardateformat="yyyy-MM-dd " textAlign="center" text="bind:qtrScNm" textDecoration="underline" cssclass="cell_WF_underline,cell_WF_Pointer,cell_WF_BlueB"/>
+                <Cell col="4" text="bind:allItmInspYn" textAlign="center"/>
+                <Cell col="5" textAlign="center" text="bind:wrtYn"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="sta04" taborder="6" left="0" top="grdMain:0" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff" height="30"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    위생점검등록서비스 > 지하수수질검사결과관리
+*  @FileName 	sem_srsrm01_m00.xfdl 
+*  @Creator 	Kangchaeyoon
+*  @CreateDate 	2022.10.19
+*  @Desction    위생점검등록서비스 > 지하수수질검사결과관리
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.10.19            Kangchaeyoon                   최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_cddcCd;  // 시도교육청 코드
+this.fv_brno; 	 //사업자등록번호
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	//시도교육청 세팅
+	this.fv_cddcCd = this.smfGetCddcCode();
+	this.dsSearch.setColumn(0, "cddcCd", this.fv_cddcCd);
+	
+	//사업자등록번호 세팅
+	this.fv_brno = this.smfGetBrno();
+	this.dsSearch.setColumn(0, "brno", this.fv_brno);	
+	
+	// 서버단에서 설정한 유효성 검증 목록을 획득하여 설정
+	this.smfValidateService("validateMain", {
+			url : "/sem_srs_rm01_000.do",
+		})
+		.mappingRulesetToForm(this.divSearch, "search")
+		.callback(function(callbackParams) {
+		})
+		.run()
+	;
+	
+	// 공통코드의 코드구분
+	this.smfCodeList("code", [this.dsQtrScCd])
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		})
+	;
+	
+	//조회조건 조회
+	this.fnSearchInqCondCn(); 
+	
+	//조회조건(년도) 세팅
+	this.yearCmbSet();
+	
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+};
+
+/**
+ *  팝업 CALLBACK
+ */
+this.fnPopupCallback = function(context, responseParams, sender){
+	this.fnSearch();
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * @description 조회조건 조회 Transaction 
+ */
+ this.fnSearchInqCondCn = function()
+{
+ 	// 서비스 객체 생성
+	this.smfSearchService("listInqCondCn")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if (this.dsApiResponseList.getColumn(0, 'prcsRltCd') == 'SUCC'){
+				this.divSearch.form.cboBizNm.set_index(0);
+				this.divSearch.form.cboAyr.set_index(0);
+				this.fnComboShlSet();
+			}else{
+				this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'errCn')]);
+			}
+		});
+};
+
+/**
+ * @description 목록 조회 Transaction
+ */
+this.fnSearch = function()
+{
+ 	// 서비스 객체 생성
+	this.smfSearchService("list")
+		// 데이터 검증
+		.validateForm(this.divSearch)	
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;		
+			
+			if (this.dsApiResponseList.getColumn(0, 'prcsRltCd') == 'SUCC'){
+				// 작성여부 컬럼 값 세팅
+				this.wrtYnChk();
+			}else{
+				this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'errCn')]);
+			}	
+		});
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * @description 조회조건 년도 세팅 : 현재년도 ~  현재년도-2
+*/
+this.yearCmbSet = function(){
+	var today = new nexacro.Date();
+	var year = today.getFullYear();
+	
+	for(var i = 0; i < 3; i++){
+		var yearVal = year - i;
+		this.dsAyrList.addRow();
+		this.dsAyrList.setColumn(i, 'ayr', yearVal);
+	}
+};
+
+ /**
+ * @description 학교명 콤보박스 세팅
+*/
+this.fnComboShlSet = function(){
+	this.dsShlList.filter("bizSn == " + this.dsSearch.getColumn(0, "bizSn"));
+	this.dsShlList.setColumn(this.dsShlList.insertRow(0), 'shlNm', '- 전체 -');
+	this.divSearch.form.cboShlNm.set_index(0);
+};
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 조회 버튼 클릭
+*/
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//조회 처리
+	this.fnSearch();
+};
+
+/**
+ * @description 그리드(분기) 클릭
+*/
+this.grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	//팝업에 전달할 데이터셋에 값 세팅
+	var sBrno = this.dsSearch.getColumn(0, "brno");
+	this.dsGrdChcRow.setColumn(0, "brno", sBrno);
+	this.dsGrdChcRow.copyRow(0, this.dsMain, e.row);
+	
+	var addTitle = '등록';
+	var wrtYn = this.dsMain.getColumn(e.row, "wrtYn");
+	if(wrtYn == "Y"){
+		addTitle = '수정'
+	}
+	
+	//분기 클릭 시
+	if(e.col == 3){
+		var popupParams = {
+			sender: obj,								// sender 지정
+			callback: this.fnPopupCallback,				// 콜백함수 지정
+			internalCallback : this.fnPopupCallback,	// 콜백함수 지정	
+			params: {   
+				procType: 'none', 						// 처리타입 지정
+				dataset : this.dsGrdChcRow.saveXML(),
+				addTitle : addTitle
+			},
+		};
+		//모달팝업 실행
+		this.smfDialog("_auto", "pa_sem_srs_rm::sem_srsrm01_p00.xfdl ", popupParams);
+	}
+};
+
+/**
+ * @description 학교찾기 콤보 아이템 변경 시
+*/
+this.divSearch_cboBizNm_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.fnComboShlSet();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsSearch" useclientlayout="false">
+        <ColumnInfo>
+          <Column id="brno" type="STRING" size="256" description="사업자등록번호"/>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="bizSn" type="STRING" size="256" description="사업일련번호"/>
+          <Column id="ayr" type="STRING" size="256" description="년도"/>
+          <Column id="qtrScCd" type="STRING" size="256" description="분기"/>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listInqCondCn</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsBizList=dsBizList dsShlList=dsShlList dsApiResponseList=dsApiResponseList</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/sem_srs_rm01_001.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+          <Row>
+            <Col id="id">list</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsMain=dsMain dsApiResponseList=dsApiResponseList</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/sem_srs_rm01_002.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="bizSn" type="STRING" size="256" description="사업일련번호"/>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" description="학교명"/>
+          <Column id="ayr" type="STRING" size="256" description="검사년도"/>
+          <Column id="qtrScCd" type="STRING" size="256" description="분기코드"/>
+          <Column id="qtrScNm" type="STRING" size="256" description="분기명"/>
+          <Column id="slctnInstNm" type="STRING" size="256" description="발주기관명"/>
+          <Column id="allItmInspYn" type="STRING" size="256" description="전체검사여부"/>
+          <Column id="wrtYn" type="STRING" size="256" description="작성여부"/>
+          <Column id="qltwtInspComyNm" type="STRING" size="256" description="수질검사업체명"/>
+          <Column id="qltwtInspYmd" type="STRING" size="256" description="수질검사일자"/>
+          <Column id="qltwtInspFileRefrnId" type="STRING" size="256" description="파일참조ID"/>
+          <Column id="regId" type="STRING" size="256" description="등록자ID"/>
+          <Column id="modId" type="STRING" size="256" description="수정자ID"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsBizList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="bizSn" type="STRING" size="10" description="사업일련번호"/>
+          <Column id="bizNm" type="STRING" size="30" description="사업명"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsAyrList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="ayr" type="STRING" size="10"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsShlList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="10" description="학교코드"/>
+          <Column id="shlNm" type="STRING" size="30" description="학교명"/>
+          <Column id="bizSn" type="STRING" size="256" description="사업일련번로"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsQtrScCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="FirstCode" type="STRING" size="30" value="ALL" datapath=""/>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value="QTR_SC_CD"/>
+          <ConstColumn id="FilterExpr" type="STRING" size="30" value=""/>
+          <ConstColumn id="UnyCdGrpId" type="STRING" size="30" value=""/>
+          <ConstColumn id="BfrClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd1Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd2Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd3Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd4Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd5Value" type="STRING" size="30" value=""/>
+          <Column id="pgeId" type="STRING" size="256"/>
+          <Column id="clfCdValue" type="STRING" size="30"/>
+          <Column id="clfCdValueNm" type="STRING" size="120"/>
+          <Column id="clfCdUseYn" type="STRING" size="150"/>
+          <Column id="unyCdValue" type="STRING" size="10"/>
+          <Column id="unyCdValueNm" type="STRING" size="30"/>
+          <Column id="userDfnCd1Value" type="STRING" size="100"/>
+          <Column id="userDfnCd2Value" type="STRING" size="100"/>
+          <Column id="userDfnCd3Value" type="STRING" size="100"/>
+          <Column id="userDfnCd4Value" type="STRING" size="100"/>
+          <Column id="userDfnCd5Value" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsApiResponseList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="연계상태값"/>
+          <Column id="prcsRltCd" type="STRING" size="256" description="연계결과코드"/>
+          <Column id="errCn" type="STRING" size="256" description="연계결과내용"/>
+          <Column id="message" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsGrdChcRow" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="brno" type="STRING" size="256" description="사업자등록번호"/>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="bizSn" type="STRING" size="256" description="사업일련번호"/>
+          <Column id="qtrScCd" type="STRING" size="256" description="분기코드"/>
+          <Column id="ayr" type="STRING" size="256" description="년도"/>
+          <Column id="allItmInspYn" type="STRING" size="256" description="전체검사여부"/>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" description="학교명"/>
+          <Column id="qltwtInspComyNm" type="STRING" size="256" description="수질검사업체명"/>
+          <Column id="qltwtInspYmd" type="STRING" size="256" description="수질검사일자"/>
+          <Column id="qltwtInspFileRefrnId" type="STRING" size="256" description="수질검사파일참조ID"/>
+          <Column id="regId" type="STRING" size="256" description="등록ID"/>
+          <Column id="modId" type="STRING" size="256" description="수정ID"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.cboBizNm" propid="value" datasetid="dsSearch" columnid="bizSn"/>
+      <BindItem id="item1" compid="divSearch.form.cboAyr" propid="value" datasetid="dsSearch" columnid="ayr"/>
+      <BindItem id="item2" compid="divSearch.form.cboQtrScCd" propid="value" datasetid="dsSearch" columnid="qtrScCd"/>
+      <BindItem id="item3" compid="divSearch.form.cboShlNm" propid="value" datasetid="dsSearch" columnid="shlCd"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,636 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="frmEduCondition" classname="WorkFrame" left="0" top="0" width="1300" height="910" scrollbars="none" onload="frmEduCondition_onload" titletext="접수현황" binddataset="ds_EduRegList">
+    <Layouts>
+      <Layout>
+        <Tab id="tabProduct" taborder="0" tabindex="0" left="0" top="0" width="1300" height="66" cssclass="tab_WF_product" onchanged="tabProduct_onchanged" accessibilitylabel="접수현황" focusacceptable="true" initvalueid="iv_Tab0">
+          <Tabpages>
+            <Tabpage id="Tabpage1" text="Nexacro N" accessibilityenable="false">
+              <Layouts>
+                <Layout/>
+              </Layouts>
+            </Tabpage>
+            <Tabpage id="Tabpage2" text="nexacro 17" accessibilityenable="false"/>
+            <Tabpage id="Tabpage3" text="nexacro 14"/>
+            <Tabpage id="Tabpage4" text="XPLATFORM" accessibilityenable="false"/>
+          </Tabpages>
+        </Tab>
+        <Static id="stcTitle" taborder="1" text="접수현황" left="0" top="91" width="176" height="30" cssclass="sta_WF_eduTitle"/>
+        <Grid id="grdEduCondition" taborder="2" left="0" top="141" height="257" right="0" binddataset="ds_EduRegList" autofittype="col" autoenter="select" nodatatext="교육 신청 내역이 없습니다." oncellclick="grdEduCondition_oncellclick" onheadclick="grdEduCondition_onheadclick" accessibilitylabel="접수현황" selecttype="cell" cellclickbound="cell">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="50" band="left"/>
+                <Column size="100"/>
+                <Column size="80"/>
+                <Column size="160"/>
+                <Column size="140"/>
+                <Column size="140"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="48"/>
+              </Columns>
+              <Rows>
+                <Row size="55" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head" accessibilityenable="false">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="교육방식"/>
+                <Cell col="2" text="교육회차"/>
+                <Cell col="3" text="교육과정"/>
+                <Cell col="4" text="교육시작일"/>
+                <Cell col="5" text="교육종료일"/>
+                <Cell col="6" text="교육구분"/>
+                <Cell col="7" text="정보수정"/>
+                <Cell col="8" text="지역"/>
+              </Band>
+              <Band id="body" accessibilityenable="false">
+                <Cell text="bind:CHK" displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="bind:EDU_METHOD_NAME" suppress="1" suppressalign="middle"/>
+                <Cell col="2" text="bind:ES_SEQ"/>
+                <Cell col="3" text="bind:EDU_DET_NAME"/>
+                <Cell col="4" text="bind:START_DATE" displaytype="date"/>
+                <Cell col="5" text="bind:END_DATE" displaytype="date"/>
+                <Cell col="6" text="bind:STATUS_CD_NAME"/>
+                <Cell col="7" text="수정" displaytype="buttoncontrol"/>
+                <Cell col="8" text="bind:EDU_AREA_NAME" suppress="2" suppressalign="middle"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btn_ProdDelete" taborder="3" text="신청취소" width="150" height="40" right="0" top="91" cssclass="btn_LOGIN" onclick="btn_ProdDelete_onclick"/>
+        <Static id="stcTitle00" taborder="4" text="수강이력" left="0" top="grdEduCondition:40" width="176" height="30" cssclass="sta_WF_eduTitle"/>
+        <Grid id="grdEduHistory" taborder="5" left="0" top="stcTitle00:20" right="0" binddataset="ds_RegHistory" autofittype="col" autoenter="select" nodatatext="교육 수강 이력이 없습니다." height="417" oncellclick="grdEduHistory_oncellclick" accessibilitylabel="수강이력" selecttype="cell" cellclickbound="cell">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="80"/>
+                <Column size="160"/>
+                <Column size="140"/>
+                <Column size="140"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="48"/>
+              </Columns>
+              <Rows>
+                <Row size="55" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head" accessibilityenable="false">
+                <Cell text="교육방식"/>
+                <Cell col="1" text="교육회차"/>
+                <Cell col="2" text="교육과정"/>
+                <Cell col="3" text="교육시작일"/>
+                <Cell col="4" text="교육종료일"/>
+                <Cell col="5" text="수강여부"/>
+                <Cell col="6" text="수료증발급"/>
+                <Cell col="7" text="지역"/>
+              </Band>
+              <Band id="body" accessibilityenable="false">
+                <Cell text="bind:EDU_METHOD_NAME" suppress="1" suppressalign="middle"/>
+                <Cell col="1" text="bind:ES_SEQ"/>
+                <Cell col="2" text="expr:PRODUCT_NAME + &quot; &quot; + EDU_DET_NAME + &quot;과정&quot;"/>
+                <Cell col="3" text="bind:START_DATE" displaytype="date"/>
+                <Cell col="4" text="bind:END_DATE" displaytype="date"/>
+                <Cell col="5" text="expr:ATTEND_FLAG == &quot;1&quot; ? &quot;수강&quot; : &quot;미수강&quot;" cssclass="expr:ATTEND_FLAG=='0'?'grd_WF_schRed':''"/>
+                <Cell col="6" text="expr:ATTEND_FLAG == '1' ? '내려받기' : ''" displaytype="expr:ATTEND_FLAG == '1' ? 'buttoncontrol' : 'none'" edittype="button"/>
+                <Cell col="7" text="bind:EDU_AREA_NAME" suppress="2" suppressalign="middle"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcTitle_" taborder="6" text="접수현황" cssclass="sta_WF_EduTitle" left="1356" top="11" width="268" height="30" visible="false"/>
+        <Static id="Static02" taborder="7" cssclass="sta_WF_eduInputTopLine" left="1358" top="43" width="783" height="2" visible="false" accessibilityenable="false"/>
+        <Grid id="grdEduCondition_" cssclass="grd_WF_eduCourse" taborder="8" binddataset="ds_EduRegList" useinputpanel="false" autofittype="col" left="1358" top="44" width="783" height="246" oncellclick="grdEduCondition_oncellclick" nodatatext="교육 신청 내역이 없습니다." visible="false">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="60"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="60"/>
+                <Column size="71"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="30"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="교육회차"/>
+                <Cell col="1" text="교육제품"/>
+                <Cell col="2" text="교육과정"/>
+                <Cell col="3" text="교육시작일"/>
+                <Cell col="4" text="교육종료일"/>
+                <Cell col="5" text="교육지역"/>
+                <Cell col="6"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:ES_SEQ"/>
+                <Cell col="1" text="bind:PRODUCT_NAME"/>
+                <Cell col="2" text="bind:EDU_DET_NAME"/>
+                <Cell col="3" displaytype="date" text="bind:START_DATE"/>
+                <Cell col="4" displaytype="date" text="bind:END_DATE"/>
+                <Cell col="5" text="bind:EDU_AREA_NAME"/>
+                <Cell col="6" displaytype="decoratetext" style="cursor:hand;" text="&lt;fc v='chocolate'&gt;&lt;b v='true'&gt;&lt;u v='true'&gt;신청취소&lt;/u&gt;&lt;/b&gt;&lt;/fc&gt;"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcTitle00_" taborder="9" text="수강이력" cssclass="sta_WF_EduTitle" left="1356" top="315" width="268" height="30" visible="false"/>
+        <Static id="Static00" taborder="10" cssclass="sta_WF_eduInputTopLine" left="1358" top="347" width="783" height="2" visible="false" accessibilityenable="false"/>
+        <Grid id="grdEduHistory_" cssclass="grd_WF_eduCourse" taborder="11" binddataset="ds_RegHistory" useinputpanel="false" autofittype="col" left="1358" top="348" width="785" height="236" nodatatext="교육 수강 이력이 없습니다." visible="false">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="196"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="26" band="head"/>
+                <Row size="36"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="교육회차"/>
+                <Cell col="1" text="교육과정"/>
+                <Cell col="2" text="교육시작일"/>
+                <Cell col="3" text="교육종료일"/>
+                <Cell col="4" text="수강여부"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:ES_SEQ"/>
+                <Cell col="1" text="expr:PRODUCT_NAME + &quot; &quot; + EDU_DET_NAME + &quot;과정&quot;"/>
+                <Cell col="2" displaytype="date" text="bind:START_DATE"/>
+                <Cell col="3" displaytype="date" text="bind:END_DATE"/>
+                <Cell col="4" text="expr:ATTEND_FLAG == &quot;1&quot; ? &quot;수강&quot; : &quot;미수강&quot;"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_EduRegList">
+        <ColumnInfo>
+          <Column id="EDU_PRODUCT_CODE" type="string" size="255"/>
+          <Column id="ES_SEQ" type="int" size="11"/>
+          <Column id="START_DATE" type="string" size="255"/>
+          <Column id="END_DATE" type="string" size="255"/>
+          <Column id="DONE_FLAG" type="STRING" size="256" description="'DONE' 지난과정 'UNDONE' 안지난과정"/>
+          <Column id="DATE_DIFF" type="STRING" size="256"/>
+          <Column id="EDU_TYPE" type="string" size="255"/>
+          <Column id="EDU_TYPE_DET" type="string" size="255"/>
+          <Column id="ESL_SEQ" type="STRING" size="256"/>
+          <Column id="USER_ID" type="string" size="255"/>
+          <Column id="EMP_NAME" type="string" size="255"/>
+          <Column id="COMPANY_NAME" type="string" size="255"/>
+          <Column id="DEPT_NAME" type="string" size="255"/>
+          <Column id="DUTY_NAME" type="string" size="255"/>
+          <Column id="PHONE_NO" type="string" size="255"/>
+          <Column id="EMAIL" type="string" size="255"/>
+          <Column id="ATTEND_FLAG" type="string" size="255"/>
+          <Column id="PRODUCT_NAME" type="string" size="255"/>
+          <Column id="EDU_DET_NAME" type="string" size="255"/>
+          <Column id="EDU_AREA_NAME" type="string" size="255"/>
+          <Column id="CHK" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="ds_EduRegTemp">
+        <ColumnInfo>
+          <Column id="EDU_PRODUCT_CODE" type="string" size="255"/>
+          <Column id="ES_SEQ" type="int" size="11"/>
+          <Column id="START_DATE" type="string" size="255"/>
+          <Column id="END_DATE" type="string" size="255"/>
+          <Column id="DONE_FLAG" type="STRING" size="256" description="'DONE' 지난과정 'UNDONE' 안지난과정"/>
+          <Column id="DATE_DIFF" type="STRING" size="256"/>
+          <Column id="EDU_TYPE" type="string" size="255"/>
+          <Column id="EDU_TYPE_DET" type="string" size="255"/>
+          <Column id="ESL_SEQ" type="STRING" size="256"/>
+          <Column id="USER_ID" type="string" size="255"/>
+          <Column id="EMP_NAME" type="string" size="255"/>
+          <Column id="COMPANY_NAME" type="string" size="255"/>
+          <Column id="DEPT_NAME" type="string" size="255"/>
+          <Column id="DUTY_NAME" type="string" size="255"/>
+          <Column id="PHONE_NO" type="string" size="255"/>
+          <Column id="EMAIL" type="string" size="255"/>
+          <Column id="ATTEND_FLAG" type="string" size="255"/>
+          <Column id="PRODUCT_NAME" type="string" size="255"/>
+          <Column id="EDU_DET_NAME" type="string" size="255"/>
+          <Column id="EDU_AREA_NAME" type="string" size="255"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="ds_RegHistory">
+        <ColumnInfo>
+          <Column id="EDU_PRODUCT_CODE" type="string" size="255"/>
+          <Column id="ES_SEQ" type="int" size="11"/>
+          <Column id="START_DATE" type="string" size="255"/>
+          <Column id="END_DATE" type="string" size="255"/>
+          <Column id="DONE_FLAG" type="STRING" size="256" description="'DONE' 지난과정 'UNDONE' 안지난과정"/>
+          <Column id="DATE_DIFF" type="STRING" size="256"/>
+          <Column id="EDU_TYPE" type="string" size="255"/>
+          <Column id="EDU_TYPE_DET" type="string" size="255"/>
+          <Column id="ESL_SEQ" type="STRING" size="256"/>
+          <Column id="USER_ID" type="string" size="255"/>
+          <Column id="EMP_NAME" type="string" size="255"/>
+          <Column id="COMPANY_NAME" type="string" size="255"/>
+          <Column id="DEPT_NAME" type="string" size="255"/>
+          <Column id="DUTY_NAME" type="string" size="255"/>
+          <Column id="PHONE_NO" type="string" size="255"/>
+          <Column id="EMAIL" type="string" size="255"/>
+          <Column id="ATTEND_FLAG" type="string" size="255"/>
+          <Column id="PRODUCT_NAME" type="string" size="255"/>
+          <Column id="EDU_DET_NAME" type="string" size="255"/>
+          <Column id="EDU_AREA_NAME" type="string" size="255"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="ds_print">
+        <ColumnInfo>
+          <Column id="cer_no" type="STRING" size="256"/>
+          <Column id="req_nm" type="STRING" size="256"/>
+          <Column id="company_nm" type="STRING" size="256"/>
+          <Column id="course_nm" type="STRING" size="256"/>
+          <Column id="period" type="STRING" size="256"/>
+          <Column id="yyyy" type="STRING" size="256"/>
+          <Column id="mm" type="STRING" size="256"/>
+          <Column id="dd" type="STRING" size="256"/>
+          <Column id="getTime" type="STRING" size="256"/>
+          <Column id="EMAIL" type="STRING" size="256"/>
+          <Column id="ESL_SEQ" type="STRING" size="256"/>
+          <Column id="product_nm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind/>
+    <Script type="xscript5.1"><![CDATA[/**
+*  교육접수현황
+*
+*  @MenuPath 
+*  @FileName 		EDUCATION::fimEduCondition.xfdl 
+*  @Creator 		김광호
+*  @CreateDate 		2022.01.01
+*  @LastModifier  
+*  @LastModifyDate  
+*  @Version 		1.0
+*  @Outline 		교육접수현황
+*  @Desction 
+************** 소스 수정 이력 *************************************************
+*    date          Modifier            Description
+*******************************************************************************
+*  2022.01.01      김광호	           최초 생성 
+*******************************************************************************
+*/
+ 
+this.mChkRows = [];
+this.mHeadChk; 
+this.mHeadVal = 0;
+this.pageMoveCd = 0;
+
+this.frmEduCondition_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{	
+	// 공통측에서 요청한 내용임 : 프레임 사이즈가 다른 화면에 갔다오면 변경되어
+	// 문자가 깨질수 있으므로 초기화 해달라고함
+	this.set_height(1000);      		
+	this.parent.set_height(1000);         
+	nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, 1150);
+
+	//로그인 여부 확인
+	if(nexacro.getApplication().gds_UserInfo.getRowCount() <= 0)
+ 	{
+ 		nexacro.getApplication().gv_mainFrame.TargetUrl = nexacro.getApplication().gv_mainFrame.PCategory2;
+		nexacro.getApplication().gv_mainFrame.param = {
+			'menu': "login",
+			'keyword': "",
+			'page': 1,
+			'postId': ""
+			};
+		nexacro.getApplication().gv_mainFrame.gfnGoMain();
+		return;
+ 	}
+	
+	//교육 신청 정보 
+ 	this.fn_EduRegList();
+	var sProd = "";
+	switch(e.postindex) {
+	case 0:
+		sProd = "NPN";
+		break;
+	case 1:
+		sProd = "NP17";
+		break;
+	case 2:
+		sProd = "NP14";
+		break;
+	case 3:
+		sProd = "XP";
+		break;
+	default:
+	}
+	this.ds_EduRegList.filter("EDU_PRODUCT_CODE == '" + sProd + "'");
+ 	
+}
+
+//로그인 아이디로 신청되어있는 리스트 조회
+this.fn_EduRegList = function() 
+{
+	// 인수 설정 
+	var sUserId = nexacro.getApplication().gds_UserInfo.getColumn(0, "User_id");
+	var strArgs = "RTYPE=XML DB='CS'"
+	            + " sessionChk=false"
+	            + " nationCd='"    + nexacro.getApplication().gv_NationCd + "'"
+	            + " JSESSIONID='"  + nexacro.getApplication().JSESSIONID  + "'"
+	            + " sUserId='"     + sUserId                 + "'";
+
+	var strUrl = "SVC_JSP::Next_JSP/Education/SearchEduReg.jsp?";
+	var strDsInput = "";
+	var strDsOutput = "ds_EduRegTemp=output1";  
+
+	this.com_TransSend("EduRegList",strUrl,strDsInput,strDsOutput,strArgs,"fn_CallBack");
+}
+     
+this.fn_CallBack = function (svcid,errCode,errMsg)
+{
+	if(svcid == "EduRegList") 
+	{
+		//아이디에 해당하는 전체 신청정보에서 'DONE_FLAG' 컬럼 'UNDONE'이면 지나지 않은, 'DONE' 지난과정 
+		if(this.ds_EduRegTemp.rowcount > 0){
+			this.ds_EduRegTemp.filter("DONE_FLAG == 'UNDONE'");
+			this.ds_EduRegList.copyData(this.ds_EduRegTemp, true);
+			
+			this.ds_EduRegTemp.filter("DONE_FLAG == 'DONE'");
+			this.ds_RegHistory.copyData(this.ds_EduRegTemp, true);
+			
+			this.ds_EduRegList.reset();
+			this.ds_EduRegList.filter("EDU_PRODUCT_CODE == 'NPN'");
+			
+			this.ds_RegHistory.reset();
+			this.ds_RegHistory.filter("EDU_PRODUCT_CODE == 'NPN'");
+		}
+		//탭 이동을 위한 변수 확인
+		this.pageMoveCd = nexacro.getApplication().gv_prodMoveCd;
+		if(!this.gfnIsNull(nexacro.getApplication().gv_prodMoveCd)){
+			var sProdCd = this.pageMoveCd;
+			this.tabProduct.set_tabindex(sProdCd);
+			nexacro.getApplication().gv_prodMoveCd=0;
+		}else{
+			nexacro.getApplication().gv_prodMoveCd = 0;
+			this.tabProduct.set_tabindex(0);
+		}
+		
+ 	}	  
+ 	else if(svcid == "EduRegCancel"){
+		if(this.mChkCount < 0){
+			alert("교육신청이 취소되었습니다.");
+			this.reload();
+		}else{
+			this.fn_ProdDelete()
+		}
+		
+ 	}else if(svcid == "fn_EduCertificate"){
+     
+		var sFileName = "투비소프트수료증서_"+this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition,"EMP_NAME") + "_" + this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition,"ESL_SEQ") + ".pdf";
+		system.execBrowser(nexacro.getEnvironment().services["SVC_JSP"].url+"Next_JSP/Education/CertificateFileDownload.jsp?FileName=" + sFileName);		
+         	
+    }
+}
+
+//단건 취소처리
+this.grdEduCondition_oncellclick = function(obj:Grid, e:nexacro.GridClickEventInfo)
+{
+	nexacro.getApplication().gv_prodMoveCd = this.pageMoveCd;
+	if(e.cell == 7){
+		
+		var sES_SEQ = this.grdEduCondition.getCellValue(e.row,2);
+
+		var nRow = this.ds_EduRegList.findRow("ES_SEQ",sES_SEQ);
+		if(this.ds_EduRegList.getCaseCount("CHK == 1")>1){			//체크박스 여러개 체크 후 삭제시 메세지
+			this.alert("정보수정은 개별수정만 가능합니다.");
+			return false;
+		}   
+		
+		nexacro.getApplication().gv_mainFrame.param = {
+			'menu': "Education_Registration",
+			'keyword': "",
+			'page': 1,
+			'postId': sES_SEQ
+			};
+		nexacro.getApplication().gv_mainFrame.gfnGoMain();
+	
+	}else if(e.cell == 0){  
+		var nCellIdx  = e.cell;
+		//체크 여부 확인
+		var sChk = this.ds_EduRegList.getColumn(nRow,"CHK");
+		if(sChk == 0){
+			if (this.mHeadChk == "1")
+			{
+				//Head의 값을 체크해제로 설정
+				obj.setCellProperty("head", nCellIdx, "text", "0");
+				this.mHeadChk="0";
+			}
+		}else{
+			if(this.ds_EduRegList.findRow("CHK",0)==-1){
+				obj.setCellProperty("head", nCellIdx, "text", "1");
+				this.mHeadChk="1";
+			}
+		}
+	}
+}
+
+
+// 제품 선택 이벤트
+this.tabProduct_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	var sProd = "";
+	switch(e.postindex) {
+	case 0:
+		sProd = "NPN";
+		break;
+	case 1:
+		sProd = "NP17";
+		break;
+	case 2:
+		sProd = "NP14";
+		break;
+	case 3:
+		sProd = "XP";
+		break;
+	default:
+	}
+	this.ds_EduRegList.reset();
+	this.ds_EduRegList.filter("EDU_PRODUCT_CODE == '" + sProd + "'");
+	this.ds_RegHistory.reset();
+	this.ds_RegHistory.filter("EDU_PRODUCT_CODE == '" + sProd + "'");
+	this.pageMoveCd = e.postindex;
+	
+	this.grdEduCondition.setCellProperty("head",0,"text","0");
+	this.mHeadChk="0";
+};
+
+//신청 취소 버튼 클릭 이벤트
+this.btn_ProdDelete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sRowCount = this.ds_EduRegList.getRowCount();
+	this.mChkCount = -1;    
+	
+	if(this.ds_EduRegList.findRow("CHK",1) == -1){
+		alert("선택된 교육이 없습니다.");
+	}else{
+		if(nexacro.getApplication().com_ConfirmMessage("MSG_000105", false))
+		{
+			for(var i =0; i< sRowCount;i++){
+				var sChk= this.ds_EduRegList.getColumn(i,"CHK");
+				if(sChk == "1"){
+					this.mChkRows.push(i);
+					this.mChkCount += 1;
+				}
+			}
+		}else{
+			return false;
+		}
+		this.fn_ProdDelete();
+	}
+};
+
+//교육 취소 함수
+this.fn_ProdDelete= function(){
+
+
+		var sUserId = nexacro.getApplication().gds_UserInfo.getColumn(0, "User_id");
+		var sEslSeq = this.ds_EduRegList.getColumn(this.mChkRows[this.mChkCount], "ESL_SEQ");
+		var strArgs = "RTYPE=XML DB='CS'"
+					+ " sessionChk=false"
+					+ " nationCd='"    + nexacro.getApplication().gv_NationCd + "'"
+					+ " JSESSIONID='"  + nexacro.getApplication().JSESSIONID  + "'"
+					+ " sUserId='"     + sUserId                 + "'"
+					+ " sEslSeq='"     + sEslSeq                 + "'";
+		var strUrl = "SVC_JSP::Next_JSP/Education/SaveCancel.jsp?";
+		var strDsInput = "";
+		var strDsOutput = "";
+		this.mChkCount -= 1;
+		this.com_TransSend("EduRegCancel",strUrl,strDsInput,strDsOutput,strArgs,"fn_CallBack");
+
+}
+
+//그리드 헤드 클릭 이벤트
+this.grdEduCondition_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	
+	//그리드 전체체크/체크해제 실행 함수 호출
+	if(e.cell==0)
+	{	
+		this.gfnSetGridCheckAll(obj, e);
+	}
+};
+
+//그리드 전체체크/체크해제 실행 함수
+this.gfnSetGridCheckAll = function (obj, e)
+{
+	var objDs;
+	var nCellIdx  = e.cell;
+	var sColumnId;
+	
+	//그리드에 연결된 데이터셋 가져오기
+	objDs  = obj.getBindDataset();
+	
+	//데이터셋에 데이터가 없을 경우 리턴
+	if(objDs.rowcount < 1) return;
+	
+	//전체 체크/체크해제할 컬럼명 구하기
+	sColumnId = obj.getCellProperty("body", nCellIdx, "text");
+	sColumnId = sColumnId.toString().replace("bind:", "");
+		
+	//Head의 현재 Check설정 값 가져오기
+	this.mHeadVal = obj.getCellProperty("head", nCellIdx, "text");
+
+	//현재 체크상태일 경우
+	if (this.mHeadVal == "1" )
+	{
+		//Head의 값을 체크해제로 설정
+		obj.setCellProperty("head", nCellIdx, "text", "0");
+		this.mHeadChk="0";
+	}
+	//현재 체크해제상태일 경우
+	else {
+		//Head의 값을 체크로 설정
+		obj.setCellProperty("head", nCellIdx, "text", "1");
+		this.mHeadChk="1";
+	}
+	
+	// Body에 전체 체크/체크해제 상태 적용
+	for(var i=0 ; i< objDs.rowcount ; i++) 
+	{
+		objDs.setColumn(i, sColumnId, this.mHeadChk);
+	}
+
+};
+
+//수료증 발급 클릭
+this.grdEduHistory_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(e.cell == 6){
+    	if(this.ds_RegHistory.getColumn(e.row, "ATTEND_FLAG") == "1"){
+	
+    		this.fn_EduCertificate();
+    	}      
+    }
+};
+
+//수료증 발급 함수
+this.fn_EduCertificate = function()   
+{   
+        	    	    	    
+	this.ds_print.clearData();
+    this.ds_print.addRow();
+     				   
+    this.ds_print.setColumn(this.ds_print.rowposition,"cer_no",this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition,"cer_no"));
+    this.ds_print.setColumn(this.ds_print.rowposition,"req_nm",this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition,"EMP_NAME"));
+    this.ds_print.setColumn(this.ds_print.rowposition,"company_nm",this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition,"COMPANY_NAME"));
+    
+    var sPcode = this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition, "EDU_PRODUCT_CODE");
+    var sCourseNm = ""
+    if(sPcode == "NP17") sCourseNm = "nexacro platform 17™ " + this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition, "EDU_DET_NAME");
+    if(sPcode == "NP14") sCourseNm = "nexacro platform 14™ " + this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition, "EDU_DET_NAME");
+    if(sPcode == "XP")   sCourseNm = "X-Internet 및 XPLATFORM™ v9.2(엑스플랫폼)";
+    if(sPcode == "MP")   sCourseNm = "X-Internet 및 Miplatform™ v3.3(마이플랫폼)";
+    		
+    this.ds_print.setColumn(this.ds_print.rowposition,"course_nm",sCourseNm);
+    this.ds_print.setColumn(this.ds_print.rowposition,"product_nm",this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition,"product_name"));
+    	
+    this.ds_print.setColumn(this.ds_print.rowposition,"period",this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition,"START_DATE") + " ~ " + this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition,"END_DATE"));
+        	
+    this.ds_print.setColumn(this.ds_print.rowposition,"yyyy",this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition,"yyyy"));
+    this.ds_print.setColumn(this.ds_print.rowposition,"mm",this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition,"mm"));
+    this.ds_print.setColumn(this.ds_print.rowposition,"dd",this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition,"dd"));
+       	 
+        	
+    this.ds_print.setColumn(this.ds_print.rowposition,"getTime",this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition,"getTime"));
+    this.ds_print.setColumn(this.ds_print.rowposition,"EMAIL",this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition,"EMAIL"));
+    this.ds_print.setColumn(this.ds_print.rowposition,"ESL_SEQ",this.ds_RegHistory.getColumn(this.ds_RegHistory.rowposition,"ESL_SEQ"));
+        	
+    this.transaction("fn_EduCertificate"
+                    ,"SVC_JSP::Next_JSP/Education/EduCertificate.jsp?"
+                    ,"in_print=ds_print:U"
+                    ,""
+                    ,""
+                    ,"fn_CallBack");
+};
+
+
+
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace(this.ds_EduRegList.saveXML());
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleImageCrop" width="1280" height="745" titletext="이미지크롭샘플">
+    <Layouts>
+      <Layout height="745" mobileorientation="landscape" width="1280">
+        <Button id="btn00" taborder="0" text="이미지선택" left="19" top="240" width="120" height="40" onclick="btn00_onclick"/>
+        <Static id="sta00" taborder="1" text="이미지 크롭 샘플" left="19" top="14" width="191" height="36"/>
+        <ImageViewer id="imgCrop" taborder="2" left="19" top="63" width="168" height="155" image="url('theme://images/btn_CalDrop_N.png')"/>
+        <Static id="sta01" taborder="3" text="type" left="21" top="309" width="120" height="30"/>
+        <Edit id="edtImageType" taborder="4" left="154" top="305" width="208" height="36"/>
+        <Edit id="edtImageFileName" taborder="5" left="154" top="355" width="208" height="36"/>
+        <Static id="sta01_00" taborder="6" text="filename" left="21" top="359" width="120" height="30"/>
+        <Static id="sta02" taborder="7" text="* Image에서 imageData를 뽑아오는 것은 this.imgCrop.image 를 하면 &#13;&#10;   이미지 데이터(Base64로 인코딩된 데이터)를 얻을 수  있다.&#13;&#10;   또는 팝업에서 넘어온 이미지 데이터를 활용 가능하다." left="19" top="406" width="423" height="74"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleImageCrop.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.10.6
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.10.6     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fvBase64ImageData ="";
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+	// 업무콜백 처리
+	//this.smfAlert("응답결과 ==>"+e.row.Column0+", "+e.row.Column1+", "+e.row.Column2+", "+e.row.Column3);
+	trace("====>fnPopupCallback");
+	var sImageType       = "";
+	var sImageFileName   = "";   // 선택된 파일이름
+	var sImageDataBase64 = "";
+	
+	if(e.imageInfo)
+	{
+		sImageType       = e.imageInfo.imageType;   // 이미지 타입(image/png)
+		sImageFileName   = e.imageInfo.imageFileName;   // 파일이름(test.png)
+		sImageDataBase64 = e.imageInfo.imageDataBase64;  // BASE64의 이미지 파일
+		
+		if(!this.smfIsNull(sImageDataBase64))
+		{
+			this.imgCrop._imagetype = sImageType; 
+			this.imgCrop._imagename = sImageFileName; 
+			this.imgCrop.set_image(sImageDataBase64);
+		}
+	}
+	
+	// 테스트를 위해 화면에 정보를 표시한다.
+	this.edtImageFileName.set_value(sImageFileName);
+	this.edtImageType.set_value(sImageType);
+	
+	
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sBase64ImageData = "";
+
+	var objParam = {
+						type : "file"             // [필수] 이미지 전달 방식 ("data": base64형태의 데이터롤 이미지 전달, "file":팝업에서 파일선택)
+					, 	data : sBase64ImageData   // [선택] (type="data"인 경우는 필수) 팝업에 전달할 이미지 데이터
+					,   senderObj : obj
+				   };
+
+	var sPopupId = "popupImageCrop";
+	this.smfImgCropPopup(objParam,sPopupId);
+	
+};
+
+
+]]></Script>
+  </Form>
+</FDL>

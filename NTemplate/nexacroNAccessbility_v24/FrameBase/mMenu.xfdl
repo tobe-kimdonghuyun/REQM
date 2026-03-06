@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="mMenu" width="480" height="590" titletext="모바일 메뉴" onload="form_onload">
+    <Layouts>
+      <Layout height="590" width="480">
+        <Static id="staUser" taborder="0" top="26" width="30" height="30" cssclass="sta_MF_User" left="20" accessibilitylabel="사용자 아이콘" accessibilityrole="image"/>
+        <Static id="staName" taborder="1" text="&lt;fc ='#5C5E5C'&gt;&lt;fs v='14'&gt;&lt;b v='true'&gt;홍길동&lt;/b&gt; 님&lt;/fs&gt;&lt;/fc&gt;" top="23" width="130" height="30" usedecorate="true" textAlign="left" left="staUser:10"/>
+        <Static id="Static01" taborder="2" left="0" top="75" height="1" background="#E7E7E7" right="0" accessibilityenable="false"/>
+        <Div id="divBtn" taborder="3" text="Div00" left="0" top="80" right="0" bottom="0" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <Button id="btn_1" taborder="0" text="컴포넌트01" left="0" top="0" height="80" cssclass="btn_MF_mTMenu" fittocontents="none" right="0" onclick="btnMenu_onclick" accessibilitylabel="링크"/>
+              <Button id="btn_2" taborder="1" text="컴포넌트02" left="0" top="80" height="80" cssclass="btn_MF_mTMenu" fittocontents="none" right="0" onclick="btnMenu_onclick" accessibilitylabel="링크"/>
+              <Button id="btn_4" taborder="2" text="템플릿01" left="0" top="160" height="80" cssclass="btn_MF_mTMenu" fittocontents="none" right="0" onclick="btnMenu_onclick" accessibilitylabel="링크"/>
+              <Button id="btn_5" taborder="3" text="템플릿02" left="0" top="240" height="80" cssclass="btn_MF_mTMenu" fittocontents="none" right="0" onclick="btnMenu_onclick" accessibilitylabel="링크"/>
+              <Button id="btn_6" taborder="4" text="웹 접근성 안내" left="0" top="320" height="80" cssclass="btn_MF_mTMenu" fittocontents="none" right="0" onclick="btnMenu_onclick" accessibilitylabel="링크"/>
+              <Button id="btn_7" taborder="5" text="테스트" left="0" top="400" height="80" cssclass="btn_MF_mTMenu" fittocontents="none" right="0" onclick="btnMenu_onclick" accessibilitylabel="링크"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnClose" taborder="4" top="10" width="60" height="60" cssclass="btn_MF_mClose" right="20" accessibilitylabel="메뉴 닫기" onclick="btnClose_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  Nexacro Accessibility
+*  @FileName 	mMenu.xfdl 
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022.12.15
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.12.15     		TOBESOFT		 		최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = this.gfnGetApplication();
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+
+};
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.btnMenu_onclick = function(obj, e)
+{
+	var sid = obj.name.split("_")[1];
+
+	var objBtnList = this.divBtn.form.components;
+
+	for (var i = 0; i < objBtnList.length; i++) 
+	{
+		objBtnList[i].cssclass = "btn_MF_mTMenu";
+	}
+	
+	obj.cssclass = "btn_MF_mTMenuS";
+
+
+	this.objApp.nexacroBase.fnCallMenu(sid);
+	
+	this.objApp.nexacroBase.fnMenuClick(false);
+}
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.objApp.nexacroBase.fnMenuClick(false);
+};
+]]></Script>
+  </Form>
+</FDL>

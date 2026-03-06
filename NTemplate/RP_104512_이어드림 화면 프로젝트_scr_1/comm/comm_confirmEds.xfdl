@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comm_confirmEds" width="640" height="418" titletext="교육설문 컨펌창" cssclass="frm_Pop_bgTrsprt" onload="comm_alert_onload" onclose="comm_confirmEds_onclose" onkeyup="comm_confirmEds_onkeyup">
+    <Layouts>
+      <Layout height="418" width="640" screenid="ScreenDeskTop">
+        <Button id="btnClose" taborder="0" top="0" width="48" height="48" cssclass="btn_Pop_close_W" initvalueid="ivBtnAccessibilityButton" right="-214" visible="false" enable="false"/>
+        <Div id="divMain" taborder="1" text="div03" left="30" cssclass="div_WF_SurvPopLine" boxShadow="10px 10px 30px 0px rgba(20,20,20,0.35)" initvalueid="ivDivAccessibilityOff" width="580" height="356" top="30">
+          <Layouts>
+            <Layout>
+              <Static id="staTitle00" taborder="0" text="확인" left="30" top="20" width="467" height="36" cssclass="sta_WF_Txt18B" initvalueid="ivStcAccessibilityOn" usedecorate="true"/>
+              <Button id="btnClose" taborder="1" top="20" width="36" height="36" cssclass="btn_WF_SurvPopClose" initvalueid="ivBtnAccessibilityButton" right="20" text="" onclick="divMain_btnClose_onclick"/>
+              <Static id="sta00_00" taborder="2" left="20" top="76" height="1" fittocontents="none" textAlign="center" cssclass="sta_WF_Txt16" right="20" background="#dddddd" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="staMessage" taborder="3" text="내용노출" left="20" top="87" height="158" fittocontents="none" textAlign="center" cssclass="sta_WF_Txt16" right="20" initvalueid="ivStcAccessibilityOn"/>
+              <Button id="btnCancel" taborder="4" text="취소" left="168" top="274" cssclass="btn_WF_Survcancel02" height="44" initvalueid="ivBtnAccessibilityButton" width="114" onclick="divMain_btnCancel_onclick"/>
+              <Button id="btnChk" taborder="5" text="확인" left="292" top="274" cssclass="btn_WF_SurvSearch02" height="44" initvalueid="ivBtnAccessibilityButton" width="114" onclick="divMain_btnChk_onclick"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="staTitle00" left="40" top="40" height="56" right="100"/>
+              <Button id="btnChk" left="320" top="370" width="160" height="60" cssclass="btn_WF_SurvSearch02"/>
+              <Button id="btnClose" width="56" top="40" height="56" right="40"/>
+              <Static id="staMessage" cssclass="sta_WF_Txt24" left="40" top="126" height="214" right="40"/>
+              <Static id="sta00_00" left="40" top="116" height="1" right="40"/>
+              <Button id="btnCancel" left="140" top="370" width="160" height="60"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="660" height="570" mobileorientation="portrait" type="default" background="rgba(0,0,0,0.0)">
+        <Div id="divMain" left="20" boxShadow="none" formscrollbartype="none none" text="div03" cssclass="div_Pop_SurvBox_C" height="479" right="30" top="60" taborder="1"/>
+        <Button id="btnClose" enable="true" visible="false" cssclass="btn_Pop_close_W_M" right="30" top="0" width="48" height="48" taborder="0"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsAlertLang">
+        <ColumnInfo>
+          <Column id="alertText01" type="STRING" size="256"/>
+          <Column id="alertText02" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="alertText01">취소</Col>
+            <Col id="alertText02">확인</Col>
+          </Row>
+          <Row>
+            <Col id="alertText01">Cancel</Col>
+            <Col id="alertText02">Ok</Col>
+          </Row>
+          <Row>
+            <Col id="alertText01">取消</Col>
+            <Col id="alertText02">确定</Col>
+          </Row>
+          <Row>
+            <Col id="alertText01">キャンセル</Col>
+            <Col id="alertText02">確認</Col>
+          </Row>
+          <Row>
+            <Col id="alertText01">Hủy</Col>
+            <Col id="alertText02">Xác nhận</Col>
+          </Row>
+          <Row>
+            <Col id="alertText01">Kanselahin</Col>
+            <Col id="alertText02">Kumpirmahin</Col>
+          </Row>
+          <Row>
+            <Col id="alertText01">Отмена</Col>
+            <Col id="alertText02">Подтвердить</Col>
+          </Row>
+          <Row>
+            <Col id="alertText01">ยกเลิก</Col>
+            <Col id="alertText02">ยืนยัน</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divMain.form.edtTitle03" propid="value" datasetid="dsSearch" columnid="shlNm"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[include "lib::cm_script.xjs"
+
+this.fv_confirmResult = false;
+
+// 로드
+this.comm_alert_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitPopup(obj);
+	
+	this.pv_params = this.smfGetPopupParams();
+	//this.smfUpdatePopupTitle("확인");
+	this.smfUpdatePopupTitle(this.smfStr(this.pv_params.test));
+	
+//  var fnMessage = this.pv_params.message.substring(this.pv_params.message.length-4, 0);
+//  var fnLangCd = this.pv_params.message.substring(this.pv_params.message.length-1);
+// 	var fnSurvey = this.pv_params.message.substring(this.pv_params.message.length-4);
+// 	fnSurvey = fnSurvey.substring(fnSurvey.length-1, 0);
+// 	fnSurvey == "vff" ? this.divMain.form.staMessage.set_text(this.smfStr(fnMessage)) : this.divMain.form.staMessage.set_text(this.smfStr(this.pv_params.message));
+	this.divMain.form.staMessage.set_text(this.smfStr(this.pv_params.message));
+};
+
+this.comm_confirmEds_onclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	this.smfSendResponseToOpener({
+		confirmResult: this.fv_confirmResult,
+	});
+};
+
+this.comm_confirmEds_onkeyup = function(obj:nexacro.Form,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 27){
+		this.fv_confirmResult = false;
+		this.close(false);
+	}
+};
+
+this.divMain_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fv_confirmResult = false;	
+	this.close(true);
+};
+
+this.divMain_btnChk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fv_confirmResult = true;
+	this.close(true);
+};
+
+this.divMain_btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fv_confirmResult = false;	
+	this.close(true);
+};
+]]></Script>
+  </Form>
+</FDL>

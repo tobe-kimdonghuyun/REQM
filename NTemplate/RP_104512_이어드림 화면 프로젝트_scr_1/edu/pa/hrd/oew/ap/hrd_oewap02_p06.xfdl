@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmMain" width="800" height="460" titletext="계약제교원인력풀-희망근무지 팝업" onload="frmMain_onload">
+    <Layouts>
+      <Layout height="460" width="800" screenid="ScreenDeskTop">
+        <Static id="staPopupTitleAss" taborder="0" left="20" top="20" width="20" height="20" initvalueid="ivStcAccessibilityOn"/>
+        <Div id="divMain" taborder="1" left="20" top="20" height="370" right="20" cssclass="div_WF_Detail" formscrolltype="vertical" text="" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="div00" taborder="2" text="div00" left="0" top="410" right="0" height="30">
+          <Layouts>
+            <Layout>
+              <Button id="btnCancel" taborder="0" text="취소" height="30" left="345" fittocontents="width" initvalueid="ivBtnAccessibilityButton" top="0" onclick="btnCancel_onclick" accessibilitylabel="취소" width="50" cssclass="btn_WF_Custom"/>
+              <Button id="btnRegist" taborder="1" text="적용" height="30" width="50" fittocontents="width" left="403" initvalueid="ivBtnAccessibilityButton" top="0" onclick="btnRegist_onclick" accessibilitylabel="적용"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staGd00" taborder="3" left="20" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGd04" taborder="4" left="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff" bottom="0" height="20"/>
+        <Static id="staGd01" taborder="5" left="0" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" width="20" bottom="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGd02" taborder="6" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" width="20" bottom="0" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGd03_00_00" taborder="7" left="20" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff" top="390"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="url">hrd_oew_ap02_006.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsResultHopPlwk=dsResultHopPlwk</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectZone</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsSelZoneCd=dsSelZoneCd</Col>
+            <Col id="url">hrd_oew_ap02_007.do</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cddcOrgCd" type="STRING" size="256" description="시도교육청조직코드"/>
+          <Column id="adtzoUseYn" type="STRING" size="256" description="행정구역사용여부"/>
+          <Column id="zoneCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResultHopPlwk" useclientlayout="true" keystring="S:+zoneNm">
+        <ColumnInfo>
+          <Column id="cddcOrgCd" type="STRING" size="256" description="시도교육청조직코드"/>
+          <Column id="adtzoUseYn" type="STRING" size="256" description="행정구역사용여부"/>
+          <Column id="zoneCd" type="STRING" size="256" description="구역코드(4)"/>
+          <Column id="dofdcCd" type="STRING" size="256" description="교육지원청코드(10)"/>
+          <Column id="zoneNm" type="STRING" size="256" description="구역명"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSelZoneCd" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="zoneNm" type="STRING" size="256"/>
+          <Column id="zoneCd" type="STRING" size="256"/>
+          <Column id="dofdcCd" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  온라인통합채용-계약제교원인력풀-지원서작성-희망근무지 팝업
+*  @MenuPath    pa_hrd_oew_ap
+*  @FileName 	pa_hrd_oewap02_p06.xfdl
+*  @Creator 	최지원
+*  @CreateDate 	2022.09.15
+*  @Desction    온라인통합채용-계약제교원인력풀-지원서작성-희망근무지 팝업
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.09.15    	최지원 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ this.beforeId;
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frmMain_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+
+	// default 초기처리를 한다.
+	this.smfInitPopup(this);
+
+	// 파라메터 셋
+	this.pv_params = this.smfGetPopupParams();
+	
+	var cddcOrgCd = this.smfGetCddcCode();
+	var cddcScCd = this.smfGetCddcCode().substring(0,3);
+	this.dsSearch.setColumn(0, "cddcOrgCd", cddcOrgCd); // 시도교육청코드
+	this.dsSearch.setColumn(0, "adtzoUseYn", 'Y');	// 행정구역사용여부
+	// 팝업 타이틀 변경
+	this.smfUpdatePopupTitle("희망근무지역");
+	
+	// 지역 조회
+	this.fnSearch();
+	
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+// 희망근무지 조회
+this.fnSearch = function (obj, e)
+{
+	// 서비스 객체 생성
+	this.smfSearchService("select")
+	
+		// 데이터 존재 필수(검색 조건)
+		.requireExistsData(this.dsSearch)
+ 		
+ 		// 실행
+ 		.run()
+		
+		// 콜백
+		.callback(function(callbackParams){
+ 			if(callbackParams.errors) {
+			return;
+			}
+			
+			this.fnInitHopZoneCdBtn();
+			/*this.fnInitDiv();*/
+ 		});	
+};
+
+/**
+ * 희망근무지 선택시  코드 검색
+**/
+this.fnSearchZone = function (obj, e)
+{
+	this.smfSearchService("selectZone")
+		// 데이터 존재 필수(검색 조건)
+		.requireExistsData(this.dsSearch)
+ 		
+ 		// 실행
+ 		.run()
+		
+		// 콜백
+		.callback(function(callbackParams){
+ 			if(callbackParams.errors) {
+			return;
+			}
+	});
+};
+
+/**
+ *  버튼 동적 생성
+ **/
+ this.fnInitHopZoneCdBtn = function(){
+ 	
+	// 희망지역 버튼 동적 생성
+	var objOption = {
+		blockcount : 4  // 몇개의 block으로 나눌지 같은폭으로 생성
+		, blockgap : 10 // 블럭사이의 Gap(pixel)
+		, height : 40
+		, leftgap : 5
+		, heightgap : 15
+	};
+	this.fnCreateButton(this.divMain,this.dsResultHopPlwk,objOption);
+	// 동적 생성후 해당 Div 스크롤 Reset
+	this.divMain.form.resetScroll();
+ }
+/**
+ * 버튼 동적 생성
+ */
+ this.fnCreateButton = function(divComp:nexacro.Div,dsList:nexacro.NormalDataset,objOption)
+{
+	// 나중을 위해 설정 값 저장
+	divComp._option = objOption;
+	var sButtonIdPrefix = "btnZoneCd_";
+	var sButtonId="";
+	var oButton=null;
+	
+	// 기본 설정
+	var nBlockCount = this.smfNvl(objOption.blockcount,1 );  // 지정이 없으면 1
+	var nBlockGap   = this.smfNvl(objOption.blockgap  ,10);  // 지정이 없으면 10
+	var nLeftGap    = this.smfNvl(objOption.leftgap   ,10);  // 지정이 없으면 10
+	var nHeight     = this.smfNvl(objOption.height    ,20);  // 지정이 없으면 30
+	var nHeightGap  = this.smfNvl(objOption.heightgap ,10);  // 지정이 없으면 10
+	var nWidth = parseInt((divComp.getOffsetWidth()
+			   - ((nBlockCount-1)*nBlockGap) - nLeftGap)/nBlockCount);
+	for(var i=0;i<dsList.rowcount;i++)
+	{
+		// Text값을 데이터셋에서 가져옴.
+		var sHopZoneCd    = dsList.getColumn(i,"zoneCd");  // 구역코드
+		var sHopZoneNm    = dsList.getColumn(i,"zoneNm");  // 구역명
+		
+		// 해당오브젝트를 구한다.
+		//sCheckboxId = sCheckboxIdPrefix+i; 
+		// 버튼아이디 = 지역코드
+		sButtonId = sHopZoneCd
+		oButton = divComp[sButtonId];
+		
+		// 위치를 계산
+		var nBlockIdx = i%nBlockCount;
+		var nLeft = nLeftGap + (nBlockIdx*nWidth) + (nBlockIdx*nBlockGap);
+		var nTop = parseInt(i/nBlockCount) * (nHeight + nHeightGap);
+		
+		// 버튼 생성
+		oButton = new Button(sButtonId,nLeft,nTop,nWidth,nHeight);
+		oButton.set_text(sHopZoneNm);
+		oButton.setEventHandler("onclick", function(obj,e){
+			this.fnClickEvt(obj,e);
+		}, this);
+		divComp.addChild(sButtonId,oButton);
+		oButton.show();
+	}	
+}
+
+
+ 
+ /**
+ * 조건별 영역 가변 처리
+ **/
+ this.fnInitDiv = function(){
+	// 희망근무지역 DIV 영역 체크
+	var hopZoneCnt = this.dsResultHopPlwk.getRowCount();
+	/*trace("행정구역수 : " + hopZoneCnt);*/
+
+	// 전체영역  RESET
+	this.smfResetScroll(this);
+ }
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ 
+
+// 버튼 클릭 공통 이벤트
+ this.fnClickEvt = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+ {	
+
+	// 이전 선택
+	if(this.beforeId){
+		var btnObj = this.divMain.form.components[this.beforeId];
+		btnObj.set_background('#1e5df2');
+	}
+	// 현재 선택
+	this.dsSearch.setColumn(0, "zoneCd", obj.id);
+	obj.set_background('#43bcf9');
+	this.beforeId =  obj.id;	
+	
+	this.fnSearchZone();
+ };
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * 적용버튼 클릭	
+ */
+this.btnRegist_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	if (!this.smfIsNull(this.dsSelZoneCd.getColumn(0, 'dofdcCd')))
+	{
+		// 부모창으로 입력 값 전달
+		this.smfSendResponseToOpener
+		({		
+			
+			"zoneNm" : this.dsSelZoneCd.getColumn(0, "zoneNm"),		// 구역명 
+			"zoneCd" : this.dsSelZoneCd.getColumn(0, "zoneCd"), 	// 구역코드
+			"dofdcCd" : this.dsSelZoneCd.getColumn(0, "dofdcCd"), 	// 교육지원청코드
+		
+		});
+		this.close(true);
+	} else {
+		this.smfAlert('희망근무지를 선택하세요.');
+		return;
+	}
+	
+	
+};
+
+/**
+ * 취소버튼 클릭
+ */
+this.btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 닫기 버튼을 이용한 팝업종료의 파라메터는 false를 전달
+	this.close(false);
+};
+
+
+
+]]></Script>
+  </Form>
+</FDL>

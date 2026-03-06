@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmTemp02" width="1200" height="606" titletext="대국민-자료실등록p93(디테일+첨부파일)" onload="frmTemp02_onload">
+    <Layouts>
+      <Layout height="606" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0" tabstop="false" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="자료실 등록" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="179" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divMain" taborder="1" left="0" height="402" top="134" text="" cssclass="div_WF_Detail" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="sta44" taborder="0" left="189" height="42" cssclass="sta_WF_Input02Top" top="0" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta07" taborder="1" left="0" height="192" cssclass="sta_WF_Input02" top="41" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta44_00_01_00_00" taborder="2" left="189" height="170" cssclass="sta_WF_Input02" top="232" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta45" taborder="3" left="0" width="190" height="42" cssclass="sta_WF_Input01Top" text="제목" top="0" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edt00_00_01" taborder="4" left="195" top="6" height="30" text="나이스 대국민서비스 리플렛" width="415" initvalueid="ivEdtNormal"/>
+              <Static id="sta10" taborder="5" left="0" width="190" height="192" cssclass="sta_WF_Input01" text="내용" top="41" initvalueid="ivStcAccessibilityOn"/>
+              <TextArea id="txt00" taborder="6" left="195" top="47" height="180" enable="true" scrolltype="both" right="5" initvalueid="ivTxtNormal"/>
+              <Static id="sta10_00_01" taborder="7" left="0" width="190" cssclass="sta_WF_Input01" text="첨부파일" top="232" initvalueid="ivStcAccessibilityOn" height="170"/>
+              <Div id="div00" taborder="8" left="195" top="238" url="comm::comm_fileAdd.xfdl" text="" initvalueid="ivDivAccessibilityOn" height="160" right="5"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnCancel" taborder="2" text="취소" top="566" width="120" cssclass="btn_WF_ActionLine" right="129" onclick="btnCancel_onclick" initvalueid="ivBtnAccessibilityButton" height="40"/>
+        <Button id="btnAdd" taborder="3" text="확인" top="566" height="40" width="120" cssclass="btn_WF_Action" right="-1" onclick="btnAdd_onclick" initvalueid="ivBtnAccessibilityButton"/>
+        <Static id="sta99_00_00_00_00" taborder="4" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta99_00_00_00_00_00" taborder="5" left="0" top="114" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta99_00_00_00_00_00_03_00" taborder="6" left="0" top="536" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*   대국민 - 템플릿02
+*  @MenuPath    TEMPLATE
+*  @FileName 	Temp02.xfdl
+*  @Creator 	홍길동
+*  @CreateDate 	2022.5.12
+*  @Desction    검정고시p72+(공지목록)+(타이틀,그리드)
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.5.12     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+
+include "lib::cm_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frmTemp02_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// Form의 default 초기처리를 한다.
+	this.smfInitForm(this);
+	
+	// 파라메터 세팅
+	this.pv_params = this.smfGetFormParams();	
+	
+	// 데이터 클리어
+	this.dsMain.clearData();
+	// row추가
+	this.dsMain.addRow();	
+	// 컬럼 초기화
+	this.smfInitRow(this.dsMain, 0); 
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnSave = function()
+{
+	// 이 값은 서버에서 디폴트로 세팅해야될 것 같음.
+	this.dsMain.setColumn(0,"prlDataId",this.smfGetUniqueId("",""));
+	this.dsMain.setColumn(0,"prlDataInqCnt",0);
+	
+	
+	// 서비스 객체 생성 
+	this.smfSaveService("save")
+		// 데이터 존재 필수
+		.requireExistsData(this.dsMain) 
+		// 데이터 검증
+		.validateForm(this.divMain)
+		// 데이터 변경 필수
+		.requireModifredData(this.dsMain) 
+ 
+		// 실행
+		.run()
+
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+
+			// 저장이 완료되었습니다.
+			// 재조회
+			this.smfAlert('CM002', [],  function(){
+				// 조회 수행
+				this.smfSetWorkPage("template::Temp01.xfdl");
+			});
+		});	
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+this.btnAdd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSave();
+};
+
+this.btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfSetWorkPage("template::Temp01.xfdl");
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="int" size="1"/>
+          <Column id="prlDataId" type="string" size="256"/>
+          <Column id="prlDataTitlNm" type="string" size="256"/>
+          <Column id="prlDataCn" type="string" size="256"/>
+          <Column id="fileRefrnId" type="string" size="256"/>
+          <Column id="prlDataInqCnt" type="bigdecimal" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="_chk">0</Col>
+            <Col id="prlDataId">f40bd9b1dac842ee81ab9b386de410ef</Col>
+            <Col id="prlDataTitlNm">홍보자료 수정을 위한 등록</Col>
+            <Col id="prlDataCn">홍보자료 수정을 위한 등록</Col>
+            <Col id="prlDataInqCnt">18</Col>
+          </Row>
+          <Row>
+            <Col id="_chk">0</Col>
+            <Col id="prlDataId">8e314951f8dd4597af9b15164c591f41</Col>
+            <Col id="prlDataTitlNm">테스트 자료</Col>
+            <Col id="prlDataCn">홍보 테스트 입니다</Col>
+            <Col id="prlDataInqCnt">15</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMainValid" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="256" prop="NONE"/>
+          <Column id="prlDataId" type="string" size="256"/>
+          <Column id="prlDataTitlNm" type="string" size="256"/>
+          <Column id="prlDataCn" type="string" size="256"/>
+          <Column id="fileRefrnId" type="string" size="256"/>
+          <Column id="prlDataInqCnt" type="bigdecimal" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="_chk"/>
+          </Row>
+          <Row>
+            <Col id="_chk"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="inDatasets">dsMain=dsMain:U</Col>
+            <Col id="outDatasets"/>
+            <Col id="asynctp"/>
+            <Col id="url">pas_mns_cn04_m02.do</Col>
+            <Col id="id">save</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divMain.form.edt00_00_01" propid="value" datasetid="dsMain" columnid="prlDataTitlNm"/>
+      <BindItem id="item1" compid="divMain.form.txt00" propid="value" datasetid="dsMain" columnid="prlDataCn"/>
+    </Bind>
+  </Form>
+</FDL>

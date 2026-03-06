@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="pas_mmspc01_m07" width="1920" height="200" onload="pas_mmspc01_m07_onload" onsize="pas_mmspc01_m07_onsize" titletext="GNBSearch" accessibilitydescription="메인 - 검색화면">
+    <Layouts>
+      <Layout height="200" width="1920" screenid="ScreenDeskTopP">
+        <Div id="div0011" taborder="0" left="0" top="50" bottom="-50" right="0" cssclass="div_SA_Opacity40" initvalueid="ivDivAccessibilityOff" visible="false">
+          <Layouts>
+            <Layout/>
+            <Layout name="Layout0"/>
+          </Layouts>
+        </Div>
+        <Div id="divPanel" taborder="1" left="0" top="0" height="200" background="#ffffff" initvalueid="ivDivAccessibilityOff" right="0">
+          <Layouts>
+            <Layout>
+              <Div id="divSrarch" taborder="0" text="div00" left="662" top="0" width="600" height="200" initvalueid="ivDivAccessibilityOff">
+                <Layouts>
+                  <Layout>
+                    <Edit id="edtSearch" taborder="0" left="10" top="46" width="520" height="48" cssclass="edt_GNB_search" displaynulltext="검색어를 입력해주세요." initvalueid="ivEdtNormal" onkeydown="edtSearch_onkeydown" accessibilitylabel="검색어를 입력해주세요." maxlength="50"/>
+                    <Button id="btnSearch" taborder="1" top="46" width="48" height="48" right="21" cssclass="btn_Top_search_B" initvalueid="ivBtnAccessibilityButton" onclick="divPanel_divSrarch_btnSearch_onclick" accessibilitylabel="검색하기"/>
+                    <Static id="staLine" taborder="2" left="0" top="100" height="5" cssclass="sta_GNB_line" right="0" initvalueid="ivStcAccessibilityOff"/>
+                  </Layout>
+                  <Layout name="Layout0">
+                    <Edit id="edtSearch" cssclass="edt_GNB_search_M" left="0" top="0" height="52" right="98" taborder="0"/>
+                    <Button id="btnSearch" cssclass="btn_pop_search_M" width="52" top="0" height="52" right="28" taborder="1"/>
+                    <Static id="staLine" left="0" top="62" height="5" right="0" taborder="2"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Button id="btnClose" taborder="1" top="32" width="38" height="38" cssclass="btn_mySetting_close" right="23" padding="0px" initvalueid="ivBtnAccessibilityButton" onclick="divPanel_btnClose_onclick" accessibilitylabel="화면닫기"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Div id="divSrarch" left="20" top="126" height="225" right="20" taborder="1"/>
+              <Button id="btnClose" top="26" width="48" height="48" right="20" cssclass="btn_pop_close_M" taborder="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="640" height="800" mobileorientation="portrait" type="default">
+        <Div id="divPanel" height="420" left="0" top="0" right="0" taborder="1"/>
+        <Div id="div0011" taborder="0" cssclass="div_SA_Opacity40_M" right="0" left="0" top="0" bottom="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    대국민포탈메인- 검색
+*  @FileName 	pas_mmspc01_m07.xfdl
+*  @Creator 	투비소프트
+*  @CreateDate 	2022.12.09
+*  @Desction    대국민포탈메인- 검색
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.12.09     	TOBESOFT 	               최초 생성 
+*******************************************************************************
+*/
+//  cssclass : div_SA_Opacity40
+//  initvalueid : ivDivAccessibilityOff
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.recmMax = 10; //화면에 보여줄 추천검색어 최대 건수
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.pas_mmspc01_m07_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.fnMiddleAlign();
+	
+	//추천검색어
+	this.smfSearchService("selectRecm")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			// 추천검색어
+			if(this.dsRecmList.getRowCount() > 0){
+				this.fnSetRecmList();
+			}
+
+		});
+};
+
+this.fnMiddleAlign = function()
+{
+	if(!this.smfIsMobile() ) {
+		// Div 가운데정렬 - left,width
+		var aPosInfo = this.smfGetOpenOptions(this.width, 600);	//Form기준 1200 - Div의 가로사이즈
+
+		this.divPanel.form.divSrarch.setOffsetLeft(parseInt(aPosInfo.left,10));
+		this.divPanel.form.divSrarch.setOffsetWidth(parseInt(aPosInfo.width,10));
+	}
+};
+
+//검색
+this.divPanel_divSrarch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfSendResponseToOpener({
+		"schKeyword": this.divPanel.form.divSrarch.form.edtSearch.value
+	});	
+	
+	this.close(true);
+};
+
+this.keywordButton_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+//	var sKeyword = String(obj.text).substr(1);
+//	this.divPanel.form.divSrarch.form.edtSearch.set_value(sKeyword);
+	
+	this.divPanel.form.divSrarch.form.edtSearch.set_value(obj.text);
+};
+
+this.divPanel_btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(true);
+};
+
+this.pas_mmspc01_m07_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	this.fnMiddleAlign();	
+	
+	if(this.smfIsMobile()){
+		this.divPanel.parent.parent.set_top(0);
+	}
+};
+
+
+this.edtSearch_onkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13){
+		this.divPanel_divSrarch_btnSearch_onclick();
+	}
+};
+
+// 추천검색어 생성 - 통합검색 메인하고 다르게 화면 퍼블리싱 되어 있음...
+this.fnSetRecmList = function(){
+	var recmDiv = this.divPanel.form.divSrarch;
+	var recmCnt = this.dsRecmList.getRowCount();
+	var recmId = "staRecmSrchWord";
+	var sCssClass = this.smfIsMobile()?"btn_GNB_txtLink_M":"btn_GNB_link";
+	var leftPadding = this.smfIsMobile()?"10":"10";	//글상자간 간격 
+	var pLeft = this.smfIsMobile()?"0":"77";	//left위치 
+	var pTop = this.smfIsMobile()?"105":"125";	//top위치 
+	var pWidth = this.smfIsMobile()?"70":"100";	//가로사이즈 (가변이라 초기값)
+	var pHeigth=this.smfIsMobile()?"50":"24";	//세로사이즈 
+	var mgTop = this.smfIsMobile()?"20":"10";	//top 간격
+	
+	if(recmCnt > this.recmMax){	//화면에 보여줄 추천검색어 수
+		recmCnt = this.recmMax;
+	}
+	//버튼영역 크기
+	var totalWidth=this.divPanel.form.divSrarch.getOffsetWidth(); 
+	var textWidth=parseInt(pLeft) + parseInt(pLeft);
+	
+	for(var i=0; i<recmCnt; i++){
+		var sStaticId = recmId+i;
+		var sLeft = pLeft;
+		var vText = this.dsRecmList.getColumn(i, "recmSrchNm");
+		
+		if(i>0){
+			var indx = i-1;
+			textWidth += parseInt(leftPadding); //검색어 사이즈에 간격 더하기
+
+			sLeft = recmId + indx + ":" + leftPadding;	//두번째 검색어는 첫번째 검색어의 left 간격 필요
+		}
+
+		var objButton = new Button(); 
+		objButton.init(sStaticId, sLeft, pTop, pWidth, pHeigth);
+	
+		recmDiv.form.addChild(sStaticId, objButton); 
+		
+		// Static을 보이게 설정(addChild()하면 반드시 show()를 해주어야 실제로 화면에 보임)  
+		objButton.show();
+		
+		//속성 설정
+		objButton.set_text(vText);
+		objButton.set_initvalueid("ivBtnAccessibilityLink");
+		objButton.set_cssclass(sCssClass);
+		objButton.set_fittocontents("width");
+			
+		// Static에 클릭이벤트 추가
+		objButton.addEventHandler("onclick",this.keywordButton_onclick,this);
+		objButton.set_verticalAlign("middle");
+
+		textWidth += objButton.getOffsetWidth(); //생성된 검색어 사이즈 더하기
+		
+		if(textWidth > totalWidth){  //검색어들이 부모창크기를 넘으면 줄바꿈하기
+			textWidth=parseInt(pLeft) + parseInt(pLeft) + objButton.getOffsetWidth();
+			pTop = parseInt(pTop) + parseInt(pHeigth) + parseInt(mgTop); 
+			sLeft = pLeft;				
+			objButton.set_left(sLeft);
+			objButton.set_top(pTop);
+		}
+	}
+	
+	this.smfResetScroll(this.divPanel.form.divSrarch.form);
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectRecm</Col>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsRecmList</Col>
+            <Col id="url">pas_mms_pc00_005.do</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="collections" type="STRING" size="256"/>
+          <Column id="query" type="STRING" size="256"/>
+          <Column id="reQuery" type="STRING" size="256"/>
+          <Column id="realQuery" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="reQuery">N</Col>
+            <Col id="collections">ALL</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRecmList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="recmSrchSn" type="STRING" size="256"/>
+          <Column id="recmSrchNm" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

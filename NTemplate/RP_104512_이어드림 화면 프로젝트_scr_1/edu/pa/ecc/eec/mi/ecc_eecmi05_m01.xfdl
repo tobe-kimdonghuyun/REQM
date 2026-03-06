@@ -1,0 +1,489 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ecc_eecmi05_m01" width="1200" height="760" titletext="활동확인서 신청" onload="fnOnload">
+    <Layouts>
+      <Layout height="760" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="65" height="54" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="활동확인서 신청" left="0" top="0" height="54" cssclass="img_WF_SubTit01" width="230" initvalueid="ivTitleAccessibilityOn" accessibilitylabel="활동확인서 신청"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSearch" taborder="1" left="0" top="144" height="70" cssclass="div_WF_Search" right="0" initvalueid="ivDivAccessibilityOff" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staShlNm" taborder="0" text="학교명" left="0" top="20" width="68" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn" accessibilitylabel="학교명"/>
+              <Edit id="edtShlNm" taborder="1" left="68" width="250" height="30" top="20" initvalueid="ivEdtNormal" onchanged="divSearch_edtShlNm_onchanged" accessibilitylabel="학교명 입력"/>
+              <Static id="staAprvSts" taborder="2" text="승인상태" left="318" top="20" width="81" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn" accessibilitylabel="승인상태"/>
+              <Combo id="cboAprvSts" taborder="3" left="399" width="124" height="30" codecolumn="aprvYn" datacolumn="aprvYn" index="-1" text="" readonly="false" top="20" value="ALL" initvalueid="ivCmbNormal" innerdataset="dsSearch" accessibilitylabel="승인상태 구분"/>
+              <Button id="btnSearch" taborder="4" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="divSearch_btnSearch_onclick" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="조회"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdShl" taborder="2" left="0" top="234" height="200" autofittype="col" right="0" selecttype="cell" initvalueid="ivGrdAccessibilityOn" binddataset="dsShlList" oncellclick="grdShl_oncellclick" accessibilitylabel="순번, 시도교육청, 학교명 정보">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="200"/>
+                <Column size="400"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="순번"/>
+                <Cell col="1" text="시도교육청"/>
+                <Cell col="2" text="학교명" cssclass="LineNo"/>
+              </Band>
+              <Band id="body">
+                <Cell text="expr:currow + 1" textAlign="center"/>
+                <Cell col="1" text="bind:cddcNm"/>
+                <Cell col="2" text="bind:shlNm" cssclass="LineNo"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnIssuAply" taborder="3" text="신청" top="464" height="30" width="50" cssclass="btn_WF_Custom" visible="true" right="84" onclick="btnIssuAply_onclick" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="신청"/>
+        <Button id="btnAplyRtrcn" taborder="4" text="신청취소" top="464" height="30" width="76" cssclass="btn_WF_Custom" visible="true" right="0" onclick="btnAplyRtrcn_onclick" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="신청취소"/>
+        <Grid id="grdAply" taborder="5" left="0" top="504" height="226" autofittype="col" right="0" binddataset="dsAplyList" selecttype="cell" initvalueid="ivGrdAccessibilityOn" onheadclick="grdAply_onheadclick" accessibilitylabel="활동확인서 목록: 순번, 학교명, 신청번호, 신청일시, 신청상태, 발급가능일시, 발급번호, 발급일시, 발급상태 정보">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="40"/>
+                <Column size="100"/>
+                <Column size="80"/>
+                <Column size="100"/>
+                <Column size="60"/>
+                <Column size="100"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="순번"/>
+                <Cell col="2" text="학교명"/>
+                <Cell col="3" text="신청번호"/>
+                <Cell col="4" text="신청일시"/>
+                <Cell col="5" text="신청상태"/>
+                <Cell col="6" text="발급가능일시"/>
+                <Cell col="7" text="발급번호"/>
+                <Cell col="8" text="발급일시"/>
+                <Cell col="9" text="발급상태" cssclass="LineNo"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox" textAlign="center" text="bind:_chk"/>
+                <Cell col="1" textAlign="center" text="expr:expr:currow+1"/>
+                <Cell col="2" textAlign="center" text="bind:shlNm"/>
+                <Cell col="3" textAlign="center" text="bind:crtfAplyNo"/>
+                <Cell col="4" textAlign="center" text="bind:crtfAplyDt" displaytype="date" maskedittype="string" calendardateformat="yyyy.MM.dd HH:mm:ss" calendareditformat="yyyy.MM.dd HH:mm:ss"/>
+                <Cell col="5" textAlign="center" text="expr:aprvYn == 'N' ? '신청' : '승인'" displaytype="text" calendardateformat="yyyy-MM-dd ddd "/>
+                <Cell col="6" textAlign="center" text="bind:issuPslDt" calendardateformat="yyyy.MM.dd HH:mm:ss" calendareditformat="yyyy.MM.dd HH:mm:ss" displaytype="date" maskedittype="string"/>
+                <Cell col="7" textAlign="center" text="bind:issuNo" calendardateformat="yyyy-MM-dd" calendareditformat="yyyy-MM-dd"/>
+                <Cell col="8" textAlign="center" text="bind:issuDt" displaytype="date" calendardateformat="yyyy.MM.dd HH:mm:ss" calendareditformat="yyyy.MM.dd HH:mm:ss" maskedittype="string"/>
+                <Cell col="9" textAlign="center" text="expr:issuYn == 'N' ? (aprvYn == 'N' ? ' ' : '발급') : '발급완료'" displaytype="expr:issuYn == 'N' ? (aprvYn == 'Y' ? 'buttoncontrol' : 'normal') : 'normal'" cssclass="LineNo"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="sta00" taborder="6" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta01" taborder="7" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta02" taborder="8" left="0" top="214" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta03" taborder="9" left="0" top="434" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta03_00" taborder="10" left="0" top="494" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta04" taborder="11" left="0" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff" height="30" top="730"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  활동확인서 신청
+*  @MenuPath    초등돌봄교실 > 활동확인서 신청
+*  @FileName 	ecc_eecmi05_m01.xfdl 
+*  @Creator 	Kangchaeyoon
+*  @CreateDate 	2022.07.27
+*  @Desction    초등돌봄교실(돌봄인력서비스) 활동확인서 신청
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.07.27            Kangchaeyoon                   최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_cddcCd; //시도교육청 코드
+this.fv_userId; //외부강사ID
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	//임시 시도교육청코드 세팅
+	this.smfSetCddcCode("K100000001");
+	this.fv_cddcCd = this.smfGetCddcCode();
+
+	this.dsSearch.setColumn(0,"cddcCd", this.fv_cddcCd);
+	
+	//외부강사 ID 세팅
+	this.smfSetUserId("K10O000001");  
+	this.fv_userId = this.smfGetUserId();
+	this.dsSearch.setColumn(0,"userId", this.fv_userId);
+
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * @description 학교 목록 조회 Transaction
+ */
+this.fnListShl = function()
+{
+ 	// 서비스 객체 생성
+	this.smfSearchService("listShl")
+		
+		// 실행
+		.run()
+		
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		});
+};
+
+/**
+ * @description 활동확인서 목록 조회 Transaction
+ */
+this.fnListAply = function()
+{
+ 	// 서비스 객체 생성
+	this.smfSearchService("listAply")
+		
+		// 실행
+		.run()
+		
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		});
+};
+
+/**
+ * @description 활동확인서 신청 Transaction
+ */
+this.fnInsertAply = function()
+{
+ 	// 서비스 객체 생성
+	this.smfSaveService("insertAply")
+		
+		// 실행
+		.run()
+		
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		});
+};
+
+/**
+ * @description 활동확인서 신청 취소 Transaction
+ */
+this.fnDeleteAply = function()
+{
+ 	// 서비스 객체 생성
+	this.smfDeleteService("deleteAply")
+		
+		// 실행
+		.run()
+		
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		});
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 조회 버튼 클릭
+*/
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//담당 학교 목록 조회
+	this.fnListShl();
+};
+
+/**
+ * @description 학교 목록 행 클릭
+*/
+this.grdShl_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	//학교 코드 세팅
+	var dsShlCd = this.dsShlList.getColumn(e.row,'shlCd');
+	this.dsShlInfo.setColumn(0,"shlCd", dsShlCd);
+
+	//시도교육청 코드 세팅
+	var dsCddcCd = this.dsShlList.getColumn(e.row,'cddcCd');
+	this.dsShlInfo.setColumn(0,"cddcCd", dsCddcCd);
+	
+	//외부강사 ID 세팅
+	var dsUserId = 'K10O000001';
+	this.dsShlInfo.setColumn(0,"userId", dsUserId);
+	
+	//활동확인서 목록 조회
+	this.fnListAply();
+	
+	//활동확인서 신청 가능하게 컬럼(_chk)에 값 추가 
+	//_chk가 Y : 신청 가능, N : 신청 불가
+	this.dsShlList.setColumn(0, "_chk", "Y");
+};
+
+/**
+ * @description 그리드 체크박스 헤드 클릭
+*/
+this.grdAply_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	//체크박스 전체 선택 
+	this.smfSetGridCheckAll(obj, e);
+};
+
+/**
+ * @description 신청 버튼 클릭
+*/
+this.btnIssuAply_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//학교 선택 후 신청 가능하게 처리
+	var clickChk =  this.dsShlList.getColumn(0, "_chk");
+	if(this.isNil(clickChk)){
+		//선택된 {0}이(가) 없습니다. {0}을(를) 선택하여 주십시오.
+		this.smfAlert('CM013', ['학교']);
+		return;
+	}
+	
+	var arrChk = this.dsAplyList.extractRows('_chk');
+	
+	//신청 내역이 있을 때 (신청 상태가 '승인') 중복 추가 불가 처리
+	//확인 필요
+	var aprvChk = this.dsAplyList.getColumn(arrChk,'aprvYn');
+	
+	if(aprvChk == 'N'){
+		this.smfAlert('CM155', ['이미 신청된 내역이 있습니다.']);  
+		return;
+	}
+	
+	//활동확인서 신청
+	this.fnInsertAply();
+};
+
+/**
+ * @description 신청취소 버튼 클릭
+*/
+this.btnAplyRtrcn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//학교 선택 후 신청 가능하게 처리
+	var clickChk =  this.dsShlList.getColumn(0, "_chk");
+	if(this.isNil(clickChk)){
+		//선택된 {0}이(가) 없습니다. {0}을(를) 선택하여 주십시오.
+		this.smfAlert('CM013', ['학교']);
+		return;
+	}
+	
+	//신청 내역 있을 때만 취소처리 가능
+	var aplyCount = this.dsAplyList.getRowCount();
+	if(aplyCount <= 0){
+		this.smfAlert('CM155', ['활동확인서 신청 내역이 없습니다.']);	  
+		return;
+	}
+
+	var arrChk = this.dsAplyList.extractRows('_chk');
+		
+	//체크박스 선택 여부 확인
+	if(this.isNil(arrChk)){
+		this.smfAlert('CM155', ['신청 취소할 학교를 선택해주세요.']);	  
+		return;
+	}		
+
+	//신청상태가 '신청'인 목록만 삭제
+	var aprvChk = this.dsAplyList.getColumn(arrChk,'aprvYn');
+	if(aprvChk == 'Y'){
+		this.smfAlert('CM155', ['이미 승인처리되어 삭제할 수 없습니다.']);  
+		return;
+	}
+	
+	//활동확인서 신청 취소
+	this.fnDeleteAply();
+};
+
+/**
+ * @description 발급 버튼 클릭
+*/
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listShl</Col>
+            <Col id="url">/ecc_eec_mi05_001.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsShlList=dsShlList</Col>
+          </Row>
+          <Row>
+            <Col id="id">listAply</Col>
+            <Col id="inDatasets">dsShlInfo=dsShlInfo</Col>
+            <Col id="outDatasets">dsAplyList=dsAplyList</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/ecc_eec_mi05_002.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+          <Row>
+            <Col id="id">insertAply</Col>
+            <Col id="url">/ecc_eec_mi05_003.do</Col>
+            <Col id="inDatasets">dsShlInfo=dsShlInfo</Col>
+          </Row>
+          <Row>
+            <Col id="id">deleteAply</Col>
+            <Col id="url">/ecc_eec_mi05_004.do</Col>
+            <Col id="inDatasets">dsAplyList=dsAplyList</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" description="학교명"/>
+          <Column id="userId" type="STRING" size="256" description="외부강사ID"/>
+          <Column id="aprvYn" type="STRING" size="256" description="승인상태"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCddcScCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="FirstCode" type="STRING" size="30" value="SEL" datapath=""/>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="FilterExpr" type="STRING" size="30" value=""/>
+          <ConstColumn id="UnyCdGrpId" type="STRING" size="30" value=""/>
+          <ConstColumn id="BfrClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd1Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd2Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd3Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd4Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd5Value" type="STRING" size="30" value=""/>
+          <Column id="pgeId" type="STRING" size="256"/>
+          <Column id="clfCdValue" type="STRING" size="30"/>
+          <Column id="clfCdValueNm" type="STRING" size="120"/>
+          <Column id="clfCdUseYn" type="STRING" size="150"/>
+          <Column id="unyCdValue" type="STRING" size="10"/>
+          <Column id="unyCdValueNm" type="STRING" size="30"/>
+          <Column id="userDfnCd1Value" type="STRING" size="100"/>
+          <Column id="userDfnCd2Value" type="STRING" size="100"/>
+          <Column id="userDfnCd3Value" type="STRING" size="100"/>
+          <Column id="userDfnCd4Value" type="STRING" size="100"/>
+          <Column id="userDfnCd5Value" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsAplyList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="int" size="1"/>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" description="학교명"/>
+          <Column id="userId" type="STRING" size="256" description="사용자명"/>
+          <Column id="crtfAplyNo" type="string" size="256" description="증명서신청번호"/>
+          <Column id="crtfAplyDt" type="string" size="256" description="증명서신청일시"/>
+          <Column id="aprvYn" type="string" size="256" description="신청상태"/>
+          <Column id="issuPslDt" type="string" size="256" description="발급가능일시"/>
+          <Column id="issuPslCk" type="string" size="256" description="발급가능여부"/>
+          <Column id="issuNo" type="string" size="256" description="발급번호"/>
+          <Column id="issuDt" type="string" size="256" description="발급일시"/>
+          <Column id="issuYn" type="string" size="256" description="발급상태"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsShlList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="256" description="선택여부"/>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="cddcNm" type="STRING" size="256" description="시도교육청명"/>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" description="학교명"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsShlInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" description="학교명"/>
+          <Column id="userId" type="STRING" size="256" description="외부강사ID"/>
+          <Column id="aprvYn" type="STRING" size="256" description="승인상태"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.cboAprvSts" propid="value" datasetid="dsSearch" columnid="aprvYn"/>
+      <BindItem id="item1" compid="divSearch.form.edtShlNm" propid="value" datasetid="dsSearch" columnid="shlNm"/>
+    </Bind>
+  </Form>
+</FDL>

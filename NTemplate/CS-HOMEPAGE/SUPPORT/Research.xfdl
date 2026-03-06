@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Research" width="1300" height="190" titletext="New Form">
+    <Layouts>
+      <Layout width="1300" height="190">
+        <Div id="Div_reSearch" taborder="8" left="0" top="0" width="1300" height="190" cssclass="div_WF_survey" formscrolltype="none" visible="true" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <Static id="staReSearchText" taborder="0" text="답변에 대한 내용이 문제해결에 도움이 되었습니까? " left="40" top="30" height="30" cssclass="sta_WF_viewDetail" width="406"/>
+              <Button id="btnStar1" taborder="1" left="429" top="27" width="32" height="32" cssclass="btn_WF_starD" onclick="Div_reSearch_btnStar_onclick" accessibilitylabel="별점1 해제됨"/>
+              <Button id="btnStar2" taborder="2" left="466" top="27" width="32" height="32" cssclass="btn_WF_starD" onclick="Div_reSearch_btnStar_onclick" accessibilitylabel="별점2 해제됨"/>
+              <Button id="btnStar3" taborder="3" left="503" top="27" width="32" height="32" cssclass="btn_WF_starD" onclick="Div_reSearch_btnStar_onclick" accessibilitylabel="별점3 해제됨"/>
+              <Button id="btnStar4" taborder="4" left="540" top="27" width="32" height="32" cssclass="btn_WF_starD" onclick="Div_reSearch_btnStar_onclick" accessibilitylabel="별점4 해제됨"/>
+              <Button id="btnStar5" taborder="5" left="577" top="27" width="32" height="32" cssclass="btn_WF_starD" onclick="Div_reSearch_btnStar_onclick" accessibilitylabel="별점5 해제됨"/>
+              <Edit id="edtReSearch" taborder="6" left="40" top="80" width="1109" height="64" cssclass="edt_WF_reply" displaynulltext="개인정보보호를 위해 연락처 정보는 기술하지 마십시요." accessibilitylabel="의견입력"/>
+              <Button id="btnReSearch" taborder="7" text="의견등록" left="1160" top="80" width="100" height="64" cssclass="btn_WF_reply" onclick="btn_Save_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_Satis">
+        <ColumnInfo>
+          <Column id="QL_SEQ" type="STRING" size="256"/>
+          <Column id="user_id" type="STRING" size="256"/>
+          <Column id="case1" type="STRING" size="256"/>
+          <Column id="case2" type="STRING" size="256"/>
+          <Column id="case3" type="STRING" size="256"/>
+          <Column id="etc" type="STRING" size="256"/>
+          <Column id="case_cd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_Condition">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="data" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">4</Col>
+            <Col id="data">매우만족</Col>
+          </Row>
+          <Row>
+            <Col id="code">5</Col>
+            <Col id="data">만족</Col>
+          </Row>
+          <Row>
+            <Col id="code">2</Col>
+            <Col id="data">불만</Col>
+          </Row>
+          <Row>
+            <Col id="code">3</Col>
+            <Col id="data">매우불만</Col>
+          </Row>
+          <Row>
+            <Col id="code">1</Col>
+            <Col id="data">보통</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  설문조사(QnA상세)
+*
+*  @MenuPath 
+*  @FileName 		SUPPORT::Research.xfdl 
+*  @Creator 		김광호
+*  @CreateDate 		2022.01.01
+*  @LastModifier  
+*  @LastModifyDate  
+*  @Version 		1.0
+*  @Outline 		설문조사(QnA상세)
+*  @Desction 
+************** 소스 수정 이력 *************************************************
+*    date          Modifier            Description
+*******************************************************************************
+*  2022.01.01      김광호	           최초 생성 
+*******************************************************************************
+*/
+
+this.fvStar = 0;
+
+this.btn_Save_onclick = function (obj:Button, e:nexacro.ClickEventInfo)
+{
+	if (!this.fn_isValue()) 
+	{
+		return;
+	}
+
+	nexacro.getApplication().gds_MiWizard.clearData();
+	nexacro.getApplication().com_AddMiWizard("input", "", "", "", "CS,statistics,6");
+	var outDs = "";
+	var inDs = "input=ds_Satis:A";
+	this.com_CallService("satisfaction", "", inDs, "", "fn_Research_Callback", "CS", true);
+};
+
+this.fn_Research_Callback = function (svcid, errCode, errMsg)
+{
+	if (errCode < 0) 
+	{
+		alert("저장에 실패 하였습니다.");
+		return;
+	}
+	if (svcid == "satisfaction") 
+	{
+		alert("만족도가 저장 되었습니다.");
+		this.Div_reSearch.form.btnStar1.set_enable(false);
+		this.Div_reSearch.form.btnStar2.set_enable(false);
+		this.Div_reSearch.form.btnStar3.set_enable(false);
+		this.Div_reSearch.form.btnStar4.set_enable(false);
+		this.Div_reSearch.form.btnStar5.set_enable(false);
+		this.Div_reSearch.form.edtReSearch.set_enable(false);
+		this.Div_reSearch.form.btnReSearch.set_enable(false);
+	}
+};
+
+this.fn_isValue = function ()
+{
+	this.ds_Satis.clearData();
+	var nRow = this.ds_Satis.addRow();
+	this.ds_Satis.setColumn(nRow, "QL_SEQ", this.parent.parent.ds_ReqDetail.getColumn(0, "QL_SEQ"));
+	this.ds_Satis.setColumn(nRow, "user_id", nexacro.getApplication().gds_UserInfo.getColumn(0, "User_id"));
+	this.ds_Satis.setColumn(nRow, "case1", this.fvStar);
+	this.ds_Satis.setColumn(nRow, "case2", "");
+	this.ds_Satis.setColumn(nRow, "case3", "");
+
+	if (this.fvStar == 0)
+	{
+		alert("만족도를 선택해 주시기 바랍니다.");
+		return false;
+	}
+
+	if (nexacro.getApplication().com_IsEmpty(this.Div_reSearch.form.edtReSearch.value)) 
+	{
+		alert("의견을 기재해 주시기 바랍니다.");
+		return false;
+	}
+	if (this.Div_reSearch.form.edtReSearch.value.length > 100) 
+	{
+		alert("100자 이하로 작성해 주시기 바랍니다.");
+		return false;
+	}
+	this.ds_Satis.setColumn(nRow, "etc", this.Div_reSearch.form.edtReSearch.value);
+	return true;
+};
+
+this.fn_setSafctData = function ()
+{
+	this.fvStar = this.parent.parent.ds_CustSafctData.getColumn(0, "case_cd");
+	this.fn_setStars();
+	this.Div_reSearch.form.edtReSearch.set_value(this.parent.parent.ds_CustSafctData.getColumn(0, "etc"));
+	this.Div_reSearch.form.btnStar1.set_enable(false);
+	this.Div_reSearch.form.btnStar2.set_enable(false);
+	this.Div_reSearch.form.btnStar3.set_enable(false);
+	this.Div_reSearch.form.btnStar4.set_enable(false);
+	this.Div_reSearch.form.btnStar5.set_enable(false);
+	this.Div_reSearch.form.edtReSearch.set_readonly(true);
+	this.Div_reSearch.form.btnReSearch.set_enable(false);
+};
+
+// 별점 버튼 이벤트
+this.Div_reSearch_btnStar_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sNm = obj.name;
+	this.fvStar = parseInt(sNm.substr(7, 1));
+	
+	this.fn_setStars();
+};
+
+// 별 테마 변경
+this.fn_setStars = function()
+{
+// 4	매우만족
+// 5	만족
+// 2	불만
+// 3	매우불만
+// 1	보통
+	this.Div_reSearch.form.btnStar3.set_cssclass('btn_WF_starD');
+	this.Div_reSearch.form.btnStar2.set_cssclass('btn_WF_starD');
+	this.Div_reSearch.form.btnStar1.set_cssclass('btn_WF_starD');
+	this.Div_reSearch.form.btnStar5.set_cssclass('btn_WF_starD');
+	this.Div_reSearch.form.btnStar4.set_cssclass('btn_WF_starD');
+	
+	//접근성 적용
+	this.Div_reSearch.form.btnStar1.set_accessibilitylabel('별점1 해제됨');
+	this.Div_reSearch.form.btnStar2.set_accessibilitylabel('별점2 해제됨');	
+	this.Div_reSearch.form.btnStar3.set_accessibilitylabel('별점3 해제됨');
+	this.Div_reSearch.form.btnStar4.set_accessibilitylabel('별점4 해제됨');		
+	this.Div_reSearch.form.btnStar5.set_accessibilitylabel('빌점5 해제됨');
+
+	
+	var i = 0;
+	this.ds_Satis.setColumn(0, "case1", this.fvStar);
+	switch(parseInt(this.fvStar)) {
+	case 1:
+		this.Div_reSearch.form.btnStar1.set_cssclass('btn_WF_star');
+		this.Div_reSearch.form.btnStar1.set_accessibilitylabel('별점1 선택됨');		
+		break;
+	case 2:
+		this.Div_reSearch.form.btnStar1.set_cssclass('btn_WF_star');
+		this.Div_reSearch.form.btnStar2.set_cssclass('btn_WF_star');
+		
+		this.Div_reSearch.form.btnStar1.set_accessibilitylabel('별점1 선택됨');
+		this.Div_reSearch.form.btnStar2.set_accessibilitylabel('별점2 선택됨');			
+		break;
+	case 3:
+		this.Div_reSearch.form.btnStar3.set_cssclass('btn_WF_star');
+		this.Div_reSearch.form.btnStar2.set_cssclass('btn_WF_star');
+		this.Div_reSearch.form.btnStar1.set_cssclass('btn_WF_star');
+
+		this.Div_reSearch.form.btnStar1.set_accessibilitylabel('별점1 선택됨');
+		this.Div_reSearch.form.btnStar2.set_accessibilitylabel('별점2 선택됨');	
+		this.Div_reSearch.form.btnStar3.set_accessibilitylabel('별점3 선택됨');
+		break;
+	case 4:
+		this.Div_reSearch.form.btnStar3.set_cssclass('btn_WF_star');
+		this.Div_reSearch.form.btnStar2.set_cssclass('btn_WF_star');
+		this.Div_reSearch.form.btnStar1.set_cssclass('btn_WF_star');
+		this.Div_reSearch.form.btnStar4.set_cssclass('btn_WF_star');
+
+		this.Div_reSearch.form.btnStar1.set_accessibilitylabel('별점1 선택됨');
+		this.Div_reSearch.form.btnStar2.set_accessibilitylabel('별점2 선택됨');	
+		this.Div_reSearch.form.btnStar3.set_accessibilitylabel('별점3 선택됨');
+		this.Div_reSearch.form.btnStar4.set_accessibilitylabel('별점4 선택됨');	
+		break;
+	case 5:
+		this.Div_reSearch.form.btnStar3.set_cssclass('btn_WF_star');
+		this.Div_reSearch.form.btnStar2.set_cssclass('btn_WF_star');
+		this.Div_reSearch.form.btnStar1.set_cssclass('btn_WF_star');
+		this.Div_reSearch.form.btnStar5.set_cssclass('btn_WF_star');
+		this.Div_reSearch.form.btnStar4.set_cssclass('btn_WF_star');
+		
+		this.Div_reSearch.form.btnStar1.set_accessibilitylabel('별점1 선택됨');
+		this.Div_reSearch.form.btnStar2.set_accessibilitylabel('별점2 선택됨');	
+		this.Div_reSearch.form.btnStar3.set_accessibilitylabel('별점3 선택됨');
+		this.Div_reSearch.form.btnStar4.set_accessibilitylabel('별점4 선택됨');		
+		this.Div_reSearch.form.btnStar5.set_accessibilitylabel('빌점5 선택됨');		
+		break;
+	default:
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

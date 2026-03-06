@@ -1,0 +1,1249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1200" height="152" onload="form_onload" onlayoutchanged="form_onlayoutchanged" accessibilityenable="false">
+    <Layouts>
+      <Layout width="1200" height="152" screenid="Desktop_screen">
+        <Button id="btnFirst" taborder="0" left="0" top="0" width="0" height="0" accessibilitylabel="KRDS" accessibilityrole="none"/>
+        <Div id="divSkip" taborder="1" left="0" top="0" height="32" visible="true" onkillfocus="divSkip_onkillfocus" onsetfocus="divSkip_onsetfocus" text="본문 바로가기" background="transparent" accessibilityenable="false" right="24.00999999999999">
+          <Layouts>
+            <Layout>
+              <Button id="btnGoBody" taborder="0" text="본문 바로가기" left="524" top="0" onclick="divSkip_btnGoBody_onclick" cssclass="btn_TF_Skiplink" bottom="0" width="200"/>
+            </Layout>
+            <Layout name="Mobile_screen">
+              <Button id="btnGoBody" left="0%" top="0" width="100%" bottom="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00" taborder="2" left="0" top="0" width="100%" height="32" cssclass="sta_TF_MastheadBg" accessibilityenable="false"/>
+        <Static id="staMastHead" taborder="3" text="이 누리집은 대한민국 공식 전자정부 누리집입니다." left="0" top="0" tablecellarea="0 0/1 2" cssclass="sta_TF_MastheadTxt" width="391" height="32" flexgrow="1"/>
+        <Button id="btnLogin" taborder="4" text="로그인" left="1126" top="2" width="74" height="28" cssclass="btn_TF_UtilLogin" onclick="btnLogin_onclick" visible="true"/>
+        <Static id="Static01_01_00" taborder="5" left="984" top="30" width="1" height="16" cssclass="sta_WF_line" accessibilityenable="false"/>
+        <Button id="btnUtilView" taborder="6" text="글자·화면 설정" left="1066" top="16" width="125" height="28" cssclass="btn_TF_UtilView" onclick="btnUtilView_onclick" visible="true"/>
+        <Panel id="Panel01_00" taborder="7" top="44" height="32" flexmainaxisalign="end" flexcrossaxisalign="center" tablecellarea="0/1" horizontalgap="12" left="24" visible="true" right="0">
+          <Contents>
+            <PanelItem id="PanelItem03" componentid="btnLogin"/>
+            <PanelItem id="PanelItem01" componentid="Static01_01_00"/>
+            <PanelItem id="PanelItem00" componentid="btnUtilView"/>
+          </Contents>
+        </Panel>
+        <Static id="staLogo" taborder="8" left="0" top="80" width="340" height="63" tablecellarea="0/1" minwidth="240" maxwidth="" text="유엑스Pro KRDS" color="transparent" onclick="staLogo_onclick" cssclass="sta_TF_LogoUXPro" accessibilityrole="heading1"/>
+        <Div id="divTopBtn" taborder="9" left="450" height="72" accessibilityenable="false" formscrollbartype="none" visible="true" onkillfocus="divTopBtn_onkillfocus" text="" top="80" right="24">
+          <Layouts>
+            <Layout type="horizontal" flexmainaxisalign="end" horizontalgap="8"/>
+            <Layout name="Mobile_screen"/>
+          </Layouts>
+        </Div>
+        <Button id="btnAllMenu" taborder="10" text="전체메뉴" top="48" width="104" height="40" right="0" cssclass="btn_TF_AllmnuH" visible="false" onclick="btnAllMenu_onclick"/>
+        <Div id="Div00" taborder="11" left="0" top="140" right="0" cssclass="div_TF_MnuwrapB" height="12" accessibilityenable="false">
+          <Layouts>
+            <Layout/>
+            <Layout name="Mobile_screen"/>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout height="104" mobileorientation="Landscape" name="Mobile_screen" width="1022" screenid="Desktop_screen,mobile_small">
+        <Div id="divTopBtn" left="0" top="122" height="56" right="0" visible="false"/>
+        <Static id="staLogo" top="52" left="0" width="160" height="32" cssclass="sta_TF_MLogoUXpro"/>
+        <Static id="staMastHead" left="0" top="0" height="32" right="0"/>
+        <Button id="btnAllMenu" right="0" visible="true" top="48" width="104" height="40"/>
+        <Panel id="Panel01_00" left="27.40%" top="44" height="48" right="10.18%" visible="false"/>
+        <Static id="Static00" left="0" top="0" height="32" width="100%"/>
+        <Div id="divSkip" background="black"/>
+        <Div id="Div00" visible="false" left="0" top="112" height="12" right="0"/>
+        <Button id="btnLogin" visible="false"/>
+        <Button id="btnUtilView" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  KRDS
+*  @FileName 	frmTop.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2025/03/24
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2025/03/24			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+this.fvFirstGap 		= "0";
+this.fvBtnGap 			= 0;
+this.fvBtnHeight 		= 71;
+this.fvTopBtnPrefix 	= "TOP_";
+this.fvMenuId			= "";
+this.objApp = nexacro.getApplication();
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+/**
+ * @description 화면 오픈
+ */
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.divSkip.set_height(0);
+	this.fnLoad();
+};
+
+/**
+ * @description topmenu를 dsMenu로 copy
+ */
+this.fnLoad = function ()
+{
+	var sFilter = this.FRAME_MENUCOLUMNS.menuLevel + " == '0' ";
+	this.objApp.gdsMenu.filter(sFilter);
+	
+	// Top 메뉴 복사
+	this.dsMenu.copyData(this.objApp.gdsMenu, true);
+	this.objApp.gdsMenu.filter("");
+	// Top 메뉴 셋팅
+	this.fnSetTopMenu();
+};
+
+/**
+ * @description topmenu 셋팅
+ */
+this.fnSetTopMenu = function ()
+{
+	for (var i = 0; i < this.dsMenu.getRowCount(); i++) 
+	{
+		var sMenuId = this.dsMenu.getColumn(i, this.FRAME_MENUCOLUMNS.menuId);
+		var sMenuName = this.dsMenu.getColumn(i, this.FRAME_MENUCOLUMNS.menuNm);
+		
+		this.fnCreateTopMenu(sMenuId, sMenuName, i);
+	}
+	
+	// 메뉴버튼 Redraw
+	//this.fnRedrawBtn();
+};
+
+/**
+ * @description Top menu creation
+ */
+this.fnCreateTopMenu = function (sTopId, sName, index)
+{
+	// Creating button
+	var objBtn = new Button();
+	//objBtn.init("btn"+this.fvTopBtnPrefix + sTopId, this.fnGetLeft(sTopId), 0, 160, this.fvBtnHeight, null, null);
+	objBtn.init("btn"+this.fvTopBtnPrefix + sTopId, 0, 0, 160, 71, null, null);
+	this.divTopBtn.form.addChild(objBtn.name, objBtn);
+
+	objBtn.set_text(sName);
+	objBtn.set_cssclass("btn_TF_MainMenuSin");
+	objBtn.menuid = sTopId;
+	objBtn.show();
+	
+// 	// width 셋팅
+// 	objBtn.set_fittocontents("width");
+// 	var nWidth = objBtn.getOffsetWidth();
+// 	objBtn.set_fittocontents("none");
+// 	objBtn.set_width(nWidth + 20);
+	
+	objBtn.setEventHandler("onclick", this.btnTopMenu_onclick, this);
+	
+	// Creating div
+	var objDiv = new Div();
+	objDiv.init("div"+this.fvTopBtnPrefix + sTopId, 0, 62, null, 560, 0, null);
+	this.divTopBtn.form.addChild(objDiv.name, objDiv);
+
+	objDiv.url = "frame::frmTopMenu.xfdl";
+	objDiv.menuid = sTopId;
+	objDiv.show();
+	
+};
+
+/**
+ * @description 이전 버튼을 기준으로 버튼위치 리턴
+ */
+this.fnGetLeft = function (sTopId)
+{
+	var nCurRow = this.dsMenu.findRow(this.FRAME_MENUCOLUMNS.menuId, sTopId);
+	if (nCurRow == 0) return this.fvFirstGap;
+
+	var objPrevTab = this.fnFindObj("btn"+this.fvTopBtnPrefix + this.dsMenu.getColumn(nCurRow - 1, this.FRAME_MENUCOLUMNS.menuId));
+	return objPrevTab.name+":0";
+};
+
+/**
+ * @description Top 메뉴 버튼 click
+ */
+this.objBtnTopMenu = "";
+this.btnTopMenu_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//trace("btnTopMenu_onclick : " + obj.menuid);
+	this.objBtnTopMenu = obj.menuid;
+	var sMenuId = obj.menuid;
+	if (this.gfnIsNull(sMenuId)) return;
+	// 선택된 메뉴버튼 css 활성화
+	this.fnSetActiveBtn(sMenuId);
+	// Top 메뉴 click
+	this.fnMenuClick(sMenuId);
+}
+
+/**
+ * @description Top 메뉴 click
+ */
+this.fnMenuClick = function(sMenuId)
+{
+	//trace("this.fvMenuId : " + this.fvMenuId + " sMenuId : " + sMenuId);
+	if(this.gfnIsNull(this.fvMenuId) || this.fvMenuId != sMenuId) {
+		var sFilter  = this.FRAME_MENUCOLUMNS.menuLevel + " == '1' ";
+			sFilter	+= "&& " + this.FRAME_MENUCOLUMNS.upMenuId + " == '" + sMenuId + "'" ;
+		this.objApp.gdsMenu.filter(sFilter);
+		
+		// Top 메뉴 복사
+		this.divTopBtn.form.components["div"+this.fvTopBtnPrefix+sMenuId].form.dsMenu1.copyData(this.objApp.gdsMenu, true);
+		this.objApp.gdsMenu.filter("");
+	}
+	this.divTopBtn.form.components["div"+this.fvTopBtnPrefix+sMenuId].form.fnCreateMenu(0);
+	this.fvMenuId = sMenuId;
+	this.objApp.mainframe.ChildFrame00.form.fnOpen(sMenuId);
+// 	//try{
+// 		
+// 	// 맨 앞으로
+// 	var elem = this.parent.parent.divTop.getElement();
+// 	if(elem)
+// 	{
+// 		this.parent.parent.divTop.height = 866;
+// 		elem.setElementZIndex(1);
+// 	}	
+// 	for(var i=0; i < this.divTopBtn.form.components.length; i++){
+// 		if(this.divTopBtn.form.components[i] instanceof nexacro.Div)
+// 		{
+// 			if(this.divTopBtn.form.components[i].menuid == this.objBtnTopMenu){
+// 				this.divTopBtn.form.components[i].visible = true;
+// 			}else{ 
+// 				this.divTopBtn.form.components[i].visible = false;
+// 			}	
+// 		}	
+// 	}	
+// 	this.divTopBtn.height=622;
+// 	this.height=866;
+// 	this.parent.parent.resetScroll();
+// 	this.objApp.mainframe.ChildFrame00.form.divTopMenuBg.visible =true;
+// 	this.objApp.mainframe.ChildFrame00.form.back_dim.visible =true;
+
+};
+
+/**
+ * @description menu tab 찾는 함수
+ */
+this.fnFindObj = function (sId)
+{
+	return this.divTopBtn.form.components[sId];
+};
+
+/**
+ * @description 메뉴버튼 활성화
+ */
+this.fnSetActiveBtn = function (sMenuId)
+{
+	var objMenu;
+	for (var i = 0; i < this.dsMenu.getRowCount(); i++) 
+	{
+		objMenu = this.fnFindObj("btn"+this.fvTopBtnPrefix + this.dsMenu.getColumn(i, this.FRAME_MENUCOLUMNS.menuId));
+		if (sMenuId == this.dsMenu.getColumn(i, this.FRAME_MENUCOLUMNS.menuId)) {
+			objMenu.set_cssclass("btn_TF_MainMenuSinS");
+		} else {
+			objMenu.set_cssclass("btn_TF_MainMenuSin");
+		}
+	}
+};
+
+this.form_onlayoutchanged = function(obj:nexacro.Form,e:nexacro.LayoutChangeEventInfo)
+{
+	//trace("form_onlayoutchanged : "+ e.newlayout + " : " + e.newlayoutwidth);
+// 	if(e.newlayout == "default"){
+// 		this.Panel02.visible = true;
+// 		this.Panel01_00.visible = true;
+// 		this.divTopBtn.visible = true;
+// 	}else{
+// 		this.height=104;
+// 		this.parent.parent.divTop.height = 104;
+// 	}
+// 	this.resetScroll();
+// 	this.parent.parent.resetScroll();
+};
+
+this.btnAllMenu_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sTitle = "전체메뉴";
+	var oArg   = {};
+	var oOption = {
+		popuptype:"modal"	//modal,modaless
+		,width:this.objApp.mainframe.width
+		,height:this.objApp.mainframe.height			//width,height 지정하지 않음 popup form size적용		
+		,title:sTitle
+		,titlebar:false};
+	var sPopupCallBack = "fnPopupCallback";
+	this.gfnOpenPopup("mobileMenu", "frame::frmMobile.xfdl", oArg, sPopupCallBack, oOption);	
+	
+// 	this.parent.parent.divMobile.visible = true;
+// 	this.parent.parent.divMobile.move(0,0,this.objApp.mainframe.width,this.objApp.mainframe.height);
+//	this.resetScroll();
+};
+
+this.btnLanguage_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.cboLanguage.set_visible(true);
+	this.cboLanguage.dropdown();
+};
+
+this.btnUtilView_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sTitle = "글자·화면 설정";
+	var oArg   = {};
+	var oOption = {
+		popuptype:"modal"	//modal,modaless
+		,title:sTitle
+		,titlebar:false};
+	var sPopupCallBack = "fnPopupCallback";
+	this.gfnOpenPopup("utilView", "common::cmmUtilView2.xfdl", oArg, sPopupCallBack, oOption);	
+};
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+this.fnPopupCallback = function (sPopupId, sRtn)
+{
+	//trace("sPopupId : " + sPopupId + " sRtn : " + sRtn);
+	if(!this.gfnIsNull(sRtn))
+	{
+		if(sPopupId == "mobileMenu"){
+			if(sRtn == "utilView2"){
+				var sTitle = "메뉴검색";
+				var oArg   = {};
+				var oOption = {
+					popuptype:"modal"	//modal,modaless
+					,width:this.objApp.mainframe.width
+					,height:this.objApp.mainframe.height			//width,height 지정하지 않음 popup form size적용		
+					,autosize:false
+					,title:sTitle
+					,titlebar:false};
+				var sPopupCallBack = "fnPopupCallback";
+				this.gfnOpenPopup("utilView2", "frame::frmMobileSearch.xfdl", oArg, sPopupCallBack, oOption);					
+			}
+		}
+	}
+};
+
+this.divSkip_onkillfocus = function(obj:nexacro.Div,e:nexacro.KillFocusEventInfo)
+{
+	this.divSkip.set_height(0);
+	var elem = this.divSkip.getElement();
+	if(elem)
+	{
+		elem.setElementZIndex("");
+	}		
+};
+
+this.divSkip_onsetfocus = function(obj:nexacro.Div,e:nexacro.SetFocusEventInfo)
+{
+	this.divSkip.set_height(32);
+
+	var elem = this.divSkip.getElement();
+	if(elem)
+	{
+		elem.setElementZIndex(1);
+	}		
+};
+	
+this.cboLanguage_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	obj.set_visible(false);
+};
+
+this.divSkip_btnGoBody_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var divFirstFocus = this.parent.parent.divMain.form.divWork.form.getFirstAccessibilityComponent(true);
+	//trace(divFirstFocus.name);
+	
+    divFirstFocus.setFocus();		
+};
+
+this.staLogo_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	this.parent.parent.fnOpenHome();
+};
+
+this.Combo00_00_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	
+};
+
+this.Combo00_00_oncloseup = function(obj:nexacro.Combo,e:nexacro.ComboCloseUpEventInfo)
+{
+	obj.value = "";
+};
+
+this.Combo00_00_onkillfocus = function(obj:nexacro.Combo,e:nexacro.KillFocusEventInfo)
+{
+	obj.value = "";
+};
+
+this.btnLogin_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.parent.parent.fnOpenLogin();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsMenu1" onrowposchanged="dsMenu1_onrowposchanged">
+        <ColumnInfo>
+          <Column id="MENU_ID" type="STRING" size="256"/>
+          <Column id="MENU_NM" type="STRING" size="256"/>
+          <Column id="MENU_LV" type="STRING" size="256"/>
+          <Column id="MENU_URL" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="MENU_ID">000</Col>
+            <Col id="MENU_NM">컴포넌트</Col>
+            <Col id="MENU_LV">0</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">001</Col>
+            <Col id="MENU_NM">아이덴티티</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">002</Col>
+            <Col id="MENU_NM">공식 배너 Masthead</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">003</Col>
+            <Col id="MENU_NM">운영기관 식별자 Identifier</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">004</Col>
+            <Col id="MENU_NM">헤더 Header</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">005</Col>
+            <Col id="MENU_NM">푸터 Footer</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">006</Col>
+            <Col id="MENU_NM">탐색</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">007</Col>
+            <Col id="MENU_NM">건너뛰기 링크 Skip link</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">008</Col>
+            <Col id="MENU_NM">메인 메뉴 Main menu</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">009</Col>
+            <Col id="MENU_NM">브레드크럼 Breadcrumb</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">010</Col>
+            <Col id="MENU_NM">사이드 메뉴 Side navigation</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">011</Col>
+            <Col id="MENU_NM">콘텐츠 내 탐색 In-page navigation</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">012</Col>
+            <Col id="MENU_NM">페이지네이션 Pagination</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">013</Col>
+            <Col id="MENU_NM">탭바 Tab bars</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">014</Col>
+            <Col id="MENU_NM">레이아웃 및 표현</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">015</Col>
+            <Col id="MENU_NM">구조화 목록 Structured list</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">016</Col>
+            <Col id="MENU_NM">긴급 공지 Critical alerts</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">017</Col>
+            <Col id="MENU_NM">달력 Calendar</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">018</Col>
+            <Col id="MENU_NM">디스클로저 Disclosure</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">019</Col>
+            <Col id="MENU_NM">모달 Modal</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">020</Col>
+            <Col id="MENU_NM">배지 Badge</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">021</Col>
+            <Col id="MENU_NM">아코디언 Accordion</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">022</Col>
+            <Col id="MENU_NM">이미지 Image</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">023</Col>
+            <Col id="MENU_NM">캐러셀 Carousel</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">024</Col>
+            <Col id="MENU_NM">탭 Tab</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">025</Col>
+            <Col id="MENU_NM">표 Table</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">026</Col>
+            <Col id="MENU_NM">스플래시 스크린 Splash screen</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">027</Col>
+            <Col id="MENU_NM">텍스트 목록 Text list</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">028</Col>
+            <Col id="MENU_NM">액션</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">029</Col>
+            <Col id="MENU_NM">링크 Link</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_04.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">030</Col>
+            <Col id="MENU_NM">버튼 Button</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_04.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">031</Col>
+            <Col id="MENU_NM">선택</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">032</Col>
+            <Col id="MENU_NM">라디오 버튼 Radio button</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_05.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">033</Col>
+            <Col id="MENU_NM">체크박스 Checkbox</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_05.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">034</Col>
+            <Col id="MENU_NM">셀렉트 Select</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_05.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">035</Col>
+            <Col id="MENU_NM">태그 Tag</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_05.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">036</Col>
+            <Col id="MENU_NM">토글스위치 Toggle Switch</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_05.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">037</Col>
+            <Col id="MENU_NM">피드백</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">038</Col>
+            <Col id="MENU_NM">단계표시기 Step indicator</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_06.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">039</Col>
+            <Col id="MENU_NM">스피너 (Spinner)</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_06.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">040</Col>
+            <Col id="MENU_NM">도움</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">041</Col>
+            <Col id="MENU_NM">도움 패널(help panel)</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">042</Col>
+            <Col id="MENU_NM">따라하기 패널 Tutorial panel</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">043</Col>
+            <Col id="MENU_NM">맥락적 도움말 Contextual help</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">044</Col>
+            <Col id="MENU_NM">코치마크 Coach mark</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">045</Col>
+            <Col id="MENU_NM">툴팁 Tooltip</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">046</Col>
+            <Col id="MENU_NM">입력</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">047</Col>
+            <Col id="MENU_NM">날짜 입력필드 Date input</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_08.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">048</Col>
+            <Col id="MENU_NM">텍스트 영역 Textarea</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_08.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">049</Col>
+            <Col id="MENU_NM">텍스트 입력 필드 Text input</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_08.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">050</Col>
+            <Col id="MENU_NM">파일 업로드 File upload</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_08.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">051</Col>
+            <Col id="MENU_NM">설정</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">052</Col>
+            <Col id="MENU_NM">언어 변경 Language switcher</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_09.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">053</Col>
+            <Col id="MENU_NM">화면 크기 조정 Resize</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_09.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">054</Col>
+            <Col id="MENU_NM">콘텐츠</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">055</Col>
+            <Col id="MENU_NM">접근 가능한 미디어 Accessible multimedia</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_10.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">056</Col>
+            <Col id="MENU_NM">숨긴 콘텐츠 Visually hidden</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_10.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">057</Col>
+            <Col id="MENU_NM">기본패턴</Col>
+            <Col id="MENU_LV">0</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">058</Col>
+            <Col id="MENU_NM">개인 식별 정보 입력</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">059</Col>
+            <Col id="MENU_NM">도움</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">060</Col>
+            <Col id="MENU_NM">동의</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">061</Col>
+            <Col id="MENU_NM">목록 탐색</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_04.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">062</Col>
+            <Col id="MENU_NM">사용자 피드백</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_05.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">063</Col>
+            <Col id="MENU_NM">상세 정보 확인</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_06.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">064</Col>
+            <Col id="MENU_NM">오류</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">065</Col>
+            <Col id="MENU_NM">입력폼</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_08.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">066</Col>
+            <Col id="MENU_NM">첨부 파일</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_09.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">067</Col>
+            <Col id="MENU_NM">필터링·정렬</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_10.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">068</Col>
+            <Col id="MENU_NM">확인</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_11.xfdl</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMenu">
+        <ColumnInfo>
+          <Column id="MENU_ID" type="STRING" size="256"/>
+          <Column id="MENU_NM" type="STRING" size="256"/>
+          <Column id="MENU_LV" type="STRING" size="256"/>
+          <Column id="HIPO_MENU_ID" type="STRING" size="256"/>
+          <Column id="MENU_URL" type="STRING" size="256"/>
+          <Column id="MODULE_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMenu2">
+        <ColumnInfo>
+          <Column id="MENU_ID" type="STRING" size="256"/>
+          <Column id="MENU_NM" type="STRING" size="256"/>
+          <Column id="MENU_LV" type="STRING" size="256"/>
+          <Column id="MENU_URL" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="MENU_ID">000</Col>
+            <Col id="MENU_NM">컴포넌트</Col>
+            <Col id="MENU_LV">0</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">001</Col>
+            <Col id="MENU_NM">아이덴티티</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">002</Col>
+            <Col id="MENU_NM">공식 배너 Masthead</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">003</Col>
+            <Col id="MENU_NM">운영기관 식별자 Identifier</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">004</Col>
+            <Col id="MENU_NM">헤더 Header</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">005</Col>
+            <Col id="MENU_NM">푸터 Footer</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">006</Col>
+            <Col id="MENU_NM">탐색</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">007</Col>
+            <Col id="MENU_NM">건너뛰기 링크 Skip link</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">008</Col>
+            <Col id="MENU_NM">메인 메뉴 Main menu</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">009</Col>
+            <Col id="MENU_NM">브레드크럼 Breadcrumb</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">010</Col>
+            <Col id="MENU_NM">사이드 메뉴 Side navigation</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">011</Col>
+            <Col id="MENU_NM">콘텐츠 내 탐색 In-page navigation</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">012</Col>
+            <Col id="MENU_NM">페이지네이션 Pagination</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">013</Col>
+            <Col id="MENU_NM">탭바 Tab bars</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">014</Col>
+            <Col id="MENU_NM">레이아웃 및 표현</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">015</Col>
+            <Col id="MENU_NM">구조화 목록 Structured list</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">016</Col>
+            <Col id="MENU_NM">긴급 공지 Critical alerts</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">017</Col>
+            <Col id="MENU_NM">달력 Calendar</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">018</Col>
+            <Col id="MENU_NM">디스클로저 Disclosure</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">019</Col>
+            <Col id="MENU_NM">모달 Modal</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">020</Col>
+            <Col id="MENU_NM">배지 Badge</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">021</Col>
+            <Col id="MENU_NM">아코디언 Accordion</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">022</Col>
+            <Col id="MENU_NM">이미지 Image</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">023</Col>
+            <Col id="MENU_NM">캐러셀 Carousel</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">024</Col>
+            <Col id="MENU_NM">탭 Tab</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">025</Col>
+            <Col id="MENU_NM">표 Table</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">026</Col>
+            <Col id="MENU_NM">스플래시 스크린 Splash screen</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">027</Col>
+            <Col id="MENU_NM">텍스트 목록 Text list</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">028</Col>
+            <Col id="MENU_NM">액션</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">029</Col>
+            <Col id="MENU_NM">링크 Link</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_04.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">030</Col>
+            <Col id="MENU_NM">버튼 Button</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_04.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">031</Col>
+            <Col id="MENU_NM">선택</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">032</Col>
+            <Col id="MENU_NM">라디오 버튼 Radio button</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_05.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">033</Col>
+            <Col id="MENU_NM">체크박스 Checkbox</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_05.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">034</Col>
+            <Col id="MENU_NM">셀렉트 Select</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_05.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">035</Col>
+            <Col id="MENU_NM">태그 Tag</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_05.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">036</Col>
+            <Col id="MENU_NM">토글스위치 Toggle Switch</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_05.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">037</Col>
+            <Col id="MENU_NM">피드백</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">038</Col>
+            <Col id="MENU_NM">단계표시기 Step indicator</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_06.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">039</Col>
+            <Col id="MENU_NM">스피너 (Spinner)</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_06.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">040</Col>
+            <Col id="MENU_NM">도움</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">041</Col>
+            <Col id="MENU_NM">도움 패널(help panel)</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">042</Col>
+            <Col id="MENU_NM">따라하기 패널 Tutorial panel</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">043</Col>
+            <Col id="MENU_NM">맥락적 도움말 Contextual help</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">044</Col>
+            <Col id="MENU_NM">코치마크 Coach mark</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">045</Col>
+            <Col id="MENU_NM">툴팁 Tooltip</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">046</Col>
+            <Col id="MENU_NM">입력</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">047</Col>
+            <Col id="MENU_NM">날짜 입력필드 Date input</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_08.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">048</Col>
+            <Col id="MENU_NM">텍스트 영역 Textarea</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_08.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">049</Col>
+            <Col id="MENU_NM">텍스트 입력 필드 Text input</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_08.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">050</Col>
+            <Col id="MENU_NM">파일 업로드 File upload</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_08.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">051</Col>
+            <Col id="MENU_NM">설정</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">052</Col>
+            <Col id="MENU_NM">언어 변경 Language switcher</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_09.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">053</Col>
+            <Col id="MENU_NM">화면 크기 조정 Resize</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_09.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">054</Col>
+            <Col id="MENU_NM">콘텐츠</Col>
+            <Col id="MENU_LV">1</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">055</Col>
+            <Col id="MENU_NM">접근 가능한 미디어 Accessible multimedia</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_10.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">056</Col>
+            <Col id="MENU_NM">숨긴 콘텐츠 Visually hidden</Col>
+            <Col id="MENU_LV">2</Col>
+            <Col id="MENU_URL">design::component/Component_10.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">057</Col>
+            <Col id="MENU_NM">기본패턴</Col>
+            <Col id="MENU_LV">0</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">058</Col>
+            <Col id="MENU_NM">개인 식별 정보 입력</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">059</Col>
+            <Col id="MENU_NM">도움</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">060</Col>
+            <Col id="MENU_NM">동의</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">061</Col>
+            <Col id="MENU_NM">목록 탐색</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_04.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">062</Col>
+            <Col id="MENU_NM">사용자 피드백</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_05.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">063</Col>
+            <Col id="MENU_NM">상세 정보 확인</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_06.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">064</Col>
+            <Col id="MENU_NM">오류</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">065</Col>
+            <Col id="MENU_NM">입력폼</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_08.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">066</Col>
+            <Col id="MENU_NM">첨부 파일</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_09.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">067</Col>
+            <Col id="MENU_NM">필터링·정렬</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_10.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENU_ID">068</Col>
+            <Col id="MENU_NM">확인</Col>
+            <Col id="MENU_LV">1</Col>
+            <Col id="MENU_URL">design::pattern/patten_11.xfdl</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsLang">
+        <ColumnInfo>
+          <Column id="ID" type="STRING" size="256"/>
+          <Column id="LANGUAGE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="LANGUAGE">한국어</Col>
+          </Row>
+          <Row>
+            <Col id="LANGUAGE">English(영어)</Col>
+          </Row>
+          <Row>
+            <Col id="LANGUAGE">中文(중국어)</Col>
+          </Row>
+          <Row>
+            <Col id="LANGUAGE">日本(일본어)</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

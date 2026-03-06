@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="mainCarousel" width="384" height="360" titletext="New Form" onload="mainCarousel_onload" onrbuttondown="mainCarousel_onlbuttondown" ontimer="mainCarousel_ontimer">
+    <Layouts>
+      <Layout height="360" mobileorientation="landscape" width="384" stepcount="5">
+        <ImageViewer id="ImageViewer00" taborder="0" left="0" top="0" right="0" image="url('theme::NexaKRDS/images/sta_MF_Carousel01.png')" text="" height="360" cssclass="img_MF_Carousel"/>
+        <ImageViewer id="ImageViewer01" taborder="1" left="0" top="0" image="url('theme::NexaKRDS/images/sta_MF_Carousel02.png')" text="" height="360" positionstep="1" right="0" cssclass="img_MF_Carousel"/>
+        <ImageViewer id="ImageViewer02" taborder="2" left="0" top="0" image="url('theme::NexaKRDS/images/sta_MF_Carousel03.png')" text="" height="360" positionstep="2" right="0" cssclass="img_MF_Carousel"/>
+        <ImageViewer id="ImageViewer03" taborder="3" left="0" top="0" image="url('theme::NexaKRDS/images/sta_MF_Carousel04.png')" text="" height="360" positionstep="3" right="0" cssclass="img_MF_Carousel"/>
+        <ImageViewer id="ImageViewer04" taborder="4" left="0" top="0" image="url('theme::NexaKRDS/images/sta_MF_Carousel05.png')" text="" height="360" positionstep="4" right="0" cssclass="img_MF_Carousel"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// 지연반응 시간 및 타이머 ID
+this.DELAY_TIME = 1000;
+this.DELAY_TIMER_ID = 22222;
+
+// 포커스 이동 타이머
+this.FOCUS_TIME = 3000;
+this.FOCUS_TIMER_ID = 33333;
+
+this.STEP_COUNT = 0;
+
+this.mainCarousel_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.STEP_COUNT = this.getLayoutInfo("default","stepcount");
+	
+	//폼 로드 시 ontimer 이벤트 호출
+	this.setTimer( this.FOCUS_TIMER_ID, this.FOCUS_TIME );
+};
+
+this.mainCarousel_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if(e.timerid == this.FOCUS_TIMER_ID)
+	{	
+		var pos = this.fnGetNextStep();
+		this.setStepIndex(pos);
+	}
+	else if(e.timerid == this.	DELAY_TIMER_ID)
+	{
+		this.killTimer(this.DELAY_TIMER_ID);
+		this.setTimer( this.FOCUS_TIMER_ID, this.FOCUS_TIME );
+	}
+};
+
+//stepindex 버튼 클릭 시 발생 이벤트 
+// this.mainCarousel_onlbuttondown = function(obj:nexacro.Form,e:nexacro.MouseEventInfo)
+// {
+// 	this.killTimer(this.FOCUS_TIMER_ID);
+// 	this.setTimer(this.DELAY_TIMER_ID,this.DELAY_TIME);
+// };
+
+//next step index return
+this.fnGetNextStep = function ()
+{
+	var nStepIndex = this.getStepIndex();
+	nStepIndex ++;
+	
+	if(nStepIndex >= this.STEP_COUNT)
+	{
+		nStepIndex = 0;
+	}
+	
+	return nStepIndex;
+};]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="test001" width="1280" height="860" titletext="대한민국지도" onload="test001_onload">
+    <Layouts>
+      <Layout height="860" width="1280" screenid="ScreenDeskTop">
+        <Div id="divKorMap" taborder="0" left="385" top="90" width="410" height="560" url="comm::comp_korMap.xfdl" mapScale="1.0" clickMode="toggle"/>
+        <Static id="sta01" taborder="1" text="대한민국지도 샘플" left="18" top="12" width="364" height="36"/>
+        <Static id="sta02" taborder="2" text="선택한 정보 :" left="29" top="420" width="86" height="33"/>
+        <Edit id="edtSelInfo" taborder="3" left="24" top="453" width="252" height="27"/>
+        <Button id="btnSetCddcCode" taborder="4" text="서울특별시 교육청 선택하기" left="25" top="549" width="233" height="33" onclick="btnSetCddcCode_onclick"/>
+        <Button id="btnGetCddcCode" taborder="5" text="현재선택된 교육청코드 가져오기" left="24" top="496" width="233" height="33" onclick="btnGetCddcCode_onclick"/>
+        <Static id="sta00" taborder="6" text="userproperty&#13;&#10;==================&#13;&#10;mapScale : 지도확대정도&#13;&#10;                &#13;&#10;        1.0    원사이즈(default)&#13;&#10;        0.5    50% 작게&#13;&#10;        1.5    50% 크게&#13;&#10;&#13;&#10;clickMode : 같은영역을 클릭시 처리방식&#13;&#10;    &quot;toggle&quot;  : 교육청정보를 표시/비표시를 토글(default)&#13;&#10;    &quot;skip&quot;      : 교육청정보을 계속 표시한다. &#13;&#10;                      (클릭한 callback함수는 호출)" left="24" top="61" width="325" height="309" verticalAlign="top"/>
+        <Button id="btnChangeFillColor" taborder="7" text="선택한 교육청명 배경색 변경" left="29" top="595" width="230" height="33" onclick="btnChangeFillColor_onclick"/>
+      </Layout>
+      <Layout name="Layout0" width="640" height="720" mobileorientation="landscape" type="default" screenid="mobile"/>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleKoreaMap.xfdl
+*  @Creator 	홍길동
+*  @CreateDate 	2022.6.14
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.6.14     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.test001_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//this.fnDrawMap();
+	
+	this.divKorMap.onSelect = this.fnMapSelecetCallback;
+	
+	this.divKorMap.form.fnSetInit(this,this.fnMapSelecetCallback);
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnMapSelecetCallback = function (sSelCode,sSelName)
+{
+	
+	for(var i=0;i< arguments.length;i++)
+	{
+		trace("i="+i+" , arguments=["+arguments[i]+"]" + this.id);
+	}
+	
+	//if(this.smfIsNull(sSelName))
+	this.edtSelInfo.set_value("["+sSelCode+"]"+sSelName);
+	
+}
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.btnGetCddcCode_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sSelectedCode = this.divKorMap.form.fnGetSelectCode();
+	var sSelectedName = this.divKorMap.form.fnGetSelectName();
+	alert("선택된 값은 ["+sSelectedCode+"]"+sSelectedName+" 입니다");
+};
+
+this.btnSetCddcCode_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divKorMap.form.fnSetCddcCode("10");  // 10:서울
+};
+
+
+this.btnChangeFillColor_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divKorMap.form.fnChangeFillColor("#ff0000");  // red로 세팅
+};
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

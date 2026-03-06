@@ -1,0 +1,537 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1200" height="743" titletext="강사신청관리" onload="form_onload" nHeight="754">
+    <Layouts>
+      <Layout height="743" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="65" height="54" text="" right="0" accessibilityenable="false" accessibilityrole="none" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout initvalueid="ivDivAccessibilityOff">
+              <ImageViewer id="imgTitle" taborder="0" text="강사신청관리" left="0" top="0" height="54" cssclass="img_WF_SubTit01" width="190" initvalueid="ivTitleAccessibilityOn" accessibilitylabel="강사신청관리"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSearch" taborder="1" left="0" top="144" height="70" cssclass="div_WF_Search" right="0" accessibilityenable="false" accessibilityrole="none" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout initvalueid="ivDivAccessibilityOff">
+              <Static id="staShlCd" taborder="0" text="학교명" left="0" top="20" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn" accessibilitylabel="학교명" width="68"/>
+              <Combo id="cboShlCd" taborder="1" left="68" width="144" height="30" index="0" top="20" initvalueid="ivCmbNormal" text="" value="" innerdataset="dsShlCd" codecolumn="unyCdValue" datacolumn="unyCdValueNm" displaynulltext="- 전체 -  " accessibilitylabel="학교명 선택"/>
+              <Static id="staAslAplyStsScCd" taborder="2" text="상태" left="212" top="20" width="55" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn" accessibilitylabel="상태"/>
+              <Combo id="cboAslAplyStsScCd" taborder="3" left="267" width="144" height="30" innerdataset="dsAslAplyStsScCd" codecolumn="unyCdValue" datacolumn="unyCdValueNm" index="0" top="20" value="" initvalueid="ivCmbNormal" text="- 전체 -" accessibilitylabel="상태 선택"/>
+              <Button id="btnInit" taborder="4" text="초기화" top="20" width="88" height="30" cssclass="btn_WF_Refresh03" onclick="divSearch_btnInit_onclick" right="100" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="초기화"/>
+              <Button id="btnSearch" taborder="5" text="조회" top="20" width="72" height="30" cssclass="btn_WF_Search03" right="20" initvalueid="ivBtnAccessibilityButton" onclick="divSearch_btnSearch_onclick" accessibilitylabel="조회"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnRegAply" taborder="2" text="등록신청" top="234" height="30" width="76" cssclass="btn_WF_Custom" right="194" initvalueid="ivBtnAccessibilityButton" accessibilitydescription="새창열기" accessibilitylabel="학교찾기(새창열기)" onclick="btnRegAply_onclick"/>
+        <Button id="btnInfoChgAply" taborder="3" text="정보변경신청" top="234" height="30" width="102" cssclass="btn_WF_Custom" right="84" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="정보변동신청" onclick="btnInfoChgAply_onclick"/>
+        <Button id="btnAplyRtrcn" taborder="4" text="신청취소" top="234" height="30" width="76" cssclass="btn_WF_Custom" right="0" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="신청취소" onclick="btnAplyRtrcn_onclick"/>
+        <Grid id="grdMain" taborder="5" left="0" top="274" height="449" autofittype="col" right="0" binddataset="dsMain" initvalueid="ivGrdAccessibilityOn" accessibilitylabel="강사신청관리 : 순번,학교명,프로그램수,신청일자,처리일자,상태 등의 정보제공" onheadclick="grdMain_onheadclick" selecttype="cell">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="40"/>
+                <Column size="150"/>
+                <Column size="80"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="순번"/>
+                <Cell col="2" text="학교명"/>
+                <Cell col="3" text="프로그램수"/>
+                <Cell col="4" text="신청일시"/>
+                <Cell col="5" text="처리일시"/>
+                <Cell col="6" text="상태" cssclass="LineNo"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:chk" displaytype="expr:aslAplyStsScCd == 10 || aslAplyStsScCd == 20 ? 'checkboxcontrol' : 'none'" edittype="expr:aslAplyStsScCd == 10 || aslAplyStsScCd == 20 ? 'checkbox' : 'none'"/>
+                <Cell col="1" text="expr:currow +1" textAlign="center"/>
+                <Cell col="2" text="bind:shlNm"/>
+                <Cell col="3" text="bind:pgmCnt" textAlign="right" displaytype="number"/>
+                <Cell col="4" edittype="none" text="bind:regDt" maskedittype="string" textAlign="center" calendardateformat="yyyy.MM.dd ddd" calendareditformat="yyyy.MM.dd"/>
+                <Cell col="5" edittype="none" text="bind:mdfcnDt" cssclass="LineNo" maskedittype="string" textAlign="center" calendardateformat="yyyy.MM.dd ddd" calendareditformat="yyyy.MM.dd"/>
+                <Cell col="6" text="bind:aslAplyStsScCdNm" textAlign="center" cssclass="LineNo"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="sta04" taborder="6" left="0" top="723" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta_main" taborder="7" left="0" top="0" height="70" cssclass="sta_Ctitle" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta01" taborder="8" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta02" taborder="9" left="0" top="214" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta03" taborder="10" left="0" top="264" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  
+*  @MenuPath    방과후학교(외부강사) > 강사신청관리
+*  @FileName 	afs_atstc10_m00.xfdl
+*  @Creator 	김민성
+*  @CreateDate 	2022.06.20
+*  @Desction    방과후학교(외부강사) 강사신청관리
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.06.20            김민성                   최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::afs_script.xjs"
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_userId   = "";
+this.fv_insrRrno = "";
+this.fv_cddcCd   = "";
+
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	// 샘플데이터
+	this.dsSearch.setColumn(0,'insrScCd', "I");
+	this.afsfSetSession(this);
+	
+	// 공통코드의 코드구분 --> 0615 작동하나, 코드 존재하지 않음
+	/*this.smfCodeList("code", [this.dsInsrStsInfoCd])
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;			
+		})		
+		.run()
+	;*/
+	
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * 외부강사 신청목록 조회
+ */
+this.fnListSearch = function(){
+	if(this.isNil(this.fv_userId)){
+		this.smfAlert('PA003', ['강사정보가'], this.callback ); // 강사정보가 없습니다.
+		return;
+	}
+	// 서비스 객체 생성
+	this.smfSearchService("list")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		});
+}
+
+/**
+ * 외부강사 등록신청
+ */
+this.fnRegAply = function(){
+	// 서비스 객체 생성
+	this.smfSaveService("insert")
+		.messagePrefix(["등록신청"])
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			this.smfAlert('PA001', ['등록신청'], this.callback ); // 등록신청 되었습니다.
+			this.fnListSearch();
+		});
+}
+
+/**
+ * 외부강사 정보변경신청
+ */
+this.fnInfoChgAply = function(){
+	// 서비스 객체 생성
+	this.smfSaveService("update")
+		.messagePrefix(["정보변경신청"])
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			this.smfAlert('PA001', ['정보변경신청'], this.callback ); // 정보변경신청 되었습니다.
+			this.fnListSearch();
+		});
+}
+
+/**
+ * 외부강사 신청취소
+ */
+this.fnAplyRtrcn = function(){
+	// 서비스 객체 생성
+	this.smfDeleteService("delete")
+		.messagePrefix(["신청취소"])
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			this.smfAlert('PA001', ['신청취소'], this.callback ); // 신청취소 되었습니다.
+			this.fnListSearch();
+		});
+}
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+	
+	switch(svcid) {	
+	
+		case "selectSession" : 
+			this.divSearch_btnInit_onclick();
+			
+			this.fv_cddcCd   = this.dsSearch.getColumn(0,"cddcCd"); 	//시도교육청코드 
+			this.fv_insrRrno = this.dsSearch.getColumn(0,"insrRrno");
+			this.fv_userId   = this.dsSearch.getColumn(0,"userId");
+			
+			//id가 없을 경우 전체가 나오도록 하기 위해 " "을 넣음
+			this.dsCd.setColumn(0,'userId',   this.nvl(this.fv_userId, " ")); 
+			this.dsCd.setColumn(0,'insrRrno', this.nvl(this.fv_insrRrno, "")); 
+			this.dsCd.setColumn(0,'cddcCd',   this.fv_cddcCd); 
+			
+			this.afsfCodeList(this.dsCd);
+			if(this.isNotNil(this.fv_userId)){
+				this.fnListSearch();
+			}
+			
+			// 외부직원(5) 만 신청이 가능하도록 처리
+			// (교원, 원어민, 영어회화, 기타는 내부에서 등록시 신청순번 충돌 가능성)
+			if(this.dsSearch.getColumn(0, "aslPsnScCd") != '5'){
+				this.btnRegAply.set_enable(false);
+				this.btnInfoChgAply.set_enable(false);
+				this.btnAplyRtrcn.set_enable(false);
+			}
+			break;
+	}
+};
+
+/**
+ * 학교 찾기 팝업 콜백
+ */
+this.fnPopupCallback = function(context, responseParams, sender){
+	this.dsInsert.clearData();
+	if(context.row.rowcount > 0){
+		for(var i=0; i<context.row.rowcount; i++){
+			this.dsInsert.addRow();
+			this.dsInsert.setColumn(i,'cddcCd',       this.fv_cddcCd);
+			this.dsInsert.setColumn(i,'shlCd',        context.row.getColumn(i, "shlCd"));
+			this.dsInsert.setColumn(i,'userId',       this.fv_userId);
+			this.dsInsert.setColumn(i,'scaSysScCd',   context.row.getColumn(i, "scaSysScCd"));
+			this.dsInsert.setColumn(i,'cntnCtpvScCd', this.dsSearch.getColumn(0, 'cntnCtpvScCd'));
+			
+		}
+			
+		if(responseParams.name == "btnInfoChgAply"){
+			this.fnInfoChgAply();
+		}else{
+			this.fnRegAply();
+		}
+	}
+}
+
+/**
+ * 메세지 콜백
+ */
+this.callback = function(){
+}
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+/**
+ * 조회 버튼 클릭
+ */
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnListSearch();
+};
+
+/**
+ * 초기화 버튼 클릭
+ */
+this.divSearch_btnInit_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsSearch.setColumn(0, "shlCd",          "");
+	this.dsSearch.setColumn(0, "aslAplyStsScCd", "");
+};
+
+/**
+ * 등록신청 버튼 클릭
+ */
+this.btnRegAply_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.isNil(this.fv_userId)){
+		this.smfAlert('PA003', ['강사정보가'], this.callback ); // 강사정보가 없습니다.
+		return;
+	}
+	
+	this.afsfPopupShl(this.btnRegAply, this.fnPopupCallback, this.dsSearch);
+};
+
+/**
+ * 정보변경신청 버튼 클릭
+ */
+this.btnInfoChgAply_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.afsfPopupAplyShl(this.btnInfoChgAply, this.fnPopupCallback, this.dsSearch);
+	/*if (this.dsMain.rowcount == 0){
+		 this.smfAlert('PA002', '', this.callback ); // 조회된 자료가 없습니다.
+		 return;
+	}
+	
+	var chkList = this.dsMain.extractRows("chk == 1");
+	
+	if (chkList.length == 0){
+		 this.smfAlert('CM013', ['행'], this.callback ); // 선택된 행이(가) 없습니다. 행을(를) 선택하여 주십시오.
+		 return;
+	}
+	
+	this.fnInfoChgAply();*/
+};
+
+/**
+ * 신청취소 버튼 클릭
+ */
+this.btnAplyRtrcn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+	if (this.dsMain.rowcount == 0){
+		 this.smfAlert('PA002', '', this.callback ); // 조회된 자료가 없습니다.
+		 return;
+	}
+	
+	var chkList = this.dsMain.extractRows("chk == 1");
+	
+	if (chkList.length == 0){
+		 this.smfAlert('CM013', ['행'], this.callback ); // 선택된 행이(가) 없습니다. 행을(를) 선택하여 주십시오.
+		 return;
+	}
+	
+	var chkList2 = this.dsMain.extractRows("chk == 1 && (aslAplyStsScCd != '10' && aslAplyStsScCd != '20')");
+	if (chkList2.length > 0){
+		this.smfAlert('PA004', ['[등록요청/수정요청]상태만 취소가'], this.callback ); // [등록요청/수정요청]상태만 취소가 가능합니다.
+		return;
+	}
+	/*for(let i = 0; i < chkList.length ; i++){
+		if (this.dsMain.getColumn(chkList[i], "eccHnfStsScCd") != '01'){
+			this.smfAlert('PA004', ['[신청] 상태만'], this.callback ); // [신청] 상태만 취소가 가능합니다.
+			 return;
+		}
+	}*/
+	
+	this.fnAplyRtrcn();
+};
+
+/**
+ * 외부강사 신청목록 그리드 헤더 클릭
+ */
+this.grdMain_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if (e.col == 0){
+		this.smfToggleChkHeader(obj, e, function (ds, nRow){
+				if(ds.getColumn(nRow,"aslAplyStsScCd" )=="10" || ds.getColumn(nRow,"aslAplyStsScCd" )=="20"){
+					return true;
+				}else{
+					return false;
+				}
+			});
+	}
+};
+
+
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">list</Col>
+            <Col id="url">afs_ats_tc10_001.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsMain=dsMain</Col>
+          </Row>
+          <Row>
+            <Col id="id">insert</Col>
+            <Col id="url">afs_ats_tc10_003.do</Col>
+            <Col id="inDatasets">insert=dsInsert</Col>
+            <Col id="outDatasets">dsShlCd=dsShlCd</Col>
+          </Row>
+          <Row>
+            <Col id="id">update</Col>
+            <Col id="url">afs_ats_tc10_004.do</Col>
+            <Col id="inDatasets">insert=dsInsert</Col>
+          </Row>
+          <Row>
+            <Col id="id">delete</Col>
+            <Col id="url">afs_ats_tc10_005.do</Col>
+            <Col id="inDatasets">main=dsMain:U</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" oncolumnchanged="dsSearch_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="userId" type="STRING" size="256"/>
+          <Column id="cddcCd" type="STRING" size="150"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="aslAplyStsScCd" type="STRING" size="256"/>
+          <Column id="insrScCd" type="STRING" size="256"/>
+          <Column id="insrRrno" type="STRING" size="256"/>
+          <Column id="aslPsnScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="userId"/>
+            <Col id="cddcCd"/>
+            <Col id="shlCd"/>
+            <Col id="aslAplyStsScCd"/>
+            <Col id="insrScCd"/>
+            <Col id="insrRrno"/>
+            <Col id="aslPsnScCd"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cddcCd" type="string" size="256"/>
+          <Column id="shlCd" type="string" size="256"/>
+          <Column id="shlNm" type="string" size="256"/>
+          <Column id="userId" type="string" size="256"/>
+          <Column id="userNm" type="string" size="256"/>
+          <Column id="insrAplySeqNo" type="string" size="256"/>
+          <Column id="aslAplyStsScCd" type="string" size="256"/>
+          <Column id="aslAplyStsScCdNm" type="string" size="256"/>
+          <Column id="rgtrId" type="string" size="256"/>
+          <Column id="regDt" type="string" size="256"/>
+          <Column id="mdfrId" type="string" size="256"/>
+          <Column id="mdfcnDt" type="string" size="256"/>
+          <Column id="chk" type="int" size="1"/>
+          <Column id="pgmCnt" type="STRING" size="256"/>
+          <Column id="scaSysScCd" type="STRING" size="256"/>
+          <Column id="cntnCtpvScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMainValid" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cddcCd" type="string" size="256"/>
+          <Column id="shlCd" type="string" size="256"/>
+          <Column id="shlNm" type="string" size="256"/>
+          <Column id="userId" type="string" size="256"/>
+          <Column id="userNm" type="string" size="256"/>
+          <Column id="careHnfAplySeqNo" type="string" size="256"/>
+          <Column id="insrStsInfoCd" type="string" size="256"/>
+          <Column id="insrStsInfoNm" type="string" size="256"/>
+          <Column id="rgtrId" type="string" size="256"/>
+          <Column id="regDt" type="string" size="256"/>
+          <Column id="mdfrId" type="string" size="256"/>
+          <Column id="mdfcnDt" type="string" size="256"/>
+          <Column id="chk" type="int" size="1"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsInsert">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="userId" type="STRING" size="256"/>
+          <Column id="scaSysScCd" type="STRING" size="256"/>
+          <Column id="cntnCtpvScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsAslAplyStsScCd" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="unyCdValue" type="STRING" size="30"/>
+          <Column id="unyCdValueNm" type="STRING" size="120"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="unyCdValue"/>
+            <Col id="unyCdValueNm">- 전체 -</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCd">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="outDs" type="STRING" size="256"/>
+          <Column id="allYn" type="STRING" size="256"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="brno" type="STRING" size="256"/>
+          <Column id="cnsgnComyId" type="STRING" size="256"/>
+          <Column id="insrRrno" type="STRING" size="256"/>
+          <Column id="userId" type="STRING" size="256"/>
+          <Column id="clfCdValue" type="STRING" size="256"/>
+          <Column id="eccYn" type="STRING" size="256"/>
+          <Column id="insrScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="url">/afs_cmm_cm00_001.do</Col>
+            <Col id="id">listShlCd</Col>
+            <Col id="outDs">dsShlCd</Col>
+            <Col id="allYn">Y</Col>
+            <Col id="brno">                </Col>
+            <Col id="eccYn">N</Col>
+            <Col id="insrScCd">I</Col>
+          </Row>
+          <Row>
+            <Col id="url">/tmp_tmp_tm00_000.do</Col>
+            <Col id="id">listAslAplyStsScCd</Col>
+            <Col id="outDs">dsAslAplyStsScCd</Col>
+            <Col id="allYn">Y</Col>
+            <Col id="clfCdValue">ASL_APLY_STS_SC_CD</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsShlCd" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="unyCdValue" type="STRING" size="256" description="학교코드"/>
+          <Column id="unyCdValueNm" type="STRING" size="256" description="학교명"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="divSearch.form.cboAslAplyStsScCd" propid="value" datasetid="dsSearch" columnid="aslAplyStsScCd"/>
+      <BindItem id="item0" compid="divSearch.form.cboShlCd" propid="value" datasetid="dsSearch" columnid="shlCd"/>
+    </Bind>
+  </Form>
+</FDL>

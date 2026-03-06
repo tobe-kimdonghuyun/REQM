@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comm_alert" width="480" height="320" titletext="Alert팝업" onload="comm_alert_onload" onkeyup="comm_alert_onkeyup" onclose="comm_alert_onclose">
+    <Layouts>
+      <Layout height="320" width="480" screenid="desktopScr,mobileScr,tabletScr">
+        <Div id="divMain" taborder="0" left="0" top="0" cssclass="div_POP_Bg" right="0" bottom="0" edge="">
+          <Layouts>
+            <Layout>
+              <Static id="sta_main" taborder="0" left="20" top="0" height="74" right="18" accessibilityrole="heading" cssclass="sta_POP_Title" text="알림"/>
+              <Button id="btnClose" taborder="1" top="21" width="40" height="40" right="18" cssclass="btn_POP_Close" accessibilitydescription="팝업닫기" initvalueid="iv_Button" onclick="btnClose_onclick"/>
+              <Static id="staImage" taborder="2" left="40" top="90" height="40" cssclass="sta_POP_Info" right="40"/>
+              <Static id="staMessage" taborder="3" left="40" top="staImage:12" height="84" cssclass="sta_WF_TxtCenter" right="38"/>
+              <Button id="btnOk" taborder="4" text="확인" height="40" width="72" left="205" cssclass="btn_WF_Crud02" initvalueid="iv_Button" bottom="30" onclick="btnOk_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <TextArea id="TextArea00" taborder="1" left="625" top="142" value="예약신청이 완료되었습니다.&#10;[필수값]을 입력하지 않으셨습니다.&#10;알림사항을 전달드립니다.&#10;알림사항을 전달드립니다." cssclass="txt_POP_Data" initvalueid="iv_TextArea" visible="false" height="84" width="398"/>
+        <Static id="Static00_00" taborder="2" left="625" top="90" height="40" cssclass="sta_POP_Warning" right="-543" visible="false"/>
+        <Static id="Static00_00_00" taborder="3" left="625" top="42" height="40" cssclass="sta_POP_Info" right="-543" visible="false"/>
+        <Static id="Static80" taborder="4" text="이미지 사용에 따른 class 명 확인해주세요." left="945" top="47" width="420" height="71" cssclass="sta_WF_GBg02" visible="false" accessibilityenable="false"/>
+        <Static id="Static80_00" taborder="5" text="TextArea로 사용해야 하면, 이것으로 사용하시면 됩니다." left="945" top="178" width="420" height="71" cssclass="sta_WF_GBg02" visible="false" accessibilityenable="false"/>
+        <Static id="staImage" taborder="6" left="630" top="240" height="40" cssclass="sta_POP_Confirm" right="-548" visible="false"/>
+        <Div id="divTitlebar" taborder="7" left="20" top="0" width="400" height="74"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템
+*  @MenuPath    공통
+*  @FileName 	comm_alert.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    메시지창
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+// 로드
+this.comm_alert_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.getOwnerFrame().set_borderRadius("12px");
+	
+	this.pv_params = this.smfGetPopupParams();
+	this.divMain.form.sta_main.set_text("알림");
+	this.getOwnerFrame().set_titletext("알림");
+	
+	this.divMain.form.staMessage.set_text(this.smfStr(this.pv_params.message));
+};
+
+//keyup이벤트
+this.comm_alert_onkeyup = function(obj:nexacro.Form,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 27){	//ESC키
+		this.close(true);
+	}
+};
+
+//확인
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(true);
+};
+
+//버튼 Close
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(true);
+};
+
+//onclose
+this.comm_alert_onclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	this.smfSendResponseToOpener({});
+};]]></Script>
+  </Form>
+</FDL>

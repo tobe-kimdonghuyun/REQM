@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="testMakeXML" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="btn00" taborder="0" text="(팝업)OZViewer" left="132" top="89" width="136" height="56" onclick="btn00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    OZ 팝업 샘플
+*  @FileName 	testMakeXML.xfdl
+*  @Creator 	투비소프트
+*  @CreateDate 	2022.07.05
+*  @Desction    OZ 팝업 샘플
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.07.05     	투비소프트 	               최초 생성 
+*******************************************************************************
+*/
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var message = "";
+	var callback = this.fnCallback;
+	var cleanupCallback;
+	
+	this.smfDialog("test::testCOMREPORTPOP.xfdl" + new Date() + ":" + Math.random() +  ":" + Math.random() + ":" +message, "test::testCOMREPORTPOP.xfdl", {
+		callback: callback,
+		internalCallback: cleanupCallback,
+		params: {
+			procType: "notice",
+			message: message,
+		},
+	});	
+};
+
+this.fnCallback = function()
+{
+	
+}]]></Script>
+  </Form>
+</FDL>

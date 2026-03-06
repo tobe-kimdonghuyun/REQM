@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comp_login_onepass" width="840" height="616" titletext="간편인증공통모듈" onload="comp_login_onepass_onload" cssclass="frm_Pop_bgTrsprt">
+    <Layouts>
+      <Layout height="616" width="840">
+        <WebBrowser id="webMain" taborder="0" left="0" top="0" right="0" bottom="0" onloadcompleted="webMain_onloadcompleted" onusernotify="webMain_onusernotify" visible="true"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	comp_login_onepass.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2023.3.29
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.3.29     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_param= null;
+this.fv_openType = "birth";  // Open방식 -  "birth" : 생년월일 , "ssn" : 주민등록번호
+this.fv_actionType = ""; // "instl","trans"
+this.fv_LoginUrl = "";  // 설치형을 위한 처리
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.comp_login_onepass_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	if(this.opener)
+	{
+		this.smfInitPopup(this);
+	}
+	else
+	{
+		this.smfInitDiv(this);
+	}
+	
+	this.fv_params = this.smfGetPopupParams();	
+	
+	this.fv_openType   = this.fv_params.openType;
+	this.fv_actionType = this.fv_params.actionType;
+	
+	this.trace("this.fv_actionType ::: " + this.fv_actionType );
+	
+	if(!this.fv_actionType)
+	{
+
+		var sSubSysGb = this.smfGetSubSystemGb();
+		
+			this.trace("sSubSysGb ::: " + sSubSysGb );
+			
+			
+		if(  (sSubSysGb!="SQA")   // 검정고시
+		  && (sSubSysGb!="ORE")   // 온라인채용
+		  && (sSubSysGb!="HRD")   // 온라인채용(계약직)
+		  )
+		{    // 설치형 
+			this.fv_actionType = "instl";
+		}
+		else
+		{    // 중계형(온라인채용/검정고시)
+			this.fv_actionType = "trans";
+		}
+	}
+	
+	// Url을 세팅한다.
+	var sBaseUrl= this.smfGetBaseUrl();
+	var sUrl= "";
+	if( this.fv_actionType=="instl" )
+	{    // 설치형 
+		sUrl = sBaseUrl + "/thirdparty/oacx/instl/login_nexacro.jsp";
+		//this.webMain.set_visible(true);
+		
+		// 로그인 URL을 구한다(원클릭은 포털서버경유)
+		this.fnGetLoginUrl(sBaseUrl);
+	}
+	else
+	{    // 중계형(온라인채용/검정고시)
+		sUrl = sBaseUrl + "/thirdparty/oacx/trans/oacx_trans_nexacro.jsp";
+		//this.webMain.set_visible(false);
+	}
+	
+	this.webMain.set_url(sUrl);
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnLogin = function(sParam)
+{
+	// sParam : 중계형 - 
+
+	// 로그인 처리를 호출한다
+	this.webMain.callMethod("fnOpenLogin",sParam);
+}
+
+
+this.fnGetLoginUrl = function(sBaseUrl)
+{
+	var sLoginBaseUrl= sBaseUrl;
+	
+	var sSubSysGb = this.smfGetSubSystemGb();
+	
+	if(  (sSubSysGb!="SQA")   // 검정고시
+	  && (sSubSysGb!="ORE")   // 온라인채용
+	  && (sSubSysGb!="HRD")   // 온라인채용(계약직)
+	  )
+	{ 
+		var sPortalUrl = this.fnGetPortalUrl();
+		sLoginBaseUrl = window.location.protocol + "//" + sPortalUrl;
+	}
+	
+	this.fv_LoginUrl = sLoginBaseUrl + "/thirdparty/oacx/instl/oacx_instl_nexacro.jsp?returnUrl=" + sBaseUrl + "/thirdparty/oacx/instl/result_nexacro.jsp&type="+this.fv_openType;  // 팝업으로 사용할 URL
+}
+
+this.fnGetPortalUrl = function()
+{
+	var sPortalUrl = "";
+	var sRunMode = nexacro.getEnvironmentVariable("ev_runMode");  // "1" : 로컬,
+	switch(sRunMode)
+	{
+		case "1" :  // 로컬
+		   sPortalUrl = "localhost:8080";break;
+		case "2" :  // 개발
+		   sPortalUrl = "dev.neis.go.kr";break;
+		case "3" :  // 운영
+		   //sPortalUrl = "neis.go.kr";break;
+		   sPortalUrl = "www.neis.go.kr";break;  
+		case "4" :  // 검증
+		   sPortalUrl = "tst.neis.go.kr";break;
+	}
+	
+	return sPortalUrl;
+}
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.webMain_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+	if(this.opener)
+	{
+		if(this.fv_actionType=="instl")
+		{
+			this.fnLogin(this.fv_LoginUrl);
+		}
+		else
+		{
+			this.fnLogin(this.fv_openType);
+		}
+	}
+};
+
+this.webMain_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	switch(e.userdata)
+	{
+		case "cert_succ" :
+			var sData = this.webMain.callMethod("getNexacroData");
+			var bResult = true;
+		
+			this.smfSendResponseToOpener({result:bResult,data:sData});
+
+			//this.webMain.callMethod("fnClose");
+			
+			if(this.opener)
+			{
+				this.close(true);
+			}
+			break;
+		case "cert_stop" :
+			var sData = this.webMain.callMethod("getNexacroData");
+			var bResult = false;
+		
+			this.smfSendResponseToOpener({result:bResult,data:sData});
+			if(this.opener)
+			{
+				this.close(true);
+			}
+			break;
+		case "cert_error" :
+			var sData = this.webMain.callMethod("getNexacroData");
+			var bResult = false;
+		
+			this.smfSendResponseToOpener({result:bResult,data:sData});
+			if(this.opener)
+			{
+				this.close(true);
+			}
+			break;
+		
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

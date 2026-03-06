@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="commStep" width="195" height="50" titletext="팝업 공지 Step" background="transparent" onload="commStep_onload">
+    <Layouts>
+      <Layout height="50" screenid="ScreenDeskTopP" width="195"/>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  대국민포탈 - 공지 사항 스텝
+*  @FileName 	commStep.xfdl 
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022.08.04
+*  @Desction    Main 공지 팝업 
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.08.04     		TOBESOFT		 	  	  최초 생성 
+*******************************************************************************
+*/
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.listCnt = 0;
+this.stepNo=0;  // 현재 활성화된 step의 번호
+this.frmNm;
+
+this.commStep_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//this.fnCreateBtn();
+	
+	//0501 CF 일괄등록
+};
+
+this.btnStep_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objNo = obj.name.substring(7);
+	this.btnStepMv(parseInt(objNo));
+};
+
+//step버튼 이동
+this.btnStepMv = function(objNo)
+{
+	var vObjNo = objNo;
+
+	if(objNo < 0){ //첫번째에서 앞으로 갈 경우 맨 뒤 이미지 표시
+		vObjNo = this.listCnt -1;
+	}else if(objNo >= this.listCnt){  //맨 뒤에서 뒤로 갈 경우 첫번째 이미지 표시
+		vObjNo = 0;
+	}
+
+	this.stepNo=vObjNo; //현재 활성화된 step의 번호
+	
+	//초기화
+	for(var i=0;i<this.listCnt;i++)
+	{
+		this.components[i].set_cssclass("btn_main_pop_step");
+		this.components[i].set_accessibilitylabel("팝업공지 "+ (i+1) +"번째 Step");
+	}
+
+	this.components["btnStep"+this.stepNo].set_cssclass("btn_main_pop_step_S");
+	this.components["btnStep"+this.stepNo].set_accessibilitylabel("선택된 "+ this.components["btnStep"+this.stepNo].accessibilitylabel);
+	
+	this.frmNm.fnStepClik(this.stepNo);
+	
+};
+
+// 스텝 버튼 생성
+this.fnCreateBtn = function(popCnt, frmNm)
+{
+	this.fvfirstLeft   = 10;
+	this.fvTopMargin   = 10;
+	this.fvWidthMargin = 6;
+	var nWidth  = 30;
+	var nHeight = 30;
+	this.fvLastLeft = 10;
+	
+	this.listCnt = popCnt;
+	
+	for(var i=0;i<this.listCnt; i++)
+	{
+		var objBtn = new Button();
+		objBtn.init("btnStep"+i,this.fvLastLeft,this.fvTopMargin,nWidth,nHeight);
+		this.fvLastLeft += nWidth + this.fvWidthMargin;
+		
+		this.addChild(objBtn.name, objBtn);
+		var stepText="";
+		if ( i == 0 ){
+			objBtn.set_cssclass("btn_main_pop_step_S");
+			stepText = "선택된 ";
+		}else
+		{
+			objBtn.set_cssclass("btn_main_pop_step");
+		}
+	
+		objBtn.set_initvalueid("ivBtnAccessibilityButton");
+		objBtn.set_accessibilitylabel(stepText +"팝업공지 "+ (i+1) +"번째 Step");
+		objBtn.step = "step"+i;
+		
+		objBtn.setEventHandler("onclick", this.btnStep_onclick, this);
+		objBtn.show();
+	}
+	
+	this.frmNm = frmNm;
+};
+]]></Script>
+  </Form>
+</FDL>

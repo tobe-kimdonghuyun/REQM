@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmPopup" width="480" height="768" onload="frmPopup_onload" ondevicebuttonup="frmPopup_ondevicebuttonup" onbeforeclose="frmPopup_onbeforeclose" titletext="팝업프레임">
+    <Layouts>
+      <Layout height="768" mobileorientation="portrait" width="480">
+        <Div id="divTitle" taborder="0" text="divTitle" left="0" top="0" height="55" right="0">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="팝업타이틀영역" left="30" top="0" height="50" cssclass="sta_WF_PopTit" right="0"/>
+              <Static id="sta01" taborder="2" left="0" height="1" cssclass="sta_TF_Line" right="0" bottom="0"/>
+              <Button id="btnClose" taborder="1" top="0" width="50" height="50" right="20" cssclass="btn_TF_CloseB" onclick="btnClose_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divWork" taborder="1" text="divWork" left="0" top="55" bottom="0" right="0">
+          <Layouts>
+            <Layout>
+              <Div id="divWork2" taborder="0" left="0" top="0" right="0" bottom="0">
+                <Layouts>
+                  <Layout/>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divDetailTitle" taborder="2" text="divDetailTitle" left="490" top="0" height="55" right="-490" visible="false">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="팝업 상세타이틀영역" left="30" top="0" height="55" cssclass="sta_TF_DTitle" right="75"/>
+              <Button id="btnClose" taborder="1" top="0" width="55" height="55" right="20" cssclass="btn_TF_Close" onclick="btnClose_onclick"/>
+              <Static id="sta01" taborder="2" left="0" height="1" cssclass="sta_TF_Line" right="0" bottom="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00_01" taborder="3" left="0" top="54" height="1" cssclass="sta_WF_ConLine" right="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  Mobile 프로젝트
+*  @FileName 	frmPopup.xfdl 
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2023/10/30
+*  @Desction   
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2023/10/30			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ this.objApp = nexacro.getApplication();
+ 
+ /************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.frmPopup_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{	
+	//필수함수
+	this.gfnFormOnLoadM(obj);
+	this.objApp.gvPopup = this;
+	var sUrl = this.parent.oCFInfo.sUrl;
+	var bIsDetail = this.parent.oCFInfo.bIsDetail;
+	var sTitleText = this.parent.oCFInfo.sTitleText;
+
+	this.divDetailTitle.set_left(0);
+	this.divDetailTitle.set_right(0);
+		
+	if(bIsDetail)
+	{
+		this.divDetailTitle.set_visible(true);
+		this.divDetailTitle.form.sta00.set_text(sTitleText);
+		this.divTitle.set_visible(false);
+	}else{
+		this.divDetailTitle.set_visible(false);
+		this.divTitle.set_visible(true);
+		this.divTitle.form.sta00.set_text(sTitleText);
+	}
+	
+	this.divWork.form.divWork2.set_url(sUrl);
+	
+	this.webBrowserVisible(this.opener, false);
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+ 
+ /************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+
+
+this.frmPopup_ondevicebuttonup = function(obj:nexacro.Form,e:nexacro.DeviceButtonEventInfo)
+{
+	this.objApp.gvBase.fnClosePopupByDeviceButton(this);
+};
+this.frmPopup_onbeforeclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	this.webBrowserVisible(this.opener, true);
+};
+]]></Script>
+  </Form>
+</FDL>

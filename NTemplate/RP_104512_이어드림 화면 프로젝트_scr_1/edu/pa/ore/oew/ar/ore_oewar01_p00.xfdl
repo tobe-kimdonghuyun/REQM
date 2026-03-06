@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="popupForm" width="800" height="340" titletext="교원자격 팝업" onload="form_onload" canlayoutchange="btnCancel_onclick">
+    <Layouts>
+      <Layout height="340" width="800" screenid="ScreenDeskTop">
+        <ImageViewer id="imgTitle00" taborder="0" text="교원자격내역" left="20" top="20" height="30" cssclass="img_WF_SubTit04" width="117" initvalueid="ivTitleAccessibilityOn"/>
+        <Grid id="grdList" taborder="1" left="20" top="60" height="210" right="20" autofittype="col" selecttype="row" initvalueid="ivGrdAccessibilityOn" binddataset="dsChk" autoenter="select" accessibilitylabel="수학제외기간 목록" oncellclick="grdList_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="180"/>
+                <Column size="180"/>
+                <Column size="190"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="자격번호"/>
+                <Cell col="1" text="자격종별"/>
+                <Cell col="2" text="자격증급별"/>
+                <Cell col="3" text="발급기관"/>
+                <Cell col="4" text="발급일자"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:tchQlflCtrCd" textAlign="center"/>
+                <Cell col="1" text="bind:tchQlfAsortScNm" textAlign="left"/>
+                <Cell col="2" text="bind:lsgByScNm" textAlign="left"/>
+                <Cell col="3" text="bind:tchQlfInstCdNm" textAlign="left"/>
+                <Cell col="4" text="bind:issuYmd" textAlign="center" displaytype="date" calendardisplaynulltype="none" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd"/>
+              </Band>
+            </Format>
+            <Format id="default1">
+              <Columns>
+                <Column size="100"/>
+                <Column size="150"/>
+                <Column size="150"/>
+                <Column size="150"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="자격번호"/>
+                <Cell col="1" text="자격종별"/>
+                <Cell col="2" text="자격증급별"/>
+                <Cell col="3" text="발급기관"/>
+                <Cell col="4" text="표시과목"/>
+                <Cell col="5" text="발급일자"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:tchQlflCtrCd" textAlign="center"/>
+                <Cell col="1" text="bind:tchQlfAsortScNm" textAlign="left"/>
+                <Cell col="2" text="bind:lsgByScNm" textAlign="left"/>
+                <Cell col="3" text="bind:tchQlfInstCdNm" textAlign="left"/>
+                <Cell col="4" text="bind:indctSbjtCdNm" textAlign="left"/>
+                <Cell col="5" text="bind:issuYmd" textAlign="center" displaytype="date" calendardisplaynulltype="none" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnCancel" taborder="2" text="취소" height="30" width="50" left="43.25%" fittocontents="width" cssclass="btn_WF_Custom" initvalueid="ivBtnAccessibilityButton" top="290" onclick="btnCancel_onclick"/>
+        <Button id="btnRegist" taborder="3" text="적용" height="30" width="50" fittocontents="width" left="btnCancel:8" initvalueid="ivBtnAccessibilityButton" top="btnCancel:-30" onclick="btnRegist_onclick"/>
+        <Static id="staGd00" taborder="4" left="20" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGd04" taborder="5" left="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" height="20" bottom="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGd01" taborder="6" left="0" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" width="20" bottom="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGd02" taborder="7" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" width="20" bottom="0" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGd03" taborder="8" left="20" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" bottom="50" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCtrNo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="tchQlflCtrNo" type="STRING" size="256"/>
+          <Column id="flNm" type="STRING" size="256"/>
+          <Column id="applpRrno" type="STRING" size="256"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="currCd" type="STRING" size="256"/>
+          <Column id="eamScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="tchQlflCtrNo"/>
+            <Col id="flNm"/>
+            <Col id="applpRrno"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsChk" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="tchQlfAsortScCd" type="STRING" size="256" description="교원자격종별코드"/>
+          <Column id="tchQlfAsortScNm" type="STRING" size="256" description="교원자격종별코드 명"/>
+          <Column id="lsgByScCd" type="STRING" size="256" description="교원자격증급별코드"/>
+          <Column id="lsgByScNm" type="STRING" size="256" description="교원자격증급별코드 명"/>
+          <Column id="tchQlfInstCd" type="STRING" size="256" description="발급기관코드"/>
+          <Column id="tchQlfInstCdNm" type="STRING" size="256" description="발급기관명"/>
+          <Column id="indctSbjtCd" type="STRING" size="256" description="표시과목코드"/>
+          <Column id="indctSbjtCdNm" type="STRING" size="256" description="표시과목명"/>
+          <Column id="issuYmd" type="STRING" size="256" description="발급일자"/>
+          <Column id="tchQlflCtrCd" type="STRING" size="256"/>
+          <Column id="issuInstSymNm" type="STRING" size="256"/>
+          <Column id="sortGb" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="description" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="url">/ore_oew_rm13_002.do</Col>
+            <Col id="id">selectApi</Col>
+            <Col id="inDatasets">dsMain=dsCtrNo</Col>
+            <Col id="outDatasets">dsChk=dsChk</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  온라인통합채용-교원자격내역 팝업
+*  @MenuPath    pa_ore_oew_ar
+*  @FileName 	pa_ore_oewar01_p00.xfdl
+*  @Creator 	최정민
+*  @CreateDate 	2023.03.22
+*  @Desction    교원자격 API 호출
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.03.22    	최정민 	        최초 생성 
+*******************************************************************************
+*/
+
+include "lib::cm_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// default 초기처리를 한다.
+	this.smfInitPopup(obj);
+	
+	if(this.smfGetAppoExamScCd() == "2"){
+		//중등일경우 
+		this.grdList.set_formatid("default1");
+	}
+	// 파라메터 셋
+	this.pv_params = this.smfGetPopupParams();
+	this.dsCtrNo.setColumn(0, "applpRrno", this.pv_params.applpRrno);
+	this.dsCtrNo.setColumn(0, "flNm", this.pv_params.flNm);
+	
+	
+	//초등일경우 교과 코드 세팅
+	if(this.smfGetAppoExamScCd() == "1"){
+		this.dsCtrNo.setColumn(0, "currCd", this.pv_params.currCd);
+		this.dsCtrNo.setColumn(0, "eamScCd", "1");
+	}else{
+		this.dsCtrNo.setColumn(0, "eamScCd", "2");
+	}
+	var cddcCd = this.smfGetCddcCode();
+	this.dsCtrNo.setColumn(0, "cddcCd", cddcCd.slice(0,3));
+
+	this.smfSearchService('selectApi') 
+	.run()
+	.callback(function(callbackParams){
+		if(callbackParams.errors) return;
+
+	});	
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+// 확인버튼 클릭	
+this.btnRegist_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 부모창 전달
+	this.smfSendResponseToOpener({
+		"tchQlfAsortScCd" : this.dsChk.getColumn( this.dsChk.rowposition ,"tchQlfAsortScCd"),
+		"tchQlfAsortScNm" : this.dsChk.getColumn( this.dsChk.rowposition ,"tchQlfAsortScNm"),
+		"lsgByScCd" : this.dsChk.getColumn( this.dsChk.rowposition ,"lsgByScCd"),
+		"lsgByScNm" : this.dsChk.getColumn( this.dsChk.rowposition ,"lsgByScNm"),
+		"tchQlfInstCd" : this.dsChk.getColumn( this.dsChk.rowposition ,"tchQlfInstCd"),
+		"tchQlfInstCdNm" : this.dsChk.getColumn( this.dsChk.rowposition ,"tchQlfInstCdNm"),
+		"indctSbjtCd" : this.dsChk.getColumn( this.dsChk.rowposition ,"indctSbjtCd"),
+		"indctSbjtCdNm" : this.dsChk.getColumn( this.dsChk.rowposition ,"indctSbjtCdNm"),
+		"issuYmd" : this.dsChk.getColumn( this.dsChk.rowposition ,"issuYmd"),
+		"tchQlflCtrNo" : this.dsChk.getColumn( this.dsChk.rowposition ,"tchQlflCtrCd"),
+		"issuInstSymNm" : this.dsChk.getColumn( this.dsChk.rowposition ,"issuInstSymNm")
+	});
+	this.close(true);
+};
+
+// 취소버튼 클릭
+this.btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 닫기 버튼을 이용한 팝업종료의 파라메터는 false를 전달
+	this.close(false);
+};
+
+this.grdList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	
+	
+	//초등교사, 유치원교사,  특수(유치원)교사, 특수(초등)교사
+	var currCd = "001 003 005 006 007";
+	//초등일경우
+	if(this.smfGetAppoExamScCd() == "1"){
+		//초등교사
+		if(currCd.indexOf(this.pv_params.currCd) >= 0){
+		
+			if(this.dsChk.getColumn( this.dsChk.rowposition ,"lsgByScCd") != '019' && this.dsChk.getColumn( this.dsChk.rowposition ,"lsgByScCd") != '018'){
+				this.smfAlert("정교사(2급), 정교사(1급)가 아닌경우 선택하실수 없습니다.");
+				return;
+			}
+		}
+	}
+
+
+
+	// 부모창 전달
+	this.smfSendResponseToOpener({
+		"tchQlfAsortScCd" : this.dsChk.getColumn( this.dsChk.rowposition ,"tchQlfAsortScCd"),
+		"tchQlfAsortScNm" : this.dsChk.getColumn( this.dsChk.rowposition ,"tchQlfAsortScNm"),
+		"lsgByScCd" : this.dsChk.getColumn( this.dsChk.rowposition ,"lsgByScCd"),
+		"lsgByScNm" : this.dsChk.getColumn( this.dsChk.rowposition ,"lsgByScNm"),
+		"tchQlfInstCd" : this.dsChk.getColumn( this.dsChk.rowposition ,"tchQlfInstCd"),
+		"tchQlfInstCdNm" : this.dsChk.getColumn( this.dsChk.rowposition ,"tchQlfInstCdNm"),
+		"indctSbjtCd" : this.dsChk.getColumn( this.dsChk.rowposition ,"indctSbjtCd"),
+		"indctSbjtCdNm" : this.dsChk.getColumn( this.dsChk.rowposition ,"indctSbjtCdNm"),
+		"issuYmd" : this.dsChk.getColumn( this.dsChk.rowposition ,"issuYmd"),
+		"tchQlflCtrNo" : this.dsChk.getColumn( this.dsChk.rowposition ,"tchQlflCtrCd"),
+		"issuInstSymNm" : this.dsChk.getColumn( this.dsChk.rowposition ,"issuInstSymNm")
+	});
+	this.close(true);	
+};
+]]></Script>
+  </Form>
+</FDL>

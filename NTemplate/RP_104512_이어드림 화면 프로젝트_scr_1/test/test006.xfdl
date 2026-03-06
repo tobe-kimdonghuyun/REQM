@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="test006" width="1280" height="745" titletext="New Form" onload="test006_onload">
+    <Layouts>
+      <Layout height="745" width="1280">
+        <Div id="div00" taborder="0" text="div00" left="391" top="275" width="534" height="205" background="aqua">
+          <Layouts>
+            <Layout>
+              <Button id="btn00" taborder="0" text="btn00" left="0" top="78" width="39" height="42"/>
+            </Layout>
+            <Layout name="Layout0"/>
+          </Layouts>
+        </Div>
+        <Button id="btnPlay" taborder="1" text="Play" left="58" top="100" width="122" height="41" onclick="btnPlay_onclick"/>
+        <Div id="div01" taborder="2" text="div01" left="516" top="51" width="402" height="51" border="1px solid blanchedalmond" background="beige" visible="false">
+          <Layouts>
+            <Layout>
+              <Button id="btn00" taborder="0" text="" left="40" top="20" width="60" height="12"/>
+              <Static id="sta00" taborder="1" left="40" top="20" width="320" height="12" text="" background="#1e5df2" opacity="0.3" borderRadius="3px"/>
+            </Layout>
+            <Layout name="Layout0"/>
+          </Layouts>
+        </Div>
+        <Button id="btnStop" taborder="3" text="stop" left="188" top="100" width="122" height="41" onclick="btnStop_onclick"/>
+      </Layout>
+      <Layout height="745" mobileorientation="Landscape" name="Layout0" type="default" width="1280"/>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	test006.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2023.2.24
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.2.24     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.test006_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.fnCreateAnimation();
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+this.fv_aniId     = "Animation00";
+this.fv_aniItemId = "AniItem00";
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.fnCreateAnimation = function()
+{
+	
+	var sAniId = this.fv_aniId;
+	var sAniItemId = this.fv_aniItemId;
+	
+	var objAni = this[sAniId];
+	
+	if(!objAni)
+	{
+		objAni = new nexacro.Animation(sAniId, this);  
+		// Add Object to Parent Form  
+		this.addChild( sAniId, objAni );
+		
+		// Set Object 
+		objAni.set_duration( 1000 );
+		objAni.set_easing( "linear" );
+		objAni.set_direction( "alternate" );
+		objAni.set_loop(true);
+		objAni.set_loopcount(100);
+
+		// Add Item to Object
+		objAni.addTarget( sAniItemId, this.div01.form.btn00, "left:[40,300]" );
+
+	}
+}
+
+this.btnPlay_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// Play Object
+	this[this.fv_aniId].play();
+	this.div01.set_visible(true);
+	
+};
+
+this.btnStop_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.div01.set_visible(false);
+	this[this.fv_aniId].stop();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

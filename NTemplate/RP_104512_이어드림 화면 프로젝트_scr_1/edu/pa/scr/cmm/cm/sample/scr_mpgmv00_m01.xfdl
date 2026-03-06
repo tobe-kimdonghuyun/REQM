@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="scr_mpgmv00_m01" width="1280" height="745" titletext="임시 조회 화면" onload="form_onload">
+    <Layouts>
+      <Layout height="745" mobileorientation="landscape" width="1280">
+        <Div id="div00" taborder="0" text="div00" left="21" top="10" width="1064" height="317" onclick="div00_onclick">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="expertDB(PostgreSQL) 조회 결과" left="20" top="260" width="202" height="32" onclick="div00_sta00_onclick"/>
+              <Button id="btn00" taborder="1" text="대국민 DB 조회 테스트" left="219" top="255" width="225" height="43" onclick="btn99"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta00" taborder="1" text="17개 시도 교육청 코드 조회 결과" left="50" top="20" width="1113" height="37" onclick="sta00_onclick"/>
+        <Grid id="grd00" taborder="2" left="37" top="61" width="1117" height="119" binddataset="ds00">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="206"/>
+                <Column size="329"/>
+                <Column size="498"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="orgCd"/>
+                <Cell col="1" text="kornOrgNm"/>
+                <Cell col="2" text="chk"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:orgCd"/>
+                <Cell col="1" text="bind:kornOrgNm"/>
+                <Cell col="2" text="bind:chk"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grd01" taborder="3" left="43" top="313" width="801" height="149" binddataset="ds01">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="seqidx"/>
+                <Cell col="1" text="subject"/>
+                <Cell col="2" text="qry"/>
+                <Cell col="3" text="mailform"/>
+                <Cell col="4" text="mailto"/>
+                <Cell col="5" text="replyto"/>
+                <Cell col="6" text="rname"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:seqidx"/>
+                <Cell col="1" text="bind:subject"/>
+                <Cell col="2" text="bind:qry"/>
+                <Cell col="3" text="bind:mailform"/>
+                <Cell col="4" text="bind:mailto"/>
+                <Cell col="5" text="bind:replyto"/>
+                <Cell col="6" text="bind:rname"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds00" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="orgCd" type="STRING" size="256"/>
+          <Column id="kornOrgNm" type="STRING" size="256"/>
+          <Column id="chk" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256"/>
+          <Column id="outDatasets" type="STRING" size="256"/>
+          <Column id="asynctp" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="url">/scr_mpg_mv00_001.do</Col>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">ds00</Col>
+          </Row>
+          <Row>
+            <Col id="id">select2</Col>
+            <Col id="url">/scr_mpg_mv00_004.do</Col>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">ds01</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="testCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="testCd">100</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds01" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="seqidx" type="STRING" size="256"/>
+          <Column id="subject" type="STRING" size="256"/>
+          <Column id="qry" type="STRING" size="256"/>
+          <Column id="mailform" type="STRING" size="256"/>
+          <Column id="mailto" type="STRING" size="256"/>
+          <Column id="replyto" type="STRING" size="256"/>
+          <Column id="rname" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템
+*  @MenuPath    공통
+*  @FileName 	scr_mpgmv00_m01.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    임시 조회 화면
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.scrInitForm(obj);	//필수(화면초기화)
+};
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+this.fnSearch = function(obj, e)
+{
+	
+	// 서비스 객체 생성
+	this.smfSearchService("select")		
+		.run()// 실행
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			var rowCount = this.ds00.getRowCount();
+			console.log(rowCount);
+		});	
+};
+
+this.fnSearch2 = function(obj, e)
+{
+	
+	// 서비스 객체 생성
+	this.smfSearchService("select2")		
+		.run()// 실행
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			var rowCount = this.ds00.getRowCount();
+			console.log(rowCount);
+		});	
+};
+
+this.scr_mpgmv00_m01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitForm(this);
+	this.fnSearch();
+	alert("msg");
+	//this.fnSearch2();
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+// 서비스 콜백
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+	
+};
+
+this.btn99 = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	alert("현재 프로젝트(cloud.pa)에서 조회가능한 expertDB가 없습니다.")
+	//this.smfInitForm(this);
+	//this.fnSearch2();
+};
+]]></Script>
+  </Form>
+</FDL>

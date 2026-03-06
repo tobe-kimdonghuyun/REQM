@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Sample04_pop" width="800" height="500" titletext="팝업" onload="Sample04_pop_onload">
+    <Layouts>
+      <Layout height="500" mobileorientation="landscape" width="800">
+        <Button id="Button01" taborder="0" text="여기" left="10" top="8" width="83" height="43" accessibilityrole="static" background="red"/>
+        <Static id="sta_title" taborder="1" text="공지사항" left="110" top="0" height="50" right="0" accessibilitydescription="팝업창" font="bold 18px/normal &quot;Malgun Gothic&quot;"/>
+        <Button id="btn_close" taborder="2" top="0" width="69" height="50" right="0" cssclass="btn_WF_PopupClose" accessibilitylabel="팝업닫기" onclick="btn_close_onclick"/>
+        <Div id="Div00" taborder="3" left="0" top="51" right="0" bottom="0" accessibilityenable="false" text="">
+          <Layouts>
+            <Layout>
+              <Static id="Static08" taborder="0" text="성명" left="10" top="30" width="130" height="48" cssclass="sta_WF_DetailLabelEss01" accessibilitylabel="성명(필수입력)" color="blue" font="bold 18px/normal &quot;Malgun Gothic&quot;"/>
+              <Static id="Static06" taborder="1" left="140" top="32" width="470" height="45" cssclass="sta_WF_DetailBg03" accessibilityrole="static" accessibilityenable="false"/>
+              <Edit id="edt_applicantMgmtName" taborder="2" left="155" top="40" width="175" height="28" accessibilitylabel="성명(필수입력)" displaynulltext="예: 홍길동"/>
+              <Grid id="Grid00" taborder="3" left="7" top="86" width="783" height="353" binddataset="ds_employees" selecttype="cell">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                    </Columns>
+                    <Rows>
+                      <Row band="head" size="24"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="EMPL_ID"/>
+                      <Cell col="1" text="FULL_NAME"/>
+                      <Cell col="2" text="DEPT_ID"/>
+                      <Cell col="3" text="GENDER"/>
+                      <Cell col="4" text="HIRE_DATE"/>
+                      <Cell col="5" text="MARRIED"/>
+                      <Cell col="6" text="SALARY"/>
+                      <Cell col="7" text="EMPL_MEMO"/>
+                      <Cell col="8" text="RANK"/>
+                      <Cell col="9" text="EMAIL"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:EMPL_ID"/>
+                      <Cell col="1" text="bind:FULL_NAME"/>
+                      <Cell col="2" text="bind:DEPT_ID"/>
+                      <Cell col="3" text="bind:GENDER"/>
+                      <Cell col="4" text="bind:HIRE_DATE"/>
+                      <Cell col="5" text="bind:MARRIED"/>
+                      <Cell col="6" text="bind:SALARY"/>
+                      <Cell col="7" text="bind:EMPL_MEMO"/>
+                      <Cell col="8" text="bind:RANK"/>
+                      <Cell col="9" text="bind:EMAIL"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Edit id="Edit00" taborder="4" left="398" top="31" width="95" height="41" accessibilitylabel="성명"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Sample04_pop_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+//	this.Button01.setFocus();
+	this.fnSerch();	
+};
+
+this.btn_close_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.parent.parent.fnClose();
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+
+this.fnSerch = function()
+{
+	this.transaction("test"
+				   , "http://localhost:8080/npN/jsp/select_noDb.jsp"
+				   , ""
+				   , "ds_employees=ds_employees"
+				   , ""
+				   , "fnCallback");
+}
+
+
+this.fnCallback = function()
+{
+	this.Button01.setFocus();
+}
+]]></Script>
+    <Objects>
+      <Dataset id="ds_employees">
+        <ColumnInfo>
+          <Column id="EMPL_ID" type="string" size="10"/>
+          <Column id="FULL_NAME" type="string" size="10"/>
+          <Column id="DEPT_ID" type="string" size="10"/>
+          <Column id="GENDER" type="string" size="10"/>
+          <Column id="HIRE_DATE" type="string" size="10"/>
+          <Column id="MARRIED" type="string" size="10"/>
+          <Column id="SALARY" type="string" size="10"/>
+          <Column id="EMPL_MEMO" type="string" size="10"/>
+          <Column id="RANK" type="string" size="10"/>
+          <Column id="EMAIL" type="string" size="10"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

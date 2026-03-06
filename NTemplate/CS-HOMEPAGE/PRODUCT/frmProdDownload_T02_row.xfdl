@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmProdDownload_T02_01" width="945" height="141" titletext="Form 분리" onload="frmProdDownload_T02_01_onload">
+    <Layouts>
+      <Layout height="141" horizontalgap="0" mobileorientation="landscape" spacing="0px" tabletemplate="1* / 1*" verticalgap="0" width="945">
+        <Static id="staTitle" taborder="0" text="NexacroN_XAPI_JAVA" left="0" top="20" height="40" cssclass="sta_WF_ConTitle" width="800" cursor="default" accessibilitylabel="제목"/>
+        <Button id="staDetail" taborder="1" top="23" width="34" height="34" cssclass="btn_WF_ConRelease" right="5" onclick="staDetail_onclick"/>
+        <Button id="btnDownload" taborder="2" left="0" top="80" width="34" height="34" cssclass="btn_WF_ConDownload" onclick="btnDownload_onclick" accessibilitylabel="다운로드"/>
+        <Static id="staFileName" taborder="3" text="NexacroN_XAPI_JAJVA_20241029(1.1.10)_1.zip" left="btnDownload:10" top="77" width="600" height="40" cssclass="sta_WF_ConNumber" accessibilitylabel="파일명"/>
+        <Static id="staDate" taborder="4" text="2024-10-29" top="77" height="40" width="95" cssclass="sta_WF_ConNumberR" right="0" accessibilitylabel="등록일"/>
+        <Static id="Static03" taborder="5" left="0" right="0" cssclass="sta_WF_ConLine" top="140" height="1" accessibilityenable="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.DownloadForm = this.parent.parent.parent.parent;
+
+this.frmProdDownload_T02_01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var sParentId = this.parent.id;
+	var objDs  = this.DownloadForm.ds_list_detail;
+	this.fn_InitFormData(objDs, nexacro.toNumber(sParentId.replaceAll("divList","")));	
+};
+
+
+this.fn_InitFormData = function(ds, nIdx)
+{
+	//this.staTitle.text = ds.getColumn(nIdx, "CONTENTS");
+	this.staTitle.text = ds.getColumn(nIdx, "DL_REMARK");	
+	this.staDetail.accessibilitylabel = "팝업 " + this.staTitle.text;
+	
+	this.staFileName.text = ds.getColumn(nIdx, "file_name");
+	this.btnDownload.accessibilitylabel = "다운로드 " + this.staFileName.text;
+
+	var nDate = ds.getColumn(nIdx, "ymd");
+	nDate = nDate.substr(0,4) + '-' + nDate.substr(4,2) + '-' + nDate.substr(6,2);
+	this.staDate.text = nDate;
+};
+
+this.staDetail_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	var nIdx = nexacro.toNumber(this.parent.id[this.parent.id.length - 1]);
+	this.DownloadForm.staDetail_onclick(nIdx);	
+};
+
+this.btnDownload_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	var nIdx = nexacro.toNumber(this.parent.id[this.parent.id.length - 1]);
+	//trace(nIdx + " / " + this.parent.id + " / " + this.parent.id[this.parent.id.length - 1] );
+	this.DownloadForm.btnDownload_onclick(nIdx);		
+};
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

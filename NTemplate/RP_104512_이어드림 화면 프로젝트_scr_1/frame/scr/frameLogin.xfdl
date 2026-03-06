@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameLogin" width="480" height="495" titletext="개발자용 로그인" onload="form_onload">
+    <Layouts>
+      <Layout height="495" width="480" screenid="desktopScr,tabletScr,mobileScr">
+        <Div id="divPopup" taborder="0" text="Div00" left="0" top="0" cssclass="div_POP_Bg" right="0" bottom="0">
+          <Layouts>
+            <Layout>
+              <Static id="staTitle" taborder="0" left="20" top="0" height="74" right="18" accessibilityrole="heading" cssclass="sta_POP_Title" text="로그인(개발자용)"/>
+              <Button id="btnClose" taborder="1" top="21" width="40" height="40" right="18" cssclass="btn_POP_Close" accessibilitydescription="팝업닫기" initvalueid="iv_Button" onclick="btnClose_onclick"/>
+              <Button id="btnLogin01" taborder="2" text="사용자 없을 경우&#13;&#10;알림메시지" height="110" width="215" left="20" cssclass="btn_WF_Crud02" initvalueid="iv_Button" top="130" onclick="btnLogin_onclick"/>
+              <Button id="btnLogin02" taborder="3" text="강원도_자녀:2&#13;&#10;학부모명:장의현&#13;&#10;강릉명륜고(이지은)&#13;&#10;목호초등학교(민재학)" height="110" width="215" left="243" cssclass="btn_WF_Crud02" initvalueid="iv_Button" top="130" onclick="btnLogin_onclick"/>
+              <Button id="btnLogin03" taborder="4" text="강원도_자녀:1&#13;&#10;학부모명:권예지&#13;&#10;경포중학교(장기)" height="110" width="215" left="20" cssclass="btn_WF_Crud02" initvalueid="iv_Button" top="250" onclick="btnLogin_onclick"/>
+              <Button id="btnLogin04" taborder="5" text="강원도_자녀:1&#13;&#10;특수학교&#13;&#10;학부모명:홍길동&#13;&#10;강릉오성학교&#13;&#10;(특홍길005)" height="110" width="215" left="243" cssclass="btn_WF_Crud02" initvalueid="iv_Button" top="250" onclick="btnLogin_onclick"/>
+              <Button id="btnLogin05" taborder="6" text="강원도_자녀: 4&#13;&#10;학부모명:이지원&#13;&#10;정연초등학교(박성현)&#13;&#10;강릉명륜고(이지은) 강릉명륜고(김명륜)&#13;&#10;묵호초등학교(홍길동016)" height="110" width="438" left="20" cssclass="btn_WF_Crud02" initvalueid="iv_Button" top="370" onclick="btnLogin_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTitlebar" taborder="1" left="20" top="0" width="400" height="74"/>
+        <Edit id="edtLgn" taborder="2" left="59" top="85" width="301" height="28"/>
+        <Button id="btnLgn" taborder="3" text="로그인" left="369" top="85" width="90" height="28" onclick="btnLgn_onclick"/>
+        <Static id="staDscsnCnLabel" taborder="4" text="CI값" left="20" top="79" width="78" cssclass="sta_WF_LebelDiv" height="40" initvalueid="iv_StaticE"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템
+*  @MenuPath    공통
+*  @FileName 	frameLogin.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    개발자용 임시로그인
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = nexacro.getApplication();
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//this.scrInitForm(obj);	//필수(화면초기화)
+	this.getOwnerFrame().set_borderRadius("12px");
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+//닫기버튼
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+
+//로그인버튼 클릭시
+this.btnLogin_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var oFrameMainForm = this.objApp.mainframe.VFrameSet.frameMain.form;
+	switch(obj.name) {
+	case "btnLogin01":
+	
+//강원도_자녀:1 
+//학부모명:박유나
+//강릉명륜고(삼명륜)
+		trace("======================================================================================");
+		trace("1번 로그인");
+		trace("======================================================================================");
+
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'provider', 'kakao'); // 
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'ci', 'LPSi7S8vb7FG6lGLHlcHXpnh7Av356LYfayIeGDU12OsZ1hL5RTe0oQNL8jK7ScXblv4gn9kfkI/X8nHG2dCvg=='); //
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'userDtcNo', 'CSPP20230004180029'); //
+		
+		oFrameMainForm.doScrLgn("LG005"); //간편인증
+
+		break;		
+	case "btnLogin02":
+	
+		trace("======================================================================================");
+		trace("2번 로그인");
+		trace("======================================================================================");
+
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'provider', 'kakao'); // 
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'ci', 'eGv84+uL4+0gMMec3ZM/uLq6ytNl6GkgtfotLx6TaT66fM3X7VMDjmAwggQHcWw0TVtywAqut+ijiu38YdNvEg=='); //
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'userDtcNo', 'CSPP20240005260020'); //
+		
+		oFrameMainForm.doScrLgn("LG005"); //간편인증
+
+		break;
+	case "btnLogin03":
+	
+		trace("======================================================================================");
+		trace("3번 로그인");
+		trace("======================================================================================");
+		 
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'provider', 'kakao'); // 
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'ci', 'wq/eNUCRQsQuQkdoP9BOVKfiuByDDUCqLFkOOoRlViCL0hlyZfQRjSRuI3KT9JPdQSZczJMC6L3h1Joro4eMug=='); //
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'userDtcNo', 'CSPP20240005240029'); //
+		
+		oFrameMainForm.doScrLgn("LG005"); //간편인증
+
+		break;
+	case "btnLogin04":
+	
+		trace("======================================================================================");
+		trace("4번 로그인");
+		trace("======================================================================================");
+		
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'provider', 'kakao'); // 
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'ci', '7Fg1L214LzQB/OuQn/IgOrDIo4ilohmiUW5ronv0/OKJYH+gmR7Hu0WVGO6iopLpTteINnZzw+Qv15IIeXU5pA=='); //
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'userDtcNo', 'CSPP20240000149119'); //
+		
+		oFrameMainForm.doScrLgn("LG005"); //간편인증
+
+		break;
+	case "btnLogin05":
+	
+		trace("======================================================================================");
+		trace("5번 로그인");
+		trace("======================================================================================");
+		
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'provider', 'kakao'); // 
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'ci', 'qBbW/bB2KQNaH3E7buO3DPYHDr36hCG2YS50ebLmZZM+zU+5EA7BHsuP8JR1c3JbAmlZ4LxIbEdrzORLJQGhvA=='); //
+		oFrameMainForm.dsScrLgnSrch.setColumn(0, 'userDtcNo', 'CSPP20230004040036'); //
+		
+		oFrameMainForm.doScrLgn("LG005"); //간편인증
+
+		break;
+	default: this.close(); break;
+	}
+
+};
+
+/* 입력로그인 클릭 */
+this.btnLgn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace("=============================================================================================================");
+	trace("::: this.edtLgn.value ::: "  + this.edtLgn.value );
+	trace("=============================================================================================================");
+
+	var oFrameMainForm = this.objApp.mainframe.VFrameSet.frameMain.form;
+	oFrameMainForm.dsScrLgnSrch.setColumn(0, 'provider', 'kakao'); 
+	oFrameMainForm.dsScrLgnSrch.setColumn(0, 'ci', this.edtLgn.value);
+		
+	oFrameMainForm.doScrLgn("LG005"); //간편인증
+
+	this.close();
+};
+]]></Script>
+  </Form>
+</FDL>

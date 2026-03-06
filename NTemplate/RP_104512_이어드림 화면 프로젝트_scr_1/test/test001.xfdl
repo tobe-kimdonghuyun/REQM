@@ -1,0 +1,760 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="test001" width="1280" height="800" titletext="New Form" ontimer="test001_ontimer">
+    <Layouts>
+      <Layout height="800" width="1280" screenid="ScreenDeskTop" type="default">
+        <Button id="btn00" taborder="0" text="로컬" left="50" top="35" width="176" height="43" onclick="btn00_onclick"/>
+        <Button id="btn01" taborder="1" text="로컬 transaction" left="246" top="36" width="166" height="42" onclick="btn01_onclick"/>
+        <Grid id="grd00" taborder="2" left="59" top="126" width="396" height="140" binddataset="dsEvlprList">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="evlYr"/>
+                <Cell col="1" text="shlCd"/>
+                <Cell col="2" text="evlKndScCd"/>
+                <Cell col="3" text="evlprId"/>
+                <Cell col="4" text="evlTrprId"/>
+                <Cell col="5" text="evlPaptId"/>
+                <Cell col="6" text="evlYn"/>
+                <Cell col="7" text="evlprScCd"/>
+                <Cell col="8" text="gnrlzDetaScCd"/>
+                <Cell col="9" text="evlCthrClsNm"/>
+                <Cell col="10" text="evlChrgeSbjtNm"/>
+                <Cell col="11" text="evlprTitlNm"/>
+                <Cell col="12" text="evlGdccCn"/>
+                <Cell col="13" text="dscrpGdccCn"/>
+                <Cell col="14" text="evlYtkId"/>
+                <Cell col="15" text="evlBgngYmd"/>
+                <Cell col="16" text="evlEndYmd"/>
+                <Cell col="17" text="chgChrgeSbjtNm"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:evlYr"/>
+                <Cell col="1" text="bind:shlCd"/>
+                <Cell col="2" text="bind:evlKndScCd"/>
+                <Cell col="3" text="bind:evlprId"/>
+                <Cell col="4" text="bind:evlTrprId"/>
+                <Cell col="5" text="bind:evlPaptId"/>
+                <Cell col="6" text="bind:evlYn"/>
+                <Cell col="7" text="bind:evlprScCd"/>
+                <Cell col="8" text="bind:gnrlzDetaScCd"/>
+                <Cell col="9" text="bind:evlCthrClsNm"/>
+                <Cell col="10" text="bind:evlChrgeSbjtNm"/>
+                <Cell col="11" text="bind:evlprTitlNm"/>
+                <Cell col="12" text="bind:evlGdccCn"/>
+                <Cell col="13" text="bind:dscrpGdccCn"/>
+                <Cell col="14" text="bind:evlYtkId"/>
+                <Cell col="15" text="bind:evlBgngYmd"/>
+                <Cell col="16" text="bind:evlEndYmd"/>
+                <Cell col="17" text="bind:chgChrgeSbjtNm"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btn02" taborder="3" text="btn02" left="441" top="31" width="184" height="41" onclick="btn02_onclick"/>
+        <Button id="btn03" taborder="4" text="btn03" left="581" top="125" width="119" height="41" onclick="btn03_onclick"/>
+        <Button id="btn04" taborder="5" text="btn04" left="578" top="201" width="125" height="40" onclick="btn04_onclick"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile" width="340" height="540" mobileorientation="portrait" type="default" dragscrolltype="both"/>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	test001.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.11.29
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.11.29     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.test001_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitForm(this);
+	
+	
+	
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	//trace("@@ this.dsEvlprList.rowcount="+this.dsEvlprList.rowcount);
+	this.smfSetDefaultHttpTimeOut();
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+trace("=====>");
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfSearchService("list")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams) {
+			if(callbackParams.errors) return; 
+			
+			trace(" $$ this.dsEvlprList.rowcount="+this.dsEvlprList.rowcount);
+		});
+};
+
+this.btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sUrl = 'baseUrl::/eds_tad_os04_003.do';
+	var inds = 'dsSearch=dsSearch';
+	//var outds = 'dsResult=dsResult dsApiResponseList=dsApiResponseList dsStuList=dsStuList dsEvlList=dsEvlList dsEvlRndList=dsEvlRndList dsTchChrgeSbjtList=dsTchChrgeSbjtList dsTchList=dsTchList dsEvlprList=dsEvlprList dsEvlprQuitmList=dsEvlprQuitmList dsEaipDscrpEvlprQuitmList=dsEaipDscrpEvlprQuitmList dsEvlprDscrpQuitmList=dsEvlprDscrpQuitmList dsEvlYdstkList=dsEvlYdstkList dsTmprStrgAnsList=dsTmprStrgAnsList dsTmprStrgDscrpAnsList=dsTmprStrgDscrpAnsList dsTmprStrgDscrpAnsList=dsTmprStrgDscrpAnsList dsTmprTchIduQuitmList=dsTmprTchIduQuitmList dsEvlQuitmAnsList=dsEvlQuitmAnsList dsQstnRspns=dsQstnRspns dsBasicQstnRspns=dsBasicQstnRspns dsEvlprQuitmListAll=dsEvlprQuitmListAll _dsBusinessMessage=businessMessage'
+	var outds = 'dsEvlprList=dsEvlprList'
+	var sParam = "svcId='' voId='' method=''";
+	this.transaction("test",sUrl,inds,outds,sParam,"fnTransCallback",true,"0","false");
+};
+
+this.btn02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sUrl = 'http://dev.eduro.go.kr/eds_tad_os04_003.do';
+	//var sUrl = 'baseUrl::nxui/local2.xml';
+	var inds = 'dsSearch=dsSearch';
+	var outds = 'dsResult=dsResult dsApiResponseList=dsApiResponseList dsStuList=dsStuList dsEvlList=dsEvlList dsEvlRndList=dsEvlRndList dsTchChrgeSbjtList=dsTchChrgeSbjtList dsTchList=dsTchList dsEvlprList=dsEvlprList dsEvlprQuitmList=dsEvlprQuitmList dsEaipDscrpEvlprQuitmList=dsEaipDscrpEvlprQuitmList dsEvlprDscrpQuitmList=dsEvlprDscrpQuitmList dsEvlYdstkList=dsEvlYdstkList dsTmprStrgAnsList=dsTmprStrgAnsList dsTmprStrgDscrpAnsList=dsTmprStrgDscrpAnsList dsTmprStrgDscrpAnsList=dsTmprStrgDscrpAnsList dsTmprTchIduQuitmList=dsTmprTchIduQuitmList dsEvlQuitmAnsList=dsEvlQuitmAnsList dsQstnRspns=dsQstnRspns dsBasicQstnRspns=dsBasicQstnRspns dsEvlprQuitmListAll=dsEvlprQuitmListAll _dsBusinessMessage=businessMessage'
+	var sParam = "svcId='' voId='' method=''";
+	this.transaction("test",sUrl,inds,outds,sParam,"fnTransCallback",true,"0","false");
+};
+
+this.btn03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfSetHttpTimeOut(1000);
+	var sUrl = 'baseUrl::/pas_mms_cm00_002.do';
+	//var sUrl = 'baseUrl::nxui/local2.xml';
+	var inds = '';
+	var outds = 'dsClientIp=dsClientIp'
+	var sParam = "svcId='' voId='' method=''";
+	this.transaction("test",sUrl,inds,outds,sParam,"fnTransCallback",true,"0","false");	
+};
+
+this.btn04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="instCd" type="STRING" size="256"/>
+          <Column id="shlKndgrScCd" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="shlNm" type="STRING" size="256"/>
+          <Column id="cetNo" type="STRING" size="256"/>
+          <Column id="shlCrseScCd" type="STRING" size="256"/>
+          <Column id="shlCrseScNm" type="STRING" size="256"/>
+          <Column id="tadStuInvlNo" type="STRING" size="256"/>
+          <Column id="evlPaptId" type="STRING" size="256"/>
+          <Column id="schKndScCd" type="STRING" size="256"/>
+          <Column id="evlTrprId" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="evlKndScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cddcCd">K100000001</Col>
+            <Col id="evlYr">2023</Col>
+            <Col id="instCd">K100000001</Col>
+            <Col id="shlKndgrScCd">1</Col>
+            <Col id="shlCd">K100000776</Col>
+            <Col id="shlCrseScCd">3</Col>
+            <Col id="tadStuInvlNo">2016000002</Col>
+            <Col id="evlPaptId">2016000002</Col>
+            <Col id="evlKndScCd">2</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">list</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="url">/eds_tad_os04_003.do</Col>
+            <Col id="outDatasets">dsResult=dsResult dsApiResponseList=dsApiResponseList dsStuList=dsStuList dsEvlList=dsEvlList dsEvlRndList=dsEvlRndList dsTchChrgeSbjtList=dsTchChrgeSbjtList dsTchList=dsTchList dsEvlprList=dsEvlprList dsEvlprQuitmList=dsEvlprQuitmList dsEaipDscrpEvlprQuitmList=dsEaipDscrpEvlprQuitmList dsEvlprDscrpQuitmList=dsEvlprDscrpQuitmList dsEvlYdstkList=dsEvlYdstkList dsTmprStrgAnsList=dsTmprStrgAnsList dsTmprStrgDscrpAnsList=dsTmprStrgDscrpAnsList dsTmprStrgDscrpAnsList=dsTmprStrgDscrpAnsList dsTmprTchIduQuitmList=dsTmprTchIduQuitmList dsEvlQuitmAnsList=dsEvlQuitmAnsList dsQstnRspns=dsQstnRspns dsBasicQstnRspns=dsBasicQstnRspns dsEvlprQuitmListAll=dsEvlprQuitmListAll</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPreset" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="tadStuInvlNo" type="STRING" size="256"/>
+          <Column id="stuFlnm" type="STRING" size="256"/>
+          <Column id="grd" type="STRING" size="256"/>
+          <Column id="clsNm" type="STRING" size="256"/>
+          <Column id="clsNo" type="STRING" size="256"/>
+          <Column id="stuOflEvlYn" type="STRING" size="256"/>
+          <Column id="exmplShlYn" type="STRING" size="256"/>
+          <Column id="stuEduActPtptRspnsYn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsApiResponseList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="연계상태값"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="stuOnlEvlYn" type="STRING" size="256"/>
+          <Column id="stuEvlCmptnYn" type="STRING" size="256"/>
+          <Column id="shlEvlPrdYn" type="STRING" size="256"/>
+          <Column id="evlBgngYmd" type="STRING" size="256"/>
+          <Column id="evlEndYmd" type="STRING" size="256"/>
+          <Column id="dnPaptCnt" type="STRING" size="256"/>
+          <Column id="cmptnPtptCnt" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsStuList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="tadStuInvlNo" type="STRING" size="256"/>
+          <Column id="stuFlnm" type="STRING" size="256"/>
+          <Column id="grd" type="STRING" size="256"/>
+          <Column id="clsNm" type="STRING" size="256"/>
+          <Column id="clsNo" type="STRING" size="256"/>
+          <Column id="stuOflEvlYn" type="STRING" size="256"/>
+          <Column id="stuEduActPtptRspnsYn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsEvlList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="evlKndScCd" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="evlTrprId" type="STRING" size="256"/>
+          <Column id="evlPaptId" type="STRING" size="256"/>
+          <Column id="evlprScCd" type="STRING" size="256"/>
+          <Column id="gnrlzDetaScCd" type="STRING" size="256"/>
+          <Column id="evlYn" type="STRING" size="256"/>
+          <Column id="evlCthrClsNm" type="STRING" size="256"/>
+          <Column id="evlChrgeSbjtNm" type="STRING" size="256"/>
+          <Column id="evlprTitlNm" type="STRING" size="256"/>
+          <Column id="tchFlnm" type="STRING" size="256"/>
+          <Column id="tchScCd" type="STRING" size="256"/>
+          <Column id="tchScCdNm" type="STRING" size="256"/>
+          <Column id="appntScCd" type="STRING" size="256"/>
+          <Column id="appntScCdNm" type="STRING" size="256"/>
+          <Column id="chrgeSbjtCd" type="STRING" size="256"/>
+          <Column id="chrgeSbjtCdNm" type="STRING" size="256"/>
+          <Column id="sxdsScCd" type="STRING" size="256"/>
+          <Column id="sxdsScCdNm" type="STRING" size="256"/>
+          <Column id="chgChrgeSbjtNm" type="STRING" size="256"/>
+          <Column id="leSbjtNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEvlRndList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="evlKndScCd" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="evlTrprId" type="STRING" size="256"/>
+          <Column id="evlPaptId" type="STRING" size="256"/>
+          <Column id="evlprScCd" type="STRING" size="256"/>
+          <Column id="gnrlzDetaScCd" type="STRING" size="256"/>
+          <Column id="evlYn" type="STRING" size="256"/>
+          <Column id="evlCthrClsNm" type="STRING" size="256"/>
+          <Column id="evlChrgeSbjtNm" type="STRING" size="256"/>
+          <Column id="evlprTitlNm" type="STRING" size="256"/>
+          <Column id="tchFlnm" type="STRING" size="256"/>
+          <Column id="tchScCd" type="STRING" size="256"/>
+          <Column id="tchScCdNm" type="STRING" size="256"/>
+          <Column id="appntScCd" type="STRING" size="256"/>
+          <Column id="appntScCdNm" type="STRING" size="256"/>
+          <Column id="chrgeSbjtCd" type="STRING" size="256"/>
+          <Column id="chrgeSbjtCdNm" type="STRING" size="256"/>
+          <Column id="sxdsScCd" type="STRING" size="256"/>
+          <Column id="sxdsScCdNm" type="STRING" size="256"/>
+          <Column id="chgChrgeSbjtNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsTchChrgeSbjtList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="tchInvlNo" type="STRING" size="256"/>
+          <Column id="sbjtNm" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTchList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="tchInvlNo" type="STRING" size="256"/>
+          <Column id="tchFlnm" type="STRING" size="256"/>
+          <Column id="tchScCd" type="STRING" size="256"/>
+          <Column id="tchScCdNm" type="STRING" size="256"/>
+          <Column id="appntScCd" type="STRING" size="256"/>
+          <Column id="appntScCdNm" type="STRING" size="256"/>
+          <Column id="ctwkScCd" type="STRING" size="256"/>
+          <Column id="workYyCnt" type="STRING" size="256"/>
+          <Column id="chrgeSbjtCd" type="STRING" size="256"/>
+          <Column id="chrgeSbjtCdNm" type="STRING" size="256"/>
+          <Column id="hffcStsCd" type="STRING" size="256"/>
+          <Column id="hffcStsCdNm" type="STRING" size="256"/>
+          <Column id="chrgeSbjtQlfCd" type="STRING" size="256"/>
+          <Column id="chrgeSbjtQlfCdNm" type="STRING" size="256"/>
+          <Column id="sxdsScCd" type="STRING" size="256"/>
+          <Column id="sxdsScCdNm" type="STRING" size="256"/>
+          <Column id="hmpg1Addr" type="STRING" size="256"/>
+          <Column id="hmpg2Addr" type="STRING" size="256"/>
+          <Column id="stuEduActIntrdCn" type="STRING" size="256"/>
+          <Column id="chgChrgeSbjtNm" type="STRING" size="256"/>
+          <Column id="leSbjtNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEvlprList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="evlKndScCd" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="evlTrprId" type="STRING" size="256"/>
+          <Column id="evlPaptId" type="STRING" size="256"/>
+          <Column id="evlYn" type="STRING" size="256"/>
+          <Column id="evlprScCd" type="STRING" size="256"/>
+          <Column id="gnrlzDetaScCd" type="STRING" size="256"/>
+          <Column id="evlCthrClsNm" type="STRING" size="256"/>
+          <Column id="evlChrgeSbjtNm" type="STRING" size="256"/>
+          <Column id="evlprTitlNm" type="STRING" size="256"/>
+          <Column id="evlGdccCn" type="STRING" size="256"/>
+          <Column id="dscrpGdccCn" type="STRING" size="256"/>
+          <Column id="evlYtkId" type="STRING" size="256"/>
+          <Column id="evlBgngYmd" type="STRING" size="256"/>
+          <Column id="evlEndYmd" type="STRING" size="256"/>
+          <Column id="chgChrgeSbjtNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEvlprQuitmList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="quitmSn" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="sorSn" type="STRING" size="256"/>
+          <Column id="quitmScCd" type="STRING" size="256"/>
+          <Column id="evlRelmId" type="STRING" size="256"/>
+          <Column id="evlElemId" type="STRING" size="256"/>
+          <Column id="evlIxId" type="STRING" size="256"/>
+          <Column id="quitmCn" type="STRING" size="256"/>
+          <Column id="evlRelmNm" type="STRING" size="256"/>
+          <Column id="evlElemNm" type="STRING" size="256"/>
+          <Column id="evlIxNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEaipDscrpEvlprQuitmList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="quitmSn" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="sorSn" type="STRING" size="256"/>
+          <Column id="quitmScCd" type="STRING" size="256"/>
+          <Column id="evlRelmId" type="STRING" size="256"/>
+          <Column id="evlElemId" type="STRING" size="256"/>
+          <Column id="evlIxId" type="STRING" size="256"/>
+          <Column id="quitmCn" type="STRING" size="256"/>
+          <Column id="evlRelmNm" type="STRING" size="256"/>
+          <Column id="evlElemNm" type="STRING" size="256"/>
+          <Column id="evlIxNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEvlprDscrpQuitmList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="quitmSn" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="sorSn" type="STRING" size="256"/>
+          <Column id="quitmScCd" type="STRING" size="256"/>
+          <Column id="evlRelmId" type="STRING" size="256"/>
+          <Column id="evlElemId" type="STRING" size="256"/>
+          <Column id="evlIxId" type="STRING" size="256"/>
+          <Column id="quitmCn" type="STRING" size="256"/>
+          <Column id="evlRelmNm" type="STRING" size="256"/>
+          <Column id="evlElemNm" type="STRING" size="256"/>
+          <Column id="evlIxNm" type="STRING" size="256"/>
+          <Column id="dscrpAnsCn" type="STRING" size="256"/>
+          <Column id="txtLen" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsEvlYdstkList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="instCd" type="STRING" size="256"/>
+          <Column id="evlKndScCd" type="STRING" size="256"/>
+          <Column id="evlYtkId" type="STRING" size="256"/>
+          <Column id="evlYtkScNm" type="STRING" size="256"/>
+          <Column id="ytkSn" type="STRING" size="256"/>
+          <Column id="evlYtkNm" type="STRING" size="256"/>
+          <Column id="evlYtkScr" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsTmprStrgAnsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="evlKndScCd" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="evlTrprId" type="STRING" size="256"/>
+          <Column id="quitmScCd" type="STRING" size="256"/>
+          <Column id="sorSn" type="STRING" size="256"/>
+          <Column id="tmprQuitmSn" type="STRING" size="256"/>
+          <Column id="tmprYtkSn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsTmprStrgDscrpAnsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="evlKndScCd" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="evlTrprId" type="STRING" size="256"/>
+          <Column id="tmprQuitmSn" type="STRING" size="256"/>
+          <Column id="tmprYtkSn" type="STRING" size="256"/>
+          <Column id="tmprDscrpAnsCn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTmprTchIduQuitmList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="evlKndScCd" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="evlTrprId" type="STRING" size="256"/>
+          <Column id="tmprQuitmSn" type="STRING" size="256"/>
+          <Column id="tmprYtkSn" type="STRING" size="256"/>
+          <Column id="tmprDscrpAnsCn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPreset1" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="evlYr" type="STRING" size="256" description="검사연도"/>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" description="학교명"/>
+          <Column id="cetNo" type="STRING" size="256" description="학생주소우편번호"/>
+          <Column id="shlCrseScCd" type="STRING" size="256"/>
+          <Column id="shlCrseScNm" type="STRING" size="256"/>
+          <Column id="shlKndScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTchCmb" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="tchScCd" type="STRING" size="256"/>
+          <Column id="tchFlnm" type="STRING" size="256"/>
+          <Column id="tchFullNm" type="STRING" size="256"/>
+          <Column id="tchInvlNo" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="evlYn" type="STRING" size="256"/>
+          <Column id="evlTrprEvlprId" type="STRING" size="256"/>
+          <Column id="tchFullNmCmb" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRltList">
+        <ColumnInfo>
+          <Column id="rn" type="STRING" size="256"/>
+          <Column id="quitmSn" type="STRING" size="256"/>
+          <Column id="quitmScCd" type="STRING" size="256"/>
+          <Column id="ytkSn" type="STRING" size="256"/>
+          <Column id="evlYtkScr" type="STRING" size="256"/>
+          <Column id="dscrpAnsCn" type="STRING" size="256"/>
+          <Column id="fbwdInclsYn" type="STRING" size="256"/>
+          <Column id="tchInvlNo" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="evlRelmId" type="STRING" size="256"/>
+          <Column id="evlElemId" type="STRING" size="256"/>
+          <Column id="evlIxId" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRltInfo">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="instCd" type="STRING" size="256"/>
+          <Column id="shlKndgrScCd" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="tadStuInvlNo" type="STRING" size="256"/>
+          <Column id="evlPaptId" type="STRING" size="256"/>
+          <Column id="evlPaptIpAddr" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="evlTrprId" type="STRING" size="256"/>
+          <Column id="shlCrseScCd" type="STRING" size="256"/>
+          <Column id="shlKndScCd" type="STRING" size="256"/>
+          <Column id="tmprStrgYn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsEvlprDscrpQuitmListAll" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="quitmSn" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="sorSn" type="STRING" size="256"/>
+          <Column id="quitmScCd" type="STRING" size="256"/>
+          <Column id="evlRelmId" type="STRING" size="256"/>
+          <Column id="evlElemId" type="STRING" size="256"/>
+          <Column id="evlIxId" type="STRING" size="256"/>
+          <Column id="quitmCn" type="STRING" size="256"/>
+          <Column id="evlRelmNm" type="STRING" size="256"/>
+          <Column id="evlElemNm" type="STRING" size="256"/>
+          <Column id="evlIxNm" type="STRING" size="256"/>
+          <Column id="ytkSn" type="STRING" size="256"/>
+          <Column id="evlYtkScr" type="STRING" size="256"/>
+          <Column id="dscrpAnsCn" type="STRING" size="256"/>
+          <Column id="evlYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRltDscrpList">
+        <ColumnInfo>
+          <Column id="quitmSn" type="STRING" size="256"/>
+          <Column id="quitmScCd" type="STRING" size="256"/>
+          <Column id="ytkSn" type="STRING" size="256"/>
+          <Column id="evlYtkScr" type="STRING" size="256"/>
+          <Column id="dscrpAnsCn" type="STRING" size="256"/>
+          <Column id="fbwdInclsYn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsQtnYdstkCnt" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="Avr" type="STRING" size="256"/>
+          <Column id="Ydstk1" type="STRING" size="256"/>
+          <Column id="Ydstk2" type="STRING" size="256"/>
+          <Column id="Ydstk3" type="STRING" size="256"/>
+          <Column id="Ydstk4" type="STRING" size="256"/>
+          <Column id="Ydstk5" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsEvlQuitmAnsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="rn" type="STRING" size="256"/>
+          <Column id="quitmSn" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="sorSn" type="STRING" size="256"/>
+          <Column id="quitmScCd" type="STRING" size="256"/>
+          <Column id="evlRelmId" type="STRING" size="256"/>
+          <Column id="evlElemId" type="STRING" size="256"/>
+          <Column id="evlIxId" type="STRING" size="256"/>
+          <Column id="quitmCn" type="STRING" size="256"/>
+          <Column id="evlRelmNm" type="STRING" size="256"/>
+          <Column id="evlElemNm" type="STRING" size="256"/>
+          <Column id="evlIxNm" type="STRING" size="256"/>
+          <Column id="ytkSn" type="STRING" size="256"/>
+          <Column id="evlYtkScr" type="STRING" size="256"/>
+          <Column id="dscrpAnsCn" type="STRING" size="256"/>
+          <Column id="evlYn" type="STRING" size="256"/>
+          <Column id="tmprStrgYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsTchEvlYnCmb" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="text" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">Y</Col>
+            <Col id="text">참여완료</Col>
+          </Row>
+          <Row>
+            <Col id="code">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsEvlprQuitmList00" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="instCd" type="STRING" size="256"/>
+          <Column id="shlKndgrScCd" type="STRING" size="256"/>
+          <Column id="evlKndScCd" type="STRING" size="256"/>
+          <Column id="quitmSn" type="STRING" size="256"/>
+          <Column id="qstnQuitmCn" type="STRING" size="256"/>
+          <Column id="insSn1" type="STRING" size="256"/>
+          <Column id="insSnNm1" type="STRING" size="256"/>
+          <Column id="inskSn2" type="STRING" size="256"/>
+          <Column id="insSnNm2" type="STRING" size="256"/>
+          <Column id="insSn3" type="STRING" size="256"/>
+          <Column id="insSnNm3" type="STRING" size="256"/>
+          <Column id="insSn4" type="STRING" size="256"/>
+          <Column id="insSnNm4" type="STRING" size="256"/>
+          <Column id="insSn5" type="STRING" size="256"/>
+          <Column id="insSnNm5" type="STRING" size="256"/>
+          <Column id="insSn6" type="STRING" size="256"/>
+          <Column id="insSnNm6" type="STRING" size="256"/>
+          <Column id="insSn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsQstnRspns" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="evlKndScCd" type="STRING" size="256"/>
+          <Column id="evlPaptId" type="STRING" size="256"/>
+          <Column id="quitmNo1RspnsCdValue" type="STRING" size="256"/>
+          <Column id="quitmNo2RspnsCdValue" type="STRING" size="256"/>
+          <Column id="quitmNo3RspnsCdValue" type="STRING" size="256"/>
+          <Column id="quitmNo4RspnsCdValue" type="STRING" size="256"/>
+          <Column id="quitmNo5RspnsCdValue" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsBasicQstnRspns" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="instCd" type="STRING" size="256"/>
+          <Column id="shlKndgrScCd" type="STRING" size="256"/>
+          <Column id="evlKndScCd" type="STRING" size="256"/>
+          <Column id="quitmSn" type="STRING" size="256"/>
+          <Column id="qstnQuitmCn" type="STRING" size="256"/>
+          <Column id="sorSn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEvlprQuitmListAll" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="quitmSn" type="STRING" size="256"/>
+          <Column id="evlprId" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="evlYr" type="STRING" size="256"/>
+          <Column id="sorSn" type="STRING" size="256"/>
+          <Column id="quitmScCd" type="STRING" size="256"/>
+          <Column id="evlRelmId" type="STRING" size="256"/>
+          <Column id="evlElemId" type="STRING" size="256"/>
+          <Column id="evlIxId" type="STRING" size="256"/>
+          <Column id="quitmCn" type="STRING" size="256"/>
+          <Column id="evlRelmNm" type="STRING" size="256"/>
+          <Column id="evlElemNm" type="STRING" size="256"/>
+          <Column id="evlIxNm" type="STRING" size="256"/>
+          <Column id="ytkSn1" type="STRING" size="256"/>
+          <Column id="ytkSnNm1" type="STRING" size="256"/>
+          <Column id="ytkSn2" type="STRING" size="256"/>
+          <Column id="ytkSnNm2" type="STRING" size="256"/>
+          <Column id="ytkSn3" type="STRING" size="256"/>
+          <Column id="ytkSnNm3" type="STRING" size="256"/>
+          <Column id="ytkSn4" type="STRING" size="256"/>
+          <Column id="ytkSnNm4" type="STRING" size="256"/>
+          <Column id="ytkSn5" type="STRING" size="256"/>
+          <Column id="ytkSnNm5" type="STRING" size="256"/>
+          <Column id="ytkSn6" type="STRING" size="256"/>
+          <Column id="ytkSnNm6" type="STRING" size="256"/>
+          <Column id="ytkSn" type="STRING" size="256"/>
+          <Column id="evlYtkScr" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsClientIp"/>
+    </Objects>
+  </Form>
+</FDL>

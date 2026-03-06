@@ -1,0 +1,3606 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XCSS version="1.0"><![CDATA[/*
+* 아이콘 규칙
+   icon 에 패딩을 주는 경우 클리핑 처리 방식이 넥사브라우저와 웹브라우저가 다름
+   icon 은 스트레치 처리되지 않음
+   icon 크기를 폰트+페딩 에 맞게 조정필요
+* 하위컨트롤 이벤트 전파 ( selected 등이 전달되지 않음 )
+* 프로그래스바에 라운드보더 제거 ( 매뉴얼 제약도 명시 필요 )
+* Tabbutton 버튼하단 none border 처리를 직접해야함
+* tabpage / Div / PopupDiv 등에 Form 과 다른 배경색을 주고자 하는 경우 Form 배경색은 투명하게 처리해야함
+* cellexpandbutton 배경을 투명으로 주는 경우 셀 텍스트위에 겹쳐져서 표시되므로, 버튼 형태의 배경색 지정 필요
+* 콤보리스트 등 팝업 처리되는 컨트롤에 컬러 및 폰트 지정 필요
+* 아래 컨트롤들의 정렬 기능만 별도로 지정하고 나머지는 기본값으로 처리
+   * popupmenuitemhotkeytext : -nexa-text-align : right;
+   * progressbartext :  : -nexa-text-align : center;
+   * imagetext : -nexa-text-align : center;
+   * .Grid .head .row .cell : -nexa-text-align : center;
+   * .Grid .summary .row .cell : -nexa-text-align : center;
+   * .StatusBarControl .resizegrip : -nexa-vertical-align : bottom;
+   * .Spin .spinedit : -nexa-text-align : right;
+
+정식출시전까지 아래 변경이력 주석으로 관리함
+20160831
+   1. Form추가 [RP68483]
+   2. Grid .checkbox추가 [RP68497]
+   3. DatePicker수정 [RP없음]
+   4. menu/popupmenu .spinUp/Down Button 추가 [RP69135]
+20160913
+  1. Flash Player삭제 [RP69386]
+  2. next/prev button으로 명칭 변경 [RP69450,68873]
+  3. Grid .head .button추가 [RP69335]
+20160930
+   1. Tab next/prev Button CSS 및 이미지명 수정 - RP69490
+   2. Menu next/prev Button CSS 및 이미지명 수정 - RP69490
+   3. PopUP Menu next/prev Button CSS 및 이미지명 수정 - RP69490
+   4. Div의 -nexa-text-align 삭제 -RP69539
+   5. Grid .cell .expandbutton추가 -RP68632
+20161006
+   1. border => -nexa-border 명칭 변경 [RP68646]
+20161012
+   1. Edit계열 nexa-padding 10px => 3px로 변경
+   2. Edit계열 background컬러 추가 - RP69777
+20161208
+   1. popupmenuitemicon Style 설정 제거
+20161222
+   1. Menu / PopupMenu  navigationbutton  이미지 표시 오류 : RP71095
+20170125
+   1. nexatreeline 부분 제거 : 변경 가능한 컨트롤이 아니라 고정 값을 가지는 컨트롤임 [RP71432]
+20170302
+   1. fileuploaditemedit nexa-text-align의 left 로 변경[RP71925]
+20170315
+   1. Plugin, WebBrowser, PluginControl, WebBrowserControl의 속성 -nexa-border만 남기고 삭제함 [RP71782]
+20170403
+   1. .Grid .body .row .cell .celltreeline의 속성 -nexa-border 추가함 [RP72421]
+20170412
+   1. Calendar 하위 컨트롤 명칭 변경
+   - spinupbutton -> calendarspinupbutton
+   - spindownbutton -> calendarspindownbutton [RP72490]
+20170508
+   1. default value 추가 [RP73121]
+20170517
+   1. cellexpandbutton 	background 변경 [RP73331]
+20170526
+   1. default properties 추가 지정 작업
+20170712
+   1. FileDownload 컴포넌트 pushed userstatus  추가 [RP74090]
+20170804
+   1. windows 작업표시줄에 생기는 icon [RP74438]
+     - -nexa-icon : URL('theme://images/titlebar_icon_nexacro17.ico');
+
+*/
+
+
+/**********************Frame/Form***********************************************/
+.Form
+{
+	font : 16px "NotoSansKR-Regular";
+	color : #333333;
+	background : #ffffff;
+	-nexa-border : 0px none;
+}
+
+.Form[userstatus=contents]
+{
+	background : transparent;
+}
+
+.Form[status=disabled]
+{
+	color : #999999; 
+}
+
+
+.MainFrame,.ChildFrame,.FrameSet,.VFrameSet,.HFrameSet,.TileFrameSet
+{
+	/*별도스타일없음*/
+}
+
+.MainFrame .titlebar .titleicon
+{
+	-nexa-icon : URL('theme://images/titlebar_icon_nexacro17.ico');
+}
+
+/**********************Button***********************************************/
+.Button
+{
+	-nexa-border : 1px solid #7099f8;
+	-nexa-padding : 0px 20px;
+	background : #ffffff;
+	color : #2c59c4;
+	font : 16px "NotoSansKR-Regular";
+	cursor : pointer;
+	border-radius : 3px;
+}
+.Button[status=mouseover]
+{
+	-nexa-text-decoration : underline;
+	background :#edf4fd;
+	color : #2c59c4;
+}
+.Button[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	color : #2c59c4;
+}
+.Button[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #e5e5e5;
+	color : #999999;
+	cursor : default;
+}
+/**********************FileDownload***********************************************/
+/**********************FileUpload***********************************************/
+/***** FileDownload *****/
+.FileDownload
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 0px 10px 0px 10px;
+	background : #e6e6e6;
+	cursor : pointer;
+}
+.FileDownload[status=mouseover]
+{
+	-nexa-border : 1px solid #4a83d1;
+}
+.FileDownload[status=disabled]
+{
+	-nexa-border : 1px solid #c6c6c6;
+	background : #f2f2f2;
+	color : #888888;
+	cursor : default;
+}
+/***** FileUpload *****/
+.FileUpload .fileuploaditem .fileuploaditemedit,
+.FileUpload .fileuploaditem .fileuploaditemedit[status=readonly]
+{
+	-nexa-border : 1px solid #bbbbbb;
+	background : #ffffff;
+}
+.FileUpload .fileuploaditem .fileuploaditemedit[status=disabled]
+{
+	background : #e8e8e8;
+}
+.FileUpload .fileuploaditem .fileuploaditembutton
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 4px 10px 4px 10px;
+	background : #e6e6e6;
+	cursor : pointer;
+}
+.FileUpload .fileuploaditem .fileuploaditembutton[status=mouseover]
+{
+	-nexa-border : 1px solid #4a83d1;
+}
+.FileUpload .fileuploaditem .fileuploaditembutton[status=disabled]
+{
+	-nexa-border : 1px solid #c6c6c6;
+	background : #f2f2f2;
+	color : #888888;
+	cursor : default;
+}
+
+.ButtonControl
+{
+	background : transparent;
+	-nexa-border : 0px none;
+}
+
+
+/**********************Calendar***********************************************/
+.Calendar
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 1px;
+	background : #fbfbfb;
+	color : #333333;
+	font : 16px "NotoSansKR-Regular";
+
+}
+.Calendar[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.Calendar[status=focused]
+{
+	-nexa-padding : 0px;
+	-nexa-border : 2px solid #4272e1; 
+} 
+.Calendar[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #efefef;
+}
+.Calendar[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	color : #999999;
+	background : #efefef;
+}
+
+
+.Calendar .calendaredit
+{
+	-nexa-padding : 0px 10px 1px 15px;
+}
+
+.Calendar .dropbutton
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calendar.png');
+}
+
+.Calendar .dropbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calendar_D.png');
+}
+
+.Calendar .calendarspinupbutton
+{
+	-nexa-padding : 2px 0px 0px 0px;
+	-nexa-icon : URL('theme://images/btn_WF_Spinup.png');
+}
+
+.Calendar .calendarspinupbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spinup_O.png');
+}
+
+.Calendar .calendarspinupbutton[userstatus=pushed]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spinup_P.png');
+}
+
+.Calendar .calendarspinupbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spinup_D.png');
+}
+
+.Calendar .calendarspindownbutton
+{
+	-nexa-padding : 0px 0px 3px 0px;
+	-nexa-icon : URL('theme://images/btn_WF_Spindown.png');
+}
+
+.Calendar .calendarspindownbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spindown_O.png');
+}
+
+.Calendar .calendarspindownbutton[userstatus=pushed]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spindown_P.png');
+}
+
+.Calendar .calendarspindownbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spindown_D.png');
+}
+
+
+/**********************CheckBox***********************************************/
+.CheckBox
+{
+	-nexa-icon : URL("theme://images/chk_WF_Box.png");
+	-nexa-border : 2px solid transparent;
+	-nexa-text-padding :  1px 10px;
+	font : 16px "NotoSansKR-Regular";
+}
+.CheckBox[status=mouseover]
+{
+	-nexa-icon : URL("theme://images/chk_WF_Box_O.png");
+}
+.CheckBox[status=focused]
+{
+	-nexa-icon : URL("theme://images/chk_WF_Box.png");
+	-nexa-text-decoration : none;
+	-nexa-border : 2px solid #4272e1;
+}
+.CheckBox[userstatus=selected]
+{
+	-nexa-icon : URL("theme://images/chk_WF_Box_OS.png");
+	-nexa-text-decoration : underline;
+}
+.CheckBox[userstatus=selected][status=mouseover]
+{
+	-nexa-icon : URL("theme://images/chk_WF_Box_OS.png");
+	-nexa-text-decoration : underline;
+}
+.CheckBox[status=disabled]
+{
+	-nexa-icon : URL("theme://images/chk_WF_Box_D.png");
+	color : #999999;
+}
+.CheckBox[status=disabled][userstatus=selected]
+{
+	-nexa-icon : URL("theme://images/chk_WF_Box_DS.png");
+	color : #999999;
+}
+
+/**********************Combo***********************************************/
+.Combo
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 0px 3px 1px 15px;
+	background : #fbfbfb;
+	color : #333333;
+	font : 16px "NotoSansKR-Regular";
+
+}
+.Combo[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.Combo[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	-nexa-padding : 0px 3px 1px 14px;
+}
+.Combo[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #e5e5e5;
+	color : #999999;
+}
+.Combo[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #e5e5e5;
+}
+.Combo .comboedit
+{
+	-nexa-padding : 0px;
+}
+.Combo .dropbutton
+{
+	-nexa-icon : URL("theme://images/cmb_WF_Drop.png");
+	cursor : pointer;
+}
+.Combo .dropbutton[status=mouseover],.Combo .dropbutton[userstatus=pushed]
+{
+	-nexa-icon : URL("theme://images/cmb_WF_Drop_O.png");
+}
+.Combo .dropbutton[status=disabled]
+{
+	opacity : 0.50;
+}
+.Combo .combolist
+{
+	-nexa-border : 1px solid #b2b2b2;
+	background : #fbfbfb;
+	font : 16px "NotoSansKR-Regular";
+}
+.Combo .combolist .listboxitem
+{
+	-nexa-padding : 6px 10px;
+}
+.Combo .combolist .listboxitem[status=mouseover]
+{
+	background : #e7e7e7;
+}
+.Combo .combolist .listboxitem[userstatus=selected]
+{
+	background : #cee9fd;
+	color : #333333;
+}
+/**********************Edit***********************************************/
+.Edit
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 0px 15px 1px 15px;
+	background : #fbfbfb;
+	color : #333333;
+	font : 16px "NotoSansKR-Regular";
+}
+.Edit[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.Edit[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	-nexa-padding : 0px 15px 1px 14px;
+}
+.Edit[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #efefef;
+}
+.Edit[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	color : #999999;
+	background : #efefef;
+}
+.Edit[userstatus=nulltext]
+{
+	color : #666666;
+}
+/**********************Grid***********************************************/
+.Grid
+{
+	background : #ffffff;
+	-nexa-border : 1px solid #125dae, 1px solid #b7b1b2, 1px solid #b7b1b2, 1px solid #b7b1b2;
+}
+/*-----------------------------------head------------------------------------*/
+.Grid .head .row .cell
+{
+	font : 17px "NotoSansKR-Regular";
+	color : #333333;
+	background : #f5f5f5;
+	-nexa-border : 1px solid #cacaca;
+	-nexa-padding : 4px 4px 4px 4px;
+	-nexa-text-align : center;
+}
+.Grid .head .row .cell[status=focused]
+{
+	font : 17px "NotoSansKR-Regular";
+	color : #333333;
+	background : #f5f5f5;
+	-nexa-border : 1px solid #cacaca;
+	-nexa-padding : 4px 4px 4px 4px;
+	-nexa-text-align : center;
+	-nexa-text-decoration : underline;
+}
+
+.Grid .body .row .cell.Cell_WF_Fixed
+{
+	-nexa-border : 1px solid #cacaca, 1px solid #cacaca, 2px solid black, 1px solid #cacaca;
+}
+.Grid .body .row .cell
+{
+	color : #333333;
+	-nexa-border : 1px solid #d2d2d2;
+	-nexa-padding : 4px 15px;
+}
+
+.Grid .body .row .cell[status=mouseover]
+{
+	background : #f6f6f6;
+}
+
+.Grid .body .row .cell[userstatus=selected]
+{
+	background : #f2f9ff;
+}
+
+.Grid .body .row .cell[status=disabled]
+{
+	color : #999999;
+}
+
+/*-----------------------------------bodycellbutton:ButtonControl과 동일------------------------------------*/
+/*-----------------------------------bodycellcalendar:CalendarControl과 동일------------------------------------*/
+/*-----------------------------------bodycellcheckbox:CheckBoxControl과 동일------------------------------------*/
+/*-----------------------------------bodycellcombo:ComboControl과 동일------------------------------------*/
+/*-----------------------------------bodycelledit:EditControl과 동일------------------------------------*/
+/*-----------------------------------bodycellexpandbutton------------------------------------*/
+/*-----------------------------------bodycellimage:별도스타일없음------------------------------------*/
+/*-----------------------------------bodycellmaskedit:MaskEditControl과 동일------------------------------------*/
+/*-----------------------------------bodycellprogressbar:ProgressBarControl과 동일------------------------------------*/
+/*-----------------------------------bodycelltextarea:TextAreaControl과 동일------------------------------------*/
+/*-----------------------------------bodycelltreeitem:------------------------------------*/
+
+/*-----------------------------------summary------------------------------------*/
+.Grid .summary
+{
+	-nexa-border : 1px solid #c8c1c2, 0px none, 0px none, 0px none;
+}
+
+.Grid .summary .row .cell
+{
+	font : bold 13px "NotoSansKR-Regular";
+	color : #333333;
+	background : #fdfbe5;
+	-nexa-border : 1px solid #c8c1c2;
+	-nexa-text-align : center;
+}
+/*-----------------------------------summarycellbutton:ButtonControl과 동일------------------------------------*/
+/*-----------------------------------summarycellcalendar:CalendarControl과 동일------------------------------------*/
+/*-----------------------------------summarycellcheckbox:CheckBoxControl과 동일------------------------------------*/
+/*-----------------------------------summarycellcombo:ComboControl과 동일------------------------------------*/
+/*-----------------------------------summarycelledit:EditControl과 동일------------------------------------*/
+/*-----------------------------------summarycellexpandbutton------------------------------------*/
+/*-----------------------------------summarycellimage:별도스타일없음------------------------------------*/
+/*-----------------------------------summarycellmaskedit:MaskEditControl과 동일------------------------------------*/
+/*-----------------------------------summarycellprogressbar:ProgressBarControl과 동일------------------------------------*/
+/*-----------------------------------summarycelltextarea:TextAreaControl과 동일------------------------------------*/
+/*-----------------------------------summarycelltreeitem:------------------------------------*/
+
+/*-----------------------------------Grid hscrollbar:------------------------------------*/
+.Grid .hscrollbar
+{
+	-nexa-border : 1px solid #b1b1b1, 0px none, 0px none, 0px none;
+}
+/*-----------------------------------Grid vscrollbar:------------------------------------*/
+.Grid .vscrollbar
+{
+	-nexa-border : 0px none, 0px none, 0px none, 1px solid #b1b1b1;
+}
+
+
+/**********************GridCellControl***********************************************/
+/*-----------------------------------cellbutton:ButtonControl과 동일------------------------------------*/
+.GridCellControl .cellbutton
+{
+	font : 15px "NotoSansKR-Regular";
+	color : #555555;
+	background : linear-gradient(to top,#eaeaea,#ffffff);
+	-nexa-border : 1px solid #c2c2c2;
+}
+
+.GridCellControl .cellbutton[status=mouseover],.GridCellControl .cellbutton[status=focused]
+{
+	background : linear-gradient(to top,#e7e7e7,#fefefe);
+	-nexa-border : 1px solid #a0a0a0;
+}
+
+.GridCellControl .cellbutton[userstatus=pushed],.GridCellControl .cellbutton[userstatus=selected]
+{
+	background : linear-gradient(to top,#fefefe,#e9e9e9);
+}
+
+.GridCellControl .cellbutton[status=disabled]
+{
+	color : #bbbbbb;
+	background : #f5f5f5;
+	-nexa-border : 1px solid #d9d9d9; 
+}
+
+/*-----------------------------------cellcalendar:CalendarControl과 동일------------------------------------*/ 
+.GridCellControl .cellcalendar
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 0px ;
+	background : #fbfbfb;
+	color : #333333;
+	font : 16px "NotoSansKR-Regular";
+
+}
+.GridCellControl .cellcalendar[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.GridCellControl .cellcalendar[status=focused]
+{
+	-nexa-border : 2px solid #4272e1; 
+} 
+.GridCellControl .cellcalendar[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #efefef;
+}
+.GridCellControl .cellcalendar[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	color : #999999;
+	background : #efefef;
+}
+.GridCellControl .cellcalendar .calendaredit
+{
+	-nexa-padding : 0px 10px 1px 15px;
+}
+
+.GridCellControl .cellcalendar .dropbutton
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calendar.png');
+}
+
+.GridCellControl .cellcalendar .dropbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calendar_D.png');
+}
+
+.GridCellControl .cellcalendar .calendarspinupbutton
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spinup.png');
+}
+
+.GridCellControl .cellcalendar .calendarspinupbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spinup_O.png');
+}
+
+.GridCellControl .cellcalendar .calendarspinupbutton[userstatus=pushed]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spinup_P.png');
+}
+
+.GridCellControl .cellcalendar .calendarspinupbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spinup_D.png');
+}
+
+/*-----------------------------------cellcheckbox:CheckBoxControl과 동일------------------------------------*/
+.GridCellControl .cellcheckbox
+{
+	-nexa-icon : URL("theme://images/chk_WF_Box.png");
+	-nexa-text-padding :  0px 10px 0px 10px; 
+}
+.GridCellControl .cellcheckbox[status=mouseover]
+{
+	-nexa-icon : URL("theme://images/chk_WF_Box_O.png");
+}
+.GridCellControl .cellcheckbox[status=focused]
+{
+	-nexa-icon : URL("theme://images/chk_WF_Box.png"); 
+}
+.GridCellControl .cellcheckbox[userstatus=selected]
+{
+	-nexa-icon : URL("theme://images/chk_WF_Box_OS.png"); 
+}
+.GridCellControl .cellcheckbox[userstatus=selected][status=mouseover]
+{
+	-nexa-icon : URL("theme://images/chk_WF_Box_OS.png"); 
+}
+.GridCellControl .cellcheckbox[status=disabled]
+{
+	-nexa-icon : URL("theme://images/chk_WF_Box_D.png"); 
+}
+.GridCellControl .cellcheckbox[status=disabled][userstatus=selected] 
+{
+	-nexa-icon : URL("theme://images/chk_WF_Box_DS.png");
+}
+
+
+/*-----------------------------------cellcombo:ComboControl과 동일------------------------------------*/
+.GridCellControl .cellcombo
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 0px 3px 1px 15px;
+	background : #fbfbfb;
+	color : #333333;
+	font : 16px "NotoSansKR-Regular";
+
+}
+.GridCellControl .cellcombo[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.GridCellControl .cellcombo[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	-nexa-padding : 0px 3px 1px 14px;
+}
+.GridCellControl .cellcombo[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #e5e5e5;
+	color : #999999;
+}
+.GridCellControl .cellcombo[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #e5e5e5;
+}
+.GridCellControl .cellcombo .comboedit
+{
+	-nexa-padding : 0px;
+}
+.GridCellControl .cellcombo .dropbutton
+{
+	-nexa-icon : URL("theme://images/cmb_WF_Drop.png");
+	cursor : pointer;
+}
+.GridCellControl .cellcombo .dropbutton[status=mouseover],.GridCellControl .cellcombo .dropbutton[userstatus=pushed]
+{
+	-nexa-icon : URL("theme://images/cmb_WF_Drop_O.png");
+}
+.GridCellControl .cellcombo .dropbutton[status=disabled]
+{
+	opacity : 0.50;
+}
+.GridCellControl .cellcombo .combolist
+{
+	-nexa-border : 1px solid #b2b2b2;
+	background : #fbfbfb;
+	font : 16px "NotoSansKR-Regular";
+}
+.GridCellControl .cellcombo .combolist .listboxitem
+{
+	-nexa-padding : 8px 10px 8px 10px;
+}.GridCellControl .cellcombo .combolist .listboxitem[status=mouseover]
+{
+	background : #e7e7e7;
+}
+.GridCellControl .cellcombo .combolist .listboxitem[userstatus=selected]
+{
+	background : #cee9fd;
+	color : #333333;
+}
+
+/*-----------------------------------celledit:EditControl과 동일------------------------------------*/
+.GridCellControl .celledit
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 0px 15px 1px 15px;
+	background : #fbfbfb;
+	color : #333333;
+	font : 16px "NotoSansKR-Regular";
+}
+.GridCellControl .celledit[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.GridCellControl .celledit[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	-nexa-padding : 0px 15px 1px 14px;
+}
+.GridCellControl .celledit[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #efefef;
+}
+.GridCellControl .celledit[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	color : #999999;
+	background : #efefef;
+}
+.GridCellControl .celledit[userstatus=nulltext]
+{
+	color : #bababa;
+}
+
+/*-----------------------------------cellexpandbutton------------------------------------*/
+.GridCellControl .cellexpandbutton
+{
+	-nexa-icon : URL('theme://images/btn_WF_IcoSearch.png');
+	cursor : pointer;
+}
+
+/*-----------------------------------cellimage:별도스타일없음------------------------------------*/
+
+/*-----------------------------------cellmaskedit:MaskEditControl과 동일------------------------------------*/
+
+.GridCellControl .cellmaskedit
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 0px 15px 1px 15px;
+	-nexa-text-align : right;
+	background : #fbfbfb;
+	color : #333333;
+	font : 16px "NotoSansKR-Regular";
+}
+.GridCellControl .cellmaskedit[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.GridCellControl .cellmaskedit[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	-nexa-padding : 0px 14px 1px 15px;
+}
+.GridCellControl .cellmaskedit[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #efefef;
+}
+.GridCellControl .cellmaskedit[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	color : #999999;
+	background : #efefef;
+}
+.GridCellControl .cellmaskedit[userstatus=nulltext]
+{
+	color : #bababa;
+}
+
+/*-----------------------------------cellprogressbar:ProgressBarControl과 동일------------------------------------*/
+.GridCellControl .cellprogressbar
+{
+	font : 16px "NotoSansKR-Regular";
+}
+
+/*-----------------------------------celltextarea:TextAreaControl과 동일------------------------------------*/
+.GridCellControl .celltextarea
+{
+	font : 16px "NotoSansKR-Regular";
+}
+
+/*-----------------------------------celltreeitem:------------------------------------*/
+.GridCellControl .celltreeitem .treeitemtext
+{
+	color : #333333;
+}
+
+.GridCellControl .celltreeitem .treeitemtext[status=disabled]
+{
+	color : #999999;
+}
+
+.GridCellControl .celltreeitem .treeitembutton[userstatus=expand]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Treeexpand.png');
+}
+
+.GridCellControl .celltreeitem .treeitembutton[userstatus=collapse]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Treecollapse.png');
+}
+
+.GridCellControl .celltreeitem .treeitemimage
+{
+	-nexa-icon : URL('theme://images/img_WF_Treeitem.png');
+}
+
+.GridCellControl .celltreeitem .treeitemimage[userstatus=expand]
+{
+	-nexa-icon : URL('theme://images/img_WF_Treeexpand.png');
+}
+
+.GridCellControl .celltreeitem .treeitemimage[userstatus=collapse]
+{
+	-nexa-icon : URL('theme://images/img_WF_Treecollapse.png');
+}
+
+.GridCellControl .celltreeline
+{
+	-nexa-border : 1px dotted #909090;
+}
+
+
+
+/**********************GroupBox***********************************************/
+.GroupBox
+{
+	/*별도스타일없음*/
+}
+
+.GroupBox .groupboxcontents
+{
+	background : #ffffff;
+	-nexa-border : 1px solid #d6d4d5;
+}
+
+.GroupBox .groupboxcontents[status=disabled]
+{
+	background : #efefef;
+}
+
+.GroupBox .groupboxtitle
+{
+	background : #ffffff;
+	-nexa-padding : 0px 4px 0px 4px;
+}
+
+.GroupBox .groupboxtitle[status=disabled]
+{
+	color : #999999;
+	background : #efefef;
+}
+
+
+/**********************ImageViewer***********************************************/
+.ImageViewer
+{
+	background : #ffffff;
+	-nexa-border : 0px none;
+}
+.ImageViewer[status=focused]
+{
+	background : #ffffff;
+	-nexa-border : 2px solid #4272e1;
+}
+.ImageViewer[status=disabled]
+{
+	background : #f2f2f2;
+}
+
+.ImageViewer .imagetext
+{
+	-nexa-text-align : center;
+	font : 16px "NotoSansKR-Regular"
+	color : #333333;
+}
+
+.ImageViewer .imagetext[status=disabled]
+{
+	color : #999999;
+}
+
+
+/**********************ListBox***********************************************/
+.ListBox
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 1px;
+	background : #ffffff;
+}
+.ListBox[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.ListBox[status=focused]
+{
+	-nexa-padding : 0px;
+	-nexa-border : 2px solid #4272e1;
+}
+.ListBox[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #efefef;
+}
+
+.ListBox .listboxitem
+{
+	-nexa-padding : 5px 5px 6px 15px;
+	font : 16px "NotoSansKR-Regular";
+	color : #555555; 
+}
+
+.ListBox .listboxitem[status=mouseover]
+{
+	background : #e7e7e7;
+}
+
+.ListBox .listboxitem[userstatus=selected]
+{
+	color : #333333;
+	background : #cee9fd;
+}
+
+.ListBox .listboxitem[status=disabled]
+{
+	/*color : #999999;*/
+	opacity : 0.50;
+}
+
+
+/**********************MaskEdit***********************************************/
+.MaskEdit
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 0px 15px 1px 15px;
+	-nexa-text-align : right;
+	background : #fbfbfb;
+	color : #333333;
+	font : 16px "NotoSansKR-Regular";
+}
+.MaskEdit[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.MaskEdit[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	-nexa-padding : 0px 14px 1px 15px;
+}
+.MaskEdit[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #efefef;
+}
+.MaskEdit[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	color : #999999;
+	background : #efefef;
+} 
+.MaskEdit[userstatus=nulltext]
+{
+	color : #666666;
+}
+/**********************Menu***********************************************/
+.Menu
+{
+	background : linear-gradient(to top, #1059a8, #125dae);
+}
+
+.Menu .prevbutton
+{
+	-nexa-padding : 0px 5px 0px 15px;
+	-nexa-icon : URL('theme://images/btn_WF_Menuprev.png');
+}
+
+.Menu .prevbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Menuprev_O.png');
+}
+
+.Menu .prevbutton[userstatus=pushed]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Menuprev_O.png');
+}
+
+.Menu .prevbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Menuprev_D.png');
+}
+
+.Menu .nextbutton
+{
+	-nexa-padding : 0px 15px 0px 5px;
+	-nexa-icon : URL('theme://images/btn_WF_Menunext.png');
+}
+
+.Menu .nextbutton[status=mouseover],.Menu .nextbutton[userstatus=pushed]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Menunext_O.png');
+}
+
+.Menu .nextbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Menunext_D.png');
+}
+
+.Menu .menuitem
+{
+	font : bold 13px "NotoSansKR-Regular";
+	color : #ffffff;
+	-nexa-padding : 0px 30px 0px 30px;
+}
+
+.Menu .menuitem[status=mouseover],.Menu .menuitem[userstatus=selected]
+{
+	background : URL('theme://images/img_WF_Menu_O.png') no-repeat center top;
+}
+
+.Menu .menupopupmenu
+{
+	font : 13px "NotoSansKR-Regular";
+	color : #555555;
+	background : #0753a5;
+	-nexa-border : 1px solid #034389;
+}
+
+.Menu .menupopupmenu .prevbutton
+{
+	-nexa-icon : URL('theme://images/btn_WF_Popmenuprev2.png');
+}
+
+.Menu .menupopupmenu .prevbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Popmenuprev2_O.png');
+}
+
+.Menu .menupopupmenu .prevbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Popmenuprev2_D.png');
+}
+
+.Menu .menupopupmenu .nextbutton
+{
+	-nexa-icon : URL('theme://images/btn_WF_Popmenunext2.png');
+}
+
+.Menu .menupopupmenu .nextbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Popmenunext2_O.png');
+}
+
+.Menu .menupopupmenu .nextbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Popmenunext2_D.png');
+}
+
+.Menu .menupopupmenu .popupmenuitem
+{
+	color : #c3e0ff;
+	-nexa-border : 0px none, 0px none, 1px solid #2065ae, 0px none;
+	-nexa-padding : 3px 8px 3px 8px;
+}
+
+.Menu .menupopupmenu .popupmenuitem[status=mouseover],.Menu .menupopupmenu .popupmenuitem[status=focused],.Menu .menupopupmenu .popupmenuitem[userstatus=selected]
+{
+	color : #ffffff;
+	background : transparent;
+}
+
+.Menu .menupopupmenu .popupmenuitem[status=disabled]
+{
+	color : #2665af;
+}
+
+.Menu .menupopupmenu .popupmenuitem .popupmenuitemicon
+{
+	-nexa-icon : URL('theme://images/img_WF_Menuitem2.png');
+}
+
+.Menu .menupopupmenu .popupmenuitem .popupmenuitemcheckbox
+{
+	-nexa-padding : 0px 7px 0px 0px;
+	-nexa-icon : URL('theme://images/chk_WF_Popupmenu.png');
+}
+
+.Menu .menupopupmenu .popupmenuitem .popupmenuitemcheckbox[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/chk_WF_Popupmenu_O.png');
+}
+
+.Menu .menupopupmenu .popupmenuitem .popupmenuitemtext
+{
+	color : #c3e0ff;
+	-nexa-padding : 0px 20px 0px 0px;
+}
+
+.Menu .menupopupmenu .popupmenuitem .popupmenuitemtext[status=mouseover]
+{
+	color : #ffffff;
+}
+
+.Menu .menupopupmenu .popupmenuitem .popupmenuitemtext[status=disabled]
+{
+	color : #2665af;
+}
+
+.Menu .menupopupmenu .popupmenuitem .popupmenuitemhotkeytext
+{
+	color : #6d95cc;
+	-nexa-padding : 0px 7px 0px 0px;
+	-nexa-text-align : right;
+}
+
+.Menu .menupopupmenu .popupmenuitem .popupmenuitemhotkeytext[status=mouseover]
+{
+	color : #ffffff;
+}
+
+.Menu .menupopupmenu .popupmenuitem .popupmenuitemhotkeytext[status=disabled]
+{
+	color : #4577b9;
+}
+
+.Menu .menupopupmenu .popupmenuitem .popupmenuitemexpandimage
+{
+	-nexa-padding : 0px 0px 2px 0px;
+	-nexa-icon : URL('theme://images/btn_WF_Popupexpand.png');
+}
+/**********************Plugin***********************************************/
+.Plugin,.PluginControl
+{
+	-nexa-border : 1px solid #d5d5d5;
+}
+
+
+/**********************PopupMenu***********************************************/
+.PopupMenu,.PopupMenuControl
+{
+	-nexa-border : 1px solid #b5b5b5;
+	color : #333333;
+	background : #ffffff;
+}
+
+.PopupMenu .prevbutton,.PopupMenuControl .prevbutton
+{
+	-nexa-icon : URL('theme://images/btn_WF_Popmenuprev2.png');
+}
+.PopupMenu .prevbutton[status=mouseover],.PopupMenuControl .prevbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Popmenuprev2_O.png');
+}
+.PopupMenu .prevbutton[status=disabled],.PopupMenuControl .prevbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Popmenuprev2_D.png');
+}
+.PopupMenu .nextbutton,.PopupMenuControl .nextbutton
+{
+	-nexa-icon : URL('theme://images/btn_WF_Popmenunext2.png');
+}
+.PopupMenu .nextbutton[status=mouseover],.PopupMenuControl .nextbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Popmenunext2_O.png');
+}
+.PopupMenu .nextbutton[status=disabled],.PopupMenuControl .nextbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Popmenunext2_D.png');
+}
+.PopupMenu .popupmenuitem,.PopupMenuControl .popupmenuitem
+{
+	color : #333333;
+	-nexa-padding : 4px 10px 5px 10px;
+}
+.PopupMenu .popupmenuitem[userstatus=selected],.PopupMenuControl .popupmenuitem[userstatus=selected]
+{
+	color : #ffffff;
+	background : #125dae;
+}
+.PopupMenu .popupmenuitem[status=mouseover],.PopupMenu .popupmenuitem[status=focused],.PopupMenuControl .popupmenuitem[status=mouseover],.PopupMenuControl .popupmenuitem[status=focused]
+{
+	background : #e7e9ed;
+}
+.PopupMenu .popupmenuitem[status=disabled],.PopupMenuControl .popupmenuitem[status=disabled]
+{
+	color : #999999;
+}
+.PopupMenu .popupmenuitem .popupmenuitemicon,.PopupMenuControl .popupmenuitem .popupmenuitemicon
+{
+	-nexa-icon : URL('theme://images/img_WF_Menuitem2.png');
+}
+.PopupMenu .popupmenuitem .popupmenuitemcheckbox,.PopupMenuControl .popupmenuitem .popupmenuitemcheckbox
+{
+	background : URL('theme://images/chk_WF_Box.png') no-repeat left center;
+}
+.PopupMenu .popupmenuitem .popupmenuitemcheckbox[status=mouseover],.PopupMenuControl .popupmenuitem .popupmenuitemcheckbox[status=mouseover]
+{
+	background : URL('theme://images/chk_WF_Box_F.png') no-repeat left center;
+}
+.PopupMenu .popupmenuitem .popupmenuitemcheckbox[status=disabled],.PopupMenuControl .popupmenuitem .popupmenuitemcheckbox[status=disabled]
+{
+	background : URL('theme://images/chk_WF_Box_D.png') no-repeat left center;
+}
+.PopupMenu .popupmenuitem .popupmenuitemtext,.PopupMenuControl .popupmenuitem .popupmenuitemtext
+{
+	-nexa-padding : 2px 10px 1px 4px;
+}
+.PopupMenu .popupmenuitem .popupmenuitemhotkeytext,.PopupMenuControl .popupmenuitem .popupmenuitemhotkeytext
+{
+	color : #aaaaaa;
+	-nexa-padding : 0px 7px 0px 0px;
+	-nexa-text-align : right;
+}
+.PopupMenu .popupmenuitem .popupmenuitemhotkeytext[status=disabled],.PopupMenuControl .popupmenuitem .popupmenuitemhotkeytext[status=disabled]
+{
+	color : #4577b9;
+}
+.PopupMenu .popupmenuitem .popupmenuitemexpandimage,.PopupMenuControl .popupmenuitem .popupmenuitemexpandimage
+{
+	-nexa-icon : URL('theme://images/btn_WF_Popupexpand2.png');
+}
+
+
+/**********************ProgressBar***********************************************/
+.ProgressBar,.ProgressBarControl
+{
+	background : linear-gradient(to top, #f0f0f0, #e7e7e7);
+	-nexa-border : 1px solid #aeaeae, 1px solid #d2d0d1, 1px solid #d2d0d1, 1px solid #d2d0d1;
+}
+
+.ProgressBar .progressbaritem,.ProgressBarControl .progressbaritem
+{
+	background : #125dae;
+}
+
+.ProgressBar .progressbaritem[status=disabled],.ProgressBarControl .progressbaritem[status=disabled]
+{
+	background : #b5b5b5;
+}
+
+.ProgressBar .progressbartext,.ProgressBarControl .progressbartext
+{
+	color : #ffffff;
+	-nexa-text-align : center;
+}
+
+
+/**********************Radio***********************************************/
+.Radio,.Radio[status=disabled]
+{
+	-nexa-border : 2px solid transparent;
+}
+.Radio[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+}
+
+.Radio .radioitem
+{
+	-nexa-icon : URL("theme://images/rdo_WF_Radio.png");
+	-nexa-text-padding :  0px 21px 0px 10px;
+	font : 16px "NotoSansKR-Regular";
+}
+.Radio .radioitem[status=mouseover]
+{
+	-nexa-icon : URL("theme://images/rdo_WF_RadioO.png");
+}
+.Radio .radioitem[userstatus=selected]
+{
+	-nexa-icon : URL("theme://images/rdo_WF_RadioS.png");
+	-nexa-text-decoration : underline;
+}
+.Radio .radioitem[userstatus=selected][status=mouseover]
+{
+	-nexa-icon : URL("theme://images/rdo_WF_RadioS.png");
+	-nexa-text-decoration : underline;
+}
+.Radio .radioitem[status=disabled]
+{
+	-nexa-icon : URL("theme://images/rdo_WF_RadioD.png");
+	color : #999999;
+}
+.Radio .radioitem[status=disabled][userstatus=selected]
+{
+	-nexa-icon : URL("theme://images/rdo_WF_RadioDS.png");
+	color : #999999;
+}
+
+
+/**********************Sketch***********************************************/
+.Sketch
+{
+	background : #ffffff;
+	-nexa-border : 1px solid #d5d5d5;
+}
+
+.Sketch[status=disabled]
+{
+	background : #efefef;
+}
+
+
+/**********************Spin***********************************************/
+.Spin
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 1px;
+	background : #fbfbfb;
+}
+.Spin[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1; 
+}
+.Spin[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	-nexa-padding : 0px;
+}
+.Spin[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #efefef;
+}
+.Spin[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	color : #999999;
+	background : #efefef;
+}
+
+.Spin .spinedit
+{
+	-nexa-padding : 0px 0px 1px 3px;
+	-nexa-text-align : right;
+}
+
+.Spin .spinedit[status=disabled]
+{
+	color : #999999;
+	background : #efefef;
+}
+
+.Spin .spinupbutton
+{
+	-nexa-padding : 2px 0px 0px 0px;
+	-nexa-icon : URL('theme://images/btn_WF_Spinup.png');
+}
+
+.Spin .spinupbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spinup_O.png');
+}
+
+.Spin .spinupbutton[userstatus=pushed]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spinup_P.png');
+}
+
+.Spin .spinupbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spinup_D.png');
+}
+
+.Spin .spindownbutton
+{
+	-nexa-padding : 0px 0px 3px 0px;
+	-nexa-icon : URL('theme://images/btn_WF_Spindown.png');
+}
+
+.Spin .spindownbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spindown_O.png');
+}
+
+.Spin .spindownbutton[userstatus=pushed]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spindown_P.png');
+}
+
+.Spin .spindownbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Spindown_D.png');
+}
+/**********************Static***********************************************/
+.Static,.StaticControl
+{
+	/*별도스타일없음*/
+}
+
+.Static[status=disabled],.StaticControl[status=disabled]
+{
+	color : #999999;
+}
+
+.Static.sta_WF_SubTitle,.Static.sta_WF_SubTitle[status=mouseover],.Static.sta_WF_SubTitle[status=disabled]
+{
+	font : bold 13px "NotoSansKR-Regular";
+	color : #26323e;
+	background : url("theme://img_WF_SubTitle.png") no-repeat left center;
+	-nexa-padding : 3px 0px 0px 15px;
+}
+
+.Static.sta_WF_Bg,.Static.sta_WF_Bg[status=mouseover],.Static.sta_WF_Bg[status=disabled]
+{
+	font : bold 13px "NotoSansKR-Regular";
+	background : #fff8e0;
+	-nexa-padding : 10px 0px 0px 15px;
+	-nexa-border : 1px solid #f4b97a;
+}
+
+.Static.sta_MF_Legend2,.Static.sta_MF_Legend2[status=mouseover],.Static.sta_MF_Legend2[status=disabled]
+{
+	background : url("theme://img_MF_Legend2.png") no-repeat left center;
+	-nexa-padding : 0px 0px 0px 16px;
+	color : #919191;
+}
+
+.Static.sta_WF_GStatic,.Static.sta_WF_GStatic[status=mouseover],.Static.sta_WF_GStatic[status=disabled]
+{
+	font : bold 30px "NotoSansKR-Regular";
+	color :#222222;
+}
+.Static.sta_WF_GLine01
+{
+	background		: #ff000c;
+}
+.Static.sta_WF_GLine
+{
+	background		: #eeeeee;
+}
+.Static.sta_PF_Title
+{
+	-nexa-padding : 0px 0px 0px 25px;
+	background : #191241;
+	font : 18px "NotoSansKR-Regular";
+	color : #ffffff;
+}
+
+.Static.sta_PF_BG
+{
+	-nexa-border : 0px none, 2px solid #191241, 2px solid #191241, 2px solid #191241 ;
+	background : #ffffff;
+}
+
+.Static.sta_WF_DtlLabel,
+.Static.sta_WF_DtlLabel[status=disabled]
+{
+	-nexa-border : 1px solid #d2d2d2;
+	-nexa-text-align : center;
+	color : #333333;
+	background : #f5f5f5;
+	font : 17px "NotoSansKR-Regular";
+}
+.Static.sta_WF_DtlBg,
+.Static.sta_WF_DtlBg[status=disabled]
+{
+	-nexa-border : 1px solid #d2d2d2;
+	background : #ffffff;
+}
+
+.Static.sta_WF_NoticeTit01,
+.Static.sta_WF_NoticeTit01[status=disabled]
+{
+	-nexa-border : 1px solid #d2d2d2;
+	-nexa-padding : 0px 0px 0px 68px;
+	background : #f1f5fd;
+	color : #0549c5;
+	font : 18px "NotoSansKR-Regular";
+}
+
+.Static.sta_WF_NoticeTit02,
+.Static.sta_WF_NoticeTit02[status=disabled]
+{
+	-nexa-border : 1px solid #d2d2d2;
+	-nexa-padding : 0px 0px 0px 68px;
+	background : #ffffff;
+	color : #333333;
+	font : 18px "NotoSansKR-Regular";
+}
+
+.Static.sta_WF_NoticeTit03,
+.Static.sta_WF_NoticeTit03[status=disabled]
+{
+	color : #0549c5;
+	font : 20px "NotoSansKR-Regular";
+}
+
+.Static.sta_WF_NoticeTit04,
+.Static.sta_WF_NoticeTit04[status=disabled]
+{
+	font : 16px/1.5 "NotoSansKR-Regular";
+}
+
+.Static.sta_WF_NoticeTit05,
+.Static.sta_WF_NoticeTit05[status=disabled]
+{
+	font : bold 16px/1.5 "NotoSansKR-Regular";
+}
+
+.Static.sta_WF_NoticeTit06,
+.Static.sta_WF_NoticeTit06[status=disabled]
+{
+	font : bold 18px "NotoSansKR-Regular";
+}
+
+.Static.sta_WF_GTxt03
+{
+	font : 12px "NotoSansKR-Regular";
+}
+
+.Static.sta_WF_LoginTit,
+.Static.sta_WF_LoginTit[status=disabled]
+{
+	-nexa-border : 0px none, 0px none, 2px solid #565656, 0px none,;
+	-nexa-text-align : center;
+	background : URL("theme://images/img_WF_LoginTit.png") no-repeat right bottom #ffffff;
+	font : bold 36px "NotoSansKR-Regular";
+	color: #333333;
+}
+.Static.sta_WF_LoginTit01,
+.Static.sta_WF_LoginTit01[status=disabled]
+{
+	-nexa-text-align : center;
+	font : 26px "NotoSansKR-Regular";
+	color: #222222;
+}
+.Static.sta_WF_LoginTit02,
+.Static.sta_WF_LoginTit02[status=disabled]
+{
+	-nexa-text-align : center;
+	font : 22px/1.5 "NotoSansKR-Regular";
+	color: #666666;
+}
+.Static.sta_WF_LoginNotice01,
+.Static.sta_WF_LoginNotice01[status=disabled]
+{
+	-nexa-text-align : center;
+	font : 18px/1.5 "NotoSansKR-Regular";
+	color: #949494;
+}
+.Static.sta_WF_LoginNotice02,
+.Static.sta_WF_LoginNotice02[status=disabled]
+{
+	-nexa-text-align : center;
+	font : 24px/1.3 "NotoSansKR-Regular";
+	color: #949494;
+}
+.Static.sta_WF_LoginNotice03,
+.Static.sta_WF_LoginNotice03[status=disabled]
+{
+	-nexa-text-align : center;
+	font : 19px/1.4 "NotoSansKR-Regular";
+	color: #949494;
+}
+
+.Static.sta_WF_LoginIco,
+.Static.sta_WF_LoginIco[status=disabled]
+{
+	background : URL("theme://images/img_WF_LoginIco.png") no-repeat center center;
+}
+	
+
+/**********************TextArea***********************************************/
+.TextArea
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 13px 15px;
+	font : 16px/1.5 "NotoSansKR-Regular";
+	background : #ffffff;
+}
+.TextArea[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.TextArea[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	-nexa-padding : 12px 14px 12px 14px;
+}
+.TextArea[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #ffffff;
+}
+.TextArea[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	color : #999999;
+	background : #efefef;
+}
+
+
+/**********************WebBrowser***********************************************/
+.WebBrowser,.WebBrowserControl
+{
+	-nexa-border : 1px solid #d5d5d5;
+}
+/**********************Div:별도스타일없음***********************************************/
+/**********************PopupDiv:별도스타일없음***********************************************/
+.Div,.PopupDiv
+{
+	/*별도스타일없음*/
+}
+
+.Div.div_LOGIN_Bg,.Div.div_LOGIN_Bg[status=mouseover],.Div.div_LOGIN_Bg[status=focused],.Div.div_LOGIN_Bg[status=disabled]
+{
+	/*-nexa-edge : url("theme://images/img_LOGIN_Bg.png") 35px 35px;*/
+	background : #ffffff;
+	box-shadow : 0px 0px 5px #d9d9d9;
+	-nexa-border : 1px solid #d9d9d9;
+}
+
+
+/**********************Tab***********************************************/
+.Tab .prevbutton
+{
+	-nexa-icon : URL("theme://images/btn_WF_Tabprev.png");
+	-nexa-border : 1px solid #d8d8d8;
+	-nexa-padding : 3px 5px 3px 4px;
+	background : #ffffff;
+	cursor : pointer;
+}
+.Tab .prevbutton[status=mouseover]
+{
+	-nexa-icon : URL("theme://images/btn_WF_Tabprev_O.png");
+}
+
+.Tab .prevbutton[status=disabled]
+{
+	-nexa-icon : URL("theme://images/btn_WF_Tabprev_D.png");
+	-nexa-border : 1px solid #d8d8d8;
+	background : #e8e8e8;
+	cursor : default;
+}
+.Tab .nextbutton
+{
+	-nexa-icon : URL("theme://images/btn_WF_Tabnext.png");
+	-nexa-border : 1px solid #d8d8d8;
+	-nexa-padding : 3px 4px 3px 5px;
+	background : #ffffff;
+	cursor : pointer;
+}
+.Tab .nextbutton[status=mouseover]
+{
+	-nexa-icon : URL("theme://images/btn_WF_Tabnext_O.png");
+}
+
+.Tab .nextbutton[status=disabled]
+{
+	-nexa-icon : URL("theme://images/btn_WF_Tabnext_D.png");
+	-nexa-border : 1px solid #d8d8d8;
+	background : #e8e8e8;
+	cursor : default;
+}
+.Tab .tabbuttonitem
+{
+	-nexa-border : 1px solid #dedede, 1px solid #dedede, 1px solid #a8a8a8, 1px solid #dedede;
+	-nexa-padding : 0px 20px 1px 20px;
+	color : #222222;
+	cursor : pointer;
+	background : #f9f9f9;
+	font : 25px "NotoSansKR-Regular";
+	border-radius : 10px 10px 0px 0px;
+} 
+.Tab .tabbuttonitem[status=mouseover]
+{
+	-nexa-border : 1px solid #dedede, 1px solid #dedede, 1px solid #a8a8a8, 1px solid #dedede;
+	-nexa-padding : 0px 20px 1px 20px;
+	background : #eaf0fa;
+	
+}
+.Tab .tabbuttonitem[userstatus=selected]
+{
+	-nexa-border : 1px solid #a8a8a8, 1px solid #a8a8a8, 1px solid #ffffff, 1px solid #a8a8a8;
+	-nexa-padding : 0px 20px 1px 20px;
+	background : #ffffff;
+}
+.Tab .tabbuttonitem[status=focused]
+{
+	-nexa-padding : 0px 20px 1px 20px;
+	background : #ffffff;
+
+}
+.Tab .tabbuttonitem[status=disabled]
+{
+	color : #999999;
+}
+.Tab .tabbuttonitem .tabbuttonitemtext
+{
+	-nexa-padding : 0px 0px 0px 0px;
+	-nexa-text-align : center;
+}
+.Tab .tabbuttonitem .extrabutton
+{
+	-nexa-icon : URL("theme://images/btn_WF_Tabextra.png");
+	cursor : pointer;
+}
+.Tab .tabpage
+{
+	-nexa-border : 1px solid #a8a8a8;
+	background : #ffffff;
+}
+
+/**********************DatePickerControl***********************************************/
+.DatePickerControl
+{
+	background : #ffffff;
+}
+
+.DatePickerControl .head
+{
+	background : #125dae;
+	-nexa-padding : 5px 0px 0px 0px;
+}
+
+.DatePickerControl .head .prevbutton
+{
+	-nexa-padding : 0px 0px 0px 10px;
+	-nexa-icon : URL('theme://images/btn_WF_Calprev.png');
+}
+
+.DatePickerControl .head .prevbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calprev_O.png');
+}
+
+.DatePickerControl .head .prevbutton[userstatus=pushed]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calprev_O.png'); 
+}
+ 
+.DatePickerControl .head .prevbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calprev_D.png');
+}
+
+.DatePickerControl .head .nextbutton
+{
+	-nexa-padding : 0px 10px 0px 0px;
+	-nexa-icon : URL('theme://images/btn_WF_Calnext.png');
+}
+
+.DatePickerControl .head .nextbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calnext_O.png');
+}
+
+.DatePickerControl .head .nextbutton[userstatus=pushed]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calnext_O.png');
+}
+
+.DatePickerControl .head .nextbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calnext_D.png');
+}
+
+.DatePickerControl .head .yearstatic,.DatePickerControl .head .monthstatic
+{
+	font : bold 14px "NotoSansKR-Regular";
+	color : #ffffff;
+	-nexa-padding : 0px 10px 0px 0px;
+}
+
+.DatePickerControl .head .yearspin .spinedit,.DatePickerControl .head .monthspin .spinedit
+{
+	font : bold 14px "NotoSansKR-Regular";
+	color : #ffffff;
+	background : #0042a0;
+}
+
+.DatePickerControl .head .yearspin .spinupbutton,.DatePickerControl .head .monthspin .spinupbutton
+{
+	-nexa-padding : 0px 10px 0px 5px;
+	-nexa-icon : URL('theme://images/btn_WF_Calspinup.png');
+}
+
+.DatePickerControl .head .yearspin .spinupbutton[status=mouseover],.DatePickerControl .head .monthspin .spinupbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calspinup_O.png');
+}
+
+.DatePickerControl .head .yearspin .spinupbutton[userstatus=pushed],.DatePickerControl .head .monthspin .spinupbutton[userstatus=pushed]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calspinup_O.png');
+}
+
+.DatePickerControl .head .yearspin .spinupbutton[status=disabled],.DatePickerControl .head .monthspin .spinupbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calspinup_D.png');
+}
+
+.DatePickerControl .head .yearspin .spindownbutton,.DatePickerControl .head .monthspin .spindownbutton
+{
+	-nexa-padding : 0px 10px 0px 5px;
+	-nexa-icon : URL('theme://images/btn_WF_Calspindown.png');
+}
+
+.DatePickerControl .head .yearspin .spindownbutton[status=mouseover],.DatePickerControl .head .monthspin .spindownbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calspindown_O.png');
+}
+
+.DatePickerControl .head .yearspin .spindownbutton[userstatus=pushed],.DatePickerControl .head .monthspin .spindownbutton[userstatus=pushed]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calspindown_O.png');
+}
+
+.DatePickerControl .head .yearspin .spindownbutton[status=disabled],.DatePickerControl .head .monthspin .spindownbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Calspindown_D.png');
+}
+
+.DatePickerControl .body
+{
+	-nexa-border : 1px solid #125dae, 1px solid #697888, 1px solid #697888, 1px solid #697888;
+}
+
+.DatePickerControl .body .weekband
+{
+	background : #125dae;
+}
+
+.DatePickerControl .body .weekitem
+{
+	color : #ffffff;
+}
+
+.DatePickerControl .body .weekitem[userstatus=saturday]
+{
+	color : #48afff;
+}
+
+.DatePickerControl .body .weekitem[userstatus=sunday]
+{
+	color : #ff7986;
+}
+
+.DatePickerControl .body .weekitem[status=disabled]
+{
+	color : #ffffff;
+}
+
+.DatePickerControl .body .dayitem
+{
+	color : #333333;
+}
+
+.DatePickerControl .body .dayitem[status=mouseover]
+{
+	color : #ffffff;
+	background : #8da3c7;
+}
+
+.DatePickerControl .body .dayitem[status=focused]
+{
+	color : #ffffff;
+	background : #125dae;
+}
+
+.DatePickerControl .body .dayitem[userstatus=selected]
+{
+	color : #ffffff;
+	background : #125dae;
+}
+
+.DatePickerControl .body .dayitem[userstatus=today]
+{
+	color : #ffffff;
+	background : #e7595c;
+}
+
+.DatePickerControl .body .dayitem[userstatus=saturday]
+{
+	color : #269bee;
+}
+
+.DatePickerControl .body .dayitem[status=mouseover][userstatus=saturday]
+{
+	color : #ffffff;
+}
+
+.DatePickerControl .body .dayitem[userstatus=sunday]
+{
+	color : #ff4c5e;
+}
+
+.DatePickerControl .body .dayitem[status=mouseover][userstatus=sunday]
+{
+	color : #ffffff;
+}
+
+.DatePickerControl .body .dayitem[userstatus=trailingday]
+{
+	color : #989898;
+}
+
+.DatePickerControl .body .dayitem[status=mouseover][userstatus=trailingday]
+{
+	color : #ffffff;
+}
+
+.DatePickerControl .body .dayitem[status=disabled]
+{
+}
+
+
+/**********************ScrollBar***********************************************/
+.VScrollBarControl
+{
+	background : linear-gradient(to left,#ffffff,#f7f7f7);
+	-nexa-border : 0px none, 0px none, 0px none, 1px solid #b1b1b1;
+	-nexa-padding : 2px 2px 2px 2px;
+}
+
+.HScrollBarControl
+{
+	background : linear-gradient(to top,#ffffff,#f7f7f7);
+	-nexa-border : 1px solid #b1b1b1, 0px none, 0px none, 0px none;
+	-nexa-padding : 2px 2px 2px 2px;
+}
+
+.VScrollBarControl .incbutton
+{
+	-nexa-icon : URL('theme://images/btn_WF_Vinc.png');
+}
+
+.VScrollBarControl .incbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Vinc_O.png');
+}
+
+.VScrollBarControl .incbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Vinc_D.png');
+}
+
+.VScrollBarControl .decbutton
+{
+	-nexa-icon : URL('theme://images/btn_WF_Vdec.png');
+}
+
+.VScrollBarControl .decbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Vdec_O.png');
+}
+
+.VScrollBarControl .decbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Vdec_D.png');
+}
+
+.HScrollBarControl .incbutton
+{
+	-nexa-icon : URL('theme://images/btn_WF_Hinc.png');
+}
+
+.HScrollBarControl .incbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Hinc_O.png');
+}
+
+.HScrollBarControl .incbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Hinc_D.png');
+}
+
+.HScrollBarControl .decbutton
+{
+	-nexa-icon : URL('theme://images/btn_WF_Hdec.png');
+}
+
+.HScrollBarControl .decbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Hdec_O.png');
+}
+
+.HScrollBarControl .decbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Hdec_D.png');
+}
+
+.VScrollBarControl .trackbar,.HScrollBarControl .trackbar
+{
+	background : #dddddd;
+	-nexa-border : 1px solid #c8c8c8;
+}
+
+.VScrollBarControl .trackbar[userstatus=pushed],.VScrollBarControl .trackbar[status=focused],.VScrollBarControl .trackbar[userstatus=selected],.HScrollBarControl .trackbar[userstatus=pushed],.HScrollBarControl .trackbar[status=focused],.HScrollBarControl .trackbar[userstatus=selected]
+{
+	background : #999999;
+	-nexa-border : 1px solid #888888;
+}
+
+.VScrollBarControl .trackbar[status=mouseover],.HScrollBarControl .trackbar[status=mouseover]
+{
+	background : #bbbbbb;
+	-nexa-border : 1px solid #a8a8a8;
+}
+
+.VScrollBarControl .trackbar[status=disabled],.HScrollBarControl .trackbar[status=disabled]
+{
+	background : #eeeeee;
+	-nexa-border : 1px solid #d8d8d8;
+}
+
+
+/**********************ScrollIndicatorControl***********************************************/
+.VScrollIndicatorControl,.HScrollIndicatorControl
+{
+	background : #f2f2f2;
+}
+
+.VScrollIndicatorControl .trackbar,.HScrollIndicatorControl .trackbar
+{
+	background : #cccccc;
+	-nexa-border : 2px solid transparent;
+}
+
+.VScrollIndicatorControl .trackbar[userstatus=pushed],.HScrollIndicatorControl .trackbar[userstatus=pushed]
+{
+	background : #606060;
+}
+
+.VScrollIndicatorControl .trackbar[status=mouseover],.HScrollIndicatorControl .trackbar[status=mouseover]
+{
+	background : #999999;
+}
+
+
+/**********************TitleBar***********************************************/
+.TitleBarControl
+{
+	font : 18px "NotoSansKR-Regular";
+	color : #ffffff;
+	background : #191241;
+	-nexa-padding : 0px 0px 0px 20px;
+}
+
+.TitleBarControl .titleicon
+{
+	/*-nexa-icon : URL('theme://images/img_TF_TitleIcon.png');*/
+	-nexa-text-padding : 0px 0px 0px 10px;
+}
+
+.TitleBarControl .minbutton
+{
+	-nexa-icon : URL('theme://images/btn_PF_Min.png');
+}
+
+.TitleBarControl .minbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_PF_Min_O.png');
+}
+
+.TitleBarControl .minbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_PF_Min_D.png');
+}
+
+.TitleBarControl .normalbutton
+{
+	-nexa-icon : URL('theme://images/btn_PF_Normal.png');
+}
+
+.TitleBarControl .normalbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_PF_Normal_O.png');
+}
+
+.TitleBarControl .normalbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_PF_Normal_D.png');
+}
+
+.TitleBarControl .maxbutton
+{
+	-nexa-icon : URL('theme://images/btn_PF_Max.png');
+}
+
+.TitleBarControl .maxbutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_PF_Max_O.png');
+}
+
+.TitleBarControl .maxbutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_PF_Max_D.png');
+}
+.TitleBarControl .closebutton
+{
+	-nexa-icon : URL('theme://images/btn_PF_Close.png');
+}
+
+.TitleBarControl .closebutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_PF_Close_O.png');
+}
+
+.TitleBarControl .closebutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_PF_Close_D.png');
+}
+/**
+.TitleBarControl .closebutton
+{
+	-nexa-icon : URL('theme://images/btn_TF_Close.png');
+}
+
+.TitleBarControl .closebutton[status=mouseover]
+{
+	-nexa-icon : URL('theme://images/btn_TF_Close_O.png');
+}
+
+.TitleBarControl .closebutton[status=disabled]
+{
+	-nexa-icon : URL('theme://images/btn_TF_Close_D.png');
+}
+**/
+
+/**********************Step***********************************************/
+.StepControl
+{
+	-nexa-padding : 0px 0px 10px 0px;
+}
+
+.StepControl .stepitem
+{
+	-nexa-icon : URL('theme://images/btn_WF_Stepitem.png');
+}
+
+.StepControl .stepitem[status=mouseover],.StepControl .stepitem[status=focused],.StepControl .stepitem[userstatus=pushed],.StepControl .stepitem[userstatus=selected]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Stepitem_S.png');
+}
+
+/********************** LOGIN***********************************************/
+.Combo.cmb_LOGIN_Language
+{
+	-nexa-border : 1px solid #dfdfdf;
+}
+.Combo.cmb_LOGIN_Language[status=mouseover]
+{
+	-nexa-border : 1px solid #1e81e6;
+}
+.Combo.cmb_LOGIN_Language[status=focused]
+{
+	-nexa-border : 1px solid #1e81e6;
+}
+.Combo.cmb_LOGIN_Language[status=disabled]
+{
+	background : #fdfdfd;
+	-nexa-border : 1px solid #eaeaea;
+}
+.Combo.cmb_LOGIN_Language .comboedit,.Combo.cmb_LOGIN_Language .comboedit[status=mouseover],.Combo.cmb_LOGIN_Language .comboedit[status=focused]
+{
+	-nexa-padding : 0px 10px 0px 15px;
+	color : #555555;
+}
+.Combo.cmb_LOGIN_Language .comboedit[status=disabled]
+{
+	color : #d6d6d6;
+}
+.Combo.cmb_LOGIN_Language .comboedit[userstatus=nulltext]
+{
+	color : #aaaaaa;
+}
+.Combo.cmb_LOGIN_Language .dropbutton
+{
+	-nexa-icon : url("theme://cmb_LOGIN_Drop.png");
+}
+.Combo.cmb_LOGIN_Language .dropbutton[status=mouseover],.Combo.cmb_LOGIN_Language .dropbutton[status=focused],.Combo.cmb_LOGIN_Language .dropbutton[userstatus=pushed]
+{
+	-nexa-icon : url("theme://cmb_LOGIN_Drop_O.png");
+}
+.Combo.cmb_LOGIN_Language .dropbutton[status=disabled]
+{
+	opacity : 0.50;
+}
+
+.Edit.edt_LOGIN_ID
+{
+	-nexa-border : 1px solid #dfdfdf;
+	-nexa-padding : 0px 10px 0px 15px;
+	color : #555555;
+}
+.Edit.edt_LOGIN_ID[status=mouseover],.Edit.edt_LOGIN_ID[status=focused]
+{
+	-nexa-border : 1px solid #1e81e6;
+}
+.Edit.edt_LOGIN_ID[status=disabled]
+{
+	background : #fdfdfd;
+	-nexa-border : 1px solid #eaeaea;
+	color : #d6d6d6;
+}
+.Edit.edt_LOGIN_ID[userstatus=nulltext]
+{
+	color : #8c8c8c;
+}
+.Grid.grd_WF_Detail,.Grid.grd_WF_Detail[status=mouseover],.Grid.grd_WF_Detail[status=focused],.Grid.grd_WF_Detail[status=disabled]
+{
+	-nexa-border : 1px solid #cecccd;
+}
+
+.PopupDiv.pdiv_WF_MultiCombo,.PopupDiv.pdiv_WF_MultiCombo[status=mouseover],.PopupDiv.pdiv_WF_MultiCombo[status=focused],.PopupDiv.pdiv_WF_MultiCombo[status=disabled]
+{
+	background : #ffffff;
+	-nexa-border : 1px solid #cacaca;
+}
+
+/*****************    Button:Class    *********************/
+
+.Button.btn_WF_MultiCombo,.Button.btn_WF_MultiCombo[status=focused],.Button.btn_WF_MultiCombo[userstatus=pushed]
+{
+	-nexa-text-align : center;
+	-nexa-vertical-align : middle;
+	-nexa-icon : url("theme://cmb_WF_Drop.png");
+}
+.Button.btn_WF_MultiCombo[status=mouseover],.Button.btn_WF_MultiCombo[userstatus=selected]
+{
+	-nexa-icon : url("theme://cmb_WF_Drop_O.png");
+}
+.Button.btn_WF_MultiCombo[status=disabled]
+{
+	-nexa-icon : url("theme://cmb_WF_Drop_D.png");
+}
+
+.Button.btn_POP_Btn,.Button.btn_POP_Btn[status=focused]
+{
+	-nexa-edge : url("theme://btn_POP_Btn_N.png") 5px 9px;
+	font : bold 13px "NotoSansKR-Regular";
+	color : #ffffff;
+	background : #606060;
+}
+.Button.btn_POP_Btn[status=mouseover],.Button.btn_POP_Btn[userstatus=selected]
+{
+	-nexa-edge : url("theme://btn_POP_Btn_O.png") 5px 9px;
+}
+.Button.btn_POP_Btn[userstatus=pushed]
+{
+	-nexa-edge : url("theme://btn_POP_Btn_P.png") 5px 9px;
+}
+.Button.btn_POP_Btn[status=disabled]
+{
+	-nexa-edge : url("theme://btn_POP_Btn_D.png") 5px 9px;
+	color : #acacac;
+}
+
+.Button.btn_WF_GrdPrev,.Button.btn_WF_GrdPrev[status=focused]
+{
+	-nexa-border : 1px solid #d8d8d8;
+	-nexa-edge : none;
+	-nexa-icon : url("theme://btn_WF_GrdPrev.png");
+	-nexa-padding : 0px;
+	-nexa-text-align : center;
+	-nexa-vertical-align : middle;
+}
+.Button.btn_WF_GrdPrev[status=mouseover],.Button.btn_WF_GrdPrev[userstatus=pushed],.Button.btn_WF_GrdPrev[userstatus=selected]
+{
+	-nexa-border : 1px solid #d14221;
+	-nexa-edge : none;
+	-nexa-icon : url("theme://btn_WF_GrdPrev_O.png");
+}
+.Button.btn_WF_GrdPrev[status=disabled]
+{
+	-nexa-edge : none;
+	-nexa-icon : url("theme://btn_WF_GrdPrev_D.png");
+}
+.Button.btn_WF_GrdPrev2,.Button.btn_WF_GrdPrev2[status=focused]
+{
+	-nexa-border : 1px solid #d8d8d8;
+	-nexa-edge : none;
+	-nexa-icon : url("theme://btn_WF_GrdPrev2.png");
+	-nexa-padding : 0px;
+	-nexa-text-align : center;
+	-nexa-vertical-align : middle;
+}
+.Button.btn_WF_GrdPrev2[status=mouseover],.Button.btn_WF_GrdPrev2[userstatus=pushed],.Button.btn_WF_GrdPrev2[userstatus=selected]
+{
+	-nexa-border : 1px solid #d14221;
+	-nexa-edge : none;
+	-nexa-icon : url("theme://btn_WF_GrdPrev2_O.png");
+}
+.Button.btn_WF_GrdPrev2[status=disabled]
+{
+	-nexa-edge : none;
+	-nexa-icon : url("theme://btn_WF_GrdPrev2_D.png");
+}
+.Button.btn_WF_GrdNext,.Button.btn_WF_GrdNext[status=focused]
+{
+	-nexa-border : 1px solid #d8d8d8;
+	-nexa-edge : none;
+	-nexa-icon : url("theme://btn_WF_GrdNext.png");
+	-nexa-padding : 0px;
+	-nexa-text-align : center;
+	-nexa-vertical-align : middle;
+}
+.Button.btn_WF_GrdNext[status=mouseover],.Button.btn_WF_GrdNext[userstatus=pushed],.Button.btn_WF_GrdNext[userstatus=selected]
+{
+	-nexa-border : 1px solid #d14221;
+	-nexa-edge : none;
+	-nexa-icon : url("theme://btn_WF_GrdNext_O.png");
+}
+.Button.btn_WF_GrdNext[status=disabled]
+{
+	-nexa-edge : none;
+	-nexa-icon : url("theme://btn_WF_GrdNext_D.png");
+}
+.Button.btn_WF_GrdNext2,.Button.btn_WF_GrdNext2[status=focused]
+{
+	-nexa-border : 1px solid #d8d8d8;
+	-nexa-edge : none;
+	-nexa-icon : url("theme://btn_WF_GrdNext2.png");
+	-nexa-padding : 0px;
+	-nexa-text-align : center;
+	-nexa-vertical-align : middle;
+}
+.Button.btn_WF_GrdNext2[status=mouseover],.Button.btn_WF_GrdNext2[userstatus=pushed],.Button.btn_WF_GrdNext2[userstatus=selected]
+{
+	-nexa-border : 1px solid #d14221;
+	-nexa-edge : none;
+	-nexa-icon : url("theme://btn_WF_GrdNext2_O.png");
+}
+.Button.btn_WF_GrdNext2[status=disabled]
+{
+	-nexa-edge : none;
+	-nexa-icon : url("theme://btn_WF_GrdNext2_D.png");
+}
+.Button.btn_WF_GrdPage,.Button.btn_WF_GrdPage[status=focused]
+{
+	-nexa-edge : none;
+	font : bold 13px "NotoSansKR-Regular";
+	color : #444444;
+	-nexa-padding : 0px;
+}
+.Button.btn_WF_GrdPage[status=mouseover]
+{
+	-nexa-edge : none;
+	-nexa-text-decoration : underline;
+}
+.Button.btn_WF_GrdPage[userstatus=pushed],.Button.btn_WF_GrdPage[userstatus=selected]
+{
+	-nexa-edge : none;
+	color : #d14221;
+}
+.Button.btn_WF_GrdPage[status=disabled]
+{
+	-nexa-edge : none;
+	color : #b1b1b1;
+}
+.Button.btn_WF_GrdPageS,.Button.btn_WF_GrdPageS[status=mouseover],.Button.btn_WF_GrdPageS[status=focused],.Button.btn_WF_GrdPageS[userstatus=pushed],.Button.btn_WF_GrdPageS[userstatus=selected]
+{
+	-nexa-edge : none;
+	color : #d14221;
+	-nexa-padding : 0px;
+	font : bold 13px "NotoSansKR-Regular";
+}
+
+.Button.btn_PF_Close
+{
+	-nexa-border : 0px none;
+	background : URL("theme://images/btn_PF_Close.png") no-repeat center center transparent;
+	cursor : pointer;
+}
+.Button.btn_PF_Close[status=mouseover],.Button.btn_PF_Close[status=focused]
+{
+	-nexa-border : 0px none;
+	background : URL("theme://images/btn_PF_Close_O.png") no-repeat center center transparent ;
+}
+.Button.btn_PF_Close[status=disabled]
+{
+	background : URL("theme://images/btn_PF_Close_D.png") no-repeat center center transparent;
+}
+
+.Button.btn_PF_Max
+{
+	-nexa-border : 0px none;
+	background : URL("theme://images/btn_PF_Max.png") no-repeat center center transparent;
+	cursor : pointer;	
+}
+.Button.btn_PF_Max[status=mouseover],.Button.btn_PF_Max[status=focused]
+{
+	-nexa-border : 0px none;
+	background : URL("theme://images/btn_PF_Max_O.png") no-repeat center center transparent ;
+}
+.Button.btn_PF_Max[status=disabled]
+{
+	background : URL("theme://images/btn_PF_Max_D.png") no-repeat center center transparent;
+}
+
+.Button.btn_PF_Min
+{
+	-nexa-border : 0px none;
+	background : URL("theme://images/btn_PF_Min.png") no-repeat center center transparent;
+	cursor : pointer;	
+}
+.Button.btn_PF_Min[status=mouseover],.Button.btn_PF_Min[status=focused]
+{
+	-nexa-border : 0px none;
+	background : URL("theme://images/btn_PF_Min_O.png") no-repeat center center transparent ;
+}
+.Button.btn_PF_Min[status=disabled]
+{
+	background : URL("theme://images/btn_PF_Min_D.png") no-repeat center center transparent;
+}
+
+.Button.btn_PF_Normal
+{
+	-nexa-border : 0px none;
+	background : URL("theme://images/btn_PF_Normal.png") no-repeat center center transparent;
+	cursor : pointer;	
+}
+.Button.btn_PF_Normal[status=mouseover],.Button.btn_PF_Normal[status=focused]
+{
+	-nexa-border : 0px none;
+	background : URL("theme://images/btn_PF_Normal_O.png") no-repeat center center transparent ;
+}
+.Button.btn_PF_Normal[status=disabled]
+{
+	background : URL("theme://images/btn_PF_Normal_D.png") no-repeat center center transparent;
+}
+
+.Button.btn_WF_BtnLogin
+{
+	-nexa-border : 0px none;
+	-nexa-padding : 0px 0px 1px 0px;
+	-nexa-text-padding : 0px 0px 0px 14px;
+	-nexa-icon : URL("theme://images/ico_WF_BtnLogin.png");
+	-nexa-text-align : center;
+	font : 22px "NotoSansKR-Regular";
+	background : #5a69dc;
+	border-radius : 6px;
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_BtnLogin[status=mouseover]
+{
+	-nexa-text-decoration : underline;
+	background :#4958ca; 
+	color : #ffffff;
+}
+.Button.btn_WF_BtnLogin[status=focused]
+{
+	-nexa-border : 2px solid #080e3e; 
+	color : #ffffff;
+}
+.Button.btn_WF_BtnLogin[status=disabled]
+{
+	-nexa-border : 0px none;
+	background : #c0c2cf;
+	color : #ffffff;
+	cursor : default;
+}
+.Button.btn_WF_Ok2
+{
+	-nexa-border : 0px none;
+	-nexa-padding : 0px 0px 1px 0px;
+	-nexa-text-align : center;
+	font : 20px "NotoSansKR-Regular";
+	background : red;
+	border-radius : 6px;
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_Ok3
+{
+	-nexa-border : 0px none;
+	-nexa-padding : 0px 0px 1px 0px;
+	-nexa-text-align : center;
+	font : 20px "NotoSansKR-Regular";
+	background : green;
+	border-radius : 6px;
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_Ok
+{
+	-nexa-border : 0px none;
+	-nexa-padding : 0px 0px 1px 0px;
+	-nexa-text-align : center;
+	font : 20px "NotoSansKR-Regular";
+	background : #5a69dc;
+	border-radius : 6px;
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_Ok[status=mouseover]
+{
+	-nexa-text-decoration : underline;
+	background :#4958ca; 
+	color : #ffffff;
+}
+.Button.btn_WF_Ok[status=focused]
+{
+	-nexa-border : 2px solid #080e3e; 
+	color : #ffffff;
+}
+.Button.btn_WF_Ok[status=disabled]
+{
+	-nexa-border : 0px none;
+	background : #c0c2cf;
+	color : #ffffff;
+	cursor : default;
+}
+
+.Button.btn_WF_MemberJoin
+{
+	-nexa-border : 0px none;
+	-nexa-text-align : center;
+	font : 18px "NotoSansKR-Regular";
+	background : #ffffff;
+	border-radius : 6px;
+	color : #333333;
+	cursor : pointer;
+}
+.Button.btn_WF_MemberJoin[status=mouseover]
+{
+	-nexa-text-decoration : underline;
+	background :#ffffff; 
+	color : #3448e3;
+}
+.Button.btn_WF_MemberJoin[status=focused]
+{
+	-nexa-border : 2px solid #4272e1; 
+	color : #333333;
+}
+.Button.btn_WF_MemberJoin[status=disabled]
+{
+	-nexa-border : 0px none;
+	background : #ffffff;
+	color : #b6b6b6;
+	cursor : default;
+}
+
+.Button.btn_WF_SearchIDPW
+{
+	-nexa-border : 0px none;
+	-nexa-text-align : center;
+	font : 20px "NotoSansKR-Regular";
+	background : #f7642b;
+	border-radius : 6px;
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_SearchIDPW[status=mouseover]
+{
+	-nexa-text-decoration : underline;
+	background :#e85c25; 
+	color : #ffffff;
+}
+.Button.btn_WF_SearchIDPW[status=focused]
+{
+	-nexa-border : 2px solid #080e3e; 
+	color : #ffffff;
+}
+.Button.btn_WF_SearchIDPW[status=disabled]
+{
+	-nexa-border : 0px none;
+	background : #c0c2cf;
+	color : #ffffff;
+	cursor : default;
+}
+
+.Button.btn_WF_SearchIdPw
+{
+	-nexa-border : 0px none;
+	-nexa-text-align : center;
+	font : 17px "NotoSansKR-Regular";
+	background : #767676;
+	border-radius : 6px;
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_SearchIdPw[status=mouseover]
+{
+	-nexa-text-decoration : underline;
+	background :#676767; 
+	color : #ffffff;
+}
+.Button.btn_WF_SearchIdPw[status=focused]
+{
+	-nexa-border : 2px solid #080e3e; 
+	color : #ffffff;
+}
+.Button.btn_WF_SearchIdPw[status=disabled]
+{
+	-nexa-border : 0px none;
+	background : #c0c2cf;
+	color : #ffffff;
+	cursor : default;
+}
+
+.Button.btn_WF_Close
+{
+	-nexa-border : 0px none;
+	-nexa-text-align : center;
+	font : 20px "NotoSansKR-Regular";
+	background : #767676;
+	border-radius : 6px;
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_Close[status=mouseover]
+{
+	-nexa-text-decoration : underline;
+	background :#676767; 
+	color : #ffffff;
+}
+.Button.btn_WF_Close[status=focused]
+{
+	-nexa-border : 2px solid #080e3e; 
+	color : #ffffff;
+}
+.Button.btn_WF_Close[status=disabled]
+{
+	-nexa-border : 0px none;
+	background : #c0c2cf;
+	color : #ffffff;
+	cursor : default;
+}
+
+.Button.btn_WF_Search01
+{
+	-nexa-border : 1px solid #b2b2b2;
+	background : url('theme://images/btn_WF_IcoSearch.png') no-repeat center center #fbfbfb;
+	cursor : pointer;
+	border-radius : 3px;
+}
+.Button.btn_WF_Search01[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1; 
+	background : url('theme://images/btn_WF_IcoSearch.png') no-repeat center center #fbfbfb;
+}
+.Button.btn_WF_Search01[status=focused]
+{
+	-nexa-border : 2px solid #4272e1; 
+}
+.Button.btn_WF_Search01[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : url('theme://images/btn_WF_IcoSearch_D.png') no-repeat center center #fbfbfb;
+	cursor : default;
+}
+
+/* CalendarWeekSingle */
+.Button.CalendarWeekDropButton,.Button.CalendarWeekDropButton[status=mouseover],.Button.CalendarWeekDropButton[userstatus=pushed],.Button.CalendarWeekDropButton[userstatus=selected],.Button.CalendarWeekDropButton[status=focused],.Button.CalendarWeekDropButton[status=disabled]
+{
+	background : url('theme://images/btn_WF_Calendar.png') no-repeat center center transparent;
+	-nexa-border : 0px none;
+}
+.PopupDiv.CalendarWeekDatePicker
+{
+	background : #3366cc;
+	-nexa-border : 1px solid #c7c7c7;
+}
+.Button.CalendarWeekPrevButton,.Button.CalendarWeekPrevButton[status=mouseover],.Button.CalendarWeekPrevButton[userstatus=pushed],.Button.CalendarWeekPrevButton[userstatus=selected],.Button.CalendarWeekPrevButton[status=focused],.Button.CalendarWeekPrevButton[status=disabled]
+{
+	background : url('theme://images/btn_WF_Calprev.png') no-repeat center center transparent;
+	-nexa-border : 0px none;
+}
+.Button.CalendarWeekNextButton,.Button.CalendarWeekNextButton[status=mouseover],.Button.CalendarWeekNextButton[userstatus=pushed],.Button.CalendarWeekNextButton[userstatus=selected],.Button.CalendarWeekNextButton[status=focused],.Button.CalendarWeekNextButton[status=disabled]
+{
+	background : url('theme://images/btn_WF_Calnext.png') no-repeat center center transparent;
+	-nexa-border : 0px none;
+}
+.Edit.CalendarWeekEdit,.Edit.CalendarWeekEdit[status=readonly]
+{
+	background : #3366cc;
+	color : #ffffff;
+	-nexa-border : 0px none;
+}
+
+/*****************    Grid:Class    *********************/
+.Grid .body .row .cell.CalendarWeekWeekColor
+{
+	background : #f3f3f3;
+	color : #115fac;
+}
+.Grid .body .row .cell.CalendarWeekGrayColor
+{
+	color : #cccccc;
+}
+.Grid .body .row .cell.CalendarWeekDayColor
+{
+	color : #333333;
+}
+.Grid .body .row .cell.CalendarWeekSunColor
+{
+	color : #d40009;
+}
+.Grid .body .row .cell.CalendarWeekSatColor
+{
+	color : #d40009;
+}
+.Grid .body .row .cell.CalendarWeekTodayColor
+{
+	color : red;
+}
+.Grid .body .row .cell.CalendarWeekSelectColor
+{
+	background : #f9eb78;
+}
+
+
+/*****************    ImageViewer:Class    *********************/
+
+.ImageViewer.img_WF_LoginTit,
+.ImageViewer.img_WF_LoginTit[status=disabled]
+{
+	-nexa-border : 2px solid transparent, 2px solid transparent, 2px solid #565656, 2px solid transparent;
+	background : URL("theme://images/img_WF_LoginTit.png") no-repeat right bottom #ffffff;
+
+}
+.ImageViewer.img_WF_LoginTit[status=focused]
+{
+	-nexa-border : 2px solid #4272e1; 
+	background : URL("theme://images/img_WF_LoginTit.png") no-repeat right bottom #ffffff;
+}
+.ImageViewer.img_WF_LoginTit .imagetext
+{
+	-nexa-text-align : center;
+	font : bold 36px "NotoSansKR-Regular";
+	color : #333333;
+}
+.ImageViewer.img_WF_LoginTit .imagetext[status=disabled]
+{
+	color : #999999;
+}
+
+.ImageViewer.img_WF_LoginTit01,
+.ImageViewer.img_WF_LoginTit01[status=disabled]
+{
+	-nexa-border : 2px solid transparent; 
+}
+.ImageViewer.img_WF_LoginTit01[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+}
+.ImageViewer.img_WF_LoginTit01 .imagetext
+{
+	-nexa-text-align : center;
+	font : 26px "NotoSansKR-Regular";
+	color : #222222;
+}
+.ImageViewer.img_WF_LoginTit01 .imagetext[status=disabled]
+{
+	color : #999999;
+}
+
+.ImageViewer.img_WF_LoginIco,
+.ImageViewer.img_WF_LoginIco[status=disabled]
+{
+	-nexa-border : 2px solid transparent;
+	background : URL("theme://images/img_WF_LoginIco.png") no-repeat center center #ffffff;
+}
+.ImageViewer.img_WF_LoginIco[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	background : URL("theme://images/img_WF_LoginIco.png") no-repeat center center #ffffff;
+}
+.ImageViewer.img_WF_LoginIco .imagetext
+{
+	-nexa-text-align : center;
+	font : 26px "NotoSansKR-Regular";
+	color : #222222;
+}
+.ImageViewer.img_WF_LoginIco .imagetext[status=disabled]
+{
+	color : #999999;
+}
+
+.ImageViewer.img_WF_AlertInfo,
+.ImageViewer.img_WF_AlertInfo[status=disabled]
+{
+	-nexa-border : 2px solid transparent;
+	background : #ffffff;
+}
+.ImageViewer.img_WF_AlertInfo[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	background :#ffffff;
+}
+.ImageViewer.img_WF_AlertInfo .imagetext
+{
+	-nexa-text-align : center;
+	-nexa-word-wrap : char;
+	font : 18px/1.5 "NotoSansKR-Regular";
+	
+}
+.ImageViewer.img_WF_AlertInfo .imagetext[status=disabled]
+{
+	color : #999999;
+}
+.ImageViewer.img_WF_none,
+.ImageViewer.img_WF_none[status=disabled]
+{
+	-nexa-border : 2px solid transparent;
+	background : #ffffff;
+}
+.ImageViewer.img_WF_none[status=focused]
+{
+	-nexa-border : 2px solid transparent;
+	background :#ffffff;
+}
+.ImageViewer.img_WF_none .imagetext
+{
+	-nexa-text-align : center;
+	font : 18px/1.5 "NotoSansKR-Regular"; 
+}
+.ImageViewer.img_WF_none .imagetext[status=disabled]
+{
+	color : #999999;
+}
+.ImageViewer.img_WF_none01,
+.ImageViewer.img_WF_none01[status=disabled]
+{
+	-nexa-border : 2px solid transparent;
+	background : #ffffff;
+}
+.ImageViewer.img_WF_none01[status=focused]
+{
+	-nexa-border : 2px solid transparent;
+	background :#ffffff;
+}
+.ImageViewer.img_WF_none01 .imagetext
+{
+	-nexa-text-align : center;
+	font : 30px "NotoSansKR-Regular"; 
+}
+.ImageViewer.img_WF_none01 .imagetext[status=disabled]
+{
+	color : #999999;
+}
+
+.Static.sta_WF_TitleAcc02,
+.Static.sta_WF_TitleAcc02[status=mouseover],.Static.sta_WF_TitleAcc02[status=disabled]
+{
+	-nexa-padding : 28px 0px 0px 30px;
+	-nexa-vertical-align : top;
+	background : url("theme://images/ico_WF_SubTitle.png") no-repeat left top;
+	color : #555555;
+	font : bold 16px "NotoSansKR-Regular";
+}
+.Static.sta_WF_Des01,
+.Static.sta_WF_Des01[status=mouseover],.Static.sta_WF_Des01[status=disabled]
+{
+	-nexa-vertical-align : top;
+	color : #666666;
+	font : 14px/19px "NotoSansKR-Regular";
+}
+.Static.sta_WF_GuideLine,
+.Static.sta_WF_GuideLine[status=mouseover],.Static.sta_WF_GuideLine[status=disabled]
+{
+	background : #d5d8e1;
+}
+.Static.sta_WF_GridTitle01,
+.Static.sta_WF_GridTitle01[status=mouseover],.Static.sta_WF_GridTitle01[status=disabled]
+{
+	-nexa-vertical-align : top;
+	-nexa-padding : 0px 0px 0px 15px;
+	background : url("theme://images/ico_WF_GridTitle.png") no-repeat left top;
+	color : #2a8800;
+	font : 16px "NotoSansKR-Regular";
+}
+.Static.sta_WF_AccTitleLable,
+.Static.sta_WF_AccTitleLable[status=mouseover],.Static.sta_WF_AccTitleLable[status=disabled]
+{
+	-nexa-text-align : center;
+	-nexa-border : 2px solid #3c72dc, 1px solid #b6d0eb , 1px solid #b6d0eb, 1px solid #b6d0eb;
+	background : #e8f1fb;
+}
+.Static.sta_WF_DetailBg,
+.Static.sta_WF_DetailBg[status=mouseover],.Static.sta_WF_DetailBg[status=disabled]
+{
+	-nexa-border : 1px solid #d7d7d7;
+	-nexa-padding : 0px 15px 0px 15px;
+	-nexa-word-wrap : char;
+	background : #ffffff;
+	font : 14px/19px "NotoSansKR-Regular";
+}
+.Static.sta_WF_DetailLabel,
+.Static.sta_WF_DetailLabel[status=mouseover],.Static.sta_WF_DetailLabel[status=disabled]
+{
+	-nexa-border : 1px solid #d7d7d7;
+	-nexa-padding : 0px 0px 0ppx 30px;
+	background : #f9f9f9;
+	color : #555555;
+	font : bold 14px "NotoSansKR-Regular";
+}
+
+.Static.sta_WF_NoticeB,
+.Static.sta_WF_NoticeB[status=mouseover],.Static.sta_WF_NoticeB[status=disabled]
+{
+	-nexa-border : 1px solid #d7d7d7;
+	-nexa-vertical-align : middle;
+	-nexa-padding : 14px 16px 14px 35px;
+	background : url("theme://images/ico_WF_Notice.png") no-repeat left center #f9f9f9;
+	color : #288000;
+	font : 14px/24px "NotoSansKR-Regular";
+}
+.Static.sta_WF_VLine01,
+.Static.sta_WF_VLine01[status=mouseover],.Static.sta_WF_VLine01[status=disabled]
+{
+	-nexa-border : 0px none, 1px solid #bcbcbc, 0px none, 0px none;
+}
+/*************************************************************************/
+/***********    ESSENTIAL/DISPLAY COMPONENT START    *********************/
+/*************************************************************************/
+.Edit.essential
+{
+	background : #e8f5fe; 
+}
+.Edit.essential[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.Edit.essential[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+}
+.Edit.essential[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #efefef;
+}
+.Edit.essential[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	color : #999999;
+	background : #e5e5e5;
+}
+.Edit.essential[userstatus=nulltext]
+{
+	color : #666666;
+}
+
+.MaskEdit.essential
+{
+	-nexa-text-align : right;
+	background : #e8f5fe; 
+}
+.MaskEdit.essential[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.MaskEdit.essential[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+}
+.MaskEdit.essential[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #efefef;
+}
+.MaskEdit.essential[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	color : #999999;
+	background : #e5e5e5;
+}
+.MaskEdit.essential[userstatus=nulltext]
+{
+	color : #666666;
+}
+
+
+.Combo.essential
+{
+	background : #e8f5fe; 
+}
+.Combo.essential[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.Combo.essential[status=focused]
+{
+	-nexa-border : 2px solid #4272e1; 
+}
+.Combo.essential[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #e5e5e5;
+	color : #999999;
+}
+.Combo.essential[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #efefef;
+}
+
+
+.Calendar.essential
+{
+	background : #e8f5fe; 
+}
+.Calendar.essential[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.Calendar.essential[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+
+} 
+.Calendar.essential[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #e5e5e5;
+}
+.Calendar.essential[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	color : #999999;
+	background : #e5e5e5;
+}
+
+.TextArea.essential
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 13px 15px;
+	background : #e8f5fe;
+}
+.TextArea.essential[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.TextArea.essential[status=focused]
+{
+	-nexa-padding : 12px 14px;
+	-nexa-border : 2px solid #4272e1;
+}
+.TextArea.essential[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #efefef;
+}
+.TextArea.essential[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	color : #999999;
+	background : #efefef;
+}
+
+.Spin.essential
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 1px;
+	background : #e8f5fe;
+}
+
+.Spin.essential[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	-nexa-padding : 0px;
+	background : #e8f5fe;
+}
+
+/*************************************************************************/
+/***********    MOBILE COMPONENT START    *********************/
+/*************************************************************************/
+
+
+
+.Button.btn_WF_btnM
+{
+	-nexa-border : 1px solid #7099f8;
+	-nexa-padding : 0px 20px;
+	background : #ffffff;
+	color : #2c59c4;
+	font : 22px "NotoSansKR-Regular";
+	cursor : pointer;
+	border-radius : 3px;
+}
+.Button.btn_WF_btnM[status=mouseover]
+{
+	-nexa-text-decoration : underline;
+	background :#edf4fd;
+	color : #2c59c4;
+}
+.Button.btn_WF_btnM[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	color : #2c59c4;
+}
+.Button.btn_WF_btnM[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #e5e5e5;
+	color : #999999;
+	cursor : default;
+}
+
+.Button.btn_WF_btn01M
+{
+	-nexa-border : 1px solid #7099f8;
+	-nexa-padding : 0px 15px;
+	background : #ffffff;
+	color : #2c59c4;
+	font : 22px "NotoSansKR-Regular";
+	cursor : pointer;
+	border-radius : 3px;
+}
+.Button.btn_WF_btn01M[status=mouseover]
+{
+	-nexa-text-decoration : underline;
+	background :#edf4fd;
+	color : #2c59c4;
+}
+.Button.btn_WF_btn01M[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	color : #2c59c4;
+}
+.Button.btn_WF_btn01M[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #e5e5e5;
+	color : #999999;
+	cursor : default;
+}
+
+.Button.btn_WF_Ok_M
+{
+	-nexa-border : 0px none;
+	-nexa-padding : 0px 0px 1px 0px;
+	-nexa-text-align : center;
+	font : 30px "NotoSansKR-Regular";
+	background : #5a69dc;
+	border-radius : 6px;
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_Ok_M[status=mouseover]
+{
+	-nexa-text-decoration : underline;
+	background :#4958ca; 
+	color : #ffffff;
+}
+.Button.btn_WF_Ok_M[status=focused]
+{
+	-nexa-border : 2px solid #080e3e; 
+	color : #ffffff;
+}
+.Button.btn_WF_Ok_M[status=disabled]
+{
+	-nexa-border : 0px none;
+	background : #c0c2cf;
+	color : #ffffff;
+	cursor : default;
+}
+
+.Button.btn_WF_Close_M
+{
+	-nexa-border : 0px none;
+	-nexa-text-align : center;
+	font : 30px "NotoSansKR-Regular";
+	background : #767676;
+	border-radius : 6px;
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_Close_M[status=mouseover]
+{
+	-nexa-text-decoration : underline;
+	background :#676767; 
+	color : #ffffff;
+}
+.Button.btn_WF_Close_M[status=focused]
+{
+	-nexa-border : 2px solid #080e3e; 
+	color : #ffffff;
+}
+.Button.btn_WF_Close_M[status=disabled]
+{
+	-nexa-border : 0px none;
+	background : #c0c2cf;
+	color : #ffffff;
+	cursor : default;
+}
+
+.Button.btn_WF_BtnLogin_M
+{
+	-nexa-border : 0px none;
+	-nexa-padding : 0px 0px 1px 0px;
+	-nexa-text-padding : 0px 0px 0px 14px;
+	-nexa-icon : URL("theme://images/ico_WF_BtnLogin_M.png");
+	-nexa-text-align : center;
+	font : 30px "NotoSansKR-Regular";
+	background : #5a69dc;
+	border-radius : 6px;
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_BtnLogin_M[status=mouseover]
+{
+	-nexa-text-decoration : underline;
+	background :#4958ca; 
+	color : #ffffff;
+}
+.Button.btn_WF_BtnLogin_M[status=focused]
+{
+	-nexa-border : 2px solid #080e3e; 
+	color : #ffffff;
+}
+.Button.btn_WF_BtnLogin_M[status=disabled]
+{
+	-nexa-border : 0px none;
+	background : #c0c2cf;
+	color : #ffffff;
+	cursor : default;
+}
+
+.Button.btn_WF_MemberJoin_M
+{
+	-nexa-border : 0px none;
+	-nexa-text-align : center;
+	font : 24px "NotoSansKR-Regular";
+	background : #ffffff;
+	border-radius : 6px;
+	color : #222222;
+	cursor : pointer;
+}
+.Button.btn_WF_MemberJoin_M[status=mouseover]
+{
+	-nexa-text-decoration : underline;
+	background :#ffffff; 
+	color : #3448e3;
+}
+.Button.btn_WF_MemberJoin_M[status=focused]
+{
+	-nexa-border : 2px solid #4272e1; 
+	color : #333333;
+}
+.Button.btn_WF_MemberJoin_M[status=disabled]
+{
+	-nexa-border : 0px none;
+	background : #ffffff;
+	color : #b6b6b6;
+	cursor : default;
+}
+
+
+.Combo.essential_M
+{
+	background : #e8f5fe;
+	font : 22px "NotoSansKR-Regular";
+}
+.Combo.essential_M[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.Combo.essential_M[status=focused]
+{
+	-nexa-border : 2px solid #4272e1; 
+}
+.Combo.essential_M[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #e5e5e5;
+	color : #999999;
+}
+.Combo.essential_M[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #e5e5e5;
+}
+
+.Combo.essential_M .combolist
+{
+	-nexa-border : 1px solid #b2b2b2;
+	background : #fbfbfb;
+	font : 24px "NotoSansKR-Regular";
+}
+
+.Calendar.cal_WF_Mobile
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 1px;
+	background : #fbfbfb;
+	color : #222222;
+	font : 22px "NotoSansKR-Regular";
+}
+
+.Calendar.essential_M
+{
+	background : #e8f5fe; 
+	font : 22px "NotoSansKR-Regular";
+}
+
+.Edit.edi_WF_Mobile
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 0px 15px 1px 15px;
+	background : #fbfbfb;
+	color : #222222;
+	font : 22px "NotoSansKR-Regular";
+}
+.Edit.edi_WF_Mobile[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.Edit.edi_WF_Mobile[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+	-nexa-padding : 0px 15px 1px 14px;
+}
+.Edit.edi_WF_Mobile[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #efefef;
+}
+.Edit.edi_WF_Mobile[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	color : #999999;
+	background : #efefef;
+}
+.Edit.edi_WF_Mobile[userstatus=nulltext]
+{
+	color : #666666;
+}
+
+.Edit.essential_M
+{
+	background : #e8f5fe;
+	font : 22px "NotoSansKR-Regular";
+	color : #222222;
+}
+.Edit.essential_M[status=mouseover]
+{
+	-nexa-border : 1px solid #4272e1;
+}
+.Edit.essential_M[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+}
+.Edit.essential_M[status=readonly]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	background : #e5e5e5;
+}
+.Edit.essential_M[status=disabled]
+{
+	-nexa-border : 1px solid #a6a6a6;
+	color : #999999;
+	background : #e5e5e5;
+}
+.Edit.essential_M[userstatus=nulltext]
+{
+	color : #666666;
+}
+
+.Grid.grd_WF_Mobile .head .row .cell
+{
+	font : 22px "NotoSansKR-Regular";
+	color : #222222;
+	background : #f5f5f5;
+	-nexa-border : 1px solid #cacaca;
+	-nexa-padding : 4px 4px 4px 4px;
+	-nexa-text-align : center;
+}
+
+.ImageViewer.img_WF_LoginTit_M,
+.ImageViewer.img_WF_LoginTit_M[status=disabled]
+{
+	-nexa-border : 2px solid transparent, 2px solid transparent, 2px solid #565656, 2px solid transparent;
+	background : URL("theme://images/img_WF_LoginTit.png") no-repeat right bottom #ffffff;
+
+}
+.ImageViewer.img_WF_LoginTit_M[status=focused]
+{
+	-nexa-border : 2px solid #4272e1; 
+	background : URL("theme://images/img_WF_LoginTit.png") no-repeat right bottom #ffffff;
+}
+.ImageViewer.img_WF_LoginTit_M .imagetext
+{
+	-nexa-text-align : center;
+	font : bold 42px "NotoSansKR-Regular";
+	color : #333333;
+}
+.ImageViewer.img_WF_LoginTit_M .imagetext[status=disabled]
+{
+	color : #999999;
+}
+
+.ImageViewer.img_WF_LoginTit2_M,
+.ImageViewer.img_WF_LoginTit2_M[status=disabled]
+{
+	-nexa-border : 2px solid transparent, 2px solid transparent, 2px solid #565656, 2px solid transparent;
+	-nexa-padding : 0px 0px 0px 0px ;
+	background : URL("theme://images/img_WF_LoginTit.png") no-repeat right bottom #ffffff;
+
+}
+.ImageViewer.img_WF_LoginTit2_M[status=focused]
+{
+	-nexa-border : 2px solid #4272e1; 
+	background : URL("theme://images/img_WF_LoginTit.png") no-repeat right bottom #ffffff;
+}
+.ImageViewer.img_WF_LoginTit2_M .imagetext
+{
+	-nexa-text-align : center;
+	font : bold 38px "NotoSansKR-Regular";
+	color : #333333;
+}
+.ImageViewer.img_WF_LoginTit2_M .imagetext[status=disabled]
+{
+	color : #999999;
+}
+
+.ImageViewer.img_WF_LoginTit01_M,
+.ImageViewer.img_WF_LoginTit01_M[status=disabled]
+{
+	-nexa-border : 2px solid transparent; 
+}
+.ImageViewer.img_WF_LoginTit01_M[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+}
+.ImageViewer.img_WF_LoginTit01_M .imagetext
+{
+	-nexa-text-align : center;
+	font : 34px "NotoSansKR-Regular";
+	color : #222222;
+}
+.ImageViewer.img_WF_LoginTit01_M .imagetext[status=disabled]
+{
+	color : #999999;
+}
+
+
+.Radio.rdo_WF_Mobile,.Radio.rdo_WF_Mobile[status=disabled]
+{
+	-nexa-border : 2px solid transparent;
+}
+.Radio.rdo_WF_Mobile[status=focused]
+{
+	-nexa-border : 2px solid #4272e1;
+}
+
+.Radio.rdo_WF_Mobile .radioitem
+{
+	-nexa-icon : URL("theme://images/rdo_WF_Radio.png");
+	-nexa-text-padding :  0px 21px 0px 10px;
+	font : 22px "NotoSansKR-Regular";
+}
+.Radio.rdo_WF_Mobile .radioitem[status=mouseover]
+{
+	-nexa-icon : URL("theme://images/rdo_WF_RadioO.png");
+}
+.Radio.rdo_WF_Mobile .radioitem[userstatus=selected]
+{
+	-nexa-icon : URL("theme://images/rdo_WF_RadioS.png");
+	-nexa-text-decoration : underline;
+}
+.Radio.rdo_WF_Mobile .radioitem[userstatus=selected][status=mouseover]
+{
+	-nexa-icon : URL("theme://images/rdo_WF_RadioS.png");
+	-nexa-text-decoration : underline;
+}
+.Radio.rdo_WF_Mobile .radioitem[status=disabled]
+{
+	-nexa-icon : URL("theme://images/rdo_WF_RadioD.png");
+	color : #999999;
+}
+.Radio.rdo_WF_Mobile .radioitem[status=disabled][userstatus=selected]
+{
+	-nexa-icon : URL("theme://images/rdo_WF_RadioDS.png");
+	color : #999999;
+}
+
+
+.Static.sta_WF_LoginTit01_M,
+.Static.sta_WF_LoginTit01_M[status=disabled]
+{
+	-nexa-text-align : center;
+	font : 32px/1.4 "NotoSansKR-Regular";
+	color: #222222;
+}
+
+
+.Static.sta_WF_NoticeTit01_M,
+.Static.sta_WF_NoticeTit01_M[status=disabled]
+{
+	-nexa-border : 1px solid #d2d2d2;
+	-nexa-padding : 0px 0px 0px 68px;
+	background : #f1f5fd;
+	color : #003697;
+	font : 22px "NotoSansKR-Regular";
+}
+
+.Static.sta_WF_NoticeTit02_M,
+.Static.sta_WF_NoticeTit02_M[status=disabled]
+{
+	-nexa-border : 1px solid #d2d2d2;
+	-nexa-padding : 0px 0px 0px 68px;
+	background : #ffffff;
+	color : #222222;
+	font : 22px "NotoSansKR-Regular";
+}
+
+.Static.sta_WF_NoticeTit03_M,
+.Static.sta_WF_NoticeTit03_M[status=disabled]
+{
+	color : #0549c5;
+	font : 28px "NotoSansKR-Regular";
+}
+
+.Static.sta_WF_NoticeTxt01_M,
+.Static.sta_WF_NoticeTxt01_M[status=disabled]
+{
+	color : #222222;
+	font : 20px/1.5 "NotoSansKR-Regular";
+}
+
+.Static.sta_WF_NoticeTit06_M,
+.Static.sta_WF_NoticeTit06_M[status=disabled]
+{
+	font : bold 26px "NotoSansKR-Regular";
+}
+
+.Static.sta_WF_DtlLabel_M,
+.Static.sta_WF_DtlLabel_M[status=disabled]
+{
+	-nexa-border : 1px solid #d2d2d2;
+	-nexa-text-align : left;
+	-nexa-padding : 0px 0px 0px 20px;
+	color : #222222;
+	background : #f5f5f5;
+	font : 22px "NotoSansKR-Regular";
+}
+
+.Static.sta_WF_LoginTit02_M,
+.Static.sta_WF_LoginTit02_M[status=disabled]
+{
+	-nexa-text-align : center;
+	font : 26px/1.7 "NotoSansKR-Regular";
+	color: #666666;
+}
+
+.Static.sta_WF_PwNotice,
+.Static.sta_WF_PwNotice[status=disabled]
+{
+	-nexa-word-wrap : char;
+	font : 14px/1.5 "NotoSansKR-Regular";
+	color: #333333;
+}
+
+.Static.sta_WF_PwNotice_M,
+.Static.sta_WF_PwNotice_M[status=disabled]
+{
+	-nexa-word-wrap : char;
+	font : 20px/1.5 "NotoSansKR-Regular";
+	color: #333333;
+}
+
+.Static.sta_WF_PwNotice_M2,
+.Static.sta_WF_PwNotice_M2[status=disabled]
+{
+	-nexa-word-wrap : char;
+	font : 24px/1.5 "NotoSansKR-Regular";
+	color: #333333;
+}
+
+
+
+.Tab.tab_WF_mobile .tabbuttonitem
+{
+	-nexa-border : 1px solid #dedede, 1px solid #dedede, 1px solid #a8a8a8, 1px solid #dedede;
+	-nexa-padding : 0px 20px 1px 20px;
+	color : #222222;
+	cursor : pointer;
+	background : #f9f9f9;
+	font : 30px "NotoSansKR-Regular";
+	border-radius : 10px 10px 0px 0px;
+} 
+
+.TextArea.txt_WF_Mobile
+{
+	-nexa-border : 1px solid #b2b2b2;
+	-nexa-padding : 13px 15px;
+	font : 22px/1.7 "NotoSansKR-Regular";
+	background : #ffffff;
+}
+
+]]></XCSS>

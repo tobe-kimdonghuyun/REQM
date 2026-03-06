@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="NP70M1" width="1200" height="630" titletext="관리자 로그인" onload="ews_oclmn00_m01_onload">
+    <Layouts>
+      <Layout height="630" width="1200" screenid="ScreenDeskTop">
+        <ImageViewer id="img00_00" taborder="1" text="관리자 로그인" left="498" top="145" height="58" cssclass="font34B_C" width="204" initvalueid="ivTitleAccessibilityOn" accessibilitylabel="관리자 로그인"/>
+        <Div id="div01" taborder="2" left="250" top="226" width="700" height="305" text="" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Edit id="edt00" taborder="1" left="186" top="64" width="348" height="50" text="아이디를 입력하세요" cssclass="edi_Login_ID" initvalueid="ivEdtNormal" displaynulltext="아이디를 입력하세요" accessibilitylabel="아이디를 입력하세요"/>
+              <Edit id="edt00_00" taborder="3" left="187" top="128" width="348" height="50" text="비밀번호를 입력하세요" cssclass="edi_Login_Pass" initvalueid="ivEdtNormal" displaynulltext="비밀번호를 입력하세요" password="true" accessibilitylabel="비밀번호를 입력하세요"/>
+              <Button id="btn00_00" taborder="2" left="481" top="74" width="30" cssclass="btn_Login_Mouse" initvalueid="ivBtnAccessibilityButton" height="30"/>
+              <Button id="btn00" taborder="4" text="ID/PWD 로그인" left="186" top="199" width="348" height="60" cssclass="btn_Login_PartyCert" initvalueid="ivBtnAccessibilityButton" onclick="div01_btn00_onclick" accessibilitylabel="ID/PWD 로그인"/>
+              <Static id="sta01_00_00_00" taborder="0" text="서비스를 이용하시려면 로그인해주세요&#13;&#10;아이디와 비밀번호 입력 후 로그인 하세요" left="85" top="-6" height="46" cssclass="sta_WF_Txt16" initvalueid="ivStcAccessibilityOn" right="65" textAlign="center" accessibilitylabel="서비스를 이용하시려면 로그인해주세요. 아이디와 비밀번호 입력 후 로그인 하세요."/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="guide09_00" taborder="3" text="h147" left="380" top="485" width="140" height="147" cssclass="sta_WF_Size" visible="false" initvalueid="ivStcAccessibilityOn"/>
+        <ImageViewer id="imgTitle" taborder="0" text="교육비 원클릭 신청 시스템" left="0" top="70" height="44" cssclass="img_WF_SubTit01" initvalueid="ivTitleAccessibilityOn" right="20" accessibilitylabel="교육비 원클릭 신청 시스템"/>
+        <Static id="Static99_00_00_00_00" taborder="4" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01" taborder="5" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  교육복지 - 원클릭
+*  @MenuPath    TEMPLATE
+*  @FileName    ews_oclmn00_m01.xfdl
+*  @Creator     류찬욱
+*  @CreateDate  2023.2.15
+*  @Desction    
+************** 소스 수정 이력 ************************************************
+*  date             Modifier            Description
+********************************************************************************
+*  2023.2.15        류찬욱             최초 생성 
+********************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+this.fv_nextFormUrl = "";  // 
+this.fv_params = {};
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.ews_oclmn00_m01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+    // 테스트를 위해 데이터 클리어
+    this.dsSearch.clearData();
+    var nAddRow = this.dsSearch.addRow();
+    this.fv_params = this.smfGetFormParams();
+
+    //this.fnIpChk();
+}; 
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnIpChk = function()
+{
+    // 서비스 객체 생성
+    this.smfSearchService("listIpChk")  //서비스 아이디 추가
+        // 페이징 처리
+        .run()  // 실행
+        // 콜백
+        .callback(function(callbackParams){
+            //this.trace("0.errors=============="+callbackParams.errors);
+            if(callbackParams.errors) return;
+
+            if(this.dsIpChkResult.getColumn(0, "result") == "false"){
+                if(this.smfContainsStr(window.location.host, "local")){     //로컬인 경우
+                    window.location.href = "http://localhost:8081/nxui/index.html?subsys=EWS";
+                }else if (this.smfContainsStr(window.location.host, "dev")){    //개발인 경우
+                    window.location.href = "http://dev.oneclick.neis.go.kr/nxui/index.html";
+                }else if (this.smfContainsStr(window.location.host, "tst")){    //시험인 경우
+                    window.location.href = "http://tst.oneclick.neis.go.kr/nxui/index.html";
+                }else if (!this.smfContainsStr(window.location.host, "local") && 
+                          !this.smfContainsStr(window.location.host, "dev") &&
+                          !this.smfContainsStr(window.location.host, "tst")){   //운영인 경우
+                    window.location.href = "https://oneclick.neis.go.kr/nxui/index.html";
+                }else{
+                    window.location.href = "https://oneclick.neis.go.kr/nxui/index.html";
+                }
+            }
+        });
+};
+
+this.fnSearch = function(obj, e)
+{   
+    /**
+    id                  nm      pswd
+    
+    wearwaer12312312    525     A6xnQhbz4Vx2HuGl4lXwZ5U2I8iziLRFnhP5eNfIRvQ=    "1234"
+    123awr123er1        test1   +GOLl5svT3k92229GX4O4lp6bqMrCuIvXjxdEZ2DnnU=    "5678"
+    2334534534dzs       454     2/9TQaytXipY2079XnLi2aCoQ6KOArEYPGgWLQo6PeY=    "9876"
+    
+    ***/
+    
+    // 서비스 객체 생성
+    this.smfSearchService("listLogin")  //서비스 아이디 추가
+        // 페이징 처리
+        .run()  // 실행
+        // 콜백
+        .callback(function(callbackParams){     
+            if(callbackParams.errors) return;
+            
+            if( this.dsResult.rowcount < 1 ){
+                this.smfAlert("로그인 정보가 없습니다.");
+                return;
+            }
+            
+            // 첨부파일 셋팅 
+            if (this.dsResult.getColumn(0,"mnrMngAuthCd").trim() == "21") {
+                this.smfAlert("관리자 로그인 했습니다.");
+            }else if (this.dsResult.getColumn(0,"mnrMngAuthCd").trim() == "23") {
+                this.smfAlert("시도담당자 로그인 했습니다.");
+            }else if (this.dsResult.getColumn(0,"mnrMngAuthCd").trim() == "55") {
+                this.smfAlert("상담원 로그인 했습니다.");
+            }
+            
+            // 디테일구분값을 세팅(3자리리 패딩값 : "021")
+            var sSubSystemDetailGb = this.dsResult.getColumn(0,"mnrMngAuthCd").trim();
+            sSubSystemDetailGb = this.lpad(sSubSystemDetailGb,"0",3);
+            this.smfSetSubSystemDetailGb(sSubSystemDetailGb );
+            
+            var sLgnTypCd = "LG006";  // 로그인 유형코드
+            this.smfSendLoginLog(this, sLgnTypCd);
+            this.smfLoginProc(this);
+            //this.dsLoginUrl.setColumn(6, "url", "");
+            
+            //this.smfSetSessionDataset(this.dsResult); 
+
+            this.smfSetSessionValue("mnrSn", this.dsResult.getColumn(0,"mnrSn"));
+            this.smfSetSessionValue("mnrId", this.dsResult.getColumn(0,"mnrId"));
+            this.smfSetSessionValue("mnrMngAuthCd", this.dsResult.getColumn(0,"mnrMngAuthCd"));
+            this.smfSetSessionValue("mnrMngAuthNm", this.dsResult.getColumn(0,"mnrMngAuthNm"));
+
+            // 다음 URL을 지정한다.(일반적으로 메인화면)
+            var sMainUrl =  this.fv_params.resendUrl; //this.getOwnerFrame().form.fv_mainformUrl;
+            
+            // 파라미터를 구한다.
+            var params = {};
+            
+            // 로그인화면으로 이동한다.
+            var bHead = false;
+            this.smfSetWorkPage(sMainUrl, params, bHead);
+            
+        }); 
+        
+        
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+    if(errcd <= -1) return;
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+this.div01_btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+    this.fnSearch();
+};]]></Script>
+    <Objects>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="searchId" type="STRING" size="256"/>
+          <Column id="searchPass" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256"/>
+          <Column id="outDatasets" type="STRING" size="256"/>
+          <Column id="asynctp" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listLogin</Col>
+            <Col id="url">/ews_ocl_mn00_m01.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsResult=dsResult</Col>
+          </Row>
+          <Row>
+            <Col id="id">listIpChk</Col>
+            <Col id="url">/ews_ocl_mn00_m00.do</Col>
+            <Col id="outDatasets">dsIpChkResult=dsIpChkResult</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="mnrSn" type="STRING" size="256"/>
+          <Column id="mnrId" type="STRING" size="256"/>
+          <Column id="mnrPswd" type="STRING" size="256"/>
+          <Column id="mnrNm" type="STRING" size="256"/>
+          <Column id="eryyPswd" type="STRING" size="256"/>
+          <Column id="mnrMngAuthCd" type="STRING" size="256"/>
+          <Column id="mnrMngAuthNm" type="STRING" size="256"/>
+          <Column id="ctpvCd" type="STRING" size="256"/>
+          <Column id="ctpvNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsIpChkResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="result" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="div01.form.edt00" propid="value" datasetid="dsSearch" columnid="searchId"/>
+      <BindItem id="item1" compid="div01.form.edt00_00" propid="value" datasetid="dsSearch" columnid="searchPass"/>
+    </Bind>
+  </Form>
+</FDL>

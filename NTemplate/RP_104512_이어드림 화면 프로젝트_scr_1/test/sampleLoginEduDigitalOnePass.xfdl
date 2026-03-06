@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleLoginFinCert" width="1280" height="745" titletext="교육부 디지털원패스 로그인을 위한 샘플" onload="sampleLoginFinCert_onload">
+    <Layouts>
+      <Layout height="745" width="1280">
+        <Static id="sta00" taborder="0" text="교육부 디지털원패스 로그인을 위한 샘플" left="29" top="28" width="611" height="60"/>
+        <Static id="staFinLogo" taborder="1" left="98" top="120" height="115" cssclass="sta_Login_PartyCert" text="" width="276" initvalueid="ivStcAccessibilityOn"/>
+        <Button id="btnFinLogin" taborder="2" text="교육부 디지털원패스 로그인" left="62" top="263" width="348" height="60" cssclass="btn_Login_PartyCert" initvalueid="ivBtnAccessibilityButton" onclick="btnFinLogin_onclick"/>
+        <TextArea id="txt00" taborder="3" left="57" top="397" width="453" height="230"/>
+        <Static id="sta01" taborder="4" text="실행결과 :" left="63" top="357" width="120" height="30"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleLoginEduDigitalOnePass.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2023.1.5
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.1.5     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.sampleLoginFinCert_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 로그인의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e,sender){
+
+	trace("===>this.fnPopupCallback : popup callback");
+	var sLog = "";
+	if(e.result)
+	{
+		var sData = e.data;
+		
+		sLog += "처리결과 : [성공]\n";
+		sLog += "data : ["+sData+"]";
+		
+		this.txt00.set_value(sLog);
+	}
+	else
+	{
+		var sData = e.data;
+		var arrData = sData.split(":");
+		
+		if(arrData[0].trim()=="800000")
+		{  // 유저가 팝업을 강제 종료한 경우
+			sLog += "처리결과 : [에러(유저강제종료)]\n";
+			sLog += "data : ["+sData+"]";
+			
+			this.txt00.set_value(sLog);			
+		}
+		else
+		{
+			sLog += "처리결과 : [에러]\n";
+			sLog += "data : ["+sData+"]";
+			
+			this.txt00.set_value(sLog);			
+		}
+		
+	}
+
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.btnFinLogin_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 테스트를 위해 실행결과를 지운다.
+	this.txt00.set_value("");
+
+	var objParam = {objForm:this, popupcallback :this.fnPopupCallback};
+	this.smfExecEduDOAuth(objParam);
+	
+	//this.divEduDO.form.fnExecLogin(objParam);
+};
+
+]]></Script>
+  </Form>
+</FDL>

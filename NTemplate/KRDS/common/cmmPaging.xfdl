@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="cmmPaging" width="888" height="40" titletext="페이징" onload="form_onload" onsize="form_onsize" scrolltype="none" scrollbartype="none none">
+    <Layouts>
+      <Layout height="40" mobileorientation="landscape" width="888">
+        <Static id="staCount" taborder="0" text="총 &lt;fc v='#0B50D0'&gt;&lt;b v='true'&gt;00&lt;/b&gt;&lt;/fc&gt;건" left="0" top="106" usedecorate="true" cssclass="sta_WF_Dot" right="0" bottom="-106" visible="false"/>
+        <Combo id="cboCnt" taborder="1" text="10" top="106" width="96" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" index="0" value="10" right="0" onitemchanged="cboCnt_onitemchanged" accessibilitylabel="페이지당 목록 건수 설정" bottom="-106" visible="false">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">1</Col>
+                <Col id="datacolumn">1</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">10</Col>
+                <Col id="datacolumn">10</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">20</Col>
+                <Col id="datacolumn">20</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">30</Col>
+                <Col id="datacolumn">30</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">50</Col>
+                <Col id="datacolumn">50</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">100</Col>
+                <Col id="datacolumn">100</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">200</Col>
+                <Col id="datacolumn">200</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">500</Col>
+                <Col id="datacolumn">500</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Static id="staTitle" taborder="2" text="페이지당" top="106" width="68" right="cboCnt:8" accessibilitylabel="페이지당 목록 건수" cssclass="sta_WF_Dot" fittocontents="width" bottom="-106" visible="false"/>
+        <Div id="Div06" taborder="3" text="Div06" left="0" top="56" height="40" right="0">
+          <Layouts>
+            <Layout type="horizontal" horizontalgap="8" flexmainaxisalign="center">
+              <Button id="Button00" taborder="0" text="이전" left="0" top="0" width="62" height="40" cssclass="btn_WF_PgPrev" visible="true"/>
+              <Button id="Button01" taborder="1" text="1" left="70" top="0" width="40" height="40" cssclass="btn_WF_PgNumS" visible="true"/>
+              <Button id="Button01_00" taborder="2" text="2" left="118" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button01_01" taborder="3" text="3" left="166" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button01_02" taborder="4" text="4" left="214" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button01_03" taborder="5" text="5" left="262" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button01_04" taborder="6" text="6" left="310" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button01_05" taborder="7" text="7" left="358" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button01_06" taborder="8" text="8" left="406" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button01_07" taborder="9" text="9" left="454" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Static id="Static00" taborder="10" left="502" top="0" width="40" height="40" cssclass="sta_WF_Ellipsis" visible="true" accessibilitylabel="줄임"/>
+              <Button id="Button01_07_01" taborder="11" text="99" left="550" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button00_00" taborder="12" text="다음" left="598" top="0" width="62" height="40" cssclass="btn_WF_PgNext" visible="true"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Button id="Button01_07" visible="false"/>
+              <Button id="Button01_06" visible="false"/>
+              <Button id="Button01_05" visible="false"/>
+              <Button id="Button01_04" visible="false"/>
+              <Button id="Button01_03" visible="false"/>
+            </Layout>
+            <Layout name="Layout0"/>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout height="40" mobileorientation="Landscape" name="Layout0" type="default" width="480"/>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	cmmPaging.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/12/11
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/12/11			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+this.fvPageLeft   = 0; 	// div가운데 위치시키기 위한 left값
+this.fvFnCallback = "";	// 조회함수
+this.fvRecords    = 10;	// 목록수
+this.fvPage       = 1;
+this.fvObjGrid;
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+};
+
+this.form_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	//가운데로
+	if (this.fvFnCallback != "") this.fnSetCenter(obj);
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+/**
+ * @description  page초기화
+*/
+this.fnInitPage = function()
+{
+	if (this.isValidObject("divPage")) {
+		var obj = this.removeChild("divPage");
+		obj.destroy();
+		obj = null;
+	}
+};
+
+
+/**
+ * @class page 갯수에 맞게 버튼 생성<br>
+ * @param {Grid} objGrid - 페이지와 연결된 Grid (순번 표시)
+ * @param {String} sFnCallback - 페이지 선택시 실행될 callBack 함수명
+ * @param {Number} nPage - 페이지 수
+ * @param {Number} [nRecords] - 페이지 당 건수
+ * @param {Number} [nTotalRecords] - 전체 건수
+ * @return N/A
+ */
+this.fnCreatePage = function(objGrid, sFnCallback, nPage, nRecords, nTotalRecords)
+{
+	this.fvFnCallback = sFnCallback;	// callBack 함수명
+	
+	// 페이지 당 건수 설정
+	if(this.gfnIsNull(nRecords)) 
+		nRecords = this.fvRecords;
+	
+	//Grid
+	if(!this.gfnIsNull(objGrid)){
+		var objDs = objGrid.getBindDataset();
+		this.fvObjGrid = objGrid;
+		this.fvObjGrid.uPage = nPage;	
+		
+		//건수 설정
+		this.fvObjGrid.uPageSize = nRecords;
+	}else{
+	//Grid가 아닐 경우
+		var objDs = this.parent.parent.dsList;
+	}
+	
+	var nTotalCount = nTotalRecords;
+	var nRowCount = objDs.rowcount;
+	
+	// 총 건수가 0이면 페이징 삭제
+// 	if (nTotalCount == 0) {
+// 		// DIV 초기화
+// 		if (this.isValidObject("divPage")) {
+// 			var obj = this.removeChild("divPage");
+// 			obj.destroy();
+// 			obj = null;
+// 		}    
+// 		this.set_scrollbartype("none");
+// 		return;
+// 	}
+	
+	// 전체 페이지 갯수 계산
+	var nTotalPageC; 					
+	if (Math.floor( nTotalCount % nRecords ) > 0) {
+        nTotalPageC = Math.floor( nTotalCount / nRecords ) + 1;
+    }
+	else {
+        nTotalPageC = Math.floor( nTotalCount / nRecords );
+    }
+	//trace("nTotalPageC : " + nTotalPageC); 	
+    // 실제 페이지 갯수는 MAX 10개로 조정
+	var nPageScaleC  = 7;
+	var nTermBtn     = 8;		// 버튼사이
+    var nTerm        = 8;   	// 큰버튼과 숫자사이
+    var nTernLastNum = 0; 	    // 마지막숫자버튼과 뒤로버튼사이
+    
+	var nLeft     = 3;
+	var nTop      = 0;
+    var nWidth    = 62;
+    var nNumWidth = 40;
+    var nHeight   = 40;
+    
+    var objBtnPage;
+    var sPageView = this.pageview;
+      
+    if (this.gfnIsNull(sPageView)) 	 sPageView = "all";
+    if (this.gfnIsNull(nRecords)) 	 nRecords = 50;
+    if (this.gfnIsNull(nPage)) 		 nPage = 1;
+    if (this.gfnIsNull(nPageScaleC)) nPageScaleC = 7;
+   // if( nPageScaleC > 9 ) nPageScaleC = 9;
+    
+    // DIV 초기화
+    if (this.isValidObject("divPage")) {
+		var obj = this.removeChild("divPage");
+		obj.destroy();
+		obj = null;
+    }    
+    this.set_scrollbartype("none");
+	trace("nPage : " + nPage + " : " + Math.floor(nPageScaleC/2)); 	
+	// 현재페이지, 다음페이지
+    if(nPage <= Math.floor(nPageScaleC/2)) {
+		var uint = 1;
+		var nextUnit = nPageScaleC + 1;
+		trace("uint1 : " + uint + " : " + nextUnit); 	
+	} else if(nPage > nTotalPageC - Math.floor(nPageScaleC/2)) {
+		var uint = nTotalPageC - nPageScaleC + 1;
+		if(uint < 1) uint = 1;
+		var nextUnit = nTotalPageC + 1;
+		trace("uint2 : " + uint + " : " + nextUnit); 	
+	} else {
+	    var uint = nPage - Math.floor(nPageScaleC/2);
+		var nextUnit = nPage + Math.floor(nPageScaleC/2) + 1;
+		if( nextUnit > nTotalPageC) nextUnit = nTotalPageC + 1;
+		trace("uint3 : " + uint + " : " + nextUnit); 	
+	}
+
+	// div생성
+    var objDivPaging = new Div();
+	objDivPaging.init("divPage", 0, 0, 800, null, null, 0);
+    this.addChild(objDivPaging.name, objDivPaging);
+    
+	objDivPaging.form.set_scrolltype("none");
+	objDivPaging.show();
+	
+    // 컨트롤버튼생성
+    if (sPageView == "all" || sPageView == "number")
+    {
+		/************************************************************************
+		 * 앞으로(<) 버튼생성
+		 ************************************************************************/
+		var objBtnBefore = new Button("btnBefore", nLeft, nTop, nWidth, nHeight, null, null);   
+		objDivPaging.addChild(objBtnBefore.name, objBtnBefore);
+		objBtnBefore.set_cssclass("btn_WF_PgPrev");
+		objBtnBefore.text = "이전";
+		objBtnBefore.page = nPage - 1;
+		objBtnBefore.addEventHandler("onclick", this.fnMovePage, this);	
+		objBtnBefore.set_enable(true);
+		// 현재페이지가 '1'이면 비활성화
+		if( nPage == 1) objBtnBefore.set_enable(false);
+		nLeft = nLeft + nWidth + nTermBtn;	//left값 계산
+		objBtnBefore.show();
+		
+		if( uint >= 2) {
+			/************************************************************************
+			 * 첫페이지 버튼생성
+			 ************************************************************************/
+			var objBtnFirst = new Button("btnFirst", nLeft, nTop, nNumWidth, nHeight, null, null);   
+			objDivPaging.addChild(objBtnFirst.name, objBtnFirst);
+			objBtnFirst.set_cssclass("btn_WF_PgNum");
+			objBtnFirst.text = "1";
+			objBtnFirst.page = 1;
+			objBtnFirst.addEventHandler("onclick", this.fnMovePage, this);
+			objBtnFirst.set_enable(true);
+			// 현재페이지가 '1'이면 비활성화
+			if( nPage == 1 ) objBtnFirst.visible = false;
+			objBtnFirst.show();
+			nLeft = nLeft + nNumWidth + nTermBtn;	//left값 계산	
+		}
+		
+		if( uint >= 3) {
+			/************************************************************************
+			 * 첫페이지 버튼생성
+			 ************************************************************************/			
+			var objStaFirst = new Static("staFirst", nLeft, nTop, nNumWidth, nHeight, null, null);   
+			objDivPaging.addChild(objStaFirst.name, objStaFirst);
+			objStaFirst.set_cssclass("sta_WF_ellipsis");
+			nLeft = nLeft + nNumWidth + nTermBtn;	//left값 계산
+			objStaFirst.show();
+		}	
+		
+		/************************************************************************
+		 *페이징[1 2 3 4 5 6 7 8 9 10] 버튼생성
+		 ************************************************************************/
+		var oFocusBtn = null;
+		for(var i=uint; i<nextUnit; i++ )
+		{
+			if(i > nTotalPageC ) break; //페이지갯수 만큼만 생성
+			
+			objBtnPage = new Button("btnPage"+i,  nLeft, nTop, nNumWidth, nHeight, null, null);   
+			objDivPaging.addChild(objBtnPage.name, objBtnPage);
+			objBtnPage.set_cssclass("btn_WF_PgNum");
+			objBtnPage.set_text(i);
+			objBtnPage.page = i;
+			objBtnPage.addEventHandler("onclick", this.fnMovePage, this);
+			
+			//누름표시
+			if (i == nPage){
+				objBtnPage.set_cssclass("btn_WF_PgNumS");
+				oFocusBtn = objBtnPage;
+			}
+			objBtnPage.show();
+			
+			nLeft = nLeft + nNumWidth + nTermBtn; //left값 계산
+		}    
+		nLeft = nLeft + nTernLastNum;//left값 계산
+
+		if( nextUnit < nTotalPageC) {
+			/************************************************************************
+			 * 마지막페이지... 버튼생성
+			 ************************************************************************/			
+			var objStaEnd = new Static("staEnd", nLeft, nTop, nNumWidth, nHeight, null, null);   
+			objDivPaging.addChild(objStaEnd.name, objStaEnd);
+			objStaEnd.set_cssclass("sta_WF_ellipsis");
+			nLeft = nLeft + nNumWidth + nTermBtn;	//left값 계산
+			objStaEnd.show();
+		}
+		
+		if( nextUnit <= nTotalPageC) {
+			/************************************************************************
+			 * 마지막페이지 버튼생성
+			 ************************************************************************/	
+			var objBtnEnd = new Button("btnEnd", nLeft, nTop, nNumWidth, nHeight, null, null);   
+			objDivPaging.addChild(objBtnEnd.name, objBtnEnd);
+			objBtnEnd.set_cssclass("btn_WF_PgNum");
+			objBtnEnd.set_text(nTotalPageC);
+			objBtnEnd.addEventHandler("onclick", this.fnMovePage, this);
+			objBtnEnd.page = nTotalPageC;
+			objBtnEnd.show();
+			nLeft = nLeft + nNumWidth + nTermBtn;	//left값 계산
+		}
+			
+		/************************************************************************
+		 * 다음(>) 버튼생성
+		 ************************************************************************/
+		var objBtnNext = new Button("btnNext", nLeft, nTop, nWidth, nHeight, null, null);   
+		objDivPaging.addChild(objBtnNext.name, objBtnNext);
+		objBtnNext.set_cssclass("btn_WF_PgNext");
+		objBtnNext.text = "다음";
+		objBtnNext.addEventHandler("onclick", this.fnMovePage, this);
+		objBtnNext.set_enable(true);
+		objBtnNext.page = nPage +1;
+		
+		//현재페이지가 전체페이지갯수만큼이면 비활성화
+		if( nPage >= nTotalPageC) objBtnNext.set_enable(false);
+		objBtnNext.show();
+		nLeft = nLeft + nWidth; //left값 계산
+		
+	}
+		
+	//생성된 컴포넌트 갯수에 따른 div의 Width 조절
+	objDivPaging.set_width(nLeft);
+	
+	//가운데로
+	this.fvPageLeft = ((800 - nLeft) / 2);
+	this.fnSetCenter(this);
+	
+};
+
+/**
+ * @description  page 이동 함수
+*/
+this.fnMovePage = function(obj)
+{
+	var nPage   = nexacro.toNumber(obj.page); 					// 누른 페이지
+	var nRowNum = (nPage-1) * nexacro.toNumber(this.fvRecords);	// 시작 데이터rownum계산	
+	if(!this.gfnIsNull(this.fvObjGrid))    this.fvObjGrid.uPage = nPage;
+	
+	// callback함수호출
+	this.lookupFunc(this.fvFnCallback).call(nPage, this.fvRecords);
+};
+
+
+/**
+ * @description  pagingDiv가 가운데 오도록 이동
+*/
+this.fnSetCenter = function(obj)
+{
+    // DIV가 있을때만
+    if (this.isValidObject("divPage")) {	
+		var orgLeft = this.fvPageLeft;
+		var orgWidth = 800;	
+		var diffWidth = nexacro.toNumber(obj.getOffsetWidth()) - orgWidth;
+		this.divPage.move((parseFloat(orgLeft) + parseFloat(diffWidth/2)),5);
+    } 
+};
+
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+/**
+ * @description  페이지당 건수 변경
+*/
+this.cboCnt_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	var nPage   = 0;
+	var nRowNum = 0;
+	
+	if(!this.gfnIsNull(this.fvObjGrid))    this.fvObjGrid.uPage = 1;
+	
+	if(!this.gfnIsNull(this.fvFnCallback))
+	{
+		this.lookupFunc(this.fvFnCallback).call(1, e.postvalue);
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

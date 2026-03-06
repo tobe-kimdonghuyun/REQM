@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameMain" width="290" height="43" onload="frameTopDiv_onload" scrollbartype="none none" scrolltype="none">
+    <Layouts>
+      <Layout height="43" width="290" screenid="ScreenDeskTop">
+        <Button id="btn00" taborder="0" text="대입전형자료제출" left="116" top="7" width="169" height="30" initvalueid="ivBtnAccessibilityButton" cssclass="btn_TF_Send" visible="true" onclick="btn00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 검정고시
+*  @MenuPath    샘플
+*  @FileName 	frameTopDiv.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2023.01.19
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  	2023.01.19     	TOBESOFT 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frameTopDiv_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+
+}; 
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	if(errcd <= -1) return;
+}
+
+this.fnPopupCallback = function(context, responseParams, sender){
+}
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnSetButton = function()
+{
+	// TEXT 세팅
+	var sDetailGb = this.smfGetSubSystemDetailGb();
+	
+	if(sDetailGb=="101") // 원서접수
+	{
+		this.btn00.set_text("대입전형자료제출")
+	}
+	else if(sDetailGb=="102") // 대입전형자료제출
+	{
+		this.btn00.set_text("원서접수")	
+	}
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// TEXT 세팅
+	var sDetailGb = this.smfGetSubSystemDetailGb();
+	var sTemp = "";
+	if(sDetailGb=="101") sTemp = "102";
+	else if(sDetailGb=="102") sTemp = "101";
+	
+	this.fnRediectOtherSys("SQA",sTemp)
+};
+
+this.fnRediectOtherSys = function(sSubSys,sdetailSubSys)
+{
+	var sSelVal1 = sdetailSubSys;  // 서브시스템
+	var sSelVal2 = (sdetailSubSys=="101"?"원서접수":(sdetailSubSys=="102"?"대입전형자료제출":""));  // 서브시스템명
+	var sSelVal3 = this.smfGetCddcCode() ;  // 교육청코드
+	var sSelVal4 = this.smfGetCddcName();  // 교육청코드명
+
+	if(this.smfGetSubSystemGb()!=sSubSys)
+	{
+		this.smfSetSubSystemGb(sSubSys);
+	}
+
+	var objTopForm = this.getOwnerFrame().form.divTop.form;
+
+	objTopForm.fnSetPrivateProfile("CDDC_INFO",sSelVal1,sSelVal3,sSelVal4);
+	
+	// 교육청 변경 처리를 한다.
+	objTopForm.fnChangeCddc(sSelVal1,sSelVal2,sSelVal3,sSelVal4);
+	
+	objTopForm.divDispArea.form.resetScroll();
+	objTopForm.resetScroll();
+}]]></Script>
+    <Objects>
+      <Dataset id="dsListNotice">
+        <ColumnInfo>
+          <Column id="ntcMteId" type="string" size="256"/>
+          <Column id="ntcMteTitlNm" type="string" size="256"/>
+          <Column id="ntcMteCn" type="string" size="256"/>
+          <Column id="ntcMteClfCd" type="string" size="256"/>
+          <Column id="pstStsCd" type="string" size="256"/>
+          <Column id="fileRefrnId" type="string" size="256"/>
+          <Column id="ntcMteInqCnt" type="BIGDECIMAL" size="256"/>
+          <Column id="aplcnBgngYmd" type="DATE" size="8"/>
+          <Column id="aplcnEndYmd" type="DATE" size="8"/>
+          <Column id="aplcnBgngTm" type="DATE" size="8"/>
+          <Column id="aplcnEndTm" type="DATE" size="8"/>
+          <Column id="imptYn" type="string" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="rgtrDptNm" type="STRING" size="256"/>
+          <Column id="mdfrNm" type="STRING" size="256"/>
+          <Column id="mdfrDptNm" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="DATETIME" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="DATETIME" size="256"/>
+          <Column id="itnRcptBgngYmd" type="STRING" size="256" description="인터넷접수시작일자"/>
+          <Column id="itnRcptEndYmd" type="STRING" size="256" description="인터넷접수종료일자"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="ntcMteTitlNm">2024학년도 대입전형 자료수신 일정 안내</Col>
+            <Col id="ntcMteId">1</Col>
+            <Col id="ntcMteCn">내용1</Col>
+            <Col id="itnRcptBgngYmd">20221201</Col>
+            <Col id="itnRcptEndYmd">20221207</Col>
+          </Row>
+          <Row>
+            <Col id="ntcMteTitlNm">2024학년도 수시전형고등학교 학교 목록 안내</Col>
+            <Col id="ntcMteId">2</Col>
+            <Col id="ntcMteCn">내용2</Col>
+            <Col id="itnRcptBgngYmd">20111209</Col>
+            <Col id="itnRcptEndYmd">20111215</Col>
+          </Row>
+          <Row>
+            <Col id="ntcMteTitlNm">2024학년도 대입전형 자료수신 대학용 교육자료 및 사용자 설명서 안내</Col>
+            <Col id="ntcMteId">3</Col>
+            <Col id="ntcMteCn">내용3</Col>
+            <Col id="itnRcptBgngYmd">20111217</Col>
+            <Col id="itnRcptEndYmd">20111225</Col>
+          </Row>
+          <Row>
+            <Col id="ntcMteTitlNm">2024학년도 대입전형 자료수신 대학업무 담당자 온라인 교육 접속 정보 안내</Col>
+            <Col id="ntcMteCn">내용4</Col>
+            <Col id="ntcMteId">4</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmTechInquireList_Default" width="945" height="226" titletext="Format : Default" onload="frmTechInquireList_Default_onload">
+    <Layouts>
+      <Layout height="226" horizontalgap="0" mobileorientation="landscape" spacing="0px" tabletemplate="1* / 1*" verticalgap="0" width="945">
+        <ImageViewer id="imgProduct" taborder="0" left="0" top="22" width="28" height="36" accessibilityenable="false" tabstop="false"/>
+        <Static id="staProduct" taborder="1" left="imgProduct:5" top="20" height="40" width="80" cssclass="sta_WF_Product" accessibilitylabel="제품"/>
+        <Static id="staNo" taborder="2" left="staProduct:20" top="20" height="40" width="80" cssclass="sta_WF_ConNumber" accessibilitylabel="글번호"/>
+        <Static id="Static02_01" taborder="3" left="staNo:20" top="20" height="40" width="15" cssclass="sta_WF_TextDot" accessibilityenable="false"/>
+        <Static id="staDate" taborder="4" left="Static02_01:0" top="20" height="40" width="80" cssclass="sta_WF_ConNumber" accessibilitylabel="등록일"/>
+        <Static id="Static02_03" taborder="5" left="staDate:20" top="20" height="40" width="15" cssclass="sta_WF_TextDot" accessibilityenable="false"/>
+        <Static id="staBookmark" taborder="6" left="Static02_03:0" top="20" height="40" width="60" cssclass="sta_WF_ConBookmark" onclick="Static02_04_onclick" accessibilitylabel="북마크"/>
+        <Static id="Static02_05" taborder="7" left="staBookmark:20" top="20" height="40" width="15" cssclass="sta_WF_TextDot" accessibilityenable="false"/>
+        <Static id="staQcNo" taborder="8" left="Static02_05:0" top="20" height="40" width="80" cssclass="sta_WF_ConNumber" fittocontents="width" accessibilityenable="false"/>
+        <Static id="staQcStatus" taborder="9" left="staQcNo:20" top="25" height="30" width="62"/>
+        <Static id="staWaitTime" taborder="10" top="20" height="40" width="160" cssclass="sta_WF_ConNumberR" right="0"/>
+        <Static id="staTitle" taborder="11" left="0" top="75" height="40" right="20" cssclass="sta_WF_ConTitle" usedecorate="true" onclick="staTitle_onclick" accessibilityenable="false"/>
+        <Button id="btnTitle" taborder="12" left="0" top="75" width="925" height="40" cssclass="btn_WF_Focus" onclick="staTitle_onclick"/>
+        <Static id="staContent" taborder="13" left="0" top="120" height="82" right="20" cssclass="sta_WF_Content" wordWrap="char" usedecorate="true" accessibilitylabel="내용"/>
+        <Static id="Static03" taborder="14" left="0" height="1" right="0" cssclass="sta_WF_ConLine" top="staContent:23" accessibilityenable="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.InquireForm = this.parent.parent.parent.parent;
+
+this.frmTechInquireList_Default_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var sParentId = this.parent.id;
+	var objDs  = this.InquireForm.ds_hotlist;
+	this.fn_InitFormData(objDs, nexacro.toNumber(sParentId.replaceAll("divInquireList","")));	
+};
+
+
+this.fn_InitFormData = function(ds, nIdx)
+{
+	this.imgProduct.image = this.InquireForm.fnProductCodeIcon(ds.getColumn(nIdx, "PRODUCT_CODE"));
+	this.imgProduct.accessibilitylabel = this.InquireForm.fnProductCodeIconLabel(ds.getColumn(nIdx, "PRODUCT_CODE"));
+	this.staProduct.text = this.InquireForm.fnProductCode(ds.getColumn(nIdx, "PRODUCT_CODE"));
+	
+	this.staNo.text = "No." + ds.getColumn(nIdx, "QL_SEQ");
+	
+	var sDate = ds.getColumn(nIdx, "INSERT_DATE");
+	if(sDate.indexOf("/") > 0) 	sDate = sDate.replaceAll("/","-");
+	else				 	sDate = sDate.slice(0, 4) + "-" + sDate.slice(4, 6) + "-" + sDate.slice(6);
+	this.staDate.text = sDate;
+	this.staBookmark.text = ds.getColumn(nIdx, "user_cnt1");
+	
+	//접수상태
+	var qcNo = ds.getColumn(nIdx, "qc_no");
+	var statusCode = ds.getColumn(nIdx, "STATUS_CODE");	
+	if (!this.gfnIsNull(qcNo) && this.InquireForm.tobe_yn)	{
+		this.staQcNo.text = 'RC ' + qcNo;
+		this.staQcNo.accessibilityenable = true;
+	}
+	if (this.gfnIsNull(this.staQcNo.text)) this.staQcNo.width = 0;
+	this.resetScroll();
+	this.staQcStatus.cssclass = this.InquireForm.fn_statusCss(statusCode, qcNo);
+	this.staQcStatus.accessibilitylabel = this.InquireForm.fn_statusAccessibility(statusCode, qcNo);
+	this.staWaitTime.text = this.InquireForm.fn_statusWait(statusCode, qcNo, ds.getColumn(nIdx, "WAIT_TIME"));
+	if (this.gfnIsNull(this.staWaitTime.text)) this.staWaitTime.visible = false;
+	
+	//제목
+	var sTitle = ds.getColumn(nIdx, "SUBJECT");
+	this.staTitle.cssclass = this.InquireForm.fnStaCssclass(ds.getColumn(nIdx, "gridLevelImage"));
+	this.staTitle.text = this.gfn_makeEllipse(sTitle, this.staTitle);	
+	this.staTitle.tooltiptext = sTitle.replaceAll("<fc v='#fb6d3a'>","").replaceAll("<fc v='#ff0000'>","").replaceAll("</fc>","");
+	this.btnTitle.accessibilitylabel = "링크 제목 " + this.staTitle.tooltiptext;
+	if(this.staTitle.cssclass.replace("sta_WF_ConTitle", "").length > 0)  this.btnTitle.accessibilitylabel = "제목 재질문 " + this.staTitle.tooltiptext; 
+	
+	//내용
+	this.staContent.text = ds.getColumn(nIdx, "CONTENTS");
+}
+
+
+this.staTitle_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	var nIdx = nexacro.toNumber(this.parent.id[this.parent.id.length - 1]);
+	this.InquireForm.fn_InqstaTitle_onclick(this.InquireForm.ds_hotlist, nIdx);
+};
+
+this.sta_WF_ConTitle = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+};
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

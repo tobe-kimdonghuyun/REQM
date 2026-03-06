@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="TRACER_WAIT" width="600" height="230" stepalign="center bottom" onload="TRACER_WAIT_onload" ontimer="TRACER_WAIT_ontimer" edge="" background="RGBA(0,0,0,0.60)" cursor="pointer" font="normal 600 10pt/normal &quot;Arial&quot;">
+    <Layouts>
+      <Layout height="210" mobileorientation="landscape" width="600" stepcount="0">
+        <Div id="Div00" taborder="0" text="" left="0.00%" top="0.00%" height="230" background="#d6e0e9" border="0px solid #ee403d" borderRadius="3px" positionstep="0" width="600" cursor="default">
+          <Layouts>
+            <Layout>
+              <Div id="Div00" taborder="0" text="" left="9" top="9" width="580" height="210" background="#ffffff" cursor="default">
+                <Layouts>
+                  <Layout>
+                    <ImageViewer id="ImageViewer00" taborder="0" text="" left="455" top="6" width="117" height="49" onclick="Div00_Div00_ImageViewer00_onclick" stretch="fixaspectratio" border="0px none" image="url('theme://images/img_TF_Neis.png')"/>
+                    <Static id="txtWait" taborder="1" text="접속 대기" left="95" top="20" width="110" height="26" fittocontents="both" textAlign="left" onclick="txtWait_onclick" verticalAlign="middle" font="normal 800 23px/normal &quot;맑은 고딕&quot;" color="#ee403d"/>
+                    <Static id="txtWait00" taborder="2" text="중입니다." left="211" top="21" width="108" height="26" fittocontents="both" textAlign="left" onclick="txtWait_onclick" verticalAlign="middle" font="normal 800 23px/normal &quot;맑은 고딕&quot;" color="#333333"/>
+                    <Static id="txtWait00_00" taborder="3" text="서비스" left="21" top="21" width="69" height="26" fittocontents="both" textAlign="left" onclick="txtWait_onclick" verticalAlign="middle" font="normal 800 23px/normal &quot;맑은 고딕&quot;" color="#333333"/>
+                    <Static id="txt01" taborder="4" text="접속 대기 인원" left="21" top="71" width="118" height="30" textAlign="left" verticalAlign="middle" font="normal 15px/normal &quot;Arial&quot;"/>
+                    <Static id="txtWaitCnt00" taborder="5" text="현재 접속량이 많아 대기중입니다.&#13;&#10;순차적으로 서비스에 자동 접속되오니 잠시만 기다려주세요." left="21" top="151" width="392" height="40" onclick="Div00_Div00_txtWaitCnt_onclick" textAlign="left" verticalAlign="middle" font="normal 13px/19px &quot;Arial&quot;"/>
+                    <Static id="waitCnt" taborder="6" text="0" left="147" top="71" width="74" height="30" textAlign="right" verticalAlign="middle" font="normal 600 15px/normal &quot;Arial&quot;" color="#ee403d"/>
+                    <Static id="txtWaitCnt02" taborder="7" text="명" left="226" top="72" width="15" height="30" textAlign="left" verticalAlign="middle" font="normal 15px/normal &quot;Arial&quot;"/>
+                    <Div id="Div00" taborder="8" text="" left="21" top="101" width="540" height="10" background="#D9DDF2" border="0px none">
+                      <Layouts>
+                        <Layout>
+                          <Static id="loadingBar" taborder="0" text="" left="-700" top="0" width="700" height="10" background="#2C48CE" border="0px none"/>
+                          <!--<Static id="loadingBar2" taborder="0" text="" left="-2100" top="0" width="700" height="10" background="#ee403d" border="0px none"/>-->
+                        </Layout>
+                      </Layouts>
+                    </Div>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "lib::trc_script.xjs";
+
+this.i = 0;
+
+this.errorSearchCnt = 0;
+
+// API에 필요한 변수 모음
+this.wcHost = "";
+this.wcIp = "";
+this.wcLoginId = "";
+this.wcPort = "";
+this.wcPageUrl = "";
+this.wcSubmitForm = "";
+this.wcSubmitFrame = null;
+//
+
+//Transaction 결과 변수
+this.host = "";
+this.ip = "";
+this.loginId = "";
+this.port = "";
+this.pageUrl = "";
+this.isWait = "";
+this.waitCnt = "";
+//
+
+//순번대기 화면 로드
+this.TRACER_WAIT_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.Div00.form.Div00.form.waitCnt.set_text(this.parent.waitCnt);
+	this.setTimer(1, 1000);
+	
+	//로딩바 애니메이션 효과
+	var bar = this.Div00.form.Div00.form.Div00.form.loadingBar;
+	var toWidth = bar.width;
+	var toLeft = this.width;
+	
+	var aniObj = new nexacro.Animation("Ani00", this);
+	this.addChild("Ani00", aniObj);
+	
+	this.Ani00.addTarget("AniItem00", bar, "left:"+toLeft+", width:" + toWidth);
+	//this.Ani00.set_direction("alternate");
+	this.Ani00.set_easing("linear");
+	this.Ani00.set_duration(3000);
+	this.Ani00.set_loop(true);
+	this.Ani00.play();
+	//
+};
+
+//타이머가 실행 될 때마다 실행되는 메소드
+//스크립트 메소드에 있는 현재 순번 정보를 받아온다.
+this.TRACER_WAIT_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if (this.parent.host == null || this.parent.host == "undefined")
+	{
+		this.wcHost = "-";
+	}
+	else
+	{
+		this.wcHost = this.parent.host;
+	}
+	
+	if (this.parent.ip == null || this.parent.ip == "undefined")
+	{
+		this.wcIp = "-";
+	}
+	else
+	{
+		this.wcIp = this.parent.ip;
+	}
+	
+	if (this.parent.loginId == null || this.parent.loginId == "undefined")
+	{
+		this.wcLoginId = "-";
+	}
+	else
+	{
+		this.wcLoginId = this.parent.loginId;
+	}
+	
+	if (this.parent.port == null || this.parent.port == "undefined")
+	{
+		this.wcPort = "-";
+	}
+	else
+	{
+		this.wcPort = this.parent.port;
+	}
+	
+	if (this.parent.pageUrl == null || this.parent.pageUrl == "undefined")
+	{
+		this.wcPageUrl = "-";
+	}
+	else
+	{
+		this.wcPageUrl = this.parent.pageUrl;
+	}
+	
+	this.WC_ModalServerData(this.wcHost, this.wcIp, this.wcPort, this.wcLoginId, this.wcPageUrl, this.errorSearchCnt);
+};
+
+//순번대기의 닫기 버튼을 눌렀을 경우 이벤트
+this.Div00_Div00_btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close("N");
+};
+
+//현재 순번에 대한 Transaction 결과를 받는 Callback 함수
+this.WC_ModalServerCallback = function(strId, nErrorCode, strErrorMsg) 
+{
+	//추후 여기서 서버 데이터를 받아 판단하여 남은 대기카운트를 표시한다.
+	if(nErrorCode < 0 || strId != "ModalWCWaitTransaction")
+	{
+		if (this.errorSearchCnt < 5)
+		{
+			this.errorSearchCnt = this.errorSearchCnt + 1;
+			
+			if (this.parent.host == null || this.parent.host == "undefined")
+			{
+				this.wcHost = "-";
+			}
+			else
+			{
+				this.wcHost = this.parent.host;
+			}
+			
+			if (this.parent.ip == null || this.parent.ip == "undefined")
+			{
+				this.wcIp = "-";
+			}
+			else
+			{
+				this.wcIp = this.parent.ip;
+			}
+			
+			if (this.parent.loginId == null || this.parent.loginId == "undefined")
+			{
+				this.wcLoginId = "-";
+			}
+			else
+			{
+				this.wcLoginId = this.parent.loginId;
+			}
+			
+			if (this.parent.port == null || this.parent.port == "undefined")
+			{
+				this.wcPort = "-";
+			}
+			else
+			{
+				this.wcPort = this.parent.port;
+			}
+			
+			if (this.parent.pageUrl == null || this.parent.pageUrl == "undefined")
+			{
+				this.wcPageUrl = "-";
+			}
+			else
+			{
+				this.wcPageUrl = this.parent.pageUrl;
+			}
+			
+			this.WC_ModalServerData(this.wcHost, this.wcIp, this.wcPort, this.wcLoginId, this.wcPageUrl, this.errorSearchCnt);
+		}
+		else
+		{
+			this.close("Y");
+		}
+	}
+	else
+	{
+		//Transaction 결과 값
+		var host = this.host;
+		var ip = this.ip;
+		var loginId = this.loginId;
+		var port = this.port;
+		var pageUrl = this.pageUrl;
+		var isWait = this.isWait;
+		var waitCnt = this.waitCnt;
+		//
+		
+		this.errorSearchCnt = 0;
+		
+		this.Div00.form.Div00.form.waitCnt.set_text(waitCnt);
+		
+		this.i = this.i + 1;
+		
+ 		if (isWait == "F")
+ 		{
+ 			this.close("Y");
+ 		}
+	}
+	
+};
+
+]]></Script>
+  </Form>
+</FDL>

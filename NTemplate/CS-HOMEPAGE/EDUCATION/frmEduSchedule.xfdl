@@ -1,0 +1,818 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="frmEduSchedule" classname="WorkFrame" left="0" top="0" width="1300" height="1820" scrollbars="none" onload="frmEduSchedule_onload" titletext="교육일정" onclose="frmEduSchedule_onclose">
+    <Layouts>
+      <Layout>
+        <Tab id="tabProduct" taborder="0" tabindex="0" left="0" top="0" width="1300" height="66" cssclass="tab_WF_product" onchanged="tabProduct_onchanged" initvalueid="iv_Tab0" accessibilitylabel="교육일정">
+          <Tabpages>
+            <Tabpage id="Tabpage1" text="Nexacro N" accessibilityenable="false">
+              <Layouts>
+                <Layout/>
+              </Layouts>
+            </Tabpage>
+            <Tabpage id="Tabpage2" text="nexacro 17" accessibilityenable="false"/>
+            <Tabpage id="Tabpage3" text="nexacro 14" accessibilityenable="false"/>
+            <Tabpage id="Tabpage4" text="XPLATFORM" accessibilityenable="false"/>
+          </Tabpages>
+        </Tab>
+        <Static id="st_subTitle" taborder="1" text="교육일정" left="0" top="91" width="176" height="30" cssclass="sta_WF_eduTitle"/>
+        <Button id="btn_month1" taborder="2" left="10" top="170" width="30" height="30" cssclass="btn_MF_arrowL" onclick="fn_selectYYMM" visible="false" accessibilitylabel="이전달"/>
+        <Static id="staYearMonth" taborder="3" text="2022년 01월" left="112" top="170" width="140" height="30" cssclass="sta_WF_eduDate" accessibilitylabel="달력"/>
+        <Button id="btn_month2" taborder="4" left="345" top="170" width="30" height="30" cssclass="btn_MF_arrowR" onclick="fn_selectYYMM" accessibilitylabel="다음달"/>
+        <Grid id="Grid_calendar" taborder="5" left="0" top="220" width="385" height="390" cssclass="grd_WF_schedule" binddataset="ds_data" autofittype="col" scrolltype="none" selecttype="cell" oncellclick="Grid_calendar_oncellclick" accessibilitylabel="교육일정">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="55"/>
+                <Column size="55"/>
+                <Column size="55"/>
+                <Column size="55"/>
+                <Column size="55"/>
+                <Column size="55"/>
+                <Column size="55"/>
+              </Columns>
+              <Rows>
+                <Row size="55" band="head"/>
+                <Row size="55"/>
+              </Rows>
+              <Band id="head" accessibilityenable="false">
+                <Cell text="Sun" color="#ff5131" accessibilitylabel="일요일"/>
+                <Cell col="1" text="Mon" accessibilitylabel="월요일"/>
+                <Cell col="2" text="Tue" accessibilitylabel="화요일"/>
+                <Cell col="3" text="Wed" accessibilitylabel="수요일"/>
+                <Cell col="4" text="Thu" accessibilitylabel="목요일"/>
+                <Cell col="5" text="Fri" accessibilitylabel="금요일"/>
+                <Cell col="6" text="Sat" color="#0662cd" accessibilitylabel="토요일"/>
+              </Band>
+              <Band id="body" accessibilityenable="false">
+                <Cell text="bind:COL_D0" color="#ff5131" accessibilityenable="expr:dataset.getColumn(currow, this.col) == undefined ? 'false':'true'"/>
+                <Cell col="1" text="bind:COL_D1" accessibilityenable="expr:dataset.getColumn(currow, this.col) == undefined ? 'false':'true'"/>
+                <Cell col="2" text="bind:COL_D2" accessibilityenable="expr:dataset.getColumn(currow, this.col) == undefined ? 'false':'true'"/>
+                <Cell col="3" text="bind:COL_D3" accessibilityenable="expr:dataset.getColumn(currow, this.col) == undefined ? 'false':'true'"/>
+                <Cell col="4" text="bind:COL_D4" accessibilityenable="expr:dataset.getColumn(currow, this.col) == undefined ? 'false':'true'"/>
+                <Cell col="5" text="bind:COL_D5" accessibilityenable="expr:dataset.getColumn(currow, this.col) == undefined ? 'false':'true'"/>
+                <Cell col="6" text="bind:COL_D6" color="#0662cd" accessibilityenable="expr:dataset.getColumn(currow, this.col) == undefined ? 'false':'true'"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static00_00_00" taborder="6" left="0" top="Grid_calendar:50" height="162" cssclass="sta_WF_viewDetail" wordWrap="char" usedecorate="true" width="425"/>
+        <Radio id="radSort" taborder="7" left="440" top="87" width="330" height="40" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" cssclass="rdo_WF_search2" index="0" text="제목+내용" value="0" onitemchanged="radSort_onitemchanged" visible="false" initvalueid="iv_Radio0">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">0</Col>
+                <Col id="datacolumn">과정별</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">1</Col>
+                <Col id="datacolumn">일자별</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Static id="sta_eduInfo" taborder="8" text="교육과정소개 동영상" top="91" width="206" height="30" cssclass="sta_WF_eduMovie" right="0" onclick="sta_eduInfo_onclick" fittocontents="width" visible="false"/>
+        <Grid id="grd_eduList" taborder="9" left="440" top="141" height="629" right="0" binddataset="ds_EduSchedule" autofittype="col" oncelldblclick="grd_eduList_oncelldblclick" nodatatext="교육일정이 없습니다." accessibilitylabel="교육일정" selecttype="cell" cellclickbound="cell">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="250"/>
+                <Column size="100"/>
+                <Column size="150"/>
+                <Column size="100"/>
+                <Column size="142"/>
+                <Column size="48"/>
+              </Columns>
+              <Rows>
+                <Row size="55" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head" accessibilityenable="false">
+                <Cell text="교육방식"/>
+                <Cell col="1" colspan="2" text="교육과정"/>
+                <Cell col="3" text="교육회차"/>
+                <Cell col="4" text="교육일자"/>
+                <Cell col="5" text="교육기간"/>
+                <Cell col="6" text="신청인원/교육정원"/>
+                <Cell col="7" text="지역"/>
+              </Band>
+              <Band id="body" accessibilityenable="false">
+                <Cell text="bind:EDU_METHOD_NAME" suppress="1" suppressalign="middle"/>
+                <Cell col="1" text="bind:EDU_TYPE_NAME" suppress="1"/>
+                <Cell col="2" text="bind:EDU_TYPE_DET_NAME" suppress="2" textAlign="left"/>
+                <Cell col="3" text="bind:ES_SEQ" suppress="0"/>
+                <Cell col="4" text="bind:START_DATE" displaytype="date"/>
+                <Cell col="5" text="expr:comp.parent.fn_getEduDay(START_DATE, END_DATE)"/>
+                <Cell col="6" text="expr:ICOUNT &gt;= ONLINE_NUM || CURR_DATE &gt;= START_DATE ? &quot;신청마감&quot; : KORCHAM_FLAG == &quot;1&quot; ? &quot;대한상공회의소&quot; : ICOUNT +&quot; / &quot;+ ONLINE_NUM" cssclass="expr:ICOUNT &gt;= ONLINE_NUM || CURR_DATE &gt;= START_DATE ? 'grd_WF_schRed':'grd_WF_schBlue'"/>
+                <Cell col="7" text="bind:EDU_AREA_NAME" suppress="2" suppressalign="middle"/>
+              </Band>
+            </Format>
+            <Format id="format_date">
+              <Columns>
+                <Column size="100"/>
+                <Column size="150"/>
+                <Column size="135"/>
+                <Column size="163"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="160"/>
+              </Columns>
+              <Rows>
+                <Row size="55" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="교육방식"/>
+                <Cell col="1" text="교육일자"/>
+                <Cell col="2" colspan="2" text="교육과정"/>
+                <Cell col="4" text="교육기간"/>
+                <Cell col="5" text="교육회차"/>
+                <Cell col="6" text="신청인원/교육정원"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:EDU_METHOD_NAME" suppress="1" suppressalign="middle"/>
+                <Cell col="1" displaytype="date" text="bind:START_DATE"/>
+                <Cell col="2" text="bind:EDU_TYPE_DET_NAME"/>
+                <Cell col="3" text="bind:EDU_TYPE_DET_NAME" suppress="1"/>
+                <Cell col="4" text="expr:comp.parent.fn_getEduDay(START_DATE, END_DATE)"/>
+                <Cell col="5" text="bind:ES_SEQ" suppress="0"/>
+                <Cell col="6" text="expr:ICOUNT &gt;= ONLINE_NUM || CURR_DATE &gt;= START_DATE ? &quot;신청마감&quot; : ICOUNT +&quot; / &quot;+ ONLINE_NUM" cssclass="expr:ICOUNT &gt;= ONLINE_NUM || CURR_DATE &gt;= START_DATE ? 'grd_WF_schRed':'grd_WF_schBlue'"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="sta_notice" taborder="10" text="2024년 6월 부터 동영상 교육으로 대체 합니다.  " left="580" top="200" width="460" height="90" usedecorate="true" visible="false" onclick="sta_notice_onclick" cssclass="sta_WF_eduMovie" background="none no-repeat" verticalAlign="top"/>
+        <Button id="btnRegistration" taborder="11" text="신청하기" top="722" width="150" height="65" cssclass="btn_WF_list" right="0" onclick="btnRegistration_onclick" enable="true"/>
+        <Button id="btnMovie" taborder="12" left="sta_notice:10" top="200" width="210" height="30" cssclass="btn_MF_tag" visible="false" fittocontents="width" accessibilitydescription="링크" text="동영상 바로가기" onclick="btnMovie_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_EduSchedule" onrowposchanged="ds_EduSchedule_onrowposchanged">
+        <ColumnInfo>
+          <Column id="EDU_PRODUCT_CODE" type="string" size="255"/>
+          <Column id="EDU_PRODUCT_NAME" type="string" size="255"/>
+          <Column id="EDU_PRODUCT_NAME_ENG" type="string" size="255"/>
+          <Column id="ES_SEQ" type="int" size="11"/>
+          <Column id="START_DATE" type="string" size="255"/>
+          <Column id="END_DATE" type="string" size="255"/>
+          <Column id="EDU_TYPE" type="string" size="255"/>
+          <Column id="EDU_TYPE_DET" type="string" size="255"/>
+          <Column id="EDU_TYPE_DET_NAME" type="string" size="255"/>
+          <Column id="EDU_AREA_CODE" type="string" size="255"/>
+          <Column id="EDU_AREA_NAME" type="string" size="255"/>
+          <Column id="ONLINE_OPEN_FLAG" type="string" size="255"/>
+          <Column id="ONLINE_NUM" type="int" size="11"/>
+          <Column id="SALES_NUM" type="int" size="11"/>
+          <Column id="ICOUNT" type="int" size="11"/>
+          <Column id="CURR_DATE" type="string" size="255"/>
+          <Column id="START_DATE_MONTH" type="string" size="255"/>
+          <Column id="CHK" type="string" size="255"/>
+          <Column id="EDU_METHOD" type="STRING" size="256"/>
+          <Column id="EDU_METHOD_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_data" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="COL_D0" type="STRING" size="256"/>
+          <Column id="COL_D1" type="STRING" size="256"/>
+          <Column id="COL_D2" type="STRING" size="256"/>
+          <Column id="COL_D3" type="STRING" size="256"/>
+          <Column id="COL_D4" type="STRING" size="256"/>
+          <Column id="COL_D5" type="STRING" size="256"/>
+          <Column id="COL_D6" type="STRING" size="256"/>
+          <Column id="COL_YMD0" type="STRING" size="256"/>
+          <Column id="COL_YMD1" type="STRING" size="256"/>
+          <Column id="COL_YMD2" type="STRING" size="256"/>
+          <Column id="COL_YMD3" type="STRING" size="256"/>
+          <Column id="COL_YMD4" type="STRING" size="256"/>
+          <Column id="COL_YMD5" type="STRING" size="256"/>
+          <Column id="COL_YMD6" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="COL_D6">1</Col>
+          </Row>
+          <Row>
+            <Col id="COL_D0">2</Col>
+            <Col id="COL_D1">3</Col>
+            <Col id="COL_D2">4</Col>
+            <Col id="COL_D3">5</Col>
+            <Col id="COL_D4">6</Col>
+            <Col id="COL_D5">7</Col>
+            <Col id="COL_D6">8</Col>
+          </Row>
+          <Row>
+            <Col id="COL_D0">9</Col>
+            <Col id="COL_D1">10</Col>
+            <Col id="COL_D2">11</Col>
+            <Col id="COL_D3">12</Col>
+            <Col id="COL_D4">13</Col>
+            <Col id="COL_D5">14</Col>
+            <Col id="COL_D6">15</Col>
+          </Row>
+          <Row>
+            <Col id="COL_D0">16</Col>
+            <Col id="COL_D1">17</Col>
+            <Col id="COL_D2">18</Col>
+            <Col id="COL_D3">19</Col>
+            <Col id="COL_D4">20</Col>
+            <Col id="COL_D5">21</Col>
+            <Col id="COL_D6">22</Col>
+          </Row>
+          <Row>
+            <Col id="COL_D0">23</Col>
+            <Col id="COL_D1">24</Col>
+            <Col id="COL_D2">25</Col>
+            <Col id="COL_D3">26</Col>
+            <Col id="COL_D4">27</Col>
+            <Col id="COL_D5">28</Col>
+            <Col id="COL_D6">29</Col>
+          </Row>
+          <Row>
+            <Col id="COL_D0">30</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item2" compid="tabQnaExpr.tabpage1.cmbProcCate" propid="value" datasetid="ds_SearchParam" columnid="BusinessSection"/>
+      <BindItem id="item3" compid="tabQnaExpr.tabpage1.cmbSearchField" propid="value" datasetid="ds_SearchParam" columnid="searchfield"/>
+      <BindItem id="item4" compid="tabQnaExpr.tabpage1.edtKeyword" propid="value" datasetid="ds_SearchParam" columnid="keyword"/>
+      <BindItem id="item5" compid="tabQnaExpr.tabpage1.Combo02" propid="value" datasetid="ds_SearchParam" columnid="searchgubun"/>
+      <BindItem id="item6" compid="tabQnaExpr.tabpage1.chkBoxResearch" propid="value" datasetid="ds_SearchParam" columnid="search_resort"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/**
+*  교육일정
+*
+*  @MenuPath 
+*  @FileName 		EDUCATION::frmEduSchedule.xfdl 
+*  @Creator 		김광호
+*  @CreateDate 		2022.01.01
+*  @LastModifier  
+*  @LastModifyDate  
+*  @Version 		1.0
+*  @Outline 		교육일정
+*  @Desction 
+************** 소스 수정 이력 *************************************************
+*    date          Modifier            Description
+*******************************************************************************
+*  2022.01.01      김광호	           최초 생성 
+*******************************************************************************
+*/
+
+
+//이 값에 따라 서비스 쿼리 실행이 달라짐
+this.sFormType = "frmEduSchedule";
+this.fv_prodCd = "NPN";
+this.fv_prodNm = "넥사크로N";
+
+this.fv_eduY = "";	//현재 선택된 년도
+this.fv_eduM = "";	//현재 선택된 월
+
+this.fv_eduClosed = false;	//신청 마감여부(true:마감 false:신청)
+
+this.mBtnTop;
+
+this.frmEduSchedule_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 공통측에서 요청한 내용임 : 프레임 사이즈가 다른 화면에 갔다오면 변경되어
+	// 문자가 깨질수 있으므로 초기화 해달라고함
+//  	this.set_height(1350);      		
+//  	this.parent.set_height(1350);         
+//  	nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, 1045);
+ 	
+	this.fn_LeftBottomMessage();    
+	this.set_height(1550);      		   
+	this.parent.set_height(1550);            
+	nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, 1290);
+	
+	
+	//Today
+    var objDate = new Date();    
+	var currY = objDate.getFullYear().toString();
+	var currM = (objDate.getMonth()+1).toString().padLeft(2,"0");
+	var currD = objDate.getDate().toString().padLeft(2,"0");			
+
+	this.fv_eduY = currY;
+	this.fv_eduM = currM;
+	
+
+
+	//다음 월
+    objDate = new Date(currY + "-" + currM + "-" + "01");
+	objDate.setMonth(objDate.getMonth() + 1);
+	var nextY = objDate.getFullYear().toString();
+	var nextM = (objDate.getMonth()+1).toString().padLeft(2,"0");
+
+	//다다음 월(
+	objDate.setMonth(objDate.getMonth() + 1);	//또 다음달
+	var sTempY = objDate.getFullYear().toString();
+	var sTempM = (objDate.getMonth()+1).toString().padLeft(2,"0");
+
+	//이번달 버튼 userdata set
+	this.btn_month1.userDataY = currY;
+	this.btn_month1.userDataM = currM;
+	
+	//다음달 버튼 userdata set
+	this.btn_month2.userDataY = nextY;
+	this.btn_month2.userDataM = nextM;		
+	
+
+ 
+	//왼쪽 그리드 칼렌더 그리기		   
+    this.fn_drawCalendar(this.ds_data, this.Grid_calendar, currY, currM);
+	this.fn_setCalendarDay(currY+currM+currD);
+
+	this.fn_CallTrans();    
+	
+
+	//오늘 날짜 구하기
+	var mDate = this.gfnGetDate();
+	if(mDate != nexacro.getPrivateProfile("mTodayPop1")){
+		this.fn_NoticePop();		//팝업 함수 호출
+	}
+	
+	//페이지 번호에 따라 탭 변경
+	var nPage = nexacro.getApplication().gv_mainFrame.param.page;
+	this.tabProduct.set_tabindex(nPage-1);
+}
+
+this.fn_CallTrans = function() 
+{  
+	// 인수 설정 
+	var strArgs = "RTYPE=XML DB='CS'"
+	            + " sessionChk=false"
+	            + " nationCd='"    + nexacro.getApplication().gv_NationCd    + "'"
+	            + " JSESSIONID='"  + nexacro.getApplication().JSESSIONID     + "'"
+	            + " sFormType='"    + this.sFormType            + "'";
+				
+	var strUrl = "SVC_JSP::Next_JSP/Education/SearchEduSchedule.jsp?"; 
+	var strDsInput = "";
+	var strDsOutput = "ds_EduSchedule=output1";  
+
+	this.com_TransSend("EduSchedule",strUrl,strDsInput,strDsOutput,strArgs,"fn_callBack");
+	
+	//신청하기 버튼 높이 수정
+	this.mBtnTop = this.Static00_00_00.getOffsetTop()+this.Static00_00_00.getOffsetHeight()-this.btnRegistration.getOffsetHeight()-this.btnRegistration.getOffsetHeight();
+	this.btnRegistration.set_top(this.mBtnTop);
+}
+
+//콜백 함수
+this.fn_callBack = function(svcId, errCd, errMsg)
+{
+
+
+
+	//this.ds_EduSchedule.set_keystring("S:EDU_PRODUCT_CODE+EDU_TYPE_DET+START_DATE");		
+	this.ds_EduSchedule.set_keystring("S:-EDU_METHOD+EDU_TYPE_DET+START_DATE");		
+	
+ 	this.ds_EduSchedule.filter("EDU_PRODUCT_CODE == '" + this.fv_prodCd + "' && START_DATE.indexOf('" + (this.fv_eduY+this.fv_eduM) +"') >= 0");
+   
+ 	
+ 	var nHeadSize = this.grd_eduList.getRealRowFullSize("head");
+ 	var nBodySize = this.grd_eduList.getRealRowFullSize("body");
+ 	this.grd_eduList.set_height(nHeadSize+nBodySize+2);
+   
+	this.resetScroll();
+	
+	var mBtnMinTop = this.grd_eduList.getOffsetHeight()+this.grd_eduList.getOffsetTop();
+	if(this.mBtnTop < mBtnMinTop){
+		this.btnRegistration.set_top(mBtnMinTop+15);
+	}else{
+		this.btnRegistration.set_top(this.mBtnTop);
+	}
+	this.fn_CalPocus();
+}
+
+//Grid에서 호출
+this.fn_getEduDay = function(sStartDate, sEndDate)
+{
+    var vFromDate = new Date(parseInt(sEndDate.substring(0,4),  10), parseInt(sEndDate.substring(4,6)-1,  10), parseInt(sEndDate.substring(6,8), 10));
+    var vToDate = new Date(parseInt(sStartDate.substring(0,4),  10), parseInt(sStartDate.substring(4,6)-1,  10), parseInt(sStartDate.substring(6,8), 10));
+	var nDiffDate = parseInt((vFromDate - vToDate)/(1000*60*60*24));
+
+    return ( nDiffDate + 1) + "Day";
+
+}
+
+//년월 선택시
+this.fn_selectYYMM = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	//접근성. visible=false되면서 초점이 Tab으로 이동하는 것을 방지하기 위함.
+	this.staYearMonth.setFocus();
+	
+	obj.set_visible(false);
+	if (obj.name == "btn_month1")
+	{
+		this.btn_month2.set_visible(true);
+	}
+	else
+	{
+		this.btn_month1.set_visible(true);
+	}
+	
+	this.fv_eduY = obj.userDataY;
+	this.fv_eduM = obj.userDataM;
+	this.fn_dataFilter(this.fv_eduY+this.fv_eduM, this.fv_prodCd);
+	
+	//왼쪽 그리드 칼렌더 그리기		   
+    this.fn_drawCalendar(this.ds_data, this.Grid_calendar, this.fv_eduY, this.fv_eduM);
+	this.fn_setCalendarDay(this.fv_eduY+this.fv_eduM+"01");
+	
+	//현재 달력이면 날짜 표시
+	if(this.fv_eduM== this.gfnGetDate().substr(4,2)){
+		this.fn_CalPocus();
+	}
+	
+	this.fn_notice(this.fv_prodCd, this.fv_eduY+this.fv_eduM);
+}
+
+//제품, 년월 버튼 선택시 제품 & 년월에 따른 필터
+this.fn_dataFilter = function(sYYMM, sProd)
+{
+	//이미 필터한 조건이면 하지말자...
+	var nRow = this.ds_EduSchedule.findRowExpr("EDU_PRODUCT_CODE == '" + sProd + "' && START_DATE.indexOf('" + sYYMM +"') >= 0");
+	if(nRow > -1)	return;
+	
+	this.ds_EduSchedule.filter("EDU_PRODUCT_CODE == '" + sProd + "' && START_DATE.indexOf('" + sYYMM +"') >= 0");
+
+ 	var nHeadSize = this.grd_eduList.getRealRowFullSize("head");
+ 	var nBodySize = this.grd_eduList.getRealRowFullSize("body");
+ 	this.grd_eduList.set_height(nHeadSize+nBodySize+2);
+	
+	
+	var mBtnMinTop = this.grd_eduList.getOffsetHeight()+this.grd_eduList.getOffsetTop();
+	if(this.mBtnTop < mBtnMinTop){
+		this.btnRegistration.set_top(mBtnMinTop+15);
+	}else{
+		this.btnRegistration.set_top(this.mBtnTop);
+	}
+}
+
+/* 그리드 칼렌더 ***************************************/
+this.fn_drawCalendar = function(objDS, objGrid, sYear, sMonth)
+{
+	var nYear  = parseInt(sYear, 10);
+    var nMonth = parseInt(sMonth, 10);
+    var nCurrLastDate = this.gfnGetLastDate(nYear+String(nMonth).padStart(2,'0')).substr(6,2);	//이번달 마지막 일
+
+    var nStartDay = new Date(sYear  + "-" + sMonth + "-" + "01").getDay();	//2019-06-01 요일값
+    var nLastDay  = new Date(sYear  + "-" + sMonth + "-" + nCurrLastDate).getDay();	//2019-06-30 요일값
+						
+    objDS.clearData();
+    
+    var day;
+    var nRow = objDS.addRow();
+    for(var i=1, day=nStartDay; i<=nCurrLastDate; i++ )
+    {
+        objDS.setColumn(nRow, "COL_D"+day, i);
+        objDS.setColumn(nRow, "COL_YMD"+day, sYear+sMonth+i.toString().padLeft(2,"0"));
+
+        day = (day + 1) % 7;
+        if (day == 0 && i != nCurrLastDate){
+            nRow = objDS.addRow();
+        }        
+    }
+ 
+	this.staYearMonth.set_text(sYear + "년 " + nMonth + "월");
+	this.fn_setStyle();
+	
+ 	var nHeadSize = this.Grid_calendar.getRealRowFullSize("head");
+ 	var nBodySize = this.Grid_calendar.getRealRowFullSize("body");
+ 	this.Grid_calendar.set_height(nHeadSize+nBodySize+2);
+	
+}
+
+
+//칼렌더 일자 색상 변경 Expr
+this.fn_setStyle = function()
+{
+	for(var i=0; i<this.Grid_calendar.getCellCount("Body"); i++)
+	{
+		this.Grid_calendar.setCellProperty("Body", i, "cssclass", "EXPR:comp.parent.fn_cellCssClass(COL_YMD"+i+")");
+		this.Grid_calendar.setCellProperty("Body", i, "accessibilitylabel", "EXPR:comp.parent.fn_cellAccessibilitylabel(COL_YMD"+i+", COL_D"+i+")");
+	}
+}
+
+// 교육 일정 있는 날 셀 cssClass 변경
+this.fn_cellCssClass = function(sYMD)
+{
+	if (this.gfnIsNull(sYMD))
+	{
+		return;
+	}
+	var nRow = this.ds_EduSchedule.findRowExpr("START_DATE == '" + sYMD + "' && EDU_PRODUCT_CODE == '" + this.fv_prodCd + "'");
+
+	if(nRow > -1){
+		return "grd_WF_schDay";
+	}
+	else{
+		return "";
+	}
+}
+
+// 교육 일정 있는 날 셀 접근성 속성 적용
+this.fn_cellAccessibilitylabel = function(sYMD, sDay)
+{
+	if (this.gfnIsNull(sYMD))
+	{
+		return;
+	}
+	var nRow = this.ds_EduSchedule.findRowExpr("START_DATE == '" + sYMD + "' && EDU_PRODUCT_CODE == '" + this.fv_prodCd + "'");
+	
+	if(nRow > -1){
+		return sDay + " 교육일정 있음";
+	}
+	else{
+		return "";
+	}
+}
+
+
+//그리드 칼런더 선택시 교육 리스트 선택
+this.Grid_calendar_oncellclick = function(obj:Grid, e:nexacro.GridClickEventInfo)
+{
+	this.fn_selectEduList(e.row, e.cell);	
+}
+
+
+//교육 목록 필터 함수
+this.fn_selectEduList = function(nRow, nCell)
+{
+	var sDate = this.ds_data.getColumn(nRow, "COL_YMD"+nCell);
+	var nRow = this.ds_EduSchedule.findRowExpr("START_DATE == '" + sDate + "' || END_DATE == '" + sDate + "'" );
+	this.ds_EduSchedule.set_rowposition(nRow);
+}
+
+//데이터셋 변경 이벤트
+this.ds_EduSchedule_onrowposchanged = function(obj:Dataset, e:nexacro.DSRowPosChangeEventInfo)
+{
+	if(e.reason == 51 && e.newrow > -1){
+		var sDate = obj.getColumn(e.newrow, "START_DATE");
+		this.fn_setCalendarDay(sDate);			//클릭한 교육 캘린더에 표시
+	}
+}
+
+// 교육일정 선택시 해당 일자 그리드 칼렌더 선택
+this.fn_setCalendarDay = function(sDate)
+{
+	if (this.gfnIsNull(sDate))
+	{
+		return;
+	}
+	var sY = sDate.substr(0,4);
+	var sM = sDate.substr(4,2);
+	var sD = sDate.substr(6,2);
+	var nDay = parseInt(sD);
+	var nStartDay = new Date(sY + "-" + sM + "-" + sD).getDay();	//2019-06-01 요일값
+	
+	var nRow = this.ds_data.findRow("COL_D"+nStartDay, nDay);
+	
+	this.ds_data.set_rowposition(nRow);
+	this.Grid_calendar.setCellPos(nStartDay);
+}
+
+// 신청하기 - 그리드 더블클릭 이벤트
+this.grd_eduList_oncelldblclick = function(obj:Grid, e:nexacro.GridClickEventInfo)
+{
+	
+	var nCell = 6;
+	if(this.grd_eduList.formatid=="format_date"){
+		nCell = 5;
+	}   
+	//온라인 오픈되면 막을것. 번호 저장만 살릴것
+	if(this.grd_eduList.getCellValue(e.row,nCell)=="신청마감"){
+		alert("마감되었습니다.");    
+		return false;    
+	}else{
+		//신청하기에서 체크할 교육번호 저장
+		nexacro.getApplication().gv_ApplyEduSEQ = this.grd_eduList.getCellValue(e.row,3);
+	}
+
+	var iCount  = this.ds_EduSchedule.getColumn(e.row, "ICOUNT");
+	var iOnLine = this.ds_EduSchedule.getColumn(e.row, "ONLINE_NUM");
+	var sCurrDt = this.ds_EduSchedule.getColumn(e.row, "CURR_DATE");
+	var sStarDt = this.ds_EduSchedule.getColumn(e.row, "START_DATE");
+	var sProdCd = this.ds_EduSchedule.getColumn(e.row, "EDU_PRODUCT_CODE");
+
+	nexacro.getApplication().gv_mainFrame.param = {
+		'menu': "Education_Registration",
+		'keyword': "",
+		'page': 1,
+		'postId': ""   
+		};
+	nexacro.getApplication().gv_mainFrame.gfnGoMain();
+}
+
+// 신청하기 버튼 클릭 이벤트
+this.btnRegistration_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nRow = this.ds_EduSchedule.rowposition;
+	if(nRow != -1){
+		//온라인 오픈되면 막을것. 번호 저장만 살릴것
+		if((this.ds_EduSchedule.getColumn(nRow,"ICOUNT")<this.ds_EduSchedule.getColumn(nRow,"ONLINE_NUM"))||(this.ds_EduSchedule.getColumn(nRow,"CURR_DATE")>=this.ds_EduSchedule.getColumn(nRow,"START_DATE"))){
+			//신청하기에서 체크할 교육번호 저장
+			nexacro.getApplication().gv_ApplyEduSEQ = this.ds_EduSchedule.getColumn(nRow, "ES_SEQ");	
+		}else{	
+			alert("마감되었습니다.");
+			return false;
+		}
+	}
+	
+	var iCount  = this.ds_EduSchedule.getColumn(this.ds_EduSchedule.rowposition, "ICOUNT");
+	var iOnLine = this.ds_EduSchedule.getColumn(this.ds_EduSchedule.rowposition, "ONLINE_NUM");
+	var sCurrDt = this.ds_EduSchedule.getColumn(this.ds_EduSchedule.rowposition, "CURR_DATE");
+	var sStarDt = this.ds_EduSchedule.getColumn(this.ds_EduSchedule.rowposition, "START_DATE");
+	var sProdCd = this.ds_EduSchedule.getColumn(this.ds_EduSchedule.rowposition, "EDU_PRODUCT_CODE");
+
+	nexacro.getApplication().gv_mainFrame.param = {
+		'menu': "Education_Registration",
+		'keyword': "",
+		'page': 1,
+		'postId': ""
+		};
+	nexacro.getApplication().gv_mainFrame.gfnGoMain();
+	
+};
+
+//넥사크로 17 교육과정 소개 동영상 클릭 이벤트
+this.sta_eduInfo_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	system.execBrowser("https://youtu.be/xEP5OGOhR3Q");
+}
+ 
+// 제품선택 탭 체인지 이벤트
+this.tabProduct_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{  
+	switch(e.postindex) {
+	case 0:	// N
+		this.fv_prodCd = "NPN";
+		this.fv_prodNm = "넥사크로N";
+		//this.sta_eduInfo.set_visible(false);
+		break;
+	case 1:	// 17
+		this.fv_prodCd = "NP17";
+		this.fv_prodNm = "넥사크로17";
+		//this.sta_eduInfo.set_visible(true);
+		break;   
+	case 2: // 14
+		this.fv_prodCd = "NP14";
+		this.fv_prodNm = "넥사크로14";
+		//this.sta_eduInfo.set_visible(false);		
+		break;
+	case 3:	// XP
+		this.fv_prodCd = "XP";
+		this.fv_prodNm = "엑스플랫폼";
+		//this.sta_eduInfo.set_visible(false);		
+		break;
+	default:
+	}
+	nexacro.getApplication().gv_prodMoveCd = e.postindex;
+	var nPageMoveCd = e.postindex;
+	nexacro.getApplication().gv_mainFrame.gfnSetHistoryData(nPageMoveCd);
+	this.fn_dataFilter(this.fv_eduY+this.fv_eduM, this.fv_prodCd);
+
+	this.fn_notice(this.fv_prodCd, this.fv_eduY+this.fv_eduM);
+	  
+	//칼렌더 그리드 스타일 적용
+	this.fn_setStyle();	
+	
+	// 신청하기 버튼 위치 조정
+	this.resetScroll();
+};
+
+// 과정별/일자별 정렬
+this.radSort_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	if (e.postindex == 0)
+	{
+		this.ds_EduSchedule.set_keystring("S:-EDU_METHOD-EDU_PRODUCT_CODE+EDU_TYPE_DET+START_DATE");		
+		this.grd_eduList.set_formatid("default");
+	}
+	else
+	{      
+		this.ds_EduSchedule.set_keystring("S:-EDU_METHOD+START_DATE+EDU_PRODUCT_CODE+EDU_TYPE_DET");
+		this.grd_eduList.set_formatid("format_date");
+	}
+	this.fn_CalPocus();   
+};
+
+//교육 일정 하단 텍스트 출력 함수
+this.fn_LeftBottomMessage = function(mMonth){
+	
+	var objDate = new Date();
+	var mYear = objDate.getYear();
+	var mMonth = objDate.getMonth()+3;
+	if(mMonth>12){
+		mYear = mYear +1;
+		mMonth = mMonth-12;
+	}
+	
+	var mPreYear = objDate.getYear();
+	var mPreMonth = objDate.getMonth()+2;
+	if(mPreMonth>12){
+		mPreYear = mPreYear+1;
+		mPreMonth = mPreMonth-12;
+	}
+/*	
+	var txt = "";
+	txt += "•  교육시간은 10:00 ~ 17:00 (6H) 입니다. <br/>";
+	txt += "<fc v='#fb6d3a'>•  "+mYear+"년 "+mMonth+"월 일정은 "+mPreYear+"년 "+mPreMonth+"월 첫 영업일 오전 10시에 오픈됩니다.</fc><br/>";
+	txt += "•  교육문의는 02-2140-7224 / edu@tobesoft.com 으로 <br/>";
+	txt += "&nbsp;&nbsp;&nbsp;연락주시기 바랍니다.";
+	return txt;
+*/
+	var txt = "";
+	txt += "<fc v='#fb6d3a'>•  "+mYear+"년 "+mMonth+"월 교육 일정은 "+mPreMonth+"월 첫 영업일 오전 10시에 오픈됩니다.</fc><br/>";
+	txt += "•  교육은 10시부터 17시까지 6시간 진행됩니다.<br/>";
+	txt += "•  교육 문의는 02-2140-7224 / edu@tobesoft.com 으로 <br/>";
+	txt += "&nbsp;&nbsp;&nbsp;연락주시기 바랍니다.";
+	this.Static00_00_00.set_text(txt);
+}
+
+//팝업 오픈 함수(코로나 알림 메세지)
+this.fn_NoticePop = function(msg){
+
+	var objFrame = new ChildFrame();
+	var objParentFrame = this.getOwnerFrame();
+
+	var nLeft = nexacro.getApplication().gv_mainFrame.getOffsetWidth()/2 - 400;
+	var nTop = 300;
+	objFrame.init( "modalContent", 0, 0, 600, 800 );
+	//objFrame.set_titlebarheight(40);
+	//objFrame.titlebar.set_background("#49506d");
+	objFrame.showtitlebar = false;
+	objFrame.set_dragmovetype("all");
+	objFrame.set_openalign("center middle");
+	objFrame.set_formurl( "EDUCATION::frmEduNoticePOP.xfdl" );
+	var vRtn = objFrame.showModal( objParentFrame, msg, this, this.fn_callback );
+	
+	if(vRtn){
+		this.gvFrame = objFrame;
+	}
+}
+
+// 팝업을 연채로 이동하려할때 닫기
+this.frmEduSchedule_onclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+   if(!this.gfnIsNull(this.gvFrame)){
+		this.gvFrame.destroy();
+   }
+};
+
+
+//오늘 날짜 표시
+this.fn_CalPocus = function(){
+	var nToday = this.gfnGetDate();
+	var sWeek = this.gfnGetDay(nToday);
+	var iRow= this.ds_data.findRow("COL_YMD"+sWeek,nToday);
+	this.ds_data.set_rowposition(iRow);
+	this.Grid_calendar.setCellPos(sWeek);	
+};
+
+// 동영상 교육 대체 안내
+this.fn_notice = function(pCd, pYm)
+{   
+//	if(pYm >= "202206" && (pCd == "XP" || pCd == "NP14" ))  //|| pCd == "NP17"   //여기 수정 
+	if(pYm >= "202206" && (pCd == "XP" || pCd == "NP14" || pCd == "NP17" ))  //여기 수정 
+	{        
+   
+		this.radSort.set_visible(false);
+		this.grd_eduList.set_visible(false);
+		this.sta_notice.set_visible(true);
+		this.btnMovie.set_visible(true); 
+//		var sTxt  = (pCd == "XP" ? "XPLATFORM" : "nexacro 14") + " 정기교육은 2022년 6월부터 동영상 교육으로 대체합니다. \r\n \r\n";
+//			sTxt += "<l v='http://demo.nexacro.com/EduPlay/_web_/index.html'><fc v='#1363CE'><u v='true'>동영상 바로가기</u></fc></l>";
+		var sTxt  = (pCd == "XP" ? "XPLATFORM" : pCd == "NP14" ? "nexacro 14" : "nexacro 17") + " 정기교육은 " +  (pCd == "NP14" ? "2022" : "2024")  + "년 6월부터 \r\n 동영상 교육으로 대체합니다. \r\n\r\n";
+//			sTxt += "<l v='http://demo.nexacro.com/EduPlay/_web_/index.html'><fc v='#1363CE'><u v='true'>동영상 바로가기</u></fc></l>";
+			
+		this.sta_notice.set_text(sTxt);
+		this.sta_notice.set_fittocontents("height");
+		this.btnRegistration.set_visible(false);
+	}
+	else
+	{
+  
+//		this.radSort.set_visible(true);
+		this.grd_eduList.set_visible(true);
+		this.sta_notice.set_visible(false);
+		this.btnMovie.set_visible(false); 
+		this.btnRegistration.set_visible(true);
+	}
+}
+
+
+this.btnMovie_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	system.execBrowser("http://demo.nexacro.com/EduPlay/_web_/index.html");
+};]]></Script>
+    <Style url="EDUCATION::eduCss.css"/>
+  </Form>
+</FDL>

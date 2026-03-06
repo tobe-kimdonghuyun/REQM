@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="formMain" width="1200" height="700" titletext="지방공무원-마이페이지-합격증발급" onload="formMain_onload">
+    <Layouts>
+      <Layout height="700" width="1200" screenid="ScreenDeskTop">
+        <Div id="divContent00" taborder="0" left="0" top="0" height="144" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="staGd00" taborder="0" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <ImageViewer id="imgTitle00" taborder="1" text="합격증발급" left="0" top="70" height="44" cssclass="img_WF_SubTit01" width="170" initvalueid="ivTitleAccessibilityOn" onload="divTitle_imgTitle_onload"/>
+              <Static id="staGd01" taborder="2" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staGd02" taborder="1" left="0" top="204" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="divAppoExam" taborder="2" left="0" top="144" height="60" cssclass="div_WF_Search" right="0" initvalueid="ivDivAccessibilityOff" tabstop="true">
+          <Layouts>
+            <Layout>
+              <Static id="staContent00" taborder="0" text="응시시험" top="15" height="30" cssclass="sta_WF_InfoTit02" initvalueid="ivStcAccessibilityOn" textAlign="left" width="93" left="21" onclick="divSummary_staSubTltInfo00_onclick"/>
+              <Button id="btnPassCrtf" taborder="2" text="합격증발급" top="13" height="35" fittocontents="width" cssclass="btn_WF_Write" visible="true" initvalueid="ivBtnAccessibilityButton" width="135" onclick="divAppoExam_btnPassCrtf_onclick" left="1043"/>
+              <Combo id="cboAppoExm" taborder="1" text="" left="104" top="16" height="30" index="-1" initvalueid="ivCmbEssential" cssclass="essential" innerdataset="dsResultRcpt" codecolumn="rcptNo" datacolumn="appoExamNmSum" displaynulltext="-선택-" accessibilitylabel="시험장" autoselect="false" right="btnPassCrtf:10"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Edit id="edtSearchKeyword" left="217" top="11" width="223" height="30"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divPassCrtf" taborder="3" left="0" top="232" height="278" right="0" cssclass="div_WF_Detail" initvalueid="ivDivAccessibilityOff" visible="true">
+          <Layouts>
+            <Layout>
+              <Static id="staGd03" taborder="1" left="-1" top="35" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="1" initvalueid="ivStcAccessibilityOff"/>
+              <ImageViewer id="imgTitle01" taborder="0" text="발급내역" left="0" width="80" height="30" cssclass="img_WF_SubTit04" initvalueid="ivTitleAccessibilityOn" top="7"/>
+              <Grid id="grdPassCrtfHstr" taborder="2" left="0" top="44" height="214" autofittype="col" cellsizingtype="none" extendsizetype="none" autosizingtype="none" right="0" initvalueid="ivGrdAccessibilityOn" selecttype="cell" accessibilitylabel="합격증발급 신청내역 목록" nodatatext="발급 내역이 없습니다." binddataset="dsResultPassCrtfHstr" oncellclick="divPassCrtf_grdPassCrtfHstr_oncellclick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="33"/>
+                      <Column size="125"/>
+                      <Column size="763"/>
+                      <Column size="168"/>
+                      <Column size="117"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="번호"/>
+                      <Cell col="1" text="증명서번호"/>
+                      <Cell col="2" text="공고명" edittype="none"/>
+                      <Cell col="3" text="신청일시"/>
+                      <Cell col="4" text="합격증"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell edittype="none" displaytype="normal" textAlign="center" expr="currow+1"/>
+                      <Cell col="1" text="bind:issuNo" textAlign="center"/>
+                      <Cell col="2" text="bind:appoExamPbancNm" textAlign="center"/>
+                      <Cell col="3" text="bind:issuDtFmt" displaytype="text" calendardateformat="yyyy.MM.dd" textAlign="center"/>
+                      <Cell col="4" displaytype="buttoncontrol" text="합격증보기" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  온라인통합채용-지방공무원-마이페이지-합격증발급
+*  @MenuPath    pa_ore_oew_rm
+*  @FileName 	pa_ore_oewrm20_m04.xfdl
+*  @Creator 	최재형
+*  @CreateDate 	2022.11.28
+*  @Desction    온라인통합채용-지방공무원-마이페이지-합격증발급
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.11.28		최재형				최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::ore_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.applpRrno;
+this.applpFlnm;
+this.applpBrdt;
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+// 초기화
+this.formMain_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 로그인 세션 체크 
+	//this.isOreLogin();
+	
+	// 본인인증 세션취득
+	this.applpRrno =nexacro.base64Decode(this.smfGetSessionValue('userRrno'));
+	this.applpFlnm = this.smfGetSessionValue('userNm');
+	this.applpBrdt = this.applpRrno.slice(0,6);
+
+	// Form의 default 초기처리를 한다.
+	this.smfInitForm(obj);
+	
+	// 내 지원서 목록 / 발급내역
+	this.fnSearchRcptAndPassCrtfHstr();
+	
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+// 콜백
+this.fnTransCallback = function(svcid, errcd, errmsg){
+
+}
+// 리포트콜백
+this.fnReportCallback = function(svcid, errcd, errmsg){
+
+}
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * 지원서 목록 / 발급이력 검색
+ */
+this.fnSearchRcptAndPassCrtfHstr = function(obj, e)
+{
+	// 검색조건 초기화
+	this.dsSearch.clearData();
+	this.dsSearch.addRow();
+	//  주민번호 : 본인인증 세션취득
+	this.dsSearch.setColumn(0, "applpRrno", this.applpRrno);
+	// 시도교육청 앞 3자리 = 시도교육청 구분코드
+	this.dsSearch.setColumn(0, "cddcScCd", this.smfGetCddcCode().slice(0,3));
+	this.dsResultRcpt.clearData();
+	this.dsResultRcpt.addRow();
+	this.dsResultPassCrtfHstr.clearData();
+	this.dsResultPassCrtfHstr.addRow();
+	// 지원서목록조회
+	this.smfSearchService('listRcptAndPassCrtfHstr') 
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+	});
+}
+
+
+/**
+ * 합격증 발급
+ */
+this.fnSavePassCrtf = function(obj, e)
+{
+	// 초기화
+	this.dsResultCeckPassCrtf.clearData();
+	this.dsResultPassCrtfHstr.clearData();
+	// 합격증명서 발급
+	this.smfSaveService('savePassCrtf') 
+		.showConfirm(false)
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors){
+				return;
+			}
+			
+			// 무효(마감,삭제)한 임용시험 여부
+			var unaAppoExamYn = this.dsResultCeckPassCrtf.getColumn(0, 'unaAppoExamYn');
+			if(unaAppoExamYn != "N"){
+				this.smfAlert('진행중인 임용시험이 아닙니다.');
+				return;
+			}
+			//  합격증발급기간여부
+			var passCrtfIssuYn = this.dsResultCeckPassCrtf.getColumn(0, 'passCrtfIssuYn');
+			if(passCrtfIssuYn != "Y"){
+				//this.smfAlert('합격증 발급 기간이 아닙니다.');
+				this.smfAlert('합격증 발급을 할 수 없습니다.');
+				return;
+			}
+			// 합격여부
+			var sfc2PassYn = this.dsResultCeckPassCrtf.getColumn(0, 'sfc2PassYn');
+			if(sfc2PassYn != 'Y'){
+				//this.smfAlert("합격 정보가 없습니다.");
+				this.smfAlert('합격증 발급을 할 수 없습니다.');
+				return;
+			}
+			// 합격증발급가능여부
+			var issuPslYn = this.dsResultCeckPassCrtf.getColumn(0, 'issuPslYn');
+			if(issuPslYn != 'Y'){
+				//this.smfAlert("발급 가능한 합격증 정보가 없습니다.");
+				this.smfAlert('합격증 발급을 할 수 없습니다.');
+				return;
+			}
+	});
+}
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+* 응시표 리표트 표시
+**/
+this.fnPassCrtfReportView = function(){
+	// 버튼표시여부
+	var objButton = {
+		"toolbar.save" : "false"    // 저장 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)           
+		, "toolbar.addmemo" : "false"    // 메모 추가 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+		, "toolbar.savedm" : "false"    // 데이터 모듈 저장 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+		, "toolbar.etc" : "false"    // 다른 메뉴 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+	}
+	
+	// 리포트를 생성하기 위한 옵션을 설정한다.
+	var oOzOption = {
+		reports : [	
+			{	
+				// 기본데이터
+				displayname : "지방공무원 합격증"   // [필수] 멀티리포트시 Tree에 보여줄 이름
+				, reportname : "/edu/pa/ore/oew/rm/ore_oewrm20_r02.ozr" // [필수] 리포트명  "/jsonsample.ozr"
+				, jsonDs     : [this.dsReport]  // [선택] json으로 변환할 데이터셋
+				, jsonDsName : ["dsReport"]            // [선택] json으로 변환할 데이터의이름(ozr파일에서 지정된 값과 일치)
+				// 추가/보안옵션
+				, security     : "Y"     // [선택] 위변조방지 삽입   ("Y"(default):표시,"N":비표시)
+				, voiceBarcode : "N"     // [선택] 보이스바코드 삽입 ("Y"(default):표시,"N":비표시)
+				, brailleCode  : "N"    // [선택] 점자문서 생성     ("Y":생성,"N"(default):미생성)
+			}
+		]
+		, hidestatus : true   // [선택] 하단 상태값 표시
+		, button : objButton    // [선택] 버튼의 표시 비표시를 통제
+	};
+	
+	// 옵션
+	//this.divReportViewer.optionReport = oOzOption;
+	// report를 그린다.
+	//this.divReportViewer.set_url("comm::comp_ozreport.xfdl");
+	// 팝업
+	this.smfReportView(this,"popup",oOzOption,this.fnReportCallback);           // Div로 표시
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* 합격증발급
+*/
+this.divAppoExam_btnPassCrtf_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 선택한 응시원서 접수번호
+	var sRcptNo = this.divAppoExam.form.cboAppoExm.value;
+	// 선택
+	if(!sRcptNo){
+		this.divAppoExam.form.cboAppoExm.setFocus();
+		this.smfAlert("응시 시험을 선택 해주세요.");
+		return;
+	}
+	
+	// 선택콤보 인덱스
+	var selCboIdx = this.dsResultRcpt.findRow("rcptNo", sRcptNo);
+	// 선택 임용시험아이디
+	var sAppoExamId = this.dsResultRcpt.getColumn(selCboIdx, 'appoExamId');
+	// 선택 직급코드
+	var sOcptyCd = this.dsResultRcpt.getColumn(selCboIdx, 'ocptyCd');
+	// 선택 직류코드
+	var sJbgdCd = this.dsResultRcpt.getColumn(selCboIdx, 'jbgdCd');
+
+	
+	// 합격증 조회
+	this.dsSearch.clearData();
+	this.dsSearch.addRow();
+	// 시도교육청 앞 3자리 = 시도교육청 구분코드
+	this.dsSearch.setColumn(0, "cddcScCd", this.smfGetCddcCode().slice(0,3));
+	this.dsSearch.setColumn(0, "rcptNo", sRcptNo);// 접수번호
+	this.dsSearch.setColumn(0, "appoExamId", sAppoExamId); // 임용시험아이디
+	this.dsSearch.setColumn(0, "ocptyCd", sOcptyCd); // 직급코드
+	this.dsSearch.setColumn(0, "jbgdCd", sJbgdCd); // 직류코드
+	this.dsSearch.setColumn(0, "applpRrno", this.applpRrno); // 주민번호
+	this.dsSearch.setColumn(0, "applpFlnm", this.applpFlnm); // 이름
+	this.dsSearch.setColumn(0, "applpBrdt", this.applpBrdt); // 생년월일
+	
+	this.smfConfirm("합격증 발급 신청을 하시겠습니까?", function(result){
+		if(result.confirmResult){
+			// 발급
+			this.fnSavePassCrtf();
+		}
+	});
+};
+
+/**
+* 그리드 셀클릭 이벤트
+*/
+this.divPassCrtf_grdPassCrtfHstr_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var nCell = e.cell;	
+	
+	// 증명서보기 클릭
+	if(nCell == 4) { 
+		var nRow = e.row;
+		// 리포트 데이터  복사
+		this.dsReport.clearData();
+		this.dsReport.addRow();
+		this.dsReport.copyRow(0 ,this.dsResultPassCrtfHstr, nRow);
+		// 생년월일 포멧
+		var applpBrdt = this.dsReport.getColumn(0, 'applpBrdt');
+		var applpBrdtFmt = applpBrdt.slice(0,4) +'.'+applpBrdt.slice(4,6) +'.'+applpBrdt.slice(6,8);
+		this.dsReport.setColumn(0, 'applpBrdt', applpBrdtFmt);
+		// 발급일 (민원접수일) 포멧
+		var issuDt = this.dsReport.getColumn(0, 'issuDt');
+		var issuDtFmt = issuDt.slice(0,4) +'년 '+issuDt.slice(4,6) +'월 '+issuDt.slice(6,8)+'일';
+		this.dsReport.setColumn(0, 'issuDt', issuDtFmt);
+		this.dsReport.setColumn(0, 'cddcScNm', this.smfGetCddcName()+' 인사위원회위원장');
+		
+		// 리포트표시
+		this.fnPassCrtfReportView();
+		
+	}	
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listRcptAndPassCrtfHstr</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsResultRcpt=dsResultRcpt dsResultPassCrtfHstr=dsResultPassCrtfHstr</Col>
+            <Col id="url">ore_oew_rm20_m04_000.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">savePassCrtf</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsResultCeckPassCrtf=dsResultCeckPassCrtf dsResultPassCrtfHstr=dsResultPassCrtfHstr</Col>
+            <Col id="url">ore_oew_rm20_m04_001.do</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="false" updatecontrol="false">
+        <ColumnInfo>
+          <Column id="cddcScCd" type="STRING" size="256" description="접속시도교육청 구분코드"/>
+          <Column id="applpRrno" type="STRING" size="256" description="응시자주민번호"/>
+          <Column id="applpFlnm" type="STRING" size="256" description="응시자성명"/>
+          <Column id="applpBrdt" type="STRING" size="256" description="생년월일"/>
+          <Column id="appoExamId" type="STRING" size="256" description="임용시험아이디"/>
+          <Column id="ocptyCd" type="STRING" size="256" description="직류코드"/>
+          <Column id="jbgdCd" type="STRING" size="256" description="직급코드"/>
+          <Column id="rcptNo" type="STRING" size="256" description="접수번호"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsResultRcpt" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="rcptNo" type="STRING" size="256" description="접수번호"/>
+          <Column id="cddcScCd" type="STRING" size="256" description="시도교육청구분코드"/>
+          <Column id="cddcScNm" type="STRING" size="256" description="강원도교육청"/>
+          <Column id="appoExamId" type="STRING" size="256" description="임용시험ID"/>
+          <Column id="appoExamNm" type="STRING" size="256" description="임용시험명"/>
+          <Column id="appoExamNmSum" type="STRING" size="256"/>
+          <Column id="appoExamYr" type="STRING" size="256"/>
+          <Column id="ocptyCd" type="STRING" size="256" description="직류코드"/>
+          <Column id="ocptyNm" type="STRING" size="256" description="직류명"/>
+          <Column id="jblnCd" type="STRING" size="256" description="직렬코드"/>
+          <Column id="jblnNm" type="STRING" size="256" description="직렬명"/>
+          <Column id="jbgdCd" type="STRING" size="256" description="직급코드"/>
+          <Column id="jbgdNm" type="STRING" size="256" description="직급명"/>
+          <Column id="rksCd" type="STRING" size="256" description="계급코드"/>
+          <Column id="rksNm" type="STRING" size="256" description="계급명"/>
+          <Column id="applpFlnm" type="STRING" size="256" description="응시자성명"/>
+          <Column id="applpRrno" type="STRING" size="14" description="응시자주민등록번호"/>
+          <Column id="sxdsCd" type="STRING" size="256" description="성별코드"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsResultPassCrtfHstr" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="appoExamId" type="STRING" size="256" description="임용시험아이디"/>
+          <Column id="appoExamNm" type="STRING" size="256" description="임용시험명"/>
+          <Column id="rcptNo" type="STRING" size="256" description="접수번호"/>
+          <Column id="rcptSn" type="STRING" size="256" description="접수일련번호"/>
+          <Column id="issuNo" type="STRING" size="256" description="발급번호"/>
+          <Column id="ocrnAyr" type="STRING" size="256" description="민원신청일시=동의일시년도"/>
+          <Column id="applpFlnm" type="STRING" size="256" description="응시자성명"/>
+          <Column id="applpBrdt" type="STRING" size="256" description="응시자생년월일"/>
+          <Column id="sprtRealmCn" type="STRING" size="256" description="지원분야내용"/>
+          <Column id="appoExamExmtNo" type="STRING" size="256" description="임용시험수험번호"/>
+          <Column id="appoExamPbancNm" type="STRING" size="256" description="임용시험공고명"/>
+          <Column id="ntcCn" type="STRING" size="256" description="임용시험공고명 + 증명서 안내문구 포함"/>
+          <Column id="issuDt" type="STRING" size="256" description="발급일시"/>
+          <Column id="issuDtFmt" type="STRING" size="256" description="발급일시포멧"/>
+          <Column id="ocslImageFileCn" type="BLOB" size="256" description="직인파일"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsResultCeckPassCrtf" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="rcptNo" type="STRING" size="256" description="개인별 합격증명 발급가능여부"/>
+          <Column id="unaAppoExamYn" type="STRING" size="256" description="무효임용시험여부"/>
+          <Column id="passCrtfIssuYn" type="STRING" size="256" description="합격증발급기간여부"/>
+          <Column id="sfc2PassYn" type="STRING" size="256" description="최종합격여부"/>
+          <Column id="issuPslYn" type="STRING" size="256" description="개인별 합격증명 발급가능여부"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsReport" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="appoExamId" type="STRING" size="256" description="임용시험아이디"/>
+          <Column id="appoExamNm" type="STRING" size="256" description="임용시험명"/>
+          <Column id="rcptNo" type="STRING" size="256" description="접수번호"/>
+          <Column id="rcptSn" type="STRING" size="256" description="접수일련번호"/>
+          <Column id="issuNo" type="STRING" size="256" description="발급번호"/>
+          <Column id="ocrnAyr" type="STRING" size="256" description="민원신청일시=동의일시년도"/>
+          <Column id="applpFlnm" type="STRING" size="256" description="응시자성명"/>
+          <Column id="applpBrdt" type="STRING" size="256" description="응시자생년월일"/>
+          <Column id="sprtRealmCn" type="STRING" size="256" description="지원분야내용"/>
+          <Column id="appoExamExmtNo" type="STRING" size="256" description="임용시험수험번호"/>
+          <Column id="appoExamPbancNm" type="STRING" size="256" description="임용시험공고명"/>
+          <Column id="ntcCn" type="STRING" size="256" description="임용시험공고명 + 증명서 안내문구 포함"/>
+          <Column id="issuDt" type="STRING" size="256" description="발급일시"/>
+          <Column id="issuDtFmt" type="STRING" size="256" description="발급일시포멧"/>
+          <Column id="ocslImageFileCn" type="BLOB" size="256" description="직인파일"/>
+          <Column id="cddcScNm" type="STRING" size="256" description="시도교육청명"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

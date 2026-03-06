@@ -1,0 +1,146 @@
+﻿<!--[if gt IE 8]><!DOCTYPE html><!--<![endif]-->
+<html id='html'>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" pageEncoding="utf-8" />	
+	<meta http-equiv="x-ua-compatible" content="IE=Edge"/>
+    <title></title>	
+
+	<!-- editor css -->
+	<link rel="stylesheet" type="text/css" href="../contents.css">	
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400&display=swap" rel="stylesheet">
+	
+	<!-- code snippet css 
+	<link rel="stylesheet" type="text/css" href="../plugins/codesnippet/lib/highlight/styles/tomorrow-night-blue.css">-->
+	
+	<!-- (A) HIGHLIGHT JS LIBRARY -->
+<!-- https://highlightjs.org/ -->
+<!-- https://cdnjs.com/libraries/highlight.js/ -->
+<link rel="stylesheet" href="./highlight/styles/github.min.css">	<!--tomorrow-night-blue.min.css-->
+<script src="./highlight/highlight.min.js"></script>
+<script>hljs.highlightAll(); //initHighlightingOnLoad();</script>
+	
+	<!-- Highlight -->
+<!--	<link rel="stylesheet" type="text/css" href="./css/javacolors.css">
+	<link rel="stylesheet" type="text/css" href="./css/jscolors.css">
+	<link rel="stylesheet" type="text/css" href="./css/xmlcolors.css">-->
+	
+	<script type="text/javascript">
+//		var intervalId = null;
+		function setContent(content)
+		{	
+			//console.log("#@#@$@$@$$");
+			//content = content.replaceAll(String.fromCharCode(10),'<br>');
+			//content = content.replace(/<br>/ig, '\n');
+			//content = content.replace(/<\/br>/ig, '\n');
+			//content = content.replace(/<br \/>/ig, '\n');
+		
+			// 바디 바꿔치기
+			//document.body.innerHTML = "<pre>"+content+"</pre>"+"<input id='transfer' type='text' style='display:none;' value=''>";	// <input id="transfer" type="text" style="display:none;" value="">
+			
+			// div 바꿔치기(높이를 구하려면 div를 바꿔야함)
+			const element = document.getElementById('content_div');
+			  element.innerHTML 
+				= "<span style='font-family:Noto Sans KR, sans-serif, Arial, Verdana; font-size:14px;'>"+content+"</span>"+"<input id='transfer' type='text' style='display:none;' value=''>";
+				//+"<pre><br><code class='JavaScript language-javascript'>this.ckeditorTest_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)<br>{<br>	this.web_editor.set_url('http://localhost:8080/CKEDITOR_TEST/CKEDITOR/samples/index.html');<br>	this.initEditor();<br>	<br>	//nexacro.getApplication().gv_mainFrame.form.resetScroll();<br>};</code></pre><br>";
+				//+"<pre>&#10;<code class='JavaScript language-javascript'>this.ckeditorTest_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)&#10;{&#10;	this.web_editor.set_url('http://localhost:8080/CKEDITOR_TEST/CKEDITOR/samples/index.html');&#10;	this.initEditor();&#10;	&#10;	//nexacro.getApplication().gv_mainFrame.form.resetScroll();&#10;};</code></pre>&#10;"
+				//+"<pre>&#10;<code class='JavaScript language-javascript'>this.ckeditorTest_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)&#10;{&#10;	this.web_editor.set_url('http://localhost:8080/CKEDITOR_TEST/CKEDITOR/samples/index.html');&#10;	this.initEditor();&#10;	&#10;	//nexacro.getApplication().gv_mainFrame.form.resetScroll();&#10;};</code></pre>&#10;"
+				//+"<pre>&#10;<code class='JavaScript language-javascript'>this.ckeditorTest_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)&#10;{&#10;	this.web_editor.set_url('http://localhost:8080/CKEDITOR_TEST/CKEDITOR/samples/index.html');&#10;	this.initEditor();&#10;	&#10;	//nexacro.getApplication().gv_mainFrame.form.resetScroll();&#10;};</code></pre>&#10;"
+				//+"<pre>&#10;<code class='JavaScript language-javascript'>this.ckeditorTest_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)&#10;{&#10;	this.web_editor.set_url('http://localhost:8080/CKEDITOR_TEST/CKEDITOR/samples/index.html');&#10;	this.initEditor();&#10;	&#10;	//nexacro.getApplication().gv_mainFrame.form.resetScroll();&#10;};</code></pre>&#10;"
+				//+"<pre>&#10;<code class='JavaScript language-javascript'>this.ckeditorTest_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)&#10;{&#10;	this.web_editor.set_url('http://localhost:8080/CKEDITOR_TEST/CKEDITOR/samples/index.html');&#10;	this.initEditor();&#10;	&#10;	//nexacro.getApplication().gv_mainFrame.form.resetScroll();&#10;};</code></pre>&#10;"
+				//+"<pre>&#10;<code class='JavaScript language-javascript'>this.ckeditorTest_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)&#10;{&#10;	this.web_editor.set_url('http://localhost:8080/CKEDITOR_TEST/CKEDITOR/samples/index.html');&#10;	this.initEditor();&#10;	&#10;	//nexacro.getApplication().gv_mainFrame.form.resetScroll();&#10;};</code></pre>&#10;";
+			document.body.style.overflow = "hidden";
+			self.setTimeout(onLoadContent, 0);
+
+		}
+		// call from nexacro
+		function getHTMLValue(name)
+		{
+			
+			// 값을 바로 nexacro로 전달하지 못하므로 input element에 담아두고
+			// nexacro 에서 element 에 접근하여 값을 취득한다.
+			// 반환값은 string 이므로 형변환이 필요할 수 있다.
+			var val = null;
+			switch(name)
+			{
+				// 높이 구하기
+				
+				case "getContentHeight" :
+					// val = document.body.scrollHeight;
+					var element = document.getElementById('content_div');
+					val = document.getElementById('html').scrollHeight;
+					break;
+				default :
+			}
+			document.getElementById("transfer").value = val;
+			self.setTimeout(getContentHeight1, 100);
+		}
+		
+		function getContentHeight1(val)
+		{
+			var element = document.getElementById('content_div');
+			val = document.getElementById('html').scrollHeight;
+			document.getElementById("transfer").value = val;
+			var wb = window.NEXACROWEBBROWSER;			
+			if ( wb )
+			{
+				// HTML
+				wb.on_fire_onusernotify(wb, {method:"getContentHeight",height:val});
+			}
+		}
+		
+		// function checkImage()
+		// {
+			// var images = document.getElementsByTagName("img");
+			// var len = images.length;
+			// var completeLen = 0;
+			// for (var i=0; i<len; i++)
+			// {
+				// if ( images[i].complete )
+				// {
+					// completeLen++;
+				// }
+			// }
+			
+			// if ( completeLen == len )
+			// {
+				// self.clearInterval(intervalId);
+				// onLoadContent();
+			// }
+		// }
+		
+		function onLoadContent()
+		{
+			document.body.style.visibility = "visible";
+			
+			hljs.highlightAll();
+			var wb = window.NEXACROWEBBROWSER;			
+			if ( wb )
+			{
+				// HTML
+				wb.on_fire_onusernotify(wb, {method:"loadContent"});
+			}
+			else
+			{				
+				// Runtime
+				window.document.title = "loadContent";
+			}
+			
+			
+		}
+		
+		function initHighLighter()
+		{
+			//console.log("#@#@$@$@$$");					style="width:auto; height:auto; visibility:hidden;"
+			hljs.highlightAll();
+		}
+	</script>
+</head>
+<body id="content">
+<div id='content_div'>
+  <span style='color:red'></span>
+</div>
+</body>
+</html>

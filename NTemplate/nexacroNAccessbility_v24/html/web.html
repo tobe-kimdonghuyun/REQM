@@ -1,0 +1,80 @@
+<!--[if gt IE 8]><!DOCTYPE html><!--<![endif]-->
+<html xmlns:v='urn:schemas-microsoft-com:vml' xmlns:o='urn:schemas-microsoft-com:office:office' lang='ko'>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+
+ <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,target-densitydpi=device-dpi">
+ <!---->	
+	<title>웹컨텐츠 영역 입니다.</title>
+</head>
+<script type="text/javascript">	
+  var agent = navigator.userAgent.toLowerCase();
+  document.write(agent);
+
+	if (! window.NEXACROHTML) {
+		window.NEXACROHTML = {};
+	}
+	
+	var parentNexacro = null;
+    var bInit = false;
+    window.NEXACROHTML.Init = function(str) {
+
+        var loopCnt = 0;
+        var interval = setInterval(function() {            
+            parentNexacro = window.NEXACROWEBBROWSER;
+            //console.log("ParparentNexacroent:" + loopCnt + ":" + parentNexacro);      
+        if(loopCnt >= 10 || parentNexacro) {
+            bInit = true;
+            clearInterval(interval);
+            window.NEXACROHTML.FireUserNotify(str);
+          }
+            loopCnt++;
+        }, 10);
+    }
+	
+	window.NEXACROHTML.FireUserNotify = function(userdata)
+	{			
+		var pp = window.NEXACROWEBBROWSER;
+		if (pp) 
+		{		
+			pp.on_fire_onusernotify(pp, userdata);
+		} 
+		else if (typeof nexacro == "undefined") //windows runtime
+		{			
+			window.document.title = userdata;
+		}
+		else if (nexacro) //mobile runtime 
+		{ 		
+			nexacro.fireUserNotify(userdata);	
+		} 
+	}
+    function fn_test()
+    {
+    	window.NEXACROHTML.FireUserNotify("noti Html 에서 nexacro 값 전달");
+    	
+    }
+    
+    	function setInnerHtml(str) {
+		//document.write(str);
+		document.getElementById("returnHtml").innerHTML = str;
+		var nHeight = document.body.offsetHeight;
+		window.NEXACROHTML.FireUserNotify("toValue:"+nHeight);
+	}
+	
+	function getHeight() {
+		var nHeight = document.body.offsetHeight;
+		window.NEXACROHTML.FireUserNotify("toValue:"+nHeight);
+	}	
+    </script>
+<body >
+<div id="returnHtml"></div>
+<input type="button" id="bnt_sa" value="nexacro로 전달" onclick="fn_test()">
+	<h1>
+		웹 텍스트 영역1
+	</h1>
+	<h2>
+		웹 텍스트 영역2222
+	</h2>
+</body>
+</html>

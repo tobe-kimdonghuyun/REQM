@@ -1,0 +1,607 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ecc_eecom07_m01" width="1200" height="712" titletext="보존식관리" onload="fnOnload">
+    <Layouts>
+      <Layout height="712" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="65" height="54" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="보존식관리" left="0" top="0" height="54" cssclass="img_WF_SubTit01" width="165" initvalueid="ivTitleAccessibilityOn" accessibilitylabel="보존식관리"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSearch" taborder="1" left="0" top="144" height="70" cssclass="div_WF_Search" right="0" accessibilityenable="false" accessibilityrole="none" text="" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout initvalueid="ivDivAccessibilityOff">
+              <Static id="staAyr" taborder="0" text="*학년도" left="0" top="20" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" onclick="Common_onclick" width="75" accessibilitylabel="학년도"/>
+              <Combo id="cboAyr" taborder="1" left="75" width="130" height="30" innerdataset="dsAyr" codecolumn="code" datacolumn="value" index="0" top="20" value="" initvalueid="ivCmbNormal" accessibilitylabel="학년도 구분" onclick="Common_onclick" text="" onitemchanged="divSearch_cboAyr_onitemchanged" cssclass="essential"/>
+              <Static id="staSem" taborder="2" text="*돌봄학기" left="205" top="20" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" width="88" accessibilitylabel="돌봄학기"/>
+              <Combo id="cboSem" taborder="3" left="293" width="130" height="30" innerdataset="dsEccSem" codecolumn="code" datacolumn="value" index="0" top="20" initvalueid="ivCmbNormal" accessibilitylabel="돌봄학기 구분" text="" cssclass="essential"/>
+              <Static id="staYmdh" taborder="4" text="*조회 월" left="423" top="20" width="80" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" accessibilitylabel="조회월"/>
+              <Combo id="cboClr00" taborder="5" left="503" width="130" height="30" codecolumn="codecolumn" datacolumn="datacolumn" index="-1" top="20" initvalueid="ivCmbEssential" innerdataset="innerdataset" onitemchanged="divSearch_cboClr00_onitemchanged" accessibilitylabel="조회 월" cssclass="essential">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">01</Col>
+                      <Col id="datacolumn">1월</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">02</Col>
+                      <Col id="datacolumn">2월</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">03</Col>
+                      <Col id="datacolumn">3월</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">04</Col>
+                      <Col id="datacolumn">4월</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">05</Col>
+                      <Col id="datacolumn">5월</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">06</Col>
+                      <Col id="datacolumn">6월</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">07</Col>
+                      <Col id="datacolumn">7월</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">08</Col>
+                      <Col id="datacolumn">8월</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">09</Col>
+                      <Col id="datacolumn">9월</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">10</Col>
+                      <Col id="datacolumn">10월</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">11</Col>
+                      <Col id="datacolumn">11월</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">12</Col>
+                      <Col id="datacolumn">12월</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Button id="btnSearch" taborder="6" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" onclick="fnSearch" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="조회" right="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnAdd" taborder="2" text="등록" top="234" fittocontents="width" cssclass="btn_WF_Crud" visible="true" onclick="btnIssuAply_onclick" height="30" initvalueid="ivBtnAccessibilityButton" width="50" right="58" accessibilitylabel="등록"/>
+        <Button id="btnDelete" taborder="3" text="삭제" top="234" height="30" cssclass="btn_WF_Crud" initvalueid="ivBtnAccessibilityButton" onclick="btnDelete_onclick" accessibilitylabel="삭제" right="0" width="50"/>
+        <Grid id="grdMain" taborder="4" left="0" autofittype="col" right="0" selecttype="cell" initvalueid="ivGrdAccessibilityOn" binddataset="dsMain" top="274" oncellclick="grdMain_oncellclick" autosizingtype="row" cellsizingtype="both" extendsizetype="row" onheadclick="grdMain_onheadclick" height="438" accessibilitylabel="보존식관리 : 순번, 날짜, 기준교실명, 식단명, 채취일시, 페기일시, 채취자, 비고">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="48"/>
+                <Column size="48"/>
+                <Column size="108"/>
+                <Column size="90"/>
+                <Column size="126"/>
+                <Column size="117"/>
+                <Column size="114"/>
+                <Column size="74"/>
+                <Column size="138"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol"/>
+                <Cell col="1" text="순번"/>
+                <Cell col="2" text="날짜"/>
+                <Cell col="3" text="기준교실명"/>
+                <Cell col="4" text="식단명"/>
+                <Cell col="5" text="채취일시"/>
+                <Cell col="6" text="폐기일시"/>
+                <Cell col="7" text="채취자"/>
+                <Cell col="8" text="비고(특이사항)" cssclass="LineNo"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:chk"/>
+                <Cell col="1" text="bind:pfdSn" textAlign="center" wordWrap="char" autosizerow="limitmin"/>
+                <Cell col="2" text="bind:mlsnYmdGrid" textAlign="center" wordWrap="char" autosizerow="limitmin"/>
+                <Cell col="3" text="bind:eccNm" cssclass="cell_WF_Blue" cursor="pointer" wordWrap="char" autosizerow="limitmin"/>
+                <Cell col="4" text="bind:pfdCn" wordWrap="char" autosizerow="limitmin"/>
+                <Cell col="5" text="bind:pfdCllnDt" textAlign="center" wordWrap="char" displaytype="date" calendardateformat="yyyy.MM.dd HH:mm" calendareditformat="yyyy.MM.dd HH:mm" autosizerow="limitmin"/>
+                <Cell col="6" text="bind:pfdDscdDt" textAlign="center" wordWrap="char" displaytype="date" calendardateformat="yyyy.MM.dd HH:mm" calendareditformat="yyyy.MM.dd HH:mm" autosizerow="limitmin"/>
+                <Cell col="7" text="bind:userNm" textAlign="center" wordWrap="char" autosizerow="limitmin"/>
+                <Cell col="8" text="bind:pfdEtcCn" wordWrap="char" autosizerow="limitmin" cssclass="LineNo"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="sta00" taborder="5" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta01" taborder="6" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta02" taborder="7" left="0" top="214" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta03" taborder="8" left="0" top="264" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile" width="640" height="1024" mobileorientation="portrait" type="default"/>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">list</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsMain=dsMain</Col>
+            <Col id="outDatasets">dsMain=dsList</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+            <Col id="url">/ecc_eec_om07_001.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">delete</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsList=dsMain:U</Col>
+            <Col id="outDatasets"/>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+            <Col id="url">/ecc_eec_om07_002.do</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" sumtext="" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" sumtext="" description="학년도"/>
+          <Column id="eccSem" type="STRING" size="256" sumtext="" description="돌봄학기"/>
+          <Column id="eccScCd" type="STRING" size="256" sumtext="" description="돌봄구분"/>
+          <Column id="clrSeqNo" type="STRING" size="256" sumtext="" description="교실순서번호"/>
+          <Column id="mlsnYmd" type="STRING" size="256" sumtext="" description="조회년월"/>
+          <Column id="pfdCllnDt" type="STRING" size="256" sumtext="" description="채취일"/>
+          <Column id="pfdDscdDt" type="STRING" size="256" sumtext="" description="폐기일"/>
+          <Column id="pfdEtcCn" type="STRING" size="256" sumtext="" description="비고(특이사항)"/>
+          <Column id="pfdCn" type="STRING" size="256" sumtext="" description="식단명(보존식내용)"/>
+          <Column id="pfdSn" type="STRING" size="256" sumtext="" description="보존식일련번호"/>
+          <Column id="mm" type="STRING" size="256" description="조회월"/>
+          <Column id="flagPfd" type="STRING" size="256" description="자바단에서 파라미터 가져오는대 사용할 flag"/>
+          <Column id="flag" type="STRING" size="256" sumtext="" description="flag 자바단에서 update인지 insert인지 구분하는거"/>
+          <Column id="inserMlsnYmd" type="STRING" size="256" sumtext="" description="년월-부모창에서 등록버튼 클릭해서 들어왔을때 처음에 보여주기용."/>
+          <Column id="modified" type="STRING" size="256" description="급간식내역 테이블 저장할지 말지 체크하는 변수"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPageInfo">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" sumtext="" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" sumtext="" description="학년도"/>
+          <Column id="eccSem" type="STRING" size="256" sumtext="" description="초등돌봄교실학기"/>
+          <Column id="mlsnYmd" type="STRING" size="256" sumtext="" description="날짜(급간식일자)"/>
+          <Column id="mlsnYmdWeek" type="STRING" size="256" sumtext="" description="날짜(급간식일자)의 요일. 1-일요일"/>
+          <Column id="pfdSn" type="STRING" size="256" sumtext="" description="순번(보존식일련번호)"/>
+          <Column id="eccScCd" type="STRING" size="256" sumtext="" description="초등돌봄교실구분코드"/>
+          <Column id="clrSeqNo" type="STRING" size="256" sumtext="" description="교실순서번호"/>
+          <Column id="eccNm" type="STRING" size="256" sumtext="" description="교실명"/>
+          <Column id="pfdCn" type="STRING" size="256" sumtext="" description="식단명(보존식내용)"/>
+          <Column id="pfdCllnDt" type="STRING" size="256" sumtext="" description="보존식채취일시"/>
+          <Column id="pfdDscdDt" type="STRING" size="256" sumtext="" description="보존식폐기일시"/>
+          <Column id="pfdCllnId" type="STRING" size="256" sumtext="" description="보존식채취ID"/>
+          <Column id="userNm" type="STRING" size="256" sumtext="" description="채취자명"/>
+          <Column id="pfdEtcCn" type="STRING" size="256" sumtext="" description="보존식기타내용"/>
+          <Column id="mlsnYmdGrid" type="STRING" size="256" sumtext="" description="그리드에 표시되는 날짜"/>
+          <Column id="chk" type="STRING" size="256" description="체크박스"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsAyr">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="학년도 콤보"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEccSem">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="돌봄학기 콤보"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMainPop" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" sumtext="" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" sumtext="" description="학년도"/>
+          <Column id="eccSem" type="STRING" size="256" sumtext="" description="초등돌봄교실학기"/>
+          <Column id="mlsnYmd" type="STRING" size="256" sumtext="" description="날짜(급간식일자)"/>
+          <Column id="mlsnYmdWeek" type="STRING" size="256" sumtext="" description="날짜(급간식일자)의 요일. 1-일요일"/>
+          <Column id="pfdSn" type="STRING" size="256" sumtext="" description="순번(보존식일련번호)"/>
+          <Column id="eccScCd" type="STRING" size="256" sumtext="" description="초등돌봄교실구분코드"/>
+          <Column id="clrSeqNo" type="STRING" size="256" sumtext="" description="교실순서번호"/>
+          <Column id="eccNm" type="STRING" size="256" sumtext="" description="교실명"/>
+          <Column id="pfdCn" type="STRING" size="256" sumtext="" description="식단명(보존식내용)"/>
+          <Column id="pfdCllnDt" type="STRING" size="256" sumtext="" description="보존식채취일시"/>
+          <Column id="pfdDscdDt" type="STRING" size="256" sumtext="" description="보존식폐기일시"/>
+          <Column id="pfdCllnId" type="STRING" size="256" sumtext="" description="보존식채취ID"/>
+          <Column id="userNm" type="STRING" size="256" sumtext="" description="채취자명"/>
+          <Column id="pfdEtcCn" type="STRING" size="256" sumtext="" description="보존식기타내용"/>
+          <Column id="mlsnYmdGrid" type="STRING" size="256" sumtext="" description="그리드에 표시되는 날짜"/>
+          <Column id="chk" type="STRING" size="256" description="체크박스"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  보존식관리
+*  @MenuPath    초등돌봄교실 > 보존식관리
+*  @FileName 	ecc_eecom07_m01.xfdl 
+*  @Creator 	이혜진
+*  @CreateDate 	2022.10.20
+*  @Desction    초등돌봄교실(돌봄인력서비스) 보존식관리
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.10.20            이혜진                   최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::ecc_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_onLoadYn = true; //초기세팅여부 (화면 load시에만 첫번째 값으로 세팅하기)
+this.fv_nxtAyr = ""; //조회월이 01월 02월 일 경우 조회할때 조회년월 파라미터를 차년도로 설정
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ /*
+ * 화면 load시
+ * 
+ * 조회조건 초기값 세팅
+ * 1. 사용자정보세팅 (주민번호, 시도코드, 접속시도코드, 사용자id, 학교코드-전담사로 등록되어있는 학교코드)
+ * 2. 학년도 세팅 = 현재년도-1~현재년도+1 
+ * 3. 년월 세팅 = 현재날짜
+ * 4. 돌봄학기 -> 돌봄구분 -> 교실명 세팅
+ */
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitForm(obj);
+
+	//●1. 사용자정보세팅
+	this.eccfSetHnfInfo("selectHnfInfoForSession", this.dsSearch, ""); 
+};
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+			
+	switch(svcid) {	
+	
+		//●사용자정보세팅 콜백
+		case "selectHnfInfoForSession" : 
+			if ( errcd == -100 ) {//오류메시지 확인용
+				this.smfAlert("errcd : "+errcd);
+				this.alert(errmsg);
+			}
+
+			//●2. 학년도 세팅 
+			this.eccCmbSetAyr(this.dsAyr, "code", "value", 1, 1);
+			//현재년도로 디폴트 값 세팅
+			this.divSearch.form.cboAyr.set_index(0);
+			
+			
+			//●3. 년월 세팅(현재 월) - 월은 고정이므로 콤보에 하드코딩함
+			this.dsSearch.setColumn(0, "mm", this.smfToday().dateFormat("MM"));
+			
+			
+			//조회월이 01월 02월 일 경우 조회할때 조회년월 파라미터를 차년도로 설정
+			this.fnNxtAyr();
+			
+			
+			//●4. 돌봄학기 콤보 세팅
+			this.divSearch_cboAyr_onitemchanged();	
+			break;			
+	
+	
+		//●돌봄학기콤보 세팅 콜백
+		case "selectEccSem" : 
+			//에러처리
+			if ( errcd == -100 ) {
+				this.smfAlert("errcd : "+errcd);
+				this.alert(errmsg);
+			}
+			
+			//onload시 콤보 초기세팅
+			if(this.fv_onLoadYn){
+				this.divSearch.form.cboSem.set_index(0);
+			}
+			
+			//선택된 돌봄구분이 없으면 세팅
+			if(this.smfIsNull(this.divSearch.form.cboSem.text)){ 
+				this.divSearch.form.cboSem.set_index(0);
+			}
+			
+			this.divSearch_cboClr00_onitemchanged();
+			break;
+	}
+};
+
+
+
+/**
+ * 팝업의 콜백함수
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+	this.fnSearch();
+};
+
+
+
+/**
+ * 메세지 콜백함수
+ * @param : N/A
+ * @return : N/A
+ */
+this.fnMessageCallback = function(){
+	
+};
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * 조회 버튼 클릭
+ * 
+ */
+ this.fnSearch = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsMain.clearData();
+	
+	//년월 세팅
+	this.dsSearch.setColumn(0, "mlsnYmd", this.fv_nxtAyr + "" + (this.dsSearch.getColumn(0, "mm")) );
+	
+	this.smfSearchService("list")
+		// 데이터 검증
+		.validateForm(this.divSearch)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors){//에러
+				return;
+			}
+		});
+}
+
+
+
+/**
+ * 삭제 버튼 클릭
+ * 
+ */
+this.btnDelete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var arrChk = this.dsMain.extractRows('chk==1');
+	
+	//체크박스 선택 여부 확인
+	if(arrChk == '-1' || arrChk.length < 1){
+		//선택된 {0}이(가) 없습니다. {0}을(를) 선택하여 주십시오.
+		this.smfAlert('CM013', ['행']);	  
+		return;
+	}else{
+		this.dsSearch.setColumn(0, "flagPfd", "D");
+	}
+	
+ 	// 서비스 객체 생성
+	this.smfDeleteService("delete")
+		.messagePrefix(["삭제"]) //{} 하시겠습니까?
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			this.smfAlert('CM201', ['삭제'], this.fnMessageCallback ); // {0} 하였습니다.
+			this.fnSearch();
+		});		
+};
+
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * 보존식등록 팝업 호출
+ * 
+ */
+this.doPop = function(popupParams)
+{
+	this.smfDialog("_auto", "pa_ecc_eec_om::ecc_eecom07_p01.xfdl", popupParams);	
+}
+
+
+
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ /**
+ * 학년도 콤보 변경시 -
+ * [돌봄학기 콤보 세팅]
+ * @param : N/A
+ * @return : N/A
+ */
+this.divSearch_cboAyr_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.eccComboSet("selectEccSem", this.dsSearch, this.dsEccSem, this.fnMessageCallback, "2");
+};
+
+
+
+
+ /**
+ * 조회월 변경시
+ * [돌봄학기 콤보 세팅]
+ * @param : N/A
+ * @return : N/A
+ */
+this.divSearch_cboClr00_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	//조회월이 01월 02월 일 경우 조회할때 조회년월 파라미터를 차년도로 설정
+	this.fnNxtAyr();
+};
+
+
+
+/*
+ * 조회월이 01월 02월 일 경우 조회할때 조회년월 파라미터를 차년도로 설정
+ */
+this.fnNxtAyr = function()
+{
+	if(this.dsSearch.getColumn(0, "mm") > 02){
+		this.fv_nxtAyr = this.dsSearch.getColumn(0, "ayr");
+		
+	}else{
+		this.fv_nxtAyr = nexacro.toNumber(this.dsSearch.getColumn(0, "ayr"))+1;
+	}	
+};
+
+
+
+
+/**
+ * 등록 버튼 클릭 - 보존식등록 팝업 호출
+ * @param : N/A
+ * @return : N/A
+ */
+this.btnIssuAply_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+		//●팝업에 보낼 데이터 세팅
+		var popupParams = {
+								callback: this.fnPopupCallback
+							  , sender	: obj // sender 지정
+							  , params	: {
+												dsSearch : this.dsSearch		
+											  , mlsnYmd	 : ( this.fv_nxtAyr + "" + this.dsSearch.getColumn(0, "mm") )	
+											  , flag	 : "insert"	
+											  , procType : "search"
+										  } 
+						   };		
+		
+		//●팝업호출
+		this.doPop(popupParams)	
+};
+
+
+
+/**
+ * 그리드의 기준교실명 클릭 - 보존식등록 팝업 호출
+ * @param : N/A
+ * @return : N/A
+ */
+this.grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(this.grdMain.getBindCellIndex("body", "eccNm") == e.col){
+	
+		//●팝업에 보낼 데이터 세팅
+		this.dsMainPop.copyRow(0, this.dsMain, e.row);
+		var popupParams = {
+								callback: this.fnPopupCallback
+							  , sender	: obj // sender 지정
+							  , params	: {
+												dsSearch : this.dsSearch		
+											  , dsPfdList: this.dsMainPop
+											  , flag	 : "update"	
+											  , procType : "search"
+										  } 
+						   };		
+		
+		//●팝업호출
+		this.doPop(popupParams)			
+	}
+};
+
+
+/**
+ * @description 그리드 체크박스 헤드 클릭
+*/
+this.grdMain_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	//체크박스 전체 선택 
+	this.smfSetGridCheckAll(obj, e, function (ds, nRow){
+				var a = ds;
+			});	
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.cboAyr" propid="value" datasetid="dsSearch" columnid="ayr"/>
+      <BindItem id="item1" compid="divSearch.form.cboSem" propid="value" datasetid="dsSearch" columnid="eccSem"/>
+      <BindItem id="item2" compid="divSearch.form.cboClr00" propid="value" datasetid="dsSearch" columnid="mm"/>
+    </Bind>
+  </Form>
+</FDL>

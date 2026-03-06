@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comp_login_npki" width="450" height="580" titletext="로그인(NPKI) 공통모듈" onload="comp_login_npki_onload" cssclass="frm_Pop_bgTrsprt">
+    <Layouts>
+      <Layout height="580" width="450">
+        <WebBrowser id="webMain" taborder="0" left="0" top="0" right="0" bottom="0" onloadcompleted="webMain_onloadcompleted" onusernotify="webMain_onusernotify"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+ *	대입전형자료수신서비스로그인
+ *	@MenuPath	대입전형-대입전형자료수신서비스로그인
+ *	@FileName 	uds_cmmcm00_m01.xfdl
+ *	@Creator 	김동업
+ *	@CreateDate	2023.03.03 
+ *	@Desction	대입전형자료수신서비스로그인 
+ ************** 소스 수정 이력 ***********************************************
+ *	date			Modifier			Description
+ *******************************************************************************
+ *	2023.03.03		김동업				최초 생성
+ *******************************************************************************
+ */
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_params = {};  // 부모로 부터 받은 파라미터
+this.fv_CloseResult = false;
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.comp_login_npki_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitPopup(this);
+	
+	// this.fninit
+	this.fv_params = this.smfGetPopupParams();	
+	
+	// Url을 세팅한다.
+	var sBaseUrl = nexacro.getEnvironment().services["baseUrl"].url;
+	// var sBaseUrl= window.location.protocol + "//" + window.location.host;
+	var sUrl= sBaseUrl + "/html/edu/pa/uds/ueu/cm/certSign.html";
+	this.webMain.set_url(sUrl);
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+// 공동인증을 호출한다.
+this.fnExecLogin = function(objParam)
+{
+	var objParam = this.fv_params.loginInfo;
+	
+	// 금융인증서를 띄운다.
+	this.webMain.callMethod("fnExecLogin",objParam);
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.webMain_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+	this.fnExecLogin({});
+};
+
+this.webMain_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	trace("webMain_onusernotify : e.userdata=[" + e.userdata + "]");
+	var result = {resCode:""};
+	try{
+		result = JSON.parse(e.userdata);
+		
+		if(result.visible == "false"){
+			var bResult = false;
+			this.smfSendResponseToOpener({result:bResult,data:result});
+			this.close(true);
+		}
+		
+		switch(result.resCode) {
+			case "close" :
+			case "cert_init_error" :
+			case "cert_channel_error" :
+			case "cert_login_error" : 
+				var bResult = false;
+				this.smfSendResponseToOpener({result:bResult,data:result});
+				this.close(true);
+				break;
+			case "cert_login_success" :
+				var bResult = true;
+				this.opener.divLogin.form.btnLogin.set_enable(false);
+				this.smfSendResponseToOpener({result:bResult,data:result});
+				this.close(true);
+				break;
+		}
+	} catch(e){
+		trace(" e : " + e);
+	}
+	
+};
+
+]]></Script>
+  </Form>
+</FDL>

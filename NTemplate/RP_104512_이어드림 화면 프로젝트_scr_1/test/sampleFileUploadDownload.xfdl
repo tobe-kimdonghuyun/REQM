@@ -1,0 +1,803 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleFileUploadDownload" width="1160" height="1160" titletext="파일업로드 다운로드" onload="sampleFileUploadDownload_onload">
+    <Layouts>
+      <Layout height="1160" mobileorientation="landscape" width="1160">
+        <GroupBox id="grb00_00" taborder="16" text="파일업로드2" left="22" top="750" width="458" height="110"/>
+        <GroupBox id="grb00" taborder="2" text="파일업로드" left="22" top="100" width="458" height="640"/>
+        <Static id="sta02" taborder="1" text="파일업로드/다운로드" left="20" top="17" width="221" height="33"/>
+        <Div id="divFileUpload" taborder="0" text="div00" left="40" top="330" width="420" height="180" url="comm::comm_fileAdd.xfdl" Mode="upload" uploadLocation="PA.SAM.PLE" addProp="fnSetRaonProp" privInfoFiltYn="N" fileEncryptYn="N" fileSaveStg="SV" fileInfSaveYn="Y"/>
+        <Static id="sta00" taborder="3" text="* Div userproperty를 추가&#13;&#10;   Mode=upload" left="37" top="44" width="230" height="60"/>
+        <Button id="btnUpload_Upload" taborder="4" left="41" top="130" width="138" height="28" onclick="btnUpload_Upload_onclick" text="파일 Upload"/>
+        <TextArea id="txtLog" taborder="5" left="25" top="892" width="949" height="246"/>
+        <Button id="btnUpload_TotalFileSize" taborder="6" text="전체파일사이즈" left="42" top="520" width="118" height="28" onclick="btnUpload_TotalFileSize_onclick"/>
+        <GroupBox id="grb00_00_00" taborder="7" text="파일다운로드" left="516" top="100" width="458" height="760"/>
+        <Div id="divFileDownload" taborder="8" text="div00" left="535" top="280" height="110" url="comm::comp_fileDownload.xfdl" Mode="download" width="420"/>
+        <Button id="btnDownload_AddUploadedFile" taborder="9" text="fnAddUploadedFile" left="530" top="128" width="192" height="29" onclick="btnDownload_AddUploadedFile_onclick"/>
+        <Button id="btnDownload_rearrangeHeight" taborder="10" text="파일 갯수만큼 높이를 조정" left="529" top="168" width="192" height="29" onclick="btnDownload_rearrangeHeight_onclick"/>
+        <Static id="sta00_00_00" taborder="11" text="* 로그" left="25" top="862" width="330" height="30"/>
+        <Static id="sta01" taborder="12" text="download는 Border가 기본적으로 없습니다.&#13;&#10;디자인 단계에서는 편의를 위해 보이게 하였습니다." left="535" top="225" width="400" height="50" visible="false"/>
+        <Div id="divFileUpload2" taborder="13" text="div00" left="37" top="814" width="420" height="30" url="comm::comm_fileAdd2.xfdl" Mode="upload" uploadLocation="PA.SAM.PLE" addProp="fnSetRaonProp" privInfoFiltYn="Y" fileEncryptYn="Y" fileSaveStg="SV" fileInfSaveYn="Y" essential="Y"/>
+        <Button id="btnUpload_SelectedDownload" taborder="14" text="선택된 파일 다운로드" left="172" top="522" width="138" height="28" onclick="btnUpload_SelectedDownload_onclick"/>
+        <Button id="btnUpload2" taborder="15" text="파일 Upload" left="37" top="775" width="138" height="28" onclick="btnUpload2_onclick"/>
+        <Static id="sta00_00" taborder="17" text="* Raon의 자체 property등을 추가하려면 div에 &#13;&#10;   userproperty(addProp)에 설정할 정보를 JSON으로&#13;&#10;   리턴할 함수명(샘플에서는 fnSetRaonProp)을 지정한다. " left="37" top="654" width="423" height="80"/>
+        <Radio id="rdo00" taborder="18" left="148" top="174" width="352" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" columncount="-1" value="SV" text="공유폴더" index="0" rowcount="-1" onitemchanged="rdo00_onitemchanged">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">SV</Col>
+                <Col id="datacolumn">공유폴더:SV</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">OS</Col>
+                <Col id="datacolumn">Object Storage:OS</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">DB</Col>
+                <Col id="datacolumn">DB:DB</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Static id="sta03" taborder="19" text="서버저장방식 :" left="41" top="175" width="102" height="29"/>
+        <Static id="sta03_00" taborder="20" text="DB저장시 위치" left="41" top="215" width="102" height="29"/>
+        <Radio id="rdo00_00" taborder="21" left="148" top="214" width="312" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" columncount="-1" value="Y" text="공용DB(default)" index="0" rowcount="-1" onitemchanged="rdo00_00_onitemchanged">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">Y</Col>
+                <Col id="datacolumn">공용DB(default):Y</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">N</Col>
+                <Col id="datacolumn">개별DB:N</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Static id="sta03_00_00" taborder="22" text="암호화여부" left="41" top="255" width="102" height="29"/>
+        <Radio id="rdoFileEncryptYn" taborder="23" left="148" top="254" width="312" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" columncount="-1" value="N" text="원본" index="1" rowcount="-1" onitemchanged="rdoFileEncryptYn_onitemchanged">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">Y</Col>
+                <Col id="datacolumn">암호화:Y</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">N</Col>
+                <Col id="datacolumn">원본(default):N</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Static id="sta03_00_00_00" taborder="24" text="개인정보포함확인여부" left="41" top="295" width="102" height="29"/>
+        <Radio id="rdoPrivInfoFiltYn" taborder="25" left="148" top="294" width="312" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" columncount="-1" value="N" text="확인작업미실행" index="1" rowcount="-1" onitemchanged="rdoPrivInfoFiltYn_onitemchanged">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">Y</Col>
+                <Col id="datacolumn">실행:Y</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">N</Col>
+                <Col id="datacolumn">미실행(default):N</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Static id="sta04" taborder="26" text="fileRefrnId" left="41" top="626" width="72" height="33"/>
+        <Edit id="edtFileRefrnId" taborder="27" left="120" top="628" width="240" height="28" value="[avBzfFfD1CCzzV1+O4RpwITvxrUZAA/gm8OZ9a6pZ2Y=" text="[avBzfFfD1CCzzV1+O4RpwITvxrUZAA/gm8OZ9a6pZ2Y="/>
+        <Button id="btnUpload_TotalFileSize00" taborder="28" text="파일검색" left="372" top="628" width="88" height="28" onclick="btnUpload_FileSearch_onclick"/>
+        <Button id="btnUpload2_AddUploadedFile" taborder="29" text="fnAddUploadedFile" left="220" top="775" width="177" height="28" onclick="btnUpload2_AddUploadedFile_onclick" cssclass="essential"/>
+        <Button id="btnUpload_TotalFileCount" taborder="30" text="전체파일갯수" left="42" top="558" width="118" height="28" onclick="btnUpload_TotalFileCount_onclick"/>
+        <Button id="btnUpload_IsExistFile" taborder="31" text="파일존재여부" left="172" top="558" width="138" height="28" onclick="btnUpload_IsExistFile_onclick"/>
+        <Button id="btnAddDownloadButton" taborder="32" text="다운로드버튼추가" left="320" top="522" width="130" height="29" onclick="btnAddDownloadButton_onclick"/>
+        <Button id="btnGetButtonBarEdit" taborder="33" text="하단 버튼정보 취득" left="320" top="558" width="130" height="29" onclick="btnGetButtonBarEdit_onclick"/>
+        <Button id="btnDeleteAll" taborder="34" text="전체파일다운로드" left="753" top="128" width="154" height="29" onclick="btnDeleteAll_onclick"/>
+        <Button id="btnDownloadResetUpload" taborder="35" text="목록 클리어" left="756" top="169" width="150" height="32" onclick="btnDownloadResetUpload_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  파일업로드/다운로드 샘플
+*  @MenuPath    Sample
+*  @FileName 	sampleFileUploadDownload.xfdl
+*  @Creator 	홍길동
+*  @CreateDate 	2022.6.9
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.6.9     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ this.sampleFileUploadDownload_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitForm(this);
+
+	//=======================================
+	// 업로드관련 초기설정을 한다.
+	//=======================================
+	// 업로드시 저장위치등을 판별할 정보 세팅(대문자 : 시스템코드(2)+"."+서브시스템코드(3)+"."+대분류코드(3))
+	this.divFileUpload.UPLOAD_CreateComplete = this.fnEventUploadCreateComplete;  // 필요한 경우만 세팅
+	this.divFileUpload.UPLOAD_UploadComplete = this.fnEventUploadComplete;        // 필요한 경우만 세팅(세팅권장)
+	this.divFileUpload.UPLOAD_OnError        = this.fnEventUploadError;           // 필요한 경우만 세팅(세팅권장)
+	this.divFileUpload.UPLOAD_AfterAddFile   = this.fnEventUploadAfterAddFile;     
+	this.divFileUpload.UPLOAD_Form           = this;                              // 위의 함수가 존재하는 Form (보통은 this)
+	
+	//=======================================
+	// 업로드관련 초기설정을 한다.
+	//=======================================
+	this.divFileUpload2.UPLOAD_CreateComplete = this.fnEventUploadCreateComplete2;  // 필요한 경우만 세팅
+	this.divFileUpload2.UPLOAD_UploadComplete = this.fnEventUploadComplete2;        // 필요한 경우만 세팅(세팅권장)
+	this.divFileUpload2.UPLOAD_OnError        = this.fnEventUploadError2;           // 필요한 경우만 세팅(세팅권장)
+	this.divFileUpload2.UPLOAD_AfterAddFile   = this.fnEventUploadAfterAddFile2;     
+	this.divFileUpload2.UPLOAD_BeforeOpenFile = this.fnEventUploadBeforeOpenFile2;     
+	this.divFileUpload2.UPLOAD_Form           = this;                               // 위의 함수가 존재하는 Form (보통은 this)
+	
+	
+	//=======================================
+	// 다운로드관련 초기설정을 한다.
+	//=======================================
+	this.divFileDownload.UPLOAD_DownloadComplete = this.fnEventDownloadComplete;  // 필요한 경우만 세팅
+	this.divFileDownload.UPLOAD_Form             = this;                          // 위의 함수가 존재하는 Form (보통은 this)
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+
+this.fnEventUploadCreateComplete = function(obj,paramObj)
+{
+	trace("=== Sample : fnEventUploadCreateComplete");
+	
+}
+
+this.fnEventUploadComplete = function(obj,paramObj,objResultDataset)
+{
+
+	// 신규서비스
+	trace("=== Sample : fnEventUploadComplete");	
+	trace( "objResultDataset===========================\n" 
+	     //+ objResultDataset.saveXML() 
+		 + "\n==================================");
+	
+	// 업로드 성공 후, newfile에 있는 파일들을 webfile로 옮긴다.
+	this.divFileUpload.form.fnSetUploadCompleteState(obj,paramObj);	
+	
+	// 업로드한 file을 가져오는 법(샘플 가이드)
+	if(objResultDataset)
+	{
+		trace("====업로드한 결과 데이터셋 ========== \n"+objResultDataset.saveXML());
+		
+		var sFileRefrnId = objResultDataset.getColumn(0,"fileRefrnId");
+		trace("업로드결과 데이터셋의 첫번째 row의 fileRefrnId=["+sFileRefrnId+"]");
+		
+		// 테스트를 위해 아래의 sFileRefrnId를 세팅
+		if(!this.smfIsNull(sFileRefrnId))
+		{
+			this.edtFileRefrnId.set_value(sFileRefrnId)
+		}		
+	}
+	return;
+/*	
+	// 업로드한 파일들의 정보를 가져옴.
+	var listInfo = obj.GetListInfo("json")	    // 전송완료 후 새롭게 업로드 된 파일, 웹파일, 삭제된 파일 리스트 정보를 리턴해 주는 함수 입니다. ('array', 'json', 'xml', 'text')
+	var jsonNew     = listInfo.newFile;			// 새로 업로드된 파일 정보
+    var jsonDel     = listInfo.deleteFile;		// 삭제된 파일 정보
+    var jsonWebFile = listInfo.webFile;			// 웹파일 정보(이미 업로드 된 파일을 추가한 경우(AddUploadedFile()로 추가한 것- 업로드 대상에서 제외))
+	var jsonMerge   = listInfo.mergeFile;		// 신규추가된 파일과 웹파일을 함께 볼수 있는 정보
+	
+	var strLog = "...업로드완료\n";
+	//========================================================
+	// 업로드 된 데이터를 웹파일로 변경하는 코딩 예
+	//========================================================
+	// 기존에 추가되어 있는 webFile을 다시 추가하기 위한 로직.
+	// 업로드를 초기화
+	this.divFileUpload.form.fnResetUpload();
+	
+	if (jsonWebFile) {
+		var jsonWebFileLength = jsonWebFile.uploadPath.length;
+
+		strLog += " =====  기존웹파일 리스트 ===== 갯수 : "+jsonWebFileLength + "\n";
+		for (var i = 0; i < jsonWebFileLength; i++) {
+			var sCustomValue = jsonNew.customValue[i];
+			var handlerCode      = this.smfUploadInfoFileSn(sCustomValue,0);
+			var fileSn           = this.smfUploadInfoFileSn(sCustomValue,1);
+			var fileSize         = jsonWebFile.size[i];
+			var backendFilename  = jsonWebFile.uniqKey[i];
+			var forntendFilename = jsonWebFile.originalName[i];
+			
+			this.divFileUpload.form.fnAddUploadedFile(handlerCode, fileSn, fileSize, backendFilename, forntendFilename);			
+			
+			strLog += "[" + handlerCode + "]  [" + fileSn + "]  [" + backendFilename + "]  [" + forntendFilename+ "]  [" + fileSize+"]\n";
+		}
+	}
+
+	// 새로 업로드된 파일을 webFile로 새롭게 추가하기 위한 로직
+	if (jsonNew) {
+		var jsonNewLength = jsonNew.uploadPath.length;
+
+		strLog += " =====  신규업로드파일 리스트 ===== 갯수 : "+jsonNewLength + "\n";
+		for (var i = 0; i < jsonNewLength; i++) {
+		        trace("=== Sample : fnEventUploadComplete"+this.smfUploadInfoFileSn(jsonNew.customValue[i],0));	
+				var responseCustomValue = jsonNew.customValue[i];
+				var handlerCode         = this.smfUploadInfoFileSn(responseCustomValue,0);
+				var fileSn              = this.smfUploadInfoFileSn(responseCustomValue,1);
+				var fileSize            = jsonNew.size[i];
+				var backendFilename     = jsonNew.uploadName[i];
+				var forntendFilename    = jsonNew.originalName[i];
+				this.divFileUpload.form.fnAddUploadedFile(handlerCode, fileSn, fileSize, backendFilename, forntendFilename);			
+				
+				strLog += "[" + responseCustomValue + "] [" + handlerCode + "]  [" + fileSn + "]  [" + backendFilename + "]  [" + forntendFilename+ "]  [" + fileSize+"]\n";
+		}
+	}
+	
+	this.txtLog.set_value(strLog);
+*/	
+}
+
+this.fnEventUploadError = function(obj,paramObj)
+{
+	trace("=== Sample : fnEventUploadError - " + JSON.stringify(paramObj));	
+	
+}
+
+this.fnEventUploadComplete2 = function(obj,paramObj,objResultDataset)
+{
+	// 신규서비스
+	trace("=== Sample : fnEventUploadComplete2");	
+	
+	// 업로드 성공 후, newfile에 있는 파일들을 webfile로 옮긴다.
+	this.divFileUpload2.form.fnSetUploadCompleteState(obj,paramObj);	
+	
+	// 업로드한 file을 가져오는 법(샘플 가이드)
+	if(objResultDataset)
+	{
+		trace("====업로드한 결과 데이터셋 ========== \n"+objResultDataset.saveXML());
+		
+		var sFileRefrnId = objResultDataset.getColumn(0,"fileRefrnId");
+		trace("업로드결과 데이터셋의 첫번째 row의 fileRefrnId=["+sFileRefrnId+"]");
+		
+		// 테스트를 위해 아래의 sFileRefrnId를 세팅
+		if(!this.smfIsNull(sFileRefrnId))
+		{
+			this.edtFileRefrnId.set_value(sFileRefrnId)
+		}
+		
+	}
+	return;
+/*	
+	// 업로드한 파일들의 정보를 가져옴.
+	var listInfo = obj.GetListInfo("json")	    // 전송완료 후 새롭게 업로드 된 파일, 웹파일, 삭제된 파일 리스트 정보를 리턴해 주는 함수 입니다. ('array', 'json', 'xml', 'text')
+	var jsonNew     = listInfo.newFile;			// 새로 업로드된 파일 정보
+    var jsonDel     = listInfo.deleteFile;		// 삭제된 파일 정보
+    var jsonWebFile = listInfo.webFile;			// 웹파일 정보(이미 업로드 된 파일을 추가한 경우(AddUploadedFile()로 추가한 것- 업로드 대상에서 제외))
+	var jsonMerge   = listInfo.mergeFile;		// 신규추가된 파일과 웹파일을 함께 볼수 있는 정보
+	
+	var strLog = "...업로드완료\n";
+	//========================================================
+	// 업로드 된 데이터를 웹파일로 변경하는 코딩 예
+	//========================================================
+	// 기존에 추가되어 있는 webFile을 다시 추가하기 위한 로직.
+	// 업로드를 초기화
+	this.divFileUpload.form.fnResetUpload();
+	
+	if (jsonWebFile) {
+		var jsonWebFileLength = jsonWebFile.uploadPath.length;
+
+		strLog += " =====  기존웹파일 리스트 ===== 갯수 : "+jsonWebFileLength + "\n";
+		for (var i = 0; i < jsonWebFileLength; i++) {
+			var sCustomValue = jsonNew.customValue[i];
+			var handlerCode      = this.smfUploadInfoFileSn(sCustomValue,0);
+			var fileSn           = this.smfUploadInfoFileSn(sCustomValue,1);
+			var fileSize         = jsonWebFile.size[i];
+			var backendFilename  = jsonWebFile.uniqKey[i];
+			var forntendFilename = jsonWebFile.originalName[i];
+			
+			this.divFileUpload.form.fnAddUploadedFile(handlerCode, fileSn, fileSize, backendFilename, forntendFilename);			
+			
+			strLog += "[" + handlerCode + "]  [" + fileSn + "]  [" + backendFilename + "]  [" + forntendFilename+ "]  [" + fileSize+"]\n";
+		}
+	}
+
+	// 새로 업로드된 파일을 webFile로 새롭게 추가하기 위한 로직
+	if (jsonNew) {
+		var jsonNewLength = jsonNew.uploadPath.length;
+
+		strLog += " =====  신규업로드파일 리스트 ===== 갯수 : "+jsonNewLength + "\n";
+		for (var i = 0; i < jsonNewLength; i++) {
+		        trace("=== Sample : fnEventUploadComplete"+this.smfUploadInfoFileSn(jsonNew.responseCustomValue[i],0));	
+				var responseCustomValue = jsonNew.customValue[i];
+				var handlerCode      = this.smfUploadInfoFileSn(responseCustomValue,0);
+				var fileSn           = this.smfUploadInfoFileSn(responseCustomValue,1);
+				var fileSize         = jsonNew.size[i];
+				var backendFilename  = jsonNew.uploadName[i];
+				var forntendFilename = jsonNew.originalName[i];
+				this.divFileUpload.form.fnAddUploadedFile(handlerCode, fileSn, fileSize, backendFilename, forntendFilename);			
+				
+				strLog += "[" + responseCustomValue + "] [" + handlerCode + "]  [" + fileSn + "]  [" + backendFilename + "]  [" + forntendFilename+ "]  [" + fileSize+"]\n";
+		}
+	}
+	
+	this.txtLog.set_value(strLog);
+*/	
+}
+
+this.fnEventUploadError2 = function(obj,paramObj)
+{
+	trace("=== Sample : fnEventUploadError");	
+	
+}
+
+// KUpload를 생성시 지정할 property값을 지정
+this.fnSetRaonProp = function()
+{
+	//  Property의 자세한 설명은 
+	//  \12 나이스개발센터\17. 도입SW\01. 나이스클라우드\분리-06.파일 업로드 관리(RAON K Upload 2018)\raonkupload\sdk\index.html 참조 
+
+	//var objNewBtnText = '{"btn_remove" : "파일제거1", "btn_remove_All" : "전체파일제거1","btn_add":"FileOpen"}';
+
+	// 설정할 property
+	var objAddRaonProps = {
+							   AllowedZeroFileSize   : "1"        // 0byte 파일의 업로드를 허용 할지 설정합니다.(기본값은 "0" 허용안함이고, "1"로 설정시 허용입니다.)
+							//, ExtensionAllowOrLimit : "0"        // 업로드 할 파일 확장자를 허용 또는 제한 설정("0":지정된 확장자를 제한(선택 금지) , "1":지정된 확장자만 허용(선택가능))
+							//, ExtensionAllowOrLimit	: "1"        // 업로드 할 파일 확장자를 허용 또는 제한 설정("0":지정된 확장자를 제한(선택 금지), "1":지정된 확장자만 허용(선택가능))
+							//, ExtensionArr          : "txt,gif,png"  // 제한 및 허용할 확장자명을 ",(콤마)"로 구분하여 설정
+							//, LanguageExtendObject : objNewBtnText
+							//, MaxTotalFileCount 	: "1"	//업로드 할 최대 파일 개수 제한값을 설정합니다.
+							//, MaxOneFileSize 		: "100KB"	//업로드할 때 파일당 용량제한을 설정합니다.							
+	                      };
+
+	return objAddRaonProps;
+}
+
+
+this.fnEventUploadAfterAddFile = function(obj,paramObj,sCustomValue,sFileName,nFileSize)
+{
+	trace("========== fnEventUploadAfterAddFile");
+}
+
+this.fnEventUploadAfterAddFile2 = function(obj,paramObj,sCustomValue,sFileName,nFileSize)
+{
+	trace("========== fnEventUploadAfterAddFile2");
+}
+
+this.fnEventDownloadComplete = function(obj,paramObj)
+{
+	trace("========== fnEventDownloadComplete");
+}
+
+this.fnEventUploadBeforeOpenFile2 = function(obj,paramObj)
+{
+	trace("==========  fnEventUploadBeforeOpenFile2");
+	var nResult = true;   // 파일오픈을 할지 여부 false인 경우 파일오픈팝업 취소
+	
+	
+	return nResult; 
+}
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+//======================================================
+//   File Upload Sample - Start
+//======================================================
+// [파일 Upload]버튼 클릭 처리
+this.btnUpload_Upload_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divFileUpload.form.fnFileUpload();
+};
+
+// [전체파일사이즈]버튼 클릭 처리
+this.btnUpload_TotalFileSize_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nTotalFileSize = this.divFileUpload.form.fnGetTotalFileSize();
+	trace(" ** 전체 파일사이즈="+nTotalFileSize);
+};
+
+
+//======================================================
+//   File Upload Sample - End
+//======================================================
+
+//======================================================
+//   File Download Sample - Start
+//======================================================
+
+// [fnAddUploadedFile]버튼 클릭 처리
+this.btnDownload_AddUploadedFile_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+/*
+	var handlerCode = "PA.SAM.PLE";
+	var fileSn = "[avBzfFfD1CCzzV1+O4RpwITvxrUZAA/gm8OZ9a6pZ2Y=";
+	var fileId = "0"
+	var fileSize = 72239;
+	var backendFilename = '670272e75319870bdf1751ec3aa18e82.jpg';
+	var frontendFilename = '화면1.jpg';
+	
+	var sDownloadPath    = "";
+	var sFileEncryptYn   = "N" ;
+	var sPrivInfoFiltYn  = "N" ;
+	var sFileSaveStg     = "SV";
+	var sFileInfSaveYn   = "Y" ;
+	
+	this.divFileDownload.form.fnAddUploadedFile(handlerCode, fileSn, fileSize, backendFilename, frontendFilename , fileId
+												,sDownloadPath,sFileEncryptYn,sPrivInfoFiltYn,sFileSaveStg,sFileInfSaveYn);
+
+	var handlerCode = "PA.SAM.PLE";
+	var fileSn = "[avBzfFfD1CCzzV1+O4RpwITvxrUZAA/gm8OZ9a6pZ2Y=";
+	var fileId = "1"
+	var fileSize = 10176;
+	var backendFilename = 'a6ccb32ac5b7a3aee7f94b950611414c.jpg';
+	var frontendFilename = '화면2.jpg';
+	
+	var sDownloadPath    = "";
+	var sFileEncryptYn   = "N" ;
+	var sPrivInfoFiltYn  = "N" ;
+	var sFileSaveStg     = "SV";
+	var sFileInfSaveYn   = "Y" ;
+*/	
+
+	var handlerCode = "PA.SAM.PLE";
+	var fileSn = "[d3o3NXKHePhxCofQLg2mdrxWy5QtOYJWfr0tTMjEk4c=";
+	var fileId = "0"
+	var fileSize = 72239;
+	var backendFilename = '9f0ff72c09324a8ca31e4957a6272f82.png';
+	var frontendFilename = 'testSkech.png';
+	
+	var sDownloadPath    = "";
+	var sFileEncryptYn   = "N" ;
+	var sPrivInfoFiltYn  = "N" ;
+	var sFileSaveStg     = "SV";
+	var sFileInfSaveYn   = "Y" ;
+	
+	this.divFileDownload.form.fnAddUploadedFile(handlerCode, fileSn, fileSize, backendFilename, frontendFilename , fileId
+												,sDownloadPath,sFileEncryptYn,sPrivInfoFiltYn,sFileSaveStg,sFileInfSaveYn);
+
+	var handlerCode = "PA.SAM.PLE";
+	var fileSn = "[Vc0fSPuYOIyqTIb1DzyDG7hctPSIFiwaH5yqT32oHog=";
+	var fileId = "0"
+	var fileSize = 94655;
+	var backendFilename = '87e502c8c0894cb9899de0a44e149576.png';
+	var frontendFilename = 'crop (4).png';
+	
+	var sDownloadPath    = "";
+	var sFileEncryptYn   = "N" ;
+	var sPrivInfoFiltYn  = "N" ;
+	var sFileSaveStg     = "SV";
+	var sFileInfSaveYn   = "Y" ;
+	
+
+	this.divFileDownload.form.fnAddUploadedFile(handlerCode, fileSn, fileSize, backendFilename, frontendFilename , fileId
+												,sDownloadPath,sFileEncryptYn,sPrivInfoFiltYn,sFileSaveStg,sFileInfSaveYn);
+};
+
+// [파일 Download]버튼 클릭 처리
+this.btnDownload_rearrangeHeight_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// download 높이를 조정한다.
+	this.divFileDownload.form.fnReArrangeHeight();
+	
+	// 화면을 다시 그린다.(필수)
+	this.resetScroll();
+	
+};
+
+//======================================================
+//   File Download Sample - End
+//======================================================
+
+this.btnDownload_AddUploadedFile00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+};
+
+this.btnDownload_AddUploadedFile00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divFileDownload00.form.fnReArrangeHeight();
+	this.resetScroll();
+};
+
+this.btnUpload_FileSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sFileSn = this.edtFileRefrnId.value;
+	// 업로드 초기화
+	this.divFileUpload.form.fnResetUpload();
+	
+	this.ds00.setColumn(0,"fileRefrnId",sFileSn);
+
+
+	this.transaction("fn_filesearch" // serviceId
+				,"baseUrl::/cm_cmc_file_upload_001.do" // url
+				,"" // inDataset
+				,"dsOutFileinfo=atchFileinfo" // outDataset
+				//,"fileRefrnId='wERMhEHwrN7re8VIlylqrb8SJIU2nkZFMOu9EAa3Q3s='"
+				,"fileRefrnId='"+sFileSn+"'"
+				,this.btnUpload_FileSearch_callback // callbackFunction
+				,false // true: 비동기, false:동기
+   );
+   /*
+	this.transaction("fn_filesearch" // serviceId
+				,"baseUrl::/cm_cmc_file_upload_001_1.do" // url
+				,"ds00=ds00" // inDataset
+				,"outFileinfo=atchFileinfo" // outDataset
+				//,"fileRefrnId='wERMhEHwrN7re8VIlylqrb8SJIU2nkZFMOu9EAa3Q3s='"
+				,""//"fileRefrnId='"+sFileSn+"'"
+				,this.btnUpload_FileSearch_callback // callbackFunction
+				,false // true: 비동기, false:동기
+   );
+   */
+   for (var i = 0; i < this.dsOutFileinfo.rowcount; i++) {
+			//trace("=== Sample : fnEventUploadComplete"+this.smfUploadInfoFileSn(jsonNew.responseCustomValue[i],0));	
+			var responseCustomValue = "";
+			var sDownloadUrl       = "";   // 
+			var sPrivInfoFiltYn    = "";   // 항목 관리안함
+			var sFileInfSaveYn     = "Y";  // 업무에 맞게 개발자가 세팅(Y/N)
+			var sHandlerCode       = "PA.SAM.PLE";  //this.smfUploadInfoFileSn(jsonWebFile.customValue[i],0);
+			//var fileSn           = "476";  //this.smfUploadInfoFileSn(jsonWebFile.customValue[i],1);
+			var sFileSn            = this.dsOutFileinfo.getColumn(i,"fileRefrnId"   );
+			var sFileSeq           = this.dsOutFileinfo.getColumn(i,"fileId"        );
+			var sFileSize          = this.dsOutFileinfo.getColumn(i,"atchFileMg"    );
+			var sBackendFilename   = this.dsOutFileinfo.getColumn(i,"atchFileGuid"  );
+			var sForntendFilename  = this.dsOutFileinfo.getColumn(i,"atchFileNm"    );
+			var sFileEncryptYn     = this.dsOutFileinfo.getColumn(i,"fileEncryptYn" );
+			var sFileSaveStg       = this.dsOutFileinfo.getColumn(i,"fileSaveStg"   );
+			
+			this.divFileUpload.form.fnAddUploadedFile(sHandlerCode, sFileSn, sFileSize, sBackendFilename, sForntendFilename, sFileSeq, sDownloadUrl
+													  ,sFileEncryptYn,sPrivInfoFiltYn,sFileSaveStg,sFileInfSaveYn );			
+			
+			//strLog += "[" + responseCustomValue + "] [" + sHandlerCode + "]  [" + sFileSn + "]  [" + sFileSeq + "]  [" + sBackendFilename + "]  [" + sForntendFilename+ "]  [" + sFileSize+"]\n";
+	}
+	   
+};
+this.btnUpload_FileSearch_callback = function()
+{
+	for (var i = 0; i < this.dsOutFileinfo.rowcount; i++) {
+		        //trace("=== Sample : fnEventUploadComplete"+this.smfUploadInfoFileSn(jsonNew.responseCustomValue[i],0));	
+				var responseCustomValue = "";
+				var sDownloadUrl       = "";   // 
+				var sHandlerCode       = "PA.SAM.PLE";  //this.smfUploadInfoFileSn(jsonWebFile.customValue[i],0);
+				//var fileSn           = "476";  //this.smfUploadInfoFileSn(jsonWebFile.customValue[i],1);
+				var sFileSn            = this.dsOutFileinfo.getColumn(i,"fileRefrnId"   );
+				var sFileSeq           = this.dsOutFileinfo.getColumn(i,"fileId"        );
+				var sFileSize          = this.dsOutFileinfo.getColumn(i,"atchFileMg"    );
+				var sBackendFilename   = this.dsOutFileinfo.getColumn(i,"atchFileGuid"  );
+				var sForntendFilename  = this.dsOutFileinfo.getColumn(i,"atchFileNm"    );
+				var sFileEncryptYn     = this.dsOutFileinfo.getColumn(i,"fileEncryptYn" );
+				var sPrivInfoFiltYn    = this.dsOutFileinfo.getColumn(i,"privInfoFiltYn");
+				var sFileSaveStg       = this.dsOutFileinfo.getColumn(i,"fileSaveStg"   );
+				var sFileInfSaveYn     = this.dsOutFileinfo.getColumn(i,"fileInfSaveYn" );
+				
+				this.divFileUpload.form.fnAddUploadedFile(sHandlerCode, sFileSn, sFileSize, sBackendFilename, sForntendFilename, sFileSeq, sDownloadUrl
+				                                          ,sFileEncryptYn,sPrivInfoFiltYn,sFileSaveStg,sFileInfSaveYn );			
+				
+				//strLog += "[" + responseCustomValue + "] [" + sHandlerCode + "]  [" + sFileSn + "]  [" + sFileSeq + "]  [" + sBackendFilename + "]  [" + sForntendFilename+ "]  [" + sFileSize+"]\n";
+		}
+};
+
+this.btnUpload_SelectedDownload_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divFileUpload.form.fnFileSelectedDownload();
+};
+
+this.btnUpload2_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divFileUpload2.form.fnFileUpload();
+};
+
+this.rdo00_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	var sValue = e.postvalue;
+	
+	this.divFileUpload.fileSaveStg = sValue;
+};
+
+this.rdo00_00_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	var sValue = e.postvalue;
+	
+	this.divFileUpload.fileInfSaveYn = sValue;
+};
+
+this.rdoFileEncryptYn_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	var sValue = e.postvalue;
+	
+	this.divFileUpload.fileEncryptYn = sValue;
+};
+
+this.rdoPrivInfoFiltYn_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	var sValue = e.postvalue;
+	
+	this.divFileUpload.privInfoFiltYn = sValue;	
+};
+
+this.btnUpload2_AddUploadedFile_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var handlerCode      = "PA.SAM.PLE";
+	var fileSn           = "EtdJ6MoPUYC3soTZukHbm41H9IRztyup0JTDt/0yscE=";
+	var fileId           = "0"
+	var fileSize         = 65010;
+	var backendFilename  = '8e5182092a84aceab954cb2f88c53061.pdf';
+	var sDownloadPath    = "";
+	var frontendFilename = '11.pdf';
+	var sFileEncryptYn   = "N" ;
+	var sPrivInfoFiltYn  = "N" ;
+	var sFileSaveStg     = "SV";
+	var sFileInfSaveYn   = "Y" ;
+	this.divFileUpload2.form.fnAddUploadedFile(handlerCode, fileSn, fileSize, backendFilename, frontendFilename , fileId, sDownloadPath, sFileEncryptYn, sPrivInfoFiltYn, sFileSaveStg,sFileInfSaveYn );	
+};
+
+this.btnUpload_TotalFileCount_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nTotalCount = this.divFileUpload.form.fnGetTotalFileCount();
+	
+	alert("현재 파일은 " + nTotalCount + "개입니다.(fnGetTotalFileCount)");
+};
+
+this.btnUpload_IsExistFile_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var bExistUploadFile = this.divFileUpload.form.fnIsExistUploadFile()
+
+	alert("업로드할 파일 존재 여부(fnIsExistUploadFile) :  " + bExistUploadFile);
+};
+
+
+this.btnGetButtonBarEdit_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sButtonBarEdit = this.divFileUpload.form.fnGetButtonBarEdit();	
+	//alert(sButtonBarEdit);
+	trace("하단 버튼리스트 : " + sButtonBarEdit);
+};
+
+this.btnAddDownloadButton_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divFileUpload.form.fnAddDownloadButton();
+};
+
+this.btnDeleteAll_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divFileDownload.form.fnDownloadAll();
+};
+
+this.btnDownloadResetUpload_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divFileDownload.form.fnResetUpload();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsSample1">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">red</Col>
+            <Col id="Column3">1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">yellow</Col>
+            <Col id="Column3">2</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">blue</Col>
+            <Col id="Column3">3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">navy</Col>
+            <Col id="Column3">4</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">lemon</Col>
+            <Col id="Column3">5</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">orange</Col>
+            <Col id="Column3">6</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">test</Col>
+            <Col id="Column3">7</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">strawberry</Col>
+            <Col id="Column3">8</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">banana</Col>
+            <Col id="Column3">9</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsOutFileinfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="fileRefrnId" type="STRING" size="256" description="파일SEQ ID"/>
+          <Column id="fileId" type="STRING" size="256" description="파일 아이디"/>
+          <Column id="suc" type="STRING" size="256"/>
+          <Column id="atchFileNm" type="STRING" size="256" description="파일명"/>
+          <Column id="atchFileGuid" type="STRING" size="256" description="파일 GUID"/>
+          <Column id="atchFileMg" type="STRING" size="256"/>
+          <Column id="fileExtsnNm" type="STRING" size="256" description="파일확장자"/>
+          <Column id="minTypeNm" type="STRING" size="256" description="파일의 mime type"/>
+          <Column id="fileCoursNm" type="STRING" size="256" description="서버파일저장위치"/>
+          <Column id="fileObjKey" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds00">
+        <ColumnInfo>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

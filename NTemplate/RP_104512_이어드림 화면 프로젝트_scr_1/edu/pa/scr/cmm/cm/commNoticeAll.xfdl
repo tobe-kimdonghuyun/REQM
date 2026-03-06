@@ -1,0 +1,462 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="commNoticeAll" width="600" height="720" titletext="공지팝업" onsize="commNoticeAll_onsize" ondrag="commNoticeAll_ondrag" background="transparent" onload="commNoticeAll_onload" left="0" onlayoutchanged="commNoticeAll_onlayoutchanged" top="0" scrollbarsize="0">
+    <Layouts>
+      <Layout height="720" width="600" screenid="desktopScr">
+        <Div id="divPop" taborder="1" text="Div01" left="0" top="0" width="600" height="720" initvalueid="ivDivAccessibilityOn" minheight="720">
+          <Layouts>
+            <Layout>
+              <Div id="divHScroll" taborder="0" text="Div00" left="0" top="50" height="620" cssclass="div_POP_Bg" right="0" initvalueid="ivDivAccessibilityOn" formscrollbartype="none none" formscrolltype="none">
+                <Layouts>
+                  <Layout>
+                    <Div id="divH" taborder="0" text="Div00" left="40" top="60" url="pa_scr_cmm_cm::commStepNotice.xfdl" right="40" bottom="40" ontouchstart="divPop_divHScroll_ontouchstart" ontouchend="divPop_divHScroll_ontouchend"/>
+                  </Layout>
+                  <Layout name="mobile">
+                    <Div id="divH" left="24" top="42" right="24" bottom="24" taborder="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <CheckBox id="chkOpen" taborder="1" text="오늘 다시보지 않기" width="170" height="40" value="false" onclick="Div01_CheckBox03_onclick" initvalueid="iv_CheckBox" right="60" top="0" cssclass="chk_WF_Pop"/>
+              <Button id="btnClose" taborder="2" top="0" width="40" height="40" right="0" cssclass="btn_POP_CloseW" accessibilitydescription="팝업닫기" onclick="divPop_btnClose_onclick"/>
+              <Div id="divStep" taborder="3" text="div00" left="42" top="divHScroll:10" width="121" height="30" url="pa_scr_cmm_cm::commStep.xfdl" onkillfocus="divPop_divStep_onkillfocus"/>
+            </Layout>
+            <Layout name="mobile">
+              <Div id="divHScroll" height="728" top="50" left="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout height="909" name="mobile" type="default" width="460" screenid="mobileScr,tabletScr,desktopScr" background="transparent" mobileorientation="landscape" left="0" top="0" scrollbarsize="0">
+        <Div id="divPop" left="0" top="0" height="828" minheight="828" right="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템 
+*  @MenuPath    pa_scr_cmm_cm
+*  @FileName 	commpopNoticeAll.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.04.23
+*  @Desction    공지팝업 프레임
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.04.23     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fvWidth = 50;
+this.fvAddWidth = 36;
+
+this.popCnt = 0;	//전체 팝업 수
+this.popNum = 0;	//현재 선택된 팝업
+
+//터치 이벤트를 위한 정보
+this.popClientX = 0;     //처음 눌렸을때의 x좌표
+this.popMvSize = 80;    //x좌표가 어느만큼 움직여야 이미지 전환을 할지 지정
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.commNoticeAll_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.dsListPopup.copyData(this.parent.pPopInfo.dsListPopup);
+	
+	//this.set_background("transparent");	
+	//step1일 경우
+	//10 + 30 + 10 = 50
+	//step2일 경우	
+	//10 + 30 + 6 + 30 + 10 = 86
+	//step3일 경우
+	//10 + 30 + 6 + 30 + 6 + 30 + 10 = 122  
+	//step4일 경우
+	//10 + 30 + 6 + 30 + 6 + 30 + 6 + 30 + 10 = 158  
+	//step5일 경우
+	//10 + 30 + 6 + 30 + 6 + 30 + 6 + 30 + 6 + 30 + 10 = 194  	
+	
+	//최초 50 
+	//한 스텝 추가일 경우 36 추가
+	
+	this.popCnt = this.dsListPopup.getRowCount();
+	//조회된 팝업 개수가 최대 개수를 넘을 경우 최대 개수로 세팅
+	if(this.popCnt > this.maxNoticeStep){
+		this.popCnt = this.maxNoticeStep;
+	}
+	
+	var fvWidth = this.fvWidth + ( this.popCnt - 1 ) * this.fvAddWidth;
+	
+	this.divPop.form.divStep.setOffsetWidth(fvWidth);		//버튼수에 맞춰서 DIV길이 조절
+	this.divPop.form.divStep.form.resetScroll();
+	
+	this.divPop.form.divStep.form.fnCreateBtn(this.popCnt, this);	//버튼 생성
+	
+	//좌우정렬
+	//var nAllWidth = nexacro.getEnvironmentVariable("ev_isMobile") == "Y" ? "640" : this.width;  // 전체 form의 사이즈
+	var nAllWidth = this.width;
+	var nMaxWidth = this.divPop.getOffsetWidth();
+	var nLeft,nLeft2,nWidth;
+	nLeft  = parseInt((nAllWidth - nMaxWidth) / 2);
+ 	nLeft2 = parseInt((nMaxWidth -  this.divPop.form.divStep.getOffsetWidth()) / 2);
+ 	this.divPop.setOffsetLeft(nLeft);
+ 	this.divPop.form.divStep.setOffsetLeft(nLeft2);
+	
+	
+	//상하정렬
+	var nAllHeight = this.getOwnerFrame().height;  // 전체 form의 사이즈
+	
+	if (this.smfIsMobile()) {
+		var srcInfo = this.smfCurScreenInfo();
+		if (srcInfo[0] < srcInfo[1]) {
+			var nMaxHeight = this.divPop.minheight;
+			
+			nTop = parseInt((nAllHeight - nMaxHeight) / 2);
+			
+			if(nTop < 0) nTop=0;
+			
+			this.divPop.setOffsetTop(nTop);
+		}
+	}else {
+		//var nMaxHeight = this.divPop.getOffsetHeight();
+		
+		//nTop = parseInt((nAllHeight - nMaxHeight) / 2);
+		
+		this.divPop.setOffsetTop(100);
+	}
+	
+	
+	//팝업 화면 생성
+	this.setPopImg();
+	
+	//this.divPop.form.setFocus();
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	if(errcd == -1) return;
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+this.setPopImg  = function(){
+	var popForm =  this.divPop.form.divHScroll.form.divH.form;
+	var comLen = popForm.components.length;
+	var pWidth = nexacro.getEnvironmentVariable("ev_isMobile") == "Y" ? this.divPop.form.divHScroll.form.divH.getOffsetWidth():"518";
+	var pHeigth= nexacro.getEnvironmentVariable("ev_isMobile") == "Y" ? "660":"518";
+	
+	// 적응형용으로 추가
+	if(nexacro.getEnvironmentVariable("ev_isMobile") != "Y" && this.getCurrentLayoutID() != "default"){
+		pWidth = this.divPop.form.divHScroll.form.divH.getOffsetWidth();
+		pHeigth = "660";
+	}
+	
+	//팝업 개수에 맞게 step 생성
+	popForm.setStepCount(this.popCnt);
+
+	//팝업 생성
+	for(var i=0; i<this.popCnt; i++){
+		var objNm = "divNotice"+i;
+		//var objLeft = (i*pWidth)+20;
+	
+		if(this.dsListPopup.getColumn(i,"popupTypCd") == "IMG"){	//이미지형
+			
+			if(i!=0){	// 첫 팝업은 이미 프레임이 생성되어 있음
+				var objDiv = new Div();
+				//objDiv.init(objNm,objLeft,0,pWidth,pHeigth);
+				objDiv.init(objNm,0,0,pWidth,pHeigth);
+				popForm.addChild(objNm, objDiv);
+				objDiv.set_positionstep(i);
+				objDiv.show();
+			}else{
+				// 초기 팝업 사이즈 보정
+				popForm.components[i].set_height(pHeigth);
+				popForm.components[i].set_width(pWidth);
+			}
+
+			var objBtn = new Button();
+			objBtn.init("img00",0,0,pWidth,pHeigth);
+			popForm.components[i].form.addChild("img00", objBtn);
+			
+			var sUrl = this.smfGetImageUrl(this.dsListPopup.getColumn(i,"fileRefrnId"),0);
+			//objBtn.set_background("url("+sUrl+") no-repeat center center /cover");
+			objBtn.set_background("url("+sUrl+") no-repeat center center /518px 518px");
+			objBtn.set_initvalueid("ivBtnAccessibilityButton");
+			objBtn.set_accessibilitylabel(this.dsListPopup.getColumn(i,"popupTitlNm"));
+			//@KBR 버튼 기본속성 border 2px.
+			objBtn.set_border("0px none");
+
+			objBtn.setEventHandler("onclick", function(obj,e){
+				this.fnClickEvt(obj,e);
+			}, this);
+			
+			objBtn.show();
+
+		}else{	//템플릿형
+			var ymdStr = String(this.dsListPopup.getColumn(i,"eventBgngYmd")).dateFormat("yyyy.MM.dd. ") 
+			             + String(this.dsListPopup.getColumn(i,"eventBgngTm")).substr(0,2)
+						 + ":"
+						 + String(this.dsListPopup.getColumn(i,"eventBgngTm")).substr(2,2)
+						 + " ~ " 
+						 + String(this.dsListPopup.getColumn(i,"eventEndYmd")).dateFormat("yyyy.MM.dd. ")
+						 + String(this.dsListPopup.getColumn(i,"eventEndTm")).substr(0,2)
+						 + ":"
+						 + String(this.dsListPopup.getColumn(i,"eventEndTm")).substr(2,2);
+			var params = {eventTitlNm:this.dsListPopup.getColumn(i,"eventTitlNm")
+						 ,popupCn:this.dsListPopup.getColumn(i,"popupCn")
+						 ,lnkNm:this.dsListPopup.getColumn(i,"lnkNm")
+						 ,rplcText:this.dsListPopup.getColumn(i,"rplcText")
+						 ,jobCn:this.dsListPopup.getColumn(i,"jobCn")
+						 ,haltWrkCn:this.dsListPopup.getColumn(i,"haltWrkCn")
+						 ,lnkTypCd:this.dsListPopup.getColumn(i,"lnkTypCd")
+						 ,eventYmd:ymdStr
+						 ,popNo:i
+			};
+			
+			if(i!=0){
+				var objDiv = new Div();
+				objDiv.init(objNm,0,0,pWidth,null,null,0);
+				popForm.addChild(objNm, objDiv);
+				objDiv.set_positionstep(i);
+				objDiv.show();
+			}else{
+				// 초기 팝업 사이즈 보정
+				popForm.components[i].set_height(pHeigth);
+				popForm.components[i].set_width(pWidth);
+			}
+			
+			popForm.components[i].params=params;
+			
+			if(this.dsListPopup.getColumn(i,"popupTptCd") == "01"){  //1번 템플릿
+				popForm.components[i].set_url("pa_scr_cmm_cm::commNotice01P.xfdl");
+
+			}else if(this.dsListPopup.getColumn(i,"popupTptCd") == "02"){ //2번 템플릿
+				popForm.components[i].set_url("pa_scr_cmm_cm::commNotice02P.xfdl");
+
+			}else{	//3번 템플릿
+				popForm.components[i].set_url("pa_scr_cmm_cm::commNotice03P.xfdl");
+
+			}
+		}
+	}
+};
+
+this.fnClickEvt = function(obj,e){
+	var popNo = String(obj.parent.parent.name).substr(obj.parent.parent.name.length-1);
+	if(this.dsListPopup.getColumn(popNo,"lnkTypCd") == 1){	//url링크
+		if(this.dsListPopup.getColumn(popNo,"newinYn") == "Y"){		//새창
+			var win = window.open(this.dsListPopup.getColumn(popNo,"popupUrl"),"_blank");
+		}else{
+			
+			this.dsParam.addRow();
+			this.dsParam.setColumn(0,"lnkTypCd",this.dsListPopup.getColumn(popNo,"lnkTypCd"));
+			this.dsParam.setColumn(0,"lnkUrl",this.dsListPopup.getColumn(popNo,"popupUrl"));
+			
+			this.smfClose(this.dsParam);
+		}
+	}
+};
+
+this.fnStepClik = function(popNo){
+	var objNotice = this.divPop.form.divHScroll.form.divH.form;
+	
+	objNotice.setStepIndex(popNo);
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+//팝업 닫기
+this.divPop_btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//오늘 다시 보지 않기
+	this.smfSetNoticePopupToday(this.divPop.form.chkOpen.value);
+	
+	var paramObj = this.dsParam;
+	this.smfClose(paramObj);
+};
+
+// 센터 정렬
+this.commNoticeAll_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+ 	var fvWidth = this.fvWidth + ( this.popCnt - 1 ) * this.fvAddWidth;	
+ 	this.divPop.form.divStep.setOffsetWidth(fvWidth);
+	this.divPop.form.divStep.form.resetScroll();
+	var nMaxWidth = this.divPop.getOffsetWidth();
+	var nWidth    = this.getOffsetWidth();
+	var nLeft = ( nWidth - nMaxWidth ) / 2;
+	var nLeft2 = parseInt((nMaxWidth -  this.divPop.form.divStep.getOffsetWidth()) / 2);
+	
+	this.divPop.setOffsetLeft(nLeft);
+ 	this.divPop.form.divStep.setOffsetLeft(nLeft2);
+	
+	//모바일일 경우
+	if (this.smfIsMobile() ) {
+ 		var nTop = 0;
+ 		var srcInfo = this.smfCurScreenInfo();
+ 		
+ 		if (srcInfo[0] > srcInfo[1]) {
+ 		}else {
+ 			var nMaxHeight = this.divPop.minheight;
+ 			nTop = parseInt((srcInfo[1] - nMaxHeight) / 2);
+ 		}
+		
+		
+ 		this.divPop.setOffsetTop(nTop);
+		
+	}else {
+		//var nMaxHeight = this.divPop.getOffsetHeight();
+		
+		//nTop = parseInt((nAllHeight - nMaxHeight) / 2);		
+		this.divPop.setOffsetTop(100);
+	}
+	
+	this.divPop.form.chkOpen.setFocus();
+	
+	this.divPop.form.resetScroll();
+};
+
+this.divPop_divHScroll_ontouchstart = function(obj:nexacro.Div,e:nexacro.TouchEventInfo)
+{
+	//alert("터치시작");
+	this.popClientX = parseInt(e.touchinputinfos[0].screenx,10);	//현재 위치 저장
+};
+
+this.divPop_divHScroll_ontouchend = function(obj:nexacro.Div,e:nexacro.TouchEventInfo)
+{
+	//alert("터치끝");
+	var vForm = this.divPop.form.divStep.form;
+	
+	//현재 선택된 화면 번호
+	var nStepNo = vForm.stepNo;
+	//alert("화면번호:" + nStepNo);
+	
+	var nStepCnt = (this.popCnt-1);
+	var nStepIdx;
+	
+	
+	//var newClientX = parseInt(e.touchinputinfos[0].clientx,10);
+	var newClientX = parseInt(e.touchinputinfos[0].screenx,10);
+	var moveX = 0;
+
+	//alert("newClientX:" + newClientX);
+
+	//step  이동
+	if(newClientX > this.popClientX){		// 왼쪽에서 오른쪽으로 이동 (앞페이지)
+		moveX = parseInt(newClientX,10) - parseInt(this.popClientX,10);
+		if(moveX > this.popMvSize){ 	//페이지 이동할 만큼 움직인 경우
+			nStepIdx = nStepNo-1;
+			if(nStepIdx<0) nStepIdx = 0;
+		}else {
+			nStepIdx = nStepNo;
+		}
+	}else{		// 오른쪽에서 왼쪽으로 이동 (다음페이지)
+		moveX = this.popClientX - newClientX;
+		if(moveX > this.popMvSize){ 	//페이지 이동할 만큼 움직인 경우
+			nStepIdx = nStepNo+1;
+			if (nStepNo==nStepCnt)	nStepIdx = nStepNo;
+			
+		}else {
+			nStepIdx = nStepNo;
+		}		
+	}
+
+	//alert("nStepIdx:" + nStepIdx);
+
+	this.divPop.form.divStep.form.btnStepMv(nStepIdx);
+	//this.divNotice.set_positionstep(nStepIdx);
+};
+
+this.divPop_divStep_onkillfocus = function(obj:nexacro.Div,e:nexacro.KillFocusEventInfo)
+{
+	//this.getOwnerFrame().form.divTop.setFocus();
+};
+
+this.commNoticeAll_ondrag = function(obj:nexacro.Form,e:nexacro.DragEventInfo)
+{
+	
+};
+
+this.commNoticeAll_onlayoutchanged = function(obj:nexacro.Form,e:nexacro.LayoutChangeEventInfo)
+{
+	// layout 변경 시 팝업 초기화
+	var popForm =  this.divPop.form.divHScroll.form.divH.form;
+	for(var i=0; popForm.components.length > i; i++){
+		if(e.newlayout == "default"){
+			popForm.components[i].set_width(518);
+			popForm.components[i].set_height(518);
+			popForm.components[i].reload();
+		}else{
+			popForm.components[i].set_width(410);
+			popForm.components[i].set_height(660);
+			popForm.components[i].reload();
+		}
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsListPopup" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="popupId" type="string" size="256"/>
+          <Column id="popupTitlNm" type="STRING" size="256"/>
+          <Column id="popupCn" type="string" size="256"/>
+          <Column id="comPopupYn" type="STRING" size="256"/>
+          <Column id="popupTypCd" type="string" size="256"/>
+          <Column id="popupTptCd" type="string" size="256"/>
+          <Column id="pstStsCd" type="string" size="256"/>
+          <Column id="aplcnBgngYmd" type="string" size="256"/>
+          <Column id="aplcnEndYmd" type="string" size="256"/>
+          <Column id="aplcnBgngTm" type="STRING" size="256"/>
+          <Column id="aplcnEndTm" type="STRING" size="256"/>
+          <Column id="expsrSn" type="STRING" size="256"/>
+          <Column id="lnkTypCd" type="STRING" size="256"/>
+          <Column id="pafrBbsScCd" type="STRING" size="256"/>
+          <Column id="pafrBbsId" type="STRING" size="256"/>
+          <Column id="popupUrl" type="STRING" size="256"/>
+          <Column id="lnkNm" type="STRING" size="256"/>
+          <Column id="newinYn" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="rplcText" type="STRING" size="256"/>
+          <Column id="eventTitlNm" type="STRING" size="256"/>
+          <Column id="eventBgngYmd" type="STRING" size="256"/>
+          <Column id="eventEndYmd" type="STRING" size="256"/>
+          <Column id="eventBgngTm" type="STRING" size="256"/>
+          <Column id="eventEndTm" type="STRING" size="256"/>
+          <Column id="emrgYn" type="STRING" size="256"/>
+          <Column id="jobCn" type="STRING" size="256"/>
+          <Column id="haltWrkCn" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="rgtrDptNm" type="STRING" size="256"/>
+          <Column id="mdfrNm" type="STRING" size="256"/>
+          <Column id="mdfrDptNm" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsParam">
+        <ColumnInfo>
+          <Column id="lnkTypCd" type="STRING" size="256"/>
+          <Column id="lnkUrl" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

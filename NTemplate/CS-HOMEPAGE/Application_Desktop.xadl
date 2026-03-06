@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ADL version="2.0">
+  <Application id="Application_Desktop" screenid="Screen0" onload="application_onload" licenseurl="license::NexacroN_client_license.xml">
+    <Layout>
+      <MainFrame id="MainFrame" showtitlebar="true" showstatusbar="false" width="1024" height="768" titletext="TOBESOFT CS" titlebarheight="40">
+        <ChildFrame id="childFrame" formurl="FRAME::MainFrame.xfdl" showtitlebar="false"/>
+      </MainFrame>
+    </Layout>
+  </Application>
+  <Script type="xscript5.1"><![CDATA[include "COM::commonLib.xjs";
+include "COM::const.xjs";
+
+this.gv_mainFrame = "";
+this.gv_leftFrame = "";
+this.gv_topFrame = "";
+this.gv_bottomFrame = "";
+this.gv_rightFrame = "";
+
+this.gv_searchEngine = "";
+
+this.application_onload = function(obj:Application, e:nexacro.LoadEventInfo)
+{
+	
+	//그리드 체크박스 선택/해제 가이드코드 (RP 101592, 101572, 101690)
+	nexacro._GridCellControl.prototype._getAccessibilityMakeAddLabel  = function ()
+	{
+
+		var tmp_label = nexacro._CellControl.prototype._getAccessibilityMakeAddLabel.call(this);
+
+		if (this._curDisplayType == "checkboxcontrol")
+		{
+			var cellinfo = this._refinfo;
+			if(cellinfo) 
+			{
+				var value = cellinfo._getValue(this._rowidx);
+				tmp_label = (value == "0" ? "해제" : "선택") + " " + tmp_label;
+			}
+		}
+		return tmp_label;
+	};
+	
+	//Div 접근 시 상하방향키로 스크롤 이동 가이드코드 (RP 101978)
+	nexacro.Div.prototype.on_fire_user_onkeydown = function (keycode, alt_key, ctrl_key, shift_key, refer_comp, meta_key)
+	{
+		var ret = nexacro.Component.prototype.on_fire_user_onkeydown.call(this, keycode, alt_key, ctrl_key, shift_key, refer_comp, meta_key);
+		if (nexacro._enableaccessibility && nexacro._accessibilitycontentsearchkey == false)
+		{
+			if (this._isComponentKeydownAction() && (keycode == nexacro.Event.KEY_UP || keycode == nexacro.Event.KEY_DOWN))
+			{
+				var form = this._p_form;
+				if (form)
+				{
+					var vscrollbar = form.vscrollbar;
+					if (vscrollbar)
+					{
+						var line = vscrollbar.line;
+						if (line <= 0)
+							line = vscrollbar._linedown;
+						if (keycode == nexacro.Event.KEY_UP)
+							line *= -1;
+
+
+						vscrollbar.set_pos(vscrollbar.pos + line);
+						ret = true;
+					}
+				}
+			}
+		}
+		return ret;
+	};
+
+	this.gv_mainFrame = nexacro.getApplication().MainFrame.childFrame.form;
+
+   //운영 도메인으로 접속
+   if(nexacro.getApplication().xadl.indexOf("support.tobesoft.co.kr") != -1) {
+      nexacro.getApplication().gv_htmlUrl = "http://support.tobesoft.co.kr/nexacro/CS-Homepage_nexa_new/Next_JSP/SearchEngine";
+      nexacro.getEnvironment().services["SVC_JSP"].url = "http://support.tobesoft.co.kr/Next_JSP/CS-Homepage/";
+      nexacro.getApplication().gv_DomainInfo = "http://support.tobesoft.co.kr/Next_JSP/CS-Homepage/";
+      nexacro.getApplication().gv_DomainInfoTest = "http://support.tobesoft.co.kr/Next_JSP/CS-Homepage/";           
+      nexacro.setEnvironmentVariable("gv_SearchEngine", "http://20.194.59.154:25605"); //http://searchnew.tobesoft.com:25605
+   
+   //new 운영 도메인으로 접속
+   } else if(nexacro.getApplication().xadl.indexOf("supportnew.tobesoft.co.kr") != -1) {
+      nexacro.getApplication().gv_htmlUrl = "http://supportnew.tobesoft.co.kr/nexacro/CS-Homepage_nexa_new/Next_JSP/SearchEngine";
+      nexacro.getEnvironment().services["SVC_JSP"].url = "http://supportnew.tobesoft.co.kr/nexacro/CS-Homepage_nexa_new/";
+      nexacro.getApplication().gv_DomainInfo = "http://supportnew.tobesoft.co.kr/CS-Homepage_nexa_N/";
+      nexacro.getApplication().gv_DomainInfoTest = "http://supportnew.tobesoft.co.kr/CS-Homepage_nexa_new/";           
+      nexacro.setEnvironmentVariable("gv_SearchEngine", "http://20.194.59.154:25605");
+      
+   //개발 외부 IP로 접속
+   } else if(nexacro.getApplication().xadl.indexOf("121.134.99.181") != -1) {
+      nexacro.getApplication().gv_htmlUrl = "http://121.134.99.181/nexacro/CS-Homepage_nexa_new/Next_JSP/SearchEngine";
+      nexacro.getEnvironment().services["SVC_JSP"].url = "http://121.134.99.181/nexacro/CS-Homepage_nexa_new/";
+      nexacro.setEnvironmentVariable("gv_SearchEngine", "http://121.134.99.181");   
+      
+      var domainInfo = window.location.href.split("?")[0];   //http://121.134.99.181/NexacroN/CS_M/
+      nexacro.getApplication().gv_DomainInfo = domainInfo;
+      nexacro.getApplication().gv_DomainInfoTest = domainInfo; 
+      
+   //개발 내부 IP로 접속
+   } else if(nexacro.getApplication().xadl.indexOf("172.10.10.71") != -1) {   
+      nexacro.getApplication().gv_htmlUrl = "http://172.10.10.71/Support/Next_JSP/SearchEngine";
+      nexacro.getEnvironment().services["SVC_JSP"].url = "http://172.10.10.71/Support/";
+      nexacro.getApplication().gv_DomainInfo = "http://172.10.10.71/Support/";
+      nexacro.getApplication().gv_DomainInfoTest = "http://172.10.10.71/Support/";
+      nexacro.setEnvironmentVariable("gv_SearchEngine", "http://20.194.59.154:25605");   
+	  /*
+      nexacro.getApplication().gv_htmlUrl = "http://172.10.10.71/nexacro/CS-Homepage_nexa_new/Next_JSP/SearchEngine";
+      nexacro.getEnvironment().services["SVC_JSP"].url = "http://172.10.10.71/nexacro/CS-Homepage_nexa_new/";
+	  //nexacro.getEnvironment().services["SVC_JSP"].url = "http://172.10.10.71/Support/";
+      nexacro.getApplication().gv_DomainInfo = "http://172.10.10.71/CS-Homepage_nexa_N/";
+      nexacro.getApplication().gv_DomainInfoTest = "http://172.10.10.71/CS-Homepage_nexa_new/";
+      nexacro.setEnvironmentVariable("gv_SearchEngine", "http://20.194.59.154:25605");
+      */
+   //로컬로 접속
+   } else {
+      nexacro.getApplication().gv_htmlUrl = "http://support.tobesoft.co.kr/nexacro/CS-Homepage_nexa_new/Next_JSP/SearchEngine";
+      nexacro.getEnvironment().services["SVC_JSP"].url = "http://support.tobesoft.co.kr/Next_JSP/CS-Homepage/";
+	  //nexacro.getApplication().gv_DomainInfo = "http://support.tobesoft.co.kr/Next_JSP/CS-Homepage/";
+	  nexacro.setEnvironmentVariable("gv_SearchEngine", "http://searchnew.tobesoft.com:25605");
+
+      var domainInfo = window.location.href.split("?")[0];   //http://192.168.0.88:8080/CS_M/
+      nexacro.getApplication().gv_DomainInfo = domainInfo;
+      nexacro.getApplication().gv_DomainInfoTest = domainInfo;
+   }
+   
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//로컬 접근성 테스트 시 개발 서버로 붙기.
+	nexacro.getApplication().gv_htmlUrl = "http://172.10.10.71/nexacro/CS-Homepage_nexa_new/Next_JSP/SearchEngine";
+	nexacro.getEnvironment().services["SVC_JSP"].url = "http://172.10.10.71/Support/";
+	//nexacro.getEnvironment().services["SVC_JSP"].url = "http://172.10.10.71/Support/";
+	//nexacro.getApplication().gv_DomainInfo = "http://172.10.10.71/CS-Homepage_nexa_N/";
+	nexacro.getApplication().gv_DomainInfo = "http://172.10.11.93:4098/";
+	nexacro.getApplication().gv_DomainInfoTest = "http://172.10.10.71/CS-Homepage_nexa_new/";
+	nexacro.setEnvironmentVariable("gv_SearchEngine", "http://20.194.59.154:25605");   
+   
+   
+
+	var objApp = nexacro.getApplication();
+	var strAdl = objApp.xadl;
+	var objEnv = nexacro.getEnvironment();
+
+	var strLang = window.location.href;
+	
+	    	// 언어별 대응
+    if (strLang.indexOf(".co.jp/") != -1) {
+    		// 일본어   
+		    nexacro.getApplication().gv_Language = "JA";
+		    
+    }else if(strLang.indexOf(".nexaweb.jp/") != -1)
+    {
+		nexacro.getApplication().gv_Language = "JA";
+    
+    } else if (strLang.indexOf(".com/") != -1) {
+    		// 영어
+		    nexacro.getApplication().gv_Language = "EN";
+    } else {
+    		// 한국어
+		    nexacro.getApplication().gv_Language = "KO";
+    }
+    
+    if(nexacro.getApplication().gv_Language == "JA") 
+    {
+		window.location = "https://support.nexaweb.jp/TSSystem/index.html";
+    }
+       		
+	nexacro.getApplication().com_SetLanguage(nexacro.getApplication().gv_Language);  		
+  
+	var nLeng = strLang.indexOf("Product");	
+	if(nLeng != -1)
+	{
+		nexacro.getApplication().gv_Product = "Product,"+strLang.substr(nLeng+8, strLang.length);
+	}
+	if(strLang.indexOf("schedule") != -1)
+	{
+		nexacro.getApplication().gv_Product = "schedule,"+strLang.substr(nLeng+9, strLang.length);
+	}
+	
+	if(strLang.indexOf("policy") > -1)	
+	{
+		nexacro.getApplication().gv_Product = "policy";
+	}
+}  
+   
+this.getCookie = function (cName) {
+	cName = cName + '=';
+	var cookieData = window.document.cookie;
+	var start = cookieData.indexOf(cName);
+	var cValue = '';
+	if(start != -1){
+	   start += cName.length;
+	   var end = cookieData.indexOf(';', start);
+	   if(end == -1)end = cookieData.length;
+	   cValue = cookieData.substring(start, end);    
+	}
+	return unescape(cValue);
+}
+
+]]></Script>
+</ADL>

@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Template01" width="888" height="960" titletext="Popup" onload="Template14_onload">
+    <Layouts>
+      <Layout height="960" width="888" type="default" flexwrap="wrap" screenid="Desktop_screen">
+        <Static id="Static00" taborder="0" text="Page Title" left="0" top="0" height="60" cssclass="sta_WF_H2_pc" right="0"/>
+        <Static id="Static03" taborder="1" text="사용자검색" left="70" top="64" width="100" height="48" cssclass="sta_WF_SchDetail" flexshrink="0"/>
+        <Div id="Div00_00" taborder="2" text="Div00" left="10" top="41" width="380" height="48" formscrollbartype="none none" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Edit id="Edit02" taborder="0" top="0" height="48" cssclass="edt_WF_Sch" left="0" right="0"/>
+              <Button id="Button01" taborder="1" top="4" width="40" height="40" right="4" cssclass="btn_WF_EdtSch" onclick="Div00_00_Button01_onclick"/>
+            </Layout>
+            <Layout name="Layout0"/>
+          </Layouts>
+        </Div>
+        <Panel id="Panel00_00" taborder="3" left="24" top="24" width="184" height="48" maxwidth="" flexgrow="1">
+          <Contents>
+            <PanelItem id="PanelItem01" componentid="Static03"/>
+            <PanelItem id="PanelItem00" componentid="Div00_00"/>
+          </Contents>
+        </Panel>
+        <Button id="Button00" taborder="4" text="조회하기" left="1215" top="590" width="128" height="48" maxwidth="" cssclass="btn_WF_Sch"/>
+        <Button id="Button00_00" taborder="5" left="1325" top="590" width="48" height="48" maxwidth="" cssclass="btn_WF_Reset" enable="true" flexshrink="0"/>
+        <Panel id="Panel00_01" taborder="6" left="1313" top="220" width="184" height="48" horizontalgap="8" maxheight="" maxwidth="" flexmainaxisalign="end" flexgrow="1">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Button00"/>
+            <PanelItem id="PanelItem01" componentid="Button00_00"/>
+          </Contents>
+        </Panel>
+        <Panel id="Panel00" taborder="7" left="0" top="Static00:48" height="128" spacing="40px" cssclass="pnl_WF_SchBar" tablecellarea="" horizontalgap="16" fittocontents="height" flexmainaxisalign="spacebetween" flexwrap="wrap" right="0%" verticalgap="24" flexcrossaxisalign="center">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Panel00_00"/>
+            <PanelItem id="PanelItem01" componentid="Panel00_01"/>
+          </Contents>
+        </Panel>
+        <Button id="Button02" taborder="8" text="생성" left="64" top="1436" width="90" height="48" cssclass="btn_WF_CrudNew" flexshrink="0"/>
+        <Button id="Button02_01" taborder="9" text="수정" left="407" top="1450" width="90" height="48" cssclass="btn_WF_CrudModify" flexshrink="0"/>
+        <Button id="Button02_02" taborder="10" text="저장" left="508" top="1443" width="90" height="48" cssclass="btn_WF_CrudSave" flexshrink="0"/>
+        <Button id="Button02_03" taborder="11" text="삭제" left="614" top="1452" width="90" height="48" cssclass="btn_WF_CrudDelete" flexshrink="0"/>
+        <Panel id="Panel02" taborder="12" left="0" height="48" horizontalgap="8" flexmainaxisalign="center" right="0.00%" flexwrap="wrap" verticalgap="8" fittocontents="height" top="Panel00:150">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Button02"/>
+            <PanelItem id="PanelItem01" componentid="Button02_01"/>
+            <PanelItem id="PanelItem02" componentid="Button02_02"/>
+            <PanelItem id="PanelItem03" componentid="Button02_03"/>
+          </Contents>
+        </Panel>
+      </Layout>
+      <Layout height="960" mobileorientation="Portrait" name="Layout0" type="default" width="448" screenid="mobile_small,Desktop_screen">
+        <Button id="Button00" width="500" left="1215" top="590" height="48" flexgrow="1"/>
+        <Panel id="Panel00_00" width="100%" left="24" top="24" height="48"/>
+        <Panel id="Panel00_01" width="100%" left="1313" top="220" height="48"/>
+        <Panel id="Panel00" height="166" left="0" top="Static00:24" right="0" spacing="23px 16px"/>
+        <Static id="Static00" cssclass="sta_WF_H2_m"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="Dataset00">
+        <ColumnInfo>
+          <Column id="checkBox" type="STRING" size="256"/>
+          <Column id="Head01" type="STRING" size="256"/>
+          <Column id="Head02" type="STRING" size="256"/>
+          <Column id="Head03" type="STRING" size="256"/>
+          <Column id="Head04" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+          <Row/>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.Template14_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+};
+
+this.Div00_00_Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sTitle = "사용자검색";
+	var oArg   = {};
+	var oOption = {
+		popuptype:"modal"	//modal,modaless
+		,title:sTitle
+		,titlebar:true};
+	var sPopupCallBack = "fnPopupCallback";
+	this.gfnOpenPopup("popupModalDefault", "design::template/Template12.xfdl", oArg, sPopupCallBack, oOption);
+};
+
+this.fnPopupCallback = function (sPopupId, sRtn)
+{
+	if(!this.gfnIsNull(sRtn))
+	{
+		var objRtn = JSON.parse(sRtn);
+		if(this.gfnIsNull(objRtn)) return;
+		
+		if(!this.gfnIsNull(objRtn.rtnId))
+		{
+			trace(" 1. rtnId : " + objRtn.rtnId);
+		}
+		if(!this.gfnIsNull(objRtn.rtnName)) 
+		{
+			trace(" 2. rtnName : " + objRtn.rtnName);
+		}
+		if(!this.gfnIsNull( objRtn.rtnDepartment))
+		{
+			trace(" 3. rtnDepartment : " + objRtn.rtnDepartment);
+		}	
+		if(!this.gfnIsNull( objRtn.rtnDescription))
+		{
+			trace(" 4. rtnDescription : " + objRtn.rtnDescription);
+		}
+	}
+};]]></Script>
+  </Form>
+</FDL>

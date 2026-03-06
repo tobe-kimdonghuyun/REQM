@@ -1,0 +1,479 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmMain" width="1200" height="630" titletext="교육공무직-전자근로계약서" onload="frmMain_onload">
+    <Layouts>
+      <Layout height="630" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle00" taborder="0" text="전자근로계약서" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="240" initvalueid="ivTitleAccessibilityOn" onclick="divTitle_imgTitle00_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divLicenceInfo" taborder="1" left="0" top="144" height="246" right="0" cssclass="div_WF_Detail" initvalueid="ivDivAccessibilityOff" text="">
+          <Layouts>
+            <Layout>
+              <Grid id="grdLicence" taborder="0" left="0" top="1" height="245" autofittype="col" right="0" binddataset="dsList" selecttype="cell" initvalueid="ivGrdAccessibilityOn" autoenter="select" autosizingtype="row" extendsizetype="row" nodatatext="등록 자료가 없습니다." oncellclick="divLicenceInfo_grdLicence_oncellclick" accessibilitylabel="전자근로계약서 목록">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="170"/>
+                      <Column size="210"/>
+                      <Column size="121"/>
+                      <Column size="111"/>
+                      <Column size="111"/>
+                      <Column size="111"/>
+                      <Column size="131"/>
+                      <Column size="101"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32" band="head"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell rowspan="2" text="계약기간"/>
+                      <Cell col="1" rowspan="2" text="기관명"/>
+                      <Cell col="2" colspan="4" text="전자서명"/>
+                      <Cell col="6" rowspan="2" text="근로계약서"/>
+                      <Cell col="7" rowspan="2" text="진행상태"/>
+                      <Cell row="1" col="2" text="직접 서명"/>
+                      <Cell row="1" col="3" colspan="3" text="인증서 서명"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:cttYmd" textAlign="center" wordWrap="char" padding="10px 10px"/>
+                      <Cell col="1" textAlign="center" wordWrap="char" text="bind:instNm" padding="10px 10px"/>
+                      <Cell col="2" textAlign="center" wordWrap="char" edittype="expr:lbrCtrbStsCd == '30' ? 'button' : 'none'" text="expr:  lbrCtrbStsCd == '30' ?  (befrAgreYn == 'N' ? '동의서' :  '직접 서명' ) : ''       " padding="10px 10px" displaytype="expr:lbrCtrbStsCd == '30' ? 'buttoncontrol' : 'none'"/>
+                      <Cell col="3" textAlign="center" wordWrap="char" displaytype="expr: lbrCtrbStsCd == '30' ? ( befrAgreYn == 'N' &amp;&amp;  this.dsSearch.getColumn(0,&quot;bothYn&quot;) == 'Y' ? ''  :  'buttoncontrol' ) : 'none'              " edittype="expr:lbrCtrbStsCd == '30' ? ( befrAgreYn == 'N' &amp;&amp;  this.dsSearch.getColumn(0,&quot;bothYn&quot;) == 'Y' ? ''  :  'button' ) : 'none'              " text="expr:  lbrCtrbStsCd == '30' ?  (befrAgreYn == 'N' ?  ( this.dsSearch.getColumn(0,&quot;bothYn&quot;)  == 'Y' ? '' : '동의서' )  :  '공동인증서' ) : ''       " padding="10px 10px"/>
+                      <Cell col="4" displaytype="expr: lbrCtrbStsCd == '30' ? ( befrAgreYn == 'N' &amp;&amp;  this.dsSearch.getColumn(0,&quot;bothYn&quot;) == 'Y' ? ''  :  'buttoncontrol' ) : 'none'              " edittype="expr:lbrCtrbStsCd == '30' ? ( befrAgreYn == 'N' &amp;&amp;  this.dsSearch.getColumn(0,&quot;bothYn&quot;) == 'Y' ? ''  :  'button' ) : 'none'              " text="expr:  lbrCtrbStsCd == '30' ?  (befrAgreYn == 'N' ?  ( this.dsSearch.getColumn(0,&quot;bothYn&quot;)  == 'Y' ? '' : '동의서' )  :  '금융인증서' ) : ''       " padding="10px 10px" textAlign="center" wordWrap="char"/>
+                      <Cell col="5" displaytype="expr: lbrCtrbStsCd == '30' ? ( befrAgreYn == 'N' &amp;&amp;  this.dsSearch.getColumn(0,&quot;bothYn&quot;) == 'Y' ? ''  :  'buttoncontrol' ) : 'none'              " edittype="expr:lbrCtrbStsCd == '30' ? ( befrAgreYn == 'N' &amp;&amp;  this.dsSearch.getColumn(0,&quot;bothYn&quot;) == 'Y' ? ''  :  'button' ) : 'none'              " text="expr:  lbrCtrbStsCd == '30' ?  (befrAgreYn == 'N' ?  ( this.dsSearch.getColumn(0,&quot;bothYn&quot;)  == 'Y' ? '' : '동의서' )  :  '간편인증서' ) : ''       " combodisplaynulltype="none" textAlign="center" wordWrap="char" padding="10px 10px"/>
+                      <Cell col="6" textAlign="center" wordWrap="char" displaytype="buttoncontrol" edittype="button" text="계약서파일보기" padding="10px 10px"/>
+                      <Cell col="7" calendardateformat="yyyy-MM-dd " textAlign="center" wordWrap="char" text="bind:lbrCtrbStsNm" padding="10px 10px"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divPdfViewer" taborder="2" left="598" top="24" width="72" height="46" url="comm::comp_pdfviewer.xfdl" visible="false" background="#fdafbc"/>
+        <Div id="divFileDownload" taborder="3" text="div00" left="675" top="25" height="45" url="comm::comp_fileDownload.xfdl" Mode="download" width="75" background="#d6dafe" visible="false"/>
+        <Grid id="grdLicence" taborder="4" left="0" top="468" height="152" right="0" binddataset="dsData" selecttype="cell" initvalueid="ivGrdAccessibilityOn" autoenter="select" autosizingtype="row" extendsizetype="row" accessibilitylabel="전자근로계약서 목록" oncellclick="pdvData_grdLicence_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="526"/>
+              </Columns>
+              <Rows>
+                <Row size="40"/>
+              </Rows>
+              <Band id="body">
+                <Cell text="expr: (currow+1)+'. ' + lbrCtrbDataNm" textAlign="left" wordWrap="char" border="0px solid #dddfe3,0px solid #f6f7f8" padding="10px 10px"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <ImageViewer id="imgTitle00" taborder="5" text="별첨자료" left="0" top="410" height="44" cssclass="img_WF_SubTit01" width="240" initvalueid="ivTitleAccessibilityOn" onclick="divTitle_imgTitle00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  온라인통합채용-교육공무직-전자근로계약서
+*  @MenuPath    pa_ore_oew_rm
+*  @FileName 	pa_ore_oewrm33_m00.xfdl
+*  @Creator 	
+*  @CreateDate 	2022.9.16
+*  @Desction    교육공무직 전자근로계약서리스트  화면
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.09.16    	 	        최초 생성 
+*******************************************************************************
+*/
+
+include "lib::cm_script.xjs"
+include "lib::ore_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.readYn = false;
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frmMain_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// Form의 default 초기처리를 한다.
+	this.smfInitForm(obj);
+	var sCddcCd = this.smfGetCddcCode();
+	this.dsSearch.setColumn(0, "ctrsTchRrno"     , nexacro.base64Decode(this.smfGetSessionValue('userRrno')));
+	this.dsSearch.setColumn(0, "cddcScCd"        , sCddcCd.slice(0,3));
+	this.dsSearch.setColumn(0, "onlEmpmnExamScCd", this.smfGetAppoExamScCd());
+	// 내역조회 
+	this.fnSearchList("S");
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+
+};
+
+// 사인 완료 후 저장
+this.fnPdfCallback = function(sData)
+{
+	this.smfSaveService("saveContract")
+		.showConfirm(false)
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			// 내역조회 
+			this.dsSearch.setColumn(0,"searchKey", "");
+			this.fnSearchList("R");
+	});	
+};
+
+this.fnPopupCallback = function(e, sender){
+};
+
+//동의서 확인 후 
+this.fnUpCommpop = function(e, sender){
+	this.dsSearch.setColumn(0,"searchKey", "");
+	//재조회 
+	this.fnSearchList("R");
+};
+
+//인증서 성공 후 저장 
+this.fnContractCoprCertSignResult = function(resultYn){
+	if(resultYn == "Y"){
+		this.fnSearchDetail( this.dsList.rowposition , "01" ); 
+	}
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ // 근로계약서 목록 검색
+//searchGb : R:재조회 , S: 처음조회
+this.fnSearchList = function(searchGb)
+{
+	this.dsSearch.setColumn(0,"searchGb", searchGb);
+	
+	this.dsList.clearData();
+	this.smfSearchService('listContract') 
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			var signMthCd = this.dsSignMth.getColumn(0,"signMthCd");
+			//근로계약서 사인방법에 따른 표시 
+			if(searchGb == "S"){
+				if(signMthCd == "02"){ //직접 1
+					this.divLicenceInfo.form.grdLicence.setRealColSize( "body", "3" , 0);
+					this.divLicenceInfo.form.grdLicence.setRealColSize( "body", "4" , 0);
+					this.divLicenceInfo.form.grdLicence.setRealColSize( "body", "5" , 0);
+				}else if(signMthCd == "03"){ //인증서
+					this.divLicenceInfo.form.grdLicence.setRealColSize( "body", "2" , 0);
+				}else if(signMthCd == "X"){ //서명요청 없음 
+					this.divLicenceInfo.form.grdLicence.setRealColSize( "body", "2" , 0);
+					this.divLicenceInfo.form.grdLicence.setRealColSize( "body", "3" , 0);
+					this.divLicenceInfo.form.grdLicence.setRealColSize( "body", "4" , 0);
+					this.divLicenceInfo.form.grdLicence.setRealColSize( "body", "5" , 0);
+				}else{
+					//둘다일경우 
+					this.dsSearch.setColumn(0,"bothYn", "Y");
+				}
+			}else{
+				if(signMthCd == "X"){ //서명요청 없음 
+					this.divLicenceInfo.form.grdLicence.setRealColSize( "body", "2" , 0);
+					this.divLicenceInfo.form.grdLicence.setRealColSize( "body", "3" , 0);
+					this.divLicenceInfo.form.grdLicence.setRealColSize( "body", "4" , 0);
+					this.divLicenceInfo.form.grdLicence.setRealColSize( "body", "5" , 0);
+				}
+			}
+			
+			// 별첨자료 
+			if(this.dsData.rowcount > 0 ){
+				if( this.readYn ) return;
+				this.readYn = true;
+				for( var i=0; i < this.dsData.rowcount; i++ ){
+					var sHandlerCode       = "PA.ORE.OEW";  
+					var sFileSn            = this.dsData.getColumn(i,"fileRefrnId"   );
+					var sFileSize          = this.dsData.getColumn(i,"atchFileMg"    );
+					var sBackendFilename   = this.dsData.getColumn(i,"atchFileGuid"  );
+					var sForntendFilename  = this.dsData.getColumn(i,"atchFileNm"    );
+					var sFileSeq           = this.dsData.getColumn(i,"fileId"        );
+					var sDownloadUrl       = "";    
+					var sFileEncryptYn     = this.dsData.getColumn(i,"fileEncryptYn" );
+					var sPrivInfoFiltYn    = "N"; 
+					var sFileSaveStg       = this.dsData.getColumn(i,"fileSaveStg"   );
+					var sFileInfSaveYn     = "Y"; 
+					this.divFileDownload.form.fnAddUploadedFile(sHandlerCode
+															  , sFileSn
+															  , sFileSize
+															  , sBackendFilename
+															  , sForntendFilename
+															  , sFileSeq
+															  , sDownloadUrl
+															  , sFileEncryptYn
+															  , sPrivInfoFiltYn
+															  , sFileSaveStg
+															  , sFileInfSaveYn );	
+				}
+		}else{		
+			this.imgTitle00.set_visible(false);
+			this.grdLicence.set_visible(false);
+		}
+	});
+};
+
+//근로계약서 상세 조회 
+//sSignMthCd : (01: 인증서 서명 , 02 : 직접서명, 03 : 계약서 파일보기 )
+this.fnSearchDetail = function(nRow , sSignMthCd)
+{
+	var sCddcCd = this.smfGetCddcCode();
+	this.dsSearch.setColumn(0, "cddcScCd"    , sCddcCd.slice(0,3)); // 시도교육청 앞 3자리 = 시도교육청 구분코드
+	this.dsSearch.setColumn(0, "cddcCd"      , sCddcCd); // 선택 시도교육청코드
+	this.dsSearch.setColumn(0,"searchKey"    , this.dsList.getColumn(nRow, "searchKey"));
+	this.dsSearch.setColumn(0,"instCd"       , this.dsList.getColumn(nRow, "instCd"));
+	this.dsSearch.setColumn(0,"lbrCtrbOtlId" , this.dsList.getColumn(nRow, "lbrCtrbOtlId"));
+	this.dsSearch.setColumn(0,"lbrCtrbSn"    , this.dsList.getColumn(nRow, "lbrCtrbSn"));
+	this.dsSearch.setColumn(0, "signMthCd"   , sSignMthCd);
+	
+	if(sSignMthCd == "01"){ //인증서 서명일 경우 
+		this.dsSearch.setColumn(0, "signWdsFileCn"   , this.dsSignMth.getColumn(0,"signWdsFileCn"));
+		this.dsSearch.setColumn(0, "signWdsFileNm"   , this.dsSignMth.getColumn(0,"signWdsFileNm"));
+	}
+	
+	this.smfSearchService('listContractDetail') 
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if(this.dsResult.rowcount > 0 ){
+				this.dsSearch.setColumn(0, "fileName", this.dsResult.getColumn(0,"atchFileGuid") );
+				
+				if( sSignMthCd == "02" ){ //직접서명 
+					var sOrgPath     = this.dsResult.getColumn(0,"copyPath") ; 
+					var sResultPath = "/edufile/temp/cm/pdfviewer/" + this.dsSearch.getColumn(0,"searchKey") + "/" + this.dsResult.getColumn(0,"atchFileGuid") ; 
+					var popupParams = {
+						callback: this.fnPopupCallback, // 콜백함수 지정
+						sender: obj, // sender 지정
+						params: {
+							   procType: "none"                        // 처리타입 지정(필수)
+							// 파라메터 전달
+							,  viewtype   : "sign"                     // 표시 종류 ("view","sign")
+							,  orgPath    : sOrgPath                   // 원본PDF 경로(orgPath)
+							,  resultPath : sResultPath                // 사인이 추가된 결과PDF를 저장할 경로(resultPath)
+							,  signWidth  : "2"                        // 사인의 넓이(signWidth)
+							,  posText    : "SIGN"                     // 서명을 날인할 위치Text(posText)
+							,  title      : ""                         // 팝업의 타이틀(title)
+							,  callback   : this.fnPdfCallback         // callback함수
+							,  objForm    : this                       // callback이 있는 Form Object
+						},
+					};
+					// 모달팝업 실행
+					this.smfDialog("_auto", "comm::comm_pdfviewerPopup.xfdl", popupParams,null,null,1200,900);
+				}else if(sSignMthCd == "01" ){ //인증서 서명 
+					this.fnPdfCallback();
+				}else{
+					var sOrgPath = this.dsResult.getColumn(0,"copyPath"); 
+					var popupParams = {
+							callback: this.fnPopupCallback, // 콜백함수 지정
+							sender: obj, // sender 지정
+							params: {
+								procType: "none" 
+								// 파라메터 전달
+								,  viewtype : "view"               // 표시 종류 ("view","sign")
+								,  path     : sOrgPath             // PDF파일경로(path)
+								,  download : "false"              // 다운기능 사용여부(사용:"true",미사용:"false"(default))
+								,  print    : "false"              // 인쇄기능 사용여부(사용:"true",미사용:"false"(default))
+								,  annot    : "false"              // 주석기능 사용여부(사용:"true",미사용:"false"(default))
+								,  title    : "PFD 뷰어"          // 팝업의 타이틀(title)
+							},
+						};
+						// 모달팝업 실행
+						this.smfDialog("_auto", "comm::comm_pdfviewerPopup.xfdl", popupParams,null,null,1200,900);
+				}
+		}
+	});
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.divLicenceInfo_grdLicence_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{	
+	//진행상태 코드 
+	var lbrCtrbStsCd = this.dsList.getColumn(e.row, "lbrCtrbStsCd");
+	if(  (lbrCtrbStsCd < 40 &&  ( e.cell == "2" || e.cell == "3" || e.cell == "4" || e.cell == "5" ))  ||  e.cell == "6" ){
+		if (e.cell == "2" || e.cell == "3" || e.cell == "4" || e.cell == "5"){ //직접서명 &  인증서서명
+			var befrAgreYn = this.dsList.getColumn(e.row, "befrAgreYn"); //동의여부 
+			if(befrAgreYn != "Y"){
+				//팝업호출
+				var popupParams = {
+					callback: this.fnUpCommpop, // 콜백함수 지정
+					sender: obj, // sender 지정
+					// 팝업 전달 파라메터 지정
+					params: {
+						procType: 'none',
+						searchKey : this.dsList.getColumn(e.row, "searchKey")
+					}
+					//titlebar : false
+				};
+				// 모달팝업 실행
+				this.smfDialog("_auto", "pa_ore_oew_rm::ore_oewrm33_p00.xfdl", popupParams);
+			}else {
+				if (e.cell == "2" ){ //직접서명 
+					this.fnSearchDetail(e.row , "02"); 
+				}else if( e.cell == "3" ){ //공동인증서서명
+					this.fnContractCoprCertSign();
+				}else if( e.cell == "4" ){ //금융인증서서명
+					this.fnContractFnncCertSign();
+				}else if( e.cell == "5" ){ //간편인증서서명
+					this.fnContractEasyCertSign();
+				}
+			}
+		}else{ //계약서파일보기 
+			this.fnSearchDetail(e.row , "03"); 
+		}
+	}
+};
+
+//파일 다운로드 
+this.pdvData_grdLicence_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.divFileDownload.form.fnDownload(e.row);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cttBgngYmd" type="STRING" size="256" description="계약시작일자"/>
+          <Column id="cttEndYmd" type="STRING" size="256" description="계약종료일자"/>
+          <Column id="lbrCtrbStsNm" type="STRING" size="256"/>
+          <Column id="cttYmd" type="STRING" size="256" description="계약기간"/>
+          <Column id="lbrCtrbWrtFileRefrnId" type="STRING" size="256" description="근로계약서작성파일참조ID"/>
+          <Column id="lbrCtrbSignFileRefrnId" type="STRING" size="256" description="근로계약서서명파일참조ID"/>
+          <Column id="lbrCtrbFileRefrnId" type="STRING" size="256" description="근로계약서파일참조ID"/>
+          <Column id="searchKey" type="STRING" size="256"/>
+          <Column id="instNm" type="STRING" size="256"/>
+          <Column id="lbrCtrbStsCd" type="STRING" size="256"/>
+          <Column id="instCd" type="STRING" size="256"/>
+          <Column id="lbrCtrbOtlId" type="STRING" size="256"/>
+          <Column id="lbrCtrbSn" type="STRING" size="256"/>
+          <Column id="befrAgreYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsOutFileinfo">
+        <ColumnInfo>
+          <Column id="fileRefrnId" type="STRING" size="256" description="파일SEQ ID"/>
+          <Column id="fileId" type="STRING" size="256" description="파일 아이디"/>
+          <Column id="suc" type="STRING" size="256"/>
+          <Column id="atchFileNm" type="STRING" size="256" description="파일명"/>
+          <Column id="atchFileGuid" type="STRING" size="256" description="파일 GUID"/>
+          <Column id="atchFileMg" type="STRING" size="256"/>
+          <Column id="fileExtsnNm" type="STRING" size="256" description="파일확장자"/>
+          <Column id="minTypeNm" type="STRING" size="256" description="파일의 mime type"/>
+          <Column id="fileCoursNm" type="STRING" size="256" description="서버파일저장위치"/>
+          <Column id="fileObjKey" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listContract</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsList=dsList dsData=dsData dsSignMth=dsSignMth</Col>
+            <Col id="url">ore_oew_rm33_001.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">listContractDetail</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsResult=dsResult</Col>
+            <Col id="url">ore_oew_rm33_002.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">saveContract</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="url">ore_oew_rm33_003.do</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="false" updatecontrol="false">
+        <ColumnInfo>
+          <Column id="cddcScCd" type="STRING" size="256" description="접속시도교육청 구분코드"/>
+          <Column id="ctrsTchRrno" type="STRING" size="256" description="주민번호"/>
+          <Column id="searchKey" type="STRING" size="256"/>
+          <Column id="onlEmpmnExamScCd" type="STRING" size="256"/>
+          <Column id="instCd" type="STRING" size="256"/>
+          <Column id="lbrCtrbOtlId" type="STRING" size="256"/>
+          <Column id="lbrCtrbSn" type="STRING" size="256"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="fileName" type="STRING" size="256"/>
+          <Column id="searchGb" type="STRING" size="256"/>
+          <Column id="signMthCd" type="STRING" size="256"/>
+          <Column id="signWdsFileCn" type="BLOB" size="256"/>
+          <Column id="signWdsFileNm" type="STRING" size="256"/>
+          <Column id="bothYn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="ctrsTchRrno"/>
+            <Col id="cddcScCd">K10</Col>
+            <Col id="onlEmpmnExamScCd"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="fileRefrnId" type="string" size="256"/>
+          <Column id="fileId" type="string" size="256"/>
+          <Column id="suc" type="string" size="256"/>
+          <Column id="atchFileNm" type="string" size="256"/>
+          <Column id="atchFileGuid" type="string" size="256"/>
+          <Column id="atchFileMg" type="string" size="256"/>
+          <Column id="fileExtsnNm" type="string" size="256"/>
+          <Column id="minTypeNm" type="string" size="256"/>
+          <Column id="fileCoursNm" type="string" size="256"/>
+          <Column id="fileObjKey" type="string" size="256"/>
+          <Column id="fileEncryptYn" type="string" size="256"/>
+          <Column id="fileSaveStg" type="string" size="256"/>
+          <Column id="copyPath" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsData" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="lbrCtrbDataNm" type="string" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256" description="파일SEQ ID"/>
+          <Column id="fileId" type="STRING" size="256" description="파일 아이디"/>
+          <Column id="atchFileNm" type="STRING" size="256" description="파일명"/>
+          <Column id="atchFileGuid" type="STRING" size="256" description="파일 GUID"/>
+          <Column id="atchFileMg" type="STRING" size="256"/>
+          <Column id="fileEncryptYn" type="STRING" size="256" description="파일확장자"/>
+          <Column id="fileSaveStg" type="STRING" size="256" description="파일의 mime type"/>
+          <Column id="fileCoursNm" type="STRING" size="256" description="서버파일저장위치"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSignMth" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="signMthCd" type="STRING" size="256"/>
+          <Column id="signWdsFileCn" type="BLOB" size="256"/>
+          <Column id="signWdsFileNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

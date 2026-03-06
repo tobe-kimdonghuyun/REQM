@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameNotice" width="1900" height="50" titletext="frameNotice" onload="frameNotice_onload" ontimer="frameNotice_ontimer" onsize="frameNotice_onsize" scrollbartype="none" scrolltype="none">
+    <Layouts>
+      <Layout height="50" width="1900" screenid="ScreenDeskTop">
+        <Div id="divNotice" taborder="0" left="350" top="0" height="50" cssclass="div_WF_Banner" width="1200" initvalueid="ivDivAccessibilityOff" formscrollbartype="none none" minwidth="1200" maxwidth="">
+          <Layouts>
+            <Layout>
+              <Static id="staCddcInfo" taborder="0" text="서울특별시 교육청에서 알려드립니다!" left="10" top="10" width="330" height="30" cssclass="sta_TF_Notice" fittocontents="width" initvalueid="ivStcAccessibilityOn"/>
+              <Button id="btnNoticeUp" taborder="1" left="340" top="5" width="30" height="40" cssclass="btn_TF_PageUp" initvalueid="ivBtnAccessibilityButton" onclick="divNotice_btnNoticeUp_onclick" accessibilitylabel="이전글"/>
+              <Button id="btnNoticeDown" taborder="2" top="5" width="30" height="40" cssclass="btn_TF_PageDown" initvalueid="ivBtnAccessibilityButton" onclick="divNotice_btnNoticeDown_onclick" left="370" accessibilitylabel="다음글"/>
+              <Div id="divNoticeTitleList" taborder="3" left="433" top="0" width="650" formscrolltype="none" formscrollbartype="none none" bottom="0">
+                <Layouts>
+                  <Layout/>
+                </Layouts>
+              </Div>
+              <Static id="staNoticeCount" taborder="4" top="10" width="50" height="30" cssclass="sta_WF_WhiteTxt16" usedecorate="true" initvalueid="ivStcAccessibilityOn" text="&lt;b v='true'&gt;0&lt;/b&gt;/0" right="55" textAlign="right"/>
+              <Button id="btnRollingStop" taborder="5" top="6" width="38" height="38" cssclass="btn_TF_PageStop" initvalueid="ivBtnAccessibilityButton" right="5" text="" onclick="divNotice_btnRollingStop_onclick" accessibilitylabel="일시정지"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divNoticeTitle" taborder="1" text="div00" left="783" top="75" width="650" height="36" visible="false">
+          <Layouts>
+            <Layout>
+              <Static id="staSpecial" taborder="0" text="중요" left="0" top="5" width="60" height="27" cssclass="sta_TF_Imp" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staNoticeTitle" taborder="1" text="2022년 제1회 중졸, 고졸 검정고시 응시자 유의사항 및 고사실 배정현황..." left="73" top="3" height="30" cssclass="sta_TF_ImpTxt" usedecorate="true" initvalueid="ivStcAccessibilityOn" right="22"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    TEMPLATE
+*  @FileName 	frameNotice.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.7.13
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.7.13     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+// 공지를 Rolling하기 위한 타이머 정보 
+this.fv_TIMER_NOTICE_ID = 8888;  // 
+this.fv_TIMER_NOTICE_INTER = 5000;  // 1000=1초
+this.fv_timerState = "OFF";  // "ON" : 타이머 가동중, "OFF" : 타이머 중지중
+
+// 공지를 표시하기 위한 정보
+this.fv_noticeCount = 0;   // 표시하고 있는 공지의 전체 갯수
+this.fv_noticeCurPos = -1;  // 표시하고 있는 공지의 현재위치(0부터시작)
+
+// 공지 클릭시 이동하는 화면의 정보
+this.fvNoticeRedirestUrl = "";
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+// Form onload처리  
+this.frameNotice_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//this.smfInitForm();
+	
+	// TEST를 위해
+	//this.fnCreateNoticeTitleList();
+	//this.fnNoticeRolling(0);
+	//this.fnNoticeRollingStart();
+};
+
+this.frameNotice_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if(e.timerid==this.fv_TIMER_NOTICE_ID)
+	{
+		var nPos = this.fv_noticeCurPos + 1;
+		if(nPos==this.fv_noticeCount)
+		{
+			nPos = 0;
+		}
+		this.fnNoticeRolling(nPos);
+	}
+};
+
+this.frameNotice_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	var nMaxWidth = 1200;
+	var nFormWidth = this.parent.getOffsetWidth();
+	if(nFormWidth>nMaxWidth)
+	{
+		var nLeft = parseInt((nFormWidth-nMaxWidth)/2);
+		this.divNotice.setOffsetLeft(nLeft)
+		this.divNotice.setOffsetWidth(nMaxWidth)
+	}
+	else
+	{
+		var nLeft = 0;
+		this.divNotice.setOffsetLeft(nLeft)
+		this.divNotice.setOffsetWidth(nFormWidth)
+	}
+	
+	this.resetScroll();
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnSearch = function()
+{
+	var sUrl = "/tmp_tmp_tm00_000.do";
+	var sService = "";
+	var sInDataset = "";
+	var sOutDataset = "";
+	
+		this.smfDynService(serviceId, {
+			url: sUrl
+			,inDatasets: sInDataset
+			,outDatasets: sOutDataset
+			//,bindingControls: nexacro.trim(sBindingCtrls)
+		})
+}
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnSetCddcInfo = function(sCddcCode)
+{
+	var sCddcName = this.smfGetCddcName();
+	
+	var sCddcMsg = sCddcName + "에서 알려드립니다!";
+	
+	this.divNotice.form.staCddcInfo.set_text(sCddcMsg);
+	
+}
+
+this.fnSetCddcInfo2 = function(sCddcName)
+{
+	
+	var sCddcMsg = sCddcName + "에서 알려드립니다!";
+	
+	this.divNotice.form.staCddcInfo.set_text(sCddcMsg);
+	
+}
+
+this.fnGetNoticeList = function()
+{
+	this.fnSearch();
+}
+
+// 공지사항리스트를 작성한다.
+this.fnCreateNoticeTitleList = function()
+{
+	// 현재 공지의 갯수를 구한다.
+	this.fv_noticeCount = this.dsNoticeList.rowcount;
+	
+	if(this.fv_noticeCount>0)
+	{
+		for(var i=0;i<this.fv_noticeCount;i++)
+		{
+			var sNoticeTitle = this.dsNoticeList.getColumn(i,"ntcMteTitlNm"); // 공지사항제목명
+			var sImptYn      = this.dsNoticeList.getColumn(i,"imptYn"      ); // 중요여부
+			this.fnCreateNoticeTitle(i,sNoticeTitle,sImptYn);
+		}
+	}
+	
+}
+
+
+this.fnCreateNoticeTitle = function(nIndex,sNoticeTitle,sImptYn)
+{
+	var objDivId = "_divNoticeTitle"+nIndex;
+	var objStaImpId = "_btnImpt";
+	var objStaTitleId = "_staNoticetitle";
+	
+	var nLeft=0;
+	var nTop=9;
+	var nRight = 0;
+	var nHeight = 36;
+	var objDiv = this.divNotice.form.divNoticeTitleList[objDivId];
+
+	if(!objDiv)
+	{
+		// DIV 생성
+		objDiv = new Div(objDivId,nLeft,nTop,null,nHeight,nRight,null);
+		this.divNotice.form.divNoticeTitleList.addChild(objDivId,objDiv);
+		//objDiv.set_visible(false);
+		objDiv.show();
+		
+		// "중요" 아이콘 생성
+		var objStaImp   = new Static(objStaImpId,0,2,60,27);
+		objStaImp.set_cssclass("sta_TF_Imp");
+		
+		objDiv.addChild(objStaImpId,objStaImp);
+		objStaImp.show();
+		
+		// 공지Text 생성
+		var objStaTitle     = new Static(objStaTitleId,73,0,null,30,0,null);
+		objStaTitle.set_cssclass("sta_TF_ImpTxt");
+		objStaTitle.addEventHandler("onclick",this.staTitle_Onclick,this);
+		
+		objDiv.addChild(objStaTitleId,objStaTitle);
+		objStaTitle.show();
+	}
+	
+	if(sImptYn=="Y") 
+	{
+		objDiv.form[objStaImpId].set_visible(true);
+	}
+	else
+	{
+		objDiv.form[objStaImpId].set_visible(false);
+	}
+	objDiv.form[objStaImpId  ].set_text("중요"       );
+	objDiv.form[objStaTitleId].set_text(sNoticeTitle);
+	
+	trace("====== ",nIndex,sNoticeTitle,sImptYn);
+	trace( objDiv.form[objStaImpId  ].id + "=" + objDiv.form[objStaImpId  ].visible );
+	
+	objDiv.set_visible(false);
+	
+	
+}
+
+this.fnNoticeRollingStart = function()
+{	
+	// 타이머를 가동
+	this.setTimer(this.fv_TIMER_NOTICE_ID,this.fv_TIMER_NOTICE_INTER);
+	
+	// cssclass를 변경
+	this.divNotice.form.btnRollingStop.set_cssclass("btn_TF_PageStop");
+	
+	// Flag를 설정
+	this.fv_timerState="ON";
+}
+
+this.fnNoticeRollingEnd = function()
+{
+	// 타이머를 중단
+	this.killTimer(this.fv_TIMER_NOTICE_ID);
+	
+	// cssclass를 변경
+	this.divNotice.form.btnRollingStop.set_cssclass("btn_TF_PagePlay");
+
+	// Flag를 설정
+	this.fv_timerState="OFF";
+}
+
+this.fnNoticeRolling = function(nPos)
+{
+	var nOldPos = this.fv_noticeCurPos;
+	var nNewPos = nPos;
+	// 현재 공지의 갯수를 구한다.
+	if(this.fv_noticeCount<=nNewPos)
+	{
+		trace(" this.fnNoticeRolling : 현재 요청한 공지가 공지리스트에 없는 것을 요청했습니다.(this.fv_noticeCount="+this.fv_noticeCount+",nPos="+nPos+")");
+		return;
+	}
+		
+	if(nOldPos>-1)
+	{
+		var sOldObjId = "_divNoticeTitle"+nOldPos;
+		var objOld = this.divNotice.form.divNoticeTitleList.form[sOldObjId];
+		if(objOld) objOld.set_visible(false);
+		
+	}
+	
+	var sNewObjId = "_divNoticeTitle"+nNewPos;
+	var objNew = this.divNotice.form.divNoticeTitleList.form[sNewObjId];
+	
+	if(objNew) objNew.set_visible(true);
+		
+	this.fv_noticeCurPos = nNewPos;	
+	
+	// 현재위치(갯수)를 변경한다.
+	var sCountText = "<b v='true'>"+(this.fv_noticeCurPos+1)+"</b>/"+this.fv_noticeCount;
+	this.divNotice.form.staNoticeCount.set_text(sCountText);
+		
+}
+
+// 새로운 데이터셋으로 세팅한다.세팅후 Rolling시작
+this.fnSetNoticeDataset = function(objDs)
+{
+	// 주어진 데이터셋을 복사한다.
+	this.dsNoticeList.copyData(objDs);
+	
+	// 
+	this.fnCreateNoticeTitleList();
+	
+	// 첫번째것을 표시한다.
+	this.fnNoticeRolling(0);
+	// Rolling을 시작한다.
+	this.fnNoticeRollingStart();
+}
+
+// 알림을 클릭시 이동하는 URL을 세팅한다.()
+this.fnSetNoticeRedirectUrl = function(sUrl)
+{
+	this.fvNoticeRedirestUrl = sUrl;
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+// rolling을 멈춤/재동작
+this.divNotice_btnRollingStop_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.fv_timerState=="ON")
+	{
+		this.fnNoticeRollingEnd();
+	}
+	else
+	{
+		this.fnNoticeRollingStart();
+	}
+};
+
+// 
+this.divNotice_btnNoticeUp_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nPos = this.fv_noticeCurPos+1;
+	if(nPos==this.fv_noticeCount)
+	{
+		nPos = 0;
+	}
+	this.fnNoticeRolling(nPos);
+	this.fnNoticeRollingEnd();
+	this.fnNoticeRollingStart();
+};
+
+this.divNotice_btnNoticeDown_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nPos = this.fv_noticeCurPos-1;
+	if(nPos==-1)
+	{
+		nPos = this.fv_noticeCount-1;
+	}
+	this.fnNoticeRolling(nPos);
+	this.fnNoticeRollingEnd();
+	this.fnNoticeRollingStart();
+};
+
+this.staTitle_Onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	// 이동할 URL을 구한다.
+	var sUrl = this.fvNoticeRedirestUrl;
+	
+	if(this.smfIsNull(sUrl))
+	{
+		trace("======> [DEBUG] (frameNotice.xfdl) 지정된 화면정보가 없어 이동을 중지합니다.");
+		trace("======> [DEBUG]                     fnSetNoticeRedirectUrl()을 지정해 주십시오.");
+		return;
+	}
+	
+	// 현재의 대상 Notice를 구한다.
+	var nRow = this.fv_noticeCurPos;
+	
+	// 화면에 전달할 Param을 생성한다. 
+	var objParam = {};
+	
+	// 데이터셋의 컬럼값을 Param에 추가한다.
+	for(var i=0;i<this.dsNoticeList.colcount;i++)
+	{
+		var sColId = this.dsNoticeList.getColID(i);
+		var sColVal = this.dsNoticeList.getColumn(i,sColId);
+		
+		objParam[sColId] = sColVal;
+	}
+	
+	// 지정한 화면으로 이동한다.
+	this.smfSetWorkPage(sUrl,objParam);
+	
+};
+
+
+//frameMain - divAll 가로스크롤의 위치와 동일하게 이동하게 함
+this.fnDivNoticeOnhscroll = function(nPos)
+{
+	this.hscrollbar.set_pos(nPos);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsNoticeList">
+        <ColumnInfo>
+          <Column id="ntcMteId" type="STRING" size="256" description="공지사항ID"/>
+          <Column id="ntcMteTitlNm" type="STRING" size="256" description="공지사항제목명"/>
+          <Column id="ntcMteCn" type="STRING" size="256" description="공지사항내용"/>
+          <Column id="pstStsCd" type="STRING" size="256" description="게시상태코드"/>
+          <Column id="fileRefrnId" type="STRING" size="256" description="파일참조ID"/>
+          <Column id="ntcMteInqCnt" type="STRING" size="256" description="공지사항조회수"/>
+          <Column id="aplcnBgngYmd" type="STRING" size="256" description="적용시작일자"/>
+          <Column id="aplcnEndYmd" type="STRING" size="256" description="적용종료일자"/>
+          <Column id="aplcnBgngTm" type="STRING" size="256" description="적용시작시각"/>
+          <Column id="aplcnEndTm" type="STRING" size="256" description="적용종료시각"/>
+          <Column id="imptYn" type="STRING" size="256" description="중요여부"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="imptYn">Y</Col>
+            <Col id="ntcMteId">1003</Col>
+            <Col id="ntcMteTitlNm">2022년 제1회 중졸, 고졸 검정고시 응시자 유의사항 및 고사실 배정현황...</Col>
+            <Col id="ntcMteCn">교육청 지정 팝업 내용입니다.</Col>
+          </Row>
+          <Row>
+            <Col id="imptYn">N</Col>
+            <Col id="ntcMteId">1002</Col>
+            <Col id="ntcMteTitlNm">교육청팝업공지2</Col>
+            <Col id="ntcMteCn">교육청 지정 팝업 내용입니다.</Col>
+          </Row>
+          <Row>
+            <Col id="imptYn">Y</Col>
+            <Col id="ntcMteId">1001</Col>
+            <Col id="ntcMteTitlNm">교육청팝업공지1</Col>
+            <Col id="ntcMteCn">교육청 지정 팝업 내용입니다.</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

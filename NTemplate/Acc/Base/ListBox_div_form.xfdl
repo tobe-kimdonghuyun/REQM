@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="div_form" width="400" height="700" titletext="Test" onload="div_form_onload" onkeydown="div_form_onkeydown">
+    <Layouts>
+      <Layout height="700" mobileorientation="landscape" width="400">
+        <Button id="Button00" taborder="0" text="focus" left="266" top="77" width="120" height="32" onclick="Button00_onclick"/>
+        <Div id="Div00" taborder="1" height="496" left="6" top="125" width="380" text="" async="false"/>
+        <Button id="Button01" taborder="2" text="focus" left="266" top="629" width="120" height="32"/>
+        <Button id="Button00_00" taborder="3" text="검색" left="314" top="43" width="53" height="27"/>
+        <Static id="Static00" taborder="4" text="Search : " left="28" top="43" width="57" height="26" onclick="Static00_onclick"/>
+        <Static id="Static01" taborder="5" text="&lt;ListBox&gt;" left="10" top="10" width="172" height="19" onclick="Static01_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.isPopupDiv = null;
+this.isPopupMenu = null;
+
+// Div에 링크된 폼에 PopupDiv/PopupMenu가 있을 경우 this.isPopupDiv/this.isPopupMenu에 "true" 설정
+this.div_form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var i;
+	
+	for(i=0; i<this.Div00.form.all.length+1; i++)
+	{
+		if(this.Div00.form.all[i]=="[object PopupDiv]")
+			this.isPopupDiv= true;
+	}
+	
+	for(i=0; i<this.Div00.form.all.length+1; i++)
+	{
+		if(this.Div00.form.all[i]=="[object PopupMenu]")
+			this.isPopupMenu= true;
+	}
+
+	trace("this.isPopupDiv= "+this.isPopupDiv);
+	trace("this.isPopupMenu= "+this.isPopupMenu);
+};
+
+
+// this.isPopupDiv/this.PopupMenu가 "true"인 상태에서 SpaceBar를 누를 경우 PopupDiv.trackPopup()/PopupMenu.trackPopup() 실행 
+this.div_form_onkeydown = function(obj:nexacro.Form,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode=="32" && this.isPopupDiv)
+		this.Div00.form.PopupDiv00.trackPopup(100, 200, 100, 100);
+	else if(e.keycode=="32" && this.isPopupMenu)
+		this.Div00.form.PopupMenu00.trackPopup(100, 200);
+};
+
+
+
+
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

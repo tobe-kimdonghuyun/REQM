@@ -1,0 +1,509 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="par_spssl06_m00" width="1200" height="755" titletext="가정통신문" onload="fnOnload" nHeight="754" onsize="par_spssl06_m00_onsize">
+    <Layouts>
+      <Layout height="755" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="가정통신문" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="200" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+            <Layout name="Layout0">
+              <ImageViewer id="imgTitle" left="20" top="0" width="207" height="65"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSearch" taborder="1" left="0" top="144" height="70" cssclass="div_WF_Search" right="0" initvalueid="ivDivAccessibilityOff" text="">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="학년도" left="0" top="20" width="71" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboSearchAyr" taborder="1" left="71" width="105" height="30" innerdataset="dsAyr" codecolumn="ayr" datacolumn="ayrNm" index="0" text="2022년도" readonly="false" top="20" value="2022" initvalueid="ivCmbNormal" accessibilitylabel="학년도"/>
+              <Static id="Static00_00" taborder="2" text="작성기간" left="176" top="20" width="85" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Calendar id="calSearchBngnYmd" taborder="3" left="261" top="20" width="150" height="30" dateformat="yyyy.MM.dd." editformat="yyyy.MM.dd." onchanged="fnCheckSearchDays" initvalueid="ivCalNormal" accessibilitylabel="작성기간 시작일자"/>
+              <Static id="Static00_00_00" taborder="4" text="~" left="411" top="20" width="15" height="30" cssclass="sta_WF_AC" initvalueid="ivStcAccessibilityOff"/>
+              <Calendar id="calSearchEndYmd" taborder="5" left="426" top="20" width="150" height="30" dateformat="yyyy.MM.dd." editformat="yyyy.MM.dd." onchanged="fnCheckSearchDays" initvalueid="ivCalNormal" accessibilitylabel="작성기간 종료일자"/>
+              <Static id="Static00_01" taborder="6" text="제목" left="576" top="20" width="57" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtSearchTitl" taborder="7" left="633" top="20" width="373" height="30" onchanged="divSearch_edtSearchKeyword_onchanged" initvalueid="ivEdtNormal" maxlength="50" accessibilitylabel="제목" imemode="hangul" onkeydown="divSearch_edtSearchTitl_onkeydown"/>
+              <Button id="btnSearch" taborder="8" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" initvalueid="ivBtnAccessibilityButton" onclick="btnSearch_onclick"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Combo id="cboSearchAyr" left="20" top="83" height="60" right="20" taborder="1"/>
+              <Button id="btnSearch" top="449" width="164" right="20" taborder="8" height="60"/>
+              <Static id="Static00_01" left="0" top="317" width="101" height="42" taborder="6"/>
+              <Edit id="edtSearchTitl" left="20" top="369" height="60" displaynulltext="검색어를 입력해주세요." right="20" taborder="7"/>
+              <Static id="Static00" left="0" top="31" width="101" height="42" taborder="0"/>
+              <Static id="Static00_00" left="0" top="174" width="141" height="42" taborder="2"/>
+              <Static id="Static00_00_00" left="275" top="226" width="50" height="60" cssclass="sta_WF_AC" taborder="4"/>
+              <Calendar id="calSearchBngnYmd" width="255" left="20" top="226" height="60" dateformat="yyyy.MM.dd" taborder="3"/>
+              <Calendar id="calSearchEndYmd" left="325" top="226" height="60" dateformat="yyyy.MM.dd" taborder="5" width="255"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div00" taborder="2" left="0" top="234" height="439" right="0">
+          <Layouts>
+            <Layout>
+              <Grid id="grdSchneList" taborder="0" left="0" top="0" height="439" binddataset="dsSchneList" autofittype="col" oncellclick="grdSchneList_oncellclick" initvalueid="ivGrdAccessibilityOn" formatid="default" right="0" selecttype="cell" accessibilitylabel="가정통신문 목록" nodatatext="조회된 데이터가 없습니다." minheight="439" maxheight="" onkeydown="div00_grdSchneList_onkeydown">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="50"/>
+                      <Column size="407"/>
+                      <Column size="85"/>
+                      <Column size="256"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="번호"/>
+                      <Cell col="1" text="제목"/>
+                      <Cell col="2" text="질의개수"/>
+                      <Cell col="3" text="회신가능기간"/>
+                      <Cell col="4" text="회신여부"/>
+                      <Cell col="5" text="작성자"/>
+                      <Cell col="6" text="작성일자"/>
+                      <Cell col="7" text="상태" cssclass="LineNo"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:rowNum" textAlign="center"/>
+                      <Cell col="1" displaytype="normal" edittype="none" text="bind:nttTitlNm" textAlign="left" expr="comp.parent.smfDispLongTextGrid(comp, 1, currow, nttTitlNm, &quot;&quot;, 20)"/>
+                      <Cell col="2" textAlign="center" text="bind:aplcnt"/>
+                      <Cell col="3" textAlign="center" text="expr:rplyUseYn == &quot;Y&quot; ? comp.parent.parent.parent.fnDateFormat(rplyBgngYmd, &quot;yyyy.MM.dd.&quot;) + &quot; ~ &quot; + comp.parent.parent.parent.fnDateFormat(rplyEndYmd, &quot;yyyy.MM.dd.&quot;) : &quot;-&quot;"/>
+                      <Cell col="4" textAlign="center" text="expr:rplyUseYn == &quot;Y&quot; ? comp.parent.parent.parent.expr_result(aplcnt, rplyYn) : &quot;-&quot;"/>
+                      <Cell col="5" textAlign="center" text="bind:rgtrNm"/>
+                      <Cell col="6" textAlign="center" text="bind:regDt" displaytype="mask" edittype="none" maskeditformat="@@@@.@@.@@." maskedittype="string"/>
+                      <Cell col="7" displaytype="normal" edittype="none" text="expr:rplyUseYn == &quot;Y&quot; ? scnlSts == &quot;1&quot; ? &quot;진행중&quot; : &quot;마감&quot; : &quot;-&quot;" cssclass="LineNo" maskedittype="string" maskeditformat="@@@@-@@-@@ @@:@@" textAlign="center"/>
+                    </Band>
+                  </Format>
+                  <Format id="default_00">
+                    <Columns>
+                      <Column size="57"/>
+                      <Column size="407"/>
+                      <Column size="99"/>
+                      <Column size="335"/>
+                      <Column size="106"/>
+                      <Column size="143"/>
+                      <Column size="142"/>
+                      <Column size="100"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="60" band="head"/>
+                      <Row size="70"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="번호"/>
+                      <Cell col="1" text="제목"/>
+                      <Cell col="2" text="질의개수"/>
+                      <Cell col="3" text="회신가능기간"/>
+                      <Cell col="4" text="회신여부"/>
+                      <Cell col="5" text="작성자"/>
+                      <Cell col="6" text="작성일자"/>
+                      <Cell col="7" text="상태" cssclass="LineNo"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:rowNum" textAlign="center"/>
+                      <Cell col="1" displaytype="normal" edittype="none" text="bind:nttTitlNm" textAlign="left" expr="comp.parent.parent.parent.fnDisplayText(comp, 1, currow, nttTitlNm)"/>
+                      <Cell col="2" textAlign="center" text="bind:aplcnt"/>
+                      <Cell col="3" textAlign="center" text="expr:rplyUseYn == &quot;Y&quot; ? comp.parent.parent.parent.fnDateFormat(rplyBgngYmd, &quot;yyyy.MM.dd.&quot;) + &quot; ~ &quot; + comp.parent.parent.parent.fnDateFormat(rplyEndYmd, &quot;yyyy.MM.dd.&quot;) : &quot;-&quot;"/>
+                      <Cell col="4" textAlign="center" text="expr:rplyUseYn == &quot;Y&quot; ? comp.parent.parent.parent.expr_result(aplcnt, rplyYn) : &quot;-&quot;"/>
+                      <Cell col="5" textAlign="center" text="bind:rgtrNm"/>
+                      <Cell col="6" textAlign="center" text="bind:regDt" displaytype="mask" edittype="none" maskeditformat="@@@@.@@.@@." maskedittype="string"/>
+                      <Cell col="7" displaytype="normal" edittype="none" text="expr:rplyUseYn == &quot;Y&quot; ? scnlSts == &quot;1&quot; ? &quot;진행중&quot; : &quot;마감&quot; : &quot;-&quot;" cssclass="LineNo" maskedittype="string" maskeditformat="@@@@-@@-@@ @@:@@" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+            <Layout name="Layout0">
+              <Grid id="grdSchneList" left="0" top="0" width="1410" height="439" autofittype="col" formatid="default_00"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divPaginator" taborder="3" left="0" height="30" right="0" url="comm::comp_paginator.xfdl" initvalueid="ivDivAccessibilityOn" text="" top="div00:20"/>
+        <Div id="divPageSummary" taborder="4" top="693" width="181" height="30" url="comm::comp_pageSummary2.xfdl" visible="false" text="" initvalueid="iv_DivVideoPlayerOff" right="5"/>
+        <Static id="Static99" taborder="5" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="640" height="1464" mobileorientation="portrait" type="default">
+        <Div id="divPaginator" left="0" top="div00:60" right="0" taborder="3" height="160" text=""/>
+        <Div id="divSearch" left="20" top="195" height="549" right="20" formscrolltype="none" taborder="1"/>
+        <Div id="divTitle" left="0" top="70" height="65" right="0" taborder="0"/>
+        <Div id="div00" cssclass="div_WF_GridBox_M" left="20" top="804" height="439" right="20" formscrollbarsize="1" taborder="2"/>
+        <Div id="divPageSummary" left="454" top="1245" width="181" height="70" taborder="4"/>
+        <Static id="Static99" taborder="5"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    대국민 > 학부모서비스(유) > 가정통신문
+*  @MenuPath    TEMPLATE
+*  @FileName 	par_spssl06_m00.xfdl
+*  @Creator 	
+*  @CreateDate 	2022.07.20
+*  @Desction    가정통신문
+*
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.07.20     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::par_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// Form의 default 초기처리를 한다.
+	this.smfInitForm(this);
+	
+	//검색영역 초기화처리를 한다.
+	this.fnSearchInit();
+};
+
+this.fnSearchInit = function()
+{
+	//검색영역 초기화처리를 한다.
+	//자녀정보에서 조회한 학년도학적 이력의 학년도 설정
+	var objParForm = this.getOwnerFrame().form.divTop.form.divDispArea.form.divPARLink.form;
+	this.dsAyr.copyData(objParForm.dsStuAyrList);
+	
+	//검색영역 초기화처리를 한다.
+	//1. 조회학년도 : 나이스 교무에 설정된 오늘날짜에 해당하는 학년도
+	//this.divSearch.form.cboSearchAyr.set_value(objParForm.dsStuIduzEduYn.getColumn(0, "ayr"));
+	//검색조건 설정
+	this.dsSearch.copyRow(0, objParForm.dsStuIduzEduYn, 0);
+	this.divSearch.form.cboSearchAyr.set_index(0);
+	
+	//소재정보, 개인번호 체크
+	var validate = this.parfValidate(this.dsSearch);	
+	if(!validate) return false;
+	
+	this.fnSearchSchne();
+}
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ /**
+ * @description 조회버튼 onclick
+ */
+this.fnSearchSchne = function(obj, e)
+{
+	this.dsSearch.setColumn(0, "sType", "1"); // 2 : 조회, 1 : 목록, 3 : 답변
+	
+	var sServiceId = "selectSchneList";
+	if(this.smfIsMobile()){
+		sServiceId = "selectSchneListTemp";
+	}
+
+ 	// 서비스 객체 생성
+	this.smfSearchService(sServiceId)
+//		.confirmIfModifiedGrid(this.grdExperlrnList)						// 데이터가 변경되었으면 확인메시지
+		.validateForm(this.divSearch) 										// 폼 유효성검사	
+		.paginator(this.div00.form.grdSchneList, this.divPaginator, this.divPageSummary, this.dsPageInfo, obj, e)	// 페이징처리
+		.run() 																// 실행
+		.callback(function(callbackParams){									// 콜백
+			if(callbackParams.errors) return;
+			
+			if(this.smfIsMobile()){
+				this.smfDataAppend(this, this.div00.form.grdSchneList, this.dsSchneListTemp);
+				// 총 검색결과와 현재 검색 결과 수가 일치할 경우 [더보기]버튼 숨김 (TODO)
+				if(this.dsPageInfo.getColumn(0, "totalCount")==this.dsSchneList.getRowCount()){
+					this.divPaginator.set_enable(false);
+				}else{
+					this.divPaginator.set_enable(true);
+				}
+				
+				this.smfResetScroll(this.div00.form);
+			}
+		}) 
+	;
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	if(errcd <= -1) return;
+	
+// 	if(svcid == "selectSchneList"){
+// 		if(this.smfIsMobile()){
+// 			// 총 검색결과와 현재 검색 결과 수가 일치할 경우 [더보기]버튼 숨김 
+// 			var pageIndex 	= this.dsPageInfo.getColumn(0, "pageIndex");
+// 			var pageSize 	= this.dsPageInfo.getColumn(0, "pageSize");
+// 			var totalCount 	= this.dsPageInfo.getColumn(0, "totalCount");
+// 
+// 			if(totalCount <= pageIndex * pageSize){	
+// 				this.divPaginator.set_enable(false);
+// 			}else{
+// 				this.divPaginator.set_enable(true);
+// 			}
+// 		}
+// 	}
+	
+};
+
+this.fnPopupCallback = function(context, responseParams, sender){
+}
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ /**
+ * @description 조회버튼 onclick
+ */
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+ 	//소재정보, 개인번호 체크
+	var validate = this.parfValidate(this.dsSearch);	
+	if(!validate) return false;
+	
+	if(this.smfIsMobile()){
+		this.dsSchneListTemp.clearData();
+	}
+	
+	if(this.smfIsNull(this.divSearch.form.calSearchBngnYmd.value) && !this.smfIsNull(this.divSearch.form.calSearchEndYmd.value)){
+		this.smfAlert("시작일자를 지정하세요!", function(){
+			this.divSearch.form.calSearchBngnYmd.setFocus();
+			//this.divSearch.form.calSearchBngnYmd.set_value("1");
+		});
+		return false;
+	}else if(!this.smfIsNull(this.divSearch.form.calSearchBngnYmd.value) && this.smfIsNull(this.divSearch.form.calSearchEndYmd.value)){
+		this.smfAlert("종료일자를 지정하세요!", function(){
+			this.divSearch.form.calSearchEndYmd.setFocus();
+			//this.divSearch.form.calSearchBngnYmd.set_value("1");
+		});
+		return false;
+	}
+	
+	this.fnSearchSchne(obj, e);
+};
+
+//날짜 포멧 설정fnDateFormat("20220720", "yyyy.MM.dd"); => 2022.07.20
+this.fnDateFormat = function(date, dateFormat)
+{
+	if(this.smfIsNull(date)){
+		return "";
+	}else{
+		return date.dateFormat(dateFormat);
+	}
+}
+
+this.grdSchneList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.fnDetailView(obj,e);
+};
+
+this.div00_grdSchneList_onkeydown = function(obj:nexacro.Grid,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13){
+		this.fnDetailView(obj,e);
+	}
+};
+
+this.fnDetailView = function(obj,e)
+{
+	var procType = "none";
+	var sType = "2";
+
+	// 팝업을 동작에 필요한 파라메터 지정
+	var popupParams = {
+		callback : this.fnPopupCallback, // 콜백함수 지정
+		sender : obj, // sender 지정
+		// 팝업 전달 파라메터 지정
+		params : {
+			// 처리타입 지정
+			procType	: procType,
+			// 파라메터 전달
+			dataset 	: this.dsSearch,
+			nttId 		: this.dsSchneList.getColumn(e.row, "nttId"),
+			sType 		: sType
+		},
+	};
+	
+	if(this.smfIsMobile()){
+		var srcInfo = this.smfCurScreenInfo();
+		var srcInfoW = srcInfo[0];
+		var srcInfoH = srcInfo[1];
+		this.smfDialog("_auto", "pa_par_sps_sl::par_spssl06_p01.xfdl", popupParams, "", "", srcInfoW, srcInfoH);
+	}else{
+		this.smfDialog("_auto", "pa_par_sps_sl::par_spssl06_p01.xfdl", popupParams);
+	}
+};
+
+this.fnCheckSearchDays = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	var sStartDate = this.divSearch.form.calSearchBngnYmd.value;
+	var sEndDate = this.divSearch.form.calSearchEndYmd.value;
+	
+	if( this.smfIsNull(sStartDate) || this.smfIsNull(sEndDate) ) return;
+	
+	var days = this.smfDiffDate(sStartDate, sEndDate);
+	
+	if(days < 0){
+		// 메시지를 이용한 처리
+		this.smfAlert("종료일자가 시작일자보다 빠릅니다.", function(){
+			obj.set_value(e.prevalue);
+		});
+	}
+};
+
+this.expr_result = function(aplcnt, rplyYn) { 
+	if(aplcnt == 0){
+		return "";
+	}else if(aplcnt > 0 && rplyYn == "Y"){
+		return "회신";
+	}else{
+		return "미회신";
+	}
+}
+
+
+this.par_spssl06_m00_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	this.smfResetScroll();
+};
+
+this.divSearch_edtSearchTitl_onkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13)  this.divSearch.form.btnSearch.click();
+};
+
+this.fnDisplayText = function(obj,nCell,nRow,sLongText)
+{
+	var sFont = 'normal 400 26px/normal "Noto Sans KR","NotoSansKR-Regular"';
+	var nPadding = 40;
+
+
+	return this.smfDispLongTextGrid(obj,nCell,nRow,sLongText,sFont,nPadding);
+};]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectSchneList</Col>
+            <Col id="inDatasets">dsSearch dsPageInfo</Col>
+            <Col id="outDatasets">dsSchneList dsPageInfo</Col>
+            <Col id="url">par_sps_sl06_001.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">selectSchneListTemp</Col>
+            <Col id="inDatasets">dsSearch dsPageInfo</Col>
+            <Col id="outDatasets">dsSchneListTemp=dsSchneList dsPageInfo</Col>
+            <Col id="url">par_sps_sl06_001.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsAyr">
+        <ColumnInfo>
+          <Column id="ayr" type="STRING" size="4"/>
+          <Column id="ayrNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="10"/>
+          <Column id="ayr" type="STRING" size="4"/>
+          <Column id="stuInvlNo" type="STRING" size="10"/>
+          <Column id="wrtPrdBngnYmd" type="STRING" size="8"/>
+          <Column id="wrtPrdEndYmd" type="STRING" size="8"/>
+          <Column id="titlNm" type="STRING" size="150"/>
+          <Column id="nttId" type="STRING" size="20"/>
+          <Column id="sType" type="STRING" size="1" description="실행타입(1:목록, 2:조회, 3:답변, 4:메인용)"/>
+          <Column id="cddcScCd" type="STRING" size="3" description="연계시도코드"/>
+          <Column id="schpaDtcNo" type="STRING" size="256" description="학부모고유번호"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="ayr"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSchneList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="nttId" type="STRING" size="20" sumtext="게시물ID"/>
+          <Column id="shlCd" type="STRING" size="10" sumtext="학교코드"/>
+          <Column id="nttTitlNm" type="STRING" size="150" sumtext="게시물제목명"/>
+          <Column id="aplcnt" type="STRING" size="2" sumtext="질의개수"/>
+          <Column id="rplyBgngYmd" type="STRING" size="8" sumtext="회신시작일자"/>
+          <Column id="rplyEndYmd" type="STRING" size="8" sumtext="회신종료일자"/>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="rplyUseYn" type="STRING" size="1"/>
+          <Column id="rplyYn" type="STRING" size="1" sumtext="회신여부(Y:회신, N:미회신)"/>
+          <Column id="scnlSts" type="STRING" size="1" sumtext="가정통신문상태(1:진행중, 2:마감)"/>
+          <Column id="regId" type="STRING" size="30" sumtext="등록자ID"/>
+          <Column id="rgtrNm" type="STRING" size="50" sumtext="등록자명"/>
+          <Column id="regDt" type="STRING" size="8" sumtext="등록일자"/>
+          <Column id="rowNum" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex">1</Col>
+            <Col id="pageSize">10</Col>
+            <Col id="totalCount">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSchneListTemp" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="nttId" type="STRING" size="20" sumtext="게시물ID"/>
+          <Column id="shlCd" type="STRING" size="10" sumtext="학교코드"/>
+          <Column id="nttTitlNm" type="STRING" size="150" sumtext="게시물제목명"/>
+          <Column id="aplcnt" type="STRING" size="2" sumtext="질의개수"/>
+          <Column id="rplyBgngYmd" type="STRING" size="8" sumtext="회신시작일자"/>
+          <Column id="rplyEndYmd" type="STRING" size="8" sumtext="회신종료일자"/>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="rplyUseYn" type="STRING" size="1"/>
+          <Column id="rplyYn" type="STRING" size="1" sumtext="회신여부(Y:회신, N:미회신)"/>
+          <Column id="scnlSts" type="STRING" size="1" sumtext="가정통신문상태(1:진행중, 2:마감)"/>
+          <Column id="regId" type="STRING" size="30" sumtext="등록자ID"/>
+          <Column id="rgtrNm" type="STRING" size="50" sumtext="등록자명"/>
+          <Column id="regDt" type="STRING" size="8" sumtext="등록일자"/>
+          <Column id="rowNum" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item2" compid="divSearch.form.cboSearchAyr" propid="value" datasetid="dsSearch" columnid="ayr"/>
+      <BindItem id="item0" compid="divSearch.form.calSearchBngnYmd" propid="value" datasetid="dsSearch" columnid="wrtPrdBngnYmd"/>
+      <BindItem id="item1" compid="divSearch.form.calSearchEndYmd" propid="value" datasetid="dsSearch" columnid="wrtPrdEndYmd"/>
+      <BindItem id="item3" compid="divSearch.form.edtSearchTitl" propid="value" datasetid="dsSearch" columnid="titlNm"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmTemp02" width="1280" height="780" titletext="공지사항 상세조회" onload="frmTemp02_onload">
+    <Layouts>
+      <Layout height="780" width="1280" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="상세내용" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="402" onclick="divTitle_imgTitle_onclick" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divDetail" taborder="1" left="0" height="565" top="134" text="" cssclass="div_WF_Detail" right="0">
+          <Layouts>
+            <Layout>
+              <Static id="sta44" taborder="0" left="189" height="42" cssclass="sta_WF_Input02Top" top="0" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta44_00_01_01_00" taborder="1" left="0" height="42" cssclass="sta_WF_Input02" top="41" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta07" taborder="2" left="0" height="404" cssclass="sta_WF_Input02" top="82" right="0" text="" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta44_00_01_00_00" taborder="3" left="0" height="88" cssclass="sta_WF_Input02" top="476" right="0" text="" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta45" taborder="4" left="0" width="190" height="42" cssclass="sta_WF_Input01Top" text="제목" top="0" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edt00_00_01" taborder="5" left="195" top="6" height="30" text="bind:ntcMteTitlNm" readonly="true" cssclass="edi_WF_Input" right="105" initvalueid="ivEdtReadOnly"/>
+              <Static id="sta10_00" taborder="6" left="0" width="190" height="42" cssclass="sta_WF_Input01" text="조회수" top="41" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edt00_00" taborder="7" left="195" top="47" height="30" width="415" readonly="true" cssclass="edi_WF_Input" value="" onchanged="divDetail_edt00_00_onchanged" initvalueid="ivEdtReadOnly"/>
+              <Static id="sta10_00_00" taborder="8" left="615" width="190" height="42" cssclass="sta_WF_Input01" text="작성일" top="41" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edt00_00_00" taborder="9" left="810" top="47" height="30" right="5" cssclass="edi_WF_Input" value="" text="" readonly="true" onchanged="divDetail_edt00_00_00_onchanged" initvalueid="ivEdtReadOnly"/>
+              <Static id="sta10" taborder="10" left="0" width="190" height="397" cssclass="sta_WF_Input01" text="내용" top="82" initvalueid="ivStcAccessibilityOn"/>
+              <Div id="divWebEditor" taborder="11" text="div00" left="195" top="86" url="comm::comp_webEditor.xfdl" right="0" height="390" initvalueid="ivDivAccessibilityOff"/>
+              <Static id="sta10_00_01" taborder="12" left="0" width="190" cssclass="sta_WF_Input01" text="첨부파일" top="476" height="88" initvalueid="ivStcAccessibilityOn"/>
+              <Div id="divFileDownload" taborder="13" left="195" top="486" height="70" initvalueid="ivDivAccessibilityOff" url="comm::comp_fileDownload.xfdl" right="5" text=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnList" taborder="2" text="목록" top="729" height="40" width="120" cssclass="btn_WF_Action" right="0" onclick="btnList_onclick" initvalueid="ivBtnAccessibilityLink"/>
+        <Static id="sta99_00_00_00_00" taborder="3" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" onclick="sta99_00_00_00_00_onclick"/>
+        <Static id="sta99_00_00_00_00_00" taborder="4" left="0" top="114" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="sta99_00_00_00_00_00_03_00" taborder="5" left="0" top="699" height="30" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="ntcMteId" type="STRING" size="256"/>
+          <Column id="ntcMteTitlNm" type="STRING" size="256"/>
+          <Column id="ntcMteCn" type="STRING" size="256"/>
+          <Column id="pafrSysClfCd" type="STRING" size="256"/>
+          <Column id="cddcScCd" type="STRING" size="256"/>
+          <Column id="wrtCddcScCd" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="ntcMteInqCnt" type="BIGDECIMAL" size="256"/>
+          <Column id="aplcnBgngYmd" type="DATE" size="8"/>
+          <Column id="aplcnEndYmd" type="DATE" size="8"/>
+          <Column id="imptYn" type="STRING" size="256"/>
+          <Column id="prdLmttYn" type="STRING" size="256"/>
+          <Column id="etcCn" type="STRING" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="rgtrDptNm" type="STRING" size="256"/>
+          <Column id="mdfrNm" type="STRING" size="256"/>
+          <Column id="mdfrDptNm" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="DATETIME" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="ntcMteId" type="STRING" size="256"/>
+          <Column id="ntcMteClfCd" type="STRING" size="256"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="appoExamScCd" type="STRING" size="256"/>
+          <Column id="pafrSysClfCd" type="STRING" size="256"/>
+          <Column id="menuId" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDelList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="sn" type="STRING" size="256"/>
+          <Column id="appoExamScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="sn"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsResult=dsResult</Col>
+            <Col id="svctp">R</Col>
+            <Col id="url">ore_oew_bd00_002.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="message">조회</Col>
+            <Col id="asynctp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsOutFileinfo">
+        <ColumnInfo>
+          <Column id="fileRefrnId" type="STRING" size="256" description="파일SEQ ID"/>
+          <Column id="fileId" type="STRING" size="256" description="파일 아이디"/>
+          <Column id="suc" type="STRING" size="256"/>
+          <Column id="atchFileNm" type="STRING" size="256" description="파일명"/>
+          <Column id="atchFileGuid" type="STRING" size="256" description="파일 GUID"/>
+          <Column id="atchFileMg" type="STRING" size="256"/>
+          <Column id="fileExtsnNm" type="STRING" size="256" description="파일확장자"/>
+          <Column id="minTypeNm" type="STRING" size="256" description="파일의 mime type"/>
+          <Column id="fileCoursNm" type="STRING" size="256" description="서버파일저장위치"/>
+          <Column id="fileObjKey" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divDetail.form.edt00_00_01" propid="value" datasetid="dsResult" columnid="ntcMteTitlNm"/>
+      <BindItem id="item1" compid="divDetail.form.edt00_00" propid="value" datasetid="dsResult" columnid="ntcMteInqCnt"/>
+      <BindItem id="item2" compid="divDetail.form.edt00_00_00" propid="value" datasetid="dsResult" columnid="regDt"/>
+      <BindItem id="item3" compid="divDetail.form.txt00" propid="value" datasetid="dsResult" columnid="ntcMteCn"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/**
+*   대국민 - 계약제교원 인력풀
+*  @MenuPath    pa_ore_oew_bd
+*  @FileName 	ore_oewbd00_m01.xfdl
+*  @Creator 	최재형
+*  @CreateDate 	2022.5.25
+*  @Desction    공지상세조회
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.5.25     	최재형 	        최초 생성 
+*******************************************************************************
+*/
+include "lib::cm_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frmTemp02_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// Form의 default 초기처리를 한다.
+	this.smfInitForm(this);
+	// 파라메터 세팅
+	this.pv_params = this.smfGetFormParams();
+	this.dsSearchParam = this.pv_params.dsSearchParam;
+	this.dsPagingParam = this.pv_params.dsPagingParam;
+	
+	// 검색 조건 Dataset 설정
+	this.dsSearch.setColumn(0, "ntcMteId", this.pv_params.ntcMteId);
+	this.dsSearch.setColumn(0, "ntcMteClfCd", this.pv_params.ntcMteClfCd);
+	var cddcCd = this.smfGetCddcCode();
+	this.dsSearch.setColumn(0, "cddcCd", cddcCd);
+	this.dsSearch.setColumn(0, "appoExamScCd", this.pv_params.appoExamScCd);
+	this.dsSearch.setColumn(0, "menuId", this.pv_params.menuId);
+	
+	// 계약제교원인력풀로 접속할 경우 업무구분코드 HRD, 나머지는 ORE로 설정
+	if (this.smfGetAppoExamScCd() == "5") {
+		this.dsSearch.setColumn(0,"pafrSysClfCd", "HRD");
+	} else {
+		this.dsSearch.setColumn(0,"pafrSysClfCd", "ORE");
+	}
+	this.divDetail.form.divWebEditor.form.fnInit(this,this.fnWebEditorCallback,this.fnWebEditorSetHtmlCallback);
+};
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+};
+
+this.fnWebEditorCallback = function(obj)
+{
+	// 일반적으로는 데이터를 세팅
+	this.fnSearch();
+};
+
+this.fnWebEditorSetHtmlCallback = function(obj,contentHeight)
+{
+	this.smfResetScroll(this.divDetail.form.divWebEditor);
+	/*this.divDetail.form.divFileDownload.form.resetScroll();*/
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnSearch = function()
+
+{
+	trace(this.dsSearch.saveXML());
+ 	// 서비스 객체 생성
+	this.smfSearchService("select")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if (callbackParams.errors) return;
+			trace(this.dsResult.saveXML());
+			this.divDetail.form.divWebEditor.form.fnSetHtml(this.dsResult.getColumn(0,"ntcMteCn"));
+			//this.smfResetScroll(this.divDetail.form.divWebEditor);
+			// 첨부파일 셋팅 
+			if (!this.smfIsNull(this.dsResult.getColumn(0,"fileRefrnId"))) {
+				this.divDetail.form.divFileDownload.form.set_visible(true);
+				this.fnGetFileInfo(this.dsResult.getColumn(0,"fileRefrnId"));
+				this.divDetail.form.divFileDownload.form.resetScroll();
+			} else {
+				this.divDetail.form.divFileDownload.form.set_visible(false);
+			}
+
+			
+		});	
+};
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnGetFileInfo = function(fileRefrnId){
+	// 업로드 초기화
+	this.transaction("fn_filesearch"
+		,"baseUrl::/cm_cmc_file_upload_001.do"
+		,""
+		,"dsOutFileinfo=atchFileinfo" 
+		,"fileRefrnId='"+ fileRefrnId +"'"
+		,""//this.btnUpload_FileSearch_callback
+		,false // 동기
+	);
+
+	for (var i = 0; i < this.dsOutFileinfo.rowcount; i++) {
+	
+		var responseCustomValue = " ";
+		var sDownloadUrl       = " ";   // 
+		var sPrivInfoFiltYn    = " ";   // 항목 관리안함
+		var sFileInfSaveYn     = "Y";  // 업무에 맞게 개발자가 세팅(Y/N)
+		var sHandlerCode       = "PA.ORE.OEW";  //this.smfUploadInfoFileSn(jsonWebFile.customValue[i],0);
+		var sFileSn            = this.dsOutFileinfo.getColumn(i,"fileRefrnId"   );
+		var sFileSeq           = this.dsOutFileinfo.getColumn(i,"fileId"        );
+		var sFileSize          = this.dsOutFileinfo.getColumn(i,"atchFileMg"    );
+		var sBackendFilename   = this.dsOutFileinfo.getColumn(i,"atchFileGuid"  );
+		var sForntendFilename  = this.dsOutFileinfo.getColumn(i,"atchFileNm"    );
+		var sFileEncryptYn     = this.dsOutFileinfo.getColumn(i,"fileEncryptYn" );
+		var sFileSaveStg       = this.dsOutFileinfo.getColumn(i,"fileSaveStg"   );
+		var sDownloadUrl       = this.dsOutFileinfo.getColumn(i,"fileCoursNm"   );		
+		this.divDetail.form.divFileDownload.form.fnAddUploadedFile(sHandlerCode, sFileSn, sFileSize, sBackendFilename, sForntendFilename, sFileSeq, sDownloadUrl
+														  ,sFileEncryptYn,sPrivInfoFiltYn,sFileSaveStg,sFileInfSaveYn );
+	}
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+// [목록]버튼클릭 처리
+this.btnList_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var params = {
+					"menu":this.dsSearch.getColumn(0, "menuId")
+				};
+	this.smfSetWorkPage("pa_ore_oew_bd::ore_oewbd00_m00.xfdl", params);
+};]]></Script>
+  </Form>
+</FDL>

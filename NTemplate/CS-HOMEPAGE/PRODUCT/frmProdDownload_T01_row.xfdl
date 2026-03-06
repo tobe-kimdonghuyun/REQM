@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmProdDownload_T01_row" width="310" titletext="developer" scrolltype="none" height="415" onload="frmProdDownload_T01_row_onload">
+    <Layouts>
+      <Layout height="415" width="310">
+        <Static id="staTitle" taborder="0" text="2021년 11월 정기버전" left="25" top="15" height="50" cssclass="sta_WF_downTitle" width="283"/>
+        <Static id="staVersion" taborder="1" text="2021.11.16.1(17.1.3.900)" left="25" top="45" height="50" cssclass="sta_WF_downVer" width="283" accessibilitydescription="버전"/>
+        <Button id="btnContentPop" taborder="2" top="30" width="34" height="34" cssclass="btn_WF_downDetail" left="249" text="" onclick="btnContentPop_onclick" accessibilitylabel="팝업"/>
+        <Grid id="grdFiles" taborder="3" left="25" top="108" height="275" right="27" binddataset="ds_list_detail" autofittype="col" cssclass="grd_WF_down" oncellclick="grdFiles_oncellclick" scrollbarsize="10" scrollbardecbuttonsize="0" scrollbarincbuttonsize="0" accessibilitylabel="제품 목록" selecttype="cell" autoenter="select" createrowstype="all">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="218"/>
+                <Column size="34"/>
+              </Columns>
+              <Rows>
+                <Row size="34"/>
+                <Row size="5"/>
+              </Rows>
+              <Band id="body" accessibilityenable="false">
+                <Cell text="bind:PRODUCT_GUBUN_NAME" accessibilitylabel="제목"/>
+                <Cell col="1" cssclass="grd_WF_download" accessibilitylabel="expr:PRODUCT_GUBUN_NAME + &quot; 다운로드&quot;" accessibilityrole="button" edittype="button" displaytype="buttoncontrol"/>
+                <Cell row="1" colspan="2" cssclass="grd_WF_white" accessibilityenable="false"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <FileDownload id="FileDownload00" taborder="4" text="FileDownload00" left="407" top="5" width="100" height="100" visible="false" accessibilityenable="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  제품 다운로드(Developer Tab Row)
+*
+*  @MenuPath 
+*  @FileName 		PRODUCT::frmProdDownload_T01_row.xfdl 
+*  @Creator 		김광호
+*  @CreateDate 		2022.01.01
+*  @LastModifier  
+*  @LastModifyDate  
+*  @Version 		1.0
+*  @Outline 		제품 다운로드(Developer Tab Row)
+*  @Desction 
+************** 소스 수정 이력 *************************************************
+*    date          Modifier            Description
+*******************************************************************************
+*  2022.01.01      김광호	           최초 생성 
+*******************************************************************************
+*/
+
+// 온로드 이벤트
+this.frmProdDownload_T01_row_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// staTitle
+	var strDate = this.parent.parent.parent.parent.ds_list.getColumn(this.parent.name.substr(-2,2), "ymd");
+	var strversion = this.parent.parent.parent.parent.ds_list.getColumn(this.parent.name.substr(-2,2), "remark");	
+
+	//if( strversion.indexOf("24.0") > -1 )
+	if( this.parent.parent.parent.parent.ds_list.getColumn(this.parent.name.substr(-2,2),"goods") == "045" )
+		strDate = strDate.substr(0,4)+"년 "+strDate.substr(4,2)+"월 정기버전(V24)";
+	else
+		strDate = strDate.substr(0,4)+"년 "+strDate.substr(4,2)+"월 정기버전";
+	
+	this.staTitle.set_text(strDate);
+	
+	//접근성 label 적용
+	this.btnContentPop.accessibilitylabel = "팝업 " + this.staTitle.text;
+	
+	// staVersion
+	strversion = strversion.split('\n').reverse()[0];
+	this.staVersion.set_text(strversion);
+	
+	// grdFiles
+	this.ds_list_detail.enableevent = false;
+	this.ds_list_detail.copyData(this.parent.parent.parent.parent.parent.parent.parent.ds_list_detail);
+	this.ds_list_detail.filter("idx=='"+this.parent.parent.parent.parent.ds_list.getColumn(this.parent.name.substr(-2,2), "idx")+"'");
+	this.ds_list_detail.set_rowposition(-1);	
+	this.ds_list_detail.enableevent = true;
+};
+
+// 그리드 다운로드 클릭
+this.grdFiles_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if (e.col == 1)
+	{
+		var gdsUserInfo = nexacro.getApplication().gds_UserInfo;
+		var user_id = gdsUserInfo.getColumn(0, "User_id");
+		var regex = /[^0-9]/g;				// 숫자가 아닌 문자열을 선택하는 정규식
+		var nRow  = e.row; 
+		var dnStr = nexacro.getEnvironment().services["SVC_JSP"].url +"Next_JSP/FileDownload/fileDownload2.jsp";
+		var basePath = this.ds_list_detail.getColumn(nRow, "base_path");//.replaceAll("\\", "/");
+		basePath = basePath.replaceAll("\\", "/");
+		dnStr = dnStr + "?path=" + basePath;
+		dnStr = dnStr + "&file=" + this.ds_list_detail.getColumn(nRow, "file_name");
+		dnStr = dnStr + "&realFileNm=" + this.ds_list_detail.getColumn(nRow, "file_name");
+		dnStr = dnStr + "&uid=" + user_id;
+
+		//alert(dnStr);
+		//파일이름이 url인 경우 링크를 타고 이동하도록 변경
+		if(basePath.substr(0,4)=="http"){
+			system.execBrowser(basePath);
+		}else{
+			this.FileDownload00.set_downloadurl(dnStr);
+			this.FileDownload00.download();
+		}
+	}
+};
+
+// 팝업으로 상세내용 보여줌
+this.btnContentPop_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objFrame = new ChildFrame();
+	var objParentFrame = this.getOwnerFrame();
+
+	var nLeft = nexacro.getApplication().gv_mainFrame.getOffsetWidth()/2 - 400;
+	var nTop = nexacro.getApplication().gv_mainFrame.getOffsetHeight()/2 - 400;
+	objFrame.init( "modalContent", nLeft, nTop, 800, 800 );
+	//objFrame.set_titlebarheight(40);
+	objFrame.set_showtitlebar(false);
+	objFrame.set_formurl( "PRODUCT::frmProdDetailPop.xfdl" );
+
+	var vRtn = objFrame.showModal( objParentFrame, {content:this.ds_list_detail.getColumn(0, "CONTENTS")}, this, this.fn_callback );
+};]]></Script>
+    <Objects>
+      <Dataset id="dsFiles">
+        <ColumnInfo>
+          <Column id="PRODUCT_GUBUN_NAME" type="STRING" size="256"/>
+          <Column id="base_path" type="STRING" size="256"/>
+          <Column id="SAVE_FILE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="PRODUCT_GUBUN_NAME">All File</Col>
+            <Col id="base_path"/>
+          </Row>
+          <Row>
+            <Col id="PRODUCT_GUBUN_NAME">Developer</Col>
+            <Col id="base_path"/>
+          </Row>
+          <Row>
+            <Col id="PRODUCT_GUBUN_NAME">Android</Col>
+            <Col id="base_path"/>
+          </Row>
+          <Row>
+            <Col id="PRODUCT_GUBUN_NAME">AndroidX</Col>
+            <Col id="base_path"/>
+          </Row>
+          <Row>
+            <Col id="PRODUCT_GUBUN_NAME">iOS</Col>
+            <Col id="base_path"/>
+          </Row>
+          <Row>
+            <Col id="PRODUCT_GUBUN_NAME">macOS</Col>
+            <Col id="base_path"/>
+          </Row>
+          <Row>
+            <Col id="PRODUCT_GUBUN_NAME">Manual</Col>
+            <Col id="base_path"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_list_detail" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="ymd" type="STRING" size="256"/>
+          <Column id="idx" type="STRING" size="256"/>
+          <Column id="goods_gbn" type="STRING" size="256"/>
+          <Column id="DOWNLOAD_KIND" type="STRING" size="256"/>
+          <Column id="DOWNLOAD_KIND_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_CODE" type="STRING" size="256"/>
+          <Column id="PRODUCT_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_KIND" type="STRING" size="256"/>
+          <Column id="PRODUCT_KIND_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_VERSION" type="STRING" size="256"/>
+          <Column id="CONTENTS" type="STRING" size="256"/>
+          <Column id="DL_REMARK" type="STRING" size="256"/>
+          <Column id="USE_FLAG" type="STRING" size="256"/>
+          <Column id="FM_SEQ" type="STRING" size="256"/>
+          <Column id="FILE_TYPE" type="STRING" size="256"/>
+          <Column id="file_name" type="STRING" size="256"/>
+          <Column id="PRODUCT_GUBUN_NAME" type="STRING" size="256"/>
+          <Column id="remark" type="STRING" size="256"/>
+          <Column id="SAVE_FILE_NAME" type="STRING" size="256"/>
+          <Column id="base_path" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

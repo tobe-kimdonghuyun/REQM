@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="pas_mmssi00_m04" width="1200" height="800" titletext="나이스 서비스" onload="pas_mmssi00_m04_onload">
+    <Layouts>
+      <Layout height="800" width="1200" screenid="ScreenDeskTopP">
+        <ImageViewer id="title" taborder="0" text="서비스 소개" left="0" top="54" width="287" height="80" cssclass="font50B" initvalueid="ivTitleAccessibilityOn" visible="false"/>
+        <Div id="divArea" taborder="1" text="div00" left="0" top="72" height="139" formscrollbartype="none none" accessibilitylabel="나이스서비스선택영역" initvalueid="ivDivAccessibilityOn" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btn01" taborder="0" text="나이스플러스" left="0" top="0" width="241" height="70" cssclass="btn_WF_area_S" initvalueid="ivBtnAccessibilityButton" onclick="divArea_btn_onclick" onsetfocus="Button_onsetfocus"/>
+              <Button id="btn02" taborder="1" text="학부모서비스" left="240" top="0" width="241" height="70" cssclass="btn_WF_area" initvalueid="ivBtnAccessibilityButton" onclick="divArea_btn_onclick" onsetfocus="Button_onsetfocus"/>
+              <Button id="btn03" taborder="2" text="검정고시" left="480" top="0" width="241" height="70" cssclass="btn_WF_area" initvalueid="ivBtnAccessibilityButton" onclick="divArea_btn_onclick" onsetfocus="Button_onsetfocus"/>
+              <Button id="btn04" taborder="3" text="학원서비스" left="720" top="0" width="241" height="70" cssclass="btn_WF_area" initvalueid="ivBtnAccessibilityButton" onclick="divArea_btn_onclick" onsetfocus="Button_onsetfocus"/>
+              <Button id="btn05" taborder="4" text="비영리법인" left="960" top="0" width="240" height="70" cssclass="btn_WF_area" initvalueid="ivBtnAccessibilityButton" onclick="divArea_btn_onclick" onsetfocus="Button_onsetfocus"/>
+              <Button id="btn09" taborder="5" text="대입전형자료(학교생활기록부)" left="0" top="69" width="301" height="70" cssclass="btn_WF_area" initvalueid="ivBtnAccessibilityButton" onclick="divArea_btn_onclick" onsetfocus="Button_onsetfocus"/>
+              <Button id="btn06" taborder="6" text="교육비 원클릭 신청시스템" left="300" top="69" width="301" height="70" cssclass="btn_WF_area" initvalueid="ivBtnAccessibilityButton" onclick="divArea_btn_onclick" onsetfocus="Button_onsetfocus" padding="2px"/>
+              <Button id="btn07" taborder="7" text="학생·학부모 참여 교육설문" left="600" top="69" width="301" height="70" cssclass="btn_WF_area" initvalueid="ivBtnAccessibilityButton" onclick="divArea_btn_onclick" onsetfocus="Button_onsetfocus" padding="2px"/>
+              <Button id="btn08" taborder="8" text="업무지원" left="900" top="69" width="300" height="70" cssclass="btn_WF_area" initvalueid="ivBtnAccessibilityButton" onclick="divArea_btn_onclick" onsetfocus="Button_onsetfocus"/>
+            </Layout>
+            <Layout name="Layout0"/>
+          </Layouts>
+        </Div>
+        <Combo id="cboArea" taborder="2" text="나이스플러스" left="1280" top="60" width="600" height="100" initvalueid="ivCmbNormal" visible="false" onsetfocus="cboArea_onsetfocus" onitemchanged="cboArea_onitemchanged" innerdataset="dsList" codecolumn="code" datacolumn="value" index="0" value="01"/>
+        <Div id="div00" taborder="3" left="0" top="270" width="1200" height="350" text="" initvalueid="ivDivAccessibilityOff"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="640" height="1600" mobileorientation="portrait" type="default" titletext="나이스 서비스">
+        <ImageViewer id="title" cssclass="font48B_C" top="53" left="160" height="80" right="160" taborder="0" visible="true"/>
+        <Div id="divArea" left="680" top="162" height="139" right="-680" visible="false" taborder="3"/>
+        <Combo id="cboArea" left="20" top="204" height="100" visible="true" taborder="1" right="20" index="0" text="나이스플러스" value="01" cssclass="cbo_WF_M"/>
+        <Div id="div00" left="0" top="374" height="1150" right="0" taborder="2"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fvBtnFocus ="N";
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.pas_mmssi00_m04_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{  
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	this.div00.set_url("pa_pas_mms_si::pas_mmssi01_m01.xfdl");
+	
+	if(this.smfIsMobile()){
+		this.cboArea.set_index(0);
+		this.cboArea.setFocus();
+	} else {
+		this.divArea.form.btn01.click();
+	}
+	
+	//0501 CF 일괄등록
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnSearch = function(code)
+{	
+	var sContUrl = "";
+	if (code == "01") sContUrl = "pa_pas_mms_si::pas_mmssi01_m01.xfdl";
+	if (code == "02") sContUrl = "pa_pas_mms_si::pas_mmssi01_m02.xfdl";
+	if (code == "03") sContUrl = "pa_pas_mms_si::pas_mmssi01_m03.xfdl";
+	if (code == "04") sContUrl = "pa_pas_mms_si::pas_mmssi01_m04.xfdl";
+	if (code == "05") sContUrl = "pa_pas_mms_si::pas_mmssi01_m05.xfdl";
+	if (code == "06") sContUrl = "pa_pas_mms_si::pas_mmssi01_m06.xfdl";
+	if (code == "07") sContUrl = "pa_pas_mms_si::pas_mmssi01_m07.xfdl";
+	if (code == "08") sContUrl = "pa_pas_mms_si::pas_mmssi01_m08.xfdl";
+	if (code == "09") sContUrl = "pa_pas_mms_si::pas_mmssi01_m09.xfdl";
+
+	this.div00.set_url(sContUrl);
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.Button_onsetfocus = function(obj:nexacro.Button,e:nexacro.SetFocusEventInfo)
+{
+	//this.fnSearch(obj.id.substr(3,2));
+
+	var objComps = this.divArea.form.components;
+	for(var i=0;i<objComps.length;i++)
+	{
+		var objComp = objComps[i];
+		objComp.set_cssclass("btn_WF_area");
+	}
+	obj.set_cssclass("btn_WF_area_S");
+	obj.set_accessibilitylabel("선택된 "+ obj.text);
+};
+
+this.cboArea_onsetfocus = function(obj:nexacro.Combo,e:nexacro.SetFocusEventInfo)
+{
+	this.fnSearch(obj.value);
+};
+
+this.cboArea_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.fnSearch(obj.value);
+};
+
+this.divArea_btn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSearch(obj.id.substr(3,2));
+
+	var objComps = this.divArea.form.components;
+	for(var i=0;i<objComps.length;i++)
+	{
+		var objComp = objComps[i];
+		objComp.set_cssclass("btn_WF_area");
+	}
+	obj.set_cssclass("btn_WF_area_S");
+	obj.set_accessibilitylabel("선택된 "+ obj.text); 
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">01</Col>
+            <Col id="value">나이스플러스</Col>
+          </Row>
+          <Row>
+            <Col id="code">02</Col>
+            <Col id="value">학부모서비스</Col>
+          </Row>
+          <Row>
+            <Col id="code">03</Col>
+            <Col id="value">검정고시</Col>
+          </Row>
+          <Row>
+            <Col id="code">04</Col>
+            <Col id="value">학원서비스</Col>
+          </Row>
+          <Row>
+            <Col id="code">05</Col>
+            <Col id="value">비영리법인</Col>
+          </Row>
+          <Row>
+            <Col id="code">09</Col>
+            <Col id="value">대입전형자료(학교생활기록부)</Col>
+          </Row>
+          <Row>
+            <Col id="code">06</Col>
+            <Col id="value">교육비 원클릭 신청시스템</Col>
+          </Row>
+          <Row>
+            <Col id="code">07</Col>
+            <Col id="value">학생·학부모 참여 교육설문</Col>
+          </Row>
+          <Row>
+            <Col id="code">08</Col>
+            <Col id="value">업무지원</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="samplePost" width="888" height="736" titletext="주소찾기(행정안전부)" onload="form_onload">
+    <Layouts>
+      <Layout screenid="Desktop_screen,mobile_small">
+        <Static id="sta_MenuCd" taborder="0" text="우편번호" cssclass="sta_WF_DeatilLabel" top="400" height="48" left="0" width="80"/>
+        <Edit id="edtBasAddr" taborder="1" readonly="true" maxlength="200" cssclass="readonly" left="254" top="400" width="448" height="48" displaynulltext="도로명주소"/>
+        <Edit id="edtDetailAddr" taborder="2" maxlength="200" left="710" top="400" right="15" height="48" displaynulltext="상세주소"/>
+        <Edit id="edtSculZip" taborder="3" left="98" top="400" width="92" height="48" displaynulltext="우편번호" readonly="true"/>
+        <Button id="btnSearchPost" taborder="4" left="198" top="400" width="48" height="48" onclick="btn_searchPost_onclick" cssclass="btn_WF_SearchSmall"/>
+        <TextArea id="txaGuide" taborder="5" left="0" top="0" height="340" right="0" onchanged="txaGuide_onchanged" value="1.화면에 행정안전부의 페이지를 호출 할 수 있도록 WebBrowser를 올려 놓는다.(본 화면에서는 webPost라는 아이디로 올려놓음 visible false)&#10;2.찾기버튼 클릭시 행정안전부 팝업을 호출한다. (this.gfnPostSearch(버튼);)&#10;3.fnPostCallBack에서 넘어온 배열을 화면에 셋팅한다.&#10;this.fnPostCallBack = function(sName, aAddr)&#10;array[1]=&gt;주소1&#10;array[2]=&gt;주소2&#10;array[3]=&gt;상세주소&#10;array[4]=&gt;우편번호&#10;4. this.fnPostCallBack = function(sName, aAddr) 으로 리턴값 처리&#10;** Window NRE, IE 환경에서는 localhost 로 호출 시 오류가 발생함 &#10;  127.0.0.1로 변경하여 테스트 가능" cssclass="txt_WF_Nochar"/>
+      </Layout>
+    </Layouts>
+    <Bind>
+      <BindItem id="item17" compid="edtDetailAddr" propid="value" datasetid="ds_list" columnid="DETL_ADDR"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	samplePost.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/12/22
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/12/22			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+};
+
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+/**
+ * @description 우편번호 찾기 팝업 호출
+*/
+this.btn_searchPost_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.gfnPostSearch(obj);
+};
+
+/**
+ * @description 우편번호 CallBack 함수(선택)
+*/
+this.fnPostCallback = function(sName, aAddr)
+{
+	if (sName == "btnSearchPost") {
+		trace("onusernotify ----------------------------");
+		trace("array[1]=>주소1          ==> " +	aAddr[1] );
+		trace("array[2]=>주소2          ==> " +	aAddr[2] );
+		trace("array[3]=>상세주소      ==> " + aAddr[3] );
+		trace("array[4]=>우편번호      ==> " +	aAddr[4] );
+		trace("-----------------------------------------");
+
+		this.edtSculZip.set_value(aAddr[4]);	        // 우편번호
+		this.edtBasAddr.set_value(aAddr[1]+aAddr[2]);	// 주소
+		this.edtDetailAddr.set_value(aAddr[3]);	    	// 상세 주소
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

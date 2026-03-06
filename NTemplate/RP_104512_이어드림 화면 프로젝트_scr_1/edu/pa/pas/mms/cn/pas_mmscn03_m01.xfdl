@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="pas_mmscn03_m01" width="1200" height="1060" titletext="이벤트·공모전 목록" onload="pas_mmscn03_m01_onload" onsize="pas_mmscn03_m01_onsize">
+    <Layouts>
+      <Layout height="1060" width="1200" screenid="ScreenDeskTopP">
+        <ImageViewer id="title1" taborder="0" text="이벤트·공모전" left="0" top="64" width="200" height="50" cssclass="font34B" initvalueid="ivTitleAccessibilityOn"/>
+        <Div id="divTotal" taborder="1" top="title1:58" width="205" height="30" url="comm::comp_pageSummary2.xfdl" initvalueid="ivDivAccessibilityOff" left="0"/>
+        <Edit id="edtSearchKeyword" taborder="2" top="title1:34" width="350" height="50" initvalueid="ivEdtNormal" displaynulltext="검색어를 입력해 주세요." maxlength="30" onkeydown="edtSearchKeyword_onkeydown" right="92" accessibilitylabel="검색어를 입력해 주세요"/>
+        <Button id="btnSearch" taborder="3" text="조회" top="148" width="80" height="50" cssclass="btn_SA_search" initvalueid="ivBtnAccessibilityButton" onclick="btnSearch_onclick" right="0"/>
+        <Grid id="grdMain" taborder="4" left="0" top="218" height="752" autoenter="select" binddataset="dsList" right="0" fillareatype="none" cssclass="grd_notice" selecttype="cell" scrolltype="none" scrollbartype="none none" initvalueid="ivGrdAccessibilityOn" nodatatext="조회된 데이터가 없습니다" oncellclick="grdMain_oncellclick" autofittype="col" accessibilitylabel="이벤트공모전목록">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="110"/>
+                <Column size="680"/>
+                <Column size="303"/>
+                <Column size="27"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="67"/>
+              </Rows>
+              <Band id="body">
+                <Cell cssclass="expr:status==&quot;진행중&quot;? &quot;cell_status_progress&quot;:status==&quot;예정&quot;? &quot;cell_status_todo&quot;:status==&quot;마감&quot;?&quot;cell_status_end&quot;:&quot;&quot;" padding="0px 10px 0px 30px" accessibilitylabel="bind:status"/>
+                <Cell col="1" textAlign="left" cssclass="expr:status==&quot;진행중&quot;?&quot;cell_bgGray&quot;:&quot;&quot;" border="1px solid #eaeaea,0px none,1px solid #eaeaea" cursor="pointer" text="expr:comp.parent.fnDisplayText(comp,1,currow,eventTitlNm)"/>
+                <Cell col="2" displaytype="normal" edittype="none" cssclass="expr:status==&quot;진행중&quot;?&quot;cell_bgGray01&quot;:&quot;cell_bgGray02&quot;" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd" expr="eventBgngYmd.substr(0,4) + &quot;.&quot; + eventBgngYmd.substr(4,2) + &quot;.&quot; + eventBgngYmd.substr(6,2) + &quot;. ~ &quot; + eventEndYmd.substr(0,4) + &quot;.&quot; + eventEndYmd.substr(4,2) + &quot;.&quot; + eventEndYmd.substr(6,2) + &quot;.&quot;"/>
+                <Cell col="3" displaytype="imagecontrol" edittype="none" cssclass="expr:status=='진행중' ? &quot;cell_CountBGGray&quot;:&quot;cell_CountBG&quot;" padding="0px" accessibilitylabel="조회수"/>
+                <Cell col="4" text="bind:inqCnt" textAlign="left" padding="0px 8px" displaytype="text" cssclass="expr:status==&quot;진행중&quot;?&quot;cell_bgGray01&quot;:&quot;cell_bgGray02&quot;"/>
+              </Band>
+            </Format>
+            <Format id="mobile">
+              <Columns>
+                <Column size="130"/>
+                <Column size="183"/>
+                <Column size="50"/>
+                <Column size="247"/>
+              </Columns>
+              <Rows>
+                <Row size="82"/>
+                <Row size="38"/>
+                <Row size="18"/>
+              </Rows>
+              <Band id="body">
+                <Cell border="0px none" cssclass="expr:status==&quot;진행중&quot;? &quot;cell_status_progress_M&quot;:status==&quot;예정&quot;? &quot;cell_status_todo_M&quot;:status==&quot;마감&quot;?&quot;cell_status_end_M&quot;:&quot;&quot;" padding="0px" accessibilitylabel="bind:status"/>
+                <Cell col="1" colspan="3" border="0px none" cssclass="expr:status==&quot;진행중&quot;?&quot;cell_bgGray_M&quot;:&quot;&quot;" textAlign="left" padding="0px" displaytype="normal" edittype="none" expr="expr:comp.parent.fnDisplayText(comp,1,currow,eventTitlNm)"/>
+                <Cell row="1" colspan="2" border="0px none" cssclass="expr:status==&quot;진행중&quot;?&quot;cell_bgGray_M01&quot;:&quot;cell_bgGray_M02&quot;" letterSpacing="-1px" padding="0px 0px 0px 20px" expr="eventBgngYmd.substr(0,4) + &quot;.&quot; + eventBgngYmd.substr(4,2) + &quot;.&quot; + eventBgngYmd.substr(6,2) + &quot;. ~ &quot; + eventEndYmd.substr(0,4) + &quot;.&quot; + eventEndYmd.substr(4,2) + &quot;.&quot; + eventEndYmd.substr(6,2) + &quot;.&quot;"/>
+                <Cell row="1" col="2" border="0px none" cssclass="expr:status==&quot;진행중&quot;?&quot;cell_CountBGGray_M&quot;:&quot;cell_CountBG_M&quot;" edittype="none" accessibilitylabel="조회수"/>
+                <Cell row="1" col="3" border="0px none" text="bind:inqCnt" textAlign="left" displaytype="number" cssclass="expr:status==&quot;진행중&quot;?&quot;cell_bgGray_M01&quot;:&quot;cell_bgGray_M02&quot;" letterSpacing="-1px" verticalAlign="top"/>
+                <Cell row="2" colspan="4" cssclass="expr:status==&quot;진행중&quot;?&quot;cell_bgGray_M&quot;:&quot;&quot;" border="2px solid #eaeaea,0px none"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divPaging" taborder="5" left="0" top="grdMain:50" height="30" right="0" url="comm::comp_paginator2.xfdl" initvalueid="ivDivAccessibilityOn" accessibilitylabel="페이징그룹박스"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="640" height="1298" mobileorientation="portrait" type="default">
+        <ImageViewer id="title1" top="53" left="165" height="80" cssclass="font48B_C" taborder="0" right="165"/>
+        <Edit id="edtSearchKeyword" height="100" left="20" top="184" cssclass="edt_WF_M" right="220" displaynulltext="검색어를 입력하세요." taborder="1"/>
+        <Button id="btnSearch" height="100" top="184" width="188" cssclass="btn_SA_search_M" right="20" taborder="2"/>
+        <Div id="divTotal" height="40" top="344" left="0" right="0" text="" taborder="3"/>
+        <Grid id="grdMain" cssclass="grd_notice_M" formatid="mobile" left="20" top="399" height="709" right="20" taborder="4" minheight="200" maxheight=""/>
+        <Div id="divPaging" formscrolltype="none" height="120" left="0" top="grdMain:70" right="0" taborder="5"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="eventId" type="STRING" size="256"/>
+          <Column id="eventScCd" type="STRING" size="256"/>
+          <Column id="eventTitlNm" type="STRING" size="256"/>
+          <Column id="eventCn" type="STRING" size="256"/>
+          <Column id="pstStsCd" type="STRING" size="256"/>
+          <Column id="aplcnBgngYmd" type="STRING" size="256"/>
+          <Column id="aplcnEndYmd" type="STRING" size="256"/>
+          <Column id="aplcnBgngTm" type="STRING" size="256"/>
+          <Column id="aplcnEndTm" type="STRING" size="256"/>
+          <Column id="eventBgngYmd" type="STRING" size="256"/>
+          <Column id="eventEndYmd" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="pubcnRealmCn" type="STRING" size="256"/>
+          <Column id="opmtInstNm" type="STRING" size="256"/>
+          <Column id="mngtInstNm" type="STRING" size="256"/>
+          <Column id="qustCttpcCn" type="STRING" size="256"/>
+          <Column id="imageFileRefrnId" type="STRING" size="256"/>
+          <Column id="hmpgAddr" type="STRING" size="256"/>
+          <Column id="pubcnThmCn" type="STRING" size="256"/>
+          <Column id="pubcnPtptTrgtCn" type="STRING" size="256"/>
+          <Column id="pubcnPtptMthCn" type="STRING" size="256"/>
+          <Column id="sprtRealmCn" type="STRING" size="256"/>
+          <Column id="atwSdrqCn" type="STRING" size="256"/>
+          <Column id="pubcnFxCn" type="STRING" size="256"/>
+          <Column id="awdCn" type="STRING" size="256"/>
+          <Column id="srngCtrCn" type="STRING" size="256"/>
+          <Column id="eventEtcCn" type="STRING" size="256"/>
+          <Column id="inqCnt" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="STRING" size="256"/>
+          <Column id="status" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsList=dsList dsPageInfo=dsPageInfo</Col>
+            <Col id="url">pas_mms_cn03_001.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">selectTemp</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsListTemp=dsList dsPageInfo=dsPageInfo</Col>
+            <Col id="url">pas_mms_cn03_001.do</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex">1</Col>
+            <Col id="pageSize">10</Col>
+            <Col id="totalCount">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="searchKeyword" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListTemp" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="eventId" type="STRING" size="256"/>
+          <Column id="eventScCd" type="STRING" size="256"/>
+          <Column id="eventTitlNm" type="STRING" size="256"/>
+          <Column id="eventCn" type="STRING" size="256"/>
+          <Column id="pstStsCd" type="STRING" size="256"/>
+          <Column id="aplcnBgngYmd" type="STRING" size="256"/>
+          <Column id="aplcnEndYmd" type="STRING" size="256"/>
+          <Column id="aplcnBgngTm" type="STRING" size="256"/>
+          <Column id="aplcnEndTm" type="STRING" size="256"/>
+          <Column id="eventBgngYmd" type="STRING" size="256"/>
+          <Column id="eventEndYmd" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="pubcnRealmCn" type="STRING" size="256"/>
+          <Column id="opmtInstNm" type="STRING" size="256"/>
+          <Column id="mngtInstNm" type="STRING" size="256"/>
+          <Column id="qustCttpcCn" type="STRING" size="256"/>
+          <Column id="imageFileRefrnId" type="STRING" size="256"/>
+          <Column id="hmpgAddr" type="STRING" size="256"/>
+          <Column id="pubcnThmCn" type="STRING" size="256"/>
+          <Column id="pubcnPtptTrgtCn" type="STRING" size="256"/>
+          <Column id="pubcnPtptMthCn" type="STRING" size="256"/>
+          <Column id="sprtRealmCn" type="STRING" size="256"/>
+          <Column id="atwSdrqCn" type="STRING" size="256"/>
+          <Column id="pubcnFxCn" type="STRING" size="256"/>
+          <Column id="awdCn" type="STRING" size="256"/>
+          <Column id="srngCtrCn" type="STRING" size="256"/>
+          <Column id="etcCn" type="STRING" size="256"/>
+          <Column id="inqCnt" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="STRING" size="256"/>
+          <Column id="status" type="STRING" size="256"/>
+          <Column id="status2" type="STRING" size="256"/>
+          <Column id="rownum" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds02">
+        <ColumnInfo>
+          <Column id="지역" type="STRING" size="256"/>
+          <Column id="화장시설" type="STRING" size="256"/>
+          <Column id="성별" type="STRING" size="256"/>
+          <Column id="날짜" type="STRING" size="256"/>
+          <Column id="전체" type="STRING" size="256"/>
+          <Column id="예약" type="STRING" size="256"/>
+          <Column id="대기" type="STRING" size="256"/>
+          <Column id="불가" type="STRING" size="256"/>
+          <Column id="가능" type="STRING" size="256"/>
+          <Column id="예약현황" type="STRING" size="256"/>
+          <Column id="예약신청" type="STRING" size="256"/>
+          <Column id="Column9" type="STRING" size="256"/>
+          <Column id="Column10" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="지역">대구</Col>
+            <Col id="화장시설">대구명복공원</Col>
+            <Col id="전체">45</Col>
+            <Col id="예약">45</Col>
+            <Col id="대기">0</Col>
+            <Col id="불가">16</Col>
+            <Col id="가능">0</Col>
+            <Col id="예약현황">현황</Col>
+            <Col id="예약신청">신청</Col>
+            <Col id="Column9">예약시간 및 사용료</Col>
+            <Col id="Column10">구비서류</Col>
+            <Col id="날짜">20180604</Col>
+          </Row>
+          <Row>
+            <Col id="지역">인천</Col>
+            <Col id="화장시설">인천가족공원</Col>
+            <Col id="전체">72</Col>
+            <Col id="예약">72</Col>
+            <Col id="대기">0</Col>
+            <Col id="불가">3</Col>
+            <Col id="가능">0</Col>
+            <Col id="예약현황">현황</Col>
+            <Col id="예약신청">신청</Col>
+            <Col id="Column9">예약시간 및 사용료</Col>
+            <Col id="Column10">구비서류</Col>
+            <Col id="성별">1</Col>
+            <Col id="날짜">20180605</Col>
+          </Row>
+          <Row>
+            <Col id="지역">광주</Col>
+            <Col id="화장시설">광주시명락공원</Col>
+            <Col id="전체">32</Col>
+            <Col id="예약">32</Col>
+            <Col id="대기">0</Col>
+            <Col id="불가">1</Col>
+            <Col id="가능">0</Col>
+            <Col id="예약현황">현황</Col>
+            <Col id="예약신청">신청</Col>
+            <Col id="Column9">예약시간 및 사용료</Col>
+            <Col id="Column10">구비서류</Col>
+            <Col id="성별">2</Col>
+            <Col id="날짜">20180606</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*   대국민 - 이벤트, 공모전 목록조회
+*  @MenuPath    pa_pas_mms_cn
+*  @FileName 	pas_mmscn03_m01.xfdl
+*  @Creator 	홍길동
+*  @CreateDate 	2022.5.12
+*  @Desction    이벤트, 공모전 목록조회
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.5.12     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+include "lib::cm_script.xjs";
+
+//0501 CF 일괄등록
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.pas_mmscn03_m01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	// 파라메터 세팅
+	this.pv_params = this.smfGetFormParams();
+	
+	if(!this.smfIsNull(this.pv_params.dsSearchParam)){
+		this.dsSearch.loadXML(this.pv_params.dsSearchParam);
+	}
+	if(!this.smfIsNull(this.pv_params.dsPagingParam)){
+		this.dsPageInfo.loadXML(this.pv_params.dsPagingParam);
+		if(this.dsPageInfo.getConstColIndex("initIsUsePageInfo") < 0){
+			this.dsPageInfo.addConstColumn("initIsUsePageInfo","Y");
+		} else {
+			this.dsPageInfo.setConstColumn("initIsUsePageInfo","Y");
+		}
+	}
+	
+	//  페이지를 조회한다.
+	this.btnSearch.click();
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnSearch = function(obj, e)
+{
+	var vSearchKeyword = this.edtSearchKeyword.value;
+	var objRegExp = /[$]/gi;
+	if(!this.smfIsNull(vSearchKeyword)){
+		vSearchKeyword = vSearchKeyword.replace(objRegExp,"");	//특수문자 제거
+	}
+	this.dsSearch.setColumn(0,"searchKeyword" , vSearchKeyword);
+	
+	var sServiceId = "select";
+	if(this.smfIsMobile()){
+		sServiceId = "selectTemp";
+	}
+	
+ 	// 서비스 객체 생성
+	this.smfSearchService(sServiceId)
+		// 페이징처리
+		.paginator(this.grdMain, this.divPaging, this.divTotal, this.dsPageInfo, obj, e)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if(this.smfIsMobile()){
+				this.smfDataAppend(this, this.grdMain, this.dsListTemp);
+				// 총 검색결과와 현재 검색 결과 수가 일치할 경우 [더보기]버튼 숨김 (TODO)
+				if(this.dsPageInfo.getColumn(0, "totalCount")==this.dsList.getRowCount()){
+					this.divPaging.set_visible(false);
+				}else{
+					this.divPaging.set_visible(true);
+				}
+			}
+			if(!this.smfIsMobile()){
+				this.parent.parent.scrollTo(0,0);
+				
+				if(this.dsList.getRowCount() == 0){
+					this.divPaging.set_visible(false);
+				}else{
+					this.divPaging.set_visible(true);
+				}
+			}
+			this.smfResetScroll(this);
+			
+			//this.grdList.set_binddataset("dsList");
+			//this.grd01.set_binddataset("ds02");
+			
+			if(callbackParams.errors) return;
+		});
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnDisplayText = function(obj,nCell,nRow,sLongText,sImptYn)
+{
+	var sFont = (sImptYn=="Y"?'normal 700 18px/normal "Noto Sans KR","NotoSansKR-Bold"':'normal 400 18px/normal "Noto Sans KR","NotoSansKR-Regular"');
+	//var objFont = new nexacro._PaddingObject(sFont);
+	var nPadding = (sImptYn=="Y"?180:50);
+
+	if(this.smfIsMobile())
+	{
+		sFont = (sImptYn=="Y"?'normal 700 28px/normal "Noto Sans KR","NotoSansKR-Bold"':'normal 400 28px/normal "Noto Sans KR","NotoSansKR-Regular"');	
+		nPadding = (sImptYn=="Y"?220:90);
+	}
+	return this.smfDispLongTextGrid(obj,nCell,nRow,sLongText,sFont,nPadding);
+};
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSearch(obj, e);
+};
+
+this.grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	// 클릭한 셀을 구한다
+	var nRow = e.row;
+	var nCell = e.cell;
+	
+	var titlNo = 1;
+	if(this.smfIsMobile()){
+		titlNo = 1;
+	}
+	
+	if(nCell == titlNo) // 제목
+	{
+		var objDs = obj.getBindDataset();
+		var seventId = objDs.getColumn(nRow,"eventId");
+		var params = {"pafrBbsId":seventId
+				, "dsSearchParam":this.dsSearch.saveXML()
+				, "dsPagingParam":this.dsPageInfo.saveXML()
+			};
+		
+		trace("param: ", params);
+		
+		
+		var seventScCd = objDs.getColumn(nRow,"eventScCd");
+		
+		//이벤트인지 공모전인지 구분해서 각 구분에 맞는 화면으로 이동
+		if(seventScCd == "1"){
+			this.smfSetWorkPage("pa_pas_mms_cn::pas_mmscn03_m02.xfdl", params);
+		}else{
+			this.smfSetWorkPage("pa_pas_mms_cn::pas_mmscn03_m03.xfdl", params);
+		}
+		
+	}
+};
+this.edtSearchKeyword_onkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13){
+		this.btnSearch.click();
+	}
+};
+
+this.pas_mmscn03_m01_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	this.grdMain.set_enableredraw(false);
+	
+	this.grdMain.set_enableredraw(true);
+
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="edtSearchKeyword" propid="value" datasetid="dsSearch" columnid="searchKeyword"/>
+    </Bind>
+  </Form>
+</FDL>

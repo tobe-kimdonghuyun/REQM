@@ -1,0 +1,398 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frm01" width="1200" height="754" titletext="시도별오류학생목록조회" onload="frm01_onload">
+    <Layouts>
+      <Layout height="754" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="시도별오류학생목록조회" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="390" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSearch" taborder="1" left="0" top="144" height="92" cssclass="div_WF_Search" text="" right="0" initvalueid="ivDivAccessibilityOn" accessibilitylabel="조회영역">
+          <Layouts>
+            <Layout>
+              <Static id="staCoaAyr" taborder="0" text="대입학년도" left="0" top="11" width="108" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtCoaAyr" taborder="1" left="staCoaAyr:0" top="11" width="100" height="30" text="2024" enable="false" accessibilitylabel="대입학년도" initvalueid="ivEdtNormal"/>
+              <Static id="staCoaRcrit" taborder="2" text="모집구분" left="edtCoaAyr:0" top="11" width="96" cssclass="sta_WF_Searchtxt01" height="30" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtCoaRcritScNm" taborder="3" left="staCoaRcrit:0" top="11" width="135" height="30" text="정시" enable="false" accessibilitylabel="모집구분" initvalueid="ivEdtNormal"/>
+              <Static id="staWrk" taborder="4" text="세부모집시기" left="edtCoaRcritScNm:0" top="11" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn" width="120"/>
+              <Combo id="cboDetaRcrit" taborder="5" left="staWrk:0" width="196" height="30" innerdataset="dsDetaRcritPrd" codecolumn="detaRcritScValue" datacolumn="detaRcritScNm" text="과목" readonly="false" value="0" top="11" initvalueid="ivCmbNormal" onitemchanged="divSearch_cboDetaRcrit_onitemchanged" index="0" accessibilitylabel="세부모집시기"/>
+              <Static id="staWrk01" taborder="6" text="시도" left="cboDetaRcrit:0" top="11" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn" width="80"/>
+              <Combo id="cboCddcCd" taborder="7" left="staWrk01:0" width="196" height="30" innerdataset="dsCddcScCd" codecolumn="unyCdValue" datacolumn="unyCdValueNm" text="과목" readonly="false" value="0" top="11" initvalueid="ivCmbNormal" onitemchanged="divSearch_cmbGb_onitemchanged" index="0" accessibilitylabel="시도교육청"/>
+              <Static id="staWrk00" taborder="8" text="오류구분" left="0" top="51" width="108" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboErrGubun" taborder="9" left="staWrk00:0" width="196" height="30" innerdataset="dsErrGubun" codecolumn="cdcValue" datacolumn="cdcValueNm" text="" readonly="false" value="" top="51" initvalueid="ivCmbNormal" onitemchanged="divSearch_cmbGb_onitemchanged" index="-1" accessibilitylabel="오류구분"/>
+              <Button id="btnSearch" taborder="10" text="조회" top="11" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="btnSearch_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta00" taborder="2" text="※ 본 화면은 [대상학생 자료올리기] 및 [시도별 대상학생 자료요청]작업 후 발생한 오류에 대한 이력정보가 조회됩니다." left="3" top="246" width="775" height="33" cssclass="sta_WF_Red14" initvalueid="ivStcAccessibilityOn"/>
+        <Button id="btnExcel" taborder="4" text="액셀내려받기" top="246" width="135" height="30" cssclass="btn_WF_Excel03" onclick="btnExcel_onclick" right="0"/>
+        <Div id="divTotal" taborder="3" top="250" height="30" url="comm::comp_pageSummary2.xfdl" initvalueid="ivDivAccessibilityOn" left="980" visible="false" right="btnExcel:5"/>
+        <Grid id="grdMain" taborder="5" left="0" top="sta00:5" height="422" autofittype="col" right="0" binddataset="dsList" initvalueid="ivGrdAccessibilityOn" selecttype="cell" oncellclick="grdMain_oncellclick" mouseovertype="row" nodatatext="조회된 데이터가 없습니다." onheadclick="grid_onhaedclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="167"/>
+                <Column size="167"/>
+                <Column size="167"/>
+                <Column size="167"/>
+                <Column size="167"/>
+              </Columns>
+              <Rows>
+                <Row size="62" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="소재지"/>
+                <Cell col="1" text="세부모집시기"/>
+                <Cell col="2" text="주민등록번호&#13;&#10;(외국인등록번호)"/>
+                <Cell col="3" text="등록일시"/>
+                <Cell col="4" text="비고"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:cddcOrgCdNm" textAlign="center"/>
+                <Cell col="1" text="bind:detaRcritScNm" textAlign="center"/>
+                <Cell col="2" textAlign="center" text="bind:trprRrno" maskeditformat="######-#######" displaytype="mask" maskedittype="string"/>
+                <Cell col="3" text="bind:mdfcnDt" displaytype="date" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd" textAlign="center"/>
+                <Cell col="4" text="bind:seleDtaReqPrgSttusNm" textAlign="center"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divPaging" taborder="6" left="0" top="716" height="30" right="0" url="comm::comp_paginator.xfdl" initvalueid="ivDivAccessibilityOff" visible="false"/>
+        <Static id="Static99_00_00_00_00" taborder="7" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="-2" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01" taborder="8" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="-2" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta99_00_00_00_00_00_00_02_00" taborder="9" left="0" top="divSearch:0" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    시스템오류내역조회
+*  @FileName 	sqa_ueudr09_m00.xfdl
+*  @Creator 	박가혜
+*  @CreateDate 	2023.02.01
+*  @Desction    검정고시대입전형-대학-시스템오류내역조회
+************** 소스 수정 이력 ***********************************************
+*  date				Modifier				Description
+*******************************************************************************
+*  2023.02.01		박가혜					최초 생성
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::cm_script.xjs"
+include "lib::sqa_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리
+ */
+this.frm01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	this.dsSearch.addRow();
+
+	this.dsSearch.setColumn(0, "coaAyr", this.sqav_coaAyr);
+	this.dsSearch.setColumn(0, "coaRcritScCd", this.sqav_coaRcritScCd);
+	this.dsSearch.setColumn(0, "coaRcritScNm",  this.sqav_coaRcritScNm);
+	this.dsSearch.setColumn(0, "uvstOrgCd",  this.sqav_uvstOrgCd);
+	
+	this.dsSearch.setColumn(0,"coaErrCd","");
+	
+	//세부모집시기 가져오기
+	this.fnOnloadSearch(obj, ["dsDetaRcritPrd"])
+
+
+	// 공통코드 (교육청)
+	this.smfCodeList("code", [this.dsCddcScCd])
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;	
+			for(var i = 1; i < this.dsCddcScCd.rowcount; i++){
+				if(this.dsCddcScCd.getColumn(i,"unyCdValue") == "A00"){
+						this.dsCddcScCd.deleteRow(i)
+				}
+				this.dsCddcScCd.setColumn(i, "unyCdValue", this.dformat("{unyCdValue}0000001", this.dsCddcScCd, i));
+				
+			}
+			
+		})		
+		.run()
+	;
+	
+	this.smfValidateService("validateMain", {
+			url: "/sqa_ueu_dr05_000.do",
+		})
+
+		.mappingRulesetToForm(this.divSearch, "search")
+		.run() 
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		
+		})
+	; 	
+};
+
+/************************************************************************************************
+ * TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd <= -1) return;
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnSearch = function(obj, e) {			
+	
+	if(!this.fnBfrSave()) return;
+
+	this.smfSearchService("listErrStdnt")
+		// 페이징처리
+		.paginator(this.grdMain, this.divPaging, this.divTotal, this.dsPageInfo, obj, e)
+		.validateForm(this.divSearch)
+		.run() // 실행
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			if(this.dsList.rowcount > 0 ){
+				this.divPaging.set_visible(true);
+			}
+			
+		
+		})
+};
+
+this.fnBfrSave = function(){
+	var coaErrCd = this.dsSearch.getColumn(0,"coaErrCd");
+	var cddcOrgCd = this.dsSearch.getColumn(0,"cddcOrgCd");
+	
+// 	if(this.smfIsNull(coaErrCd)) {
+// 		this.smfLiteralAlert("오류구분코드는 필수입력사항입니다.");
+// 		return false;
+// 	}
+
+	if(coaErrCd == '03' || coaErrCd == '06'){
+		if(!this.smfIsNull(cddcOrgCd)){
+		   this.smfLiteralAlert("미존재학교, 학생 데이타는 해당 소재지가 없습니다.\n\n시도를 전체선택 후 조회 하세요!");
+		   return false;
+		}
+    }
+	return true;
+
+}
+this.fnOnloadSearchCallback = function(){
+
+
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+/**
+ * @description 엔터키실행
+ */
+this.fnKeyUp = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode=='13'){
+		this.btnSearch_onclick();
+	}
+};
+
+/**
+ * @description 조회 버튼 클릭
+ */
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSearch();
+};
+
+this.dsSearch_cancolumnchange = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	this.dsSearch.setColumn(0,e.columnid,e.newvalue);
+};
+this.grid_onhaedclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.smfProcGrdSort(obj, e.cell);
+};
+
+/**
+ * @description 엑셀다운로드
+ */
+this.btnExcel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.dsList.rowcount < 1){
+		this.smfAlert("조회 후 엑셀다운로드가 가능합니다.");
+		return;
+	}
+	var objOption = {
+						objGrid : this.grdMain
+					,   sheetname : "시도별오류학생목록조회"
+					,   filename : "시도별오류학생목록조회"
+					};
+
+	this.smfExcelExport(objOption);
+};
+
+
+this.divSearch_cboDetaRcrit_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.dsSearch.setColumn(0, "detaRcritScValue",  this.divSearch.form.cboDetaRcrit.value);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listErrStdnt</Col>
+            <Col id="url">sqa_ueu_dr05_001.do</Col>
+            <Col id="outDatasets">dsList=dsList dsPageInfo=dsPageInfo</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true" cancolumnchange="dsSearch_cancolumnchange">
+        <ColumnInfo>
+          <Column id="coaAyr" size="4" type="STRING"/>
+          <Column id="coaRcritScCd" size="1" type="STRING"/>
+          <Column id="coaRcritScNm" type="STRING" size="256"/>
+          <Column id="uvstOrgCd" size="10" type="STRING"/>
+          <Column id="detaRcritScValue" type="STRING" size="256"/>
+          <Column id="cddcOrgCd" type="STRING" size="256"/>
+          <Column id="coaErrCd" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="coaAyr" size="4" type="STRING"/>
+          <Column id="coaRcritScCd" size="1" type="STRING"/>
+          <Column id="uvstOrgCd" size="10" type="STRING"/>
+          <Column id="mstkCode" size="1" type="STRING"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" size="1" type="STRING"/>
+          <Column id="cddcOrgCd" size="256" type="STRING"/>
+          <Column id="cddcOrgCdNm" size="256" type="STRING"/>
+          <Column id="detaRcritScNm" size="256" type="STRING"/>
+          <Column id="trprRrno" type="STRING" size="256"/>
+          <Column id="mdfcnDt" size="256" type="STRING"/>
+          <Column id="seleDtaReqPrgSttusNm" size="256" type="STRING"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCddcScCd" onrowposchanged="dsUesUemUm04M00SVO_listUesUemUm04M00_onrowposchanged" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="FirstCode" type="STRING" size="30" value="ALL" datapath=""/>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value="CDDC_SC_CD"/>
+          <ConstColumn id="FilterExpr" type="STRING" size="30" value=""/>
+          <ConstColumn id="UnyCdGrpId" type="STRING" size="30" value=""/>
+          <ConstColumn id="BfrClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd1Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd2Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd3Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd4Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd5Value" type="STRING" size="30" value=""/>
+          <Column id="clfCdValue" type="STRING" size="30"/>
+          <Column id="clfCdValueNm" type="STRING" size="120"/>
+          <Column id="clfCdUseYn" type="STRING" size="150"/>
+          <Column id="unyCdValue" type="STRING" size="10"/>
+          <Column id="unyCdValueNm" type="STRING" size="30"/>
+          <Column id="userDfnCd1Value" type="STRING" size="100"/>
+          <Column id="userDfnCd2Value" type="STRING" size="100"/>
+          <Column id="userDfnCd3Value" type="STRING" size="100"/>
+          <Column id="userDfnCd4Value" type="STRING" size="100"/>
+          <Column id="userDfnCd5Value" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDetaRcritPrd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="firstCode" type="STRING" size="30" value="SEL"/>
+          <ConstColumn id="filterExpr" type="STRING" size="30" value=""/>
+          <ConstColumn id="cmbType" type="STRING" size="30" value="detaRcritScCode"/>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="coaAyr" type="STRING" size="4"/>
+          <Column id="coaRcritScCd" type="STRING" size="1"/>
+          <Column id="uvstOrgCd" type="STRING" size="150"/>
+          <Column id="detaRcritScValue" type="STRING" size="8"/>
+          <Column id="detaRcritScNm" type="STRING" size="8"/>
+          <Column id="detaRcritScBgngYmd" type="STRING" size="256"/>
+          <Column id="detaRcritScEndYmd" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsErrGubun" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="firstCode" size="30" type="STRING" value="SEL"/>
+          <ConstColumn id="filterExpr" size="30" type="STRING" value=""/>
+          <ConstColumn id="cmbType" size="30" type="STRING" value="cdcValue"/>
+          <Column id="cdcValue" size="30" type="STRING"/>
+          <Column id="cdcValueNm" size="120" type="STRING"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cdcValue"/>
+            <Col id="cdcValueNm">-선택-</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">06</Col>
+            <Col id="cdcValueNm">미존재학생</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">07</Col>
+            <Col id="cdcValueNm">요청제외학생</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">01</Col>
+            <Col id="cdcValueNm">주민등록중복</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">02</Col>
+            <Col id="cdcValueNm">수험번호중복</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtCoaAyr" propid="value" datasetid="dsSearch" columnid="coaAyr"/>
+      <BindItem id="item1" compid="divSearch.form.edtCoaRcritScNm" propid="value" datasetid="dsSearch" columnid="coaRcritScNm"/>
+      <BindItem id="item3" compid="divSearch.form.cboCddcCd" propid="value" datasetid="dsSearch" columnid="cddcOrgCd"/>
+      <BindItem id="item4" compid="divSearch.form.cboErrGubun" propid="value" datasetid="dsSearch" columnid="coaErrCd"/>
+      <BindItem id="item2" compid="divSearch.form.cboDetaRcrit" propid="value" datasetid="dsSearch" columnid="detaRcritScValue"/>
+    </Bind>
+  </Form>
+</FDL>

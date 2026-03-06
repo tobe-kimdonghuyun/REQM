@@ -1,0 +1,411 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="pas_mmscn00_m01" width="1200" height="970" titletext="공지사항 목록조회" onload="pas_mmscn00_m01_onload" onsize="pas_mmscn00_m01_onsize">
+    <Layouts>
+      <Layout height="970" width="1200" screenid="ScreenDeskTopP">
+        <ImageViewer id="title1" taborder="0" text="공지사항" left="0" top="64" width="124" height="50" cssclass="font34B" initvalueid="ivTitleAccessibilityOn" visible="false"/>
+        <Div id="divTotal" taborder="1" top="82" width="205" height="30" url="comm::comp_pageSummary2.xfdl" initvalueid="ivDivAccessibilityOff" left="0"/>
+        <Edit id="edtSearchKeyword" taborder="2" top="58" width="350" height="50" initvalueid="ivEdtNormal" displaynulltext="검색어를 입력해 주세요." maxlength="30" onkeydown="edtSearchKeyword_onkeydown" right="92"/>
+        <Button id="btnSearch" taborder="3" text="조회" top="58" width="80" height="50" cssclass="btn_SA_search" initvalueid="ivBtnAccessibilityButton" onclick="btnSearch_onclick" right="0"/>
+        <Grid id="grdMain" taborder="4" left="0" top="edtSearchKeyword:20" height="672" autofittype="col" autoenter="select" binddataset="dsList" fillareatype="none" cssclass="grd_notice" selecttype="cell" scrollbartype="none none" scrolltype="none" initvalueid="ivGrdAccessibilityOn" formatid="default" oncellclick="grdMain_oncellclick" nodatatext="조회된 데이터가 없습니다." right="0" accessibilitylabel="공지사항목록" onkeyup="grdMain_onkeyup">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="825"/>
+                <Column size="95"/>
+                <Column size="155"/>
+                <Column size="125"/>
+              </Columns>
+              <Rows>
+                <Row size="67"/>
+              </Rows>
+              <Band id="body">
+                <Cell cssclass="expr:imptYn==&quot;Y&quot;?&quot;cell_ImpNoti&quot;:&quot;cell_ImpTit&quot;" edittype="none" cursor="pointer" textAlign="left" accessibilitylabel="expr:imptYn==&quot;Y&quot;?&quot;중요 &quot;+ntcMteTitlNm:ntcMteTitlNm" expr="expr:comp.parent.fnDisplayText(comp,0,currow,ntcMteTitlNm,imptYn)"/>
+                <Cell col="1" displaytype="imagecontrol" edittype="none" padding="0px" cssclass="expr:comp.parent.fnSetCssFileYN(imptYn, fileRefrnId)" accessibilitylabel="expr:(fileRefrnId != undefined &amp;&amp; fileRefrnId != &quot;&quot;) ?&quot;첨부파일 존재함&quot;:&quot;첨부파일 존재하지 않음&quot;"/>
+                <Cell cssclass="cell_WF_LinkBtn emptyCellButton" col="2" displaytype="buttoncontrol" edittype="button" text="" accessibilitylabel="expr:imptYn==&quot;Y&quot;?&quot;중요 &quot;+ntcMteTitlNm+&quot; 상세 바로가기&quot;:ntcMteTitlNm+&quot; 상세 바로가기&quot;"/>
+                <Cell col="3" text="bind:regDt" displaytype="date" calendardateformat="yyyy.MM.dd." cssclass="expr:imptYn==&quot;Y&quot;?&quot;cell_bgGray01&quot;:&quot;cell_bgGray02&quot;" calendareditformat="yyyy.MM.dd."/>
+              </Band>
+            </Format>
+            <Format id="mobile">
+              <Columns>
+                <Column size="130"/>
+                <Column size="40"/>
+                <Column size="321"/>
+                <Column size="54"/>
+              </Columns>
+              <Rows>
+                <Row size="10"/>
+                <Row size="64"/>
+                <Row size="40"/>
+                <Row size="27"/>
+              </Rows>
+              <Band id="body">
+                <Cell colspan="4" border="0px none" cssclass="expr:imptYn==&quot;Y&quot;?&quot;cell_bgGray_M&quot;:&quot;&quot;" accessibilityenable="false"/>
+                <Cell row="1" colspan="3" border="0px none" cssclass="expr:imptYn==&quot;Y&quot;?&quot;cell_ImpNoti_M&quot;:&quot;cell_ImpTit_M&quot;" expr="expr:comp.parent.fnDisplayText(comp,0,currow,ntcMteTitlNm,imptYn)" accessibilitylabel="expr:imptYn==&quot;Y&quot;?&quot;중요 &quot;+ntcMteTitlNm:ntcMteTitlNm" textAlign="left"/>
+                <Cell row="1" col="3" border="0px none" edittype="none" cssclass="expr:comp.parent.fnSetCssFileYN(imptYn, fileRefrnId)" padding="0px 14px 0px 0px" accessibilitylabel="expr:(fileRefrnId != undefined &amp;&amp; fileRefrnId != &quot;&quot;) ?&quot;첨부파일 존재함&quot;:&quot;첨부파일 존재하지 않음&quot;"/>
+                <Cell row="2" colspan="4" border="0px none" cssclass="expr:imptYn==&quot;Y&quot;?&quot;cell_txt24R,cell_color5959,cell_bgGray_M&quot;:&quot;cell_txt24R,cell_color5959&quot;" text="bind:regDt" displaytype="date" textAlign="left" padding="0px 0px 0px 20px" color="#595959" calendardateformat="yyyy.MM.dd." calendareditformat="yyyy.MM.dd." letterSpacing="0px" font="normal 400 24px/normal &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Regular&quot;"/>
+                <Cell row="3" colspan="4" cssclass="expr:imptYn==&quot;Y&quot;?&quot;cell_bgGray_M&quot;:&quot;&quot;" accessibilityenable="false"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divPaging" taborder="5" left="0" top="grdMain:50" height="30" right="0" url="comm::comp_paginator2.xfdl" initvalueid="ivDivAccessibilityOn" accessibilitylabel="페이징그룹박스"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="640" height="2005" mobileorientation="portrait" type="default">
+        <ImageViewer id="title1" cssclass="font48B_C" top="53" left="200" height="80" taborder="0" right="200" visible="true"/>
+        <Edit id="edtSearchKeyword" cssclass="edt_WF_M" left="20" top="184" height="100" right="220" taborder="1"/>
+        <Button id="btnSearch" cssclass="btn_SA_search_M" top="184" width="188" height="100" right="20" taborder="2"/>
+        <Grid id="grdMain" left="20" top="401" height="1414" right="20" cssclass="grd_notice_M" formatid="mobile" taborder="4" minheight="200" maxheight=""/>
+        <Div id="divTotal" top="346" height="40" left="0" right="0" text="" taborder="3"/>
+        <Div id="divPaging" height="120" left="0" top="grdMain:70" right="0" formscrolltype="none" taborder="5" text=""/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="ntcMteId" type="string" size="256"/>
+          <Column id="ntcMteTitlNm" type="string" size="256"/>
+          <Column id="ntcMteCn" type="string" size="256"/>
+          <Column id="ntcMteClfCd" type="string" size="256"/>
+          <Column id="pstStsCd" type="string" size="256"/>
+          <Column id="fileRefrnId" type="string" size="256"/>
+          <Column id="ntcMteInqCnt" type="BIGDECIMAL" size="256"/>
+          <Column id="aplcnBgngYmd" type="DATE" size="8"/>
+          <Column id="aplcnEndYmd" type="DATE" size="8"/>
+          <Column id="aplcnBgngTm" type="DATE" size="8"/>
+          <Column id="aplcnEndTm" type="DATE" size="8"/>
+          <Column id="imptYn" type="string" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="rgtrDptNm" type="STRING" size="256"/>
+          <Column id="mdfrNm" type="STRING" size="256"/>
+          <Column id="mdfrDptNm" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="DATETIME" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="DATETIME" size="256"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsList=dsList dsPageInfo=dsPageInfo</Col>
+            <Col id="url">pas_mms_cn00_003.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">selectTemp</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsListTemp=dsList dsPageInfo=dsPageInfo</Col>
+            <Col id="url">pas_mms_cn00_003.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex">1</Col>
+            <Col id="pageSize">10</Col>
+            <Col id="totalCount">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="searchKeyword" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListTemp" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="ntcMteId" type="string" size="256"/>
+          <Column id="ntcMteTitlNm" type="string" size="256"/>
+          <Column id="ntcMteCn" type="string" size="256"/>
+          <Column id="ntcMteClfCd" type="string" size="256"/>
+          <Column id="pstStsCd" type="string" size="256"/>
+          <Column id="fileRefrnId" type="string" size="256"/>
+          <Column id="ntcMteInqCnt" type="BIGDECIMAL" size="256"/>
+          <Column id="aplcnBgngYmd" type="DATE" size="8"/>
+          <Column id="aplcnEndYmd" type="DATE" size="8"/>
+          <Column id="aplcnBgngTm" type="DATE" size="8"/>
+          <Column id="aplcnEndTm" type="DATE" size="8"/>
+          <Column id="imptYn" type="string" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="rgtrDptNm" type="STRING" size="256"/>
+          <Column id="mdfrNm" type="STRING" size="256"/>
+          <Column id="mdfrDptNm" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="DATETIME" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="DATETIME" size="256"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*   대국민 - 공지사항 목록조회
+*  @MenuPath    pa_pas_mns_cn
+*  @FileName 	pas_mmscn00_m01.xfdl
+*  @Creator 
+*  @CreateDate 	2022.5.12
+*  @Desction    공지사항 목록조회
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.5.12     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::cm_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.paramDsList;	//모바일에서 파라메터로 넘길 조회결과
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.pas_mmscn00_m01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	// 파라메터 세팅
+	this.pv_params = this.smfGetFormParams();
+	
+	if(!this.smfIsNull(this.pv_params.dsSearchParam)){
+		this.dsSearch.loadXML(this.pv_params.dsSearchParam);
+	}
+	if(!this.smfIsNull(this.pv_params.dsPagingParam)){
+		this.dsPageInfo.loadXML(this.pv_params.dsPagingParam);
+		if(this.dsPageInfo.getConstColIndex("initIsUsePageInfo") < 0){
+			this.dsPageInfo.addConstColumn("initIsUsePageInfo","Y");
+		} else {
+			this.dsPageInfo.setConstColumn("initIsUsePageInfo","Y");
+		}
+	}
+	
+	//모바일 상세페이지에서 되돌아온 경우, 목록 유지
+	if(!this.smfIsNull(this.pv_params.dsListParam) && this.smfIsMobile()){
+		this.dsListTemp.loadXML(this.pv_params.dsListParam);
+		this.smfDataAppend(this, this.grdMain, this.dsListTemp);
+		var pageIdx = this.dsPageInfo.getColumn(0,"pageIndex");
+		this.dsPageInfo.setColumn(0,"pageIndex", pageIdx-1);
+		this.divPaging.form.fnInit(this.grdMain, this.dsPageInfo, this.divTotal, this.fnSearch, this);
+		this.divTotal.form.fnInit(this.grdMain, this.dsPageInfo, this.divTotal, this.fnSearch, this);
+		this.divPaging.form.btnAppendData_onclick();
+	}else{
+		//  페이지를 조회한다.
+		this.btnSearch.click();
+	}
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnSearch = function(obj, e)
+{
+	var vSearchKeyword = this.edtSearchKeyword.value;
+	var objRegExp = /[$]/gi;
+	if(!this.smfIsNull(vSearchKeyword)){
+		vSearchKeyword = vSearchKeyword.replace(objRegExp,"");	//특수문자 제거
+	}
+	this.dsSearch.setColumn(0,"searchKeyword" , vSearchKeyword);
+	
+	//모바일일 경우 데이터셋에 쌓이는 방식이 다름
+	var sServiceId = "select";
+	if(this.smfIsMobile()){
+		sServiceId = "selectTemp";
+	}
+	
+ 	// 서비스 객체 생성
+	this.smfSearchService(sServiceId)
+		// 페이징처리
+		.paginator(this.grdMain, this.divPaging, this.divTotal, this.dsPageInfo, this.fnSearch, e)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+
+			if(this.smfIsMobile()){
+				this.paramDsList = this.dsList.saveXML();
+				this.smfDataAppend(this, this.grdMain, this.dsListTemp);
+				// 총 검색결과와 현재 검색 결과 수가 일치할 경우 [더보기]버튼 숨김 (TODO)
+				if(this.dsPageInfo.getColumn(0, "totalCount")==this.dsList.getRowCount()){
+					this.divPaging.set_visible(false);
+				}else{
+					this.divPaging.set_visible(true);
+				}
+			}
+			if(!this.smfIsMobile()){
+				this.parent.parent.scrollTo(0,0);
+
+				//검색 결과가 없는 경우 페이징 숨김
+				if(this.dsList.getRowCount() == 0){	
+					this.divPaging.set_visible(false);
+				}else{
+					this.divPaging.set_visible(true);
+					this.grdMain.clearSelect();
+				}
+			}
+			this.smfResetScroll(this);
+			
+			if(callbackParams.errors) return;
+		});
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnDisplayText = function(obj,nCell,nRow,sLongText,sImptYn)
+{
+	var sFont = (sImptYn=="Y"?'normal 700 18px/normal "Noto Sans KR","NotoSansKR-Bold"':'normal 400 18px/normal "Noto Sans KR","NotoSansKR-Regular"');
+	//var objFont = new nexacro._PaddingObject(sFont);
+	var nPadding = (sImptYn=="Y"?180:50);
+
+	if(this.smfIsMobile())
+	{
+		sFont = (sImptYn=="Y"?'normal 700 28px/normal "Noto Sans KR","NotoSansKR-Bold"':'normal 400 28px/normal "Noto Sans KR","NotoSansKR-Regular"');	
+		nPadding = (sImptYn=="Y"?220:90);
+	}
+	return this.smfDispLongTextGrid(obj,nCell,nRow,sLongText,sFont,nPadding);
+};
+
+// imptYn :중요여부, fileRefrnId:파일존재여부
+this.fnSetCssFileYN = function(imptYn, fileRefrnId) {
+	var cssRtn = "cell_bgGray";
+
+	if (imptYn=="Y") {
+		if (this.smfIsNull(fileRefrnId)){
+			cssRtn = "cell_bgGray";
+		}else {
+			cssRtn = "cell_FileAddGray";
+		}
+	}else {
+		if (this.smfIsNull(fileRefrnId)){
+			cssRtn = "";
+		}else {
+			cssRtn = "cell_FileAdd";
+		}	
+	}
+	
+	if (this.smfIsMobile()) {
+		if (!this.smfIsNull(cssRtn))	cssRtn = cssRtn+"_M";
+	}
+	
+	return cssRtn;
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.smfIsMobile()){
+		this.dsPageInfo.setColumn(0,"pageIndex", 1);
+		this.dsPageInfo.setColumn(0,"totalCount", 0);
+	}
+	this.fnSearch(obj, e);
+};
+
+this.grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	// 클릭한 셀을 구한다
+	var nRow = e.row;
+	var nCell = e.cell;
+	
+	var titlNo = 0;
+	if(this.smfIsMobile()){
+		titlNo = 1;
+	}
+	if(nCell == titlNo){ // 제목
+	
+		var objDs = obj.getBindDataset();
+		var sNtcMteId = objDs.getColumn(nRow,"ntcMteId");
+		var params = {"pafrBbsId":sNtcMteId
+			, "dsSearchParam":this.dsSearch.saveXML()
+			, "dsPagingParam":this.dsPageInfo.saveXML()
+			, "dsListParam" : this.paramDsList
+			};
+		this.smfSetWorkPage("pa_pas_mms_cn::pas_mmscn00_m02.xfdl", params);
+	} else {
+		if (!this.smfIsMobile()) {
+			if(nCell == 2){ // 상세버튼
+				var objDs = obj.getBindDataset();
+				var sNtcMteId = objDs.getColumn(nRow,"ntcMteId");
+				var params = {"pafrBbsId":sNtcMteId
+					, "dsSearchParam":this.dsSearch.saveXML()
+					, "dsPagingParam":this.dsPageInfo.saveXML()
+					, "dsListParam" : this.paramDsList
+					};
+				this.smfSetWorkPage("pa_pas_mms_cn::pas_mmscn00_m02.xfdl", params);
+			}
+		}
+	}
+};
+
+this.edtSearchKeyword_onkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13){
+		this.btnSearch.click();
+	}
+};
+
+this.pas_mmscn00_m01_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	this.grdMain.set_enableredraw(false);
+	
+	this.grdMain.set_enableredraw(true);
+};
+
+this.grdMain_onkeyup = function(obj:nexacro.Grid,e:nexacro.KeyEventInfo)
+{
+	if (!this.smfIsMobile()) {
+		if(e.keycode == 13){
+			var nRow = e.row;
+			var nCell = e.cell;
+			var objDs = obj.getBindDataset();
+			var sNtcMteId = objDs.getColumn(nRow,"ntcMteId");
+			var params = {"pafrBbsId":sNtcMteId
+				, "dsSearchParam":this.dsSearch.saveXML()
+				, "dsPagingParam":this.dsPageInfo.saveXML()
+				, "dsListParam" : this.paramDsList
+				};
+			this.smfSetWorkPage("pa_pas_mms_cn::pas_mmscn00_m02.xfdl", params);
+		}
+	}
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="edtSearchKeyword" propid="value" datasetid="dsSearch" columnid="searchKeyword"/>
+    </Bind>
+  </Form>
+</FDL>

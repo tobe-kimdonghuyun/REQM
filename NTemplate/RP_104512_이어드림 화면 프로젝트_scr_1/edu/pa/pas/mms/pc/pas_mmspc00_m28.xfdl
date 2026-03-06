@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?> 
+<FDL version="2.1">
+  <Form id="pas_mmspc00_m28" width="1920" height="727" titletext="비영리법인">
+    <Layouts>
+      <Layout height="727" width="1920" screenid="ScreenDeskTopP">
+        <ImageViewer id="img00" taborder="0" left="0" top="0" image="url('imagerc::main/main_bg_neisSupport2_1920_N1.gif')" cssclass="display" height="727" accessibilitylabel="비영리법인 소개" onclick="img00_onclick" right="0" initvalueid="ivImgAccessibilityOn" text=""/>
+        <Div id="div00" taborder="1" width="1200" height="453" top="225" left="17.19%" initvalueid="ivDivAccessibilityOff" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="img00" taborder="0" text="업무를 교육까지 이어주는" left="30" top="50" width="534" height="80" cssclass="font52R_W" initvalueid="ivTitleAccessibilityOn" tabstop="false"/>
+              <ImageViewer id="img01" taborder="1" text="비영리법인" left="30" top="120" width="254" height="80" cssclass="font52B_W" initvalueid="ivTitleAccessibilityOn" tabstop="false"/>
+              <ImageViewer id="img02" taborder="2" text="비영리법인의 정보제공과 민원인의 편익 및 행정 만족도를 높이는 서비스입니다." left="30" top="202" width="800" height="33" cssclass="font20R_W" initvalueid="ivTitleAccessibilityOn" tabstop="false"/>
+              <Button id="btnShortcuts" taborder="3" text="바로가기" left="30" top="250" width="160" height="50" cssclass="btn_WF_shortcuts" initvalueid="ivBtnAccessibilityLink" onclick="div00_btnShortcuts_onclick" accessibilitydescription="새창열림"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Button id="btnShortcuts" cssclass="btn_main_shortcuts" top="380" left="10" width="210" height="70"/>
+              <ImageViewer id="img02" cssclass="font28R_W_M" height="140" left="10" top="218" right="20"/>
+              <ImageViewer id="img00" left="10" top="55" width="534" height="80"/>
+              <ImageViewer id="img01" left="10" top="137" width="254" height="80"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="640" height="946" mobileorientation="portrait" type="default">
+        <ImageViewer id="img00" height="946" left="0" top="0" image="url('imagerc::main_M/main_bg_neisSupport2_1024_N.gif')" right="0" imagealign="right middle"/>
+        <Div id="div00" left="20" top="62" height="453" right="20" formscrolltype="none"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[//비영리법인
+this.div00_btnShortcuts_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	/*
+	http://localhost:8080/nxui/index.html?subsys=BDM
+	http://dev.nonprofit.neis.go.kr/nxui/index.html?subsys=BDM
+*/
+
+	var param = {};
+	param.subSys = "BDM";
+	
+	if(this.smfContainsStr(window.location.host, "local")){		//로컬인 경우
+		param.server = "local";
+	}else if (this.smfContainsStr(window.location.host, "dev")){	//개발인 경우
+		param.server = "dev";
+	}else if (this.smfContainsStr(window.location.host, "tst")){	//시험인 경우
+			param.server = "test";
+	}else if (!this.smfContainsStr(window.location.host, "local") && 
+			  !this.smfContainsStr(window.location.host, "dev") &&
+			  !this.smfContainsStr(window.location.host, "tst")){	//운영인 경우
+			param.server = "prod";
+	}
+	
+	trace("window.location.host: " + window.location.host);
+	trace("param.server: " + param.server);
+
+	var pageUrl = null;
+	var type = "link";
+	
+	this.smfSetServiceLink(pageUrl,type,param);
+};
+]]></Script>
+  </Form>
+</FDL>

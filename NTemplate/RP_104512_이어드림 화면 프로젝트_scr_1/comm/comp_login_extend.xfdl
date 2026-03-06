@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comp_remainTime" width="538" height="429" titletext="로그인연장" ontimer="form_ontimer" onload="form_onload">
+    <Layouts>
+      <Layout height="429" mobileorientation="landscape" width="538" screenid="ScreenDeskTop">
+        <Div id="divBtn" taborder="6" text="div_00" left="0" bottom="0" height="120" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Button id="btnRemain" taborder="0" text="연장" left="60" width="200" defaultbutton="true" escapebutton="true" height="60" initvalueid="ivBtnAccessibilityButton" onclick="divBtn_btnRemain_onclick" top="0"/>
+              <Button id="btnCancel" taborder="1" text="종료" width="200" defaultbutton="true" escapebutton="true" height="60" left="278" initvalueid="ivBtnAccessibilityButton" onclick="divBtn_btnCancel_onclick" cssclass="btn_WF_Custom" top="0"/>
+            </Layout>
+            <Layout name="default0">
+              <Button id="btnRemain" taborder="0" text="확인" left="40%" top="20" width="108" height="50" defaultbutton="true" escapebutton="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta01" taborder="0" text="안내" left="218" top="110" height="43" cssclass="sta_WF_Txt34B" initvalueid="ivStcAccessibilityOn" textAlign="center" width="103"/>
+        <Static id="sta05" taborder="5" text="&lt;fc v='#2b72de'&gt;접속시간을 연장하시겠습니까?&lt;/fc&gt;" left="50" height="30" cssclass="sta_WF_Txt18B" initvalueid="ivStcAccessibilityOn" top="244" textAlign="center" usedecorate="true" width="438"/>
+        <Static id="sta02" taborder="1" text="접속유지시간이" left="100" top="170" height="28" cssclass="sta_WF_Txt18" initvalueid="ivStcAccessibilityOn" width="133"/>
+        <Static id="staTime" taborder="2" text="00분 00초" left="sta02:10" top="170" height="28" width="84" cssclass="sta_WF_Txt18" initvalueid="ivStcAccessibilityOn"/>
+        <Static id="sta03" taborder="3" text="남았습니다." top="170" height="28" width="107" left="staTime:10" cssclass="sta_WF_Txt18" initvalueid="ivStcAccessibilityOn"/>
+        <Static id="sta04" taborder="4" text="사용자 정보보호를 위해 시스템을 자동 종료합니다." left="50" height="28" cssclass="sta_WF_Txt18" initvalueid="ivStcAccessibilityOn" top="196" textAlign="center" width="438"/>
+        <Static id="sta00" taborder="7" left="249" top="60" width="40" height="40" cssclass="sta_LOGIN_InformIcon"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fvMaxTimeout = "";
+this.fvLoginLocalTime = "";
+
+this.fvTimerId = 1001;
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 파라메터 셋
+	this.pv_params = this.smfGetPopupParams();
+	this.fvMaxTimeout = this.pv_params.fvMaxTimeout;
+	this.fvLoginLocalTime = this.pv_params.objLoginLocalTime;
+	var sLastTime = this.pv_params.sLastTime;
+	
+	//text셋팅
+	this.staTime.set_text(sLastTime);
+	
+	//타이머셋팅
+	this.setTimer(this.fvTimerId, 1000);
+};
+
+
+var objTopForm = this.getOwnerFrame().getOwnerFrame().form.divTop.form;
+this.form_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if(e.timerid == this.fvTimerId)
+	{
+		var objCurrLocalTime = new Date();
+		
+		//경과시간   현재시간-로그인시간 (.getTime() 밀리초값으로 반환.) 
+		var nPassTime = Math.floor( (objCurrLocalTime.getTime() - this.fvLoginLocalTime.getTime())/ 1000);
+		
+		//남은시간(잔여총시간(초) - 경과시간)
+		var nDiffSec = this.fvMaxTimeout - nPassTime;
+		
+		var nLastMin = Math.floor(nDiffSec/60);
+		var nLastSec = Math.floor(nDiffSec%60);
+		
+		var sLastMin = this.lpad(nLastMin,"0",2);
+		var sLastSec = this.lpad(nLastSec, "0", 2);
+		
+		//시간 text셋팅
+		this.staTime.set_text(sLastMin + "분 " 	+  sLastSec +"초");
+		objTopForm.divDispArea.form.staRemainingTime.set_text(sLastMin + "분 " +  sLastSec +"초");
+
+	  
+		//잔여시간 다 되면 로그아웃
+		if(nDiffSec <= 0)
+		{
+			//팝업닫기, 로그아웃
+			this.killTimer(this.fvTimerId);
+			this.smfSendResponseToOpener({
+				 "logoutYn" : true
+			});			
+			this.close();
+		}		
+	}
+};
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+//연장 버튼
+this.divBtn_btnRemain_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.killTimer(this.fvTimerId);
+	
+	this.smfSendResponseToOpener({
+		 "logoutYn" : false
+	});		
+	this.close();
+};
+
+//종료 버튼
+this.divBtn_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//팝업닫기, 로그아웃
+	this.killTimer(this.fvTimerId);
+	
+	this.smfSendResponseToOpener({
+		 "logoutYn" : true
+	});			
+	this.close();
+};
+]]></Script>
+  </Form>
+</FDL>

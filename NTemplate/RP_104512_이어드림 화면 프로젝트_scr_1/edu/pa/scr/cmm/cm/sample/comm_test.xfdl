@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comm_test" width="1340" height="745" titletext="기능테스트화면" onload="form_onload">
+    <Layouts>
+      <Layout height="745" width="1340">
+        <Button id="btn00" taborder="0" text="알림메시지" left="19" top="16" width="110" height="38" onclick="btn00_onclick"/>
+        <Button id="btn00_00" taborder="1" text="확인메시지" left="279" top="16" width="110" height="38" onclick="btn00_00_onclick"/>
+        <Button id="btnTest" taborder="2" text="테스트" left="20" top="154" width="96" height="56" onclick="btnTest_onclick"/>
+        <Button id="btn00_01" taborder="3" text="팝업테스트" left="19" top="86" width="110" height="38" onclick="btn00_01_onclick"/>
+        <Button id="btnAlert" taborder="4" text="알림메시지2" left="149" top="16" width="110" height="38" onclick="btnAlert_onclick"/>
+        <Static id="sta00" taborder="5" top="0" width="90" background="antiquewhite" left="1340" bottom="0" text="90" textAlign="center" visible="false"/>
+        <Static id="sta00_00" taborder="6" top="0" width="20" background="antiquewhite" left="0" bottom="0" text="20" textAlign="center" visible="false"/>
+        <Button id="btn01" taborder="7" text="btn01" left="248" top="104" width="113" height="70" onclick="btn01_onclick"/>
+        <Button id="btnClose" taborder="8" text="닫기" left="660" top="15" width="120" height="50" onclick="btnClose_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템
+*  @MenuPath    공통
+*  @FileName 	comm_test.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    기능 테스트 화면
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = nexacro.getApplication();
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.scrInitForm(obj);	//필수(화면초기화)
+};
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+
+
+// 서비스 콜백
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	trace("svcid==="+svcid + "::::errcd==="+errcd + "::::errmsg==="+errmsg);
+	if(errcd == -1) return;
+	
+};
+
+this.btnTest_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sChildNames = "abcd" + String.fromCharCode(10) + "def";
+	trace("sChildNames==="+sChildNames);
+};
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//알림메시지
+	this.scrAlert("CM001");	//조회가 완료되었습니다.
+};
+
+this.btnAlert_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//알림메시지2
+	this.scrAlert("CM006", [obj.text]);	//0}은(는) 필수 입력입니다.
+};
+
+this.btn00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//확인메시지
+	this.scrConfirm("CM003", function (result){	//저장하시겠습니까?
+		trace("확인메시지 콜백 >>>" + result.confirmResult);
+	});
+};
+
+//모달팝업
+this.btn00_01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var procType = "none";
+	
+	// 팝업을 동작에 필요한 파라메터 지정
+	var popupParams = {
+		callback: this.fnPopupCallback, // 콜백함수 지정
+		sender: obj, // sender 지정
+		// 팝업 전달 파라메터 지정
+		params: {
+			// 처리타입 지정
+			procType: procType,
+			// 파라메터 전달
+			dataset: this.dsSample1,
+			param1: "abcd",
+			param2: 1234567
+		},
+		titlebar : false
+	};
+
+	// 모달팝업 실행
+	if ( this.objApp.gv_appScreenType == "T" ) {
+		this.smfDialog("_auto", "pa_scr_cmm_cm::samplePopupForm.xfdl", popupParams, null, null, 600, 390);
+	}
+	else if ( this.objApp.gv_appScreenType == "M" ) {
+		this.smfDialog("_auto", "pa_scr_cmm_cm::samplePopupForm.xfdl", popupParams, null, null, 480, 390);
+	}
+	else {
+		this.smfDialog("_auto", "pa_scr_cmm_cm::samplePopupForm.xfdl", popupParams, null, null, 800, 390);
+	}
+};
+
+this.fnPopupCallback = function(e, sender)
+{
+	trace("e ==>"+e.row.Column0+", "+e.row.Column1+", "+e.row.Column2+", "+e.row.Column3);
+};
+
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	nexacro.getApplication().exit();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsSample1">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">red</Col>
+            <Col id="Column3">1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">yellow</Col>
+            <Col id="Column3">2</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">blue</Col>
+            <Col id="Column3">3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">navy</Col>
+            <Col id="Column3">4</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">lemon</Col>
+            <Col id="Column3">5</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">orange</Col>
+            <Col id="Column3">6</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">test</Col>
+            <Col id="Column3">7</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">strawberry</Col>
+            <Col id="Column3">8</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">banana</Col>
+            <Col id="Column3">9</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256"/>
+          <Column id="outDatasets" type="STRING" size="256"/>
+          <Column id="asynctp" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

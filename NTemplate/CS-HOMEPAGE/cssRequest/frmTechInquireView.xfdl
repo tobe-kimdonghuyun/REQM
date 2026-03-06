@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="techinquireView" width="1300" height="1820" titletext="New Form" onload="techinquireView_onload" scrollbarsize="0" ontimer="techinquireView_ontimer">
+    <Layouts>
+      <Layout width="1300" height="1820">
+        <Static id="staResTitle" taborder="0" left="0" top="0" height="50" cssclass="sta_WF_viewTitle" right="0" fittocontents="height" wordWrap="char"/>
+        <Static id="staProduct" taborder="1" left="0" top="staResTitle:17" width="140" height="30" cssclass="sta_WF_iconNN" fittocontents="none" visible="true" accessibilitylabel="제품"/>
+        <Static id="staReqDate" taborder="2" left="staProduct:5" top="staResTitle:17" height="30" cssclass="sta_WF_viewDate" fittocontents="none" visible="false" width="117" accessibilitylabel="등록일"/>
+        <Static id="staLineRC" taborder="3" left="staResTitle:-1038" top="69" width="1" height="26" background="#d9dce2" accessibilityenable="false"/>
+        <Static id="staRC" taborder="4" left="283" top="staResTitle:17" width="120" height="30" cssclass="sta_WF_viewRC" fittocontents="width" usedecorate="true" visible="true"/>
+        <Static id="staLineFile" taborder="5" left="393" top="staResTitle:19" width="1" height="26" background="#d9dce2" visible="true" accessibilityenable="false"/>
+        <Button id="btnAttachFile" taborder="6" left="414" top="staResTitle:17" width="500" height="30" cssclass="btn_WF_attatchL" visible="true" onclick="btnAttachFile_onclick" fittocontents="width" minwidth="" accessibilitydescription="첨부파일"/>
+        <Button id="btn_BookMark" taborder="8" top="staResTitle:8" width="95" height="48" cssclass="btn_WF_book" right="0" fittocontents="width" onclick="btn_BookMark_onclick" text="0" accessibilitylabel="북마크 해제됨"/>
+        <WebBrowser id="webBrowResult" left="0" top="staResTitle:80" width="1300" height="0" taborder="9" onloadcompleted="webBrowResult_onloadcompleted" onusernotify="webBrowResult_onusernotify" visible="true" border="0px none" accessibilitylabel="내용"/>
+        <Div id="divTreat" taborder="10" left="0" top="462" width="1300" height="460" cssclass="div_WF_result" formscrolltype="none" text="" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <WebBrowser id="webBrowResult2" left="30" top="33" width="1240" taborder="0" onloadcompleted="webBrowResult2_onloadcompleted" onusernotify="webBrowResult2_onusernotify" visible="true" border="0px none" accessibilitylabel="답변" height="200"/>
+              <Static id="staResDate" taborder="1" left="49.00" top="webBrowResult2:0" width="117" height="30" cssclass="sta_WF_viewDate" fittocontents="width" accessibilitylabel="등록일"/>
+              <Static id="Static02" taborder="2" left="staResDate:0.00" top="webBrowResult2:0" width="1" height="26" background="#ffffff" accessibilityenable="false"/>
+              <Button id="btnGetEmail" taborder="3" text="이메일로 소스받기" left="Static02:20" top="webBrowResult2:0" width="200" height="30" cssclass="btn_WF_email" fittocontents="width" onclick="divTreat_btnGetEmail_onclick"/>
+              <Div id="divEmail" taborder="4" left="187" top="btnGetEmail:0" width="520" height="60" accessibilityenable="false" visible="false" cssclass="div_WF_result">
+                <Layouts>
+                  <Layout>
+                    <Static id="Static02_00_00" taborder="0" text="메일주소" left="20.00" top="10" width="100" height="40" cssclass="sta_WF_eduTitle"/>
+                    <Edit id="edtEmail" taborder="1" left="115.00" top="10" width="275" height="40" cssclass="edt_WF_reply" displaynulltext="이메일을 입력해주세요." onkeyup="divEmail_edtEmail_onkeyup" autoselect="true" accessibilitylabel="메일주소"/>
+                    <Button id="btnSendEmail" taborder="2" text="보내기" width="100" height="40" cssclass="btn_LOGIN" top="10" right="20" onclick="divEmail_btnSendEmail_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="Static02_00" taborder="5" left="btnGetEmail:0.00" top="webBrowResult2:0" width="1" height="26" background="#ffffff" accessibilityenable="false"/>
+              <Button id="btnCopyLink" taborder="6" text="링크복사" left="Static02_00:10.00" top="webBrowResult2:0" width="200" height="30" cssclass="btn_WF_link" fittocontents="width" onclick="divTreat_btnCopyLink_onclick" accessibilitydescription="팝업"/>
+              <Button id="btnAttachFileRes" taborder="7" text="attadfgdfgfdgdfgdfgdfgdfgdfgchfile.7z" top="webBrowResult2:0" width="400" cssclass="btn_WF_attatchR" fittocontents="width" right="51" visible="true" maxwidth="650" minwidth="" onclick="divTreat_btnAttachFileRes_onclick" height="30"/>
+              <Div id="divFiles" taborder="8" top="btnAttachFileRes:0" width="230" height="180" accessibilityenable="false" right="51" maxheight="102" minheight="" cssclass="div_WF_result">
+                <Layouts>
+                  <Layout>
+                    <Grid id="grdFiles" taborder="0" left="20.00" top="10" binddataset="ds_downloadfile_res" autofittype="col" right="20" bottom="10" cssclass="grd_WF_hisMenu" oncellclick="pdivFiles_grdFiles_oncellclick" accessibilitylabel="첨부파일 목록" selecttype="cell">
+                      <Formats>
+                        <Format id="default">
+                          <Columns>
+                            <Column size="153"/>
+                            <Column size="35"/>
+                            <Column size="35"/>
+                          </Columns>
+                          <Rows>
+                            <Row size="40"/>
+                          </Rows>
+                          <Band id="body" accessibilityenable="false">
+                            <Cell text="expr:comp.parent.parent.parent.gfn_makeEllipse(FILE_NAME, comp)" tooltiptext="bind:FILE_NAME" accessibilitylabel="bind:FILE_NAME" accessibilitydescription="다운로드"/>
+                            <Cell col="1" text="bind:Column1" cssclass="grd_WF_down" accessibilitylabel="첨부파일" accessibilitydescription="다운로드" edittype="button" displaytype="buttoncontrol"/>
+                            <Cell col="2" cssclass="grd_WF_view" accessibilitylabel="expr:dataset.parent.fn_exprFileChkRes(currow)?'파일 소스보기':''" accessibilityenable="expr:dataset.parent.fn_exprFileChkRes(currow)?'true':'false'" displaytype="buttoncontrol" edittype="button"/>
+                          </Band>
+                        </Format>
+                      </Formats>
+                    </Grid>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="Div_reSearch" taborder="11" left="0" top="divTreat:20" width="1300" height="0" cssclass="div_WF_survey" formscrolltype="none" visible="true" accessibilityenable="false"/>
+        <View id="viewNavi" taborder="12" text="View00" viewdataset="viewdataset" left="0" top="Div_reSearch:55" width="1300" height="110" enable="false" accessibilityenable="false">
+          <ViewTemplateInfo filepath="PageNaviViewTemplate.xviewgen"/>
+          <Layouts>
+            <Layout>
+              <Button id="stc_preIcon" taborder="0" text="다음글" left="40" top="10" height="30" cssclass="btn_WF_listUp" width="96" onclick="viewNavi_stc_preIcon_onclick" accessibilitydescription="링크"/>
+              <Button id="stc_pre" taborder="1" text="123123123" left="150" top="10" height="30" cssclass="btn_WF_viewDetail2" right="0" onclick="viewNavi_stc_pre_onclick" cursor="default" accessibilitydescription="링크"/>
+              <Button id="stc_nextIcon" taborder="3" text="이전글" left="40" height="30" cssclass="btn_WF_listDown" width="96" top="70" onclick="viewNavi_stc_nextIcon_onclick" accessibilitydescription="링크"/>
+              <Button id="stc_next" taborder="4" text="123123123123" left="150" top="69" height="30" cssclass="btn_WF_viewDetail2" right="0" onclick="viewNavi_stc_next_onclick" cursor="default" accessibilitydescription="링크"/>
+              <Static id="staLine" taborder="2" left="0" top="55" width="1300" height="1" background="#d9dce2" accessibilityenable="false"/>
+            </Layout>
+          </Layouts>
+          <ModelInfo modelserviceid="MODEL" serviceid="" modelid="dummy" filepath="COMMON.xmodel"/>
+        </View>
+        <Button id="btnWrite" taborder="13" text="질문하기" left="0" top="viewNavi:60" width="150" height="65" cssclass="btn_WF_ask" onclick="btnWrite_onclick" accessibilitydescription="링크"/>
+        <Button id="btnReply" taborder="14" text="재질문하기" left="160" top="viewNavi:60" width="150" height="65" cssclass="btn_WF_ask" onclick="btnReply_onclick" accessibilitydescription="링크"/>
+        <Button id="btnModify" taborder="15" text="수정하기" left="320" top="viewNavi:60" width="150" height="65" cssclass="btn_WF_ask" onclick="btnModify_onclick" visible="false" accessibilitydescription="링크"/>
+        <Button id="btnList" taborder="16" text="목록으로" top="viewNavi:60" width="150" height="65" cssclass="btn_WF_list" right="0" onclick="btnList_onclick" accessibilitydescription="링크"/>
+        <FileDownload id="FileDownload00" taborder="17" text="FileDownload00" left="1310" top="0" width="100" height="100" visible="false"/>
+        <Div id="divFilesReq" taborder="7" left="414" top="btnAttachFile:0" width="230" height="180" accessibilityenable="false" cssclass="div_WF_result" background="white" minwidth="" maxheight="102" minheight="">
+          <Layouts>
+            <Layout>
+              <Grid id="grdFiles" taborder="0" left="20.00" top="10" binddataset="ds_downloadfile_req" autofittype="col" right="20" bottom="10" cssclass="grd_WF_hisMenu" oncellclick="pdivFilesReq_grdFiles_oncellclick" accessibilitylabel="첨부파일 목록" selecttype="cell">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="153"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="body" accessibilityenable="false">
+                      <Cell text="expr:comp.parent.parent.parent.gfn_makeEllipse(FILE_NAME, comp)" tooltiptext="bind:FILE_NAME" accessibilitylabel="bind:FILE_NAME" accessibilitydescription="다운로드"/>
+                      <Cell col="1" text="bind:Column1" cssclass="grd_WF_down" accessibilitylabel="첨부파일" accessibilitydescription="다운로드"/>
+                      <Cell col="2" text="bind:Column2" cssclass="grd_WF_view" accessibilitylabel="expr:comp.parent.parent.parent.fn_exprFileChkReq(currow)?'파일 소스보기':''" accessibilityenable="expr:comp.parent.parent.parent.fn_exprFileChkReq(currow)?'true':'false'"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_downloadfile_req" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="FM_SEQ" type="STRING" size="256"/>
+          <Column id="FILE_NAME" type="STRING" size="256"/>
+          <Column id="SAVE_FILE_NAME" type="STRING" size="256"/>
+          <Column id="SAVE_PATH" type="STRING" size="256"/>
+          <Column id="SOURCE_CD" type="STRING" size="256"/>
+          <Column id="SOURCE_SEQ" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_downloadfile_res" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="FM_SEQ" type="STRING" size="256"/>
+          <Column id="FILE_NAME" type="STRING" size="256"/>
+          <Column id="SAVE_FILE_NAME" type="STRING" size="256"/>
+          <Column id="SAVE_PATH" type="STRING" size="256"/>
+          <Column id="SOURCE_CD" type="STRING" size="256"/>
+          <Column id="SOURCE_SEQ" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="btnAttachFile" propid="text" datasetid="ds_downloadfile_req" columnid="FILE_NAME"/>
+    </Bind>
+  </Form>
+</FDL>

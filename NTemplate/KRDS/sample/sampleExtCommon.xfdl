@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleExtCommon" width="888" height="720" titletext="Extend Commmon(NRE)" onload="form_onload" onclose="form_onclose">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="888">
+        <TextArea id="txaGuide" taborder="0" left="0" top="0" height="140" right="0" onchanged="txaGuide_onchanged" value="- ExtCommon 사용 방법&#10;1. 화면 실행 시 Trace의 sFilePath 경로에 ExtCommon 모듈 복사&#10;2. ExtCommon 모듈을 로드한다.&#10;3. ExtCommon 모듈의 API를 호출하여 사용&#10;" scrolltype="horizontal"/>
+        <Button id="btn_ext_excuteProcess" taborder="1" text="ext_excuteProcess" left="0" top="txaGuide:40" width="200" height="48" onclick="btn_ext_excuteProcess_onclick"/>
+        <Button id="btn_getCurrentProcessID" taborder="2" text="ext_getCurrentProcessID" left="0" top="btn_ext_excuteProcess:16" width="200" height="48" onclick="btn_getCurrentProcessID_onclick"/>
+        <Button id="btn_ext_getIPAddress" taborder="3" text="ext_getIPAddress" left="0" top="btn_getCurrentProcessID:16" width="200" height="48" onclick="btn_ext_getIPAddress_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.objExtCommon = {};
+this.objExtURL = "";
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var navigatorFullName = system.navigatorfullname;
+	var sFilePath = system.convertRealPath("%COMPONENTHOME%");
+	// Component Path 경로
+	trace("sFilePath :: " + sFilePath);
+	trace( navigatorFullName );
+
+	if ( navigatorFullName === "Nexacro N Engine (x86)" )
+	{
+		//보안정책. execprocess 사용 안됨.
+		//this.objExtURL = sFilePath + "ExtCommonV_N_32.dll";	// 보안 적용
+		this.objExtURL = sFilePath + "ExtCommonV_N_32_EX.dll";	// 보안 미적용
+	}
+	else if ( navigatorFullName === "Nexacro N Engine (x64)" )
+	{
+		//보안정책. execprocess 사용 안됨.
+		//this.objExtURL = sFilePath + "ExtCommonV_N_64.dll";	// 보안 적용
+		this.objExtURL = sFilePath + "ExtCommonV_N_64_EX.dll";	// 보안 미적용
+	}
+	else
+	{
+		alert("Not Nexacro Runtime!!! Only Runtime !!!");
+	}
+		
+	trace(this.objExtURL);
+	this.objExtCommon = nexacro._addExtensionModule(this.objExtURL);
+	
+	trace( ">>>>" +  this.objExtCommon );
+};
+
+this.form_onclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	nexacro._clearExtensionModule(this.objExtURL);
+	this.objExtCommon = null;
+	this.objExtCommon  = {};
+};
+
+this.btn_ext_excuteProcess_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var path;
+	
+	//path = "osk";
+	//path = "C:\\Windows\\System32\\osk.exe"
+	//path = "D:\\Hscl_WF_TrackbarImgP.png";
+	//path = "notepad.exe";
+	
+	//보안이슈로 cmd, powershell은 실행 안됨
+	//path = "cmd.exe"; 		
+	//path = "cmd";
+	//path = "powershell.exe";
+	//path = "powershell";
+	//path = "c:\\windows\\systetm32\\cmd.exe";
+	//path = "c:\\windows\\systetm32\\windowspowershell\\v1.0\\powershell.exe";
+	
+	// edge 브라우저
+	path = "msedge.exe";
+	
+	
+	//path = "d:\\tmp\\ico_gaengsin01.png";
+	var args = "";
+	args = "www.naver.com";
+	
+	/*
+	* ShowWindow() Commands
+	*/
+	/*
+		#define SW_HIDE             0
+		#define SW_SHOWNORMAL       1
+		#define SW_NORMAL           1
+		#define SW_SHOWMINIMIZED    2
+		#define SW_SHOWMAXIMIZED    3
+		#define SW_MAXIMIZE         3
+		#define SW_SHOWNOACTIVATE   4
+		#define SW_SHOW             5
+		#define SW_MINIMIZE         6
+		#define SW_SHOWMINNOACTIVE  7
+		#define SW_SHOWNA           8
+		#define SW_RESTORE          9
+		#define SW_SHOWDEFAULT      10
+		#define SW_FORCEMINIMIZE    11
+		#define SW_MAX              11
+	*/
+	var nShowMode = 1;
+	var bReturn = this.objExtCommon._ext_excuteProcess(path, args, "", nShowMode) ; 
+
+	/*
+	var path = "C:\\Users\\Administrator\\Downloads\\NOPC\\BIN\\BgmPlayerShow.exe"
+	var args = "";
+	var workpath = "C:\\Users\\Administrator\\Downloads\\NOPC\\BIN\\***.exe"
+	var bReturn = this.objExtCommon._ext_excuteProcess(path, args, workpath) ; 
+	*/
+
+	//성공 : true;
+	//실패 : false;
+	trace ("성공 여부 : " + bReturn );
+};
+
+this.btn_getCurrentProcessID_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var ret = this.objExtCommon._ext_getCurrentProcessID( ); // 프로세스 ID 
+	//Return type : Integer
+	alert("_ext_getCurrentProcessID : " + ret );
+};
+
+this.btn_ext_getIPAddress_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var bRet = this.objExtCommon._ext_getIPAddress();  //유선, 무선 .. 
+	//Return : Array
+ 	alert("_ext_getIPAddress : " + bRet );
+};
+]]></Script>
+  </Form>
+</FDL>

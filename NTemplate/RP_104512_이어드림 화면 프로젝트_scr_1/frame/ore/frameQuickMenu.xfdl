@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="quickMenu" width="170" height="490" titletext="quickMenu" onload="form_onload" scrollbartype="auto auto" scrollindicatorsize="10">
+    <Layouts>
+      <Layout height="490" mobileorientation="landscape" width="170" screenid="ScreenDeskTop,tablet">
+        <Static id="sta00" taborder="0" text="Quick Menu" left="20" top="0" width="86" height="27" cssclass="sta_WF_Quick02" initvalueid="ivStcAccessibilityOn"/>
+        <Div id="div00" taborder="1" text="div00" left="1" top="35" height="420" cssclass="div_WF_Quickin" width="114" boxShadow="10px 10px 30px 0px RGBA(0,0,0,0.05)" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" left="22" top="145" width="70" height="2" cssclass="sta_WF_GuideLineLG" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta00_00" taborder="1" left="22" top="269" width="70" height="2" cssclass="sta_WF_GuideLineLG" initvalueid="ivStcAccessibilityOff"/>
+              <Button id="btnRedirect01" taborder="2" text="수험표출력" left="11" top="30" width="90" height="109" cssclass="btn_WF_AnnounceG05" initvalueid="ivBtnAccessibilityLink" _linkNo="500" onclick="btnLink_onclick"/>
+              <Button id="btnRedirect02" taborder="3" text="성적조회" left="11" top="154" width="90" height="109" cssclass="btn_WF_AnnounceG04" initvalueid="ivBtnAccessibilityLink" _linkNo="600" onclick="btnLink_onclick" visible="true"/>
+              <Button id="btnRedirect03" taborder="4" text="합격조회" left="11" top="280" width="90" height="109" cssclass="btn_WF_AnnounceG06" initvalueid="ivBtnAccessibilityLink" _linkNo="700" onclick="btnLink_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile" width="640" height="1024" mobileorientation="portrait" type="default"/>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  교육디지털 원패스
+*  @MenuPath    frame > frameMain
+*  @FileName 	frameMain.xfdl 
+*  @Creator 	kmp
+*  @CreateDate 	2021.12.27
+*  @Desction    base가 되는 화면
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2021.12.27     		kmp		 	  			최초 생성 
+*******************************************************************************
+*/
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::sm_script.xjs";
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_workPageParams = {};	//화면전환시 넘길 parameter
+this.fv_isMobile;	//모바일로 접속여부
+this.fv_device;		//device 종류
+this.fv_isLoaded = "N";
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ 
+/**
+ * 화면 onload시 처리내역
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.fnSetQuickMenu();
+	this.fv_isLoaded = "Y";
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/ 
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnSetQuickMenu = function() 
+{
+		var appoScCd = this.smfGetAppoExamScCd();
+//   	var objForm = nexacro.getApplication().mainframe.VFrameSet.frameMain.form;
+//  	objForm.fnResizeQuickMenu();
+		switch(appoScCd) {	
+			case "3":
+			this.div00.form.btnRedirect01.set_cssclass("btn_WF_AnnounceG05");
+			this.div00.form.btnRedirect01.set_text("응시표출력");
+			this.div00.form.btnRedirect02.set_cssclass("btn_WF_AnnounceG04");
+			this.div00.form.btnRedirect02.set_text("성적조회");
+			this.div00.form.btnRedirect03.set_cssclass("btn_WF_AnnounceG06");
+			this.div00.form.btnRedirect03.set_text("합격조회");
+			break;
+			
+			case "4":
+			this.div00.form.btnRedirect01.set_cssclass("btn_WF_AnnounceG08");
+			this.div00.form.btnRedirect01.set_text("채용공고");
+			this.div00.form.btnRedirect02.set_cssclass("btn_WF_AnnounceG05");
+			this.div00.form.btnRedirect02.set_text("응시표출력");
+			this.div00.form.btnRedirect03.set_cssclass("btn_WF_AnnounceG06");
+			this.div00.form.btnRedirect03.set_text("합격조회");
+			break;
+			
+			default:
+			this.div00.form.btnRedirect01.set_cssclass("btn_WF_AnnounceG05");
+			this.div00.form.btnRedirect01.set_text("수험표출력");
+			this.div00.form.btnRedirect02.set_cssclass("btn_WF_AnnounceG04");
+			this.div00.form.btnRedirect02.set_text("성적조회");
+			this.div00.form.btnRedirect03.set_cssclass("btn_WF_AnnounceG06");
+			this.div00.form.btnRedirect03.set_text("합격조회");
+			break;
+		}
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 사이즈 변경시 위치변경
+*/
+this.frameMain_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+
+
+};
+
+
+this.btnLink_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sCddcCd = this.smfGetCddcCode();
+	var sUrl , sMenu ;
+	switch(obj._linkNo)
+	{
+		case "500" :    // 수험(응시)표 출력 | 교육공무직일 경우 채용공고
+			if(this.smfGetAppoExamScCd() == "1"){ //교원 : 유초등
+				sUrl = "pa_ore_oew_rm::ore_oewrm00_m01.xfdl"; 
+			}else if(this.smfGetAppoExamScCd() == "2"){  //교원 : 중등
+				sUrl = "pa_ore_oew_rm::ore_oewrm10_m01.xfdl"; 
+			}else if(this.smfGetAppoExamScCd() == "3"){ //지방공무원
+				sUrl = "pa_ore_oew_rm::ore_oewrm20_m01.xfdl"; 
+			}else if(this.smfGetAppoExamScCd() == "4"){ //교육공무직일 경우 채용공고로
+				sUrl = "pa_ore_oew_bd::ore_oewbd00_m00.xfdl";
+				sMenu = "2000";
+			}
+			break;
+	
+		case "600" :    // 성적조회 | 교육공무직일 경우 응시표출력
+			if(this.smfGetAppoExamScCd() == "1"){ //교원 : 유초등
+				sUrl = "pa_ore_oew_rm::ore_oewrm00_m03.xfdl"; 
+			}else if(this.smfGetAppoExamScCd() == "2"){  //교원 : 중등
+				sUrl = "pa_ore_oew_rm::ore_oewrm10_m03.xfdl"; 
+			}else if(this.smfGetAppoExamScCd() == "3"){ //지방공무원
+				sUrl = "pa_ore_oew_rm::ore_oewrm20_m03.xfdl"; 
+			}else if(this.smfGetAppoExamScCd() == "4"){ //교육공무직 : 응시표 출력
+				sUrl = "pa_ore_oew_rm::ore_oewrm30_m01.xfdl"; 
+			}
+			break;
+			
+		case "700" :    // 합격조회 
+			if(this.smfGetAppoExamScCd() == "1"){ //교원 : 유초등
+				sUrl = "pa_ore_oew_rm::ore_oewrm00_m02.xfdl"; 
+			}else if(this.smfGetAppoExamScCd() == "2"){  //교원 : 중등
+				sUrl = "pa_ore_oew_rm::ore_oewrm10_m02.xfdl"; 
+			}else if(this.smfGetAppoExamScCd() == "3"){ //지방공무원
+				sUrl = "pa_ore_oew_rm::ore_oewrm20_m02.xfdl"; 
+			}else if(this.smfGetAppoExamScCd() == "4"){ //교육공무직
+				sUrl = "pa_ore_oew_rm::ore_oewrm30_m02.xfdl"; 
+			}
+			break;
+	}	
+	var params = {
+					cddcCd        : sCddcCd
+				   , menu         : sMenu
+				 };
+				 	 
+	this.smfSetWorkPage(sUrl, params);  //자주묻는질문 세번째 탭으로 이동
+};
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script type="xscript5.1"><![CDATA[/**
+ *	교육설문(eds) 공통 스크립트
+ *	@MenuPath	교육설문 (정서/학폭/교원/특수)
+ *	@FileName 	eds_script.xjs
+ *	@Creator 	김지영
+ *	@CreateDate	2023.05.24
+ *	@Desction	
+ ************** 소스 수정 이력 ***********************************************
+ *	date			Modifier			Description
+ *******************************************************************************
+ *	2022.05.24		김지영				최초 생성
+ *******************************************************************************
+ */
+
+/**
+* 설문기간 체크
+* @param : periodSc		- 교육설문 구분(정서, 학폭, 교평, 특수)
+* @param : formSc		- 함수를 호출한 form 구분
+* @return : array
+*/
+this.fnChkPeriod = function(periodSc, formSc, surveyDate, surveyTime){
+/*******************************************************************************
+ * 설문 시작기간, 설문 종료기간, 설문 시작시간, 설문 종료시간, 가능여부, 문구, 차수
+ *******************************************************************************/
+	// 로컬 / 개발 / 시험서버 테스트용 날짜 세팅-------------------------------------**
+	var period = {	// 1. 설문기간을 직접 입력한다.
+		seo : ["2023/01/01", "2025/12/31", "0000", "2359", "Y", "", "1"],	// 정서
+		vff : ["2025/01/01", "2025/12/31", "0000", "2359", "Y", "", "1"],	// 학폭	(1 or 2) 기간에 따라 변경 필요*
+		tad : ["2023/01/01", "2025/12/31", "0000", "2359", "Y", "", "1"],	// 교평
+		shf : ["2023/01/01", "2025/12/31", "0000", "2359", "Y", "", "1"],	// 특수
+	};
+	
+	// 운영인 경우 설문 종료기간 제한 (실제 설문날짜 입력)--------------------------**
+	if (!this.smfContainsStr(window.location.host, "local") &&
+			  !this.smfContainsStr(window.location.host, "dev") &&
+			  !this.smfContainsStr(window.location.host, "tst")){
+		period.seo[0] = "2025/04/01";
+		period.seo[1] = "2025/04/30";
+		period.vff[0] = "2025/04/14";	// 실제 시작일(학폭)
+		period.vff[1] = "2025/05/13";	// 실제 마감일(학폭)
+		period.tad[0] = "2023/06/18";
+		period.tad[1] = "2023/10/17";
+		period.shf[0] = "2023/06/18";
+		period.shf[1] = "2023/10/17";
+		
+		var vffSta = period.vff[0].split("/");	// 시작일(학폭)
+		vffSta = vffSta.join('');
+		var vffFin = period.vff[1].split("/");	// 마감일(학폭)
+		vffFin = vffFin.join('');
+	
+		// today일 때만 시작시간, 마감시간 변경
+		surveyDate == vffSta ? period.vff[2] = "0800" : period.vff[2] = "0000";
+		surveyDate == vffFin ? period.vff[3] = "1900" : period.vff[3] = "2359";
+	}
+	// 운영 fin --------------------------------------------------------------------------
+	
+	var subSc = period[periodSc];
+	var bgngYmd  = subSc[0];		// 설문 시작기간 (YYYY/MM/DD 형식)
+	var endYmd   = subSc[1];		// 설문 종료기간 (YYYY/MM/DD 형식)
+	var bgngTime = subSc[2];		// 설문 시작시간 (HHmm 형식)
+	var endTime  = subSc[3];		// 설문 종료시간 (HHmm 형식)
+	
+	var arrDays = new Array("(일)", "(월)", "(화)", "(수)", "(목)", "(금)", "(토)");
+	var bDay = new Date(bgngYmd).getDay();
+	var eDay = new Date(endYmd).getDay();
+	var bgngDay = arrDays[bDay];
+	var endDay = arrDays[eDay];
+	
+	// 2. 설문 시작, 종료일을 '/' 제외 형식으로 바꿔줌
+	bgngYmd = bgngYmd.split("/");
+	bgngYmd = bgngYmd.join('');
+	endYmd = endYmd.split("/");
+	endYmd = endYmd.join('');
+	
+	// 3. 각 설문 헤더 참여기간 세팅
+	var prdText = "참여기간 : " + bgngYmd.substr(4, 2).replace(/^0/g, '') + "월 "
+								 + bgngYmd.substr(6, 2).replace(/^0/g, '') + "일"
+								 + bgngDay + " "
+								 //+ (periodSc == "vff" || periodSc == "shf" ? bgngTime.substr(0, 2) + ":" + bgngTime.substr(2,2) + " " : "")
+								 + (periodSc == "vff" ? "09:00 " : "")
+								 + (periodSc == "shf" ? bgngTime.substr(0, 2) + ":" + bgngTime.substr(2,2) + " " : "")
+								 + "~ "
+								 + endYmd.substr(4, 2).replace(/^0/g, '') + "월 "
+								 + endYmd.substr(6, 2).replace(/^0/g, '') + "일"
+								 + endDay + " "
+								 //+ (periodSc == "vff" || periodSc == "shf" ? endTime.substr(0, 2) + ":" + endTime.substr(2,2) : "");
+								 + (periodSc == "vff" ? "18:00" : "")
+								 + (periodSc == "shf" ? endTime.substr(0, 2) + ":" + endTime.substr(2,2) : "");
+	
+
+	subSc[5] = prdText;	// 설문조사 text 세팅
+	
+	// 설문 메인화면 - 진행중 표시 활성화 여부
+	if (!this.smfIsNull(surveyDate) && !(surveyDate >= bgngYmd && surveyDate < endYmd) && surveyDate < endYmd){	// 설문기간 전
+		subSc[4] = "N";
+		if (formSc != 'main') this.smfAlertEds("설문기간이 아닙니다.\n 설문기간은" + prdText.substr(6) +"입니다.", [], function() {
+		});
+	}else if(!this.smfIsNull(surveyDate) && !(surveyDate >= bgngYmd && surveyDate < endYmd) && surveyDate > endYmd){	// 설문기간 후
+		subSc[4] = "N";
+		if (formSc != 'main') this.smfAlertEds("설문기간이 마감되었습니다.", [], function() {
+		});
+	}else if(!this.smfIsNull(surveyTime) && !(surveyTime >= bgngTime && surveyTime < endTime)){	// 시간 비교
+		subSc[4] = "N";
+	if (formSc != 'main') this.smfAlertEds("설문기간이 아닙니다.\n 설문기간은" + prdText.substr(6) +"입니다.", [], function() {
+		});
+	}
+ 	return subSc;	// 진행중 표시 활성화 여부 반환	
+}]]></Script>

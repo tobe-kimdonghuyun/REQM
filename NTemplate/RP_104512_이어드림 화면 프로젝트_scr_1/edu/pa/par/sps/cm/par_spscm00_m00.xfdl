@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="par_spscm00_m00" width="900" height="520" titletext="유치원조회" onload="par_spscm00_m00_onload">
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    유치원조회
+*  @FileName 	par_spscm00_m00.xfdl
+*  @Creator 	안배식
+*  @CreateDate 	2023.02.10
+*  @Desction    유치원 학부모서비스 - 유치원 조회
+************** 소스 수정 이력 ***********************************************
+*  date				Modifier				Description
+*******************************************************************************
+*  2023.02.10		안배식					최초 생성
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::cm_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리
+ */
+this.par_spscm00_m00_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitPopup(obj);
+
+	this.smfSearchService("selectCddcList")
+		.run() // 실행
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+				this.dsCddcList.insertRow(0);
+				this.dsCddcList.setColumn(0, "orgCd", "");
+				this.dsCddcList.setColumn(0, "kornOrgNm", "선택");
+				this.divSearch.form.cboCddcCd.set_index(0);
+		}) // 콜백
+	;
+	
+};
+
+/************************************************************************************************
+ * TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd <= -1) return;
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnCddcList = function(){
+	this.smfSearchService("selectCddcList")
+		.run() // 실행
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+				this.dsCddcList.insertRow(0);
+				this.dsCddcList.setColumn(0, "orgCd", "");
+				this.dsCddcList.setColumn(0, "kornOrgNm", "선택");
+				this.divSearch.form.cboCddcCd.set_index(0);
+		}) // 콜백
+	;
+
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 조회 버튼 클릭
+ */
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	if (this.divSearch.form.cboCddcCd.value == '') {
+		this.smfAlert('교육청을 선택하세요.');
+		return false;
+	}
+	
+	if (this.smfIsNull(this.divSearch.form.edtShlNm.value)) {
+		this.smfAlert('유치원 명을 입력하세요.');
+		return false;
+	}
+
+	this.dsSearch.setColumn(0, "cddcScCd", this.divSearch.form.cboCddcCd.value);
+	this.dsSearch.setColumn(0, "shlNm", this.divSearch.form.edtShlNm.text);
+	
+	this.smfSearchService("selectPrgeInfo")
+		.run() // 실행
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			trace(this.dsResult.saveXML());
+		})
+	;
+};
+
+/**
+ * @description 엔터키실행
+ */
+this.fnKeyUp = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode=='13'){
+		this.divSearch_btnSearch_onclick();
+	}
+};
+
+this.grdList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.smfSendResponseToOpener({
+	    "cddcScCd" : this.dsResult.getColumn(e.row, "cddcScCd"),
+		"orgCd": this.dsResult.getColumn(e.row, "orgCd"),
+		"kornOrgNm": this.dsResult.getColumn(e.row, "kornOrgNm"),
+	});
+	
+	this.close(true);
+};
+
+this.btn_close_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(true);
+};
+
+this.divSearch_edtShlNm_onkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode=='13'){
+		this.divSearch_btnSearch_onclick();
+	}
+};
+]]></Script>
+    <Layouts>
+      <Layout height="520" width="900" screenid="ScreenDeskTop" mobileorientation="landscape">
+        <Static id="Static99_00_00_00_00" taborder="2" left="0" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Div id="divSearch" taborder="0" left="20" top="20" height="70" cssclass="div_WF_Search" right="20" text="" initvalueid="ivDivAccessibilityOn" accessibilitylabel="검색영역">
+          <Layouts>
+            <Layout>
+              <Static id="staCoaAyr" taborder="2" text="유치원 명" left="304" top="20" width="90" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Button id="btnSearch" taborder="4" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="30" onclick="divSearch_btnSearch_onclick" initvalueid="ivBtnAccessibilityButton"/>
+              <Edit id="edtShlNm" taborder="3" left="394" width="250" height="30" top="20" initvalueid="ivEdtEssential" readonly="false" enable="true" cssclass="essential" onkeyup="fnKeyUp" imemode="hangul" onkeydown="divSearch_edtShlNm_onkeydown"/>
+              <Static id="staCode" taborder="0" text="교육청" left="10" top="20" width="68" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboCddcCd" taborder="1" left="78" width="226" height="30" innerdataset="dsCddcList" codecolumn="orgCd" datacolumn="kornOrgNm" text="" readonly="false" value="0" top="20" initvalueid="ivCmbEssential" index="-1" type="dropdown" cssclass="essential"/>
+            </Layout>
+            <Layout name="mobile">
+              <Static id="staCoaAyr" left="0" top="119" width="139" height="42"/>
+              <Edit id="edtShlNm" left="140" top="110" height="60" right="20"/>
+              <Button id="btnSearch" width="164" height="60" right="20" bottom="40"/>
+              <Combo id="cboCddcCd" left="140" top="30" height="60" right="20"/>
+              <Static id="staCode" top="39" left="0" width="111" height="42"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div00" taborder="1" left="20" top="110" height="339" initvalueid="ivDivAccessibilityOff" right="20">
+          <Layouts>
+            <Layout>
+              <Grid id="grdList" taborder="0" left="0" top="0" right="0" binddataset="dsResult" nodatatext="조회된 데이터가 없습니다." oncelldblclick="grdList_oncellclick" oncellclick="grdList_oncellclick" formatid="default" selecttype="cell" accessibilitylabel="유치원목록" initvalueid="ivGrdAccessibilityOn" autofittype="col" bottom="0">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="214"/>
+                      <Column size="460"/>
+                      <Column size="181"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="유치원명" font="normal 14px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                      <Cell col="1" text="주소지" font="normal 14px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                      <Cell col="2" text="소재지" font="normal 14px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:kornOrgNm" textAlign="center" font="normal 13px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                      <Cell col="1" text="bind:roadNmAddr" textAlign="center" font="normal 13px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                      <Cell col="2" text="bind:lctnScNm" textAlign="center" font="normal 13px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                    </Band>
+                  </Format>
+                  <Format id="mobile">
+                    <Columns>
+                      <Column size="262"/>
+                      <Column size="302"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="60" band="head"/>
+                      <Row size="70"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="유치원명"/>
+                      <Cell col="1" text="주소지"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:kornOrgNm" textAlign="center"/>
+                      <Cell col="1" text="bind:roadNmAddr" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+            <Layout name="mobile">
+              <Grid id="grdList" formatid="mobile" left="0" top="0" right="0" bottom="1" autosizingtype="col" autofittype="none"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnClose" taborder="3" text="닫기" onclick="btn_close_onclick" cssclass="btn_pop_normal" left="47.89%" top="470" height="30" escapebutton="true" hotkey="ALT+C" width="48" initvalueid="ivBtnAccessibilityButton"/>
+      </Layout>
+      <Layout height="1046" mobileorientation="Landscape" name="mobile" type="default" width="600" screenid="mobile,tablet">
+        <Div id="divSearch" left="20" top="20" height="300" right="20"/>
+        <Div id="div00" left="20" top="divSearch:60" height="506" right="20" formscrollbarsize="1"/>
+        <Button id="btnClose" height="80" left="20" top="div00:60" right="20"/>
+        <Static id="Static99_00_00_00_00" left="0" top="0" width="600" height="20"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectCddcList</Col>
+            <Col id="url">/sqa_ueu_um00_001.do</Col>
+            <Col id="outDatasets">dsCddcList</Col>
+          </Row>
+          <Row>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsResult</Col>
+            <Col id="asynctp"/>
+            <Col id="url">par_sps_cm00_001.do</Col>
+            <Col id="id">selectPrgeInfo</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="orgCd" type="STRING" size="30"/>
+          <Column id="kornOrgNm" type="STRING" size="300"/>
+          <Column id="lctnScCd" type="STRING" size="30"/>
+          <Column id="lctnScNm" type="STRING" size="300"/>
+          <Column id="roadNmAddr" type="STRING" size="300"/>
+          <Column id="cddcScCd" type="STRING" size="30"/>
+          <Column id="cddcOrgCd" type="STRING" size="30"/>
+          <Column id="cddcNm" type="STRING" size="150"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset enableevent="true" id="dsSearch" loadfiltermode="keep" loadkeymode="keep" updatecontrol="true" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cddcScCd" size="4" type="STRING"/>
+          <Column id="shlNm" size="1" type="STRING"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="shlNm">성모</Col>
+            <Col id="cddcScCd">S100000001</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCddcList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="orgCd" type="STRING" size="10"/>
+          <Column id="kornOrgNm" type="STRING" size="300"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

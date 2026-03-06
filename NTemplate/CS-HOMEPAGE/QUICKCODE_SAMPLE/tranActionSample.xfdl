@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="tranActionSample" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="Button00" taborder="0" text="Trigger로 Transaction호출" left="10" top="10" width="190" height="50" onclick="Button00_onclick"/>
+        <Grid id="Grid00" taborder="1" left="250" top="10" width="560" height="270" binddataset="Dataset00">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="BUSINESS_LICENSE_NUM"/>
+                <Cell col="1" text="CORPORATE_NAME"/>
+                <Cell col="2" text="COMPANY_NAME"/>
+                <Cell col="3" text="CONDITION_VALUE"/>
+                <Cell col="4" text="REPRESENTATIVE_NAME"/>
+                <Cell col="5" text="REPRESENTATIVE_SOCIAL_NUM"/>
+                <Cell col="6" text="CORPORATE_AREA"/>
+                <Cell col="7" text="CORPORATE_TELNUM"/>
+                <Cell col="8" text="CORPORATE_FAXNUM"/>
+                <Cell col="9" text="CORPORATE_EMAIL"/>
+                <Cell col="10" text="CORPORATE_HOMEPAGE"/>
+                <Cell col="11" text="CORPORATE_POSTAL_CODE"/>
+                <Cell col="12" text="CORPORATE_ADRESS1"/>
+                <Cell col="13" text="CORPORATE_ADRESS2"/>
+                <Cell col="14" text="MEMO"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:BUSINESS_LICENSE_NUM"/>
+                <Cell col="1" text="bind:CORPORATE_NAME"/>
+                <Cell col="2" text="bind:COMPANY_NAME"/>
+                <Cell col="3" text="bind:CONDITION_VALUE"/>
+                <Cell col="4" text="bind:REPRESENTATIVE_NAME"/>
+                <Cell col="5" text="bind:REPRESENTATIVE_SOCIAL_NUM"/>
+                <Cell col="6" text="bind:CORPORATE_AREA"/>
+                <Cell col="7" text="bind:CORPORATE_TELNUM"/>
+                <Cell col="8" text="bind:CORPORATE_FAXNUM"/>
+                <Cell col="9" text="bind:CORPORATE_EMAIL"/>
+                <Cell col="10" text="bind:CORPORATE_HOMEPAGE"/>
+                <Cell col="11" text="bind:CORPORATE_POSTAL_CODE"/>
+                <Cell col="12" text="bind:CORPORATE_ADRESS1"/>
+                <Cell col="13" text="bind:CORPORATE_ADRESS2"/>
+                <Cell col="14" text="bind:MEMO"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="Button00_00" taborder="2" text="스크립트로 Transaction호출" left="10" top="70" width="210" height="50" onclick="Button00_00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Button00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.TranAction01.set_serviceid("search2");
+	this.TranAction01.set_serviceurl("http://localhost:8080/CS-Homepage_nexa_N/service/TransactionActionService01.jsp");
+	this.TranAction01.set_outputdatasets("Dataset00=output");
+	this.TranAction01.run();
+	
+};
+
+this.TranAction_onsuccess = function(obj:nexacro.TranAction, e:nexacro.TranActionSuccessEventInfo)
+{
+	if(e.serviceid=="search")
+	{
+		trace("trigger로 transaction호출");
+		trace("ErrorCd : " + e.errorcode +" ErrorMsg : " +e.errormsg);
+	
+	}else if(e.serviceid=="search2")
+	{
+		trace("스크립트로 transaction호출");
+		trace("ErrorCd : " + e.errorcode +" ErrorMsg : " +e.errormsg);
+	}
+};
+
+this.TranAction_onerror = function(obj:nexacro.TranAction, e:nexacro.TranActionErrorEventInfo)
+{
+	
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+};
+]]></Script>
+    <Objects>
+      <TranAction id="TranAction00" serviceid="search" serviceurl="http://localhost:8080/CS-Homepage_nexa_N/service/TransactionActionService01.jsp" outputdatasets="Dataset00=output" async="true" onerror="TranAction_onerror" onsuccess="TranAction_onsuccess">
+        <Contents/>
+      </TranAction>
+      <Dataset id="Dataset00">
+        <ColumnInfo>
+          <Column id="BUSINESS_LICENSE_NUM" type="STRING" size="80"/>
+          <Column id="CORPORATE_NAME" type="STRING" size="80"/>
+          <Column id="COMPANY_NAME" type="STRING" size="80"/>
+          <Column id="CONDITION_VALUE" type="STRING" size="80"/>
+          <Column id="REPRESENTATIVE_NAME" type="STRING" size="80"/>
+          <Column id="REPRESENTATIVE_SOCIAL_NUM" type="STRING" size="80"/>
+          <Column id="CORPORATE_AREA" type="STRING" size="80"/>
+          <Column id="CORPORATE_TELNUM" type="STRING" size="80"/>
+          <Column id="CORPORATE_FAXNUM" type="STRING" size="80"/>
+          <Column id="CORPORATE_EMAIL" type="STRING" size="80"/>
+          <Column id="CORPORATE_HOMEPAGE" type="STRING" size="80"/>
+          <Column id="CORPORATE_POSTAL_CODE" type="STRING" size="80"/>
+          <Column id="CORPORATE_ADRESS1" type="STRING" size="80"/>
+          <Column id="CORPORATE_ADRESS2" type="STRING" size="80"/>
+          <Column id="MEMO" type="STRING" size="80"/>
+        </ColumnInfo>
+      </Dataset>
+      <TranAction id="TranAction01" async="true" onerror="TranAction_onerror" onsuccess="TranAction_onsuccess">
+        <Contents/>
+      </TranAction>
+    </Objects>
+    <Trigger>
+      <TriggerItem id="item0" triggertype="Click" triggerview="tranActionSample" triggerobj="Button00" targetaction="TranAction00" condition=""/>
+    </Trigger>
+  </Form>
+</FDL>

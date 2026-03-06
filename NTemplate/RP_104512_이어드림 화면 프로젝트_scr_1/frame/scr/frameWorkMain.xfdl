@@ -1,0 +1,1805 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameWorkMain" width="1340" height="910" titletext="학부모소통서비스 main" onload="form_onload">
+    <Layouts>
+      <Layout height="910" width="1340" screenid="desktopScr">
+        <Static id="Static06" taborder="0" left="20" top="30" height="280" cssclass="sta_MF_LoginBg" right="0"/>
+        <Div id="divChldInfo" taborder="1" text="Div00" left="40" top="50" width="17.54%" height="150" cssclass="div_MF_Student">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_01" taborder="0" text="자녀정보" left="6" top="0" cssclass="sta_MF_Student,sta_WF_Txt20M" width="98" height="42"/>
+              <Static id="staChldInfo" taborder="1" left="20" top="50" cssclass="sta_MF_StudentInfo" right="20" bottom="20" usedecorate="true" onclick="divChldInfo_staChldInfo_onclick"/>
+            </Layout>
+            <Layout name="tablet"/>
+            <Layout name="tablet0"/>
+            <Layout name="mobile">
+              <Static id="staChldInfo" left="20" top="50" right="20" bottom="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divShlRprsTelno" taborder="2" text="Div01" left="40" top="211" width="17.54%" height="79" cssclass="div_MF_Tel">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="학교문의 대표번호" left="20" top="10" height="24" right="20" cssclass="sta_WF_Txt20M, sta_WF_TxtFFF"/>
+              <Static id="staShlRprsTelno" taborder="1" left="20" height="30" right="20" cssclass="sta_MF_Tel" top="39" onclick="divShlRprsTelno_staShlRprsTelno_onclick"/>
+            </Layout>
+            <Layout name="tablet"/>
+            <Layout name="tablet0"/>
+            <Layout name="mobile"/>
+          </Layouts>
+        </Div>
+        <Div id="divIap" taborder="3" text="Div02" left="divChldInfo:21.965000000000032" top="50" width="24.18%" height="240" cssclass="div_MF_BgFFF">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="학급알림공지" left="17" top="4" height="54" right="17" cssclass="sta_MF_Title01"/>
+              <Grid id="grdIap" taborder="1" left="17" top="70" right="17" cssclass="grd_MF_Notice01" autofittype="col" showcellselection="true" showselection="true" bottom="45" oncellclick="divIap_grdIap_oncellclick" binddataset="dsIap" nodatatext="등록된 정보가 없습니다">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="80"/>
+                      <Column size="90" band="right"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="30"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell displaytype="buttoncontrol" edittype="button" expr="comp.parent.parent.parent.fnDisplayText(comp,0,currow,clsIapTitlNm) " tooltiptext="bind:clsIapTitlNm" cssclass="expr:orgcpImptYn == 'Y' ? (newYn == 'Y' ? 'cell_MF_NoticeNew' : 'cell_MF_TxtLinkNotice') : (newYn == 'Y' ? 'cell_MF_New' : '')"/>
+                      <Cell col="1" text="bind:regDt" displaytype="date" calendardateformat="yyyy.MM.dd"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Button id="btnIap" taborder="2" text="더보기" top="200" height="23" cssclass="btn_MF_Sercive" width="60" initvalueid="iv_Button" accessibilitylabel="학급알림공지" left="40.62%" onclick="divIap_btnIap_onclick"/>
+            </Layout>
+            <Layout name="tablet"/>
+            <Layout name="tablet0"/>
+            <Layout name="mobile">
+              <Button id="btnIap" left="43.33%" top="200" width="60" height="23"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divDscsnInfo" taborder="4" text="Div02" left="divIap:23.95399999999995" top="50" width="24.18%" height="240" cssclass="div_MF_BgFFF">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="상담예약 진행현황" left="17" top="4" height="53" right="17" cssclass="sta_MF_Title02"/>
+              <Static id="staDscsnInfo" taborder="1" left="17" top="53" height="39" usedecorate="true" right="17" cssclass="sta_MF_Data" onclick="divDscsnInfo_btnDscsnInfo_onclick"/>
+              <Grid id="grdDscsnInfo" taborder="2" left="17" top="100" right="17" cssclass="grd_MF_Notice01" autofittype="col" showcellselection="true" showselection="true" bottom="47" binddataset="dsDscsnResult" oncellclick="divDscsnInfo_grdDscsnInfo_oncellclick" nodatatext="등록된 정보가 없습니다">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="44" band="left"/>
+                      <Column size="80"/>
+                      <Column size="90" band="right"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="30"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell text="bind:dscsnRsvtPrgStsCd" cssclass="cell_WF_Flag" combodataset="dsDscsnRsvtPrgStsCdList" combocodecol="value" combodatacol="label" displaytype="combotext"/>
+                      <Cell col="1" displaytype="buttoncontrol" edittype="button" cssclass="cell_WF_NoDot" tooltiptext="bind:dscsnAplyTitlNm" expr="comp.parent.parent.parent.fnDisplayText(comp,0,currow,dscsnAplyTitlNm) "/>
+                      <Cell col="2" text="bind:dscsnAplyDt" displaytype="date" calendardateformat="yyyy.MM.dd"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Button id="btnDscsnInfo" taborder="3" text="더보기" top="200" height="23" cssclass="btn_MF_Sercive" width="60" initvalueid="iv_Button" accessibilitylabel="상담예약 진행현황" left="40.62%" onclick="divDscsnInfo_btnDscsnInfo_onclick"/>
+            </Layout>
+            <Layout name="tablet"/>
+            <Layout name="tablet0"/>
+            <Layout name="mobile">
+              <Grid id="grdDscsnInfo" left="17" top="100" right="17" bottom="47"/>
+              <Button id="btnDscsnInfo" left="43.33%" top="200" width="60" height="23"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divOnlDscsnInfo" taborder="5" text="Div02" left="divDscsnInfo:24.942999999999984" top="50" height="240" cssclass="div_MF_BgFFF" right="23">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="온라인(서면)상담 진행현황" left="17" top="4" height="53" right="17" cssclass="sta_MF_Title03"/>
+              <Static id="staOnlDscsnInfo" taborder="1" left="17" top="53" height="39" usedecorate="true" right="17" cssclass="sta_MF_Data" onclick="divOnlDscsnInfo_btnOnlDscsnInfo_onclick"/>
+              <Grid id="grdOnlDscsnInfo" taborder="2" left="17" top="100" right="17" cssclass="grd_MF_Notice01" autofittype="col" showcellselection="true" showselection="true" bottom="47" binddataset="dsOnlDscsnResult" oncellclick="divOnlDscsnInfo_grdOnlDscsnInfo_oncellclick" nodatatext="등록된 정보가 없습니다">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="44" band="left"/>
+                      <Column size="80"/>
+                      <Column size="90" band="right"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="30"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell text="bind:dscsnPrgStsCd" cssclass="cell_WF_Flag" combodataset="dsDscsnPrgStsCdList" combodatacol="label" combocodecol="value" rtl="false" displaytype="combotext"/>
+                      <Cell col="1" displaytype="buttoncontrol" edittype="button" cssclass="cell_WF_NoDot" tooltiptext="bind:dscsnAplyTitlNm" expr="comp.parent.parent.parent.fnDisplayText(comp,0,currow,dscsnAplyTitlNm) "/>
+                      <Cell col="2" text="expr:dscsnAplyDt == null ? &quot;-&quot; : (dataset.getColumn(currow,'dscsnAplyDt')).substr(0,10)" displaytype="expr:dscsnAplyDt == null ? &quot;none&quot; : date" calendardateformat="yyyy.MM.dd"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Button id="btnOnlDscsnInfo" taborder="3" text="더보기" top="200" height="23" cssclass="btn_MF_Sercive" width="60" initvalueid="iv_Button" accessibilitylabel="온라인(서면)상담 진행현황" left="40.62%" onclick="divOnlDscsnInfo_btnOnlDscsnInfo_onclick"/>
+            </Layout>
+            <Layout name="tablet"/>
+            <Layout name="tablet0"/>
+            <Layout name="mobile">
+              <Button id="btnOnlDscsnInfo" left="43.33%" top="200" width="60" height="23"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divCnctrInfo" taborder="6" text="Div03" left="20" top="Static06:25" height="44" right="0" cssclass="div_MF_Notice" visible="true">
+          <Layouts>
+            <Layout type="default">
+              <Button id="btnCnctrInfo" taborder="0" text="신청하기" top="8" width="85" height="25" right="10" cssclass="btn_MF_Apply" accessibilitylabel="학교집중상담" onclick="divCnctrInfo_btnCnctrInfo_onclick"/>
+              <Static id="staCnctrInfo" taborder="1" top="7" width="420" height="26" right="110" cssclass="sta_MF_NoticeRed" onclick="divCnctrInfo_staCnctrInfo_onclick"/>
+            </Layout>
+            <Layout name="tablet"/>
+            <Layout name="tablet0"/>
+            <Layout name="mobile">
+              <Button id="btnCnctrInfo" height="28" left="10" right="10" bottom="10"/>
+              <Static id="staCnctrInfo" top="10" height="40" left="20" right="20" cssclass="sta_MF_NoticeRedM"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00" taborder="7" text="학부모소통서비스" left="45" top="403" cssclass="sta_MF_Service01" width="16.42%" accessibilityrole="heading2" height="38"/>
+        <Static id="Static00_00" taborder="8" text="학부모 소통서비스(이어드림)을 통해 상담 예약이나 온라인 상당(서면)을 편하게 신청하실 수 있습니다." left="45" top="Static00:13" cssclass="sta_MF_Service01Txt" width="16.42%" height="129"/>
+        <Button id="btn00" taborder="9" text="btn00" left="193" top="580" width="119" height="56"/>
+        <Static id="Static01" taborder="10" text="상시상담예약" top="divCnctrInfo:24" height="212" usedecorate="true" width="26.87%" left="286" cssclass="sta_MF_Service02" accessibilityrole="heading2"/>
+        <Static id="Static02" taborder="11" text="상담을 원하는 시간에&#13;&#10;예약할 수 있는 &#13;&#10;서비스입니다." left="285" top="divCnctrInfo:95" width="26.87%" height="76" cssclass="sta_MF_Service02Txt"/>
+        <Button id="btnCrInfo" taborder="12" text="예약하기" left="299" top="divCnctrInfo:194" width="80" height="23" cssclass="btn_MF_Sercive" initvalueid="iv_Button" accessibilitylabel="상담예약" onclick="btnCrInfo_onclick" textAlign="left"/>
+        <Static id="Static01_00" taborder="13" text="온라인(서면)상담" left="Static01:20" top="divCnctrInfo:24" height="212" cssclass="sta_MF_Service03" usedecorate="true" right="294" accessibilityrole="heading2"/>
+        <Static id="Static02_00" taborder="14" text="상담내용을 온라인으로&#13;&#10;신청하면 선생님이 &#13;&#10;답변하는서비스입니다." left="Static02:20" top="divCnctrInfo:95" height="76" cssclass="sta_MF_Service02Txt" right="294"/>
+        <Button id="btnOcInfo" taborder="15" text="신청하기" left="Static02:36" top="divCnctrInfo:194" width="80" height="23" cssclass="btn_MF_Sercive" initvalueid="iv_Button" accessibilitylabel="온라인(서면)상담" onclick="btnOcInfo_onclick" textAlign="left"/>
+        <Static id="Static03" taborder="16" text="서비스별 이용 가이드" top="divCnctrInfo:24" height="45" cssclass="sta_MF_Guide" width="270" right="0" accessibilityrole="heading"/>
+        <Button id="btnCrI" taborder="17" text="상시상담안내" top="Static03:20" height="41" width="270" right="0" cssclass="btn_MF_Guide01" initvalueid="iv_Button" onclick="divGuide_btn_onclick"/>
+        <Button id="btnIrI" taborder="18" text="집중상담안내" top="btnCrI:12" height="41" width="270" right="0" cssclass="btn_MF_Guide02" initvalueid="iv_Button" onclick="divGuide_btn_onclick"/>
+        <Button id="btnOrI" taborder="19" text="온라인(서면)상담안내" top="btnIrI:12" height="41" width="270" right="0" cssclass="btn_MF_Guide03" initvalueid="iv_Button" onclick="divGuide_btn_onclick"/>
+        <Static id="Static04" taborder="20" left="50" top="Static01:45" height="30" cssclass="sta_MF_Notice" accessibilityrole="heading" right="693"/>
+        <Button id="btnTabShlNt" taborder="21" text="서비스공지" left="97" top="Static01:44" width="110" height="34" cssclass="btn_MF_TabN" initvalueid="iv_Button" accessibilitylabel="학교공지탭" onclick="btnTabShlNt_onclick"/>
+        <Button id="btnTabSysNt" taborder="22" text="시스템공지" left="btnTabShlNt:5" top="Static01:44" width="120" height="34" cssclass="btn_MF_Tab" initvalueid="iv_Button" accessibilitylabel="시스템공지탭" onclick="btnTabSysNt_onclick"/>
+        <Div id="divNt" taborder="23" text="Div04" left="20" top="btnTabShlNt:10" height="201" cssclass="div_MF_NoticeBg" right="Static01_00:17.057999999999993">
+          <Layouts>
+            <Layout>
+              <Grid id="grdNt" taborder="0" left="14" top="16" height="180" right="15.057999999999993" cssclass="grd_MF_Notice" binddataset="dsNt" autofittype="col" showcellselection="true" showselection="true" oncellclick="divNt_grdNt_oncellclick" formatid="default" nodatatext="등록된 정보가 없습니다">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="80"/>
+                      <Column size="105" band="right"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell displaytype="buttoncontrol" edittype="button" expr="comp.parent.parent.parent.fnDisplayText(comp,0,currow,(regInstScNm == &quot;&quot; ? ntcTitlNm : (&quot;[&quot;+regInstScNm+&quot;] &quot;+ntcTitlNm)))" tooltiptext="expr:regInstScNm == &quot;&quot; ? ntcTitlNm : (&quot;[&quot;+regInstScNm+&quot;] &quot;+ntcTitlNm)" cssclass="expr:imptYn == 'Y' ? (newYn == 'Y' ? 'cell_MF_TxtLinkNoticeNew' : 'cell_MF_TxtLinkNotice') : (newYn == 'Y' ? 'cell_MF_TxtLinkNew' : '')"/>
+                      <Cell col="1" text="bind:regDt" displaytype="date" calendardateformat="yyyy.MM.dd"/>
+                    </Band>
+                  </Format>
+                  <Format id="format00">
+                    <Columns>
+                      <Column size="48"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell displaytype="buttoncontrol" edittype="button" cssclass="expr:imptYn == 'Y' ? (newYn == 'Y' ? 'cell_MF_TxtLinkNoticeNew' : 'cell_MF_TxtLinkNotice') : (newYn == 'Y' ? 'cell_MF_TxtLinkNew' : '')" expr="comp.parent.parent.parent.fnDisplayText(comp,0,currow,(regInstScNm == &quot;&quot; ? ntcTitlNm : (&quot;[&quot;+regInstScNm+&quot;] &quot;+ntcTitlNm)))" tooltiptext="expr:regInstScNm == &quot;&quot; ? ntcTitlNm : (&quot;[&quot;+regInstScNm+&quot;] &quot;+ntcTitlNm)"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+            <Layout name="tablet"/>
+            <Layout name="tablet0"/>
+            <Layout name="mobile">
+              <Grid id="grdNt" left="14" top="16" height="180" right="15.057999999999993" formatid="format00"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnNt" taborder="24" text="더보기" top="Static01:49" height="23" cssclass="btn_MF_Sercive" right="Static01_00:20" width="60" initvalueid="iv_Button" accessibilitylabel="공지" onclick="btnNt_onclick"/>
+        <Static id="Static04_00" taborder="25" left="btnNt:40" top="Static01_00:45" height="30" cssclass="sta_MF_Faq" right="0" accessibilityrole="heading" text=""/>
+        <Button id="btnTabShlFaq" taborder="26" text="서비스FAQ" left="Static01:82.94200000000001" top="Static01_00:44" width="110" height="34" cssclass="btn_MF_TabN" initvalueid="iv_Button" accessibilitylabel="학교FAQ탭" onclick="btnTabShlFaq_onclick"/>
+        <Button id="btnTabSysFaq" taborder="27" text="시스템FAQ" left="btnTabShlFaq:3.9420000000000073" top="Static01_00:44" width="120" height="34" cssclass="btn_MF_Tab" initvalueid="iv_Button" accessibilitylabel="시스템FAQ탭" onclick="btnTabSysFaq_onclick"/>
+        <Div id="divFaq" taborder="28" text="Div04" left="divNt:20" top="btnTabShlFaq:10" height="201" cssclass="div_MF_NoticeBg" right="0">
+          <Layouts>
+            <Layout>
+              <Grid id="grdFaq" taborder="0" left="15" top="10" height="180" right="58.20100000000002" cssclass="grd_MF_Notice" binddataset="dsFaq" autofittype="col" showcellselection="true" showselection="true" oncellclick="divFaq_grdFaq_oncellclick" nodatatext="등록된 정보가 없습니다">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="185"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell displaytype="buttoncontrol" edittype="button" expr="comp.parent.parent.parent.fnDisplayText(comp,0,currow,(regInstScNm == &quot;&quot; ? faqTitlNm : (&quot;[&quot;+regInstScNm+&quot;] &quot;+faqTitlNm))) " tooltiptext="expr:regInstScNm == &quot;&quot; ? faqTitlNm : (&quot;[&quot;+regInstScNm+&quot;] &quot;+faqTitlNm)" cssclass="expr:newYn == 'Y' ? 'cell_MF_TxtLinkNew' : ''"/>
+                    </Band>
+                  </Format>
+                  <Format id="format00">
+                    <Columns>
+                      <Column size="48"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="30"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell displaytype="buttoncontrol" edittype="button" expr="comp.parent.parent.parent.fnDisplayText(comp,0,currow,(regInstScNm == &quot;&quot; ? faqTitlNm : (&quot;[&quot;+regInstScNm+&quot;] &quot;+faqTitlNm))) " tooltiptext="expr:regInstScNm == &quot;&quot; ? faqTitlNm : (&quot;[&quot;+regInstScNm+&quot;] &quot;+faqTitlNm)" cssclass="expr:newYn == 'Y' ? 'cell_MF_TxtLinkNew' : ''"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+            <Layout name="tablet"/>
+            <Layout name="tablet0"/>
+            <Layout name="mobile"/>
+          </Layouts>
+        </Div>
+        <Button id="btnFaq" taborder="29" text="더보기" top="Static01_00:49" height="23" cssclass="btn_MF_Sercive" width="60" initvalueid="iv_Button" accessibilitylabel="FAQ" right="10" onclick="btnFaq_onclick"/>
+        <Grid id="Grid00_01" taborder="30" left="1380" top="140" height="125" cssclass="grd_MF_Notice01" binddataset="ds_data01" autofittype="col" showcellselection="true" showselection="true" visible="false" width="291">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="90" band="right"/>
+              </Columns>
+              <Rows>
+                <Row size="30"/>
+              </Rows>
+              <Band id="body">
+                <Cell text="bind:Column0" displaytype="buttoncontrol" edittype="button" cssclass="cell_MF_New"/>
+                <Cell col="1" text="bind:Column1" displaytype="date" calendardateformat="yyyy.MM.dd"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static80" taborder="31" text="New 아이콘 셀 클래스명&#13;&#10;cell_MF_New" left="1380" top="273" width="291" height="85" cssclass="sta_WF_GBg02" visible="false" textAlign="center" verticalAlign="middle" accessibilityenable="false" onclick="Static80_onclick"/>
+      </Layout>
+      <Layout height="1130" mobileorientation="Landscape" name="tablet" type="default" width="1000" screenid="desktopScr,tabletScr">
+        <Div id="divCnctrInfo" left="20" top="Static06:25" height="44" right="0"/>
+        <Grid id="Grid00_01" width="300" left="1380" top="110" height="125"/>
+        <Static id="Static06" left="20" top="0" height="540" right="0" taborder="0"/>
+        <Div id="divDscsnInfo" left="40" top="divShlRprsTelno:20" width="44.00%" height="240"/>
+        <Div id="divOnlDscsnInfo" left="divDscsnInfo:20" top="divIap:20" height="240" right="20"/>
+        <Div id="divIap" left="divChldInfo:20" top="20" height="240" right="20" taborder="3"/>
+        <Div id="divChldInfo" width="44.00%" left="40" top="20" height="150" taborder="1"/>
+        <Div id="divShlRprsTelno" width="44.00%" left="40" top="181" height="79" taborder="2"/>
+        <Static id="Static00_00" left="0" top="684" width="0%" height="129" accessibilityenable="false"/>
+        <Static id="Static00" left="0" top="633" width="0%" height="38" accessibilityenable="false"/>
+        <Static id="Static01" left="20" top="divCnctrInfo:24" width="33%" height="212" text="상시상담예약"/>
+        <Static id="Static02" left="20" top="divCnctrInfo:95" width="33.00%" height="76" text="원하는 날짜와 시간에 &#13;&#10;방문 및 유선 상담 예약을&#13;&#10;할 수 있는 서비스"/>
+        <Button id="btnCrInfo" left="34" top="divCnctrInfo:194" width="126" height="23"/>
+        <Static id="Static04" left="0" top="880" height="30" width="0"/>
+        <Button id="btnTabShlNt" left="20" top="Static01:34" width="110" height="34" taborder="20"/>
+        <Button id="btnTabSysNt" left="btnTabShlNt:5" top="Static01:34" width="110" height="34" taborder="21"/>
+        <Div id="divNt" left="20" top="btnTabShlNt:10" height="202" text="Div04" width="48.00%" taborder="22"/>
+        <Button id="btnNt" top="Static01_00:39" width="60" height="23" right="51%" taborder="23"/>
+        <Static id="Static04_00" left="0" top="880" height="30" width="0"/>
+        <Button id="btnTabShlFaq" left="divNt:20" top="Static01_00:34" width="110" height="34"/>
+        <Button id="btnTabSysFaq" left="btnTabShlFaq:5" top="Static01_00:34" width="110" height="34"/>
+        <Div id="divFaq" left="divNt:20" top="btnTabShlFaq:10" height="202" right="0" text="Div04"/>
+        <Button id="btnFaq" top="btnOrI:39" width="60" height="23" right="10"/>
+        <Static id="Static03" top="divCnctrInfo:24" height="45" cssclass="sta_MF_GuideM" left="Static01_00:20" right="0" taborder="15"/>
+        <Button id="btnCrI" top="Static03:20" height="41" left="Static01_00:20" right="0" taborder="16"/>
+        <Button id="btnIrI" top="btnCrI:12" height="41" left="Static01_00:20" right="0" taborder="17"/>
+        <Button id="btnOrI" top="btnIrI:12" height="41" left="Static01_00:20" right="0"/>
+        <Static id="Static01_00" left="Static01:20" top="divCnctrInfo:24" height="212" taborder="12" width="33%" text="온라인(서면)상담"/>
+        <Static id="Static02_00" left="Static01:20" top="divCnctrInfo:95" height="76" taborder="13" width="33%"/>
+        <Button id="btnOcInfo" left="Static01:34" top="divCnctrInfo:194" width="151" height="23" taborder="14"/>
+      </Layout>
+      <Layout height="1370" mobileorientation="Landscape" name="tablet0" type="default" width="800" screenid="desktopScr,tabletScr">
+        <Div id="divCnctrInfo" left="20" top="Static06:25" height="44" right="0"/>
+        <Grid id="Grid00_01" width="300" left="1380" top="110" height="125"/>
+        <Static id="Static06" left="20" top="0" height="540" right="0"/>
+        <Div id="divDscsnInfo" left="40" top="divShlRprsTelno:20" width="44.00%" height="240"/>
+        <Div id="divOnlDscsnInfo" left="divDscsnInfo:20" top="divIap:20" height="240" right="20"/>
+        <Div id="divIap" left="divChldInfo:20" top="20" height="240" right="20"/>
+        <Div id="divChldInfo" width="44.00%" left="40" top="20" height="150"/>
+        <Div id="divShlRprsTelno" width="44.00%" left="40" top="181" height="79"/>
+        <Static id="Static00_00" left="0" top="684" width="0%" height="129" accessibilityenable="false"/>
+        <Static id="Static00" left="0" top="633" width="0%" height="38" accessibilityenable="false"/>
+        <Static id="Static01" left="20" top="divCnctrInfo:24" width="48.00%" height="212" text="상시상담예약"/>
+        <Static id="Static02" left="20" top="divCnctrInfo:95" width="48.00%" height="76" text="원하는 날짜와 시간에 &#13;&#10;방문 및 유선 상담 예약을&#13;&#10;할 수 있는 서비스"/>
+        <Button id="btnCrInfo" left="34" top="divCnctrInfo:194" width="126" height="23"/>
+        <Static id="Static04" left="0" top="1120" height="30" width="0"/>
+        <Button id="btnTabShlNt" left="20" top="1119" width="100" height="34"/>
+        <Button id="btnTabSysNt" left="btnTabShlNt:5" top="1119" width="110" height="34"/>
+        <Div id="divNt" left="20" top="btnTabShlNt:10" height="202" text="Div04" width="48.00%"/>
+        <Button id="btnNt" top="1124" width="60" height="23" right="Static01_00:30"/>
+        <Static id="Static04_00" left="0" top="1120" height="30" width="0"/>
+        <Button id="btnTabShlFaq" left="divNt:20" top="1119" width="100" height="34"/>
+        <Button id="btnTabSysFaq" left="btnTabShlFaq:5" top="1119" width="110" height="34"/>
+        <Div id="divFaq" left="divNt:20" top="btnTabShlFaq:10" height="202" right="0" text="Div04"/>
+        <Button id="btnFaq" top="1124" width="60" height="23" right="10"/>
+        <Static id="Static03" top="863" height="45" cssclass="sta_MF_GuideM" left="20" right="0"/>
+        <Button id="btnCrI" top="Static03:20" height="41" left="20" right="0"/>
+        <Button id="btnIrI" top="btnCrI:12" height="41" left="20" right="0"/>
+        <Button id="btnOrI" top="btnIrI:12" height="41" left="20" right="0"/>
+        <Static id="Static01_00" right="0" left="Static01:20" top="divCnctrInfo:24" height="212"/>
+        <Static id="Static02_00" left="Static02:20" top="divCnctrInfo:95" height="76" right="0"/>
+        <Button id="btnOcInfo" left="Static02:34" top="divCnctrInfo:194" width="102" height="23"/>
+      </Layout>
+      <Layout height="2534" mobileorientation="Landscape" name="mobile" type="default" width="480" screenid="desktopScr,mobileScr">
+        <Div id="divCnctrInfo" left="20" top="32" height="100" right="15" cssclass="div_MF_NoticeM" taborder="1"/>
+        <Grid id="Grid00_01" width="300" left="1380" top="110" height="125"/>
+        <Static id="Static06" left="0" top="0" height="1252" right="0" cssclass="sta_MF_LoginBgM" taborder="0"/>
+        <Div id="divDscsnInfo" left="15" top="divIap:35" height="240" right="15" taborder="5" text="Div02"/>
+        <Div id="divOnlDscsnInfo" left="15" top="divDscsnInfo:35" height="240" right="15" taborder="6"/>
+        <Div id="divIap" left="15" top="divShlRprsTelno:32" height="240" right="15" taborder="4"/>
+        <Div id="divChldInfo" left="15" top="149" height="150" right="15" taborder="2"/>
+        <Div id="divShlRprsTelno" left="15" top="divChldInfo:17" height="79" right="15" taborder="3"/>
+        <Static id="Static00_00" left="0" top="1338" width="0.00%" height="129" accessibilityenable="false"/>
+        <Static id="Static00" left="0" top="1287" width="0.00%" height="38" accessibilityenable="false"/>
+        <Static id="Static01" left="15" top="Static06:35" height="212" right="15" text="상시상담예약"/>
+        <Static id="Static02" left="15" top="Static01:-141" height="76" right="15" text="원하는 날짜와 시간에 &#13;&#10;방문 및 유선 상담 예약을&#13;&#10;할 수 있는 서비스"/>
+        <Button id="btnCrInfo" left="30" top="Static02:23" width="130" height="23"/>
+        <Static id="Static04" left="0" top="2006" height="30" width="0"/>
+        <Button id="btnTabShlNt" left="15" top="btnOrI:35" width="110" height="34"/>
+        <Button id="btnTabSysNt" left="btnTabShlNt:5" top="btnOrI:35" width="120" height="34"/>
+        <Div id="divNt" left="15" top="2050" height="202" text="Div04" right="15"/>
+        <Button id="btnNt" top="btnOrI:40" width="60" height="23" right="20"/>
+        <Static id="Static04_00" left="0" top="2006" height="30" width="0"/>
+        <Button id="btnTabShlFaq" left="16" top="divNt:35" width="110" height="34"/>
+        <Button id="btnTabSysFaq" left="btnTabShlFaq:5" top="divNt:35" width="120" height="34"/>
+        <Div id="divFaq" left="15" top="2332" height="202" right="15" text="Div04"/>
+        <Button id="btnFaq" top="divNt:40" width="60" height="23" right="20"/>
+        <Static id="Static03" top="Static01_00:13" height="45" cssclass="sta_MF_GuideM" left="20" right="0"/>
+        <Button id="btnCrI" top="Static03:20" height="41" left="20" right="0"/>
+        <Button id="btnIrI" top="btnCrI:12" height="41" left="20" right="0"/>
+        <Button id="btnOrI" top="btnIrI:12" height="41" left="20" right="0"/>
+        <Static id="Static01_00" right="15" left="15" top="Static01:34" height="212"/>
+        <Static id="Static02_00" left="15" top="Static01_00:-141" height="76" right="15"/>
+        <Button id="btnOcInfo" left="30" top="Static02_00:23" width="150" height="23"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listBtbSysNt</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="url">/scr_mpg_mv00_007.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="outDatasets">dsNt=dsNt</Col>
+          </Row>
+          <Row>
+            <Col id="id">listBtbSysFaq</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="url">/scr_mpg_mv00_008.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="outDatasets">dsFaq=dsFaq</Col>
+          </Row>
+          <Row>
+            <Col id="id">listBtbShlIap</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="url">/scr_mpg_mv00_005.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="outDatasets">dsIap=dsIap</Col>
+          </Row>
+          <Row>
+            <Col id="id">listBtbShlNt</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="url">/scr_mpg_mv00_005.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="outDatasets">dsNt=dsNt</Col>
+          </Row>
+          <Row>
+            <Col id="id">listBtbShlFaq</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="url">/scr_mpg_mv00_005.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="outDatasets">dsFaq=dsFaq</Col>
+          </Row>
+          <Row>
+            <Col id="url">/scr_ctr_oc00_004.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="svctp"/>
+            <Col id="inDatasets">dsParam=dsOnlDscsnParam dsPageInfo=dsOnlDscsnPageInfo</Col>
+            <Col id="id">selectOnlDcmDscscnList</Col>
+            <Col id="outDatasets">dsOnlDscsnResult=dsResult dsOnlDscsnPageInfo=dsPageInfo</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="bindingControls"/>
+            <Col id="method"/>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+          <Row>
+            <Col id="id">selectDcmDscscnList</Col>
+            <Col id="inDatasets">dsDscsnParam=dsDscsnParam dsPageInfo=dsDscsnPageInfo</Col>
+            <Col id="outDatasets">dsDscsnResult=dsDscsnList dsDscsnPageInfo=dsPageInfo</Col>
+            <Col id="url">/scr_mri_cl00_001.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="svctp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlBtbScCd" type="STRING" size="256"/>
+          <Column id="srchScCd" type="STRING" size="256"/>
+          <Column id="keyword" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsNt">
+        <ColumnInfo>
+          <Column id="rownum" type="STRING" size="256" description="ROWNUM"/>
+          <Column id="cddcScCd" type="STRING" size="256" description="시도교육청구분코드"/>
+          <Column id="cddcScNm" type="STRING" size="256" description="시도교육청구분명"/>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" description="학교명"/>
+          <Column id="imptYn" type="STRING" size="256" description="중요여부"/>
+          <Column id="orgcpImptYn" type="STRING" size="256" description="원본_중요여부"/>
+          <Column id="imptNtcStngBgngYmd" type="STRING" size="256" description="중요공지설정시작일자"/>
+          <Column id="imptNtcStngEndYmd" type="STRING" size="256" description="중요공지설정종료일자"/>
+          <Column id="clsIapSn" type="STRING" size="256" description="공지사항일련번호"/>
+          <Column id="ayr" type="STRING" size="256" description="학교공지사항구분코드"/>
+          <Column id="shlCrseScCd" type="STRING" size="256" description="학교공지사항구분명"/>
+          <Column id="shlCrseScNm" type="STRING" size="256" description="공지제목명"/>
+          <Column id="grdCd" type="STRING" size="256" description="공지내용"/>
+          <Column id="ordScCd" type="STRING" size="256" description="파일참조ID"/>
+          <Column id="dddepCd" type="STRING" size="256" description="등록자ID"/>
+          <Column id="clsCd" type="STRING" size="256" description="등록자명"/>
+          <Column id="cthrTcrDtcNo" type="STRING" size="256" description="등록일시"/>
+          <Column id="cthrTcrFlnm" type="STRING" size="256" description="수정자ID"/>
+          <Column id="clsIapTitlNm" type="STRING" size="256" description="수정일시"/>
+          <Column id="clsIapCn" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="STRING" size="256"/>
+          <Column id="ntcMteSn" type="STRING" size="256" description="공지사항일련번호"/>
+          <Column id="shlNtcMteScCd" type="STRING" size="256" description="학교공지사항구분코드"/>
+          <Column id="shlNtcMteScNm" type="STRING" size="256" description="학교공지사항구분명"/>
+          <Column id="ntcTitlNm" type="STRING" size="256" description="공지제목명"/>
+          <Column id="ntcCn" type="STRING" size="256" description="공지내용"/>
+          <Column id="regInstScNm" type="STRING" size="256" description="등록기관구분명"/>
+          <Column id="newYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsFaq">
+        <ColumnInfo>
+          <Column id="rowNum" type="STRING" size="256" description="번호"/>
+          <Column id="faqId" type="STRING" size="256" description="자주묻는질문ID"/>
+          <Column id="faqTitlNm" type="STRING" size="256" description="자주묻는질문 제목명"/>
+          <Column id="faqCn" type="STRING" size="256" description="자주묻는질문 내용"/>
+          <Column id="pstStsCd" type="STRING" size="256" description="게시상태코드"/>
+          <Column id="fileRefrnId" type="STRING" size="256" description="파일참조ID"/>
+          <Column id="faqInqCnt" type="STRING" size="256" description="자주묻는질문 조회수"/>
+          <Column id="regDt" type="STRING" size="256" description="등록일시"/>
+          <Column id="rgtrId" type="STRING" size="256" description="등록자ID"/>
+          <Column id="rgtrNm" type="STRING" size="256" description="등록자명"/>
+          <Column id="rgtrDptNm" type="STRING" size="256" description="등록자부서명"/>
+          <Column id="mdfcnDt" type="STRING" size="256" description="수정일시"/>
+          <Column id="mdfrId" type="STRING" size="256" description="수정자ID"/>
+          <Column id="mdfrNm" type="STRING" size="256" description="수정자명"/>
+          <Column id="mdfrDptNm" type="STRING" size="256" description="수정자부서명"/>
+          <Column id="pafrSysClfCd" type="STRING" size="256" description="대국민시스템분류코드"/>
+          <Column id="pafrSysSubCd" type="STRING" size="256" description="대국민시스템서브코드"/>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="faqClfCd" type="STRING" size="256" description="FAQ 분류코드"/>
+          <Column id="rownum" type="STRING" size="256"/>
+          <Column id="cddcScCd" type="STRING" size="256"/>
+          <Column id="cddcScNm" type="STRING" size="256"/>
+          <Column id="regInstScNm" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="shlNm" type="STRING" size="256"/>
+          <Column id="faqSn" type="STRING" size="256"/>
+          <Column id="shlFaqScCd" type="STRING" size="256"/>
+          <Column id="shlFaqScNm" type="STRING" size="256"/>
+          <Column id="faqAnsCn" type="STRING" size="256"/>
+          <Column id="newYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsIap">
+        <ColumnInfo>
+          <Column id="rownum" type="STRING" size="256" description="ROWNUM"/>
+          <Column id="cddcScCd" type="STRING" size="256" description="시도교육청구분코드"/>
+          <Column id="cddcScNm" type="STRING" size="256" description="시도교육청구분명"/>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" description="학교명"/>
+          <Column id="imptYn" type="STRING" size="256" description="중요여부"/>
+          <Column id="orgcpImptYn" type="STRING" size="256" description="원본_중요여부"/>
+          <Column id="imptNtcStngBgngYmd" type="STRING" size="256" description="중요공지설정시작일자"/>
+          <Column id="imptNtcStngEndYmd" type="STRING" size="256" description="중요공지설정종료일자"/>
+          <Column id="clsIapSn" type="STRING" size="256" description="공지사항일련번호"/>
+          <Column id="ayr" type="STRING" size="256" description="학교공지사항구분코드"/>
+          <Column id="shlCrseScCd" type="STRING" size="256" description="학교공지사항구분명"/>
+          <Column id="shlCrseScNm" type="STRING" size="256" description="공지제목명"/>
+          <Column id="grdCd" type="STRING" size="256" description="공지내용"/>
+          <Column id="ordScCd" type="STRING" size="256" description="파일참조ID"/>
+          <Column id="dddepCd" type="STRING" size="256" description="등록자ID"/>
+          <Column id="clsCd" type="STRING" size="256" description="등록자명"/>
+          <Column id="cthrTcrDtcNo" type="STRING" size="256" description="등록일시"/>
+          <Column id="cthrTcrFlnm" type="STRING" size="256" description="수정자ID"/>
+          <Column id="clsIapTitlNm" type="STRING" size="256" description="수정일시"/>
+          <Column id="clsIapCn" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="STRING" size="256"/>
+          <Column id="todayYn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+          <Row/>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsOnlDscsnParam">
+        <ColumnInfo>
+          <Column id="dscsnAplyTitlNm" type="STRING" size="256" description="학부모고유번호"/>
+          <Column id="dscsnPrgStsCd" type="STRING" size="256" description="학년코드"/>
+          <Column id="fromValue" type="STRING" size="256"/>
+          <Column id="toValue" type="STRING" size="256"/>
+          <Column id="schpaDtcNo" type="STRING" size="256"/>
+          <Column id="cteOrgCd" type="STRING" size="256"/>
+          <Column id="instCd" type="STRING" size="256"/>
+          <Column id="from" type="STRING" size="256"/>
+          <Column id="rcptDt" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsOnlDscsnPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex">1</Col>
+            <Col id="pageSize">3</Col>
+            <Col id="totalCount">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsOnlDscsnResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="onlDscsnAplyNo" type="STRING" size="256"/>
+          <Column id="dscsnAplyTitlNm" type="STRING" size="256"/>
+          <Column id="schpaNm" type="STRING" size="256"/>
+          <Column id="dscsnAplyDt" type="STRING" size="256"/>
+          <Column id="dscsnPrcsTermDdCnt" type="STRING" size="256"/>
+          <Column id="dscsnPrgStsCd" type="STRING" size="256"/>
+          <Column id="ntfctnDt" type="STRING" size="256"/>
+          <Column id="rcptDt" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+          <Row/>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDscsnPrgStsCdList">
+        <ColumnInfo>
+          <Column id="label" type="STRING" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="label">작성중</Col>
+            <Col id="value">10</Col>
+          </Row>
+          <Row>
+            <Col id="label">처리자변경요청</Col>
+            <Col id="value">11</Col>
+          </Row>
+          <Row>
+            <Col id="label">신청</Col>
+            <Col id="value">20</Col>
+          </Row>
+          <Row>
+            <Col id="label">접수</Col>
+            <Col id="value">21</Col>
+          </Row>
+          <Row>
+            <Col id="label">처리중</Col>
+            <Col id="value">30</Col>
+          </Row>
+          <Row>
+            <Col id="label">완료</Col>
+            <Col id="value">50</Col>
+          </Row>
+          <Row>
+            <Col id="label">취소</Col>
+            <Col id="value">60</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDscsnParam">
+        <ColumnInfo>
+          <Column id="bgngYmd" type="STRING" size="256" description="검색조건 - 시작일"/>
+          <Column id="endYmd" type="STRING" size="256" description="검색조건 - 종료일"/>
+          <Column id="dscsnRsvtPrgStsCd" type="STRING" size="256" description="검색조건 - 진행상태"/>
+          <Column id="dscsnAplyTitlNm" type="STRING" size="256" description="검색조건 - 상담제목"/>
+          <Column id="schpaDtcNo" type="STRING" size="256" description="세션 - 학부모고유번호"/>
+          <Column id="schpaDscsnMmntScCd" type="STRING" size="256" description="학부모상담시기구분코드"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDscsnPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex">1</Col>
+            <Col id="pageSize">3</Col>
+            <Col id="totalCount">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDscsnResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="schpaDscsnDtcNo" type="STRING" size="256"/>
+          <Column id="cddcScCd" type="STRING" size="256"/>
+          <Column id="cteOrgCd" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="sgByCd" type="STRING" size="256"/>
+          <Column id="schpaDtcNo" type="STRING" size="256"/>
+          <Column id="schpaNm" type="STRING" size="256"/>
+          <Column id="mblTelno" type="STRING" size="256"/>
+          <Column id="stuDtcNo" type="STRING" size="256"/>
+          <Column id="stuInvlNo" type="STRING" size="256"/>
+          <Column id="stuFlnm" type="STRING" size="256"/>
+          <Column id="ayr" type="STRING" size="256"/>
+          <Column id="grdCd" type="STRING" size="256"/>
+          <Column id="grdNm" type="STRING" size="256"/>
+          <Column id="clsCd" type="STRING" size="256"/>
+          <Column id="clsNm" type="STRING" size="256"/>
+          <Column id="clsNo" type="STRING" size="256"/>
+          <Column id="shlCrseScCd" type="STRING" size="256"/>
+          <Column id="shlCrseScNm" type="STRING" size="256"/>
+          <Column id="ordScCd" type="STRING" size="256"/>
+          <Column id="ordScNm" type="STRING" size="256"/>
+          <Column id="dddepCd" type="STRING" size="256"/>
+          <Column id="dddepNm" type="STRING" size="256"/>
+          <Column id="cthrTcrDtcNo" type="STRING" size="256"/>
+          <Column id="cthrTcrFlnm" type="STRING" size="256"/>
+          <Column id="dscsnAplyDt" type="STRING" size="256"/>
+          <Column id="schpaDscsnMmntScCd" type="STRING" size="256"/>
+          <Column id="dscsnDmndMthCd" type="STRING" size="256"/>
+          <Column id="dscsnDmndYmd" type="STRING" size="256"/>
+          <Column id="dscsnDmndHm" type="STRING" size="256"/>
+          <Column id="dscsnDmndEndParngHm" type="STRING" size="256"/>
+          <Column id="dscsnClfCd" type="STRING" size="256"/>
+          <Column id="dscsnAplyTitlNm" type="STRING" size="256"/>
+          <Column id="dscsnAplyCn" type="STRING" size="256"/>
+          <Column id="dscsnDmndThtsDtcNo" type="STRING" size="256"/>
+          <Column id="dscsnDmndThtsFlnm" type="STRING" size="256"/>
+          <Column id="dscsnBgngHm" type="STRING" size="256"/>
+          <Column id="dscsnEndHm" type="STRING" size="256"/>
+          <Column id="dscsnCn" type="STRING" size="256"/>
+          <Column id="dscsnRsvtPrgStsCd" type="STRING" size="256"/>
+          <Column id="prgPrcsRsnCn" type="STRING" size="256"/>
+          <Column id="dscsnDmndAprvDt" type="STRING" size="256"/>
+          <Column id="dscsnCmptnDt" type="STRING" size="256"/>
+          <Column id="delYn" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="STRING" size="256"/>
+          <Column id="dscsnDmndYmdFr" type="STRING" size="256"/>
+          <Column id="dscsnDmndHmFr" type="STRING" size="256"/>
+          <Column id="dscsnDmndEndParngHmFr" type="STRING" size="256"/>
+          <Column id="dscsnDmndYmdSe" type="STRING" size="256"/>
+          <Column id="dscsnDmndHmSe" type="STRING" size="256"/>
+          <Column id="dscsnDmndEndParngHmSe" type="STRING" size="256"/>
+          <Column id="dscsnDmndYmdTh" type="STRING" size="256"/>
+          <Column id="dscsnDmndHmTh" type="STRING" size="256"/>
+          <Column id="dscsnDmndEndParngHmTh" type="STRING" size="256"/>
+          <Column id="rownum" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="dscsnAplyTitlNm">제목1</Col>
+          </Row>
+          <Row>
+            <Col id="dscsnAplyTitlNm">제목2</Col>
+          </Row>
+          <Row>
+            <Col id="dscsnAplyTitlNm">제목3</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDscsnRsvtPrgStsCdList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="label" type="STRING" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="label">저장</Col>
+            <Col id="value">10</Col>
+          </Row>
+          <Row>
+            <Col id="label">신청</Col>
+            <Col id="value">20</Col>
+          </Row>
+          <Row>
+            <Col id="label">접수</Col>
+            <Col id="value">30</Col>
+          </Row>
+          <Row>
+            <Col id="label">확정</Col>
+            <Col id="value">40</Col>
+          </Row>
+          <Row>
+            <Col id="label">완료</Col>
+            <Col id="value">50</Col>
+          </Row>
+          <Row>
+            <Col id="label">취소</Col>
+            <Col id="value">60</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[// /**
+// *  학부모소통시스템
+// *  @MenuPath    공통
+// *  @FileName 	frameWorkMain.xfdl
+// *  @Creator 	tobesoft
+// *  @CreateDate 	2025.03.17
+// *  @Desction    
+// ************** 소스 수정 이력 ***********************************************
+// *  date          	Modifier            Description
+// *******************************************************************************
+// *  2025.03.17     	tobesoft 	        최초 생성     
+// *******************************************************************************
+// */
+// 
+// /************************************************************************************************
+//  * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+//  ************************************************************************************************/
+// include "lib::scr_script.xjs";
+// 
+// /************************************************************************************************
+//  * FORM 변수 선언 영역
+//  ************************************************************************************************/
+// this.objApp = nexacro.getApplication();
+// 
+// /***********************************************************************************************
+// * FORM EVENT 영역(onload)
+// /***********************************************************************************************/
+// /**
+//  * @description 화면 onload시 처리내역(필수)
+// */
+// this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+// {
+// 	//trace("frameWorkMain onload >>>>>>>");
+// 	this.scrInitForm(obj);	//필수(화면초기화)
+// 
+// 	//화면 초기설정
+// 	this.fnInitForm();
+// 
+// };
+// 
+// /* 화면 초기설정 */
+// this.fnInitForm = function()
+// {
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// 확인용
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	var sRunMode = nexacro.getEnvironmentVariable("ev_runMode");
+// 	if ( sRunMode == "1" || sRunMode == "2" || sRunMode == "4" ) {
+// 		trace("=============================================================================================================");
+// 		trace("this.smfIsLogin() ::: " + this.smfIsLogin() );	
+// 		trace("=============================================================================================================");
+// 
+// 		trace("=============================================================================================================");
+// 		trace("★★★ 로그인한 사용자 정보(학부모)");
+// 		trace("prntNm[학부모_사용자명] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'prntNm') );
+// 		trace("prntMblNo[학부모_핸드폰번호] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'prntMblNo') );
+// 		trace("mnrDsgnYn[필수개인정보수집동의여부 (세션에 없어서 대신사용)] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'mnrDsgnYn') );
+// 		trace("-------------------------------------------------------------------------------------------------------------");
+// 		trace("★★★ 로그인한 사용자의 선택된 자녀 정보");
+// 		trace("stdntNm[자녀_학생명] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'stdntNm') );
+// 		trace("cddcCd[자녀_시도교육청코드] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'cddcCd') );
+// 		trace("cteOrgCd[자녀_관할조직코드] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'cteOrgCd') );
+// 		trace("shlKndScCd[자녀_학교종류구분코드 ::: SG_BY_CD[학교급별코드] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'shlKndScCd') );
+// 		trace("shlCrseScCd[자녀_학교과정구분코드] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'shlCrseScCd') );				
+// 		trace("shlCd[자녀_학교코드] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'shlCd') );
+// 		trace("shlNm[자녀_학교명] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'shlNm') );
+// 		trace("ayr[자녀_학년도] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'ayr') );
+// 		trace("grd[자녀_학년] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'grd') );
+// 		trace("dghtCrseScCd[자녀_주야과정구분코드] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'dghtCrseScCd') );
+// 		trace("ordScCd[자녀_계열구분코드] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'ordScCd') );
+// 		trace("dddepCd[자녀_학과코드] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'dddepCd') );
+// 		trace("clsCd[자녀_학급코드] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'clsCd') );
+// 		trace("clsNm[자녀_학급명] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'clsNm') );
+// 		trace("clsNo[자녀_학급번호] :::" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'clsNo') );
+// 		trace("cthrTcrNm[담임_사용자명] :::" + nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cthrTcrNm") );
+// 		trace("cthrTcrIdfId[담임_담임교사식별ID] :::" + nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cthrTcrIdfId") );
+// 		trace("cthrUserDtcNo[담임_사용자고유번호] :::" + nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cthrUserDtcNo") );
+// 		trace("cnctrDscsnPrdYn[집중상담기간여부] :::" + nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnPrdYn") );
+// 		trace("cnctrDscsnPrdSn[집중상담기간일련번호] :::" + nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnPrdSn") );
+// 		trace("cnctrDscsnPrdAyr[집중상담기간_학년도] :::" + nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnPrdAyr") );		
+// 		trace("cnctrDscsnPrdSem[집중상담기간_학기] :::" + nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnPrdSem") );		
+// 		trace("cnctrDscsnBgngYmd[집중상담시작일자] :::" + nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnBgngYmd") );		
+// 		trace("cnctrDscsnEndYmd[집중상담종료일자] :::" + nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnEndYmd") );
+// 		trace("pstBgngYmd[게시시작일자] :::" + nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "pstBgngYmd") );
+// 		trace("pstEndYmd[게시종료일자] :::" + nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "pstEndYmd") );
+// 		trace("shlRprsTelno[학교대표전화번호] :::" + nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "shlRprsTelno") );
+// 		trace("-------------------------------------------------------------------------------------------------------------");
+// 		trace("★★★ 전체 자녀 정보_리스트 형식");
+// 		trace("dsScrLgnChildList.getCount() =" + nexacro.getApplication().gdsScrLgnChildList.getCount() );		
+// 		trace("=============================================================================================================");
+// 	}
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// 확인용
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+// 
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// 선택된 자녀, 학교대표전화번호
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	var staChldInfoTxt = "<fc v=\'#B4C6F9\'>· 이름 :</fc>" +  nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'stdntNm')
+// 		+ "\n<fc v=\'#B4C6F9\'>· 학교 :</fc>" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'shlNm')
+// 		+ "\n<fc v=\'#B4C6F9\'>· 소속 :</fc>" + nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'grd') + "학년 " 
+// 		+ nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'clsNm') + "반 " 
+// 		+ nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'clsNo') + "번 " 
+// 	;
+// 	
+// 	var shlRprsTelno = nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "shlRprsTelno");
+// 	
+// 	this.divChldInfo.form.staChldInfo.set_text(staChldInfoTxt); // 선택된자녀
+// 	this.divShlRprsTelno.form.staShlRprsTelno.set_text(shlRprsTelno); // 학교대표전화번호
+// 	
+// 	
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// 집중상담기간
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	var nFormHeight = this.getOwnerFrame().form.divAll.form.fv_WorkFormHeight;
+// 	var cnctrDscsnPrdYn = nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnPrdYn"); // 집중상담기간여부
+// 		
+// 	trace("=============================================================================================================");
+// 	trace("::: nFormHeight ::: "  + nFormHeight);
+// 	trace("::: gv_appScreenType ::: "  + this.objApp.gv_appScreenType);
+// 	trace("=============================================================================================================");
+// 	
+// 	if("Y" == cnctrDscsnPrdYn){ // 집중상담기간인 경우	
+// 		// 화면 조정
+// 		if ( this.objApp.gv_appScreenType == "M" ) { // 모바일
+// 			this.divCnctrInfo.setOffsetHeight(100);
+// 			
+// 		// text SET
+// 		var cnctrDscsnBgngYmd =  nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnBgngYmd"); // 집중상담시작일자
+// 		var cnctrDscsnEndYmd =  nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnEndYmd"); // 집중상담종료일자
+// 		
+// 		this.divCnctrInfo.form.staCnctrInfo.set_text("학교집중상담기간:\n"
+// 			+ cnctrDscsnBgngYmd.substring(0, 4) + "." + cnctrDscsnBgngYmd.substring(4, 6) + "." + cnctrDscsnBgngYmd.substring(6, 8) 
+// 			+ " ~ " 
+// 			+ cnctrDscsnEndYmd.substring(0, 4) + "." + cnctrDscsnEndYmd.substring(4, 6) + "." + cnctrDscsnEndYmd.substring(6, 8) 
+// 		);
+// 		
+// 		}else {
+// 			this.divCnctrInfo.setOffsetHeight(44);
+// 			
+// 		// text SET
+// 		var cnctrDscsnBgngYmd =  nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnBgngYmd"); // 집중상담시작일자
+// 		var cnctrDscsnEndYmd =  nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnEndYmd"); // 집중상담종료일자
+// 		
+// 		this.divCnctrInfo.form.staCnctrInfo.set_text("학교집중상담기간: "
+// 			+ cnctrDscsnBgngYmd.substring(0, 4) + "." + cnctrDscsnBgngYmd.substring(4, 6) + "." + cnctrDscsnBgngYmd.substring(6, 8) 
+// 			+ " ~ " 
+// 			+ cnctrDscsnEndYmd.substring(0, 4) + "." + cnctrDscsnEndYmd.substring(4, 6) + "." + cnctrDscsnEndYmd.substring(6, 8) 
+// 		);
+// 		
+// 		}		
+// 		
+// 
+// 	}else{
+// 		this.divCnctrInfo.setOffsetHeight(0);
+// 		if ( this.objApp.gv_appScreenType == "M" ) { // 모바일
+// 			this.Static06.setOffsetHeight(1152);
+// 			this.getOwnerFrame().form.divAll.form.divWork.setOffsetHeight(nFormHeight - 100);
+// 		}else if ( this.objApp.gv_appScreenType == "T" ) { // 태블릿
+// 			this.getOwnerFrame().form.divAll.form.divWork.setOffsetHeight(nFormHeight - 4);
+// 		}else {
+// 			this.getOwnerFrame().form.divAll.form.divWork.setOffsetHeight(nFormHeight - 49);
+// 		}		
+// 	}
+// 
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// 학교공지, 학교FAQ, 학교알림공지
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	this.doBtbShlIap(); // 학교알림공지 조회
+// 	this.doBtbShlNt(); // 학교공지 조회
+// 	this.doBtbShlFaq(); // 학교Faq 조회
+// 	
+// 
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// 상담예약 진행현황, 온라인(서면)상담 진행현황
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	this.doOnlDscsnInfo(); // 온라인(서면)상담 진행현황
+// 	this.doDscsnInfo(); // 상담예약 진행현황
+// 
+// 
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// 화면 resetScroll();
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	//this.resetScroll();
+// 	this.getOwnerFrame().form.divAll.form.resetScroll();
+// 	
+// };
+// 
+// 
+// /* 화면 사이즈 변경 */
+// this.fnAfter_onlayoutchanged = function (sLayoutID)
+// {
+// 
+// 	//화면 초기설정
+// //	this.fnInitForm();
+// 	
+// 
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// 집중상담기간
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	var nFormHeight = this.getOwnerFrame().form.divAll.form.fv_WorkFormHeight;
+// 	var cnctrDscsnPrdYn = nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnPrdYn"); // 집중상담기간여부
+// 		
+// 	//trace("=============================================================================================================");
+// 	//trace("::: nFormHeight ::: "  + nFormHeight);
+// 	//trace("sLayoutID ::: " + sLayoutID );	
+// 	//trace("cnctrDscsnPrdYn ::: " + cnctrDscsnPrdYn );	
+// 	//trace("=============================================================================================================");
+// 	
+// 	if("Y" == cnctrDscsnPrdYn){ // 집중상담기간인 경우	
+// 		// 화면 조정
+// 		if ( sLayoutID == "mobile" ) { // 모바일
+// 			this.divCnctrInfo.setOffsetHeight(100);
+// 			
+// 			// text SET
+// 			this.divCnctrInfo.form.staCnctrInfo.set_text("");
+// 			
+// 			var cnctrDscsnBgngYmd =  nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnBgngYmd"); // 집중상담시작일자
+// 			var cnctrDscsnEndYmd =  nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnEndYmd"); // 집중상담종료일자
+// 			
+// 			this.divCnctrInfo.form.staCnctrInfo.set_text("학교집중상담기간:\n"
+// 				+ cnctrDscsnBgngYmd.substring(0, 4) + "." + cnctrDscsnBgngYmd.substring(4, 6) + "." + cnctrDscsnBgngYmd.substring(6, 8) 
+// 				+ " ~ " 
+// 				+ cnctrDscsnEndYmd.substring(0, 4) + "." + cnctrDscsnEndYmd.substring(4, 6) + "." + cnctrDscsnEndYmd.substring(6, 8) 
+// 			);
+// 				
+// 		}else {
+// 			this.divCnctrInfo.setOffsetHeight(44);
+// 			
+// 			// text SET
+// 			this.divCnctrInfo.form.staCnctrInfo.set_text("");
+// 			
+// 			var cnctrDscsnBgngYmd =  nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnBgngYmd"); // 집중상담시작일자
+// 			var cnctrDscsnEndYmd =  nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnEndYmd"); // 집중상담종료일자
+// 			
+// 			this.divCnctrInfo.form.staCnctrInfo.set_text("학교집중상담기간:"
+// 				+ cnctrDscsnBgngYmd.substring(0, 4) + "." + cnctrDscsnBgngYmd.substring(4, 6) + "." + cnctrDscsnBgngYmd.substring(6, 8) 
+// 				+ " ~ " 
+// 				+ cnctrDscsnEndYmd.substring(0, 4) + "." + cnctrDscsnEndYmd.substring(4, 6) + "." + cnctrDscsnEndYmd.substring(6, 8) 
+// 			);
+// 			
+// 		}		
+// 	}else{
+// 		this.divCnctrInfo.setOffsetHeight(0);
+// 		if ( sLayoutID == "mobile") {
+// 			this.Static06.setOffsetHeight(1152);
+// 			this.getOwnerFrame().form.divAll.form.divWork.setOffsetHeight(nFormHeight - 400);
+// 		}else if ( sLayoutID == "tablet") {
+// 			this.getOwnerFrame().form.divAll.form.divWork.setOffsetHeight(nFormHeight - 4);
+// 		}else {
+// 			this.getOwnerFrame().form.divAll.form.divWork.setOffsetHeight(nFormHeight - 49);
+// 		}		
+// 	}
+// 
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// 화면 resetScroll();
+// 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	this.resetScroll();
+// 	this.getOwnerFrame().form.divAll.form.resetScroll();
+// 	
+// };
+// 
+// 
+// this.fnDisplayText = function(obj,nCell,nRow,sLongText)
+// {	
+// //	trace("=============================================================================================================");
+// //	trace("obj.get_id() ::: " + obj.id );
+// //	trace("sLongText ::: " + sLongText );
+// //	trace("sLongText.length ::: " + sLongText.length );
+// //	trace("=============================================================================================================");
+// 
+// 	var objId = obj.id;
+// 	var sSize;
+// 
+// 	if ( this.objApp.gv_appScreenType == "M" ) { // 모바일
+// 		if("grdIap" == objId){ // 학급알림공지
+// 			sSize = 30;		
+// 		}else if("grdDscsnInfo" == objId || "grdOnlDscsnInfo" == objId){ // 상담예약진행현황, 온라인(서면)상담 진행현황
+// 			sSize = 10;		
+// 		}else if("grdNt" == objId || "grdFaq" == objId){ // 공지, FAQ
+// 			sSize = 20;		
+// 		}
+// 	}else if ( this.objApp.gv_appScreenType == "T" ) { // 태블릿
+// 		if("grdIap" == objId){ // 학급알림공지
+// 			sSize = 30;		
+// 		}else if("grdDscsnInfo" == objId || "grdOnlDscsnInfo" == objId){ // 상담예약진행현황, 온라인(서면)상담 진행현황
+// 			sSize = 10;		
+// 		}else if("grdNt" == objId || "grdFaq" == objId){ // 공지, FAQ
+// 			sSize = 20;		
+// 		}	
+// 	}else {
+// 		if("grdIap" == objId){ // 학급알림공지
+// 			sSize = 20;		
+// 		}else if("grdDscsnInfo" == objId || "grdOnlDscsnInfo" == objId){ // 상담예약진행현황, 온라인(서면)상담 진행현황
+// 			sSize = 8;		
+// 		}else if("grdNt" == objId || "grdFaq" == objId){ // 공지, FAQ
+// 			sSize = 20;		
+// 		}	
+// 	}		
+// 
+// 	return this.scrDisplayText(sLongText, sSize);
+// };
+// /************************************************************************************************
+//  * CRUD 및 TRANSACTION 서비스 호출 처리
+//  ************************************************************************************************/
+//  
+// /************************************************************************************************
+//  * CALLBACK 콜백 처리부분(Transaction, Popup)
+//  ************************************************************************************************/
+//  /* 기본 트랙잭션 콜백 */
+//  this.fnTransCallback = function(svcid,errcd,errmsg){
+// 	if(errcd == -1) return;
+// };
+// 
+// /************************************************************************************************
+//  * 사용자 FUNCTION 영역
+//  ************************************************************************************************/
+// 
+// /* 학교공지 조회 */
+// this.doBtbShlNt = function()
+// {
+// 	//데이터 SET
+// 	this.dsSearch.clearData();
+// 	this.dsSearch.addRow();
+// 	this.dsSearch.setColumn(0, "shlBtbScCd", "01"); // 학교게시판구분코드 [01:학교_공지, 02:학교_학급알림, 03:학교_FQA]
+// 	
+// 	//데이터 초기화
+// 	this.dsNt.clearData();
+// 	
+// 	// 서비스 객체 생성
+// 	this.smfSearchService("listBtbShlNt")
+// 	// 실행
+// 	.run()
+// 	// 콜백
+// 	.callback(function(callbackParams){
+// 		if(callbackParams.errors){
+// 			return;
+// 		}
+// 		
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		// 처리 시작
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		// 처리 종료
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////			
+// 		
+// 	});
+// }
+// 
+// 
+// /* 학교알림공지 조회 */
+// this.doBtbShlIap = function()
+// {
+// 	//데이터 SET
+// 	this.dsSearch.clearData();
+// 	this.dsSearch.addRow();
+// 	this.dsSearch.setColumn(0, "shlBtbScCd", "02"); // 학교게시판구분코드 [01:학교_공지, 02:학교_학급알림, 03:학교_FQA]
+// 	
+// 	// 서비스 객체 생성
+// 	this.smfSearchService("listBtbShlIap")
+// 	// 실행
+// 	.run()
+// 	// 콜백
+// 	.callback(function(callbackParams){
+// 		if(callbackParams.errors){
+// 			return;
+// 		}
+// 		
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		// 처리 시작
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		// 처리 종료
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////			
+// 		
+// 	});
+// }
+// 
+// 
+// /* 학교Faq 조회 */
+// this.doBtbShlFaq = function()
+// {
+// 	//데이터 SET
+// 	this.dsSearch.clearData();
+// 	this.dsSearch.addRow();
+// 	this.dsSearch.setColumn(0, "shlBtbScCd", "03"); // 학교게시판구분코드 [01:학교_공지, 02:학교_학급알림, 03:학교_FQA]
+// 	
+// 	//데이터 초기화
+// 	this.dsFaq.clearData();
+// 	
+// 	// 서비스 객체 생성
+// 	this.smfSearchService("listBtbShlFaq")
+// 	// 실행
+// 	.run()
+// 	// 콜백
+// 	.callback(function(callbackParams){
+// 		if(callbackParams.errors){
+// 			return;
+// 		}
+// 		
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		// 처리 시작
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		// 처리 종료
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////			
+// 		
+// 	});
+// }
+// 
+// 
+// /* 시스템공지 조회 */
+// this.doBtbSysNt = function()
+// {
+// 	//데이터 초기화
+// 	this.dsNt.clearData();
+// 	
+// 	// 서비스 객체 생성
+// 	this.smfSearchService("listBtbSysNt")
+// 	// 실행
+// 	.run()
+// 	// 콜백
+// 	.callback(function(callbackParams){
+// 		if(callbackParams.errors){
+// 			return;
+// 		}
+// 		
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		// 처리 시작
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		// 처리 종료
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////			
+// 		
+// 	});
+// }
+// 
+// 
+// /* 시스템FQA 조회 */
+// this.doBtnSysFaq = function()
+// {
+// 	//데이터 초기화
+// 	this.dsFaq.clearData();
+// 	
+// 	// 서비스 객체 생성
+// 	this.smfSearchService("listBtbSysFaq")
+// 	// 실행
+// 	.run()
+// 	// 콜백
+// 	.callback(function(callbackParams){
+// 		if(callbackParams.errors){
+// 			return;
+// 		}
+// 		
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		// 처리 시작
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		// 처리 종료
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////			
+// 		
+// 	});
+// }
+// 
+// 
+// /* 온라인(서면)상담 진행현황 조회 */
+// this.doOnlDscsnInfo = function()
+// {
+// 	var sToday = this.smfToday();	//오늘 날짜
+// 	eDay = this.smfAddDate(sToday, -30);
+// 	
+// 	this.dsOnlDscsnParam.setColumn(0, 'fromValue', eDay);
+// 	this.dsOnlDscsnParam.setColumn(0, 'toValue', sToday);
+// 	this.dsOnlDscsnParam.setColumn(0, 'dscsnPrgStsCd', "99,10,20,21,30");
+// 	this.dsOnlDscsnParam.setColumn(0, 'from', "INDI");
+// 	this.dsOnlDscsnParam.setColumn(0, 'cteOrgCd', nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'cteOrgCd'));
+// 	this.dsOnlDscsnParam.setColumn(0, "instCd",  nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'shlCd')  );
+// 
+// 	/***********************************************************************************************************************
+// 	* 서비스 객체 생성 시작
+// 	************************************************************************************************************************/
+// 	this.smfSearchService("selectOnlDcmDscscnList")	
+// 	// 데이터 검증
+// //	.validateForm(this.divSearch)
+// 	// 페이징처리
+// //	.paginator(this.grd1, this.divPaginator, this.divPageSummary, this.dsPageInfo, obj, e)
+// 	.showConfirm(false)
+// 	.run()// 실행
+// 	// 콜백
+// 	.callback(function(callbackParams){
+// 		if(callbackParams.errors) return;
+// 
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		// 처리 시작
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+// 		
+// 		//trace("=============================================================================================================");
+// 		//trace("totalCount ::: " + this.dsDscsnPageInfo.getColumn(0, "totalCount") );		
+// 		//trace("=============================================================================================================");
+// 		
+// 		var totalCount = this.dsOnlDscsnPageInfo.getColumn(0, "totalCount");		
+// 		var staOnlDscsnInfoTxt = "<fs v=\'26\'>" + this.dsOnlDscsnPageInfo.getColumn(0, "totalCount") + "</fs>건";
+// 					
+// 		this.divOnlDscsnInfo.form.staOnlDscsnInfo.set_text(staOnlDscsnInfoTxt);
+// 		// 3건만 남기고 삭제처리
+// 		//for(var i = totalCount - 1; i >= 3; i-- ){							
+// 		//	this.dsOnlDscsnResult.deleteRow( i );		
+// 		//}
+// 		
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		// 처리 종료
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+// 
+// 	});	
+// 	/***********************************************************************************************************************
+// 	* 서비스 객체 생성 종료
+// 	************************************************************************************************************************/
+// }
+// 
+// 
+// /* 상담예약 진행현황 조회 */
+// this.doDscsnInfo = function()
+// {
+// 	var sToday = this.smfToday();	//오늘 날짜
+// 	eDay = this.smfAddDate(sToday, -30);
+// 	
+// 	this.dsDscsnParam.setColumn(0, 'endYmd', sToday); // 검색조건 - 종료일
+// 	this.dsDscsnParam.setColumn(0, 'bgngYmd', eDay); // 검색조건 - 시작일
+// 	this.dsDscsnParam.setColumn(0, 'dscsnRsvtPrgStsCd', "20,30,40,50,60"); // 검색조건 - 진행상태
+// 	this.dsDscsnParam.setColumn(0, 'schpaDscsnMmntScCd', '01'); // 학부모상담시기구분코드
+// 	
+// 	/***********************************************************************************************************************
+// 	* 서비스 객체 생성 시작
+// 	************************************************************************************************************************/
+// 	this.smfSearchService("selectDcmDscscnList")	
+// 	// 데이터 검증
+// //	.validateForm(this.divSearch)
+// 	// 페이징처리
+// //	.paginator(this.grd1, this.divPaginator, this.divPageSummary, this.dsPageInfo, obj, e)
+// 	.showConfirm(false)
+// 	.run()// 실행
+// 	// 콜백
+// 	.callback(function(callbackParams){
+// 		if(callbackParams.errors) return;
+// 
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		// 처리 시작
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+// 		
+// 		//trace("=============================================================================================================");
+// 		//trace("totalCount ::: " + this.dsDscsnPageInfo.getColumn(0, "totalCount") );		
+// 		//trace("=============================================================================================================");
+// 		
+// 		var totalCount = this.dsDscsnPageInfo.getColumn(0, "totalCount");		
+// 		var staDscsnInfoTxt = "<fs v=\'26\'>" + this.dsDscsnPageInfo.getColumn(0, "totalCount") + "</fs>건";
+// 					
+// 		this.divDscsnInfo.form.staDscsnInfo.set_text(staDscsnInfoTxt);
+// 		
+// 		// 3건만 남기고 삭제처리
+// 		//for(var i = totalCount - 1; i >= 3; i-- ){							
+// 		//	this.dsDscsnResult.deleteRow( i );		
+// 		//}
+// 		
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		// 처리 종료
+// 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+// 
+// 	});	
+// 	/***********************************************************************************************************************
+// 	* 서비스 객체 생성 종료
+// 	************************************************************************************************************************/
+// }
+// 
+// 
+// /************************************************************************************************
+//  * 각 COMPONENT 별 EVENT 영역
+//  ************************************************************************************************/
+// 
+// /* 학교문의 대표번호 */
+// this.divShlRprsTelno_staShlRprsTelno_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+// {
+// 	var userAgent = navigator.userAgent.toLowerCase();
+//     var isMobile = /android|iphone|ipad|mobile|nokia|blackbeerry|lgtelecom|natebrowser|sonyericsson|ipod|mobi|sm|samsung/i.test(userAgent);  // linux||macintosh|mac 조건 제거
+// 	var shlRprsTelno = nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "shlRprsTelno");
+// 		
+// 	//trace("=============================================================================================================");
+// 	//trace("userAgent ::: " +userAgent );	
+// 	//trace("shlRprsTelno ::: " + nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "shlRprsTelno") );
+// 	//trace("this.divShlRprsTelno.form.staShlRprsTelno.text ::: " +this.divShlRprsTelno.form.staShlRprsTelno.text );	
+// 	//trace("=============================================================================================================");
+// 
+// 	if(isMobile){ // 휴대폰인 경우
+// 		if("" != shlRprsTelno || "미등록" != shlRprsTelno){
+// 			document.location.href = "tel:" + shlRprsTelno;		
+// 		}
+// 	}
+// 	
+// };
+// 
+// 
+// /* 학급알림공지 상세 */
+// this.divIap_grdIap_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+// {
+// 	//trace("======================================================================================");
+// 	//trace("obj ::: " + obj );
+// 	//trace("e ::: " + e );
+// 	//trace("======================================================================================");
+// 
+// 	// 클릭한 셀을 구한다
+// 	var nRow = e.row;
+// 	var nCell = e.cell;
+// 	
+// 	// 상세화면으로 전달할 데이터 SET
+// 	var objDs = obj.getBindDataset();
+// 	var sCddcScCd = objDs.getColumn(nRow,"cddcScCd");
+// 	var sShlCd = objDs.getColumn(nRow,"shlCd");
+// 	var sClsIapSn = objDs.getColumn(nRow,"clsIapSn");
+// 	
+// 	var params = {
+// 		tabIndex:2,
+// 		cddcScCd:sCddcScCd,
+// 		shlCd:sShlCd,
+// 		ntcMteId:sClsIapSn
+// 	};
+// 	
+// 	// 상세화면 호출
+// 	this.smfSetWorkPage("pa_scr_btb_nt::scr_btbnt00_m04.xfdl", params);
+// };
+// 
+// 
+// /* 학급알림공지 더보기 */
+// this.divIap_btnIap_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	var sMenuId = "4000";
+// 	var sUrl = "pa_scr_btb_nt::scr_btbnt00_m00.xfdl";
+// 	var sText = "공지사항";
+// 	
+// 	var params = {menu : sMenuId , _url : sUrl, tabIndex : 2};
+// 	this.smfSetWorkPage(sUrl, params, null, sText);
+// };
+// 
+// 
+// /* 학교공지 탭 */
+// this.btnTabShlNt_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	//trace("=============================================================================================================");
+// 	//trace("this.btnTabShlNt.cssclass ::: " +this.btnTabShlNt.cssclass );		
+// 	//trace("=============================================================================================================");
+// 
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// css 따라 분기처리 시작
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	if("btn_MF_Tab" == this.btnTabShlNt.cssclass){ // 선택인 경우
+// 
+// 		this.btnTabShlNt.set_cssclass("btn_MF_TabN");
+// 		this.btnTabSysNt.set_cssclass("btn_MF_Tab");
+// 	
+// 		this.doBtbShlNt(); // 학교공지 조회
+// 		
+// 	}	
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// css 따라 분기처리 종료
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// };
+// 
+// 
+// /* 시스템공지 탭 */
+// this.btnTabSysNt_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	//trace("=============================================================================================================");
+// 	//trace("this.btnTabSysNt.cssclass ::: " +this.btnTabSysNt.cssclass );		
+// 	//trace("=============================================================================================================");
+// 
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// css 따라 분기처리 시작
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	if("btn_MF_Tab" == this.btnTabSysNt.cssclass){ // 선택인 경우
+// 
+// 		this.btnTabShlNt.set_cssclass("btn_MF_Tab");
+// 		this.btnTabSysNt.set_cssclass("btn_MF_TabN");
+// 
+// 		this.doBtbSysNt(); // 시스템공지 조회
+// 		
+// 	}
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// css 따라 분기처리 종료
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// };
+// 
+// 
+// /* 공지 상세 */
+// this.divNt_grdNt_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+// {
+// 	var tabIndex;
+// 	
+// 	// 학교공지, 시스템공지
+// 	if("btn_MF_TabN" == this.btnTabShlNt.cssclass){ // 학교공지인 경우
+// 		tabIndex = 0;
+// 	}else if("btn_MF_TabN" == this.btnTabSysNt.cssclass){ // 시스템공지인 경우
+// 		tabIndex = 1;	
+// 	}
+// 	
+// 	//trace("======================================================================================");
+// 	//trace("obj ::: " + obj );
+// 	//trace("e ::: " + e );
+// 	//trace("======================================================================================");
+// 
+// 	// 클릭한 셀을 구한다
+// 	var nRow = e.row;
+// 	var nCell = e.cell;
+// 	
+// 	// 제목 cell 설정
+// 	var titlNo = 0;
+// 	// 제목 클릭했을 때만 동작
+// 	if(nCell == titlNo){
+// 		// 상세화면으로 전달할 데이터 SET
+// 		var objDs = obj.getBindDataset();
+// 		var sCddcScCd = objDs.getColumn(nRow,"cddcScCd");
+// 		var sShlCd = objDs.getColumn(nRow,"shlCd");
+// 		var sNtcMteId = tabIndex == 0 ? objDs.getColumn(nRow,"ntcMteSn") : objDs.getColumn(nRow,"ntcMteId");
+// 		
+// 		var params = {
+// 			tabIndex:tabIndex,
+// 			cddcScCd:sCddcScCd,
+// 			shlCd:sShlCd,
+// 			ntcMteId:sNtcMteId
+// 		};
+// 		
+// 		// 상세화면 호출
+// 		this.smfSetWorkPage("pa_scr_btb_nt::scr_btbnt00_m04.xfdl", params);
+// 	}
+// };
+// 
+// 
+// /* 공지 더보기 */
+// this.btnNt_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	var tabIndex;
+// 	
+// 	// 학교공지, 시스템공지
+// 	if("btn_MF_TabN" == this.btnTabShlNt.cssclass){ // 학교공지인 경우
+// 		tabIndex = 0;
+// 	}else if("btn_MF_TabN" == this.btnTabSysNt.cssclass){ // 시스템공지인 경우
+// 		tabIndex = 1;	
+// 	}
+// 	
+// 	var sMenuId = "4000";
+// 	var sUrl = "pa_scr_btb_nt::scr_btbnt00_m00.xfdl";
+// 	var sText = "공지사항";
+// 	
+// 	var params = {menu : sMenuId , _url : sUrl, tabIndex : tabIndex};
+// 	this.smfSetWorkPage(sUrl, params, null, sText);
+// };
+// 
+// 
+// /* 학교FAQ 탭 */
+// this.btnTabShlFaq_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	//trace("=============================================================================================================");
+// 	//trace("this.btnTabShlFaq.cssclass ::: " +this.btnTabShlFaq.cssclass );		
+// 	//trace("=============================================================================================================");
+// 
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// css 따라 분기처리 시작
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	if("btn_MF_Tab" == this.btnTabShlFaq.cssclass){ // 선택인 경우
+// 
+// 		this.btnTabShlFaq.set_cssclass("btn_MF_TabN");
+// 		this.btnTabSysFaq.set_cssclass("btn_MF_Tab");
+// 	
+// 		this.doBtbShlFaq(); // 학교Faq 조회
+// 		
+// 	}	
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// css 따라 분기처리 종료
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// };
+// 
+// 
+// /* 시스템FAQ 탭 */
+// this.btnTabSysFaq_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	//trace("=============================================================================================================");
+// 	//trace("this.btnTabSysFaq.cssclass ::: " +this.btnTabSysFaq.cssclass );		
+// 	//trace("=============================================================================================================");
+// 
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// css 따라 분기처리 시작
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	if("btn_MF_Tab" == this.btnTabSysFaq.cssclass){ // 선택인 경우
+// 
+// 		this.btnTabShlFaq.set_cssclass("btn_MF_Tab");
+// 		this.btnTabSysFaq.set_cssclass("btn_MF_TabN");
+// 	
+// 		this.doBtnSysFaq(); // 시스템FQA 조회
+// 		
+// 	}	
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 	// css 따라 분기처리 종료
+// 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// };
+// 
+// /* FAQ 상세 */
+// this.divFaq_grdFaq_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+// {
+// 	var tabIndex;
+// 	
+// 	// 학교FAQ, 시스템FAQ
+// 	if("btn_MF_TabN" == this.btnTabShlFaq.cssclass){ // 학교FAQ인 경우
+// 		tabIndex = 0;
+// 	}else if("btn_MF_TabN" == this.btnTabSysFaq.cssclass){ // 시스템FAQ인 경우
+// 		tabIndex = 1;	
+// 	}
+// 	
+// 	//trace("======================================================================================");
+// 	//trace("obj ::: " + obj );
+// 	//trace("e ::: " + e );
+// 	//trace("======================================================================================");
+// 
+// 	// 클릭한 셀을 구한다
+// 	var nRow = e.row;
+// 	var nCell = e.cell;
+// 
+// 	// 상세화면으로 전달할 데이터 SET
+// 	var objDs = obj.getBindDataset();
+// 	var sCddcScCd = objDs.getColumn(nRow,"cddcScCd");
+// 	var sShlCd = objDs.getColumn(nRow,"shlCd");
+// 	var sFaqId = tabIndex == 0 ? objDs.getColumn(nRow,"faqSn") : objDs.getColumn(nRow,"faqId");
+// 	
+// 	var params = {
+// 		tabIndex:tabIndex,
+// 		cddcScCd:sCddcScCd,
+// 		shlCd:sShlCd,
+// 		faqId:sFaqId
+// 	};
+// 	
+// 	// 상세화면 호출
+// 	this.smfSetWorkPage("pa_scr_btb_fq::scr_btbfq00_m03.xfdl", params);
+// };
+// 
+// 
+// /* FAQ 더보기 */
+// this.btnFaq_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	var tabIndex;
+// 	
+// 	// 학교FAQ, 시스템FAQ
+// 	if("btn_MF_TabN" == this.btnTabShlFaq.cssclass){ // 학교FAQ인 경우
+// 		tabIndex = 0;
+// 	}else if("btn_MF_TabN" == this.btnTabSysFaq.cssclass){ // 시스템FAQ인 경우
+// 		tabIndex = 1;	
+// 	}
+// 	
+// 	var sMenuId = "5000";
+// 	var sUrl = "pa_scr_btb_fq::scr_btbfq00_m00.xfdl";
+// 	var sText = "FAQ";
+// 	
+// 	var params = {menu : sMenuId , _url : sUrl, tabIndex : tabIndex};
+// 	this.smfSetWorkPage(sUrl, params, null, sText);
+// };
+// 
+// 
+// /* 집중상담 신청하기 버튼 */
+// this.divCnctrInfo_btnCnctrInfo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	var sMenuId = "2020";
+// 	var sUrl = "pa_scr_ctr_ir::scr_ctrir00_m00.xfdl";
+// 	var sText = "집중상담예약";
+// 	
+// 	var params = {menu : sMenuId , _url : sUrl};
+// 	this.smfSetWorkPage(sUrl, params, null, sText);
+// };
+// 
+// 
+// /* 상시상담예약 버튼 */
+// this.btnCrInfo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	var sMenuId = "2010";
+// 	var sUrl = "pa_scr_ctr_cr::scr_ctrcr00_m00.xfdl";
+// 	var sText = "상시상담예약";
+// 	
+// 	var params = {menu : sMenuId , _url : sUrl};
+// 	this.smfSetWorkPage(sUrl, params, null, sText);
+// };
+// 
+// 
+// /* 온라인(서면)상담예약 버튼 */
+// this.btnOcInfo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	var sMenuId = "2030";
+// 	var sUrl = "pa_scr_ctr_oc::scr_ctroc00_m00.xfdl";
+// 	var sText = "온라인(서면)상담";
+// 	
+// 	var params = {menu : sMenuId , _url : sUrl};
+// 	this.smfSetWorkPage(sUrl, params, null, sText);
+// };
+// 
+// 
+// /* 온라인(서면)상담 진행현황 상세 */
+// this.divOnlDscsnInfo_grdOnlDscsnInfo_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+// {
+// 	var nRow = e.row;
+// 	var nCell = e.cell;
+// 	
+// 	//trace("======================================================================================");
+// 	//trace("nCell ::: " + nCell );
+// 	//trace("======================================================================================");
+// 
+// 	if("1" == nCell){	
+// 		var onlDscsnAplyNo = this.dsOnlDscsnResult.getColumn(e.row, "onlDscsnAplyNo");
+// 		var dscsnPrgStsCd = this.dsOnlDscsnResult.getColumn(e.row,"dscsnPrgStsCd");
+// 		this.dsOnlDscsnPageInfo.setColumn(0,"pageSize","10");
+// 		if(dscsnPrgStsCd != "10") {
+// 			var params = {menu : "2041"
+// 						  ,_url : "pa_scr_mri_cl::scr_mricl02_m01.xfdl"
+// 						  , onlDscsnAplyNo : onlDscsnAplyNo
+// 						  , from : "INDI"
+// 						  ,dsListParam : this.dsOnlDscsnParam.saveXML()
+// 						  ,dsPageInfo :this.dsOnlDscsnPageInfo.saveXML()
+// 						  ,dsResult : this.dsOnlDscsnResult.saveXML()
+// 						  };
+// 			this.smfSetWorkPage(params._url, params, null, null);
+// 		}else{
+// 			var params = {menu : "2030"
+// 						  ,_url : "pa_scr_ctr_oc::scr_ctroc00_m00.xfdl"
+// 						  , onlDscsnAplyNo : onlDscsnAplyNo 
+// 						  , flag : "OLD"
+// 						  ,dsListParam : this.dsOnlDscsnParam.saveXML()
+// 						  ,dsPageInfo :this.dsOnlDscsnPageInfo.saveXML()
+// 						  ,dsResult : this.dsOnlDscsnResult.saveXML()
+// 						  };
+// 			this.smfSetWorkPage(params._url, params, null, null);
+// 		}
+// 	
+// 	}
+// };
+// 
+// /* 온라인(서면)상담 진행현황 더보기 */
+// this.divOnlDscsnInfo_btnOnlDscsnInfo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	this.dsOnlDscsnPageInfo.setColumn(0,"pageSize","10");
+// 	var params = {menu : "3030"
+// 				  ,_url : "pa_scr_mri_cl::scr_mricl02_m00.xfdl"
+// 				  ,dsParam : this.dsOnlDscsnParam.saveXML()
+// 				  ,dsPageInfo :this.dsOnlDscsnPageInfo.saveXML()
+// 				  ,dsResultMore : this.dsOnlDscsnResult.saveXML()
+// 				  ,listFlag : "Y"
+// 				 };
+// 	var sText = "온라인(서면)상담결과";
+// 	this.smfSetWorkPage(params._url, params, null, sText);
+// };
+// 
+// 
+// /* 상담예약 진행현황 상세 */
+// this.divDscsnInfo_grdDscsnInfo_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+// {
+// 	var nRow = e.row;
+// 	var nCell = e.cell;
+// 	
+// 	//trace("======================================================================================");
+// 	//trace("nCell ::: " + nCell );
+// 	//trace("======================================================================================");
+// 
+// 	if("1" == nCell){	
+// 		var schpaDscsnDtcNo = this.dsDscsnResult.getColumn(e.row, "schpaDscsnDtcNo")
+// 		var params = {menu : "3011",_url : "pa_scr_mri_cl::scr_mricl00_m01.xfdl", schpaDscsnDtcNo : schpaDscsnDtcNo};
+// 		this.smfSetWorkPage(params._url, params, null, String(obj.text));
+// 	}
+// 
+// };
+// 
+// 
+// /* 상담예약 진행현황 더보기 */
+// this.divDscsnInfo_btnDscsnInfo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	var params = {menu : "3010",_url : "pa_scr_mri_cl::scr_mricl00_m00.xfdl"};
+// 	var sText = "상시상담예약결과";
+// 	this.smfSetWorkPage(params._url, params, null, sText);	
+// };
+// 
+// 
+// /* 서비스별이용가이드 */
+// this.divGuide_btn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	//trace("======================================================================================");
+// 	//trace("obj.id ::: " +obj.id );			
+// 	//trace("======================================================================================");
+// 	
+// 	var tabInfo = 0; 
+// 	
+// 	if("btnCrI" == obj.id){ // 상시상담안내
+// 		tabInfo = 0;
+// 	}else if("btnIrI" == obj.id){ // 집중상담안내
+// 		tabInfo = 1;
+// 	}else if("btnOrI" == obj.id){ // 온라인(서면)상담안내
+// 		tabInfo = 2;
+// 	}
+// 
+// 	// 이동
+// 	var sUrl   = "pa_scr_cmm_cm::scr_guide00.xfdl";
+// 	var params = {menu : "B005", _url:sUrl, tabIndex:tabInfo};
+// 	this.smfSetWorkPage(sUrl, params, null, obj.text);		
+// };
+
+
+this.fnDisplayText = function(obj,nCell,nRow,sLongText) {
+	return   sLongText + "expr";
+};
+
+this.divIap_grdIap_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	alert("oncellclick");
+};
+
+this.divDscsnInfo_grdDscsnInfo_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	alert("oncellclick");
+};
+
+this.divOnlDscsnInfo_grdOnlDscsnInfo_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	alert("oncellclick");
+};
+]]></Script>
+  </Form>
+</FDL>

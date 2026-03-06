@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleGridAppend" width="1280" height="720" titletext="그리드 포맷 설정 컬럼 추가 오토핏 " onload="sampleGridAppend_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280" screenid="ScreenDeskTop">
+        <Grid id="grdList" taborder="0" left="28" top="186" width="879" height="334" initvalueid="ivGrdAccessibilityOn">
+          <Formats>
+            <Format id="default"/>
+          </Formats>
+        </Grid>
+        <Button id="btnAppendContentsCol" taborder="1" text="appendContentsCol" left="959" top="199" width="159" height="45" onclick="btnAppendContentsCol_onclick" initvalueid="ivBtnAccessibilityButton"/>
+        <Button id="btn01" taborder="2" text="autofittype(&quot;col&quot;)" left="959" top="264" width="160" height="45" onclick="btn01_onclick" initvalueid="ivBtnAccessibilityButton"/>
+        <Button id="btn02" taborder="3" text="autofittype(&quot;none&quot;)" left="959" top="332" width="160" height="46" onclick="btn02_onclick" initvalueid="ivBtnAccessibilityButton"/>
+        <Static id="sta00" taborder="4" text="개요 : 그리드 포맷 ,컬럼 추가,autofit 기능 가이드&#13;&#10;&#13;&#10;1. 그리드 포맷 설정 기능  : this.fnInitGrdFormat&#13;&#10;2. 그리드 컬럼 추가 : btnAppendContentsCol.onlcik&#13;&#10;2. 그리드 autofit : autofittype(&quot;col&quot;),autofittype(&quot;none&quot;)" left="28" top="12" width="916" height="145" background="yellow" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+          <Column id="Column5" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column2"></Col>
+            <Col id="Column3">20210315</Col>
+            <Col id="Column5">Y</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    test::sampleGridColAppend.xfdl
+*  @FileName 	sampleGridColAppend.xfdl
+*  @Creator 	투비소프트
+*  @CreateDate 	2022.07.22
+*  @Desction    그리드 컬럼 추가 및 autofit = col 예제
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.07.21     	투비소프트 	               최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.sampleGridAppend_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//최초 그리드 포맷 설정.
+	this.fnInitGrdFormat(this.grdList);
+};
+// 그리드 컬럼 추가
+this.btnAppendContentsCol_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//그리드 컬럼 추가
+	var nCol = this.grdList.appendContentsCol("body");
+	//추가 컬럼 설정
+	this.grdList.setCellProperty("head",nCol,"text","컬럼 추가"+nCol);
+	this.grdList.setFormatColProperty(nCol,"size",120);	
+};
+
+//그리드 autofit 설정
+this.btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.grdList.set_autofittype("col");
+};
+//그리드 autofit 해제
+this.btn02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.grdList.set_autofittype("none");
+};
+
+//그리드 포맷 설정
+this.fnInitGrdFormat = function(objGrd)
+{
+	var strFormat = '<Formats>'
+	+ '        <Format id="default">'
+	+ '          <Columns>'
+	+ '            <Column size="40"/>'
+	+ '            <Column size="120"/>'
+	+ '            <Column size="120"/>'
+	+ '            <Column size="110"/>'
+	+ '            <Column size="72"/>'
+	+ '            <Column size="77"/>'
+	+ '          </Columns>'
+	+ '          <Rows>'
+	+ '            <Row size="36" band="head"/>'
+	+ '            <Row size="40"/>'
+	+ '          </Rows>'
+	+ '          <Band id="head">'
+	+ '            <Cell text="번호"/>'
+	+ '            <Cell col="1" text="제목"/>'
+	+ '            <Cell col="2" text="파일"/>'
+	+ '            <Cell col="3" text="등록일"/>'
+	+ '            <Cell col="4" text="조회수"/>'
+	+ '            <Cell col="5" text="공지여부" cssclass="LineNo"/>'
+	+ '          </Band>'
+	+ '          <Band id="body">'
+	+ '            <Cell text="1" displaytype="text"/>'
+	+ '            <Cell col="1" displaytype="normal" edittype="text" text="bind:Column1"/>'
+	+ '            <Cell col="2" displaytype="normal" edittype="text" text="bind:Column2"/>'
+	+ '            <Cell col="3" displaytype="date" edittype="normal" text="bind:Column3" calendardateformat="yyyy-MM-dd "/>'
+	+ '            <Cell col="4" displaytype="text" text="bind:Column4"/>'
+	+ '            <Cell col="5" displaytype="text" edittype="text" text="bind:Column5" />'
+	+ '          </Band>'
+	+ '        </Format>'
+	+ '      </Formats>';
+	
+	objGrd.set_enableredraw(false);
+		objGrd.set_enableevent(false);
+			objGrd.set_formats( strFormat );
+			objGrd.set_binddataset("dsList");
+		objGrd.set_enableevent(true);
+	objGrd.set_enableredraw(true);	
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleAuth" width="888" height="1050" titletext="권한제어 샘플" onload="form_onload">
+    <Layouts>
+      <Layout height="1050" mobileorientation="landscape" width="888" screenid="Desktop_screen">
+        <Static id="Static00" taborder="0" text="권한 제어" left="0" top="0" width="150" height="60" cssclass="sta_WF_H2_pc" fittocontents="width" accessibilityrole="heading2"/>
+        <Static id="Static01" taborder="1" left="Static00:15" top="20" width="1" height="21" cssclass="sta_WF_line" accessibilityenable="false"/>
+        <Static id="Static00_02" taborder="2" text="Authority" left="Static01:15" top="0" width="109" height="60" cssclass="sta_WF_ParaH4_pc"/>
+        <TextArea id="txaGuide" taborder="3" left="0" top="100" height="270" right="0" onchanged="txaGuide_onchanged" value="1. 추가/삭제/저장 공통버튼은 권한이 있는 버튼만 visible 됩니다.&#10;&#10;2. 조회영역의 조회버튼은 조회 권한이 있을때만 enable 됩니다.&#10;&#10;3. 모듈버튼은 this.gfnSetCommBtn(Division 명....) 함수를 통해 &#10;   공통버튼과 동일한 권한으로 제어되며 visible or enable 처리가 가능합니다.(현재는 enable)&#10;&#10;4. 부서, 사용자는 권한의 조회범위에 따라 enable 됩니다.&#10;   - 조회범위가 전체, 사업본부, 그룹일때 enable" scrolltype="horizontal" cssclass="txt_WF_Nochar"/>
+        <Div id="divSearch" taborder="4" left="0" top="txaGuide:40" height="128" text="" right="0" cssclass="div_WF_SchBar" fittocontents="height" accessibilityenable="false" tabstop="false">
+          <Layouts>
+            <Layout type="horizontal" spacing="40px 40px 40px 40px" verticalgap="24" horizontalgap="24" flexwrap="wrap">
+              <Panel id="Panel02" taborder="0" left="24" top="24" width="584" height="48" horizontalgap="24" fittocontents="height" verticalgap="16" flexgrow="1" flexwrap="wrap">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="Panel00"/>
+                  <PanelItem id="PanelItem01" componentid="Panel01"/>
+                </Contents>
+              </Panel>
+              <Button id="btnSearch" taborder="1" text="조회" cssclass="btn_WF_Sch" onclick="divSearch_btnSearch_onclick" height="48" top="24" left="744" width="120" flexgrow="0"/>
+              <Div id="divDept" taborder="2" text="div00" left="98" top="24" width="100%" height="48" url="common::cmmDeptSearch.xfdl" accessibilitylabel="[@staTit01]"/>
+              <Div id="divUser" taborder="3" text="div00" left="446" top="24" width="100%" height="48" url="common::cmmUserSearch.xfdl" uEssential="true" accessibilitylabel="[@staTit02]"/>
+              <Static id="staTit01" taborder="4" text="부서" left="24" top="24" width="74" height="48" cssclass="sta_WF_SchDetail"/>
+              <Static id="staTit02" taborder="5" text="사용자" left="divDept:24" top="24" width="74" height="48" cssclass="sta_WF_SchDetail"/>
+              <Panel id="Panel00" taborder="6" left="24" top="24" width="48%" height="48" flexgrow="1">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staTit01"/>
+                  <PanelItem id="PanelItem01" componentid="divDept"/>
+                </Contents>
+              </Panel>
+              <Panel id="Panel01" taborder="7" left="372" top="24" width="48%" height="48" flexgrow="1">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staTit02"/>
+                  <PanelItem id="PanelItem01" componentid="divUser"/>
+                </Contents>
+              </Panel>
+            </Layout>
+            <Layout name="Layout0" spacing="24px 24px 24px 24px">
+              <Button id="btnSearch" flexgrow="1"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staTitle" taborder="5" text="사용자 정보" left="40" top="divSearch:80" width="360" height="43" cssclass="sta_WF_ParaH4_pc" flexgrow="1" accessibilityrole="heading4"/>
+        <Div id="divCmmnBtn" taborder="6" top="divSearch:80" width="360" height="48" text="" right="40" flexgrow="0">
+          <Layouts>
+            <Layout type="horizontal" horizontalgap="16" flexmainaxisalign="end">
+              <Button id="btnExcelDown" taborder="0" text="엑셀다운로드" top="0" width="162" height="48" cssclass="btn_WF_ExcelDown" onclick="divCmmnBtn_btnExcelDown_onclick" left="370"/>
+              <Button id="btnExcelUp" taborder="1" text="엑셀업로드" top="0" width="145" height="48" cssclass="btn_WF_ExcelUp" onclick="divCmmnBtn_btnExcelUp_onclick" left="200"/>
+            </Layout>
+            <Layout name="Layout0" horizontalgap="8"/>
+          </Layouts>
+        </Div>
+        <Grid id="grdList" taborder="7" left="40" top="0" binddataset="dsList" autofittype="col" height="311" width="100%" tabstop="false" showcellselection="true">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="아이디"/>
+                <Cell col="1" text="성명"/>
+                <Cell col="2" text="부서"/>
+                <Cell col="3" text="비고"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:ID" displaytype="expr:dataset.getRowType(currow)=='2'?'editcontrol':'normal'" edittype="expr:dataset.getRowType(currow)=='2'?'text':'none'"/>
+                <Cell col="1" text="bind:NAME" edittype="text" displaytype="editcontrol"/>
+                <Cell col="2" text="bind:DEPARTMENT" edittype="text" displaytype="editcontrol"/>
+                <Cell col="3" text="bind:DESCRIPTION" edittype="text" displaytype="editcontrol"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Panel id="Panel00" taborder="8" left="40" top="508" height="48" fittocontents="height" width="100%" flexgrow="1" verticalgap="16" flexwrap="wrap" flexmainaxisalign="start" type="horizontal">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="staTitle"/>
+            <PanelItem id="PanelItem01" componentid="divCmmnBtn"/>
+          </Contents>
+        </Panel>
+        <Panel id="Panel01" taborder="9" left="0" top="divSearch:40" height="465" flexwrap="wrap" spacing="40px 40px 40px 40px" cssclass="pnl_WF_Detailbox" right="0" verticalgap="24" fittocontents="height">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Panel00"/>
+            <PanelItem id="PanelItem01" componentid="grdList"/>
+          </Contents>
+        </Panel>
+      </Layout>
+      <Layout height="1050" mobileorientation="Portrait" name="Layout0" type="default" width="480" screenid="mobile_small,Desktop_screen">
+        <Div id="divSearch" left="0" top="398" height="168" right="0"/>
+        <Panel id="Panel01" spacing="23px 23px 23px 23px" verticalgap="16" left="0" top="divSearch:40" height="467" right="0"/>
+        <Grid id="grdList" left="24" top="753" width="100%" height="300"/>
+        <Panel id="Panel00" left="40" top="508" width="100%" height="107"/>
+        <Div id="divCmmnBtn" width="320" top="59" height="48" right="40" flexgrow="1"/>
+        <TextArea id="txaGuide" top="104" left="0" height="270" right="0"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="SYTM_FLAG_CD" type="STRING" size="256"/>
+          <Column id="FROM_DT" type="STRING" size="256"/>
+          <Column id="TO_DT" type="STRING" size="256"/>
+          <Column id="DEPT_CD" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="LOIN_FLAG_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="SYTM_FLAG_CD" type="STRING" size="256"/>
+          <Column id="ALOG_DTTM" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+          <Column id="DEPT_CD" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="WKGD_CD" type="STRING" size="256"/>
+          <Column id="LOIN_FLAG_CD" type="STRING" size="256"/>
+          <Column id="BROWSER_CD" type="STRING" size="256"/>
+          <Column id="BROWSER_VERSION" type="STRING" size="256"/>
+          <Column id="OS_CD" type="STRING" size="256"/>
+          <Column id="OS_VERSION" type="STRING" size="256"/>
+          <Column id="SCREEN_SIZE" type="STRING" size="256"/>
+          <Column id="MOB_YN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item3" compid="divSearch.form.divDept.form.edtCode" propid="value" datasetid="dsCond" columnid="DEPT_CD"/>
+      <BindItem id="item4" compid="divSearch.form.divUser.form.edtUserId" propid="value" datasetid="dsCond" columnid="USER_ID"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleAuth.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022/09/15
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2022/09/15			TOBESOFT					최초생성
+*******************************************************************************
+*/
+ 
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	
+	// 엑셀 버튼 권한 제어
+	this.gfnSetCommBtn(this.divCmmnBtn);
+};
+
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnAdd : 추가 / cfnDel : 삭제 / cfnSave : 저장 / cfnPrint : 인쇄 / cfnExecl : 엑셀..)
+*******************************************************************************************************************************/
+//조회
+this.cfnSearch = function ()
+{
+	//TODO..
+};
+
+//추가
+this.cfnAdd = function ()
+{
+	//TODO..
+};
+
+//삭제
+this.cfnDel = function ()
+{
+	//TODO..
+};
+
+//저장
+this.cfnSave = function ()
+{
+	//TODO..
+};
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/]]></Script>
+  </Form>
+</FDL>

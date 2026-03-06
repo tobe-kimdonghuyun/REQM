@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleCalendar" width="888" height="990" titletext="캘린더" onload="form_onload">
+    <Layouts>
+      <Layout height="990" width="888" screenid="Desktop_screen,mobile_small">
+        <Static id="sta03" taborder="0" text="&lt;b v='true'&gt;- 캘린더 사용 방법&lt;/b&gt;&#13;&#10;1. div를 생성한다.&#13;&#10;2. 생성한 div에 사용할 캘린더 URL을 연결하다.&#13;&#10; - 기간달력 : common::cmmCalFT.xfdl&#13;&#10; - 월달력    : common::cmmM.xfdl&#13;&#10; - 주차달력 : common::cmmW.xfdl&#13;&#10;3. onload 이후/콤보데이터 로딩 이후  div내부 함수 setDate()함수를 호출하여 초기값을 세팅한다.&#13;&#10;&#13;&#10;&lt;b v='true'&gt;- 호출 할 수 있는 함수&lt;/b&gt; &#13;&#10; 공통함수 &#13;&#10; - this.div.form.setRequired(); // 필수설정&#13;&#10; - this.div.form.setReadOnly();//리드온리설정&#13;&#10;&#13;&#10; 각 component 별 함수&#13;&#10; - this.div.form.setDate(); // value세팅 , 주차달력/월달력 only&#13;&#10; - this.div.form.getDate(); //선택된 value가져오기 주차달력/월달력 only&#13;&#10; - this.div.form.getWeek(); //주차달력 only&#13;&#10; - this.div.form.setFromDate();//기간달력의 from date세팅 기간달력 only&#13;&#10; - this.div.form.getFromDate();//기간달력의 from date가져오기 기간달력 only&#13;&#10; - this.div.form.setToDate();//기간달력의 to date세팅 기간달력 only&#13;&#10; - this.div.form.getToDate();//기간달력의 to dater가져오기 기간달력 only" left="0" top="1090" height="330" onclick="sta03_onclick" cssclass="sta_WF_GBg01" usedecorate="true" right="20" visible="false"/>
+        <TextArea id="txaGuide" taborder="16" left="0" top="0" height="600" right="0" onchanged="txaGuide_onchanged" value="- 캘린더 사용 방법&#10;1. div를 생성한다.&#10;2. 생성한 div에 사용할 캘린더 URL을 연결하다.&#10; - 기간달력 : common::cmmCalFT.xfdl&#10; - 월달력    : common::cmmM.xfdl&#10; - 주차달력 : common::cmmW.xfdl&#10;3. onload 이후/콤보데이터 로딩 이후  div내부 함수 setDate()함수를 호출하여 초기값을 세팅한다.&#10;&#10;- 호출 할 수 있는 함수&#10; 공통함수 &#10; - this.div.form.setRequired(); // 필수설정&#10; - this.div.form.setReadOnly();//리드온리설정&#10;&#10; 각 component 별 함수&#10; - this.div.form.setDate(); // value세팅 , 주차달력/월달력 only&#10; - this.div.form.getDate(); //선택된 value가져오기 주차달력/월달력 only&#10; - this.div.form.getWeek(); //주차달력 only&#10; - this.div.form.setFromDate();//기간달력의 from date세팅 기간달력 only&#10; - this.div.form.getFromDate();//기간달력의 from date가져오기 기간달력 only&#10; - this.div.form.setToDate();//기간달력의 to date세팅 기간달력 only&#10; - this.div.form.getToDate();//기간달력의 to dater가져오기 기간달력 only" cssclass="txt_WF_Nochar" scrolltype="horizontal"/>
+        <Static id="StaDt01" taborder="1" text="주차달력" left="0" width="169" height="23" cssclass="sta_WF_Label" top="txaGuide:40"/>
+        <Div id="divWeekCal" taborder="2" text="div00" left="0" top="StaDt01:8" width="150" height="48" url="common::cmmCalW.xfdl" accessibilitylabel="[@StaDt01]"/>
+        <Button id="btnGetWCalDate" taborder="3" text="get date" left="divWeekCal:8" top="StaDt01:8" width="120" height="48" onclick="btnGetWCalDate_onclick" accessibilitylabel="[@StaDt01]"/>
+        <Button id="btnGetWCalWeek" taborder="4" text="get week" left="btnGetWCalDate:8" top="StaDt01:8" width="120" height="48" onclick="btnGetWCalWeek_onclick" accessibilitylabel="[@StaDt01]"/>
+        <Button id="btnSetWCalDate" taborder="5" text="set date" left="btnGetWCalWeek:8" top="StaDt01:8" width="120" height="48" onclick="btnSetWCalDate_onclick" accessibilitylabel="[@StaDt01]"/>
+        <Static id="StaDt02" taborder="6" text="월달력" left="0" width="169" height="23" cssclass="sta_WF_Label" top="divWeekCal:24"/>
+        <Div id="divMonthCal" taborder="7" text="div00" left="0" top="StaDt02:8" width="150" height="48" url="common::cmmCalM.xfdl" accessibilitylabel="[@StaDt02]"/>
+        <Button id="btnGetMCalM" taborder="8" text="get month" left="divMonthCal:8" top="StaDt02:8" width="120" height="48" onclick="btnGetMCalM_onclick"/>
+        <Button id="btnSetMCalM" taborder="9" text="set month" left="btnGetMCalM:8" top="StaDt02:8" width="120" height="48" onclick="btnSetMCalM_onclick" accessibilitylabel="[@StaDt02]"/>
+        <Static id="StaDt03" taborder="10" text="기간달력" left="0" width="169" height="23" cssclass="sta_WF_Label" top="divMonthCal:24"/>
+        <Div id="divFTCal" taborder="11" text="div01" left="0" top="StaDt03:8" width="330" height="48" url="common::cmmCalFT.xfdl" accessibilitylabel="[@StaDt03]"/>
+        <Button id="btnGetFTCalFDate" taborder="12" text="get from date" left="divFTCal:8" top="StaDt03:8" width="140" height="48" onclick="btnGetFTCalFDate_onclick" accessibilitylabel="[@StaDt03]"/>
+        <Button id="btnSetFTCalFDate" taborder="13" text="set from date" left="btnGetFTCalFDate:8" top="StaDt03:8" width="140" height="48" onclick="btnSetFTCalFDate_onclick" accessibilitylabel="[@StaDt03]"/>
+        <Button id="btnGetFTCalTDate" taborder="14" text="get to date" left="divFTCal:8" top="btnGetFTCalFDate:8" width="140" height="48" onclick="btnGetFTCalTDate_onclick" accessibilitylabel="[@StaDt03]"/>
+        <Button id="btnSetFTCalTDate" taborder="15" text="set to date" left="btnGetFTCalTDate:8" top="btnSetFTCalFDate:8" width="140" height="48" onclick="btnSetFTCalTDate_onclick" accessibilitylabel="[@StaDt03]"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleCalendar.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/12/07
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/12/07			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.btnGetWCalDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	alert(this.divWeekCal.form.getDate());
+};
+
+
+this.btnGetWCalWeek_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	alert(this.divWeekCal.form.getWeek());
+};
+
+this.btnSetWCalDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divWeekCal.form.setDate("20201207");
+};
+
+this.btnGetMCalM_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	alert(this.divMonthCal.form.getDate());
+};
+
+this.btnSetMCalM_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divMonthCal.form.setDate("20201207");
+};
+
+this.btnGetFTCalFDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	alert(this.divFTCal.form.getFromDate());
+};
+
+this.btnSetFTCalFDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divFTCal.form.setFromDate("20201207");
+};
+
+this.btnGetFTCalTDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	alert(this.divFTCal.form.getToDate());
+};
+
+this.btnSetFTCalTDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divFTCal.form.setToDate("20201231");
+};
+
+this.txaGuide_onchanged = function(obj:nexacro.TextArea,e:nexacro.ChangeEventInfo)
+{
+	
+};
+]]></Script>
+  </Form>
+</FDL>

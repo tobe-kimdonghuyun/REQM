@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="cmmEChartAll" width="273" height="350" titletext="cmmEChartAll" onload="form_onload">
+    <Layouts>
+      <Layout height="350" mobileorientation="landscape" width="273">
+        <WebBrowser id="webChart" taborder="0" left="0" top="0" right="0" bottom="0" visible="false" onloadcompleted="webChart_onloadcompleted" onusernotify="webChart_onusernotify"/>
+        <Div id="divChart" taborder="1" text="divChart" left="0" top="0" visible="false" right="0" bottom="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	cmmEChartAll.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022/09/05
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2022/09/05			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/********************************************************************************
+ * Form 변수선언 영역
+ ********************************************************************************/
+
+
+/********************************************************************************
+ * Form Event 영역
+ ********************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	if (system.navigatorname == "nexacro") 
+	{		
+		var sUrl = nexacro.getEnvironment().services['svcUrl'].url + "thirdParty/echarts/nexacroEchartSample.html";
+		this.webChart.set_url(sUrl);	
+		this.webChart.set_visible(true);
+	}	
+	else // 웹 접속
+	{
+		this.divChart.set_visible(true);	
+		var dom = this.fnGetDiv(this.divChart);
+		this.objChart = echarts.init(dom); 		
+	}
+};
+
+/********************************************************************************
+ * 사용자 Function 영역
+ ********************************************************************************/ 
+this.fnSetChart = function(option)
+{
+	// 런타임 접속
+	if (system.navigatorname == "nexacro") 
+	{		
+		this.objWeb = this.webChart.getProperty("window");
+		this.objWeb.callMethod("fnSetOption", JSON.stringify(option));
+	}	
+	else // 웹 접속
+	{
+		this.objChart.setOption(option);        
+		
+		var formObj = this;
+		this.objChart.on('click', function (params) {
+			var strInfos = " 클릭\n";
+			for(var n in params) {
+				if(params[n]) {
+					strInfos += n + " : " + params[n] + "\n";
+				}
+			}
+			
+			formObj.alert(strInfos);
+		});		
+		
+	}
+}
+
+this.fnResize = function()
+{
+	// 런타임 접속
+	if (system.navigatorname == "nexacro") 
+	{		
+		this.objWeb.callMethod("fnResize");
+	}	
+	else // 웹 접속
+	{
+		this.objChart.resize();
+	}	
+}
+
+this.fnGetDiv = function(obj)
+{
+	var elementId = obj.getElement().handle.id.replace(/[.]/g, '\\.');
+
+// 	var dom = document.querySelector("#" + elementId +" #nexacontainer.nexainnercontainer");
+// 	if(dom == null) {
+// 		dom = document.querySelector("#" + elementId +" #nexacontainer");
+// 	}
+	
+	//20230208 hj 변경
+	var dom = document.querySelector("#" + elementId + " .nexacontainer");
+
+	return dom;
+} 
+/********************************************************************************
+ * Component Event 영역
+ ********************************************************************************/ 
+
+this.webChart_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+//	trace("webChart_onloadcompleted");
+	this.parent.parent.fnReady();
+};
+
+this.webChart_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	var rtn = e.userdata.split("|");
+	
+	if (rtn[0] == "click")
+	{
+		this.alert("webChart_onusernotify "+ rtn[1]);
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

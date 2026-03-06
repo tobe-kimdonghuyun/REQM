@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="samplePopup" width="888" height="3660" titletext="팝업 샘플" onload="form_onload">
+    <Layouts>
+      <Layout height="3660" mobileorientation="landscape" width="888" screenid="Desktop_screen">
+        <Static id="staH2" taborder="0" text="팝업" left="0" top="0" width="70" height="60" cssclass="sta_WF_H2_pc" fittocontents="width" accessibilityrole="heading2"/>
+        <Static id="Static01" taborder="1" left="staH2:15" top="20" width="1" height="21" cssclass="sta_WF_line" accessibilityenable="false"/>
+        <Static id="Static00_02" taborder="2" text="Popup" left="Static01:15" top="0" width="109" height="60" cssclass="sta_WF_ParaH4_pc"/>
+        <Panel id="Panel02" taborder="3" left="0" top="100" height="580" spacing="40px" flexwrap="wrap" cssclass="pnl_WF_Detailbox" verticalgap="20" right="0" fittocontents="height">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Panel00"/>
+            <PanelItem id="PanelItem02" componentid="TextArea00"/>
+          </Contents>
+        </Panel>
+        <Panel id="Panel00" taborder="4" left="0" top="0" width="100%" height="48" flexwrap="wrap" verticalgap="16" fittocontents="height">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="staTitle00"/>
+            <PanelItem id="PanelItem01" componentid="btnShowModal"/>
+          </Contents>
+        </Panel>
+        <Static id="staTitle00" taborder="5" text="모달팝업&lt;fs v='12'&gt;(callback - string)&lt;/fs&gt;" left="40" top="125" width="600" height="42" cssclass="sta_WF_H4_pc" usedecorate="true" flexgrow="1" accessibilityrole="heading4"/>
+        <Button id="btnShowModal" taborder="6" text="show" top="125" width="90" height="48" onclick="btnShowModal_onclick" right="40"/>
+        <TextArea id="TextArea00" taborder="7" left="848" top="231" width="100%" height="420" value="var sTitle = &quot;모달팝업(Default)&quot;;&#10;&#9;var oArg   = {pvString:&quot;abcdedd&quot;, pvNumber:555555, pvDataset:this.dsData};&#10;&#9;var oOption = {&#10;&#9;&#9;top:100&#10;&#9;&#9;,left:100&#9;&#9;&#9;//top,left 지정하지않음 center,middle 적용&#10;&#9;&#9;,width:700&#10;&#9;&#9;,height:300&#9;&#9;&#9;//width,height 지정하지 않음 popup form size적용&#10;&#9;&#9;,popuptype:&quot;modal&quot;&#9;//modal,modaless&#10;&#9;&#9;,autosize:false&#10;&#9;&#9;,title:sTitle&#10;&#9;&#9;,resize:false&#10;&#9;&#9;,titlebar:true};&#10;&#9;var sPopupCallBack = &quot;fnPopupCallback&quot;;&#10;&#9;this.gfnOpenPopup(&quot;popupModalDefault&quot;, &quot;sample::samplePopupP.xfdl&quot;, oArg, sPopupCallBack, oOption);" scrolltype="horizontal" scrollbartype="default none" cssclass="txt_WF_Nochar"/>
+        <Panel id="Panel04" taborder="8" left="0" top="Panel02:40" height="622" spacing="40px" verticalgap="20" flexwrap="wrap" cssclass="pnl_WF_Detailbox" fittocontents="height" right="0">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Panel05"/>
+            <PanelItem id="PanelItem01" componentid="TextArea01"/>
+          </Contents>
+        </Panel>
+        <Panel id="Panel05" taborder="9" left="0" top="0" width="100%" height="48" fittocontents="height" flexwrap="wrap" verticalgap="16">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="staTitle00_00"/>
+            <PanelItem id="PanelItem01" componentid="btnShowModalFun"/>
+          </Contents>
+        </Panel>
+        <Static id="staTitle00_00" taborder="10" text="모달팝업&lt;fs v='12'&gt;(callback -function)&lt;/fs&gt;" left="40" top="724" width="500" height="42" cssclass="sta_WF_H4_pc" usedecorate="true" flexgrow="1" accessibilityrole="heading4"/>
+        <Button id="btnShowModalFun" taborder="11" text="show" top="724" width="90" height="48" onclick="btnShowModalFun_onclick" right="40"/>
+        <TextArea id="TextArea01" taborder="12" left="767" top="851" width="100%" height="472" value="var sTitle = &quot;모달팝업(callback-Function)&quot;;&#10;&#9;var oArg   = {pvString:&quot;abcdedd&quot;, pvNumber:555555, pvDataset:this.dsData};&#10;&#9;var oOption = {&#10;&#9;&#9;popuptype:&quot;modal&quot;&#9;//modal,modaless&#10;&#9;&#9;,autosize:true&#10;&#9;&#9;,title:sTitle&#10;&#9;&#9;,resize:true&#10;&#9;&#9;,titlebar:true};&#10;&#9;this.gfnOpenPopup(&quot;popupModalFunc&quot;, &quot;sample::samplePopupP.xfdl&quot;, oArg, function(sPopupId, sRtn){&#10;&#9;&#9;trace(&quot;callback 함수를 function object로 지정&quot;);&#10;&#9;&#9;var rtn = JSON.parse(sRtn);&#10;&#9;&#9;this.dsRtn.loadXML(rtn.rtnPvDataset);&#10;&#9;&#9;trace(&quot;sPopupId : &quot; + sPopupId +&quot; 2. rtnPvString : &quot; + rtn.rtnPvString + &quot; 3. rtnPvNumber : &quot; + rtn.rtnPvNumber);&#10;&#9;//trace(this.dsRtn.saveXML());&#10;    }, oOption);" scrolltype="horizontal" cssclass="txt_WF_Nochar"/>
+        <Panel id="Panel09" taborder="13" left="0" top="Panel04:40" height="596" flexwrap="wrap" spacing="40px" cssclass="pnl_WF_Detailbox" verticalgap="20" fittocontents="height" right="0">
+          <Contents>
+            <PanelItem id="PanelItem01" componentid="Panel08"/>
+            <PanelItem id="PanelItem00" componentid="TextArea02"/>
+          </Contents>
+        </Panel>
+        <Panel id="Panel08" taborder="14" left="40" top="1396" width="99.75186104218362%" height="48" verticalgap="16" flexwrap="wrap" fittocontents="height">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Panel06"/>
+            <PanelItem id="PanelItem01" componentid="Panel07"/>
+          </Contents>
+        </Panel>
+        <Panel id="Panel06" taborder="15" left="40" top="1521" width="396" height="42" flexcrossaxisalign="center" horizontalgap="16" flexgrow="1" flexwrap="wrap" fittocontents="height">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="staTitle00_00_00"/>
+            <PanelItem id="PanelItem01" componentid="chkDualMonitor"/>
+          </Contents>
+        </Panel>
+        <Static id="staTitle00_00_00" taborder="16" text="모달리스팝업&lt;fs v='12'&gt;(callback -String)&lt;/fs&gt;" left="40" top="1521" width="273" height="42" cssclass="sta_WF_H4_pc" usedecorate="true" accessibilityrole="heading4"/>
+        <CheckBox id="chkDualMonitor" taborder="17" text="듀얼 모니터" left="273" top="1525" width="123" height="34"/>
+        <Panel id="Panel07" taborder="18" left="600" top="1518" width="218" height="48" horizontalgap="8" flexgrow="0">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="btnShowModaless"/>
+            <PanelItem id="PanelItem01" componentid="btnCallPopup"/>
+          </Contents>
+        </Panel>
+        <Button id="btnShowModaless" taborder="19" text="show" top="1518" width="90" height="48" onclick="btnShowModaless_onclick" right="168"/>
+        <Button id="btnCallPopup" taborder="20" text="팝업 호출" top="1518" width="120" height="48" onclick="btnCallPopup_onclick" right="40"/>
+        <TextArea id="TextArea02" taborder="21" left="40" top="40" width="100%" height="446" value="var sTitle = &quot;모달리스(callback-Function)&quot;;&#10;&#9;var oArg   = {pvString:&quot;abcdedd&quot;, pvNumber:555555, pvDataset:this.dsData};&#10;&#9;var oOption = {&#10;&#9;&#9;popuptype:&quot;modeless&quot;&#9;//modal,modaless&#10;&#9;&#9;,title:sTitle&#10;&#9;&#9;,resize:true&#10;&#9;&#9;,titlebar:false};&#10;&#9;this.gfnOpenPopup(&quot;popupModalessFunc&quot;, &quot;sample::samplePopupP.xfdl&quot;, oArg, function(sPopupId, sRtn){&#10;&#9;&#9;trace(&quot;callback 함수를 function object로 지정&quot;);&#10;&#9;&#9;var rtn = JSON.parse(sRtn);&#10;&#9;&#9;this.dsRtn.loadXML(rtn.rtnPvDataset);&#10;&#9;&#9;trace(&quot;sPopupId : &quot; + sPopupId +&quot; 2. rtnPvString : &quot; + rtn.rtnPvString + &quot; 3. rtnPvNumber : &quot; + rtn.rtnPvNumber);&#10;&#9;&#9;//trace(this.dsRtn.saveXML());&#10;&#9;}, oOption);" scrolltype="horizontal" cssclass="txt_WF_Nochar"/>
+        <Panel id="Panel11" taborder="22" left="0" top="Panel09:40" height="596" verticalgap="20" flexwrap="wrap" spacing="40px" cssclass="pnl_WF_Detailbox" right="0" fittocontents="height">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Panel10"/>
+            <PanelItem id="PanelItem01" componentid="TextArea03"/>
+          </Contents>
+        </Panel>
+        <Panel id="Panel10" taborder="23" left="40" top="2036" width="100%" height="48" verticalgap="16" flexwrap="wrap" fittocontents="height">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="staTitle00_00_00_00"/>
+            <PanelItem id="PanelItem01" componentid="btnShowModalessFunc"/>
+          </Contents>
+        </Panel>
+        <Static id="staTitle00_00_00_00" taborder="24" text="모달리스팝업&lt;fs v='12'&gt;(callback -Function)&lt;/fs&gt;" left="40" top="2036" width="293" height="42" cssclass="sta_WF_H4_pc" usedecorate="true" flexgrow="1" accessibilityrole="heading4"/>
+        <Button id="btnShowModalessFunc" taborder="25" text="show" top="2046" height="48" onclick="btnShowModalessFunc_onclick" width="90" right="40"/>
+        <TextArea id="TextArea03" taborder="26" left="831" top="2186" width="100%" height="446" value="var sTitle = &quot;모달리스(callback-Function)&quot;;&#10;&#9;var oArg   = {pvString:&quot;abcdedd&quot;, pvNumber:555555, pvDataset:this.dsData};&#10;&#9;var oOption = {&#10;&#9;&#9;popuptype:&quot;modeless&quot;&#9;//modal,modaless&#10;&#9;&#9;,title:sTitle&#10;&#9;&#9;,resize:true&#10;&#9;&#9;,titlebar:false};&#10;&#9;this.gfnOpenPopup(&quot;popupModalessFunc&quot;, &quot;sample::samplePopupP.xfdl&quot;, oArg, function(sPopupId, sRtn){&#10;&#9;&#9;trace(&quot;callback 함수를 function object로 지정&quot;);&#10;&#9;&#9;var rtn = JSON.parse(sRtn);&#10;&#9;&#9;this.dsRtn.loadXML(rtn.rtnPvDataset);&#10;&#9;&#9;trace(&quot;sPopupId : &quot; + sPopupId +&quot; 2. rtnPvString : &quot; + rtn.rtnPvString + &quot; 3. rtnPvNumber : &quot; + rtn.rtnPvNumber);&#10;&#9;&#9;//trace(this.dsRtn.saveXML());&#10;&#9;}, oOption);" scrolltype="horizontal" cssclass="txt_WF_Nochar"/>
+        <Panel id="Panel13" taborder="27" left="0" top="Panel11:40" height="768" spacing="40px" cssclass="pnl_WF_Detailbox" right="0" flexwrap="wrap" fittocontents="height" verticalgap="20">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Panel12"/>
+            <PanelItem id="PanelItem01" componentid="TextArea04"/>
+          </Contents>
+        </Panel>
+        <Panel id="Panel12" taborder="28" left="40" top="2810" width="100%" height="48" fittocontents="height" flexwrap="wrap" verticalgap="16">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="staTitleShowModalPromise"/>
+            <PanelItem id="PanelItem01" componentid="btnShowModalPromise"/>
+          </Contents>
+        </Panel>
+        <Static id="staTitleShowModalPromise" taborder="29" text="모달팝업&lt;fs v='12'&gt;(Promise)&lt;/fs&gt;" left="40" top="2810" width="295" height="42" cssclass="sta_WF_H4_pc" usedecorate="true" flexgrow="1" accessibilityrole="heading4"/>
+        <Button id="btnShowModalPromise" taborder="30" text="show" top="2810" height="48" width="90" right="40" onclick="btnShowModalPromise_onclick"/>
+        <TextArea id="TextArea04" taborder="31" left="847" top="2753" width="100%" height="618" value="var sTitle = &quot;모달팝업(Promise)&quot;;&#10;var oArg   = {pvString:&quot;abcdedd&quot;, pvNumber:555555, pvDataset:this.dsData};&#10;var oOption = {&#10;&#9;top:100&#10;&#9;,left:100&#9;&#9;&#9;//top,left 지정하지않음 center,middle 적용&#10;&#9;,width:700&#10;&#9;,height:394&#9;&#9;&#9;//width,height 지정하지 않음 popup form size적용&#10;&#9;,popuptype:&quot;modal&quot;&#9;//modal,modaless&#10;&#9;,autosize:false&#10;&#9;,title:sTitle&#10;&#9;,resize:false&#10;&#9;,titlebar:true };&#10;&#10;// Promise 객체 return 받은 뒤 .then() &#10;var oProm = this.gfnOpenPopupPromise(&quot;popupModalDefault&quot;, &quot;sample::samplePopupPPromise.xfdl&quot;, oArg, null, oOption);&#10;oProm.then(function(e) {&#10;&#9;var resultDate = e.data;&#10;&#9;if(e.data) {&#10;&#9;&#9;trace(&quot;e.data.text ::: &quot; + e.data.text);&#10;&#9;}&#10;&#9;}&#10;);" scrolltype="horizontal" cssclass="txt_WF_Nochar"/>
+        <Static id="staBg05" taborder="32" left="0" top="Panel13:40" height="128" cssclass="sta_WF_Detailbox" right="0" accessibilityenable="false" accessibilityrole="none"/>
+        <Button id="btnShowDebug" taborder="33" text="show debug" top="Panel13:80" width="200" height="48" onclick="btnShowDebug_onclick" right="40" cssclass="btn_WF_Custom"/>
+      </Layout>
+      <Layout height="3620" mobileorientation="Portrait" name="Layout0" type="default" width="480" screenid="Desktop_screen,mobile_small">
+        <Button id="btnShowModaless" top="959" width="120" height="48" right="168"/>
+        <Button id="btnCallPopup" top="959" width="120" height="48" right="40"/>
+        <Panel id="Panel02" spacing="23px" left="0" top="100" height="594" right="0"/>
+        <Panel id="Panel00" left="0" top="0" width="432" height="48" flexgrow="1"/>
+        <Static id="staTitle00_00" left="40" top="724" width="64.81481481481481%" height="42" text="모달팝업&lt;fs v='12'&gt;(callback -function)&lt;/fs&gt;" cssclass="sta_WF_H4_m"/>
+        <Panel id="Panel04" spacing="23px" left="0" top="Panel02:40" height="646" right="0"/>
+        <Panel id="Panel05" left="0" top="0" width="432" height="48" flexgrow="1"/>
+        <Panel id="Panel09" spacing="23px" left="0" top="Panel04:40" height="620" right="0"/>
+        <Panel id="Panel08" left="40" top="1396" width="432" height="106" flexgrow="1"/>
+        <Panel id="Panel11" spacing="23px"/>
+        <Panel id="Panel10" left="40" top="2036" width="100%" height="48" flexgrow="1"/>
+        <Panel id="Panel13" spacing="23px" left="0" top="Panel11:40" height="734" right="0"/>
+        <Static id="staTitle00" width="64.81481481481481%" left="40" top="125" height="42" cssclass="sta_WF_H4_m"/>
+        <Static id="staTitle00_00_00" width="63.19444444444444%" cssclass="sta_WF_H4_m"/>
+        <Static id="staTitle00_00_00_00" width="67.82407407407408%" cssclass="sta_WF_H4_m"/>
+        <Static id="staTitleShowModalPromise" width="68.28703703703704%" cssclass="sta_WF_H4_m"/>
+        <Panel id="Panel12" flexgrow="1"/>
+        <Static id="staH2" cssclass="sta_WF_H2_m" width="50" left="0" top="0" height="60"/>
+        <Static id="Static00_02" right="0" left="Static01:15" top="0" height="60" cssclass="sta_WF_ParaH4_m"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	samplePopup.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/11/26
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/11/26			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+this.fnPopupCallback = function (sPopupId, sRtn)
+{
+	if(!this.gfnIsNull(sRtn))
+	{
+		var objRtn = JSON.parse(sRtn);
+		if(this.gfnIsNull(objRtn)) return;
+		
+		if(!this.gfnIsNull(objRtn.rtnId))
+		{
+			trace(" 1. rtnId : " + objRtn.rtnId);
+		}
+		if(!this.gfnIsNull(objRtn.rtnName)) 
+		{
+			trace(" 2. rtnName : " + objRtn.rtnName);
+		}
+		if(!this.gfnIsNull( objRtn.rtnDepartment))
+		{
+			trace(" 3. rtnDepartment : " + objRtn.rtnDepartment);
+		}	
+		if(!this.gfnIsNull( objRtn.rtnDescription))
+		{
+			trace(" 4. rtnDescription : " + objRtn.rtnDescription);
+		}
+	}
+};
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+this.fnChildCallee = function()
+{
+	trace("나는 부모 " + arguments);
+}
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.btnShowModal_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sTitle = "모달팝업(Default)";
+	var oArg   = {pvString:"abcdedd", pvNumber:555555, pvDataset:this.dsData};
+	var oOption = {
+		top:100
+		,left:100			//top,left 지정하지않음 center,middle 적용
+		,width:800
+		,height:685			//width,height 지정하지 않음 popup form size적용
+		,popuptype:"modal"	//modal,modaless
+		,autosize:false
+		,title:sTitle
+		,resize:false
+		,titlebar:true};
+	var sPopupCallBack = "fnPopupCallback";
+	this.gfnOpenPopup("popupModalDefault", "sample::samplePopupP.xfdl", oArg, sPopupCallBack, oOption);
+};
+
+this.btnShowModalFun_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sTitle = "모달팝업(callback-Function)";
+	var oArg   = {pvString:"abcdedd", pvNumber:555555, pvDataset:this.dsData};
+	var oOption = {
+		popuptype:"modal"	//modal,modaless
+		,autosize:true
+		,title:sTitle
+		,resize:true
+		,titlebar:true};
+	this.gfnOpenPopup("popupModalFunc", "sample::samplePopupP.xfdl", oArg, function(sPopupId, sRtn){
+																				if(!this.gfnIsNull(sRtn))
+																				{
+																					var objRtn = JSON.parse(sRtn);
+																					if(this.gfnIsNull(objRtn)) return;
+																					
+																					if(!this.gfnIsNull(objRtn.rtnId))
+																					{
+																						trace(" 1. rtnId : " + objRtn.rtnId);
+																					}
+																					if(!this.gfnIsNull(objRtn.rtnName)) 
+																					{
+																						trace(" 2. rtnName : " + objRtn.rtnName);
+																					}
+																					if(!this.gfnIsNull( objRtn.rtnDepartment))
+																					{
+																						trace(" 3. rtnDepartment : " + objRtn.rtnDepartment);
+																					}	
+																					if(!this.gfnIsNull( objRtn.rtnDescription))
+																					{
+																						trace(" 4. rtnDescription : " + objRtn.rtnDescription);
+																					}
+																				}
+																			}, oOption);
+};
+
+this.btnShowModaless_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sTitle = "모달리스(Default)";
+	var oArg   = {pvString:"abcdedd", pvNumber:555555, pvDataset:this.dsData};
+	var oOption = {
+		width:800
+		,height:685			//모달리스는 width,height 필수지정
+		,popuptype:"modeless"
+		,dual:this.chkDualMonitor.value
+		,autosize:false
+		,title:sTitle
+		,resize:false
+		,titlebar:true		
+		};
+	var sPopupCallBack = "fnPopupCallback";
+	this.gfnOpenPopup("popupModaless", "sample::samplePopupP.xfdl", oArg, sPopupCallBack, oOption);
+};
+
+this.btnCallPopup_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var oOption = {
+		pvString :"123"
+		}
+	nexacro.getPopupFrames()["popupModaless"].form.fnParentCallee(oOption, 456);
+
+};
+
+this.btnShowModalessFunc_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sTitle = "모달리스(callback-Function)";
+	var oArg   = {pvString:"abcdedd", pvNumber:555555, pvDataset:this.dsData};
+	var oOption = {
+		popuptype:"modeless"	//modal,modaless
+		,title:sTitle
+		,resize:true
+		,titlebar:false
+		};
+	this.gfnOpenPopup("popupModalessFunc", "sample::samplePopupP.xfdl", oArg, function(sPopupId, sRtn){
+																				if(!this.gfnIsNull(sRtn))
+																				{
+																					var objRtn = JSON.parse(sRtn);
+																					if(this.gfnIsNull(objRtn)) return;
+																					
+																					if(!this.gfnIsNull(objRtn.rtnId))
+																					{
+																						trace(" 1. rtnId : " + objRtn.rtnId);
+																					}
+																					if(!this.gfnIsNull(objRtn.rtnName)) 
+																					{
+																						trace(" 2. rtnName : " + objRtn.rtnName);
+																					}
+																					if(!this.gfnIsNull( objRtn.rtnDepartment))
+																					{
+																						trace(" 3. rtnDepartment : " + objRtn.rtnDepartment);
+																					}	
+																					if(!this.gfnIsNull( objRtn.rtnDescription))
+																					{
+																						trace(" 4. rtnDescription : " + objRtn.rtnDescription);
+																					}
+																				}
+																			}, oOption);
+};
+
+this.btnShowDebug_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var oOption = {
+		popuptype:"modeless"	//modal,modaless
+		,title:"DEBUG"
+		,resize:true
+		,titlebar:true};
+	this.gfnOpenPopup("debug", "common::cmmDebug.xfdl", null, "", oOption);
+};
+
+
+this.btnShowModalPromise_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sTitle = "모달팝업(Promise)";
+	var oArg   = {pvString:"abcdedd", pvNumber:555555, pvDataset:this.dsData};
+	var oOption = {
+		top:100
+		,left:100			//top,left 지정하지않음 center,middle 적용
+		,width:800
+		,height:685			//width,height 지정하지 않음 popup form size적용
+		,popuptype:"modal"	//modal,modaless
+		,autosize:false
+		,title:sTitle
+		,resize:false
+		,titlebar:true };
+	
+	// Promise 객체 return 받은 뒤 .then() 
+	var oProm = this.gfnOpenPopupPromise("popupModalDefault", "sample::samplePopupPPromise.xfdl", oArg, null, oOption);
+	oProm.then(function(e) {
+		var resultData = e.data;
+		if(resultData) {
+			for(var key in resultData.rtnValue) {
+				trace("data :: " + resultData.rtnValue[key]);
+			}
+		}
+		}
+	);
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsData">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">동해물과</Col>
+            <Col id="Column1">무궁화</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">백두산이</Col>
+            <Col id="Column1">삼천리</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">마르고</Col>
+            <Col id="Column1">화려강산</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">닳도록</Col>
+            <Col id="Column1">대한사람</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">하느님이</Col>
+            <Col id="Column1">대한으로</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">보우하사</Col>
+            <Col id="Column1">길이 </Col>
+          </Row>
+          <Row>
+            <Col id="Column0">우리나라만세</Col>
+            <Col id="Column1">보전하세</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRtn"/>
+    </Objects>
+  </Form>
+</FDL>

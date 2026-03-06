@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="hes_cptra02_m00" left="0" top="0" width="1200" height="639" titletext="강사게시표교습비등게시표조회출력" onload="fnOnload" oninit="fnOninit">
+    <Layouts>
+      <Layout screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="65" height="54" text="" right="0" tabstop="false" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="강사게시표 교습비 등 게시표 조회 출력" left="0" top="0" height="54" cssclass="img_WF_SubTit01" width="550" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divInstutInfo00" taborder="1" left="0" top="145" right="0" text="" initvalueid="ivDivAccessibilityOff" height="425">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="img00" taborder="0" text="학원선택" left="0" top="0" width="110" height="30" cssclass="img_WF_SubTit04" initvalueid="ivTitleAccessibilityOn"/>
+              <Static id="sta00_00_01_01" taborder="1" left="img00:0" top="6" height="23" text="※ 학원목록을 선택하십시오." wordWrap="char" width="207" cssclass="sta_WF_Black14" initvalueid="ivStcAccessibilityOn" usedecorate="false"/>
+              <Grid id="grdInstutInfo" taborder="2" binddataset="dsList" left="1" top="40" height="385" autofittype="col" autosizingtype="none" right="0" oncellclick="divInstutInfo00_grdInstutInfo_oncellclick" initvalueid="ivGrdAccessibilityOn" selecttype="cell">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="40"/>
+                      <Column size="150"/>
+                      <Column size="200"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="80"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="선택"/>
+                      <Cell col="1" text="관할청" edittype="none"/>
+                      <Cell col="2" text="학원명"/>
+                      <Cell col="3" text="등록번호"/>
+                      <Cell col="4" text="전화번호"/>
+                      <Cell col="5" text="개원일" cssclass="LineNo"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:_chk" edittype="checkbox" displaytype="checkboxcontrol"/>
+                      <Cell col="1" text="bind:kornOrgNm" textAlign="center"/>
+                      <Cell col="2" text="bind:acaNm" cursor="pointer"/>
+                      <Cell col="3" text="bind:regDsgnNo" textAlign="center"/>
+                      <Cell col="4" text="bind:faTelno" textAlign="center"/>
+                      <Cell col="5" text="bind:etbYmd" edittype="none" calendardateformat="yyyy.MM.dd." textAlign="center" calendareditformat="yyyy.MM.dd." displaytype="date" cssclass="LineNo"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="Static99_00_00_00_00_00_00" taborder="3" left="0" top="30" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff" onclick="divInstutInfo00_Static99_00_00_00_00_00_00_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtn" taborder="2" left="0" top="599" height="40" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Button id="btnInsrPstChit" taborder="0" text="강사게시표" top="0" height="40" width="120" cssclass="btn_WF_Action" right="170" initvalueid="ivBtnAccessibilityButton" onclick="divBtn_btnInsrPstChit_onclick"/>
+              <Button id="btnThccPstChit" taborder="1" text="교습비등 게시표" top="0" height="40" width="160" cssclass="btn_WF_Action" right="0" initvalueid="ivBtnAccessibilityButton" onclick="divBtn_btnThccPstChit_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static99_00_00_00_00" taborder="3" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01" taborder="4" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_00_00_00" taborder="5" left="0" top="570" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsList=dsList</Col>
+            <Col id="asynctp"/>
+            <Col id="url">hes_mle_bb00_001.do</Col>
+            <Col id="id">listChkTheBBOtpt</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cteOfcdcCd" type="STRING" size="256" sumtext="관할교육청코드"/>
+          <Column id="acaNm" type="STRING" size="256" sumtext="학원명"/>
+          <Column id="acaDsgnNo" type="STRING" size="256" sumtext="학원지정번호"/>
+          <Column id="regDsgnNo" type="STRING" size="256" sumtext="등록지정번호"/>
+          <Column id="faTelno" type="STRING" size="256" sumtext="시설전화번호"/>
+          <Column id="etbYmd" type="STRING" size="256" sumtext="개설일자"/>
+          <Column id="kornOrgNm" type="STRING" size="256" sumtext="조직명"/>
+          <Column id="realmScCd" type="STRING" size="256" sumtext="분야구분코드"/>
+          <Column id="realmScCodeNm" type="STRING" size="256" sumtext="분야구분명"/>
+          <Column id="acaKndNm" type="STRING" size="256" sumtext="학원종류명"/>
+          <Column id="kornOrgNm" type="STRING" size="256" sumtext="관할교육청명"/>
+          <Column id="acaInstiScCd" type="STRING" size="256" sumtext="학원교습소구분코드"/>
+          <Column id="_chk" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="atptOfcdcOrgCode" type="STRING" size="256" sumtext="시도교육청코드"/>
+          <Column id="fouRrnEncpt" type="STRING" size="256" sumtext="주민등록번호"/>
+          <Column id="fouKraName" type="STRING" size="256" sumtext="성명"/>
+          <Column id="acaInstiScCd" type="STRING" size="256" sumtext="학원교습소구분코드"/>
+          <Column id="acaDsgnNo" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cteOfcdcCd" type="STRING" size="256" sumtext="관할교육청코드"/>
+          <Column id="acaNm" type="STRING" size="256" sumtext="학원명"/>
+          <Column id="acaDsgnNo" type="STRING" size="256" sumtext="학원지정번호"/>
+          <Column id="regDsgnNo" type="STRING" size="256" sumtext="등록지정번호"/>
+          <Column id="faTelno" type="STRING" size="256" sumtext="시설전화번호"/>
+          <Column id="etbYmd" type="STRING" size="256" sumtext="개설일자"/>
+          <Column id="kornOrgNm" type="STRING" size="256" sumtext="조직명"/>
+          <Column id="realmScCd" type="STRING" size="256" sumtext="분야구분코드"/>
+          <Column id="realmScCodeNm" type="STRING" size="256" sumtext="분야구분명"/>
+          <Column id="acaKndNm" type="STRING" size="256" sumtext="학원종류명"/>
+          <Column id="kornOrgNm" type="STRING" size="256" sumtext="관할교육청명"/>
+          <Column id="acaInstiScCd" type="STRING" size="256" sumtext="학원교습소구분코드"/>
+          <Column id="_chk" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  대국민 - 강사게시표 교습비 등 게시표 조회 출력
+*  @MenuPath    TEMPLATE
+*  @FileName 	hes_mlebb00_m00.xfdl
+*  @Creator 	최경진
+*  @CreateDate 	2023.02.03
+*  @Desction    강사게시표 교습비 등 게시표 조회 출력
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.02.03     	최경진 	        최초 생성 
+*******************************************************************************
+*/
+include "lib::cm_script.xjs"
+include "lib::hes_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ //화면 접근 시 로그인정보 확인
+this.fnOninit = function(obj:nexacro.Form,e:nexacro.EventInfo)
+{
+	this.hesSetGoUrl("pa_hes_mle_bb::hes_mlebb00_m00.xfdl");
+};
+
+// 폼 초기화 이벤트
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{	
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	//교습소일 경우 명칭변경, 강사게시표 숨기기
+	if(this.hesGetAcaInstiScCd == "2"){
+		this.divTitle.form.imgTitle.set_text("교습비등 게시표 조회");
+		this.divInstutInfo00.form.img00.set_text("교습소 선택");
+		this.divInstutInfo00.form.sta00_00_01_01.set_text("※ 교습소목록을 선택하십시오.");
+		this.divInstutInfo00.form.grdInstutInfo.setCellProperty("head",2,"text","교습소명");
+		this.divBtn.form.btnInsrPstChit.set_visible(false);
+	}
+			
+	//학원목록조회
+	this.listChkTheBBOtpt();
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+// 서비스 콜백
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+	
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+// 학원정보 조회 함수
+this.listChkTheBBOtpt = function ()
+{
+	// 학원조회조건
+	this.dsSearch.setColumn(0, "acaDsgnNo", this.hesGetAcaDsgnNo);	
+	this.dsSearch.setColumn(0, "acaInstiScCd", this.hesGetAcaInstiScCd);
+	this.dsSearch.setColumn(0, "atptOfcdcOrgCode", this.hesGetAtptOfcdcOrgCode);
+	this.dsSearch.setColumn(0, "acaDsgnNo", this.hesGetAcaDsgnNo);	
+	this.dsSearch.setColumn(0, "acaInstiScCd", this.hesGetAcaInstiScCd);
+	
+	this.smfSearchService("listChkTheBBOtpt")
+	.run()
+	.callback(function(callbackParams){
+		if(callbackParams.errors) return;
+	});
+}
+
+// 선택한 셀만 체크박스 체크(라디오 버튼 효과)
+this.fnGridRadioCheck = function(grid, dataset){
+	var row = dataset.rowposition;
+
+	for (var i = 0; i < grid.rowcount; i++) {
+		// 체크박스 컬럼 생성
+		dataset.addColumn("_chk", "string");
+		
+		if( i == row){ //선택한 셀 체크박스 체크
+			dataset.setColumn(row, "_chk", 1);
+		}else{
+			dataset.setColumn(i, "_chk", 0);
+		}
+    }
+};
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.divInstutInfo00_grdInstutInfo_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	// 그리드 체크박스(라디오버튼)
+	this.fnGridRadioCheck(this.divInstutInfo00.form.grdInstutInfo, this.dsList);
+	this.dsInfo.copyRow(0, this.dsList, this.dsList.rowposition);
+};
+
+
+this.divBtn_btnInsrPstChit_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.dsList.getCaseCount("_chk == 1") < 1){
+		alert("학원을 선택해주세요.");
+		return;
+	}
+	
+	//강사게시표 팝업 호출
+	var popupParams = {
+			noCallback: true,
+			sender: obj, // sender 지정
+			// 팝업 전달 파라메터 지정
+			params: {
+				// 처리타입 지정
+				procType: 'none',
+				acaDsgnNo: this.dsInfo.getColumn(0,"acaDsgnNo"),
+				acaNm: this.dsInfo.getColumn(0,"acaNm"),
+				acaInstiScCd: this.dsInfo.getColumn(0, "acaInstiScCd"),
+				cddcOrgCd: this.dsSearch.getColumn(0, "atptOfcdcOrgCode")
+			},
+		};
+		
+	// 모달팝업 실행
+	this.smfDialog("_auto", "pa_hes_mle_bb::hes_mlebb00_p00.xfdl", popupParams,null,null,1000,800);
+};
+
+
+this.divBtn_btnThccPstChit_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.dsList.getCaseCount("_chk == 1") < 1){
+		alert("학원을 선택해주세요."); 
+		return;
+	}
+	
+	//교습비등 게시표 팝업 호출
+	var popupParams = {
+			noCallback: true,
+			sender: obj, // sender 지정
+			// 팝업 전달 파라메터 지정
+			params: {
+				// 처리타입 지정
+				procType: 'none',
+				acaDsgnNo: this.dsInfo.getColumn(0,"acaDsgnNo"),
+				acaInstiScCd: this.dsInfo.getColumn(0, "acaInstiScCd"),
+				cteOfcdcCd: this.dsSearch.getColumn(0, "atptOfcdcOrgCode")
+			},
+		};
+		
+	// 모달팝업 실행
+	this.smfDialog("_auto", "pa_hes_mle_bb::hes_mlebb00_p01.xfdl", popupParams);
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sample_rdn_zip" width="1160" height="950" titletext="우펴번호 조회 샘플 화면" onload="sample_rdn_zip_onload">
+    <Layouts>
+      <Layout height="950" mobileorientation="landscape" width="1160">
+        <Static id="sta00" taborder="0" text="대국민 우편 번호 조회 샘플" left="30" top="30" width="280" height="60"/>
+        <Grid id="grd00" taborder="1" left="13" top="130" width="1007" height="270" binddataset="dsList">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="138"/>
+                <Column size="230"/>
+                <Column size="190"/>
+                <Column size="230"/>
+                <Column size="190"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="우편번호"/>
+                <Cell col="1" text="도로명주소"/>
+                <Cell col="2" text="도로명상세"/>
+                <Cell col="3" text="건물상세"/>
+                <Cell col="4" text="지번주소"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:zipCd"/>
+                <Cell col="1" text="bind:roadNmAddr"/>
+                <Cell col="2" text="bind:roadNmDtl"/>
+                <Cell col="3" text="bind:bldgNmDtl"/>
+                <Cell col="4" text="bind:lotnoAddr"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btn00" taborder="2" text="우편번호 조회" left="578" top="46" width="120" height="50" onclick="btn00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="zipCd" type="STRING" size="256"/>
+          <Column id="roadNmAddr" type="STRING" size="256"/>
+          <Column id="roadNmDtl" type="STRING" size="256"/>
+          <Column id="lotnoAddr" type="STRING" size="256"/>
+          <Column id="bldgNmDtl" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    우편번호 조회 샘플
+*  @FileName 	sample_rdn_zip.xfdl
+*  @Creator 	안배식
+*  @CreateDate 	2023.03.02
+*  @Desction    우편번호 조회 샘플
+************** 소스 수정 이력 ***********************************************
+*  date				Modifier				Description
+*******************************************************************************
+*  2023.03.02		안배식					최초 생성
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::cm_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리
+ */
+this.sample_rdn_zip_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼을 초기화
+	this.smfInitForm(obj);
+	
+
+	
+};
+
+/************************************************************************************************
+ * TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd <= -1) return;
+};
+
+this.fnPopupCallback = function(e, sender){
+
+	var i = this.dsList.rowcount ;
+
+	this.dsList.addRow();
+    this.dsList.setColumn(i, 'zipCd', e.zipCd);
+	this.dsList.setColumn(i, 'roadNmAddr', e.roadNmAddr);
+	this.dsList.setColumn(i, 'roadNmDtl', e.roadNmDtl);
+	this.dsList.setColumn(i, 'lotnoAddr', e.lotnoAddr);
+	this.dsList.setColumn(i, 'bldgNmDtl', e.bldgNmDtl);
+}
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var procType = "none";
+	
+	var popupParams = {
+		callback : this.fnPopupCallback, // 콜백함수 지정
+		sender : obj, // sender 지정
+		// 팝업 전달 파라메터 지정
+		params : {
+			// 처리타입 지정
+			procType	: procType
+		},
+	};
+	
+	this.smfDialog("_auto", "commpop::commpop_rdn_zip.xfdl", popupParams);
+};
+]]></Script>
+  </Form>
+</FDL>

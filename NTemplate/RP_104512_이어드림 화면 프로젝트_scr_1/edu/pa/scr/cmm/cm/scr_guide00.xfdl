@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="scr_guide00" width="1340" height="953" titletext="이용가이드" onload="form_onload" onsize="form_onsize" onlayoutchanged="form_onlayoutchanged">
+    <Layouts>
+      <Layout height="953" width="1340" screenid="desktopScr">
+        <Static id="Static09" taborder="0" text="이용가이드" left="20" top="0" height="95" cssclass="sta_WF_Title" accessibilityrole="heading" right="0"/>
+        <Tab id="tabMain" taborder="1" left="20" top="100" right="0" initvalueid="iv_Tab0" cssclass="tab_WF_Guide" bottom="0" preload="true" canchange="tabMain_canchange">
+          <Tabpages>
+            <Tabpage id="Tabpage1" text="상시상담" url="pa_scr_cmm_cm::scr_guide01.xfdl" accessibilityenable="false"/>
+            <Tabpage id="Tabpage2" text="집중상담" url="pa_scr_cmm_cm::scr_guide02.xfdl"/>
+            <Tabpage id="Tabpage3" text="온라인(서면)상담결과" url="pa_scr_cmm_cm::scr_guide03.xfdl"/>
+          </Tabpages>
+        </Tab>
+        <Button id="btn00" taborder="2" text="btn00" left="552" top="68" width="169" height="52"/>
+      </Layout>
+      <Layout height="953" mobileorientation="Portrait" name="tablet" type="default" width="800" screenid="desktopScr,tabletScr"/>
+      <Layout height="1019" mobileorientation="Portrait" name="mobile" type="default" width="480" screenid="desktopScr,mobieScr">
+        <Static id="Static09" left="15" top="0" height="60" right="15" cssclass="sta_WF_TitleM"/>
+        <Tab id="tabMain" left="15" top="81" right="15" bottom="0" cssclass="tab_WF_M"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_data01">
+        <ColumnInfo>
+          <Column id="제공받는자" type="STRING" size="256"/>
+          <Column id="제공목적" type="STRING" size="256"/>
+          <Column id="제공항목" type="STRING" size="256"/>
+          <Column id="보유이용기간" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="제공받는자">시도교육청</Col>
+            <Col id="제공목적">온라인(서면) 상담 처리</Col>
+            <Col id="제공항목">온라인(서면) 상담 내용 및 신청자 정보</Col>
+            <Col id="보유이용기간">해당 기관의 지침에 따름</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템
+*  @MenuPath    공통
+*  @FileName 	framePolicyScr01.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    개인정보처리방침(25.7.1)
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";	//SCR공통라이브러리(필수)
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = nexacro.getApplication();
+this.tabIndex = 0;
+
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.scrInitForm(obj);	//화면초기화 공통함수(필수)
+
+	// 파라메터 STE
+	this.pv_params = this.smfGetFormParams();
+	
+	//trace("======================================================================================");
+	//trace("this.pv_params ::: " +this.pv_params );			
+	//trace("======================================================================================");
+	
+	if(!this.smfIsNull(this.pv_params)){
+		if(typeof this.pv_params.tabIndex == 'undefined'){
+			this.tabIndex = 0;			
+		}else{
+			this.tabIndex = this.pv_params.tabIndex;
+		}
+	}
+
+	// 탭 조회 
+	this.tabMain.set_tabindex(this.tabIndex);
+
+	// 화면조정
+	this.form_onsize(obj);
+};
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ this.tabMain_canchange = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	this.tabIndex = e.postindex;
+};
+
+
+this.form_onlayoutchanged = function(obj:nexacro.Form,e:nexacro.LayoutChangeEventInfo)
+{
+	// 탭 조회 
+	this.tabMain.set_tabindex(this.tabIndex);
+};
+
+
+this.form_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	var nFormHeight = 900;
+
+	//trace("======================================================================================");
+	//trace("this.tabMain.tabindex  ::: " + this.tabMain.tabindex  );	
+	//trace("======================================================================================");
+
+	if( this.tabMain.tabindex == 0) {
+
+
+		if ( this.tabMain.Tabpage1.form.isValidObject("imgEnd") ) {
+			nFormHeight = this.tabMain.Tabpage1.form.imgEnd.getOffsetBottom();
+		}else{
+			return;
+		}
+	}else if( this.tabMain.tabindex == 1) {
+	
+
+	
+		if ( this.tabMain.Tabpage2.form.isValidObject("imgEnd") ) {
+			nFormHeight = this.tabMain.Tabpage2.form.imgEnd.getOffsetBottom();
+		}else{
+			return;
+		}
+	}else if( this.tabMain.tabindex == 2) {
+
+		if ( this.tabMain.Tabpage3.form.isValidObject("imgEnd") ) {
+			nFormHeight = this.tabMain.Tabpage3.form.imgEnd.getOffsetBottom();
+		}else{
+			return;
+		}
+	}
+	
+	//trace("======================================================================================");
+	//trace("nFormHeight ::: " + nFormHeight );	
+	//trace("this.tabMain.getOffsetBottom() ::: " + this.tabMain.getOffsetBottom() );	
+	//trace("======================================================================================");
+
+	this.tabMain.setOffsetHeight(nFormHeight + 60);
+	
+	nFormHeight = this.tabMain.getOffsetBottom();
+
+	this.getOwnerFrame().form.divAll.form.divWork.setOffsetHeight(nFormHeight);
+		
+	this.getOwnerFrame().form.divAll.form.resetScroll();
+
+};
+]]></Script>
+  </Form>
+</FDL>

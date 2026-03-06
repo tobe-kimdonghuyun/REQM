@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sample11" width="973" height="763" titletext="셀클릭테스트" onload="form_onload">
+    <Layouts>
+      <Layout height="763" width="973">
+        <Div id="Div00" taborder="0" text="Div00" left="30" top="18" width="910" height="129">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="111" left="41" top="22" width="157" height="52"/>
+              <Button id="Button00" taborder="1" text="Button00" left="221" top="12" width="145" height="68"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="Div01" taborder="1" text="Div01" left="26" top="Div00:15" width="931" height="498" background="pink">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="222" left="41" top="22" width="157" height="52"/>
+              <Button id="Button00" taborder="1" text="Button00" left="221" top="12" width="145" height="68"/>
+              <Grid id="Grid00" taborder="2" left="40" top="91" width="845" height="30" binddataset="Dataset00" oncellclick="Div01_Grid00_oncellclick" selecttype="cell">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="30" band="head"/>
+                      <Row size="30"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="Column0"/>
+                      <Cell col="1" text="Column1"/>
+                      <Cell col="2" text="Column2"/>
+                      <Cell col="3" text="Column3"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:Column0"/>
+                      <Cell col="1" text="bind:Column1"/>
+                      <Cell col="2" text="bind:Column2"/>
+                      <Cell col="3" text="bind:Column3"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Button id="Button00_00" taborder="3" text="Button00" left="219" top="428" width="145" height="68"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="Div02" taborder="2" text="Div02" left="24" top="Div01:7" width="933" height="114">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="333" left="41" top="22" width="157" height="52"/>
+              <Button id="Button00" taborder="1" text="Button00" left="221" top="12" width="145" height="68"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="Dataset00">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+
+//	this.Dataset00.set_enableevent(false);
+	
+this.Div01.form.Grid00.set_enableredraw(false);
+	for (var i = 0; i < 40; i++)
+	{
+		var nRow = this.Dataset00.addRow();
+		this.Dataset00.setColumn(nRow, "Column0", i);		
+	}
+	
+	var nSize = (40*30) + this.Div01.getOffsetHeight();
+//this.Dataset00.set_rowposition(0);
+	this.Div01.form.Grid00.setOffsetHeight((40*30)+30);
+	this.Div01.setOffsetHeight(nSize);
+	
+	this.Div01.form.resetScroll();
+	this.resetScroll();
+	
+	this.Div01.form.Grid00.set_enableredraw(true);
+//	this.Dataset00.set_enableevent(true);
+	
+};
+
+this.Div01_Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	trace("셀클릭");
+};
+]]></Script>
+  </Form>
+</FDL>

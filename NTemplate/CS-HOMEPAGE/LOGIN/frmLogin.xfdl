@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="membJoin" width="1300" height="870" onload="membJoin_onload" background="#f8f8f8">
+    <Layouts>
+      <Layout width="1300" height="870">
+        <Div id="divLogin" taborder="0" left="442" top="130" width="420" height="590" text="" formscrolltype="none" cssclass="div_LOGIN_bg">
+          <Layouts>
+            <Layout>
+              <Static id="Static02" taborder="0" text="로그인" left="0" top="27" height="50" cssclass="sta_MF_copy01" textAlign="center" right="0" verticalAlign="middle"/>
+              <Static id="Static02_00_00_00" taborder="1" text="아직 회원이 아니세요?" left="0" top="94" height="30" cssclass="sta_MF_copy04" right="0" textAlign="center"/>
+              <Button id="btnJoinUs" taborder="2" text="회원가입" left="40" top="135" width="340" height="48" cssclass="btn_LOGIN_join" onclick="btnJoinUs_onclick" accessibilitydescription="링크"/>
+              <Static id="Static02_00_00_00_00" taborder="3" text="OR" left="0" top="204" height="30" cssclass="sta_LOGIN" right="0" textAlign="center" accessibilityenable="false"/>
+              <Static id="Static00" taborder="4" left="40" top="218" width="140" height="1" background="#e4e4e4" accessibilityenable="false"/>
+              <Static id="Static00_00" taborder="5" left="240" top="218" width="140" height="1" background="#e4e4e4" accessibilityenable="false"/>
+              <Static id="Static02_00_00_00_00_00" taborder="6" text="UserID" left="40" top="249" height="30" cssclass="sta_LOGIN" right="40" accessibilitylabel="유저 아이디"/>
+              <Edit id="edLoginId" taborder="7" left="40" top="285" width="340" height="48" cssclass="edt_LOGIN" onkeyup="edLoginId_onkeyup" accessibilitylabel="유저 아이디"/>
+              <Static id="Static02_00_00_00_00_00_00" taborder="8" text="Password" left="40" top="353" height="30" cssclass="sta_LOGIN" right="40"/>
+              <Edit id="edPassword" taborder="9" left="40" top="389" width="340" height="48" password="true" cssclass="edt_LOGIN" onkeyup="edPassword_onkeyup" accessibilitylabel="Password"/>
+              <CheckBox id="chkSaveId" taborder="10" text="아이디저장" left="40" top="446" width="100" height="30" cssclass="chk_LOGIN" falsevalue="0" truevalue="1"/>
+              <CheckBox id="chkAutoLogin" taborder="11" text="자동로그인" left="140" top="446" width="100" height="30" cssclass="chk_LOGIN" falsevalue="0" truevalue="1"/>
+              <Button id="btnFindId" taborder="12" left="259" top="446" width="120" height="30" accessibilitylabel="링크 Find 아이디/Password" onclick="staFindId_onclick" cssclass="btn_WF_Focus"/>
+              <Static id="staFindId" taborder="13" text="Find ID/Password" left="259" top="446" height="30" cssclass="sta_BF_2depth" textAlign="right" width="120" color="#3855b3" font="normal 400 14px/normal &quot;NotoSansKR&quot;" textDecoration="underline" onclick="staFindId_onclick" accessibilitylabel="Find 아이디/Password" accessibilityrole="button" accessibilityenable="false"/>
+              <Button id="btnOK" taborder="14" text="LOGIN" left="40" top="502" width="340" height="48" cssclass="btn_LOGIN" onclick="btnOK_onclick" accessibilitylabel="로그인"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_SearchParam" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="loginAcc" type="STRING" size="256"/>
+          <Column id="dispGubun" type="STRING" size="256"/>
+          <Column id="PCategory2" type="STRING" size="256"/>
+          <Column id="display_cnt" type="STRING" size="256"/>
+          <Column id="page" type="STRING" size="256"/>
+          <Column id="searchfield" type="STRING" size="256"/>
+          <Column id="searchgubun" type="STRING" size="256"/>
+          <Column id="keyword" type="STRING" size="256"/>
+          <Column id="search_resort" type="STRING" size="256"/>
+          <Column id="keywordall" type="STRING" size="256"/>
+          <Column id="BusinessSection" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="dispGubun"/>
+            <Col id="BusinessSection"/>
+            <Col id="searchgubun"/>
+            <Col id="searchfield"/>
+            <Col id="search_resort"/>
+            <Col id="loginAcc"/>
+            <Col id="PCategory2"/>
+            <Col id="display_cnt"/>
+            <Col id="page"/>
+            <Col id="keyword"/>
+            <Col id="keywordall"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsParam" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="userId" type="STRING" size="256"/>
+          <Column id="userPass" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_sendmail">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="mailto" type="STRING" size="256"/>
+          <Column id="subject" type="STRING" size="256"/>
+          <Column id="contents" type="STRING" size="256"/>
+          <Column id="cc" type="STRING" size="256"/>
+          <Column id="mailFrom" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  로그인
+*
+*  @MenuPath 
+*  @FileName 		LOGIN::frmLogin.xfdl 
+*  @Creator 		김광호
+*  @CreateDate 		2022.01.01
+*  @LastModifier  
+*  @LastModifyDate  
+*  @Version 		1.0
+*  @Outline 		로그인
+*  @Desction 
+************** 소스 수정 이력 *************************************************
+*    date          Modifier            Description
+*******************************************************************************
+*  2022.01.01      김광호	           최초 생성 
+*******************************************************************************
+*/
+
+
+this.membJoin_onload = function (obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 체크박스 초기설정
+	this.divLogin.form.chkSaveId.set_value(nexacro.getPrivateProfile("save_id_flag"));
+	this.divLogin.form.chkAutoLogin.set_value(nexacro.getPrivateProfile("auto_login_flag"));
+	if(this.divLogin.form.chkSaveId.value == 1)
+	{
+		this.divLogin.form.edLoginId.set_value(nexacro.getPrivateProfile("cstop_nexacro_user_id"));
+	}
+
+};
+
+// 로그인버튼
+this.btnOK_onclick = function (obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.fn_login();
+};
+
+// 로그인 조회
+this.fn_login = function ()
+{
+	// User Id정보 저장
+	this.dsParam.deleteAll();
+	this.dsParam.addRow();
+
+	this.dsParam.setColumn(0, "userId", this.divLogin.form.edLoginId.value);
+	this.dsParam.setColumn(0, "userPass", this.divLogin.form.edPassword.value);
+
+	nexacro.getApplication().gds_UserInfo.clearData();
+	var nRow = nexacro.getApplication().gds_UserInfo.addRow();
+
+	// 입력 체크
+	if (this.fn_CheckParam()) 
+	{
+		return;
+	}
+
+	// $$ 테스트 확인용으로 로그인시 DB를 운영서버로 사용하고 있음 (DBUSER='TESTDB' : 체크 Flag)
+	this.com_TransSend("login", "SVC_JSP::Next_JSP/Login/Login_new.jsp", "input=dsParam", "gds_UserInfo=output", "RTYPE=XML DB='CS' DBUSER='POTAL_USER'", "fn_Login_CallBack");
+};
+
+//회원가입 인증 메일 전송
+this.fnSendMail = function(user_id, user_nm, email)
+{	
+	
+	var contents = '';
+	
+	contents += '<html style="margin: 0;padding: 0;border: 0;font-size: 100%;font: inherit;vertical-align: baseline;font-family: Noto Sans KR, sans-serif;">                                        ';
+	contents += '    <head>                                                                                                                                                                           ';
+	contents += '        <meta charset="utf-8">                                                                                                                                                       ';
+	contents += '        <meta http-equiv="X-UA-Compatible" content="IE=edge">                                                                                                                        ';
+	contents += '        <title>아이디/비밀번호찾기 안내입니다.</title>                                                                                                                                             ';
+	contents += '        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />                                                                    ';
+	contents += '        <link rel="preconnect" href="https://fonts.googleapis.com">                                                                                                                  ';
+	contents += '        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>                                                                                                         ';
+	contents += '        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">                                                           ';
+	contents += '    </head>                                                                                                                                                                          ';
+	contents += '    <body style="margin: 0;padding: 0;border: 0;font-size: 100%;font:inherit;vertical-align: baseline;line-height: 1;                                                                ';
+	contents += '    background-color: #fafafa;">                                                                                                                                                     ';
+	contents += '        <div style="margin:0px auto;width: 700px;height: 100%;background-color: #fff;letter-spacing: -1;">                                                                           ';
+	contents += '            <div style="padding: 23px 40px 40px 40px;height: auto;background: url(http://support.tobesoft.co.kr/portal/Mail/images/05-2.png) no-repeat;color:#fff;">                                                           ';
+	contents += '                <h1 style="margin: 0; position: relative;padding-bottom: 85px;">                                                                                                     ';
+	contents += '                    <a href="#" target="_blank" style="display: inline-block;"><img src="http://support.tobesoft.co.kr/portal/Mail/images/logo-w.gif"></a>                                                                     ';
+	contents += '                    <span style="display: inline-block;position: absolute;top: 0;right: 0;font-size: 16px;">(주)투비소프트 고객지원센터</span>                                                   ';
+	contents += '                </h1>                                                                                                                                                                ';
+	contents += '                <span style="font-size: 46px;line-height: 1.1;"><span style=font-weight:700;>고객님의 회원가입</span>을<br>축하합니다</span>                                                       ';
+	contents += '            </div>                                                                                                                                                                   ';
+	contents += '            <div style="padding: 40px 40px;font-size: 16px;color:#555;line-height: 1.5;">                                                                                            ';
+	contents += '                <p style="margin: 0; padding-bottom: 30px;">안녕하세요. TOBESOFT 고객지원센터입니다.<br>' + user_nm + '님의 회원가입을 축하합니다.<br>고객님의 회원아이디는 아래와같습니다. </p>                                            ';
+	contents += '                <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;border-top: 2px solid #666;border-bottom: 2px solid #666;text-align: left;line-height: 1.5;">   ';
+	contents += '                    <tr>                                                                                                                                                             ';
+	contents += '                        <th style="padding: 15px 0 15px 10px;width: 23%;color: #999;font-weight: 400;border-bottom: 1px solid #dee1ee;">아이디</th>                                     ';
+	contents += '                        <td style="padding: 15px 10px;width: auto;color: #333;font-weight: 500;border-bottom: 1px solid #dee1ee;">'+ user_id +'</td>                                      ';
+	contents += '                    </tr>                                                                                                                                                            ';
+	contents += '                </table><br>                                                                                                                                                            ';
+	contents += '                <div>회원님의 이메일 <b><font color="RoyalBlue">'+ email +'</font></b>이 <br>정확한 주소인지 확인을 위한 메일이 발송되었습니다. <br>아래 링크를 클릭하시면 회원가입 절차가 완료됩니다.</div><br>';
+	contents += '                <div> <a href="'+nexacro.getEnvironment().services["SVC_JSP"].url+'Next_JSP/Login/user_activation.jsp?user_id=' + user_id + '" target="self" target="self"><font color="blue"> 이메일 인증하기 </font> </a> </div>';
+	contents += '                <p style="margin: 0; padding-top: 30px;">                                                                                                                            ';
+	contents += '                    감사합니다.<br><br>                                                                                                                                                       ';
+	contents += '                    기타 문의사항은 고객지원센터 대표번호 <span style=color:#0a84ff;>1588-7895</span>로 연락주시기 바랍니다.<br>                                                                                ';
+	contents += '                    ※평일 9:00 ~ 18:00 / 휴무일 10:00 ~ 16:00 공휴일 당직제 시행                                                                                                                 ';
+	contents += '                </p>                                                                                                                                                                 ';
+	contents += '            </div>                                                                                                                                                                   ';
+	contents += '            <div style="padding: 30px 0;text-align: center;color: #999;font-size: 14px;background-color: #eee;">                                                                     ';
+	contents += '                <p style="margin: 0; padding-bottom: 10px;">                                                                                                                         ';
+	contents += '                    서울시 강남구 봉은사로 617-2 5F |  고객지원센터 : 1588-7895  |  이메일 : helpdesk@tobesoft.com                                                                                      ';
+	contents += '                </p>                                                                                                                                                                 ';
+	contents += '                <p style="margin: 0; padding-bottom: 10px;">                                                                                                                         ';
+	contents += '                    Copyright © 2022. TOBESOFT. All rights reserved.                                                                                                                 ';
+	contents += '                </p>                                                                                                                                                                 ';
+	contents += '            </div>                                                                                                                                                                   ';
+	contents += '        </div>                                                                                                                                                                       ';
+	contents += '    </body>                                                                                                                                                                          ';
+	contents += '</html>                                                                                                                                                                              ';	
+
+	this.ds_sendmail.setColumn(0, "id", user_id);
+	this.ds_sendmail.setColumn(0, "subject", "회원가입 인증메일 입니다.");
+	this.ds_sendmail.setColumn(0, "mailto", email);
+	this.ds_sendmail.setColumn(0, "contents", contents);
+	this.ds_sendmail.setColumn(0, "mailFrom", "helpdesk@tobesoft.com");
+	
+	var strURL = "SVC_JSP::Next_JSP/Login/sendMail.jsp";
+	this.transaction("sendMail",strURL,"dsMail=ds_sendmail:A","dsReturn=dsMail","","fn_Login_CallBack");
+};
+
+// 로그인 콜백
+this.fn_Login_CallBack = function (svcid, errCode, errMsg)
+{
+	if (errCode < 0) 
+	{
+		this.alert("errMsg");
+		nexacro.getApplication().com_SetMessage(errMsg, false);
+		return;
+	}
+	if (svcid == "login") 
+	{
+		var gdsUserInfo = nexacro.getApplication().gds_UserInfo;
+
+		//이메일 인증을 하지 않았으면, 인증 과정을 먼저 통과해야 한다.
+		var emailConfirmFlag = gdsUserInfo.getColumn(0, "EMAIL_CONFIRM_FLAG");
+		if(emailConfirmFlag == 0){
+			if(this.confirm("인증 과정을 거치지 않았습니다.\n인증메일을 다시 받겠습니까?"))
+			{
+				var user_id = gdsUserInfo.getColumn(0, "User_id");
+				var user_nm = gdsUserInfo.getColumn(0, "User_nm");
+				var email = gdsUserInfo.getColumn(0, "Email_id");
+				this.fnSendMail(user_id, user_nm, email);
+			}
+			
+			//로그인 정보 초기화
+			gdsUserInfo.clearData();
+			return;
+		}
+
+		// 검색조건
+		this.ds_SearchParam.setColumn(0, "dispGubun", "MY");
+		this.ds_SearchParam.setColumn(0, "keywordall", "");
+		this.ds_SearchParam.setColumn(0, "PCategory2", "");
+		this.ds_SearchParam.setColumn(0, "display_cnt", "");
+		this.ds_SearchParam.setColumn(0, "page", "");
+		this.ds_SearchParam.setColumn(0, "searchfield", "");
+		this.ds_SearchParam.setColumn(0, "searchgubun", "");
+		this.ds_SearchParam.setColumn(0, "keyword", "");
+		this.ds_SearchParam.setColumn(0, "search_resort", "");
+		this.ds_SearchParam.setColumn(0, "BusinessSection", "");
+		this.ds_SearchParam.setColumn(0, "loginAcc", "ON");
+
+		nexacro.getApplication().com_SetParam(this.ds_SearchParam);
+
+		nexacro.getApplication().gv_mainFrame.divTop.form.btnLogin.set_visible(false);
+		nexacro.getApplication().gv_mainFrame.divTop.form.btnLogout.set_visible(true);
+		nexacro.getApplication().gv_mainFrame.divTop.form.btnSignin.set_visible(false);
+		nexacro.getApplication().gv_mainFrame.divTop.form.btnMypage.set_visible(true);
+		nexacro.getApplication().gv_mainFrame.divTop.form.staMypage.set_visible(true);
+
+		nexacro.setPrivateProfile("cstop_nexacro_user_id", nexacro.getApplication().gds_UserInfo.getColumn(nexacro.getApplication().gds_UserInfo.rowposition, "User_id"));
+		nexacro.setPrivateProfile("save_id_flag", this.divLogin.form.chkSaveId.value);
+		nexacro.setPrivateProfile("auto_login_flag", this.divLogin.form.chkAutoLogin.value);
+		
+		// 로그인 플래그 true로..(새로고침 시 로그인 풀리지 않게 하는 용도)
+		nexacro.getApplication().gv_mainFrame.LOGIN_FLG = true;
+		
+		var mTargetUrl = String(nexacro.getApplication().gv_mainFrame.TargetUrl);
+
+		// 초기화면으로 돌아가기
+		if (mTargetUrl == "undefined"||mTargetUrl == "Sign_Up" || mTargetUrl=="home"|| mTargetUrl=="ID_PWD") 
+		{
+			nexacro.getApplication().gv_mainFrame.param = {
+				'menu': "home",
+				'keyword': "",
+				'page': 1,
+				'postId': ""
+				};
+			nexacro.getApplication().gv_mainFrame.gfnGoMain();
+		} 
+		else 
+		{
+			var sMenu = nexacro.getApplication().gv_mainFrame.TargetUrl;
+			var nPostId = nexacro.getApplication().gv_mainFrame.TargetPostId;
+			if (sMenu == "login")
+			{
+				sMenu = "home";
+			}
+			else if(sMenu == "Conversion_Info")
+			{
+				var gdsUserInfo = nexacro.getApplication().gds_UserInfo;
+				var user_id = gdsUserInfo.getColumn(0, "User_id");
+				var tel_hp = gdsUserInfo.getColumn(0, "Tel_hp");
+				var email = gdsUserInfo.getColumn(0, "Email_id");	
+				nexacro.getApplication().gv_mainFrame.callConversion(user_id,tel_hp,email);
+				sMenu = "home";				
+			}
+			nexacro.getApplication().gv_mainFrame.param = {
+				'menu': sMenu,
+				'keyword': "",
+				'page': 1,
+				'postId': nPostId
+				};
+			nexacro.getApplication().gv_mainFrame.gfnGoMain();
+		}
+	}
+};
+
+// 유효성 검사
+this.fn_CheckParam = function ()
+{
+	if (nexacro.getApplication().com_IsEmpty(this.divLogin.form.edLoginId.value)) 
+	{
+		// 아이디를 입력해 주십시요
+		nexacro.getApplication().com_SetMessage("MSG_000016", false);
+		this.divLogin.form.edLoginId.setFocus();
+		return true;
+	}
+
+	if (nexacro.getApplication().com_IsEmpty(this.divLogin.form.edPassword.value)) 
+	{
+		// 비밀번호를 입력해 주십시요
+		nexacro.getApplication().com_SetMessage("MSG_000017", false);
+		this.divLogin.form.edPassword.setFocus();
+		return true;
+	}
+
+	// 영문/숫자 이외의 문자 체크
+	var arrVal = {
+		"value" : true,
+		"msgCd" : "MSG_000065"
+	};
+	// 아이디는 영어와 숫자만 가능합니다.
+
+	return false;
+};
+
+// 엔터키로 로그인 동작
+this.edPassword_onkeyup = function (obj:Edit, e:nexacro.KeyEventInfo)
+{
+	if (e.keycode == 13) 
+	{
+		this.fn_login();
+	}
+};
+
+// ID/비밀번호 찾기
+this.staFindId_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	nexacro.getApplication().gv_mainFrame.param = {
+		'menu': "ID_PWD",
+		'keyword': "",
+		'page': 1,
+		'postId': ""
+		};
+	nexacro.getApplication().gv_mainFrame.gfnGoMain();
+};
+
+// 회원가입
+this.btnJoinUs_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	nexacro.getApplication().gv_mainFrame.param = {
+		'menu': "Sign_Up",
+		'keyword': "",
+		'page': 1,
+		'postId': ""
+		};
+	nexacro.getApplication().gv_mainFrame.gfnGoMain();
+};
+
+// 아이디 창에서 엔터키 입력
+this.edLoginId_onkeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if (e.keycode == 13){
+		this.divLogin.form.edPassword.setFocus();
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

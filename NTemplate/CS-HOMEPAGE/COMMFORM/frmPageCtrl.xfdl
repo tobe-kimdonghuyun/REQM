@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmPageCtrl" width="945" height="40" titletext="New Form" ontimer="frmPageCtrl_ontimer">
+    <Layouts>
+      <Layout width="945" height="40">
+        <Button id="btnPrevPage" taborder="0" left="230" top="4" width="32" height="32" cssclass="btn_WF_pageHome" onclick="btnPrevPage_onclick" accessibilitylabel="링크 이전페이지 목록"/>
+        <Button id="btnPrev" taborder="1" left="265" top="4" width="32" height="32" cssclass="btn_WF_pagePre" onclick="btnPrev_onclick" accessibilitylabel="링크 이전페이지"/>
+        <Button id="btnPage1" taborder="2" text="1" left="300" top="4" width="32" height="32" cssclass="btn_WF_pageNum_S" onclick="btnPage_onclick" accessibilitydescription="선택"/>
+        <Button id="btnPage2" taborder="3" text="2" left="335" top="4" width="32" height="32" cssclass="btn_WF_pageNum" onclick="btnPage_onclick" accessibilitydescription="링크"/>
+        <Button id="btnPage3" taborder="4" text="3" left="370" top="4" width="32" height="32" cssclass="btn_WF_pageNum" onclick="btnPage_onclick" accessibilitydescription="링크"/>
+        <Button id="btnPage4" taborder="5" text="4" left="405" top="4" width="32" height="32" cssclass="btn_WF_pageNum" onclick="btnPage_onclick" accessibilitydescription="링크"/>
+        <Button id="btnPage5" taborder="6" text="5" left="440" top="4" width="32" height="32" cssclass="btn_WF_pageNum" onclick="btnPage_onclick" accessibilitydescription="링크"/>
+        <Button id="btnPage6" taborder="7" text="6" left="475" top="4" width="32" height="32" cssclass="btn_WF_pageNum" onclick="btnPage_onclick" accessibilitydescription="링크"/>
+        <Button id="btnPage7" taborder="8" text="7" left="510" top="4" width="32" height="32" cssclass="btn_WF_pageNum" onclick="btnPage_onclick" accessibilitydescription="링크"/>
+        <Button id="btnPage8" taborder="9" text="8" left="545" top="4" width="32" height="32" cssclass="btn_WF_pageNum" onclick="btnPage_onclick" accessibilitydescription="링크"/>
+        <Button id="btnPage9" taborder="10" text="9" left="580" top="4" width="32" height="32" cssclass="btn_WF_pageNum" onclick="btnPage_onclick" accessibilitydescription="링크"/>
+        <Button id="btnPage10" taborder="11" text="10" left="615" top="4" width="32" height="32" cssclass="btn_WF_pageNum" onclick="btnPage_onclick" accessibilitydescription="링크"/>
+        <Button id="btnNext" taborder="12" left="650" top="4" width="32" height="32" cssclass="btn_WF_pageNext" onclick="btnNext_onclick" accessibilitylabel="링크 다음페이지"/>
+        <Button id="btnNextPage" taborder="13" left="685" top="4" width="32" height="32" cssclass="btn_WF_pageEnd" onclick="btnNextPage_onclick" accessibilitylabel="링크 다음페이지 목록"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[/**
+*  공통 페이징
+*
+*  @MenuPath 
+*  @FileName 		COMMFORM::frmPageCtrl.xfdl 
+*  @Creator 		김광호
+*  @CreateDate 		2022.01.01
+*  @LastModifier  
+*  @LastModifyDate  
+*  @Version 		1.0
+*  @Outline 		공통 페이징
+*  @Desction 
+************** 소스 수정 이력 *************************************************
+*    date          Modifier            Description
+*******************************************************************************
+*  2022.01.01      김광호	           최초 생성 
+*******************************************************************************
+*/
+
+this.startPageNo = 0; //전체 페이지 순서
+this.unitSelRowNo = 100;//200; //한번 Server호출시 가져올 row갯수
+this.startSelRowNo = 1; //Server호출시 시작할 row no
+this.maxPageNum = 10; //화면에 보여줄 최대 Page번호 갯수
+this.rowCount = 10;//20; //그리드에 보여줄 최대 Row 갯수
+this.serverRowCount = 0; //서버에서 넘어온 Row갯수(100건이 안될 수 있음)
+this.curPage = 1; //현재 Page
+this.maxCurPage = 0; //현재 표시될수 있는 최대 페이지
+this.totalCount = 0; //검색되는 총건수
+
+this.dsList = null;
+this.dsListDmy = null;
+this.frmParent = null;
+this.trFuncTxt = "";
+this.sizeFuncTxt = "";
+
+// 초기 설정
+this.fn_PageInit = function (dsObj, dsObjDmy, objForm, funcTxt, funcTxtSize)
+{
+	this.startPageNo = nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo;
+	this.unitSelRowNo = 100;//200;
+	this.startSelRowNo = 1;
+	this.maxPageNum = 10;
+	this.rowCount = 10;//20;
+	this.serverRowCount = 0;
+	this.curPage = nexacro.getApplication().gv_mainFrame.QA_Cond_Page;
+
+	this.dsList = dsObj;
+	this.dsListDmy = dsObjDmy;
+	this.frmParent = objForm;
+	this.trFuncTxt = funcTxt;
+	this.sizeFuncTxt = funcTxtSize;
+};
+
+// 페이지 번호 버튼 클릭
+this.btnPage_onclick = function (obj:Button, e:nexacro.ClickEventInfo)
+{
+	// 인덱스 버튼 클릭 처리
+	this.fn_indexBtnSet(obj.text);
+};
+
+
+this.btnPrevPage_onclick = function (obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.startPageNo -= 1;
+	nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo -= 1;
+	this.curPage = (Math.floor(this.curPage / 10) - 1) * this.maxPageNum + 1;
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Page = this.curPage;
+
+	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+	this.fn_SetHistoryData();
+	eval("this.frmParent." + this.trFuncTxt);
+
+	// select 상태 설정
+	this.fn_SetStyle();
+
+	// div detail 사이즈 초기화
+	eval("this.frmParent." + this.sizeFuncTxt);
+};
+
+this.btnNextPage_onclick = function (obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.fn_btnNextPage();
+};
+
+
+// -------------------------------------------------------------------------------------------------
+// Page번호 Setting
+// -------------------------------------------------------------------------------------------------
+this.fn_SetPageNo = function ()
+{
+	// 페이지 번호 설정
+	var sPage = this.startPageNo * this.maxPageNum;
+	// 현재 표시되는 최대 페이지
+	this.maxCurPage = Math.ceil(this.serverRowCount / this.rowCount);
+
+	// 이전페이지 건너뛰기 버튼 처리
+	if (this.startPageNo < 1) 
+	{
+		this.btnPrevPage.set_enable(false);
+	}
+	else 
+	{
+		this.btnPrevPage.set_enable(true);
+	}
+
+	// 다음페이지 건너뛰기 버튼 처리
+	if (this.totalCount <= ((this.startPageNo + 1) * this.unitSelRowNo)) 
+	{
+		this.btnNextPage.set_enable(false);
+	}
+	else 
+	{
+		this.btnNextPage.set_enable(true);
+	}
+	
+	// 인덱스 번호 처리
+	for (var i = 0; i < this.maxPageNum; i++) 
+	{
+		eval("this.btnPage" + (i + 1) + ".set_text(" + (sPage + i + 1) + ")");
+		
+		if (this.maxCurPage >= (sPage + i + 1)) 
+		{
+			eval("this.btnPage" + (i + 1) + ".set_visible(true)");
+			//this.btnNext.set_enable(true);	// 마지막페이지일경우 다음페이지 비활성화
+		}
+		else 
+		{
+			eval("this.btnPage" + (i + 1) + ".set_visible(false)");
+			//this.btnNext.set_enable(false);	// 마지막페이지일경우 다음페이지 비활성화
+		}
+	}
+	
+	// 다음페이지 활성화
+	if (this.maxCurPage == 1)
+	{
+		this.btnNext.set_enable(false);	// 마지막페이지일경우 다음페이지 비활성화
+	}
+	else
+	{
+		this.btnNext.set_enable(true);	// 마지막페이지일경우 다음페이지 비활성화
+	}
+
+	// select 상태 설정
+	this.fn_SetStyle();
+};
+
+
+this.fn_indexBtnSet = function (obj)
+{
+	var iNo = nexacro.toNumber(obj);
+	
+	var iFirstNum = ((iNo - 1) * this.rowCount) + 1;
+	var iLastNum = iFirstNum + this.rowCount;
+	this.curPage = iNo;
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Page = iNo;
+	// 다음페이지 버튼처리
+	if(this.maxCurPage == this.curPage && this.curPage%10 != 0)
+	{
+		this.btnNext.set_enable(false);
+	}
+	else
+	{
+		this.btnNext.set_enable(true);
+	}
+
+	// select 상태 설정
+	this.fn_SetStyle();
+	this.dsList.filter("");
+	this.dsList.filter("rowNum >= " + iFirstNum + " && rowNum < " + iLastNum);
+	
+	//div 동적생성
+	this.frmParent.fn_createList();
+
+	nexacro.getApplication().gv_mainFrame.param.page = nexacro.getApplication().gv_mainFrame.QA_Cond_Page;
+	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+	this.fn_SetHistoryData();
+	eval("this.frmParent." + this.sizeFuncTxt);
+};
+
+this.fn_btnPrevPage = function ()
+{
+	this.startPageNo -= 1;
+	nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo -= 1;
+
+	this.curPage = (Math.floor(this.curPage / 10)) * this.maxPageNum;
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Page = this.curPage;
+
+	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+	this.fn_SetHistoryData();
+	eval("this.frmParent." + this.trFuncTxt);
+
+	// select 상태 설정
+	this.fn_SetStyle();
+
+	// div detail 사이즈 초기화
+	eval("this.frmParent." + this.sizeFuncTxt);
+};
+
+this.fn_btnNextPage = function ()
+{
+	this.startPageNo += 1;
+	nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo += 1;
+	this.curPage = Math.ceil(this.curPage / 10) * this.maxPageNum + 1;
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Page = this.curPage;
+
+	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+	this.fn_SetHistoryData();
+	eval("this.frmParent." + this.trFuncTxt);
+
+	// select 상태 설정
+	this.fn_SetStyle();
+
+	// div detail 사이즈 초기화
+	eval("this.frmParent." + this.sizeFuncTxt);
+};
+
+
+this.fn_SetStyle = function ()
+{
+	for (var i = 0; i < this.maxPageNum; i++) 
+	{
+		if ((this.curPage % 10) == (i + 1)) 
+		{
+			eval("this.btnPage" + (i + 1) + ".set_cssclass('btn_WF_pageNum_S')");
+			eval("this.btnPage" + (i + 1) + ".set_accessibilitydescription('선택')");
+		}
+		else 
+		{
+			eval("this.btnPage" + (i + 1) + ".set_cssclass('btn_WF_pageNum')");
+			eval("this.btnPage" + (i + 1) + ".set_accessibilitydescription('링크')");
+		}
+	}
+
+	if ((this.curPage % 10) == 0) 
+	{
+		eval("this.btnPage10.set_cssclass('btn_WF_pageNum_S')");
+		eval("this.btnPage10.set_accessibilitydescription('선택')");
+	}
+	
+	// 첫페이지일경우 이전페이지 비활성화
+	if (this.curPage == 1)
+	{
+		this.btnPrev.set_enable(false);
+	}
+	else
+	{
+		this.btnPrev.set_enable(true);
+	}
+};
+
+// 이전 페이지
+this.btnPrev_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var iNo = this.curPage-1;
+	if (this.btnPage1.cssclass == "btn_WF_pageNum_S")
+	{
+		if (this.btnPage1.text != 1)
+		{
+			this.fn_btnPrevPage();
+		}
+		return;
+	}
+
+	var iFirstNum = ((iNo - 1) * this.rowCount) + 1;
+	var iLastNum = iFirstNum + this.rowCount;
+	this.curPage = iNo;
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Page = iNo;
+	
+	// 다음페이지 버튼처리
+	if(this.maxCurPage == this.curPage && this.curPage%10 != 0)
+	{
+		this.btnNext.set_enable(false);
+	}
+	else
+	{
+		this.btnNext.set_enable(true);
+	}
+
+	// select 상태 설정
+	this.fn_SetStyle();
+	this.dsList.filter("");
+	this.dsList.filter("rowNum >= " + iFirstNum + " && rowNum < " + iLastNum);
+
+	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+	this.fn_SetHistoryData();
+	eval("this.frmParent." + this.sizeFuncTxt);
+};
+
+// 다음 페이지
+this.btnNext_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var iNo = this.curPage+1;
+	if (this.btnPage10.cssclass == "btn_WF_pageNum_S")
+	{
+		this.fn_btnNextPage();
+		return;
+	}
+
+	var iFirstNum = ((iNo - 1) * this.rowCount) + 1;
+	var iLastNum = iFirstNum + this.rowCount;
+	this.curPage = iNo;
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Page = iNo;
+
+	// 다음페이지 버튼처리
+	if(this.maxCurPage == this.curPage && this.curPage%10 != 0)
+	{
+		this.btnNext.set_enable(false);
+	}
+	else
+	{
+		this.btnNext.set_enable(true);
+	}
+
+	// select 상태 설정
+	this.fn_SetStyle();
+	this.dsList.filter("");
+	this.dsList.filter("rowNum >= " + iFirstNum + " && rowNum < " + iLastNum);
+
+	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+	this.fn_SetHistoryData();
+	eval("this.frmParent." + this.sizeFuncTxt);
+};
+
+this.fn_SetHistoryData = function()
+{
+	var sData = {};
+	
+	var sHash = "menu=" + nexacro.getApplication().gv_mainFrame.param.menu + "&page=" + nexacro.getApplication().gv_mainFrame.QA_Cond_Page;
+	var sKeyword = nexacro.getApplication().gv_mainFrame.param.keyword;
+	if(!this.gfnIsNull(sKeyword)) sHash += "&keyword="+sKeyword;
+	var sUrl = ".?"+sHash;
+	if (nexacro.getApplication().gv_mainFrame.PCategory2 == "QnA")
+	{
+		sData = nexacro.getApplication().gv_searchEngine.fn_savePagingData();
+	}
+	else if (nexacro.getApplication().gv_mainFrame.PCategory2 == "Notice"
+			|| nexacro.getApplication().gv_mainFrame.PCategory2 == "Tip_N"
+			|| nexacro.getApplication().gv_mainFrame.PCategory2 == "Tip_17"
+			|| nexacro.getApplication().gv_mainFrame.PCategory2 == "Tip_14"
+			|| nexacro.getApplication().gv_mainFrame.PCategory2 == "Tip_XP"
+			|| nexacro.getApplication().gv_mainFrame.PCategory2 == "Tip_MP"
+			|| nexacro.getApplication().gv_mainFrame.PCategory2 == "Education_information"
+			|| nexacro.getApplication().gv_mainFrame.PCategory2 == "Education_material")
+	{
+		sData = nexacro.getApplication().gv_mainFrame.divMain.form.divWork.form.fn_savePagingData();
+	}
+	MyHistory.setLocationHash(sHash, sData, sUrl);
+};]]></Script>
+  </Form>
+</FDL>

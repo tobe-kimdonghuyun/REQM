@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sqa_uepsc" width="1200" height="680" titletext="공지사항 목록조회" onload="form_onload">
+    <Layouts>
+      <Layout height="680" width="1200" screenid="ScreenDeskTop">
+        <ImageViewer id="imgTitle" taborder="0" text="공지사항" left="0" top="65" height="54" cssclass="img_WF_SubTit01" width="150" initvalueid="ivTitleAccessibilityOn"/>
+        <Div id="divTotal" taborder="1" top="140" width="240" height="30" url="comm::comp_pageSummary2.xfdl" initvalueid="ivDivAccessibilityOff" left="0"/>
+        <Grid id="grdMain" taborder="2" left="0" top="180" height="439" autofittype="col" right="0" binddataset="dsMain" initvalueid="ivGrdAccessibilityOn" selecttype="cell" oncellclick="grdMain_oncellclick" mouseovertype="default" accessibilitylabel="공지사항목록">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="50"/>
+                <Column size="240"/>
+                <Column size="80"/>
+                <Column size="119"/>
+                <Column size="67"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="번호" accessibilitylabel="번호"/>
+                <Cell col="1" text="제목" accessibilitylabel="제목"/>
+                <Cell col="2" text="첨부파일" accessibilitylabel="첨부파일"/>
+                <Cell col="3" text="등록일" accessibilitylabel="등록일"/>
+                <Cell col="4" text="조회수" accessibilitylabel="조회수"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:rowNum" textAlign="center" accessibilitylabel="번호"/>
+                <Cell col="1" text="bind:ntcMteTitlNm" textAlign="left" accessibilitylabel="제목"/>
+                <Cell col="2" cssclass="expr:(fileRefrnId != undefined &amp;&amp; fileRefrnId != &quot;&quot;) &amp;&amp; imptYn==&quot;Y&quot; ? &quot;cell_NotiFile,cell_bgGray&quot;:((fileRefrnId != undefined &amp;&amp; fileRefrnId != &quot;&quot;) &amp;&amp; imptYn == &quot;N&quot;?&quot;cell_NotiFile&quot;:((fileRefrnId == undefined || fileRefrnId == &quot;&quot;) &amp;&amp; imptYn== &quot;Y&quot;?&quot;cell_bgGray&quot;:&quot;&quot;))" textAlign="center" displaytype="none" accessibilitylabel="첨부파일"/>
+                <Cell col="3" text="bind:regDt" textAlign="center" displaytype="date" calendardateformat="yyyy.MM.dd." calendareditformat="yyyy.MM.dd." accessibilitylabel="등록일"/>
+                <Cell col="4" text="bind:ntcMteInqCnt" textAlign="center" accessibilitylabel="조회수"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divPaging" taborder="3" left="0" top="grdMain:20" right="0" url="comm::comp_paginator.xfdl" initvalueid="ivDivAccessibilityOff" height="30"/>
+        <Static id="Static99_00_00_00_00" taborder="4" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01" taborder="5" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_00_00" taborder="6" left="0" top="grdMain:0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+      <Layout height="1200" mobileorientation="Landscape" name="Layout0" type="default" width="640" screenid="mobile,tablet">
+        <Div id="divPaging" text=""/>
+        <ImageViewer id="imgTitle" left="20" top="65" height="54" right="20"/>
+        <Div id="divTotal" left="20" top="140" height="30" right="20"/>
+        <Grid id="grdMain" left="20" top="180" height="500" right="20"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="rowNum" type="STRING" size="256"/>
+          <Column id="ntcMteId" type="STRING" size="256"/>
+          <Column id="ntcMteTitlNm" type="STRING" size="256"/>
+          <Column id="ntcMteCn" type="STRING" size="256"/>
+          <Column id="ntcMteClfCd" type="STRING" size="256"/>
+          <Column id="pstStsCd" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="ntcMteInqCnt" type="BIGDECIMAL" size="256"/>
+          <Column id="aplcnBgngYmd" type="DATE" size="8"/>
+          <Column id="aplcnEndYmd" type="DATE" size="8"/>
+          <Column id="aplcnBgngTm" type="DATE" size="8"/>
+          <Column id="aplcnEndTm" type="DATE" size="8"/>
+          <Column id="imptYn" type="STRING" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="rgtrDptNm" type="STRING" size="256"/>
+          <Column id="mdfrNm" type="STRING" size="256"/>
+          <Column id="mdfrDptNm" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="DATETIME" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="DATETIME" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsMain=dsList dsPageInfo=dsPageInfo</Col>
+            <Col id="url">uda_uep_sc01_002.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="initPageIndex" type="INT" size="30" value="1"/>
+          <ConstColumn id="initPageSize" type="INT" size="30" value="10"/>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex"/>
+            <Col id="pageSize"/>
+            <Col id="totalCount"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    공지사항 목록조회
+*  @FileName 	uds_uepsc01_m00
+*  @Creator 	김유진
+*  @CreateDate 	2024.03.11 
+*  @Desction    대입전형자료(학교생활기록부)-공지사항 목록조회
+*
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2024.03.11          김유진                 최초 생성
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::cm_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	this.dsSearch.addRow();
+	//row초기화 undefiend를 "" 변경
+	this.smfInitRow(this.dsSearch, 0);
+	
+	// 파라메터 세팅
+	this.pv_params = this.smfGetFormParams();
+
+	if(!this.smfIsNull(this.pv_params.dsSearchParam)){
+		this.dsSearch.loadXML(this.pv_params.dsSearchParam);
+	}
+	
+	if(!this.smfIsNull(this.pv_params.dsPagingParam)){
+		this.dsPageInfo.loadXML(this.pv_params.dsPagingParam);
+		if(this.dsPageInfo.getConstColIndex("initIsUsePageInfo") < 0){
+			this.dsPageInfo.addConstColumn("initIsUsePageInfo","Y");
+		} else {
+			this.dsPageInfo.setConstColumn("initIsUsePageInfo","Y");
+		}
+	}
+	if(this.smfIsMobile()){//모바일
+		this.grdMain.setFormatRowProperty(0, "size", 60);
+		this.grdMain.setFormatRowProperty(1, "size", 70);
+		this.grdMain.setFormatColProperty(2, "size", 0);
+	}
+
+	//  페이지를 조회한다.
+	this.fnSearch();
+	
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnSearch = function(obj, e)
+{
+	this.dsSearch.setColumn(0,"cddcCd" ,  this.smfGetCddcCode()); //접속시도 가져오기
+	
+ 	// 서비스 객체 생성
+	this.smfSearchService("select")
+		// 페이징처리
+		.paginator(this.grdMain, this.divPaging, this.divTotal, this.dsPageInfo, this.fnSearch, e)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			
+			this.smfResetScroll(this);
+			
+			if(callbackParams.errors) return;
+			
+		});
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnGetNum = function(row){
+
+	var total = this.dsPageInfo.getColumn(0,"totalCount")
+	var pageSize = this.dsPageInfo.getColumn(0,"pageSize")
+	var pageIndex = this.dsPageInfo.getColumn(0,"pageIndex")
+	var numOfPage = total - (pageSize * ( pageIndex -1 ));
+
+	return numOfPage - row;
+
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSearch(obj, e);
+};
+
+this.grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	// 클릭한 셀을 구한다
+	var nRow = e.row;
+	var nCell = e.cell;
+	
+	if(nCell == 1){ // 제목클릭 시
+		var objDs = obj.getBindDataset();
+		var ntcMteId = objDs.getColumn(nRow,"ntcMteId");
+
+		var params = {"ntcMteId":ntcMteId
+						, "dsSearchParam":this.dsSearch.saveXML()
+						, "dsPagingParam":this.dsPageInfo.saveXML()
+						};
+		this.smfSetWorkPage("pa_uda_uep_sc::uda_uepsc01_m01.xfdl", params);
+	}
+};
+
+this.edtSearchKeyword_onkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == "13"){
+		this.divSearch.form.btnSearch.click();
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

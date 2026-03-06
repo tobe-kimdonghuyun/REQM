@@ -1,0 +1,1727 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1200" height="790" titletext="출결관리" onload="fnOnload">
+    <Layouts>
+      <Layout height="790" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="65" height="54" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="출결관리" left="0" top="0" height="54" cssclass="img_WF_SubTit01" width="130" initvalueid="ivTitleAccessibilityOn" accessibilitylabel="출결관리"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staCn" taborder="1" left="2" height="26" fittocontents="width" text="결재중 및 완결된 일지의 출결사항이므로 변경이 불가능합니다." cssclass="sta_WF_Tit14" top="143" color="#828282" initvalueid="ivStcAccessibilityOn" right="0" accessibilitylabel="결재중 및 완결된 일지의 출결사항이므로 변경이 불가능합니다."/>
+        <Div id="divSearch" taborder="2" left="0" top="174" height="70" cssclass="div_WF_Search" right="0" accessibilityenable="false" accessibilityrole="none" text="" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout initvalueid="ivDivAccessibilityOff">
+              <Static id="staAyr" taborder="0" text="*학년도" left="0" top="20" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" onclick="Common_onclick" width="75" accessibilitylabel="학년도"/>
+              <Combo id="cboAyr" taborder="1" left="75" width="120" height="30" index="-1" top="20" value="" initvalueid="ivCmbEssential" onclick="Common_onclick" text="" innerdataset="dsAyr" datacolumn="value" codecolumn="code" onitemchanged="divSearch_cboAyr_onitemchanged" accessibilitylabel="학년도 구분" cssclass="essential"/>
+              <Static id="staEccSem" taborder="2" text="*돌봄학기" left="195" top="20" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" width="88" accessibilitylabel="돌봄학기"/>
+              <Combo id="cboSem" taborder="3" left="283" width="120" height="30" index="0" top="20" initvalueid="ivCmbEssential" innerdataset="dsEccSem" datacolumn="value" codecolumn="code" onitemchanged="divSearch_cboSem_onitemchanged" accessibilitylabel="돌봄학기 구분" cssclass="essential"/>
+              <Static id="staEccScCd" taborder="4" text="*돌봄구분" left="403" top="20" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" width="88" accessibilitylabel="돌봄구분"/>
+              <Combo id="cboSc" taborder="5" left="491" width="130" height="30" index="0" top="20" initvalueid="ivCmbEssential" value="02" innerdataset="dsEccScCd" datacolumn="value" codecolumn="code" onitemchanged="divSearch_cboSc_onitemchanged" accessibilitylabel="돌봄구분" cssclass="essential"/>
+              <Static id="staEccNm" taborder="6" text="*교실명" left="621" top="20" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" width="75" accessibilitylabel="교실명"/>
+              <Combo id="cboClr" taborder="7" left="696" width="170" height="30" index="0" top="20" initvalueid="ivCmbEssential" text="" innerdataset="dsEccNm" codecolumn="code" datacolumn="value" onitemchanged="divSearch_cboClr_onitemchanged" accessibilitylabel="교실명" cssclass="essential"/>
+              <Static id="staYmdh" taborder="8" text="*일자" left="866" top="20" width="62" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" accessibilitylabel="일자"/>
+              <Calendar id="calYm" taborder="9" left="928" top="20" height="30" width="130" initvalueid="ivCalEssential" dateformat="yyyy.MM.dd" editformat="yyyy.MM.dd" onchanged="divSearch_calYm_onchanged" autoselect="true" onkeydown="divSearch_calYm_onkeydown" accessibilitylabel="일자" cssclass="essential"/>
+              <Button id="btnSearch" taborder="10" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="조회" onclick="fnSearchDirYnCk"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta05" taborder="3" text="출결 현황" left="0" top="264" width="80" height="30" cssclass="sta_WF_Tit18" initvalueid="ivStcAccessibilityOn" accessibilitylabel="출결현황"/>
+        <Static id="sta04" taborder="4" text="Total" left="100" top="265" width="40" height="30" initvalueid="ivStcAccessibilityOn"/>
+        <Static id="sta04_01" taborder="5" text="0" left="sta04:0" top="265" width="50" height="30" initvalueid="ivStcAccessibilityOn"/>
+        <Combo id="cboAtte" taborder="6" top="264" height="30" right="752" initvalueid="ivCmbNormal" width="80" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" index="0" text="선택" value="" onitemchanged="cboAtte_onitemchanged">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="datacolumn">선택</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">출석</Col>
+                <Col id="codecolumn">01</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">결석</Col>
+                <Col id="codecolumn">02</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Combo id="cboMlsv" taborder="7" top="264" width="80" height="30" right="667" initvalueid="ivCmbNormal" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" index="0" text="" value="" onitemchanged="cboMlsv_onitemchanged">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="datacolumn">선택</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">섭취</Col>
+                <Col id="codecolumn">Y</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">미섭취</Col>
+                <Col id="codecolumn">N</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <CheckBox id="chkLves" taborder="8" text="징수" top="264" width="60" height="30" right="604" initvalueid="ivChkNormal" falsevalue="N" truevalue="Y" accessibilitylabel="징수여부 선택"/>
+        <Combo id="cboHh" taborder="9" text="- 선택 -" top="264" height="30" width="80" right="519" initvalueid="ivCmbNormal" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" index="0" value="">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="datacolumn">선택</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">01</Col>
+                <Col id="codecolumn">01</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">02</Col>
+                <Col id="codecolumn">02</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">03</Col>
+                <Col id="codecolumn">03</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">04</Col>
+                <Col id="codecolumn">04</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">05</Col>
+                <Col id="codecolumn">05</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">06</Col>
+                <Col id="codecolumn">06</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">07</Col>
+                <Col id="codecolumn">07</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">08</Col>
+                <Col id="codecolumn">08</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">09</Col>
+                <Col id="codecolumn">09</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">10</Col>
+                <Col id="codecolumn">10</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">11</Col>
+                <Col id="codecolumn">11</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">12</Col>
+                <Col id="codecolumn">12</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">13</Col>
+                <Col id="codecolumn">13</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">14</Col>
+                <Col id="codecolumn">14</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">15</Col>
+                <Col id="codecolumn">15</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">16</Col>
+                <Col id="codecolumn">16</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">17</Col>
+                <Col id="codecolumn">17</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">18</Col>
+                <Col id="codecolumn">18</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">19</Col>
+                <Col id="codecolumn">19</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">20</Col>
+                <Col id="codecolumn">20</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">21</Col>
+                <Col id="codecolumn">21</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">22</Col>
+                <Col id="codecolumn">22</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">23</Col>
+                <Col id="codecolumn">23</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">24</Col>
+                <Col id="codecolumn">24</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Combo id="cboMm" taborder="10" text="선택" top="264" height="30" value="" index="0" initvalueid="ivCmbNormal" right="434" width="80" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="datacolumn">선택</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">00</Col>
+                <Col id="codecolumn">00</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">05</Col>
+                <Col id="codecolumn">05</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">10</Col>
+                <Col id="codecolumn">10</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">15</Col>
+                <Col id="codecolumn">15</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">20</Col>
+                <Col id="codecolumn">20</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">25</Col>
+                <Col id="codecolumn">25</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">30</Col>
+                <Col id="codecolumn">30</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">35</Col>
+                <Col id="codecolumn">35</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">40</Col>
+                <Col id="codecolumn">40</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">45</Col>
+                <Col id="codecolumn">45</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">50</Col>
+                <Col id="codecolumn">50</Col>
+              </Row>
+              <Row>
+                <Col id="datacolumn">55</Col>
+                <Col id="codecolumn">55</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Button id="btnAplcn" taborder="11" text="일괄적용" top="264" height="30" cssclass="btn_WF_Custom" right="338" initvalueid="ivBtnAccessibilityButton" width="76" onclick="btnAplcn_onclick" accessibilitylabel="일괄적용"/>
+        <Button id="btnCopy" taborder="12" text="전주복사" top="264" height="30" width="76" cssclass="btn_WF_Custom" right="254" accessibilitylabel="전주복사" initvalueid="ivBtnAccessibilityButton" onclick="btnCopy_onclick"/>
+        <Button id="btnCopyAca" taborder="13" text="교무출결정보 적용" top="264" height="30" width="130" cssclass="btn_WF_Custom" right="116" accessibilitylabel="학교찾기 (레이어팝업)" initvalueid="ivBtnAccessibilityButton" onclick="btnCopyAca_onclick"/>
+        <Button id="btnSave" taborder="14" text="저장" top="264" height="30" width="50" initvalueid="ivBtnAccessibilityButton" onclick="fnSave" right="58" cssclass="btn_WF_Crud" accessibilitylabel="저장"/>
+        <Button id="btnDelete" taborder="15" text="삭제" top="264" height="30" cssclass="btn_WF_Crud" width="50" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="삭제" right="0" onclick="fnDelete"/>
+        <Grid id="grdMain" taborder="16" left="0" top="304" autofittype="col" right="0" selecttype="cell" binddataset="dsMain" onheadclick="grdInsrList_onheadclick" autosizingtype="row" cellsizingtype="both" extendsizetype="row" autoenter="select" initvalueid="ivGrdAccessibilityOn" bottom="0" accessibilitylabel="출결관리: 학년, 반, 번호, 성명, 출결여부, 급간식, 징수여부, 퇴실시각, 귀가동행인, 특이사항 정보">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="48"/>
+                <Column size="55"/>
+                <Column size="55"/>
+                <Column size="55"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="70"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="200"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol"/>
+                <Cell col="1" text="학년"/>
+                <Cell col="2" text="반"/>
+                <Cell col="3" text="번호"/>
+                <Cell col="4" text="성명"/>
+                <Cell col="5" text="출결여부"/>
+                <Cell col="6" text="급간식"/>
+                <Cell col="7" text="징수여부"/>
+                <Cell col="8" colspan="2" text="퇴실시각"/>
+                <Cell col="10" text="귀가동행인"/>
+                <Cell col="11" text="특이사항" cssclass="LineNo"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:chk" cursor="pointer"/>
+                <Cell col="1" text="bind:grd" textAlign="center" wordWrap="char" autosizerow="limitmin"/>
+                <Cell col="2" text="bind:clsNm" wordWrap="char" autosizerow="limitmin"/>
+                <Cell col="3" text="bind:clsNo" textAlign="center" wordWrap="char" autosizerow="limitmin"/>
+                <Cell col="4" text="bind:stuFlnm" wordWrap="char" autosizerow="limitmin"/>
+                <Cell col="5" displaytype="combocontrol" edittype="combo" text="bind:eccAtteScCd" wordWrap="char" combodataset="dsEccAtteScCdGrid" combocodecol="code" combodatacol="value" comboautoselect="true" cursor="pointer" autosizerow="limitmin"/>
+                <Cell col="6" displaytype="combocontrol" edittype="combo" text="bind:mlsnYn" wordWrap="char" combodataset="dsMlsnGrid" combocodecol="code" combodatacol="value" comboautoselect="true" cursor="pointer" autosizerow="limitmin"/>
+                <Cell col="7" displaytype="checkboxcontrol" edittype="checkbox" text="bind:lvesYn" wordWrap="char" checkboxfalsevalue="N" checkboxtruevalue="Y" cursor="pointer" autosizerow="limitmin"/>
+                <Cell col="8" displaytype="combocontrol" edittype="combo" text="bind:eccHh" wordWrap="char" combodataset="dsEccHhGrid" combocodecol="code" combodatacol="value" comboautoselect="true" cursor="pointer" autosizerow="limitmin" combodisplaynulltext="선택"/>
+                <Cell col="9" displaytype="combocontrol" edittype="combo" text="bind:eccMm" wordWrap="char" combodataset="dsEccMmGrid" combocodecol="code" combodatacol="value" comboautoselect="true" cursor="pointer" autosizerow="limitmin" combodisplaynulltext="선택"/>
+                <Cell col="10" text="bind:cmhmTgprNm" wordWrap="char" editautoselect="true" editmaxlength="10" cursor="progress" autosizerow="limitmin"/>
+                <Cell col="11" text="bind:atteRsnCn" wordWrap="char" editautoselect="true" editmaxlength="20" cursor="progress" autosizerow="limitmin" cssclass="LineNo"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="sta00" taborder="17" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="sta02_00" taborder="18" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta02" taborder="19" left="0" top="244" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta03" taborder="20" left="0" top="294" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listAtteInfoDirCk</Col>
+            <Col id="url">/ecc_eec_om03_001.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsList=dsList</Col>
+          </Row>
+          <Row>
+            <Col id="id">list</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsMain=dsList</Col>
+            <Col id="url">/ecc_eec_om03_002.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">save</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsList=dsMain:U</Col>
+            <Col id="url">/ecc_eec_om03_003.do</Col>
+            <Col id="outDatasets">dsRsMsg=dsRsMsg</Col>
+          </Row>
+          <Row>
+            <Col id="id">delete</Col>
+            <Col id="url">/ecc_eec_om03_003.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsList=dsMain:U</Col>
+          </Row>
+          <Row>
+            <Col id="id">executeBfWeekCopy</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsBfWeekParam=dsBfWeekParam</Col>
+            <Col id="outDatasets">dsBfWeek=dsList</Col>
+            <Col id="url">/ecc_eec_om03_004.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">listAtteAcaInfo</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsParamAtteAcaInfo=dsParamAtteAcaInfo</Col>
+            <Col id="outDatasets">dsListAtteAcaInfo=dsList</Col>
+            <Col id="url">/ecc_eec_om03_004.do</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" sumtext="" description="학교코드-세션orgCd"/>
+          <Column id="ayr" type="STRING" size="256" sumtext="" description="학년도"/>
+          <Column id="eccSem" type="STRING" size="256" sumtext="" description="돌봄학기"/>
+          <Column id="eccScCd" type="STRING" size="256" sumtext="" description="돌봄구분"/>
+          <Column id="clrSeqNo" type="STRING" size="256" sumtext="" description="교실순서번호"/>
+          <Column id="ymd" type="STRING" size="256" sumtext="" description="일자"/>
+          <Column id="bf7Ymd" type="STRING" size="256" sumtext="" description="년월의 7일 전 일자(전주복사에서 사용)"/>
+          <Column id="mlsnYmd" type="STRING" size="256" sumtext="" description="삭제시 일지등록여부 체크할때 보내는 일자"/>
+          <Column id="cntnCtpvScCd" type="STRING" size="256" description="접속시도코드-세션"/>
+          <Column id="flagAtteSuch" type="STRING" size="256" description="나이스에서 조회할때 돌봄교실개설여부조회(결재상태포함) 할지 출결관리 조회할지 분기탈 구분자"/>
+          <Column id="flagAtteUp" type="STRING" size="256" description="저장 삭제 전주복사일경우, 나이스에 보낼 데이터셋 추가하려고 만든 구분자-자바단에서 사용"/>
+          <Column id="flagAtteA" type="STRING" size="256" description="교무출결정보 적용일 경우, 나이스에 보낼 데이터셋 추가하려고 만든 구분자-자바단에서 사용"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPageInfo">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true" oncolumnchanged="dsMain_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" sumtext="" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" sumtext="" description="학년도"/>
+          <Column id="eccSem" type="STRING" size="256" sumtext="" description="초등돌봄교실학기"/>
+          <Column id="eccScCd" type="STRING" size="256" sumtext="" description="초등돌봄교실구분코드"/>
+          <Column id="clrSeqNo" type="STRING" size="256" sumtext="" description="교실순서번호"/>
+          <Column id="aplyNo" type="STRING" size="256" sumtext="" description="신청번호"/>
+          <Column id="eccAsignScCd" type="STRING" size="256" sumtext="" description="초등돌봄교실배정구분코드"/>
+          <Column id="chgYmd" type="STRING" size="256" sumtext="" description="변경일자"/>
+          <Column id="eccAtteScCd" type="STRING" size="256" sumtext="" description="초등돌봄교실출결구분코드"/>
+          <Column id="atteRsnCn" type="STRING" size="256" sumtext="" description="출결사유내용"/>
+          <Column id="mlsnYn" type="STRING" size="256" sumtext="" description="급간식여부"/>
+          <Column id="lvesYn" type="STRING" size="256" sumtext="" description="징수여부"/>
+          <Column id="stuCmhmHm" type="STRING" size="256" sumtext="" description="학생귀가시분"/>
+          <Column id="eccHh" type="STRING" size="256" sumtext="" description="학생귀가 시"/>
+          <Column id="eccMm" type="STRING" size="256" sumtext="" description="학생귀가 분"/>
+          <Column id="cmhmTgprNm" type="STRING" size="256" sumtext="" description="귀가동행인명"/>
+          <Column id="atteYmd" type="STRING" size="256" sumtext="" description="출결일자"/>
+          <Column id="regYn" type="STRING" size="256" sumtext="" description="출결여부"/>
+          <Column id="stuFlnm" type="STRING" size="256" sumtext="" description="학생성명-암호화"/>
+          <Column id="grd" type="STRING" size="256" sumtext="" description="학년"/>
+          <Column id="clsCd" type="STRING" size="256" sumtext="" description="학급코드"/>
+          <Column id="clsNm" type="STRING" size="256" sumtext="" description="학급명"/>
+          <Column id="sorSeqSn" type="STRING" size="256" sumtext="" description="정렬순서일련번호"/>
+          <Column id="clsNo" type="STRING" size="256" sumtext="" description="학급번호-암호화"/>
+          <Column id="spfDisePtclrMteCn" type="STRING" size="256" sumtext="" description="학생특이사항내용"/>
+          <Column id="sts" type="STRING" size="256" description="나이스에서 저장인지 삭제인지 구분하는 구분자., 소스 재활용하려고 이짓햇즘"/>
+          <Column id="chk" type="STRING" size="256" description="그리드 체크박스"/>
+          <Column id="stuInvlNo" type="STRING" size="256" description="학생개인번호"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsAyr">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="학년도 콤보"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEccSem">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="돌봄학기 콤보"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEccScCd">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="돌봄구분 콤보"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEccNm">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="교실명 콤보"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsBfWeekParam" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" sumtext="" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" sumtext="" description="학년도"/>
+          <Column id="eccSem" type="STRING" size="256" sumtext="" description="초등돌봄교실학기"/>
+          <Column id="eccScCd" type="STRING" size="256" sumtext="" description="초등돌봄교실구분코드"/>
+          <Column id="clrSeqNo" type="STRING" size="256" sumtext="" description="교실순서번호"/>
+          <Column id="aplyNo" type="STRING" size="256" sumtext="" description="신청번호"/>
+          <Column id="eccAsignScCd" type="STRING" size="256" sumtext="" description="초등돌봄교실배정구분코드"/>
+          <Column id="chgYmd" type="STRING" size="256" sumtext="" description="변경일자"/>
+          <Column id="eccAtteScCd" type="STRING" size="256" sumtext="" description="초등돌봄교실출결구분코드"/>
+          <Column id="atteRsnCn" type="STRING" size="256" sumtext="" description="출결사유내용"/>
+          <Column id="mlsnYn" type="STRING" size="256" sumtext="" description="급간식여부"/>
+          <Column id="lvesYn" type="STRING" size="256" sumtext="" description="징수여부"/>
+          <Column id="stuCmhmHm" type="STRING" size="256" sumtext="" description="학생귀가시분"/>
+          <Column id="eccHh" type="STRING" size="256" sumtext="" description="학생귀가 시"/>
+          <Column id="eccMm" type="STRING" size="256" sumtext="" description="학생귀가 분"/>
+          <Column id="cmhmTgprNm" type="STRING" size="256" sumtext="" description="귀가동행인명"/>
+          <Column id="atteYmd" type="STRING" size="256" sumtext="" description="출결일자"/>
+          <Column id="regYn" type="STRING" size="256" sumtext="" description="출결여부"/>
+          <Column id="stuFlnm" type="STRING" size="256" sumtext="" description="학생성명-암호화"/>
+          <Column id="grd" type="STRING" size="256" sumtext="" description="학년"/>
+          <Column id="clsCd" type="STRING" size="256" sumtext="" description="학급코드"/>
+          <Column id="clsNm" type="STRING" size="256" sumtext="" description="학급명"/>
+          <Column id="sorSeqSn" type="STRING" size="256" sumtext="" description="정렬순서일련번호"/>
+          <Column id="clsNo" type="STRING" size="256" sumtext="" description="학급번호-암호화"/>
+          <Column id="spfDisePtclrMteCn" type="STRING" size="256" sumtext="" description="학생특이사항내용"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsBfWeek" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" sumtext="" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" sumtext="" description="학년도"/>
+          <Column id="eccSem" type="STRING" size="256" sumtext="" description="초등돌봄교실학기"/>
+          <Column id="eccScCd" type="STRING" size="256" sumtext="" description="초등돌봄교실구분코드"/>
+          <Column id="atteYmd" type="STRING" size="256" sumtext="" description="출결일자"/>
+          <Column id="clrSeqNo" type="STRING" size="256" sumtext="" description="교실순서번호"/>
+          <Column id="aplyNo" type="STRING" size="256" sumtext="" description="신청번호"/>
+          <Column id="eccAtteScCd" type="STRING" size="256" sumtext="" description="초등돌봄교실출결구분코드"/>
+          <Column id="atteRsnCn" type="STRING" size="256" sumtext="" description="출결사유내용"/>
+          <Column id="mlsnYn" type="STRING" size="256" sumtext="" description="급간식여부"/>
+          <Column id="lvesYn" type="STRING" size="256" sumtext="" description="징수여부"/>
+          <Column id="stuCmhmHm" type="STRING" size="256" sumtext="" description="학생귀가시분-퇴실시각"/>
+          <Column id="cmhmTgprNm" type="STRING" size="256" sumtext="" description="귀가동행인명-귀가동반자"/>
+          <Column id="mdfrId" type="STRING" size="256" sumtext="" description="수정자ID"/>
+          <Column id="mdfcnDt" type="STRING" size="256" sumtext="" description="수정일시"/>
+          <Column id="careClrAplyNo" type="STRING" size="256" sumtext="" description="돌봄교실신청번호"/>
+          <Column id="hopCmhmHm" type="STRING" size="256" sumtext="" description="희망귀가시분 - 퇴실시각"/>
+          <Column id="careEndHm" type="STRING" size="256" sumtext="" description="돌봄종료시분"/>
+          <Column id="cmhmTgprFlnm" type="STRING" size="256" sumtext="" description="귀가동행인성명(귀가동반자)-암호화"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEccAtteScCdGrid" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="그리드내 출결여부콤보"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="value">선택</Col>
+            <Col id="code"/>
+          </Row>
+          <Row>
+            <Col id="code">01</Col>
+            <Col id="value">출석</Col>
+          </Row>
+          <Row>
+            <Col id="code">02</Col>
+            <Col id="value">결석</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMlsnGrid" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="그리드내 급간식콤보"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="value">선택</Col>
+            <Col id="code"/>
+          </Row>
+          <Row>
+            <Col id="value">섭취</Col>
+            <Col id="code">Y</Col>
+          </Row>
+          <Row>
+            <Col id="value">미섭취</Col>
+            <Col id="code">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsEccHhGrid" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="그리드내 퇴실 시 콤보"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="value">선택</Col>
+            <Col id="code"/>
+          </Row>
+          <Row>
+            <Col id="value">01</Col>
+            <Col id="code">01</Col>
+          </Row>
+          <Row>
+            <Col id="value">02</Col>
+            <Col id="code">02</Col>
+          </Row>
+          <Row>
+            <Col id="value">03</Col>
+            <Col id="code">03</Col>
+          </Row>
+          <Row>
+            <Col id="value">04</Col>
+            <Col id="code">04</Col>
+          </Row>
+          <Row>
+            <Col id="value">05</Col>
+            <Col id="code">05</Col>
+          </Row>
+          <Row>
+            <Col id="value">06</Col>
+            <Col id="code">06</Col>
+          </Row>
+          <Row>
+            <Col id="value">07</Col>
+            <Col id="code">07</Col>
+          </Row>
+          <Row>
+            <Col id="value">08</Col>
+            <Col id="code">08</Col>
+          </Row>
+          <Row>
+            <Col id="value">09</Col>
+            <Col id="code">09</Col>
+          </Row>
+          <Row>
+            <Col id="value">10</Col>
+            <Col id="code">10</Col>
+          </Row>
+          <Row>
+            <Col id="value">11</Col>
+            <Col id="code">11</Col>
+          </Row>
+          <Row>
+            <Col id="value">12</Col>
+            <Col id="code">12</Col>
+          </Row>
+          <Row>
+            <Col id="value">13</Col>
+            <Col id="code">13</Col>
+          </Row>
+          <Row>
+            <Col id="value">14</Col>
+            <Col id="code">14</Col>
+          </Row>
+          <Row>
+            <Col id="value">15</Col>
+            <Col id="code">15</Col>
+          </Row>
+          <Row>
+            <Col id="value">16</Col>
+            <Col id="code">16</Col>
+          </Row>
+          <Row>
+            <Col id="value">17</Col>
+            <Col id="code">17</Col>
+          </Row>
+          <Row>
+            <Col id="value">18</Col>
+            <Col id="code">18</Col>
+          </Row>
+          <Row>
+            <Col id="value">19</Col>
+            <Col id="code">19</Col>
+          </Row>
+          <Row>
+            <Col id="value">20</Col>
+            <Col id="code">20</Col>
+          </Row>
+          <Row>
+            <Col id="value">21</Col>
+            <Col id="code">21</Col>
+          </Row>
+          <Row>
+            <Col id="value">22</Col>
+            <Col id="code">22</Col>
+          </Row>
+          <Row>
+            <Col id="value">23</Col>
+            <Col id="code">23</Col>
+          </Row>
+          <Row>
+            <Col id="value">24</Col>
+            <Col id="code">24</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsEccMmGrid" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="그리드내 퇴실 분 콤보"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="value">선택</Col>
+            <Col id="code"/>
+          </Row>
+          <Row>
+            <Col id="value">00</Col>
+            <Col id="code">00</Col>
+          </Row>
+          <Row>
+            <Col id="value">05</Col>
+            <Col id="code">05</Col>
+          </Row>
+          <Row>
+            <Col id="value">10</Col>
+            <Col id="code">10</Col>
+          </Row>
+          <Row>
+            <Col id="value">15</Col>
+            <Col id="code">15</Col>
+          </Row>
+          <Row>
+            <Col id="value">20</Col>
+            <Col id="code">20</Col>
+          </Row>
+          <Row>
+            <Col id="value">25</Col>
+            <Col id="code">25</Col>
+          </Row>
+          <Row>
+            <Col id="value">30</Col>
+            <Col id="code">30</Col>
+          </Row>
+          <Row>
+            <Col id="value">35</Col>
+            <Col id="code">35</Col>
+          </Row>
+          <Row>
+            <Col id="value">40</Col>
+            <Col id="code">40</Col>
+          </Row>
+          <Row>
+            <Col id="value">45</Col>
+            <Col id="code">45</Col>
+          </Row>
+          <Row>
+            <Col id="value">50</Col>
+            <Col id="code">50</Col>
+          </Row>
+          <Row>
+            <Col id="value">55</Col>
+            <Col id="code">55</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" description="학년도"/>
+          <Column id="eccSem" type="STRING" size="256" description="돌봄학기"/>
+          <Column id="eccScCd" type="STRING" size="256" description="돌봄구분"/>
+          <Column id="clrSeqNo" type="STRING" size="256" description="교실순서번호"/>
+          <Column id="mlsnYn" type="STRING" size="256" description="급간식여부"/>
+          <Column id="careBgngYmd" type="STRING" size="256" description="돌봄시작일자"/>
+          <Column id="careEndYmd" type="STRING" size="256" description="돌봄종료일자"/>
+          <Column id="atrzStsCd" type="STRING" size="256" description="결재상태코드"/>
+          <Column id="rsAtrzStsCd" type="STRING" size="256" description="결재상태체크-그리드활성화에 사용"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsListAtteAcaInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" sumtext="" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" sumtext="" description="학년도"/>
+          <Column id="eccSem" type="STRING" size="256" sumtext="" description="초등돌봄교실학기"/>
+          <Column id="eccScCd" type="STRING" size="256" sumtext="" description="초등돌봄교실구분코드"/>
+          <Column id="clrSeqNo" type="STRING" size="256" sumtext="" description="교실순서번호"/>
+          <Column id="aplyNo" type="STRING" size="256" sumtext="" description="신청번호"/>
+          <Column id="eccAsignScCd" type="STRING" size="256" sumtext="" description="초등돌봄교실배정구분코드"/>
+          <Column id="chgYmd" type="STRING" size="256" sumtext="" description="변경일자"/>
+          <Column id="eccAtteScCd" type="STRING" size="256" sumtext="" description="초등돌봄교실출결구분코드"/>
+          <Column id="atteRsnCn" type="STRING" size="256" sumtext="" description="출결사유내용"/>
+          <Column id="mlsnYn" type="STRING" size="256" sumtext="" description="급간식여부"/>
+          <Column id="lvesYn" type="STRING" size="256" sumtext="" description="징수여부"/>
+          <Column id="stuCmhmHm" type="STRING" size="256" sumtext="" description="학생귀가시분"/>
+          <Column id="eccHh" type="STRING" size="256" sumtext="" description="학생귀가 시"/>
+          <Column id="eccMm" type="STRING" size="256" sumtext="" description="학생귀가 분"/>
+          <Column id="cmhmTgprNm" type="STRING" size="256" sumtext="" description="귀가동행인명"/>
+          <Column id="atteYmd" type="STRING" size="256" sumtext="" description="출결일자"/>
+          <Column id="regYn" type="STRING" size="256" sumtext="" description="출결여부"/>
+          <Column id="stuFlnm" type="STRING" size="256" sumtext="" description="학생성명-암호화"/>
+          <Column id="grd" type="STRING" size="256" sumtext="" description="학년"/>
+          <Column id="clsCd" type="STRING" size="256" sumtext="" description="학급코드"/>
+          <Column id="clsNm" type="STRING" size="256" sumtext="" description="학급명"/>
+          <Column id="sorSeqSn" type="STRING" size="256" sumtext="" description="정렬순서일련번호"/>
+          <Column id="clsNo" type="STRING" size="256" sumtext="" description="학급번호-암호화"/>
+          <Column id="spfDisePtclrMteCn" type="STRING" size="256" sumtext="" description="학생특이사항내용"/>
+          <Column id="sts" type="STRING" size="256" description="나이스에서 저장인지 삭제인지 구분하는 구분자., 소스 재활용하려고 이짓햇즘"/>
+          <Column id="chk" type="STRING" size="256" description="그리드 체크박스"/>
+          <Column id="stuInvlNo" type="STRING" size="256" description="학생개인번호"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsParamAtteAcaInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" sumtext="" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" sumtext="" description="학년도"/>
+          <Column id="eccSem" type="STRING" size="256" sumtext="" description="초등돌봄교실학기"/>
+          <Column id="eccScCd" type="STRING" size="256" sumtext="" description="초등돌봄교실구분코드"/>
+          <Column id="clrSeqNo" type="STRING" size="256" sumtext="" description="교실순서번호"/>
+          <Column id="atteYmd" type="STRING" size="256" sumtext="" description="출결일자"/>
+          <Column id="stuInvlNo" type="STRING" size="256" description="학생개인번호"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRsMsg" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="rsMsg" type="STRING" size="256" description="저장 리턴값(나이스에서 BusinessException 발생한경우 메세지 찍어줄 값 넘어옴. 발생 안했으면 ok 넘어옴)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  출결관리
+*  @MenuPath    초등돌봄교실 > 출결관리
+*  @FileName 	ecc_eecom03_m01.xfdl 
+*  @Creator 	이혜진
+*  @CreateDate 	2022.10.19
+*  @Desction    초등돌봄교실(돌봄인력서비스) 출결관리
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.10.19            이혜진                   최초 생성 
+*******************************************************************************
+*/ 
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::ecc_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+//●그리드 내 콤보(출석여부, 급간식, 퇴실시각)은 고정값이라 데이터셋에 하드코딩되어있음. 
+this.fv_onLoadYn = true; //초기세팅여부 (화면 load시에만 첫번째 값으로 세팅하기)
+
+
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ /*
+ * 화면 load시
+ * 
+ * 조회조건 초기값 세팅
+ * 1. 사용자정보세팅 (주민번호, 시도코드, 접속시도코드, 사용자id, 학교코드-전담사로 등록되어있는 학교코드)
+ * 2. 학년도 세팅 = 현재년도-1~현재년도+1 
+ * 3. 일자 세팅 = 현재날짜
+ * 4. 돌봄학기 -> 돌봄구분 -> 교실명 세팅
+ */
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitForm(obj);
+	this.staCn.set_text("                                                                                                              "); 
+	
+	//●1. 사용자정보세팅
+	this.eccfSetHnfInfo("selectHnfInfoForSession", this.dsSearch, ""); 
+};
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+			
+	switch(svcid) {	
+	
+		//●사용자정보세팅 콜백
+		case "selectHnfInfoForSession" : 
+			if ( errcd == -100 ) {//오류메시지 확인용
+				this.smfAlert("errcd : "+errcd);
+				this.alert(errmsg);
+			}	
+	
+			//2. 학년도 세팅 
+			this.eccCmbSetAyr(this.dsAyr, "code", "value", 1, 1);
+			//현재년도로 디폴트 값 세팅
+			this.divSearch.form.cboAyr.set_index(0);
+				
+			//3. 일자 세팅(현재 날짜)
+			this.dsSearch.setColumn(0, "ymd", this.dsSearch.getColumn(0, "ayr") +""+ this.smfToday().dateFormat("MMdd"));
+			
+			//4. 돌봄학기 콤보 세팅
+			this.divSearch_cboAyr_onitemchanged();			
+			break;		
+	
+	
+	
+		//●돌봄학기콤보 세팅 콜백
+		case "selectEccSem" : 
+			//에러처리
+			if ( errcd == -100 ) {
+				this.smfAlert("errcd : "+errcd);
+				this.alert(errmsg);
+			}
+			
+			//onload시 콤보 초기세팅
+			if(this.fv_onLoadYn){
+				this.divSearch.form.cboSem.set_index(0);
+			}
+			
+			//선택된 돌봄구분이 없으면 세팅
+			if(this.smfIsNull(this.divSearch.form.cboSem.text)){ 
+				this.divSearch.form.cboSem.set_index(0);
+			}
+			
+			//돌봄구분콤보 세팅
+			this.divSearch_cboSem_onitemchanged();
+			break;
+		
+		
+		//●돌봄구분콤보 세팅 콜백
+		case "selectEccScCd" :
+			//에러처리
+			if ( errcd == -100 ) {
+				this.smfAlert("errcd : "+errcd);
+				this.alert(errmsg);
+			}
+			
+			//onload시 콤보 초기세팅
+			if(this.fv_onLoadYn){
+				this.divSearch.form.cboSc.set_index(0);
+			}
+			
+			//선택된 돌봄구분이 없으면 세팅
+			if(this.smfIsNull(this.divSearch.form.cboSc.text)){ 
+				this.divSearch.form.cboSc.set_index(0);
+			}			
+			
+			//교실콤보 세팅	
+			this.divSearch_cboSc_onitemchanged();
+			break;
+		
+		
+		//●교실콤보 세팅 콜백
+		case "selectEccEccNm" :
+			//에러처리
+			if ( errcd == -100 ) {
+				this.smfAlert("errcd : "+errcd);
+				this.alert(errmsg);
+			}
+			
+			//onload시 콤보 초기세팅
+			if(this.fv_onLoadYn){
+				this.divSearch.form.cboClr.set_index(0);	
+				this.fv_onLoadYn = false;
+			}
+			
+			//선택된 돌봄구분이 없으면 세팅
+			if(this.smfIsNull(this.divSearch.form.cboClr.text)){ 
+				this.divSearch.form.cboClr.set_index(0);
+			}	
+			
+			//데이터 초기화
+			this.divSearch_cboClr_onitemchanged();
+			break;		
+	}		
+};
+
+
+
+/**
+ * 팝업의 콜백함수
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+	this.fnSearch();
+};
+
+
+
+/**
+ * 메세지 콜백함수
+ * @param : N/A
+ * @return : N/A
+ */
+this.fnMessageCallback = function(){
+	
+};
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * 조회 버튼 클릭 - 1. 돌봄교실 개설여부, 해당 출결일의 일지 결재상태코드 조회
+ * 1. 돌봄교실 개설여부(개설된게 없으면 돌봄 서비스기간이 아님. 화면 비활성화 할거임), 해당 출결일의 일지 결재상태코드 조회
+ * 2. 출결관리 내역 조회
+ */
+ this.fnSearchDirYnCk = function()
+{
+	//일자 체크
+    if(nexacro.toNumber(this.dsSearch.getColumn(0, "ymd")) > nexacro.toNumber(this.smfToday())){
+	  this.smfAlert('PA064', ["출결은 오늘 날짜까지만 작성할 수"], this.fnMessageCallback ); //{0} 있습니다.
+      return;
+    }
+	
+	
+	
+	
+	//나이스에서 조회할때 돌봄교실개설여부조회(결재상태포함)-1 할지, 출결관리조회할지-2 분기탈 구분자 세팅
+	this.dsSearch.setColumn(0, "flagAtteSuch", "1");
+	this.dsSearch.setColumn(0, "flagAtteUp", "");//저장 삭제 전주복사일경우, 나이스에 보낼 데이터셋 추가하려고 만든 구분자-자바단에서 사용
+	
+	//●호출
+	this.dsList.clearData();
+	this.smfSearchService("listAtteInfoDirCk")
+		// 데이터 검증
+		.validateForm(this.divSearch)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors){//에러
+				return;
+			}
+			
+			//●조회된 내역이 없으면 개설된 돌봄교실이 없는거임. 돌봄교실 없으면 빠꾸
+			if(this.dsList.rowcount < 1){ 
+				this.smfAlert('PA057', ["돌봄 서비스기간이 아닙니", "\n(개설된 돌봄교실이 없습니다)"], this.fnMessageCallback ); //{0}다. \n{1}
+				this.dsMain.clearData();
+				return;		
+				
+			//●조회된 내역이 있으면			
+			}else{
+				//2.출결관리 내역 조회
+				this.fnSearch();					
+			}			
+		});	
+}
+
+
+
+
+
+/**
+ * 조회 버튼 클릭 - 2. 출결관리 내역 조회
+ * 1. 돌봄교실 개설여부(개설된게 없으면 돌봄 서비스기간이 아님. 화면 비활성화 할거임), 해당 출결일의 일지 결재상태코드 조회
+ * 2. 출결관리 내역 조회
+ */
+ this.fnSearch = function()
+{
+	//나이스에서 조회할때 돌봄교실개설여부조회(결재상태포함)-1 할지, 출결관리조회할지-2 분기탈 구분자 세팅
+	this.dsSearch.setColumn(0, "flagAtteSuch", "2");
+
+	//●호출
+	this.dsMain.clearData();
+	this.smfSearchService("list")
+		// 데이터 검증
+		.validateForm(this.divSearch)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors){//에러처리
+				return;
+			}	
+			this.sta04_01.set_text(this.dsMain.rowcount); //total찍기
+			
+			//●1. 그리드 활성화 설정
+			var rsAtrzStsCd = this.dsList.getColumn(0, "rsAtrzStsCd"); //결재상태체크
+			var mlsnYn = this.dsList.getColumn(0, "mlsnYn"); //급간식여부
+			this.cboMlsv.set_enable(true); //일괄적용에 있는 급간식여부
+			this.chkLves.set_enable(true); //일괄적용에 있는 징수여부
+			this.staCn.set_text(""); 
+			
+			//1. 결재 = N  급간식 = Y  -- 전부 활성화
+			if(rsAtrzStsCd == "N" && mlsnYn == "Y"){
+				this.grdMain.setCellProperty( "Body", 5, "edittype", "combo"); 		//출석여부
+				this.grdMain.setCellProperty( "Body", 6, "edittype", "combo");		//급간식
+				this.grdMain.setCellProperty( "Body", 7, "edittype", "checkbox");	//징수여부
+				this.grdMain.setCellProperty( "Body", 8, "edittype", "combo");		//퇴실시
+				this.grdMain.setCellProperty( "Body", 9, "edittype", "combo");		//퇴실분
+				this.grdMain.setCellProperty( "Body", 10, "edittype", "text");		//귀가동반자
+				this.grdMain.setCellProperty( "Body", 11, "edittype", "text");		//특이사항
+				
+			//2. 결재 = N 급간식 = N  -- 급간식콤보, 징수여부 비활성화 / 나머지 활성화
+			}else if(rsAtrzStsCd == "N" && mlsnYn == "N"){
+				this.grdMain.setCellProperty( "Body", 5, "edittype", "combo"); 	//출석여부
+				this.grdMain.setCellProperty( "Body", 6, "edittype", "none");	//급간식
+				this.grdMain.setCellProperty( "Body", 7, "edittype", "none");	//징수여부
+				this.grdMain.setCellProperty( "Body", 8, "edittype", "combo");	//퇴실시
+				this.grdMain.setCellProperty( "Body", 9, "edittype", "combo");	//퇴실분
+				this.grdMain.setCellProperty( "Body", 10, "edittype", "text");	//귀가동반자
+				this.grdMain.setCellProperty( "Body", 11, "edittype", "text");	//특이사항		
+				this.staCn.set_text("급간식을 하지 않는 교실입니다."); 	
+				
+			//3. 결재 = Y  급간식 = Y  -- 징수여부만 활성화 / 나머지 비활성화
+			}else if(rsAtrzStsCd == "Y" && mlsnYn == "Y"){
+				this.grdMain.setCellProperty( "Body", 5, "edittype", "none"); 		//출석여부
+				this.grdMain.setCellProperty( "Body", 6, "edittype", "none");		//급간식
+				this.grdMain.setCellProperty( "Body", 7, "edittype", "checkbox");	//징수여부
+				this.grdMain.setCellProperty( "Body", 8, "edittype", "none");		//퇴실시
+				this.grdMain.setCellProperty( "Body", 9, "edittype", "none");		//퇴실분
+				this.grdMain.setCellProperty( "Body", 10, "edittype", "none");		//귀가동반자
+				this.grdMain.setCellProperty( "Body", 11, "edittype", "none");		//특이사항			
+				
+			//4. 결재 = Y  급간식 = N  -- 전부 비활성화	
+			}else if(rsAtrzStsCd == "Y" && mlsnYn == "N"){			
+				this.grdMain.setCellProperty( "Body", 5, "edittype", "none"); 	//출석여부
+				this.grdMain.setCellProperty( "Body", 6, "edittype", "none");	//급간식
+				this.grdMain.setCellProperty( "Body", 7, "edittype", "none");	//징수여부
+				this.grdMain.setCellProperty( "Body", 8, "edittype", "none");	//퇴실시
+				this.grdMain.setCellProperty( "Body", 9, "edittype", "none");	//퇴실분
+				this.grdMain.setCellProperty( "Body", 10, "edittype", "none");	//귀가동반자
+				this.grdMain.setCellProperty( "Body", 11, "edittype", "none");	//특이사항			
+				this.staCn.set_text("급간식을 하지 않는 교실입니다."); 	
+			}
+			
+			
+			//●2. 버튼 활성화 세팅
+			//●2-1 조회된 값 있으면 활성화
+			var dsMainCnt = this.dsMain.rowcount;
+			if(dsMainCnt > 0){ 
+				this.btnSave.set_enable(true); 		//저장
+				
+				
+				//●2-1-1 상신중, 완결된 일지의 결출정보는 비활성화
+				if(rsAtrzStsCd == "Y"){
+					this.btnAplcn.set_enable(false); 	//일괄적용
+					this.cboAtte.set_enable(false); 	//출결여부
+					this.cboMlsv.set_enable(false); 	//급간식여부
+					this.chkLves.set_enable(false); 	//징수
+					this.cboHh.set_enable(false); 		//시
+					this.cboMm.set_enable(false); 		//분
+					this.btnDelete.set_enable(false); 	//삭제
+					this.staCn.set_text("결재중 및 완결된 일지의 출결사항이므로 변경이 불가능합니다."); 	
+					this.btnCopy.set_enable(false); 	//전주복사
+					this.btnCopyAca.set_enable(false);	//교무출결정보 적용 
+				
+				//●2-1-2 상신중, 완결된 일지의 결출정보 아니면 활성화 	
+				}else{
+					this.btnAplcn.set_enable(true); 	//일괄적용
+					this.cboAtte.set_enable(true); 		//출결여부
+					this.cboMlsv.set_enable(true); 		//급간식여부
+					this.chkLves.set_enable(true); 		//징수
+					this.cboHh.set_enable(true); 		//시
+					this.cboMm.set_enable(true); 		//분
+					this.btnDelete.set_enable(true); 	//삭제
+					this.btnCopy.set_enable(true); 		//전주복사
+					this.btnCopyAca.set_enable(true);	//교무출결정보 적용 
+					this.cboAtte.set_index(0); 			//출결여부
+					this.cboMlsv.set_index(0); 			//급간식여부
+					this.cboHh.set_index(0); 			//시
+					this.cboMm.set_index(0); 			//분					
+				}
+				
+				//퇴실시각이 null일때 빈값 넣어주기 (그리드에서 콤보가 선택으로 맞춰지게 하기 위해)
+				
+				this.dsMain.set_updatecontrol(false);//데이터셋 rowtype 수정으로 변경되지 않도록 꺼놓기
+				this.dsMain.set_enableevent(false);//속도 향상을 위해 이벤트 꺼놓기
+				for(var i=0; i<dsMainCnt ; i++){
+					this.smfIsNull(this.dsMain.getColumn(i, "eccHh")) ? this.dsMain.setColumn(i, "eccHh", "") : "" ;
+					this.smfIsNull(this.dsMain.getColumn(i, "eccMm")) ? this.dsMain.setColumn(i, "eccMm", "") : "" ;		
+				}	
+				this.dsMain.set_enableevent(true);//속도 향상을 위해 이벤트 꺼놓기
+				this.dsMain.set_updatecontrol(true);
+				
+			//●2-2 조회된 내역이 없으면 전부 비활성화
+			}else{
+				this.btnSave.set_enable(false); 	//저장
+				this.btnAplcn.set_enable(false); 	//일괄적용
+				this.cboAtte.set_enable(false); 	//출결여부
+				this.cboMlsv.set_enable(false); 	//급간식여부
+				this.chkLves.set_enable(false); 	//징수
+				this.cboHh.set_enable(false); 		//시
+				this.cboMm.set_enable(false); 		//분
+				this.btnDelete.set_enable(false); 	//삭제
+				this.staCn.set_text("조회된 내역이 없습니다."); 
+				this.btnCopy.set_enable(false); 	//전주복사		
+				this.btnCopyAca.set_enable(false);	//교무출결정보 적용 
+			}//2-2 조회된 내역이 없으면 전부 비활성화 if 끝	
+			
+			
+			//급간식 안하는 교실은 급간식여부=N으로 세팅
+			if(mlsnYn=="N"){
+				this.cboMlsv.set_value('N'); //일괄적용에 있는 급간식여부
+				this.cboMlsv.set_enable(false); //일괄적용에 있는 급간식여부
+				this.chkLves.set_enable(false); //일괄적용에 있는 징수여부				
+				//그리드 급간식여부
+				this.dsMain.set_enableevent(false); //속도향상을 위해 이벤트 꺼놓기
+				for(var i=0; i<this.dsMain.rowcount; i++){
+					this.dsMain.setColumn(i, "mlsnYn", "N");
+				}
+				this.dsMain.set_enableevent(true); //속도향상을 위해 이벤트 꺼놓기
+			}			
+		});//콜백 끝		
+}
+
+
+
+/*
+ * "저장" 버튼(btnSave)에서 click 이벤트 발생 시 호출.
+ * 
+ */
+this.fnSave = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//●필수 값 체크	
+	this.dsMain.set_enableevent(false); //속도향상을 위해 이벤트 꺼놓기
+	for(var i=0; i<this.dsMain.rowcount; i++){
+		if(this.dsMain.getRowType(i) == "2" || this.dsMain.getRowType(i) == "4"){
+			
+			//출결여부
+			if(this.smfIsNull(this.dsMain.getColumn(i, "eccAtteScCd"))){
+				this.smfAlert("CM006", ["["+ (i+1) +"행] 출결여부"], this.fnMessageCallback); // {0}은(는) 필수 입력입니다.
+				return;						
+			}
+			//급간식
+			if(this.smfIsNull(this.dsMain.getColumn(i, "mlsnYn"))){
+				this.smfAlert("CM006", ["["+ (i+1) +"행] 급간식"], this.fnMessageCallback); // {0}은(는) 필수 입력입니다.
+				return;			
+			}			
+			
+			//출결여부가 출석이면 퇴실시각 체크
+			if(this.dsMain.getColumn(i, "eccAtteScCd") == "01"){
+				if(this.smfIsNull(this.dsMain.getColumn(i, "eccHh")) || this.smfIsNull(this.dsMain.getColumn(i, "eccMm"))){
+				this.smfAlert("CM006", ["["+ (i+1) +"행] 퇴실시각"], this.fnMessageCallback); // {0}은(는) 필수 입력입니다.
+				return;			
+				}
+				
+			//출결여부가 결석인데 퇴실시각 입력했으면 퇴실시각 없애기. 급간식N으로 세팅하기
+			}else if(this.dsMain.getColumn(i, "eccAtteScCd") == "02"){
+				if(!this.smfIsNull(this.dsMain.getColumn(i, "eccHh")) || !this.smfIsNull(this.dsMain.getColumn(i, "eccMm"))){
+					this.dsMain.setColumn(i, "eccHh", "");
+					this.dsMain.setColumn(i, "eccMm", "");
+					this.dsMain.setColumn(i, "mlsnYn", "N");
+				}
+				this.dsMain.setColumn(i, "cmhmTgprNm", "");	//귀가동행인명 없애기
+			}
+			
+			//나이스에서 저장인지 삭제인지 구분하는 구분자 세팅. 소스 재활용하려고 이짓햇즘
+			this.dsMain.setColumn(i, "sts", "u");
+
+		}//getRowType if 끝
+	}//●필수 값 체크 for 끝
+	this.dsMain.set_enableevent(true); //속도향상을 위해 이벤트 꺼놓기
+	
+	this.dsSearch.setColumn(0, "flagAtteUp", "U"); //저장 삭제 전주복사일경우, 나이스에 보낼 데이터셋 추가하려고 만든 구분자-자바단에서 사용
+	
+	
+	//●호출
+	this.smfSaveService("save")
+		// 데이터 변경 필수 
+		.requireModifredData(this.dsMain)
+		//메세지
+		.messagePrefix(["저장"]) //{} 하시겠습니까?
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+				this.dsSearch.setColumn(0, "flagAtteUp", "");//구분자 초기화
+				
+				//저장 리턴값(나이스에서 BusinessException 발생한경우 메세지 찍어줄 값 넘어옴. 발생 안했으면 ok 넘어옴)
+				if(!this.smfIsNull(this.dsRsMsg.getColumn(0, "rsMsg"))){
+					var rsMsg = this.dsRsMsg.getColumn(0, "rsMsg");
+					if(rsMsg != "ok"){
+						this.smfAlert('PA057', [ rsMsg, "" ], this.fnMessageCallback ); //{0}다.{1}
+					}else{
+						this.smfAlert('CM002', [], this.fnMessageCallback ); // 저장이 완료되었습니다.
+						this.fnSearch();
+					}
+				}				
+		});	
+};
+
+
+
+
+/*
+ * "삭제" 버튼(btnSave)에서 click 이벤트 발생 시 호출.
+ * 
+ */
+this.fnDelete = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//●체크박스 선택 여부 확인
+	var arrChk = this.dsMain.extractRows('chk==1');
+	if(arrChk == '-1' || arrChk.length < 1){
+		//선택된 {0}이(가) 없습니다. {0}을(를) 선택하여 주십시오.
+		this.smfAlert('CM013', ['행']);	  
+		return;
+	}else{
+		this.dsSearch.setColumn(0, "flagAtteUp", "D"); //저장 삭제 전주복사일경우, 나이스에 보낼 데이터셋 추가하려고 만든 구분자-자바단에서 사용
+	}
+	
+	
+	//●나이스에서 저장인지 삭제인지 구분하는 구분자 세팅. 소스 재활용하려고 이짓햇즘
+	this.dsMain.set_enableevent(false); //속도향상을 위해 이벤트 꺼놓기
+	for(var i=0; i<arrChk.length; i++){
+		this.dsMain.setColumn(arrChk[i], "sts", "d");
+	}
+	this.dsMain.set_enableevent(true); //속도향상을 위해 이벤트 꺼놓기
+	
+	
+ 	//●호출
+	this.smfDeleteService("delete")
+		.messagePrefix(["삭제"]) //{} 하시겠습니까?
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			this.dsSearch.setColumn(0, "flagAtteUp", "");
+			this.smfAlert('CM201', ['삭제'], this.fnMessageCallback ); // {0} 하였습니다.
+			this.fnSearch();
+		});			
+};
+
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ /*
+ * "전주복사" 버튼(btnCopy)에서 click 이벤트 발생 시 호출.
+ * 전 주 해당 요일의 출결정보(출결여부,급간식,퇴실시각,귀가동반자)를 복사
+ * 1. 동일한 요일에 작성된 내역을 복사한다(최대 3주까지 조회해서 가장 최근껄로 가저온다)
+ * 2. ECCSECOM002LT(돌봄교실별출석내역)에서 기존 출결 정보 뽑고, 여기에 없으면 ECCSECCR001MT(돌봄교실신청기본), ECCSECCM001MT(돌봄교실기본)에서 교실정보와 해당 교실에 배정된 학생정보를 뽑는다
+ */
+this.btnCopy_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//●체크박스 선택 여부 확인
+	var arrChk = this.dsMain.extractRows('chk==1');
+	if(arrChk == '-1' || arrChk.length < 1){
+		//선택된 {0}이(가) 없습니다. {0}을(를) 선택하여 주십시오.
+		this.smfAlert('CM013', ['행']);	  
+		return;
+	}
+
+
+	//●파라미터 세팅
+	//1. 7일전 일자 세팅
+	var bf7 = this.smfAddDate(this.dsSearch.getColumn(0, "ymd"), -7);
+	this.dsSearch.setColumn(0, "bf7Ymd", bf7);
+	
+	//2.신청번호 세팅 : 조회조건 파라미터 값이 신청번호 빼고 다 똑같음. 그래서 신청번호 in조건으로 조회할거임(asis는 건건이 조회했음)
+	var aplyNoList = "";
+	for(var i=0 ; i < arrChk.length ; i++){
+		aplyNoList += this.dsMain.getColumn(arrChk[i], "aplyNo") + ",";
+	}
+	this.dsBfWeekParam.setColumn(0, "aplyNo", aplyNoList);
+	
+	//3. 나머지 세팅
+	this.dsBfWeekParam.setColumn(0, "shlCd", this.dsMain.getColumn(0, "shlCd"));  //학교코드
+	this.dsBfWeekParam.setColumn(0, "ayr", this.dsMain.getColumn(0, "ayr")); //학년도
+	this.dsBfWeekParam.setColumn(0, "eccSem", this.dsMain.getColumn(0, "eccSem")); //초등돌봄교실학기
+	this.dsBfWeekParam.setColumn(0, "eccScCd", this.dsMain.getColumn(0, "eccScCd")); //초등돌봄교실구분코드	
+	
+	this.dsSearch.setColumn(0, "flagAtteUp", "C"); //저장 삭제 전주복사일경우, 나이스에 보낼 데이터셋 추가하려고 만든 구분자-자바단에서 사용
+	
+	
+	//●전 주 내용 조회해오기 호출
+	this.smfSaveService("executeBfWeekCopy")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+				this.dsSearch.setColumn(0, "flagAtteUp", "");
+			
+				//●복사 - dsMain의 aplyNo(신청번호)와 dsBfWeek의 aplyNo(신청번호)가 같은애를 찾아서 복사한다 
+				//1. dsBfWeek의 aplyNo(신청번호)가 dsMain의 몇번째 로우에 있는지 찾는다
+				//2. dsMain의 해당 로우에 dsBfWeek의 값을 넣는다
+				
+				//준비
+				var dsBfWeekCnt = this.dsBfWeek.rowcount;
+				var dsMainCtn = this.dsMain.rowcount;
+				var aplyNoRowIndex = ""; 	//dsBfWeek의 aplyNo(신청번호)가 dsMain의 몇번째 로우에 있는지 찾는다
+				
+				this.dsMain.set_enableevent(false); //속도향상을 위해 이벤트 꺼놓기
+				for(var m=0 ; m<dsMainCtn ; m++){					
+					for(var i=0 ; i<dsBfWeekCnt ; i++){
+						
+						//1. dsBfWeek의 aplyNo(신청번호)가 dsMain의 몇번째 로우에 있는지 찾는다
+						aplyNoRowIndex = this.dsMain.findRow("aplyNo", this.dsBfWeek.getColumn(i, "aplyNo"));
+						
+						var eccHh = this.dsBfWeek.getColumn(i, "stuCmhmHm");
+						var eccMm = this.dsBfWeek.getColumn(i, "stuCmhmHm");
+						if(!this.smfIsNull(eccHh) && !this.smfIsNull(eccMm)){
+							//2. dsMain의 해당 로우에 dsBfWeek의 값을 넣는다
+							this.dsMain.setColumn(aplyNoRowIndex, "eccAtteScCd", this.dsBfWeek.getColumn(i, "eccAtteScCd")); //출결구분
+							this.dsMain.setColumn(aplyNoRowIndex, "mlsnYn", this.dsBfWeek.getColumn(i, "mlsnYn")); // 급간식여부
+							this.dsMain.setColumn(aplyNoRowIndex, "lvesYn", this.dsBfWeek.getColumn(i, "lvesYn")); // 징수여부
+							this.dsMain.setColumn(aplyNoRowIndex, "eccHh", eccHh.slice(0, 2));//퇴실시각 시
+							this.dsMain.setColumn(aplyNoRowIndex, "eccMm", eccHh.slice(2, 4));//퇴실시간 분
+							this.dsMain.setColumn(aplyNoRowIndex, "cmhmTgprNm", this.dsBfWeek.getColumn(i, "cmhmTgprNm")); // 귀가동반자
+							this.dsMain.setColumn(aplyNoRowIndex, "atteRsnCn", this.dsBfWeek.getColumn(i, "atteRsnCn")); // 특이사항(출결사유내용)
+						}
+					}//dsBfWeekCnt for문 끝				
+				}//dsMainCtn for문 끝
+				this.dsMain.set_enableevent(true); //속도향상을 위해 이벤트 꺼놓기
+				
+				this.smfAlert('PA058', ['전 주 출결정보를 복사하였습니다.\n내용 확인 후 저장'], this.fnMessageCallback ); // {0}해주세요.
+		});	//콜백 끝	
+};
+
+
+/*
+ * "교무출결정보 적용" 버튼(btnLevy)에서 click 이벤트 발생 시 호출.
+ * 
+ */
+this.btnCopyAca_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//●체크박스 선택 여부 확인
+	var arrChk = this.dsMain.extractRows('chk==1');
+	if(arrChk == '-1' || arrChk.length < 1){
+		//선택된 {0}이(가) 없습니다. {0}을(를) 선택하여 주십시오.
+		this.smfAlert('CM013', ['행']);	  
+		return;
+	}	
+	
+	//●조회할 파라미터 세팅
+
+	//●파라미터 세팅	
+	//1.학생개인번호 in조건으로 세팅
+	var noList = "";
+	var stuInvlNoVnNo = "";
+	for(var i=0 ; i < arrChk.length ; i++){
+		var stuInvlNoVn = this.dsMain.getColumn(arrChk[i], "stuInvlNo");
+		if(!this.smfIsNull(stuInvlNoVn)){
+			noList += stuInvlNoVn + ",";	
+				
+		}else{
+			stuInvlNoVnNo = arrChk[i];	
+		}		
+	}
+
+	if(!this.smfIsNull(stuInvlNoVnNo)){
+		this.smfAlert('PA003', ["["+(stuInvlNoVnNo+1)+"번째 행]학적 정보가 없어 교무출결정보를 적용할 수"], this.fnMessageCallback ); // {0} 없습니다.
+		return;
+	}
+	
+	this.dsParamAtteAcaInfo.setColumn(0, "stuInvlNo", noList);
+	
+	//2. 나머지 세팅
+	this.dsParamAtteAcaInfo.setColumn(0, "shlCd", this.dsMain.getColumn(0, "shlCd"));  //학교코드
+	this.dsParamAtteAcaInfo.setColumn(0, "ayr", this.dsMain.getColumn(0, "ayr")); //학년도
+	this.dsParamAtteAcaInfo.setColumn(0, "eccSem", this.dsMain.getColumn(0, "eccSem")); //초등돌봄교실학기
+	this.dsParamAtteAcaInfo.setColumn(0, "eccScCd", this.dsMain.getColumn(0, "eccScCd")); //초등돌봄교실구분코드	
+	this.dsParamAtteAcaInfo.setColumn(0, "clrSeqNo", this.dsMain.getColumn(0, "clrSeqNo")); //교실순서번호	
+	this.dsParamAtteAcaInfo.setColumn(0, "atteYmd", this.dsSearch.getColumn(0, "ymd")); //일자	
+	this.dsSearch.setColumn(0, "flagAtteA", "A"); //나이스에 보낼 데이터셋 추가하려고 만든 구분자-자바단에서 사용	
+	
+
+	//●교무정보 조회해오기
+	this.smfSearchService("listAtteAcaInfo")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+				this.dsSearch.setColumn(0, "flagAtteA", ""); //나이스에 보낼 데이터셋 추가하려고 만든 구분자-자바단에서 사용	
+			
+				//●복사 - dsMain의 aplyNo(신청번호)와 dsListAtteAcaInfo aplyNo(신청번호)가 같은애를 찾아서 복사한다 
+				//1. dsListAtteAcaInfo aplyNo(신청번호)가 dsMain의 몇번째 로우에 있는지 찾는다
+				//2. dsMain의 해당 로우에 dsListAtteAcaInfo 값을 넣는다
+				
+				//준비
+				var dsBfWeekCnt = this.dsListAtteAcaInfo.rowcount;
+				var dsMainCtn = this.dsMain.rowcount;
+				var aplyNoRowIndex = ""; 	//dsListAtteAcaInfo aplyNo(신청번호)가 dsMain의 몇번째 로우에 있는지 찾는다
+				var regYn = "";
+				
+				//●조회된 내역이 있으면 복사
+				if(dsBfWeekCnt > 0){
+					this.dsMain.set_enableevent(false); //속도향상을 위해 이벤트 꺼놓기
+					for(var m=0 ; m<dsMainCtn ; m++){					
+						for(var i=0 ; i<dsBfWeekCnt ; i++){
+							
+							//1. dsListAtteAcaInfo의 aplyNo(신청번호)가 dsList의 몇번째 로우에 있는지 찾는다
+							aplyNoRowIndex = this.dsMain.findRow("aplyNo", this.dsListAtteAcaInfo.getColumn(i, "aplyNo"));
+							regYn = this.dsListAtteAcaInfo.getColumn(i, "regYn");
+							
+							if(!this.smfIsNull(regYn) && regYn=="N"){
+								//2. dsList의 해당 로우에 dsListAtteAcaInfo의 값을 넣는다. 결석한 자료만
+								this.dsMain.setColumn(aplyNoRowIndex, "eccAtteScCd", this.dsListAtteAcaInfo.getColumn(i, "eccAtteScCd")); //출결구분
+								this.dsMain.setColumn(aplyNoRowIndex, "mlsnYn", "N"); // 급간식여부
+								this.dsMain.setColumn(aplyNoRowIndex, "eccAtteScCd", "02"); // 출결코드
+								this.dsMain.setColumn(aplyNoRowIndex, "eccHh", ""); // 퇴실시
+								this.dsMain.setColumn(aplyNoRowIndex, "eccMm", ""); // 퇴실분
+								
+								// 특이사항(출결사유내용) 60byte로 자르기
+								var atteRsnCn = this.dsListAtteAcaInfo.getColumn(i, "atteRsnCn");
+								if(!this.smfIsNull(atteRsnCn)){
+									if(atteRsnCn.length > 20){
+										atteRsnCn = atteRsnCn.substr(0, 20);
+									}
+								}
+								this.dsMain.setColumn(aplyNoRowIndex, "atteRsnCn", atteRsnCn); // 특이사항(출결사유내용)									
+
+							} //regYn if문 끝
+						}//dsBfWeekCnt for문 끝				
+					}//dsMainCtn for문 끝
+					this.dsMain.set_enableevent(true); //속도향상을 위해 이벤트 꺼놓기
+					this.smfAlert('PA058', ['교무출결정보를 적용하였습니다.\n내용 확인 후 저장'], this.fnMessageCallback ); // {0}해주세요.
+					
+				}else{
+					this.smfAlert('PA003', ['조회된 교무출결정보가'], this.fnMessageCallback ); // {0} 없습니다.
+				}//●조회된 내역이 있으면 복사 if문 끝
+		});//●교무정보 조회해오기 콜백 끝		
+};
+
+
+
+
+
+/*
+ * "일괄적용" 버튼(btnLevy)에서 click 이벤트 발생 시 호출.
+ * 설정한 애들만 복사. 단 퇴실시 퇴실분은 결석일때 설정 안한것도 세팅
+ */
+this.btnAplcn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//●체크박스 선택 여부 확인
+	var arrChk = this.dsMain.extractRows('chk==1');
+	if(arrChk == '-1' || arrChk.length < 1){
+		//선택된 {0}이(가) 없습니다. {0}을(를) 선택하여 주십시오.
+		this.smfAlert('CM013', ['대상자']);	  
+		return;
+	}
+
+
+	//일괄적용 설정한 값
+	var cmbRegYn = this.cboAtte.value; //출결여부
+	var cmbMlsnYn = this.cboMlsv.value; //급간식
+	var cbxLves = this.chkLves.value; //징수여부
+	var cmbHh = this.cboHh.value; //퇴실 시
+	var cmbMm = this.cboMm.value; //퇴실 분	
+
+	var dsMainCnt = this.dsMain.rowcount;
+	
+	this.dsMain.set_enableevent(false); //속도향상을 위해 이벤트 꺼놓기	
+	for(var i=0; i<arrChk.length; i++){
+		if(!this.smfIsNull(cmbRegYn)){
+			this.dsMain.setColumn(arrChk[i], "eccAtteScCd", cmbRegYn );	//출결여부
+		}
+		if(!this.smfIsNull(cmbMlsnYn)){
+			this.dsMain.setColumn(arrChk[i], "mlsnYn", cmbMlsnYn); 		//급간식
+		}	
+		if(!this.smfIsNull(cmbHh) || cmbRegYn == "02"){
+			this.dsMain.setColumn(arrChk[i], "eccHh", cmbHh); 			//퇴실시
+		}	
+		if(!this.smfIsNull(cmbMm) || cmbRegYn == "02"){
+			this.dsMain.setColumn(arrChk[i], "eccMm", cmbMm); 			//퇴실분
+		}	
+		this.dsMain.setColumn(arrChk[i], "lvesYn", this.chkLves.value); //징수여부
+		
+		if(cmbRegYn == "02"){ //결석일때 귀가동반자 초기화
+			this.dsMain.setColumn(arrChk[i], "cmhmTgprNm", "");
+		}
+	}
+	this.dsMain.set_enableevent(true); //속도향상을 위해 이벤트 꺼놓기
+};
+
+
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ /**
+ * 학년도 콤보 변경시 -
+ * [돌봄학기 콤보 세팅]
+ * @param : N/A
+ * @return : N/A
+ */
+this.divSearch_cboAyr_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.eccComboSet("selectEccSem", this.dsSearch, this.dsEccSem, this.fnMessageCallback, "2");
+};
+
+
+
+ /**
+ * 돌봄학기 콤보 변경시 -
+ * [돌봄구분 콤보 세팅]
+ * @param : N/A
+ * @return : N/A
+ */
+this.divSearch_cboSem_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.eccComboSet("selectEccScCd", this.dsSearch, this.dsEccScCd, this.fnMessageCallback, "3");
+};
+
+
+
+ /**
+ * 돌봄구분 콤보 변경시 -
+ * [교실 콤보 세팅]
+ * @param : N/A
+ * @return : N/A
+ */
+this.divSearch_cboSc_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.eccComboSet("selectEccEccNm", this.dsSearch, this.dsEccNm, this.fnMessageCallback, "4");	
+};
+
+
+ /**
+ * 교실 콤보 변경
+ * @param : N/A
+ * @return : N/A
+ */
+this.divSearch_cboClr_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	//total 초기화
+	this.staCn.set_text("                                                                                                              "); 
+	this.sta04_01.set_text("0"); //total찍기
+	this.dsMain.clearData();
+	
+	
+	//학년도랑 일자이랑 맞추기
+	var ayr = this.dsSearch.getColumn(0, "ayr"); //학년도
+	var ymdYy = (this.dsSearch.getColumn(0, "ymd")).substr(0, 4); //일자의 년도
+	var ymdMm = (this.dsSearch.getColumn(0, "ymd")).substr(4, 2); //일자의 월
+	var ymdMmDd = (this.dsSearch.getColumn(0, "ymd")).substr(4, 4); //일자의 월일
+	
+	//●년월의 년도랑 학년도랑 같지 않으면 학년도랑 년월 맞추기
+	if(ayr != ymdYy && ymdMm > 02){
+		this.dsSearch.setColumn(0, "ymd", ayr +""+ ymdMmDd);
+	}
+	
+	//●1월 2월은 전년도 세팅	
+	if(ymdMm < 03){
+		this.dsSearch.setColumn(0, "ymd", (nexacro.toNumber(ayr)+1) +""+ ymdMmDd);
+	}		
+};
+
+
+
+ /**
+ * 일자 변경시
+ * @param : N/A
+ * @return : N/A
+ */
+this.divSearch_calYm_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	//total 초기화
+	this.staCn.set_text("                                                                                                              "); 
+	this.sta04_01.set_text("0"); //total찍기
+	this.dsMain.clearData();	
+};
+
+
+
+/**
+ * @description 그리드 체크박스 헤드 클릭
+*/
+this.grdInsrList_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	//체크박스 전체 선택 
+	this.smfSetGridCheckAll(obj, e, function (ds, nRow){
+		var a = ds;
+	});		
+};
+
+
+/**
+ * @description 일자에서 엔터 눌렀을때 조회
+*/
+this.divSearch_calYm_onkeydown = function(obj:nexacro.Calendar,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == "13"){
+		
+		this.fnSearchDirYnCk();
+	}
+};
+
+
+/**
+ * @description 출석 콤보 변경시
+ * 출석(01)일땐 섭취(Y) / 결석(02)일땐 미섭취(N)로 자동 세팅
+*/
+this.cboAtte_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	//급간식을 안하는 교실
+	if(this.dsList.getColumn(0, "mlsnYn") == "N"){
+		this.cboMlsv.set_value('N');
+		this.cboMlsv.set_enable(false);
+		
+		//출석
+		if(this.cboAtte.value == '01'){
+			this.cboHh.set_enable(true);
+			this.cboMm.set_enable(true);
+			
+		//결석	
+		}else if(this.cboAtte.value == '02'){
+			this.cboHh.set_index(0);
+			this.cboMm.set_index(0);
+			this.cboHh.set_enable(false);
+			this.cboMm.set_enable(false);			
+		}
+		
+	//급간식을 하는 교실	
+	}else{
+		//출석
+		if(this.cboAtte.value == '01'){
+			this.cboMlsv.set_value('Y');
+			this.cboMlsv.set_enable(true);
+			this.cboHh.set_enable(true);
+			this.cboMm.set_enable(true);
+			
+		//결석	
+		}else if(this.cboAtte.value == '02'){
+			this.cboMlsv.set_value('N');
+			this.cboHh.set_index(0);
+			this.cboMm.set_index(0);
+			
+			this.cboMlsv.set_enable(false);
+			this.cboHh.set_enable(false);
+			this.cboMm.set_enable(false);			
+		}	
+	}
+};
+
+
+/*
+ * 콤보 박스에서 selection-change 이벤트 발생 시 호출.
+ * ComboBox Item을 선택하여 선택된 값이 저장된 후에 발생하는 이벤트.
+ * 결석(02)일땐 미섭취(N)로 자동 세팅
+ */
+this.cboMlsv_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if(this.cboAtte.value == '02'){
+		this.cboMlsv.set_value('N');
+	}	
+};
+
+
+
+/*
+ * 그리드 출결여부, 급간식, 퇴실시각 변경시
+ * 출결여부가 결석일경우 - 급간식, 퇴실시각 세팅
+ */
+this.dsMain_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.columnid=="eccAtteScCd" || e.columnid=="mlsnYn" || e.columnid=="eccHh" || e.columnid=="eccMm"){
+		if(this.dsMain.getColumn(e.row, "eccAtteScCd") == "02"){
+			this.dsMain.setColumn(e.row, "mlsnYn", "N");
+			this.dsMain.setColumn(e.row, "eccHh", "");
+			this.dsMain.setColumn(e.row, "eccMm", "");
+			this.dsMain.setColumn(e.row, "cmhmTgprNm", "");
+		}
+	}
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.cboAyr" propid="value" datasetid="dsSearch" columnid="ayr"/>
+      <BindItem id="item1" compid="divSearch.form.cboSem" propid="value" datasetid="dsSearch" columnid="eccSem"/>
+      <BindItem id="item2" compid="divSearch.form.cboSc" propid="value" datasetid="dsSearch" columnid="eccScCd"/>
+      <BindItem id="item3" compid="divSearch.form.cboClr" propid="value" datasetid="dsSearch" columnid="clrSeqNo"/>
+      <BindItem id="item4" compid="divSearch.form.calYm" propid="value" datasetid="dsSearch" columnid="ymd"/>
+    </Bind>
+  </Form>
+</FDL>

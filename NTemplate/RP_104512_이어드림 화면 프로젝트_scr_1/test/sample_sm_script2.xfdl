@@ -1,0 +1,599 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sample_sm_script1" width="1280" height="720" titletext="넥사크로 기능공통 모듈 샘플" onload="fnOnload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Static id="staMain" taborder="0" text="넥사크로 기능공통 모듈 샘플" left="10" cssclass="sta_Ctitle" top="6" right="90" height="40" font="bold 20pt/normal &quot;Arial&quot;"/>
+        <Static id="staDate" taborder="1" text="유틸" left="2" top="67" width="55" height="34" font="bold 16pt/normal &quot;Arial&quot;"/>
+        <Button id="btnDecode" taborder="2" text="decode 샘플" left="2" top="124" width="248" height="34" onclick="btnDecode_onclick"/>
+        <Button id="btnIif" taborder="3" text="iif 샘플" left="262" top="124" width="248" height="34" onclick="btnIif_onclick"/>
+        <Button id="btnIsNil" taborder="4" text="isNil 샘플" left="519" top="124" width="248" height="34" onclick="btnIsNil_onclick"/>
+        <Button id="btnIsNotNil" taborder="5" text="isNotNil 샘플" left="773" top="124" width="248" height="34" onclick="btnIsNotNil_onclick"/>
+        <Button id="btnNvl" taborder="6" text="nvl 샘플" left="1030" top="124" width="248" height="34" onclick="btnNvl_onclick"/>
+        <Button id="btnSmfAlert" taborder="7" text="smfAlert 샘플" left="2" top="167" width="248" height="34" onclick="btnSmfAlert_onclick"/>
+        <Button id="btnSmfConfirm" taborder="8" text="smfConfirm 샘플" left="262" top="167" width="248" height="34" onclick="btnSmfConfirm_onclick"/>
+        <Button id="btnSmfConvertDataSize" taborder="9" text="smfConvertDataSize 샘플" left="519" top="167" width="248" height="34" onclick="btnSmfConvertDataSize_onclick"/>
+        <Button id="btnSmfDialog" taborder="10" text="smfDialog 샘플" left="773" top="167" width="248" height="34" onclick="btnSmfDialog_onclick"/>
+        <Button id="btnSmfDiffDataset" taborder="11" text="smfDiffDataset 샘플" left="1030" top="167" width="248" height="34" onclick="btnSmfDiffDataset_onclick"/>
+        <Button id="btnSmfIsCorpRegNo" taborder="12" text="smfIsCorpRegNo 샘플" left="2" top="211" width="248" height="34" onclick="btnSmfIsCorpRegNo_onclick"/>
+        <Button id="btnSmfIsDuplicate" taborder="13" text="smfIsDuplicate 샘플" left="262" top="211" width="248" height="34" onclick="btnSmfIsDuplicate_onclick"/>
+        <Button id="btnSmfIsDuplicateColumns" taborder="14" text="smfIsDuplicateColumns 샘플" left="519" top="211" width="248" height="34" onclick="btnSmfIsDuplicateColumns_onclick"/>
+        <Button id="btnSmfIsDuplicateList" taborder="15" text="smfIsDuplicateList 샘플" left="773" top="211" width="248" height="34" onclick="btnSmfIsDuplicateList_onclick"/>
+        <Button id="btnSmfIsDuplicateTo" taborder="16" text="smfIsDuplicateTo 샘플" left="1030" top="211" width="248" height="34" onclick="btnSmfIsDuplicateTo_onclick"/>
+        <Button id="btnSmfIsForeignNo" taborder="17" text="smfIsForeignNo 샘플" left="2" top="254" width="248" height="34" onclick="btnSmfIsForeignNo_onclick"/>
+        <Button id="btnSmfIsNull" taborder="18" text="smfIsNull 샘플" left="262" top="254" width="248" height="34" onclick="btnSmfIsNull_onclick"/>
+        <Button id="btnSmfIsNum" taborder="19" text="smfIsNum 샘플" left="519" top="254" width="248" height="34" onclick="btnSmfIsNum_onclick"/>
+        <Button id="btnSmfIsRsrNo" taborder="20" text="smfIsRsrNo 샘플" left="773" top="254" width="248" height="34" onclick="btnSmfIsRsrNo_onclick"/>
+        <Button id="btnSmfStartsStr" taborder="21" text="smfStartsStr 샘플" left="1030" top="254" width="248" height="34" onclick="btnSmfStartsStr_onclick"/>
+        <Button id="btnSmfStartsText" taborder="22" text="smfStartsText 샘플" left="2" top="297" width="248" height="34" onclick="btnSmfStartsText_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[// 서비스 콜백
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+	
+};
+
+
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// Form을 초기화
+	this.smfInitForm(obj);
+};
+
+this.btnDecode_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 조건에 따른 매개변수 처리
+	var result = this.decode("1", "1", true, false);
+	alert(result);
+};
+
+this.btnFormat_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열 Formatting
+	var result = this.format("{0} x {1} = {2}", [10, 2, 10 * 2]);
+	alert(result);
+};
+
+this.btnDformat_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// Dataset 값 문자열 Formatting
+	var result = this.dformat("{userNameDecpt}:({jikwi})", this.dsMain, 0);
+	alert(result);
+};
+
+this.btnIif_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 조건에 따른 매개변수 처리
+	var result = this.iif("test"=="sample", true, false);
+	alert(result);
+};
+
+this.btnIsNil_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 매개변수 Null 검증
+	var result = this.isNil(null);
+	alert(result);
+};
+
+this.btnIsNotNil_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 매개변수 Not Null 검증
+	var result = this.isNotNil(null);
+	alert(result);
+};
+
+this.btnLpad_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열의 지정 길이 맞춤(왼쪽)
+	var result = this.lpad("1", "0", 5);
+	alert(result);
+};
+
+this.btnNvl_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// null 값 사용자 정의 값으로 대체
+	var result = this.nvl(null, "1");
+	alert(result);
+};
+
+this.btnRpad_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열의 지정 길이 맞춤(오른쪽)
+	var result = this.rpad("1", "0", 5);
+	alert(result);
+};
+
+this.btnSmfContainsStr_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// subStr 문자열이 Str 문자열에 포함되는지 확인
+	var result = this.smfContainsStr("They Are Billion's", "b");
+	alert(result);
+};
+
+this.btnSmfContainsText_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// subStr 문자열이 Str 문자열에 포함되는지 확인 (대소문자 구분 X)
+	var result = this.smfContainsText("They Are Billion's", "b");
+	alert(result);
+};
+
+this.btnSmfDiffDataset_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 두 개의 dataset column값 비교
+	var result = this.smfDiffDataset(this.dsMain, this.dsCompare).isDiff
+	alert(result);
+};
+
+this.btnSmfIsDuplicate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// dataset 중복 검증
+	// 변경된 값에 대해서만 중복체크하므로 변경된 값으로 인식하도록 세팅
+	this.dsMain.setColumn(0,"dummy",0);
+	this.dsMain.setColumn(1,"dummy",0);
+	
+	this.smfIsDuplicate(this.dsMain);
+};
+
+this.btnSmfIsDuplicateColumns_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// dataset 해당 column의 row 중복 검증
+	var result = this.smfIsDuplicateColumns(this.dsMain, ["userNameDecpt"]).isDup;
+	alert(result);
+};
+
+this.btnSmfIsDuplicateList_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 서비스에 등록된 dataset 데이터 중복 검증
+	// 변경된 값에 대해서만 중복체크하므로 변경된 값으로 인식하도록 세팅
+	this.dsMain.setColumn(0,"dummy",0);
+	this.dsMain.setColumn(1,"dummy",0);
+	
+	this.smfIsDuplicateList("list");
+};
+
+this.btnSmfIsDuplicateTo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 두 개의 Dataset 중복 검증
+	// 변경된 값에 대해서만 중복체크하므로 변경된 값으로 인식하도록 세팅
+ 	this.dsCompare.setColumn(0,"dummy",0);
+ 	this.dsCompare.setColumn(1,"dummy",0);
+	
+	var result = this.smfIsDuplicateTo(this.dsMain, this.dsCompare, ["userNameDecpt"], "성명").isDup;
+	alert(result);
+};
+
+this.btnSmfIsLike_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열의 부분 일치 여부 검증
+	var result = this.smfIsLike("100", "10");
+	alert(result);
+};
+
+this.btnSmfSplit_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열 분리(매개변수가 String이 아니면 []넘김)
+	var result = this.smfSplit("1,2,3,4,5,6", ",");
+	alert("result : " + result + "  lengh : "  + result.length);
+};
+
+this.btnSmfStartsStr_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// str이 subStr으로 시작되는지 검증
+	var result = this.smfStartsStr("N", "Neis");
+	alert(result);
+};
+
+this.btnSmfStartsText_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// str이 subStr으로 시작되는지 검증 (대소문자 구분X)
+	var result = this.smfStartsText("n", "Neis");
+	alert(result);
+};
+
+this.btnSmfStr_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 매개변수를 String 형 변환
+	var result = this.smfStr(1234);
+	alert(result);
+};
+
+this.btnSmfAddDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 입력된 날짜에서 매개변수만큼 일 증감
+	var result = this.smfAddDate("20220101", 10);
+	alert(result);
+};
+
+this.btnSmfAddMonth_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 입력된 날짜에서 매개변수만큼 월 증감
+	var result = this.smfAddMonth("20220101", 10);
+	alert(result);
+};
+
+this.btnSmfCount_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// str내 subStr 카운트
+	var result = this.smfCount("Hello World", "l");
+	alert(result);
+};
+
+this.btnSmfDialog_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// Modal Dialog 처리
+	var procType = "insert";
+	
+	// 팝업을 동작에 필요한 파라메터 지정
+	var popupParams = {
+		callback: this.fnPopupCallback, // 콜백함수 지정
+		sender: obj, // sender 지정
+
+		// 팝업 전달 파라메터 지정
+		params: {
+			// 처리타입 지정
+			procType: procType,
+			// 파라메터 전달
+			dataset: this.dsMain,
+			param1: "aaaa",
+			param2: 1111
+		},
+	};
+
+	// 모달팝업 실행
+	this.smfDialog("_auto", "test::samplePopupForm.xfdl", popupParams);
+};
+
+this.fnPopupCallback = function(e, sender){
+	alert("callback");
+};
+
+this.btnSmfDiffDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 두 날짜 사이의 일 계산
+	var result = this.smfDiffDate("20220101", "20221231");
+	alert(result);
+};
+
+this.btnSmfDiffMonth_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 두 날짜 간의 월 계산
+	var result = this.smfDiffMonth("20220101", "20221231");
+	alert(result);
+};
+
+this.btnSmfIsCorpRegNo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 법인 등록번호 검증
+	var result = this.smfIsCorpRegNo("1101110307870");
+	alert(result);
+};
+
+this.btnSmfIsDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 날짜 형식 검증
+	var result = this.smfIsDate("20220231");
+	alert(result);
+};
+
+this.btnSmfIsForeignNo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 외국인 번호 검증
+	var result = this.smfIsForeignNo("1234561234567");
+	alert(result);
+};
+
+this.btnSmfIsLeapYear_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 윤년 여부 검증
+	var result = this.smfIsLeapYear("20220101");
+	alert(result);
+};
+
+this.btnSmfIsNull_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// Null 검증
+	var result = this.smfIsNull(null);
+	alert(result);
+};
+
+this.btnSmfIsNum_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 숫자 형식 검증
+	var result = this.smfIsNum("123");
+	alert(result);
+};
+
+this.btnSmfIsRsrNo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 주민등록번호 검증(구 주민번호)
+	var result = this.smfIsRsrNo("1234561234567");
+	alert(result);
+};
+
+this.btnSmfLastDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 해당 월의 마지막 날짜 yyyyMMdd 형태 변환
+	var result = this.smfLastDate("20220201");
+	alert(result);
+};
+
+this.btnSmfLastDateNum_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 해당 월의 마지막 날짜 반환
+	var result = this.smfLastDateNum("20220201");
+	alert(result);
+};
+
+this.btnSmfLenB_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열 전체 길이 계산(한글, 한자: 2 / 나머지 1)
+	var result = this.smfLenB("20220201");
+	alert(result);
+};
+
+this.btnSmfLPad_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열이 지정된 길이가 되도록 변환(왼쪽을 채우는 함수)
+	var result = this.smfLPad("1","0",5);
+	alert(result);
+};
+
+this.btnSmfLtrim_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열 좌측 공백 제거
+	var result = this.smfLtrim("          Hello!", " ");
+	alert(result);
+};
+
+this.btnSmfMakeDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열 yyyyMMdd 형태 날짜 조합
+	var result = this.smfMakeDate("2022","1","1");
+	alert(result);
+};
+
+this.btnSmfMid_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열에서 조건 문자열 위치 검색
+	var result = this.smfMid("123456789", "3", 7);
+	alert(result);
+};
+
+this.btnSmfPos_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열에서 검색할 문자열 위치 검색
+	var result = this.smfPos("123456789", "3");
+	alert(result);
+};
+
+this.btnSmfReplace_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열 일부분을 다른 문자열로 치환
+	var result = this.smfReplace("www-naver-com", "-", ".");
+	alert(result);
+};
+
+this.btnSmfRight_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열 오른쪽 부분을 지정 길이만큼 추출
+	var result = this.smfRight("123456789", 3);
+	alert(result);
+};
+
+this.btnSmfRPad_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열이 지정된 길이가 되도록 변환(오른쪽을 채우는 함수)
+	var result = this.smfRPad("1","0",5);
+	alert(result);
+};
+
+this.btnSmfRtrim_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열의 우측 공백 제거
+	var result = this.smfLtrim("Hello!                                         ", " ");
+	alert(result);
+};
+
+this.btnSmfSetComma_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 숫자 천단위 "," 적용
+	var result = this.smfSetComma("100000000");
+	alert(result);
+};
+
+this.btnSmfToday_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var result = this.smfToday();
+	alert(result);
+};
+
+this.btnSmfTodayTime_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 현재 날짜 출력(Local)
+	var result = this.smfTodayTime();
+	alert(result);
+};
+
+this.btnSmfTrim_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열 좌우측 공백 제거
+	var result = this.smfTrim("                12345         ");
+	alert(result);
+};
+
+this.btnSmfConvertDataSize_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 데이터 단위 변환
+	var result = this.smfConvertDataSize("1", "mb", "byte");
+	alert(result);
+};
+
+this.btnSmfAlert_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 알림 메시지 출력
+	this.smfAlert("test002", function(){
+		alert('확인버튼 클릭 후 처리');
+	});
+	
+	alert('smfAlert은 비동기처리됩니다');
+};
+
+this.btnSmfConfirm_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 확인 메시지 출력
+	this.smfConfirm("저장 하시겠습니까?", function(){
+		alert('Confirm 버튼 클릭 후 처리');
+	});
+	alert('smfConfirm은 비동기처리됩니다');
+};
+
+this.btnSmfFormat_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열 Formatting
+	var result = this.smfFormat("{0} x {1} = {2}", [10, 2, 10 * 2]);
+	alert(result);
+};
+
+this.btnSmfFormatMoney_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 문자열 금액 형식 Formatting
+	var result = this.smfFormatMoney(123456789, "원");
+	alert(result);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="keys" type="STRING" size="256" value="columnText:&quot;성명&quot;userNameDecpt"/>
+          <Column id="dummy" type="STRING" size="256"/>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="userNameDecpt" type="STRING" size="256"/>
+          <Column id="jikwi" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="userNameDecpt">홍길동</Col>
+            <Col id="jikwi">부장</Col>
+          </Row>
+          <Row>
+            <Col id="userNameDecpt">홍길동</Col>
+            <Col id="jikwi">차장</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCompare" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="keys" type="STRING" size="256" value="columnText:&quot;성명&quot;userNameDecpt"/>
+          <Column id="dummy" type="STRING" size="256"/>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="userNameDecpt" type="STRING" size="256"/>
+          <Column id="jikwi" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="userNameDecpt">홍길동</Col>
+            <Col id="jikwi">부장</Col>
+          </Row>
+          <Row>
+            <Col id="userNameDecpt">홍길동</Col>
+            <Col id="jikwi">차장</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">list</Col>
+            <Col id="inDatasets">main=dsMain</Col>
+            <Col id="outDatasets"/>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/sam_plecm00_m00_001.ux</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+          <Row>
+            <Col id="id">save</Col>
+            <Col id="inDatasets">main=dsMain</Col>
+            <Col id="outDatasets"/>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/sam_plecm00_m00_002.ux</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+          <Row>
+            <Col id="id">delete</Col>
+            <Col id="inDatasets">main=dsMain</Col>
+            <Col id="outDatasets"/>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/sam_plecm00_m00_003.ux</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" oncolumnchanged="dsSearch_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="name" type="STRING" size="150"/>
+          <Column id="genreCode" type="STRING" size="1"/>
+          <Column id="artist" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="name"/>
+            <Col id="genreCode"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="NP90M1" width="1200" height="980" titletext="404 Error" onload="samplePortalResize" onsize="samplePortalResize_onsize" background="#ffffff">
+    <Layouts>
+      <Layout height="980" width="1200" screenid="ScreenDeskTopP">
+        <Div id="div00" taborder="0" left="280" top="286" width="640" height="407" initvalueid="ivDivAccessibilityOn" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="img00" taborder="0" left="93" top="30" width="454" height="170" cssclass="display" initvalueid="ivImgAccessibilityOn" accessibilitylabel="Page Not Found" image="url('imagerc::common/img_404Error.png')"/>
+              <Static id="sta00" taborder="1" text="존재하지 않는 주소를 입력하셨거나, 요청하신 페이지의 주소가 변경, 삭제되어 찾을 수 없습니다." left="0" top="207" height="40" cssclass="font16R" textAlign="center" right="0" initvalueid="ivStcAccessibilityOn"/>
+              <Button id="btnGoback" taborder="2" text="돌아가기" left="200" width="241" height="60" cssclass="btn_WF_errorBack" top="347" initvalueid="ivBtnAccessibilityLink"/>
+              <Static id="Static01_00_01_00_00" taborder="3" text="h112" left="282" top="235" width="66" height="112" cssclass="sta_WF_Size" visible="false"/>
+              <Static id="Static01_00_01_00_00_00" taborder="4" text="h36" left="282" top="185" width="66" height="36" cssclass="sta_WF_Size" visible="false"/>
+            </Layout>
+            <Layout name="Layout0">
+              <ImageViewer id="img00" width="332" left="134" top="68" height="180" image="url('imagerc::common_M/img_404Error_M.png')"/>
+              <Static id="sta00" left="0" top="258" height="100" cssclass="font28R" text="존재하지 않는 주소를 입력하셨거나, 요청하신 페이지의 주소가 변경, 삭제되어 찾을 수 없습니다." width="600"/>
+              <Button id="btnGoback" left="0" top="406" height="120" cssclass="btn_WF_errorBack_M" right="0"/>
+              <Static id="Static01_00_01_00_00" left="272" top="343" width="66" height="63" text="h63"/>
+              <Static id="Static01_00_01_00_00_00" left="272" top="236" width="66" height="40" text="h40"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static01_00_01_00_00" taborder="1" text="- PC버전 : Bottom영역 없음&#13;&#10;&#13;&#10;- Mobile버전 : Bottom영역 사용함(bottom과 사이간격은 해당화면에 포함됨)" left="64" top="286" width="206" height="112" cssclass="sta_WF_Size" visible="false" padding="20px" textAlign="left" verticalAlign="top"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP" width="640" height="621" mobileorientation="portrait" type="default">
+        <Div id="div00" top="0" left="20" height="606" width="600"/>
+        <Static id="Static01_00_01_00_00" left="683" top="276" width="206" height="112"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    대국민포탈메인사이즈 테스트
+*  @FileName 	samplePortalResize
+*  @Creator 	투비소프트
+*  @CreateDate 	2022.07.21
+*  @Desction    대국민포탈메인사이즈 테스트
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.07.21     	TOBESOFT 	               최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+
+this.samplePortalResize = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.fnMiddleAlign();
+};
+
+this.fnMiddleAlign = function()
+{
+	var nAllWidth = this.width;  // 전체 form의 사이즈
+	var nMaxWidth = 640; // 가운데정렬되는 Div의 가로사이즈(기존1200)
+	var nLeft,nWidth;
+	
+	if(nAllWidth >= nMaxWidth)	//1280 사용
+	{
+		nLeft = parseInt((nAllWidth - nMaxWidth) / 2);
+		if(nLeft < 0) nLeft = 0;
+		
+		nWidth = nMaxWidth;
+	}
+	else
+	{
+		nLeft = 0;
+		nWidth = nAllWidth;
+	}
+	// 1번째 
+	this.div00.setOffsetLeft(nLeft);
+	this.div00.setOffsetWidth(nWidth);	
+	// 2번째 
+	this.div00_00.setOffsetLeft(nLeft);
+	this.div00_00.setOffsetWidth(nWidth);		
+}
+
+this.samplePortalResize_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	this.fnMiddleAlign();		
+};]]></Script>
+  </Form>
+</FDL>

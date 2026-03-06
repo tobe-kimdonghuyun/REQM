@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" titletext="form crud" onbeforeclose="form_onbeforeclose" onload="form_onload" left="0" width="1300" top="0" height="950" nHeight="674">
+    <Layouts>
+      <Layout>
+        <Static id="st_Title" text="Message" position="absolute" left="15" width="204" top="8" height="22" cssclass="sta_WF_title"/>
+        <Button id="btnInsert" taborder="1" text="신규" position="absolute" style="font:dotum,8, bold;" userdata="A:I;" right="165" width="72" top="88" height="23" cssclass="btn_WF_crud" onclick="btnInsert_onclick"/>
+        <Button id="btnDelete" taborder="2" text="삭제" position="absolute" style="font:dotum,8, bold;" onclick="fnDelete" userdata="A:D;" right="90" width="72" top="88" height="23" cssclass="btn_WF_crud"/>
+        <Button id="btnSave" taborder="3" text="저장" position="absolute" style="font:dotum,8, bold;" onclick="fnSave" userdata="A:T;" right="15" width="72" top="88" height="23" cssclass="btn_module"/>
+        <Static id="Static41" taborder="4" text="15" visible="false" left="0" top="0" width="15" height="674" style="background:blueviolet;align:center middle;font:bold 9 Dotum;opacity:50;"/>
+        <Static id="Static44" taborder="5" text="10" visible="false" left="15" top="664" width="995" height="10" style="background:blueviolet;align:center middle;opacity:50;"/>
+        <Static id="Static43" taborder="6" text="15" visible="false" left="1010" top="0" width="15" height="674" style="background:blueviolet;align:center middle;font:bold 9 Dotum;opacity:50;"/>
+        <Static id="Static42" taborder="7" text="10" visible="false" left="15" top="0" width="995" height="10" style="background:blueviolet;align:center middle;font:bold 9 Dotum;opacity:50;"/>
+        <Static id="Static07" taborder="8" text="10" visible="false" left="11" top="55" width="1027" height="15" style="background:blueviolet;align:center middle;font:bold 9 Dotum;opacity:50;"/>
+        <Static id="Static32" taborder="10" text="40" visible="false" left="427" top="76" width="50" height="40" style="background:blueviolet;opacity:50;"/>
+        <Div id="divSearch" taborder="15" left="10" top="32" height="49" right="15">
+          <Layouts>
+            <Layout>
+              <Static id="staSearchCondition" text="사용여부" position="absolute" left="298" width="92" top="5" height="20" cssclass="sta_WFSA_label" taborder="2"/>
+              <Combo id="cboSearchUseYn" taborder="3" value="Y" codecolumn="code" datacolumn="name" index="0" left="381" width="114" top="5" height="20" innerdataset="dsUseYn" text="Y">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">0</Col>
+                      <Col id="datacolumn">domain.category.name</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">1</Col>
+                      <Col id="datacolumn">domain.category.desc</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Edit id="edtSearchMessageId" taborder="1" left="87" width="134" top="5" height="20" validate="title:메시지ID,required:true"/>
+              <Static id="staSearchCondition00" text="메시지ID" position="absolute" left="18" width="92" top="5" height="20" cssclass="sta_WFSA_label" taborder="0"/>
+              <Button id="btnSearch" taborder="4" position="absolute" defaultbutton="true" right="1" width="81" top="5" height="20" cssclass="btn_WF_search" text="조회" onclick="divSearch_btnSearch_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divCont" taborder="11" text="div00" left="15" top="135" height="340" right="15">
+          <Layouts>
+            <Layout>
+              <Static id="sta02" taborder="0" text="메시지ID" left="0" top="6" cssclass="sta_WF_tablelabel" width="130" height="30"/>
+              <Static id="sta0200" taborder="2" text="메시지Type" left="0" top="35" cssclass="sta_WF_tablelabel" width="130" height="30"/>
+              <Static id="sta020000" taborder="4" text="메시지 내용" left="0" top="64" cssclass="sta_WF_tablelabel" width="130" height="30"/>
+              <Static id="sta02000000" taborder="6" text="업무 코드" left="0" top="93" cssclass="sta_WF_tablelabel" width="130" height="30"/>
+              <Static id="sta0600" taborder="8" text="사용여부" left="0" top="122" cssclass="sta_WF_tablelabel" width="130" height="30"/>
+              <Combo id="cboUseYn" taborder="9" top="127" height="20" width="242" validate="title:사용여부,required:true" innerdataset="dsUseYnMain" codecolumn="code" datacolumn="name" left="141"/>
+              <Edit id="edtCn" taborder="5" text="" left="140" top="69" height="20" value="" width="243" validate="title:메시지내용,required:true,minlength:2,maxlength:100"/>
+              <Edit id="edtType" taborder="3" text="" left="140" top="40" height="20" width="243" validate="title:메시지Type,required:true,minlength:2,maxlength:3"/>
+              <Edit id="edtId" taborder="1" text="" left="140" top="11" height="20" value="" width="243" validate="title:메시지ID,required:true" enable="true"/>
+              <Edit id="edtCode" taborder="7" text="" left="140" top="99" height="20" width="243" validate="title:업무 코드,required:true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnMenu" taborder="12" text="메뉴이동" position="absolute" style="font:dotum,8, bold;" userdata="A:I;" right="243" width="102" top="88" height="23" cssclass="btn_WF_crud" onclick="btnMenu_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_CategoryValid" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="CATEGORY_ID" type="STRING" size="256"/>
+          <Column id="CATEGORY_DESC" type="STRING" size="256"/>
+          <Column id="CATEGORY_NAME" type="STRING" size="256"/>
+          <Column id="REG_DATE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CATEGORY_ID"/>
+            <Col id="CATEGORY_DESC">title:desc,minlength:1,maxlength:300</Col>
+            <Col id="CATEGORY_NAME">title:name,required:true,maxlength:150</Col>
+            <Col id="REG_DATE"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset preload="true" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" id="dsUseYn">
+        <ColumnInfo>
+          <Column type="STRING" size="500" id="code"/>
+          <Column type="STRING" size="200" id="name"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">Y</Col>
+            <Col id="name">Y</Col>
+          </Row>
+          <Row>
+            <Col id="code">N</Col>
+            <Col id="name">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="messageId" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset preload="true" firefirstcount="0" firenextcount="0" useclientlayout="true" updatecontrol="true" enableevent="true" id="dsMessage">
+        <ColumnInfo>
+          <Column type="STRING" size="500" id="messageId"/>
+          <Column type="STRING" size="200" id="messageType"/>
+          <Column type="STRING" size="100" id="messageCn"/>
+          <Column id="businessCode" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset preload="true" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" id="dsUseYnMain">
+        <ColumnInfo>
+          <Column type="STRING" size="500" id="code"/>
+          <Column type="STRING" size="200" id="name"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="name"/>
+            <Col id="code"/>
+          </Row>
+          <Row>
+            <Col id="code">Y</Col>
+            <Col id="name">Y</Col>
+          </Row>
+          <Row>
+            <Col id="code">N</Col>
+            <Col id="name">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsMessage=dsMessage</Col>
+            <Col id="url">/cmc_sam_pl02_001.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">save</Col>
+            <Col id="inDatasets">dsMessage=dsMessage:U</Col>
+            <Col id="outDatasets"/>
+            <Col id="url">/cmc_sam_pl02_002.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">delete</Col>
+            <Col id="inDatasets">dsMessage=dsMessage:U</Col>
+            <Col id="url">/cmc_sam_pl02_002.do</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPageInfo">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPageInfo00">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item2" compid="divSearch.form.cboSearchUseYn" propid="value" datasetid="dsSearch" columnid="useYn"/>
+      <BindItem id="item4" compid="divCont.form.cboUseYn" propid="value" datasetid="dsMessage" columnid="useYn"/>
+      <BindItem id="item6" compid="divCont.form.edtCn" propid="value" datasetid="dsMessage" columnid="messageCn"/>
+      <BindItem id="item7" compid="divCont.form.edtType" propid="value" datasetid="dsMessage" columnid="messageType"/>
+      <BindItem id="item0" compid="divCont.form.edtCode" propid="value" datasetid="dsMessage" columnid="businessCode"/>
+      <BindItem id="item1" compid="divCont.form.edtId" propid="value" datasetid="dsMessage" columnid="messageId"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/**
+* @file			: sample001.xfdl
+* @title		: form crud
+* @author		: kmp
+* @date			: 2022.01.02
+* @description	: form CRUD 샘플
+* @history		: 
+* 1.2022.01.02 . / kmp / 신규 
+*/
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::cm_script.xjs" 
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_param;	//화면에서 넘어온 param값
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼을 초기화
+	this.smfInitForm(obj);
+	//화면전환시 전달된 파라메터
+	this.fv_param = this.smfGetFormParams();
+	try{
+		trace(this.fv_param.messageId +" // "+ this.fv_param.useYn);
+		this.divSearch.form.edtSearchMessageId.set_value(this.fv_param.messageId);
+		this.divSearch.form.cboSearchUseYn.set_value(this.fv_param.useYn);
+	} catch(e){
+		trace(e.message);
+	};
+	// 조회 입력값 엔터키입력시 조회수행 이벤트 설정
+	this.smfBindEnterKeyToSearch(this.divSearch, this.divSearch.form.btnSearch);
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * @description 조회
+*/
+this.fnSearch = function ()
+{ 
+ 	// 서비스 객체 생성
+	this.smfSearchService("select")
+		// 데이터 검증
+		.validateForm(this.divSearch)
+		// 데이터가 변경되었으면 확인메시지
+		.confirmIfModifiedDataset(this.dsMessage)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		});
+};	
+
+/**
+ * @description 저장
+*/
+this.fnSave = function ()
+{
+	// 서비스 객체 생성 
+	this.smfSaveService("save")
+		// 데이터 존재 필수
+		.requireExistsData(this.dsMessage) 
+
+		// 데이터 검증
+		.validateForm(this.divCont) 
+		
+		// 데이터 변경 필수
+		.requireModifredData(this.dsMessage) 
+		
+		// 실행
+		.run()
+
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+
+			this.smfAlert('저장하였습니다', this.divSearch_btnSearch_onclick);
+		});
+		
+};
+
+/**
+ * @description 삭제
+*/
+this.fnDelete = function()
+{
+/*
+	this.dsMessage.deleteRow(0);
+		// 서비스 객체 생성 
+	this.smfSaveService("save")
+		// 데이터 존재 필수
+		.requireExistsData(this.dsMessage) 
+
+		// 데이터 검증
+		.validateForm(this.divCont) 
+		
+		// 데이터 변경 필수
+		.requireModifredData(this.dsMessage) 
+		
+		// 실행
+		.run()
+
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+
+			this.smfAlert('저장하였습니다', this.divSearch_btnSearch_onclick);
+		});
+	*/	
+
+
+	// 삭제처리
+	this.smfDeleteService("delete")
+	
+		// 데이터 존재 필수
+		.requireExistsData(this.dsMessage) 
+		// 삭제를 위한 검증수행
+		.validateFormDelete(this.divCont)
+
+		.run()
+		// 콜백
+		.callback(function(callbackParams){ 
+			if(callbackParams.errors) return;
+			
+// 			var alerter = this.smfAlerter();
+// 			alerter.message = this.smfAfterServiceMessage();
+// 			alerter.onOk = function(){
+// 				this.dsSearch.clearData();
+// 				alert('[참고] 데이터 삭제는 서버에서 동작하지 않도록 처리하였습니다');
+// 			};
+// 			alerter.run();
+//			this.smfAlert('삭제하였습니다.', this.divSearch_btnSearch_onclick);
+		})
+		;
+
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+ * @description Transaction CallBack 함수(선택)
+*/
+
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd < 0)
+	{
+		return;
+	}
+	
+};
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ 
+ 
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 조회버튼
+*/
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+    // 검색조건 세팅
+	this.dsSearch.clearData();
+	var idx = this.dsSearch.addRow();
+	this.dsSearch.setColumn(idx, "messageId", this.divSearch.form.edtSearchMessageId.value);
+	this.dsSearch.setColumn(idx, "useYn", this.divSearch.form.cboSearchUseYn.value);
+
+
+	this.dsPageInfo.clearData();
+	var idx2 = this.dsPageInfo.addRow();
+	
+	this.dsPageInfo.setColumn(idx2, "pageIndex", 1);
+	this.dsPageInfo.setColumn(idx2, "pageSize", 10);
+	this.dsPageInfo.setColumn(idx2, "totalCount", 0);
+	
+	this.fnSearch();
+};
+
+
+/**
+ * @description 행추가
+*/
+this.btnInsert_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+	// 데이터 클리어
+	this.dsMessage.clearData();
+	// row추가
+	this.dsMessage.addRow();	
+	// 컬럼 초기화
+	this.smfInitRow(this.dsMessage, 0); 
+	//this.smfSetEnable(false, this.btnDelete);	
+};
+
+/**
+ * @description 메뉴이동
+*/
+this.btnMenu_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//화면이동
+	var params = {messageId:"CM002", useYn:"Y"};
+	this.smfSetWorkPage("test::sample002.xfdl", params);
+};
+]]></Script>
+  </Form>
+</FDL>

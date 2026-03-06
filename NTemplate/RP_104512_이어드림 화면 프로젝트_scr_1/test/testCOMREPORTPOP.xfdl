@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="testCOMREPORTPOP" width="800" height="600" titletext="New Form" onload="testCOMREPORTPOP_onload">
+    <Layouts>
+      <Layout height="600" width="800">
+        <WebBrowser id="wbozRptViewer" taborder="0" left="0" top="0" width="800" height="600"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    OZ 팝업 샘플
+*  @FileName 	testMakeXML.xfdl
+*  @Creator 	투비소프트
+*  @CreateDate 	2022.07.05
+*  @Desction    OZ 팝업 샘플
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.07.05     	투비소프트 	               최초 생성 
+*******************************************************************************
+*/
+
+this.testCOMREPORTPOP_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.wbozRptViewer.objForm = obj;
+	var objArgs = {
+		"dataset" : this.ds00
+	};
+	this.gfn_setOZRptInit(obj,this.wbozRptViewer,objArgs);
+};
+
+this.dsReport;
+this.sFileName;
+/**********************************************************************
+* Function Name : gfn_callRptPopup
+* 설명 : OZ Report를 표시할 팝업을 호출.
+* Arguments : Object objForm : Form Object
+*           : Object objArgs.psRptData : OZ Report 속성 Json Object을 리턴값으로 하는 함수
+* return    : N/A
+***********************************************************************/
+
+this.gfn_setOZRptInit = function(objForm,objWeb,objArgs)
+{
+	var sRptUrl = nexacro.getApplication().gvsRptUrl;
+	this.sFileName = objArgs.filename;
+	this.dsReport = objArgs.dataset;
+	
+	objWeb.addEventHandler("onusernotify",objForm.wb_ozRptViewer_onusernotify,objForm);
+	objWeb.set_url(sRptUrl + "/ozhviewer/ozViewer.html");
+};
+
+this.wb_ozRptViewer_onusernotify = function(){
+	if( e.userdata == "" ){
+		var doc = obj.getProperty("document");
+		var objTxt = doc.getProperty("all").getProperty("json");
+		var sData = this.gfn_sendRptData(this.sFileName,this.dsReport);
+		var sJsonStr = JSON.stringify(sData);
+		if( objTxt )
+		objTxt.setProperty("value",sJsonStr);
+		
+		obj.callMethod("drawReport");
+	}
+};
+
+this.gfn_callRptPopup = function(objForm,objArgs){
+	// 팝업 창 호출 ( modal )
+};
+/**********************************************************************
+* Function Name : gfn_sendRptData
+* 설명 : OZ Report 로의 값 전달을 위한 함수
+* Arguments : String sFileName : 열고자 하는 파일 명
+*           : String sDsList : 전달하고자 하는 Dataset
+* return    : String sData : 변환된 데이터
+***********************************************************************/
+this.gfn_sendRptData = function(sFileName,sDsList)
+{	
+	nexacro.getApplication().gvsRptUrl = "http://localhost:8080/";
+	var sRptUrl     = nexacro.getApplication().gvsRptUrl + "/server";
+	var sReportName = this.sFileName + ".ozr";
+	var nPcount = "1";
+	var sArgs = "";
+	if ( typeof this.dsReport == "undefined" ){
+		this.dsReport = sDsList;
+	}else
+	{
+		if ( sDsList.toString().indexOf("Dataset") > -1 ) {
+			sArgs = this.gfn_MakeXML(sDsList);
+		}else
+		{
+			sArgs = this.gfn_MakeXMLs(sDsList);
+		}
+	}
+	
+	var sData = {
+		"connection.servlet" : sRptUrl,
+		"connection.reportname" : sReportName,
+		"connection.pcount" : nPconut,
+		"connection.args1" : sArgs		
+	}
+	
+	if ( !this.gfn_IsNull(sDsList["optionArgs"].getColumn(0,"dFileName"))){
+		sData["export.filename"] = sDsList["optionArgs"].getColumn(0,"dFileName");
+	}
+	
+	if ( typeof sDsList["optionArgs"].getColumn(0,"viewMode") != "undefined" && sDsList["optionArgs"].getColumn(0,"viewMode") =="Y"){
+		sData["toolbar.save"] = false;
+		sData["toolbar.savedm"] = false;
+		sData["toolbar.xlsx"] = false;
+		sData["toolbar.doc"] = false;
+		sData["toolbar.inversepaper"] = false;
+		sData["toolbar.print"] = false;	
+	}
+	return sData;
+};
+
+this.gfn_MakeXML = function(sDsList)
+{
+	var sXml = "";
+	var sColNm, sColVal,sColType;
+	
+	var objDs = sDsList;
+	
+	if( objDs == null )
+	{
+		return;
+	}
+	
+	sXml += "xmldata=<?xml version='1.0' encoding='UTF-8'?>";
+	sXml += "<XMLSET>";
+	sXml += "<DATASET>";
+	
+	nRowCnt = objDs.getRowCount();
+	nColCnt = objDs.getRowCount();
+	
+	sXml += '<FIELDINFO>';
+	
+	for(i=0;i<nexacro.toNumber(nColCnt);i++){
+		sColNm = objDs.getColID(i);
+		sColType = objDs.getColumnInfo(i).type;
+		sXml += '<FIELD NAME = ' +"'" + sColNm +"'" + " TYPE = " + "'" + sColType + "'" + "/>";
+	}
+	sXml += '</FIELDINFO>';	
+	
+	for(j=0;j<nexacro.toNumber(nRowCnt);j++){
+		sXml += '<RECORD>';
+		for(k=0;k<nexacro.toNumber(nColCnt);k++){
+			sColNm = objDs.getColID(k);
+			sColValue = objDs.getColumn(j,k);
+			sXml += '<' + sColNm + '><![CDATA[' + sColVal + ']]]]]]><![CDATA[><![CDATA[></' + sColNm + '>';
+		}
+		sXml += '</RECORD>';
+	}
+	sXml += "</DATASET>" + "</XMLSET>";
+	
+	sXml = nexacro.replaceAll(sXml,"<","&#60");
+	sXml = nexacro.replaceAll(sXml,">","&#62");
+	sXml = nexacro.replaceAll(sXml,"\r","&#13");
+	sXml = nexacro.replaceAll(sXml,"\n","&#10");
+	sXml = nexacro.replaceAll(sXml,'"',"\\\"");				
+	sXml = nexacro.replaceAll(sXml,"&","&amp;");
+	
+	return sXml;
+};
+
+this.gfn_MakeXMLs = function(sDsList)
+{
+	var sXml = "";
+	var sColNm = "",sColType = "";
+	var sColVal = "";
+	
+	var objDs = sDsList;
+	if ( objDS == null )
+	{
+		this.alert("Dataset is null!");
+		return;
+	}
+	
+	sXml += "xmldata=<?xml version='1.0' encoding='UTF-8'?>";
+	sXml += "<XMLSET>";
+	sXml += "<DATASET>";
+	
+	for(key in sDsList ){
+		var objDs = sDsList[key];
+		nRowCnt = objDs.getRowCount();
+		nColCnt = objDs.getColCount();
+		//정규식으로 한글 노드 제외
+		var regType1 = /^[a-zA-Z][a-zA-Z0-9]*$/;
+		
+		for(var j=0;j<nexacro.toNumber(nRowCnt);j++){
+			sXml += '<'+key+'>';
+			for(var k=0; k < nexacro.toNumber(nColCnt);k++){
+				sColNm = objDs.getColID(k);
+				sColVal = objDs.getColumn(j,k);
+				sColVal = sColVal+"";
+
+				sColVal = nexacro.replaceAll(sColval,"<","&#60");
+				sColVal = nexacro.replaceAll(sColval,">","&#62");
+				sColVal = nexacro.replaceAll(sColval,"\r","&#13");
+				sColVal = nexacro.replaceAll(sColval,"\n","&#10");
+				sColVal = nexacro.replaceAll(sColval,'"',"\\\"");				
+				sColVal = nexacro.replaceAll(sColVal,"&","&amp;");				
+				
+				if ( regType1.test(sColNm)) {
+					sXml += '<' + sColNm + '>' + sColVal +'</' + sColNm + '>';
+				}
+			}
+			sXml += '</' + key +'>';
+		}
+	}
+	
+	sXml += "</DATASET>";
+	sXml += "</XMLSET>";	
+};]]></Script>
+    <Objects>
+      <Dataset id="ds00">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

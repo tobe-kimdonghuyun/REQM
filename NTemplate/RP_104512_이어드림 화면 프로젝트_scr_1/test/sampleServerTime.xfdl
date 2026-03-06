@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleServerTime" width="1280" height="745" titletext="New Form">
+    <Layouts>
+      <Layout height="745" width="1280">
+        <Button id="btn00" taborder="0" text="서버에서 현재시간을 가져온다." left="34" top="60" width="255" height="47" onclick="btn00_onclick"/>
+        <Grid id="grd00" taborder="1" left="40" top="167" width="793" height="113" binddataset="dsDateTime">
+          <Formats>
+            <Format id="default"/>
+          </Formats>
+        </Grid>
+        <Static id="staDisplaServerDate" taborder="2" text="" left="180" top="117" width="314" height="29"/>
+        <Static id="sta00" taborder="3" text="서버에서 현재시간을 가져오는 샘플" left="3" top="3" width="290" height="40"/>
+        <Static id="sta01" taborder="4" text="현재 서버 현재 시간 : " left="41" top="117" width="120" height="29"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    Sample
+*  @FileName 	sampleServerTime.xfdl
+*  @Creator 	홍길동
+*  @CreateDate 	2022.7.25
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.7.25     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSearch();
+};
+
+
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+
+this.fnSearch = function(obj, e)
+{
+ 	// 서비스 객체 생성
+	this.smfSearchService("select")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			// 시간을 표시한다.
+			var sCurDate = this.dsDateTime.getColumn(0,"yyyymmdd");
+			var sCurTime = this.dsDateTime.getColumn(0,"hhmmss");
+			
+			// 보기 좋게 표시하기 위해 formatting
+			sCurDateTime = sCurDate + sCurTime;
+			sCurDateTime = sCurDateTime.dateFormat("yyyy년MM월dd일 hh시mm분ss초");
+			
+			// 서버에서 가져온 시간을 표시한다.
+			this.staDisplaServerDate.set_text(sCurDateTime);
+			
+			
+			// 테스트로 서저에서 받은 데이터를 그리드에 보여준다.
+			this.grd00.createFormat();
+		});	
+};]]></Script>
+    <Objects>
+      <Dataset id="dsDateTime"/>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets"></Col>
+            <Col id="outDatasets">dsDateTime=dsDateTime</Col>
+            <Col id="url">cmc_fcm_dt01_001.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

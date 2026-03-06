@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="eds_segoi04_p01" width="580" height="390" titletext="학생정서-설명동영상링크팝업" onload="frmTemp01_onload" cssclass="frm_Pop_bgTrsprt">
+    <Layouts>
+      <Layout height="390" width="580" screenid="ScreenDeskTop">
+        <Static id="staPopupTitleAss" taborder="0" left="20" top="20" width="20" height="20" initvalueid="ivStcAccessibilityOn"/>
+        <Div id="div00" taborder="1" left="30" top="30" cssclass="div_WF_SurvPopLine" initvalueid="ivDivAccessibilityOff" width="520" height="330">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="학생정서·행동특성검사를 실시하기 전,&#13;&#10;교육부 학생건강정보센터와 시도교육청 또는 학교&#13;&#10;홈페이지에 탑재된 &lt;b v='true'&gt;학생정서·행동특성검사 설명 동영상&lt;/b&gt;을&#13;&#10;시청하신 후 참여해 주시기 바랍니다." left="40" top="80" height="96" cssclass="sta_WF_Txt16L" initvalueid="ivStcAccessibilityOn" letterSpacing="-1px" textAlign="center" usedecorate="true" width="434"/>
+              <Button id="btnGoVdo" taborder="1" text="검사설명안내보기" left="50" width="200" height="50" cssclass="btn_WF_SurvCnfrm2" initvalueid="ivBtnAccessibilityButton" top="234" onclick="div00_btnGoVdo_onclick"/>
+              <Static id="sta00_00" taborder="2" left="0" top="0" height="40" cssclass="sta_WF_GDSize" text="40" visible="false" initvalueid="ivStcAccessibilityOff" right="0"/>
+              <Static id="sta00_01" taborder="3" left="0" top="0" cssclass="sta_WF_GDSize" text="40" visible="false" initvalueid="ivStcAccessibilityOff" width="40" bottom="0"/>
+              <Button id="btnGoPtpt" taborder="4" text="지금검사참여하기" width="200" height="50" cssclass="btn_WF_SurvCnfrm2" initvalueid="ivBtnAccessibilityButton" top="234" onclick="div00_btnGoPtpt_onclick" right="50"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="sta00_00" left="0" top="0" height="50" right="0" text="50" taborder="2"/>
+              <Static id="sta00_01" left="0" top="0" width="40" taborder="3" bottom="0"/>
+              <Static id="sta00" left="40" top="40" height="200" cssclass="sta_WF_Txt28" text="학교정서·행동특성 검사를 실시하기 전,&#13;&#10;교육부 학생건강 정보 센터와&#13;&#10;시·도 교육청 또는 학교 홈페이지에 탑재된&#13;&#10;&lt;b v='true'&gt;학생·정서행동 특성검사 설명 동영상&lt;/b&gt;을&#13;&#10;시청하신 후에 참여해 주시기 바랍니다." taborder="0" width="520"/>
+              <Button id="btnGoVdo" height="100" left="40" top="352" taborder="1" right="320" cssclass="btn_WF_SurvCnfrm2_M"/>
+              <Button id="btnGoPtpt" top="352" height="100" cssclass="btn_WF_SurvCnfrm2_M" left="320" right="40"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="640" height="590" mobileorientation="portrait" type="default">
+        <Div id="div00" left="20" top="58" cssclass="div_Pop_SurvBox_C" width="600" taborder="1" height="498"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    교육설문 > 학생정서행동특성검사 > 학생정서-설명동영상링크팝업
+*  @FileName 	eds_segoi04_p01.xfdl 
+*  @Creator 	kangchaeyoon
+*  @CreateDate 	2022.12.01
+*  @Desction    학생정서-설명동영상링크팝업
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.12.01           Kangchaeyoon                   최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+
+this.frmTemp01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitPopup(obj);
+	this.pv_params = this.smfGetPopupParams();
+	this.fvPaptSc = this.pv_params.paptSc;
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+ * @description '팝업 닫기' 버튼 클릭 시 
+ */
+this.fnPopupCallback = function(e){	
+	
+	this.smfSendResponseToOpener({
+		"urlName": 	"url"
+	})
+
+	this.close(true);
+}
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description '동영상보러가기' 버튼 클릭 시 
+ */
+this.div00_btnGoVdo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{ 
+	var popupParams = {
+			callback: this.fnPopupCallback,		// 콜백함수 지정
+			sender: obj, 						// sender 지정
+			params: {							// 팝업 전달 파라메터 지정
+					procType: "none",				// 처리타입 지정
+					paptSc : this.fvPaptSc
+					},
+					titlebar : false
+					};
+		// 모바일일 때만 nLeft, nTop null로 주고 nWidth, nHeight는 모바일 사이즈 그대로 줌*** popup	
+		
+		this.smfDialog("_auto", "pa_eds_seg_oi::eds_segoi012_p01.xfdl" ,popupParams);	
+};
+
+/**
+ * @description '지금검사참여하기' 버튼 클릭 시 
+ */
+this.div00_btnGoPtpt_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	this.smfSendResponseToOpener({
+		"urlName": 	"gotoPtpt"
+	});
+
+	this.close(true);
+};
+
+/**
+ * @description '닫기' 버튼 클릭 시 
+ */
+this.div00_btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(false);
+};
+
+
+
+]]></Script>
+  </Form>
+</FDL>

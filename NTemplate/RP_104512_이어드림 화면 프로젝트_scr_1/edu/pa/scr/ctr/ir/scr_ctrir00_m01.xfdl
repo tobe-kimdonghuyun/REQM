@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="scr_ctrir00_m01" width="1280" height="745" titletext="집중상담신청작성및제출" onload="form_onload">
+    <Layouts>
+      <Layout height="745" mobileorientation="landscape" width="1280">
+        <Static id="sta00" taborder="0" text="17개 시도 교육청 코드 조회 결과" left="50" top="160" width="1113" height="37" onclick="sta00_onclick"/>
+        <Grid id="grd00" taborder="1" left="37" top="201" width="1117" height="119" binddataset="ds00">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="206"/>
+                <Column size="329"/>
+                <Column size="498"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="orgCd"/>
+                <Cell col="1" text="kornOrgNm"/>
+                <Cell col="2" text="chk"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:orgCd"/>
+                <Cell col="1" text="bind:kornOrgNm"/>
+                <Cell col="2" text="bind:chk"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <ImageViewer id="imgTitle" taborder="2" text="집중상담신청작성및제출" left="30" top="20" height="54" cssclass="img_WF_SubTit01" width="505" initvalueid="ivTitleAccessibilityOn"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds00" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="orgCd" type="STRING" size="256"/>
+          <Column id="kornOrgNm" type="STRING" size="256"/>
+          <Column id="chk" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256"/>
+          <Column id="outDatasets" type="STRING" size="256"/>
+          <Column id="asynctp" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="url">/scr_mpg_mv00_001.do</Col>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">ds00</Col>
+          </Row>
+          <Row>
+            <Col id="id">select2</Col>
+            <Col id="url">/scr_mpg_mv00_004.do</Col>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">ds01</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="testCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="testCd">100</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds01" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="seqidx" type="STRING" size="256"/>
+          <Column id="subject" type="STRING" size="256"/>
+          <Column id="qry" type="STRING" size="256"/>
+          <Column id="mailform" type="STRING" size="256"/>
+          <Column id="mailto" type="STRING" size="256"/>
+          <Column id="replyto" type="STRING" size="256"/>
+          <Column id="rname" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템 
+*  @MenuPath    공통
+*  @FileName 	scr_ctrir00_m01.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    FAQ목록조회
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.scrInitForm(obj);	//필수(화면초기화)
+};
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/]]></Script>
+  </Form>
+</FDL>

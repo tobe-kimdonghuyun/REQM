@@ -1,0 +1,572 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comp_ozreport" width="560" height="275" titletext="ozReport" onload="comp_ozreport_onload">
+    <Layouts>
+      <Layout height="275" mobileorientation="landscape" width="560">
+        <WebBrowser id="webReport" taborder="0" left="0" top="0" right="0" bottom="1" onloadcompleted="webReport_onloadcompleted" onusernotify="webReport_onusernotify"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    TEMPLATE
+*  @FileName 	comp_ozreport.xfdl
+*  @Creator 	홍길동
+*  @CreateDate 	2022.7.18
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.7.18     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fvBrowserLoaded = false;
+this.fvReportLoaded = false;
+this.fvUrl = "";
+this.fvViewerType = "HTML5JS";  // "HTML5JS","HTML5SVG","EXE"
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.comp_ozreport_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var sUrlPath = this.fnGetModuleServerUrl();
+	var sUrl =  sUrlPath + "/thirdparty/ozreport/nexacro_ozhtml5.jsp";
+	
+	if(this.parent.viewertype)
+	{
+		if(this.parent.viewertype=="EXE")
+		{
+			sUrl =  sUrlPath + "/thirdparty/ozreport/nexacro_ozexeviewer.jsp";			
+		}
+		/*
+		else if(this.parent.viewertype=="HTML5SVG")
+		{
+			sUrl =  sUrlPath + "/thirdparty/ozreport/nexacro_ozhtml5.jsp";			
+		}
+		*/
+		this.fvViewerType = this.parent.viewertype;
+	}
+	
+	// 재로딩시 사용하려고
+	this.fvUrl = sUrl;
+	
+	// Url세팅
+	this.webReport.set_url(sUrl);
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnConvJson = function(arrDataset,arrDatasetId)
+{
+	var objJson = {};
+	var nDatasetCount = arrDataset.length
+	
+	for(var i=0;i<nDatasetCount;i++)
+	{
+		var objDs = arrDataset[i];
+		var objDsId = arrDatasetId[i];
+		var arrRows = [];
+		
+		for(j=0;j<objDs.rowcount;j++)
+		{
+			var objRow = {};
+			for(k=0;k<objDs.colcount;k++)
+			{
+				var sColId = objDs.getColID(k);
+				var sColVal = objDs.getColumn(j,k);
+				objRow[sColId] = sColVal;
+			}
+			arrRows.push(objRow);
+		}
+		objJson[objDsId] = arrRows;
+	}
+	
+	return objJson;
+}
+
+this.fnSetOzData = function(oOption)
+{
+	if(this.fvReportLoaded)
+	{
+		this.parent.optionReport		 = oOption;
+		
+		this.fvReportLoaded = false;
+		this.fvBrowserLoaded = false;
+		
+		// onloadcomplete이벤틀 발생시키기 위해 초기화 후 URL세팅
+		this.webReport.set_url("");		
+		this.webReport.set_url(this.fvUrl);
+		return;
+	}
+
+	this.fvReportLoaded = true;
+
+	// _reportLoadCallback
+	this.parent._reportLoadCallback = oOption.reportloadevent;
+
+	var oParam = {paramList : []};
+	var bSecurity = false;
+	
+	var objJsonData = "";
+	var sChildStr = "";
+	
+	// 공통 파라미터 세팅
+	this.fnAddParamList(oParam.paramList, "information.debug"      , "true"              );
+	this.fnAddParamList(oParam.paramList, "viewer.treeviewtitle"   , "문서목록"            );
+	this.fnAddParamList(oParam.paramList, "global.language"        , "ko_KR"             );
+	
+	// 2023-08-09 ADD
+	this.fnAddParamList(oParam.paramList, "viewer.compatibility"        , "!label_wordwrap_nonasciiword"             ); 
+
+	// zoom을 설정한다.
+	var sZoom = "100";
+	if(oOption.zoom)
+	{
+		sZoom = oOption.zoom;		
+	}
+	this.fnAddParamList(oParam.paramList, "viewer.zoom"  , sZoom        );
+	
+	var sShowStatus = "true";
+	var bHideStatus = this.smfNvl(oOption.hidestatus,false);
+	if(bHideStatus)
+	{
+		sShowStatus = "false";		
+	}
+	this.fnAddParamList(oParam.paramList, "viewer.usestatusbar"  , sShowStatus        );
+	
+	
+	var nReportCount = oOption.reports.length;
+	if(nReportCount>1)
+	{
+		this.fnAddParamList(oParam.paramList, "viewer.childcount"       , (nReportCount-1)+"");
+		this.fnAddParamList(oParam.paramList, "viewer.focus_doc_index"  , "0"                );
+		this.fnAddParamList(oParam.paramList, "viewer.showtree"         , "true"             );
+		this.fnAddParamList(oParam.paramList, "print.alldocument"       , "true"             );
+		this.fnAddParamList(oParam.paramList, "global.concatpage"       , "true"             );
+		this.fnAddParamList(oParam.paramList, "global.inheritparameter" , "true"             );
+	}
+	for(var m=0;m<nReportCount;m++)
+	{
+		var objReportOption = oOption.reports[m];
+		
+		sChildStr = (m==0)?"":("child"+m+".");
+		// 오즈서버URL설정 - 서버로 이동
+		var sServerUrl = this.fnGetServerUrl();
+		this.fnAddParamList(oParam.paramList, sChildStr + "connection.servlet" , sServerUrl      );
+		this.fnAddParamList(oParam.paramList, sChildStr + "connection.reportname" , objReportOption.reportname      );
+		
+		this.fnAddParamList(oParam.paramList, sChildStr + "export.format" , "pdf"    );
+		this.fnAddParamList(oParam.paramList, sChildStr + "export.saveonefile" , "true"    ); 
+
+	    // 
+		//this.fnAddParamList(oParam.paramList, sChildStr + "viewer.postcommand"     , "reportend;" + objReportOption.displayname  );
+		this.fnAddParamList(oParam.paramList, sChildStr + "viewer.progresscommand" , "true"              );
+
+
+		if(objReportOption.displayname)
+		{
+			this.fnAddParamList(oParam.paramList, sChildStr + "connection.displayname" , objReportOption.displayname      );
+		}
+
+		// CSV연동방식
+		var nCsvDataCnt = 0;
+		var sCsvData = "";
+		if(objReportOption.csvData)
+		{
+			nCsvDataCnt++;
+		}
+		
+		var nCsvParamCnt = 0;
+		if(objReportOption.csvParam)
+		{
+			var objCsvParam = objReportOption.csvParam;	
+			nCsvParamCnt = objCsvParam.length;
+		}
+		// JSON연동방식
+		var nJsonDataCnt = 0;
+	
+		if(objReportOption.jsonDsName)
+		{
+			objJsonData = this.fnConvJson(objReportOption.jsonDs,objReportOption.jsonDsName);
+			nJsonDataCnt++;
+		}
+		
+		var nJsonParamCnt = 0;
+		if(objReportOption.jsonParam)
+		{
+			var objJsonParam = objReportOption.jsonParam;	
+			nJsonParamCnt = objJsonParam.length;
+		}
+		
+		var nStartIdx = 1;
+		var nTotalArgument = nCsvDataCnt+nCsvParamCnt+nJsonDataCnt+nJsonParamCnt;
+		if(nTotalArgument > 0)
+		{
+			this.fnAddParamList(oParam.paramList, sChildStr + "connection.pcount"     , (nTotalArgument+"")  );
+			if(nCsvDataCnt>0)
+			{
+				this.fnAddParamList(oParam.paramList, sChildStr + "connection.args" +(nStartIdx)      , "csvdata="+ objReportOption.csvData);
+				nStartIdx++;
+			}
+			if(nJsonDataCnt>0)
+			{
+				this.fnAddParamList(oParam.paramList, sChildStr + "connection.args"+(nStartIdx)      , "jsondata="+ JSON.stringify(objJsonData));
+				nStartIdx++;
+			}
+			if(nCsvParamCnt>0)
+			{
+				for(var n=0;n<nCsvParamCnt;n++)
+				{
+					this.fnAddParamList(oParam.paramList, sChildStr + "connection.args"+(nStartIdx)      , objCsvParam[n]);
+					nStartIdx++;
+				}
+			}
+			if(nJsonParamCnt>0)
+			{
+				for(var n=0;n<nJsonParamCnt;n++)
+				{
+					this.fnAddParamList(oParam.paramList, sChildStr + "connection.args"+(nStartIdx)      , objJsonParam[n]);
+					nStartIdx++;
+				}
+			}
+		}
+	
+		
+		// Odi연동방식
+		if(objReportOption.odiDsName)
+		{
+			var sOdiNames = objReportOption.odiDsName.join();
+		
+			this.fnAddParamList(oParam.paramList, sChildStr + "odi.odinames"      , sOdiNames );
+			for(var i=0;i<objReportOption.odiDsName.length;i++)
+			{
+				var sOdiDsName = objReportOption.odiDsName[i];
+				var arrOdiParam = [];
+				
+				var objOdiDs   = objReportOption.odiDs    [i];
+				var nParamCnt  = objOdiDs.colcount ;
+				for(var j=0;j<nParamCnt;j++)
+				{
+					var sOdiKey    = objOdiDs.getColID(j);
+					var sOdiValue  = objOdiDs.getColumn(0,j);
+					arrOdiParam.push({odikey:sOdiKey,odivalue:sOdiValue})
+				}
+				trace("**** ["+sOdiDsName+"] : Odi Param이 "+arrOdiParam.length+"개 추가됐습니다.");
+				
+				// 갯수			
+				this.fnAddParamList(oParam.paramList, sChildStr + "odi."+sOdiDsName+".pcount"      , arrOdiParam.length+"" );
+				// 일부 포함안시킬것을 대비하여 배열에서 읽도록 수정
+				
+				for(var k=0;k<arrOdiParam.length;k++)
+				{
+					sOdiKey    = sChildStr + "odi."+sOdiDsName+".args"+(k+1);
+					sOdiValue  = arrOdiParam[k].odikey+"="+arrOdiParam[k].odivalue;
+					this.fnAddParamList(oParam.paramList, sOdiKey      , sOdiValue );
+				}
+			}
+		}
+		
+		// 요청에 의해 EXE방식인 경우 바코드 출력 안되게 막음.(2023.01.26)
+		if(this.fvViewerType =="EXE")
+		{
+			objReportOption.security = "N";
+			objReportOption.voiceBarcode = "N";
+		}
+		
+		if((objReportOption.security=="Y") || (objReportOption.voiceBarcode=="Y"))
+		{
+			var sExtParam = "";
+			var delimiter = "#oz#";
+			
+			// 요청에 의해 보이스바코드는 제외(2023.01.26)
+			sExtParam += "ExternalMode=markany_2d" + delimiter;
+			
+			// 바코드 생성시 텍스트가 1024보다 큰 컴포넌트는 제외(이미지값 제외)
+			sExtParam  += "maxDataLength=1024" + delimiter; 
+
+			// sExtParam += "PropPath=/edusys/jboss/webapp/oz80.war/WEB-INF/conf/oz.sganmarkany.properties" + delimiter; 
+			sExtParam += "PropPath=/opt/eap/standalone/configuration/oz.sganmarkany.properties" + delimiter; 
+			
+			sExtParam += this.fnGetSGAExtraParam();
+			sExtParam += this.fnGetMarkAnyExtraParam();
+			
+			this.fnAddParamList(oParam.paramList, sChildStr + "connection.extraparam" , sExtParam );
+			
+			
+			this.fnAddParamList(oParam.paramList, sChildStr + "export.externalmodule" , "oz.viewer.print.OZAppletPrintBarcode_SGAnMarkAny" );
+			this.fnAddParamList(oParam.paramList, sChildStr + "print.externalmoduleEx" , "oz.viewer.print.OZAppletPrintBarcode_SGAnMarkAny" ); 
+
+			bSecurity = true;
+		}
+	}
+	
+	// toolbar 아이콘에 대한 처리
+	if(oOption.button)
+	{
+		for(var strBtnName in oOption.button)
+		{
+			var sButtonState = oOption.button[strBtnName];
+			this.fnAddParamList(oParam.paramList, strBtnName, sButtonState);
+		}
+	}
+	
+	//this.fnAddParamList(oParam.paramList, "toolbar.save"           , "false"                ); // 저장 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+	//this.fnAddParamList(oParam.paramList, "toolbar.print"          , "false"                ); // 인쇄 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+	
+	//this.fnAddParamList(oParam.paramList, "toolbar.addmemo"        , "false"                ); // 메모 추가 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+	//this.fnAddParamList(oParam.paramList, "toolbar.savedm"         , "false"                ); // 데이터 모듈 저장 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+
+	//this.fnAddParamList(oParam.paramList, "toolbar.zoom"           , "false"                ); // 줌 아이콘 그룹의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+	//this.fnAddParamList(oParam.paramList, "toolbar.zoomin"         , "false"                ); // 확대 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+	//this.fnAddParamList(oParam.paramList, "toolbar.zoomout"        , "false"                ); // 축소 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+	//this.fnAddParamList(oParam.paramList, "toolbar.zoomtype"       , "false"                ); // 줌 선택 콤보 박스의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+	
+	//this.fnAddParamList(oParam.paramList, "toolbar.find"           , "false"                ); // 찾기 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+	
+	//this.fnAddParamList(oParam.paramList, "toolbar.etc"            , "false"                ); // 다른 메뉴 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+	
+	// toolbar 다른메뉴에 대한 처리
+	//this.fnAddParamList(oParam.paramList, "etcmenu.open"           , "false"                ); // 다른 메뉴에 [열기] 메뉴 표시 여부를 설정합니다.(true,false)
+	//this.fnAddParamList(oParam.paramList, "etcmenu.close"          , "false"                ); // 다른 메뉴에 [닫기] 메뉴 표시 여부를 설정합니다.(true,false)
+	//this.fnAddParamList(oParam.paramList, "etcmenu.closeall"       , "false"                ); // 다른 메뉴에 [모두 닫기] 메뉴 표시 여부를 설정합니다.(true,false)
+	//this.fnAddParamList(oParam.paramList, "etcmenu.handtool"       , "false"                ); // 다른 메뉴에 [손 모드] 메뉴 표시 여부를 설정합니다.(true,false)
+	//this.fnAddParamList(oParam.paramList, "etcmenu.edittool"       , "false"                ); // 다른 메뉴에 [편집 모드] 메뉴 표시 여부를 설정합니다.(true,false)
+
+	//this.fnAddParamList(oParam.paramList, "etcmenu.showtree"       , "false"                ); // 다른 메뉴에 [트리 보기] 메뉴 표시 여부를 설정합니다.(true,false)
+	//this.fnAddParamList(oParam.paramList, "etcmenu.showthumbnail"  , "false"                ); // 다른 메뉴에 [페이지 축소판 보기] 메뉴 표시 여부를 설정합니다.(true,false)
+	//this.fnAddParamList(oParam.paramList, "etcmenu.refresh"        , "false"                ); // 다른 메뉴에 [보고서 새로 고침] 메뉴 표시 여부를 설정합니다.(true,false)
+	//this.fnAddParamList(oParam.paramList, "etcmenu.pagenavigator"  , "false"                ); // 다른 메뉴에 [페이지 네비게이터] 또는 [페이지 선택 창] 메뉴 표시 여부를 설정합니다.(true,false)
+	//this.fnAddParamList(oParam.paramList, "etcmenu.pagesetup"      , "false"                ); // 다른 메뉴에 [페이지 설정] 메뉴 표시 여부를 설정합니다.(true,false)
+
+	//this.fnAddParamList(oParam.paramList, "etcmenu.about"          , "false"                ); // 다른 메뉴에 [제품정보] 메뉴 표시 여부를 설정합니다.(true,false)
+	//this.fnAddParamList(oParam.paramList, "etcmenu.help"           , "false"                ); // 다른 메뉴에 [도움말] 메뉴 표시 여부를 설정합니다.(true,false)
+	
+	this.fnAddParamList(oParam.paramList, "pdf.fontembedding"          , "true"                ); 
+	this.fnAddParamList(oParam.paramList, "pdf.fontembedding_subset"   , "true"                ); 
+	
+	this.fnAddParamList(oParam.paramList, "pdf.savelinkurl"            , "false"               );   // 저장팝업에서 [링크정보저장]-[URL링크]를 비선택을 디폴트로 세팅
+	this.fnAddParamList(oParam.paramList, "pdf.savelinktoc"            , "false"               );   // 저장팝업에서 [링크정보저장]-[목차링크]를 비선택을 디폴트로 세팅
+
+	if(oOption.addParam)
+	{
+		for(var m=0;m<oOption.addParam.length;m++)
+		{
+			this.fnAddParamList(oParam.paramList, oOption.addParam[m].paramkey , oOption.addParam[m].paramvalue);
+		}
+	}
+	
+	// 대입전형(UDS)인 경우, 특수문자가 포함된 문서가 PDF로 인쇄시 깨지는 문제 해결용
+	var bExecuteNexacroBrowser = false;
+	
+	if(system.navigatorname.indexOf("nexacro")>-1)
+	{
+		bExecuteNexacroBrowser = true;
+		trace("====>bExecuteNexacroBrowser="+bExecuteNexacroBrowser);
+	}
+	
+	// 파라미터를 리포트에 전달하여 표시한다.
+	trace(JSON.stringify(oParam))
+	this.webReport.callMethod("startOzReportView",oParam,bSecurity,bExecuteNexacroBrowser);
+}
+
+this.fnAddParamList = function(objParam,sKey,sValue)
+{
+	objParam.push({paramkey:sKey,paramvalue:sValue});
+}
+
+this.fnGetMarkAnyExtraParam = function() {
+	var delimiter = "#oz#";
+	var extParam  = "";
+	// Voice
+	//extParam += "VSizeX=21" + delimiter
+	//extParam += "VSizeY=21" + delimiter
+	//extParam += "VPosX=480" + delimiter
+	//extParam += "VPosY=730" + delimiter
+	//extParam += "VPages=1-2" + delimiter
+
+	// 2D 바코드, 보이스 바코드 좌표 설정 시 사용 (기본값은 oz.sganmarkany.properties에 설정)
+	extParam += "2D_CellBlockCount=360" + delimiter;
+	extParam += "2D_CellBlockRow=110"   + delimiter;
+	extParam += "2D_PosX=30"            + delimiter;
+	extParam += "2D_PosY=30"            + delimiter;
+	
+	// 복사방지마크(원본) X, Y 좌표 설정 시 사용 (기본값은 oz.sganmarkany.properties에 설정)
+	extParam += "2D_WonbonPosX=0" + delimiter;
+	extParam += "2D_WonbonPosY=0" + delimiter;
+	extParam += "2D_WonbonPath=%OZCONF%/copy_protect.bmp" + delimiter;
+	
+	return extParam;
+}
+
+this.fnGetSGAExtraParam = function() {
+	var delimiter = "#oz#";
+	var extParam = "";
+	
+	// Voiceye
+	extParam += "VTitle=NEIS" + delimiter;
+	extParam += "VPosX=180"     + delimiter;
+	extParam += "VPosY=20"     + delimiter;
+	extParam += "VPages=1"    + delimiter;
+
+	// 2D
+	//extParam += "2D_OriginType=opz" + delimiter;
+	//extParam += "2D_MultiOPZ=false" + delimiter;
+	//extParam += "2D_Width=135"      + delimiter;
+	//extParam += "2D_Wonbon=true"    + delimiter;
+	
+	// 문서확인번호, 문서명 변경 시 사용 (기본값은 oz.sganmarkany.properties에 설정)
+	//extParam += "2D_DocIssueNo=12345" + delimiter
+	//extParam += "2D_DocName=DocName"  + delimiter
+
+	// 2D 바코드 X,Y 좌표 설정 시 사용 (기본값은 sga.properties에 설정)
+	//extParam += "2D_Scale=19" + delimiter
+	//extParam += "2D_PosX=125" + delimiter
+	//extParam += "2D_PosY=750" + delimiter
+	
+	// 복사방지마크(원본) X, Y 좌표 설정 시 사용 (기본값은 sga.properties에 설정)
+	//extParam += "2D_WonbonScale=33" + delimiter
+	//extParam += "2D_WonbonPosX=25"  + delimiter
+	//extParam += "2D_WonbonPosY=750" + delimiter
+	//extParam += "2D_WonbonPath=%OZCONF%/copy_protect.bmp" + delimiter
+	
+	return extParam;
+}
+
+this.fnCloseAll = function()
+{
+	this.webReport.callMethod("fnCloseAll");
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+// Report가 load됐을 때(데이터는 안보이는 상태) 
+this.webReport_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+	this.fvBrowserLoaded = true;
+	if(this.parent.optionReport)
+	{
+		this.fnSetOzData(this.parent.optionReport);	
+		this.fvReportLoaded = true;
+	}
+};
+
+// report로부터 데이터를 받았을 때
+this.webReport_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	var sUserData = e.userdata;
+	var sReportEndCheckStr = "reportPostCommand_";   //"reportEnd_";
+	trace(" webReport_onusernotify : e.userdata="+e.userdata);
+	
+	if(sUserData.indexOf(sReportEndCheckStr)==0)
+	{		
+		var sReportDispName = "";
+		if(!this.smfIsNull(sUserData))
+		{
+			sReportDispName = sUserData.substr(sReportEndCheckStr.length);
+			trace("    sReportDispName="+sReportDispName);
+		}
+		
+		if(this.parent._reportLoadCallback)
+		{
+			this.parent._reportLoadCallback.call(this.parent._objForm,this.parent,sReportDispName);
+		}
+	}
+};
+
+// 서버URL을 구한다.
+this.fnGetServerUrl = function()
+{
+	
+	var sRunMode = nexacro.getEnvironmentVariable("ev_runMode");
+	trace("fnGetServerUrl : sRunMode="+sRunMode);
+	var sUrl = "";
+	var sExecuteRuntime = false;
+	
+	var sSubSysGb = this.smfGetSubSystemGb();
+	var sSubSysDetailGb = this.smfGetSubSystemDetailGb();
+	if(  (sSubSysGb=="UDS")   // 대입전형
+	   || ((sSubSysGb=="SQA")&&(sSubSysDetailGb=="103")))
+	{
+		sExecuteRuntime = true;
+	}
+
+	
+	switch(sRunMode)
+	{
+		case "1": // 로컬서버 
+			sUrl =  "http://localhost:8090";
+			//sUrl = "http://172.16.12.38:8080";
+			break;
+		case "2": // 개발서버
+			//sUrl = "http://172.16.12.38:8080";
+			if(sExecuteRuntime)
+			{
+				sUrl = "http://udreport.dev.neis.go.kr";
+			}
+			else
+			{
+				sUrl = "http://report.dev.neisplus.kr";
+			}
+			break;
+		case "3": // 운영서버
+			if(sExecuteRuntime)
+			{
+				sUrl = "https://udreport.neis.go.kr";
+			}
+			else
+			{
+				sUrl = "https://report.neisplus.kr";
+			}
+			break;
+		case "4": // 테스트서버
+			if(sExecuteRuntime)
+			{
+				sUrl = "http://udreport.tst.neis.go.kr";
+			}
+			else
+			{
+				sUrl = "http://report.tst.neisplus.kr";
+			}
+			break;
+	}
+	
+	return sUrl + "/server";
+}
+
+this.fnGetModuleServerUrl = function()
+{
+	var sUrl="";
+	if(system.navigatorname.indexOf("nexacro")>-1)
+	{
+		var sStartUrl = nexacro.getApplication().xadl;
+		var nIdx = sStartUrl.indexOf("/nxui");
+		sUrl = sStartUrl.substr(0,nIdx);
+		if(sStartUrl.indexOf("file://")>-1)
+		{
+			sUrl = "http://localhost:8080";
+		}
+	}
+	else
+	{
+		sUrl = window.location.protocol + "//" + window.location.host;
+	}
+	
+	return sUrl;
+
+}]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

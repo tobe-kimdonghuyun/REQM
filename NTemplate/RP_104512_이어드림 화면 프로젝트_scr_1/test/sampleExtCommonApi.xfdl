@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleExtCommonApi" width="1280" height="745" titletext="Runtime용ExtCommonAPI사용 샘플">
+    <Layouts>
+      <Layout height="745" width="1280">
+        <Static id="sta00" taborder="0" text="전용브라우저 기능 테스트" left="6" top="1" width="564" height="40"/>
+        <Button id="btn00" taborder="1" text="_ext_getIPAddress" left="17" top="55" width="213" height="42" onclick="btn00_onclick"/>
+        <Button id="btn01" taborder="2" text="_ext_CreateDirectory" left="20" top="112" width="206" height="40" onclick="btn01_onclick"/>
+        <Edit id="edt00" taborder="3" left="243" top="115" width="224" height="36" value="C:\Temp\testdata\" text="C:\Temp\testdata\"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleExtCommonApi.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.8.5
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.8.5     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objExtCommon = this.smfCreateExtCommonAPI();
+	
+	var s = objExtCommon._ext_getIPAddress();
+	trace("s="+s);
+};
+
+
+this.btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objExtCommon = this.smfCreateExtCommonAPI();
+	if(objExtCommon)
+	{
+		var sDir = this.edt00.value;
+		trace("result:"+objExtCommon._ext_CreateDirectory(sDir));
+	}
+};
+
+]]></Script>
+  </Form>
+</FDL>

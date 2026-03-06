@@ -1,0 +1,989 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ecc_eecom02_m01" width="1200" height="745" titletext="급간식 메뉴관리" nHeight="754" onload="fnOnload">
+    <Layouts>
+      <Layout height="745" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="65" height="54" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="급간식 메뉴관리" left="0" top="0" height="54" cssclass="img_WF_SubTit01" width="230" initvalueid="ivTitleAccessibilityOn" accessibilitylabel="급간식 메뉴관리"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSearch" taborder="1" left="0" top="144" height="70" cssclass="div_WF_Search" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="staSyr" taborder="0" text="*학년도" left="0" top="20" width="75" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" accessibilitylabel="학년도"/>
+              <Combo id="cboAyr" taborder="1" left="75" width="130" height="30" innerdataset="dsAyr" codecolumn="code" datacolumn="value" index="-1" text="선택" top="20" value="ALL" initvalueid="ivCmbEssential" onitemchanged="divSearch_cboAyr_onitemchanged" cssclass="essential" accessibilitylabel="학년도 구분"/>
+              <Static id="staSem" taborder="2" text="*돌봄학기" left="205" top="20" width="88" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" accessibilitylabel="돌봄학기"/>
+              <Combo id="cboSem" taborder="3" left="293" width="130" height="30" innerdataset="dsEccSem" codecolumn="code" datacolumn="value" index="-1" text="선택" top="20" value="ALL" initvalueid="ivCmbEssential" onitemchanged="divSearch_cboSem_onitemchanged" cssclass="essential" accessibilitylabel="돌봄학기 구분"/>
+              <Static id="staSc" taborder="4" text="*돌봄구분" left="423" top="20" width="88" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" accessibilitylabel="돌봄구분"/>
+              <Combo id="cboSc" taborder="5" left="511" width="130" height="30" innerdataset="dsEccScCd" codecolumn="code" datacolumn="value" index="-1" text="선택" top="20" value="ALL" initvalueid="ivCmbEssential" onitemchanged="divSearch_cboSc_onitemchanged" cssclass="essential" accessibilitylabel="돌봄구분"/>
+              <Static id="staClr" taborder="6" text="*교실" left="641" top="20" width="62" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" accessibilitylabel="교실"/>
+              <Combo id="cboClr" taborder="7" left="703" width="130" height="30" innerdataset="dsEccNm" codecolumn="code" datacolumn="value" index="-1" text="선택" top="20" value="ALL" initvalueid="ivCmbEssential" onitemchanged="divSearch_cboClr_onitemchanged" cssclass="essential" accessibilitylabel="교실 구분"/>
+              <Static id="staYmdh" taborder="8" text="*조회 월" left="833" top="20" width="82" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" accessibilitylabel="조회 월"/>
+              <Combo id="cboClr00" taborder="9" left="915" width="130" height="30" innerdataset="dsMm" codecolumn="code" datacolumn="value" index="-1" text="선택" top="20" value="ALL" initvalueid="ivCmbEssential" onitemchanged="divSearch_cboClr_onitemchanged" cssclass="essential" accessibilitylabel="조회 월 구분"/>
+              <Button id="btnSearch" taborder="10" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="fnSearch" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="조회"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staCn" taborder="2" text="1인당 월 총 금액 :      0원" left="0" top="238" width="500" height="26" cssclass="sta_WF_Total" fittocontents="width" initvalueid="ivStcAccessibilityOn" accessibilitylabel="1인당 월 총 금액: 0원"/>
+        <Button id="btnStuPtclrMte" taborder="3" text="학생 특이사항" top="234" height="30" width="107" cssclass="btn_WF_Custom" right="84" initvalueid="ivBtnAccessibilityButton" onclick="btnStuPtclrMte_onclick" accessibilitylabel="학생 특이사항"/>
+        <Button id="btnDelete" taborder="4" text="전체삭제" top="234" height="30" cssclass="btn_WF_Crud" width="76" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="전체삭제" right="0" onclick="fnDelete"/>
+        <Button id="btnDownload" taborder="5" text="양식 내려받기" top="234" height="30" cssclass="btn_WF_Excel03" width="126" right="322" onclick="btnDownload_onclick" visible="false" initvalueid="ivBtnAccessibilityDown" accessibilitylabel="양식 내려받기"/>
+        <Button id="btnUpload" taborder="6" text="자료 올리기" top="234" height="30" cssclass="btn_WF_Excel03" width="115" right="199" visible="false" onclick="btnUpload_onclick" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="자료 올리기"/>
+        <Grid id="grdMain" taborder="7" left="0" top="274" autofittype="col" right="0" binddataset="dsMain" selecttype="cell" oncellclick="grdMain_oncellclick" bottom="20" cellsizingtype="both" autosizingtype="row" extendsizetype="row" initvalueid="ivGrdAccessibilityOn" accessibilitylabel="급간식 메뉴관리 표">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="36"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="월"/>
+                <Cell col="1" text="화"/>
+                <Cell col="2" text="수"/>
+                <Cell col="3" text="목"/>
+                <Cell col="4" text="금" cssclass="LineNo"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:dfkMon" cssclass="expr:zz == &quot;-1&quot; ? &quot;cell_WF_BgColorLitsky cell_WF_NavyCnt cell_WF_Pointer&quot; : (zz == &quot;0&quot; ? &quot;cell_WF_BgColorTrssky cell_WF_Right&quot; : &quot;cell_WF_Left&quot;)" wordWrap="char" autosizerow="limitmin"/>
+                <Cell col="1" text="bind:dfkTue" cssclass="expr:zz == &quot;-1&quot; ? &quot;cell_WF_BgColorLitsky cell_WF_NavyCnt cell_WF_Pointer&quot; : (zz == &quot;0&quot; ? &quot;cell_WF_BgColorTrssky cell_WF_Right&quot; : &quot;cell_WF_Left&quot;)" wordWrap="char" autosizerow="limitmin"/>
+                <Cell col="2" text="bind:dfkWed" cssclass="expr:zz == &quot;-1&quot; ? &quot;cell_WF_BgColorLitsky cell_WF_NavyCnt cell_WF_Pointer&quot; : (zz == &quot;0&quot; ? &quot;cell_WF_BgColorTrssky cell_WF_Right&quot; : &quot;cell_WF_Left&quot;)" wordWrap="char" autosizerow="limitmin"/>
+                <Cell col="3" text="bind:dfkThu" cssclass="expr:zz == &quot;-1&quot; ? &quot;cell_WF_BgColorLitsky cell_WF_NavyCnt cell_WF_Pointer&quot; : (zz == &quot;0&quot; ? &quot;cell_WF_BgColorTrssky cell_WF_Right&quot; : &quot;cell_WF_Left&quot;)" wordWrap="char" autosizerow="limitmin"/>
+                <Cell col="4" text="bind:dfkFri" cssclass="expr:zz == &quot;-1&quot; ? &quot;cell_WF_BgColorLitsky cell_WF_NavyCnt cell_WF_Pointer&quot; : (zz == &quot;0&quot; ? &quot;cell_WF_BgColorTrssky cell_WF_Right&quot; : &quot;cell_WF_Left&quot;)" wordWrap="char" autosizerow="limitmin"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grdMainExel00" taborder="8" left="100" top="320" autofittype="col" right="15" binddataset="dsListUpMth" selecttype="cell" initvalueid="ivGrdAccessibilityOn" bottom="245" visible="false" accessibilitylabel="메뉴관리 표">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="250"/>
+                <Column size="400"/>
+                <Column size="250"/>
+                <Column size="250"/>
+              </Columns>
+              <Rows>
+                <Row size="40" band="head"/>
+                <Row size="60" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell colspan="4" color="#d32850" text="  *시트명(Sheet1)을 변경하지 마세요. 변경시 업로드 되지 않습니다." textAlign="right" background="#fffa70"/>
+                <Cell row="1" text="날짜&#13;&#10;[필수입력]&#13;&#10;*공휴일은 빨간글씨로 표시됩니다." color="#0700ea"/>
+                <Cell row="1" col="1" text="급간식종류 (최대 글자길이 : 100)&#13;&#10;[필수입력]&#13;&#10;*한줄에 한개씩 입력. 행추가하여 최대 5개까지 입력 가능" color="#0700ea"/>
+                <Cell row="1" col="2" text="단가 (최대 단가 : 99,999)&#13;&#10;*급간식종류 없이 단가 입력 불가"/>
+                <Cell row="1" col="3" text="거래처명 (최대 글자길이 : 50)&#13;&#10;*급간식종류 없이 거래처명 입력 불가"/>
+              </Band>
+              <Band id="body">
+                <Cell textAlign="center" text="bind:nathoYmd" cssclass="expr:nathoYn == &quot;Y&quot; ?  &quot;cell_WF_Red&quot;  : &quot;&quot;"/>
+                <Cell col="1" text="bind:mlsnNm"/>
+                <Cell col="2" textAlign="right" text="bind:mlsnUtp" displaytype="number"/>
+                <Cell col="3" text="bind:comyNm"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grdMainExel" taborder="9" left="110" top="510" autofittype="col" right="20" binddataset="dsListExUpload" selecttype="cell" initvalueid="ivGrdAccessibilityOn" bottom="55" visible="false" accessibilitylabel="메뉴 관리표2">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="150"/>
+                <Column size="400"/>
+                <Column size="250"/>
+                <Column size="250"/>
+              </Columns>
+              <Rows>
+                <Row size="60" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="날짜&#13;&#10;*필수 입력"/>
+                <Cell col="1" text="급간식종류 (최대 글자길이 : 100)&#13;&#10;*필수 입력&#13;&#10;*한줄에 한개씩 입력. 행추가하여 최대 5개까지 입력 가능"/>
+                <Cell col="2" text="단가 (최대 단가 : 99,999)&#13;&#10;*급간식종류 없이 단가 입력 불가"/>
+                <Cell col="3" text="거래처명 (최대 글자길이 : 50)&#13;&#10;*급간식종류 없이 거래처명 입력 불가"/>
+              </Band>
+              <Band id="body">
+                <Cell textAlign="center" text="bind:mlsnYmd" cssclass="expr:nathoYn == &quot;Y&quot; ?  &quot;cell_WF_Red&quot;  : &quot;&quot;"/>
+                <Cell col="1" text="bind:mlsnNm"/>
+                <Cell col="2" textAlign="right" text="bind:mlsnUtp" displaytype="number"/>
+                <Cell col="3" text="bind:comyNm"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="sta00" taborder="10" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta01" taborder="11" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta02" taborder="12" left="0" top="214" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta03" taborder="13" left="0" top="264" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta04" taborder="14" left="0" top="725" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff" height="20"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  급간식메뉴관리
+*  @MenuPath    초등돌봄교실 > 급간식메뉴관리
+*  @FileName 	ecc_eecom02_m01.xfdl 
+*  @Creator 	이혜진
+*  @CreateDate 	2022.10.04
+*  @Desction    초등돌봄교실(돌봄인력서비스) 급간식메뉴관리
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.10.04            이혜진                   최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::ecc_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_onLoadYn = true; //초기세팅여부 (화면 load시에만 첫번째 값으로 세팅하기)
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ /*
+ * 화면 load시
+ * 
+ * 조회조건 초기값 세팅
+ * 1. 사용자정보세팅 (주민번호, 시도코드, 접속시도코드, 사용자id, 학교코드-전담사로 등록되어있는 학교코드)
+ * 2. 학년도 세팅 = 현재년도-1~현재년도+1 
+ * 3. 년월 세팅 = 현재날짜
+ * 4. 돌봄학기 -> 돌봄구분 -> 교실명 세팅
+ */
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitForm(obj);
+
+	//●1. 사용자정보세팅
+	this.eccfSetHnfInfo("selectHnfInfoForSession", this.dsSearch, ""); 
+
+};
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+			
+	switch(svcid) {	
+	
+		//●사용자정보세팅 콜백
+		case "selectHnfInfoForSession" : 
+			if ( errcd == -100 ) {//오류메시지 확인용
+				this.smfAlert("errcd : "+errcd);
+				this.alert(errmsg);
+			}
+
+			//●2. 학년도 세팅 
+			this.eccCmbSetAyr(this.dsAyr, "code", "value", 1, 1);
+			//현재년도로 디폴트 값 세팅
+			this.divSearch.form.cboAyr.set_index(0);
+			
+			
+			//●3. 년월 세팅(현재 월) - 월은 고정이므로 하드코딩함 dsMm 
+			this.dsSearch.setColumn(0, "mm", this.smfToday().dateFormat("MM"));
+			
+			
+			//●4. 돌봄학기 콤보 세팅
+			this.divSearch_cboAyr_onitemchanged();			
+			break;			
+	
+	
+		//●돌봄학기콤보 세팅 콜백
+		case "selectEccSem" : 
+			//에러처리
+			if ( errcd == -100 ) {
+				this.smfAlert("errcd : "+errcd);
+				this.alert(errmsg);
+			}
+			
+			//onload시 콤보 초기세팅
+			if(this.fv_onLoadYn){
+				this.divSearch.form.cboSem.set_index(0);
+			}
+			
+			//선택된 돌봄구분이 없으면 세팅
+			if(this.smfIsNull(this.divSearch.form.cboSem.text)){ 
+				this.divSearch.form.cboSem.set_index(0);
+			}
+			
+			//돌봄구분콤보 세팅
+			this.divSearch_cboSem_onitemchanged();
+			break;
+		
+		
+		//●돌봄구분콤보 세팅 콜백
+		case "selectEccScCd" :
+			//에러처리
+			if ( errcd == -100 ) {
+				this.smfAlert("errcd : "+errcd);
+				this.alert(errmsg);
+			}
+			
+			//onload시 콤보 초기세팅
+			if(this.fv_onLoadYn){
+				this.divSearch.form.cboSc.set_index(0);
+			}
+			
+			//선택된 돌봄구분이 없으면 세팅
+			if(this.smfIsNull(this.divSearch.form.cboSc.text)){ 
+				this.divSearch.form.cboSc.set_index(0);
+			}			
+			
+			//교실콤보 세팅	
+			this.divSearch_cboSc_onitemchanged();
+			break;
+		
+		
+		//●교실콤보 세팅 콜백
+		case "selectEccEccNm" :
+			//에러처리
+			if ( errcd == -100 ) {
+				this.smfAlert("errcd : "+errcd);
+				this.alert(errmsg);
+			}
+			
+			//onload시 콤보 초기세팅
+			if(this.fv_onLoadYn){
+				this.divSearch.form.cboClr.set_index(0);	
+				this.fv_onLoadYn = false;
+			}
+			
+			//선택된 돌봄구분이 없으면 세팅
+			if(this.smfIsNull(this.divSearch.form.cboClr.text)){ 
+				this.divSearch.form.cboClr.set_index(0);
+			}	
+			
+			//데이터 초기화
+			this.divSearch_cboClr_onitemchanged();
+			break;		
+	}		
+};
+
+
+
+/**
+ * 엑셀업로드 콜백
+ *
+ */
+this.fnImportCallback = function(sImportId,bResult)
+{
+
+	//●업로드 성공
+	if(bResult){
+		this.smfConfirm('[급간식종류 없이 단가, 거래처명만 입력된 행은 자동으로 삭제된 후 업로드됩니다]\n업로드를 진행하시겠습니까?', function(value){
+			if(value.confirmResult){//YES
+			
+				// ●1.양식검사	
+
+
+				//데이터 벨리데이션 체크할때 메세지 찍어줄 row number 따기
+				this.dsListExUpload.addColumn("rowNum"); 
+				for(var i=0 ; i < this.dsListExUpload.rowcount ; i++){
+					this.dsListExUpload.setColumn(i, "rowNum", i+3);
+				}
+				
+				
+				// ●1-1. 급간식종류, 날짜 비어있는 행 지우기
+				for(var i=0 ; i < this.dsListExUpload.rowcount ; i++){
+					if(this.smfIsNull(this.dsListExUpload.getColumn(i, "mlsnNm")) || this.smfIsNull(this.dsListExUpload.getColumn(i, "mlsnYmd"))){
+						this.dsListExUpload.deleteRow(i);
+						i--;
+					}				
+				}
+				
+				
+				//데이터 벨리데이션 체크,  급간식순서번호 따기,  파라미터 세팅
+				var mlsnSeqNo = 0; 		//급간식순서번호 딸때 쓸 변수
+				var mlsnYmdTemp = ""; 	//급간식순서번호 딸때 쓸 변수
+				var rowNum = ""; 		//메세지 찍어줄 row number
+				
+				for(var i=0 ; i < this.dsListExUpload.rowcount ; i++){
+					rowNum = this.dsListExUpload.getColumn(i, "rowNum");
+
+					//●1-2. 이상한 날짜 입력했으면 빠꾸
+					var mlsnYmd = this.nvl(this.dsListExUpload.getColumn(i, "mlsnYmd"), "");
+					for(var j=0 ; j < this.dsListUpMth.rowcount ; j++){
+						var nathoYmd = this.dsListUpMth.getColumn(j, "nathoYmd");
+						this.dsListUpMth.filter("nathoYmd == "+mlsnYmd); 
+						if(this.dsListUpMth.getRowCount() < 1){
+							this.dsListUpMth.filter("");
+							this.smfAlert('PA059', ["["+(rowNum)+"번째 행]\n날짜[ "+mlsnYmd+" ]가 잘못되었습니다.\n*토요일, 일요일이 입력되었거나,\n돌봄기간이 아니거나,\n날짜 형식이 잘못되었거나,\n[급간식메뉴관리]화면의 [학년도, 조회월]과 업로드된 년월이 "], this.fnMessageCallback ); //{0}다릅니다.
+							return;
+						}			
+						this.dsListUpMth.filter("");
+					}//1-2. 이상한 날짜 입력했으면 빠꾸 for문 끝
+					
+					
+					
+					//●1-3. 데이터 길이 체크
+					
+					//급간식종류
+					var mlsnNm = this.nvl(this.dsListExUpload.getColumn(i, "mlsnNm"), "");
+					if(mlsnNm.length > 100){
+						this.smfAlert('PA057', ["["+(rowNum)+"번째 행]\n[급간식종류] 글자길이가 최대치를 초과하였습니", "\n최대 길이 : 100"], this.fnMessageCallback ); //{0}다. \n{1}
+						return;				
+					}
+					
+					//단가
+					var mlsnUtp = this.nvl(this.dsListExUpload.getColumn(i, "mlsnUtp"), "");
+					if(mlsnUtp.match('[^0-9]')){
+						this.smfAlert('PA058', ["["+(rowNum)+"번째 행]\n[단가]는 숫자만 입력 "], this.fnMessageCallback ); //{0}해주세요.
+						return false;				
+					}			
+					
+					mlsnUtp = nexacro.toNumber(this.nvl(mlsnUtp, 0));
+					if(mlsnUtp > 99999){
+						this.smfAlert('PA057', ["["+(rowNum)+"번째 행]\n[단가]가 최대치를 초과하였습니", "\n최대 단가 : 99,999"], this.fnMessageCallback ); //{0}다. \n{1}
+						return;				
+					}
+					
+					//거래처명
+					var comyNm = this.nvl(this.dsListExUpload.getColumn(i, "comyNm"), "");				
+					if(comyNm.length > 50){
+						this.smfAlert('PA057', ["["+(rowNum)+"번째 행]\n[거래처명] 글자길이가 최대치를 초과하였습니", "\n최대 길이 : 50"], this.fnMessageCallback ); //{0}다. \n{1}
+						return;				
+					}		
+					
+					//●1-4. 급간식순서번호 따기
+					
+					if(mlsnYmdTemp != mlsnYmd){
+						mlsnSeqNo = 1;
+						mlsnYmdTemp = mlsnYmd;
+					}else if(mlsnSeqNo < 5){
+						mlsnSeqNo++;
+					}else{
+						this.smfAlert('PA004', ["["+(rowNum)+"번째 행]\n한 날짜 당 급간식 개수는 5개 까지만 입력"], this.fnMessageCallback ); //{0} 가능합니다.
+						return;					
+					}
+					
+					
+					
+					//●1-5. 파라미터 세팅
+					this.dsListExUpload.addColumn("mlsnSeqNo"); //급간식순서번호
+					this.dsListExUpload.addColumn("shlCd");		//학교코드
+					this.dsListExUpload.addColumn("ayr");		//학년도
+					this.dsListExUpload.addColumn("eccSem");	//돌봄학기
+					this.dsListExUpload.addColumn("eccScCd");	//돌봄구분
+					this.dsListExUpload.addColumn("clrSeqNo");	//교실순서번호
+					this.dsListExUpload.addColumn("sts"); 		//나이스 자바단에서 if문 타기 위한 변수(소스를 새로 안만들고 기존 소스 재활용 하기위해 이짓햇즘)
+					
+					this.dsSearch.setColumn(0, "flag", "U"); //나이스에서 삭제("D")인지 업로드("U")인지 급간식등록팝업 저장(P)인지 구분하는 구분자(삭제랑 저장이랑 인터페이스가 안나눠져 있음. 같은 인터페이스 안에서 호출해야해서 구분자 넣음)
+					this.dsListExUpload.setColumn(i, "sts", "i"); 
+					this.dsListExUpload.setColumn(i, "mlsnSeqNo", mlsnSeqNo);
+					this.dsListExUpload.setColumn(i, "shlCd", this.dsSearch.getColumn(0, "shlCd"));
+					this.dsListExUpload.setColumn(i, "ayr", this.dsSearch.getColumn(0, "ayr"));
+					this.dsListExUpload.setColumn(i, "eccSem", this.dsSearch.getColumn(0, "eccSem"));
+					this.dsListExUpload.setColumn(i, "eccScCd", this.dsSearch.getColumn(0, "eccScCd"));
+					this.dsListExUpload.setColumn(i, "clrSeqNo", this.dsSearch.getColumn(0, "clrSeqNo"));
+
+					
+				}//데이터 벨리데이션 체크 및 급간식순서번호 따기 for문 끝
+				this.dsListUpMth.filter("");
+				
+				
+				//●2.저장
+				// 서비스 객체 생성
+				this.smfSaveService("save")
+					.messagePrefix(["업로드를 완료하였습니다. 저장"]) //하시겠습니까?
+					// 실행
+					.run()
+					// 콜백
+					.callback(function(callbackParams){
+						if(callbackParams.errors) return;
+						this.smfAlert('CM201', ['저장'], this.fnMessageCallback ); // 저장 하였습니다.
+						this.fnSearch(); //조회
+					});				
+
+			}//YES if문 끝
+		})//메세지 끝
+		
+	}
+	//●업로드 실패
+	else{
+		this.smfAlert('PA058', ['업로드 중 오류가 발생하였습니다.\n관리자에게 문의'], this.fnMessageCallback ); //{0}해주세요.
+	}
+}
+
+
+
+/**
+ * 팝업의 콜백함수
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+	this.fnSearch();
+};
+
+
+
+/**
+ * 메세지 콜백함수
+ * @param : N/A
+ * @return : N/A
+ */
+this.fnMessageCallback = function(){
+	
+};
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * 조회 버튼 클릭
+ * 1. 해당 월 날짜 조회-양식다운로드용  dsListUpMth
+ * 2. 일지 등록여부 - 있으면 수정, 삭제 안되게 막기용  dsListDirYnCk
+ * 3. 보존식등록여부 조회 - 있으면 수정, 삭제 안되게 막기용 dsListPfdYnCk
+ * 4. 급식 등록내역 조회  dsMain
+ * 5. 1인당 월 총 금액 조회 dsListSum
+ * 6. 돌봄기간 조회 dsCareYmd
+ */
+ this.fnSearch = function()
+{
+	this.dsListDirYnCk.clearData();
+	this.dsListPfdYnCk.clearData();
+	this.dsListUpMth.clearData();
+	this.dsMain.clearData();
+	this.dsListSum.clearData();
+	this.dsCareYmd.clearData();
+	
+	//년월 세팅 : 01월 02월은 차년도로 조회하기
+	var mm = this.dsSearch.getColumn(0, "mm");
+	if(mm >02){
+		this.dsSearch.setColumn(0, "mlsnYmd", (this.dsSearch.getColumn(0, "ayr")) + "" + (this.dsSearch.getColumn(0, "mm")) );
+	}else{
+		this.dsSearch.setColumn(0, "mlsnYmd", (nexacro.toNumber(this.dsSearch.getColumn(0, "ayr"))+1) + "" + (this.dsSearch.getColumn(0, "mm")) );
+	}
+	
+	
+	this.smfSearchService("list")
+		// 데이터 검증
+		.validateForm(this.divSearch)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors){//에러
+				return;
+			}else{//성공
+				var sum = this.dsListSum.getColumn(0, "allMlsnUtp");
+				this.staCn.set_text("1인당 월 총 금액 : " + sum + " 원");	
+				this.resetScroll();
+				
+				//다운로드, 업로드 버튼 활성화
+				this.btnDownload.set_visible(true);
+				this.btnUpload.set_visible(true);
+			}
+		});
+}
+
+
+/**
+ * 전체삭제 버튼 클릭
+ */
+this.fnDelete = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.dsMain.rowcount < 1){
+		this.smfAlert('PA003', ['조회된 자료가 '], this.fnMessageCallback ); //{0} 없습니다.
+		return;
+	}
+	
+	//해당월에 보존식, 일지 있으면 빠꾸
+	if(this.fnChkPfdDir("전체삭제")==false) return;
+
+	//나이스에서 쿼리 태울 구분자
+	this.dsSearch.setColumn(0, "flag", "D");
+	
+ 	// 서비스 객체 생성
+	this.smfDeleteService("delete")
+		.messagePrefix(["전체삭제"]) //전체삭제 하시겠습니까?
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			this.smfAlert('CM201', ['전체삭제'], this.fnMessageCallback ); // {0} 하였습니다.
+			this.fnSearch();
+		});	
+};
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * 보존식관리, 일지 등록됐는지 체크
+ */
+ this.fnChkPfdDir = function(msg){
+ 	var dirCount = this.dsListDirYnCk.rowcount;
+	var dirDate = this.dsListDirYnCk.getColumn(0, "careDiaryYmd");
+	var pfdCount = this.dsListPfdYnCk.rowcount;
+	var pfdDate = this.dsListPfdYnCk.getColumn(0, "mlsnYmd");
+	
+	
+	if(pfdCount > 0){
+		this.smfAlert('PA058', ["해당 월에 보존식관리가 등록 되어 있습니다.\n총 "+pfdCount+"건 (날짜 : "+ pfdDate +" 외)\n\n*초등돌봄 > 돌봄운영관리 > 보존식관리\n화면에서 삭제 후 진행"], this.fnMessageCallback ); //{0}해주세요.
+		return false;
+		
+	}else if(dirCount > 0){
+		this.smfAlert('PA058', ["해당 월에 일지가 등록 되어 있습니다.\n총 "+dirCount+"건 (날짜 : "+ dirDate +" 외)\n\n*초등돌봄 > 돌봄운영관리 > 일지관리\n화면에서 삭제 후 진행"], this.fnMessageCallback ); //{0}해주세요.
+		return false;
+	}
+	
+	return true;
+ }
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ /**
+ * 학년도 콤보 변경시 -
+ * [돌봄학기 콤보 세팅]
+ * @param : N/A
+ * @return : N/A
+ */
+this.divSearch_cboAyr_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.eccComboSet("selectEccSem", this.dsSearch, this.dsEccSem, this.fnMessageCallback, "2");
+};
+
+
+
+ /**
+ * 돌봄학기 콤보 변경시 -
+ * [돌봄구분 콤보 세팅]
+ * @param : N/A
+ * @return : N/A
+ */
+this.divSearch_cboSem_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.eccComboSet("selectEccScCd", this.dsSearch, this.dsEccScCd, this.fnMessageCallback, "3");
+};
+
+
+
+ /**
+ * 돌봄구분 콤보 변경시 -
+ * [교실 콤보 세팅]
+ * @param : N/A
+ * @return : N/A
+ */
+this.divSearch_cboSc_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.eccComboSet("selectEccEccNm", this.dsSearch, this.dsEccNm, this.fnMessageCallback, "4");	
+};
+
+
+ /**
+ * 교실 콤보 변경
+ * @param : N/A
+ * @return : N/A
+ */
+this.divSearch_cboClr_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	//데이터초기화
+	this.dsMain.clearData();
+	this.dsListSum.clearData();
+	this.staCn.set_text("1인당 월 총 금액 :      0원");	
+	
+	//다운로드, 업로드 버튼 비활성화
+	this.btnDownload.set_visible(false);
+	this.btnUpload.set_visible(false);	
+};
+
+
+
+
+ /**
+ * 그리드에서 날짜 click
+ * 급/간식 등록 팝업 호출
+ * @param : N/A
+ * @return : N/A
+ */
+this.grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+
+	//●날짜 cell 찾기 : zz가 -1이면 날짜 cell임
+
+	//1. 클릭한 로우 인덱스 
+	var clickInx = e.row;
+	
+	//2. 로우의 zz를 꺼낸다
+	var zz = this.dsMain.getColumn(clickInx, "zz");
+	
+	//3. zz가 -1이면 팝업 호출
+	if(zz == "-1"){
+			
+		//●돌봄기간이 아니면 빠꾸
+		var careBgngYmdF = this.dsCareYmd.getColumn(0, "careBgngYmdF"); //돌봄 시작일자
+		var careEndYmdF  = this.dsCareYmd.getColumn(0, "careEndYmdF");  //돌봄 종료일자
+		var clickV       = this.dsMain.getColumn(e.row, e.col+2);         //클릭한 일자
+		
+		if((careBgngYmdF > clickV) || (careEndYmdF < clickV)){
+			this.smfAlert('PA057', ["해당 일자는 돌봄기간이 아니므로 급간식내역을 등록 할 수 없습니", "\n돌봄기간 : "+careBgngYmdF+"~"+careEndYmdF], this.fnMessageCallback ); //{0}다. \n{1}
+			return;
+		}		
+			
+			
+			
+		//●팝업에 보낼 데이터 세팅
+		var popupParams = {
+							  callback: this.fnPopupCallback
+							, sender: obj // sender 지정
+							, params: {
+											date : (this.dsMain.getColumn(clickInx, e.col+2)).replace(/\-/g,"") //날짜
+										  , dsSearch : this.dsSearch
+										  , week : this.dsMain.getColID(e.col+2) /*요일*/
+										  , eccSem : this.divSearch.form.cboSem.text /*학기명*/
+										  , eccScNm : this.divSearch.form.cboSc.text /*돌봄구분*/
+										  , eccNm : this.divSearch.form.cboClr.text /*교실명*/				
+										  , procType : "insert"
+									   }
+		                  };		
+		
+		//●팝업호출
+		this.smfDialog("_auto", "pa_ecc_eec_om::ecc_eecom02_p01.xfdl", popupParams);
+		
+	}//if문 zz == "-1" 끝
+};
+
+
+
+
+
+/**
+ * 학생특이사항 버튼 click
+ * 학생특이사항 팝업 호출
+ * @param : N/A
+ * @return : N/A
+ */
+this.btnStuPtclrMte_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+		//●팝업에 보낼 데이터 세팅
+		var popupParams = {
+								callback: this.fnPopupCallback
+							  , sender	: obj // sender 지정
+							  , params	: {
+												dsSearch : this.dsSearch			
+											  , procType : "search"
+										  } 
+						   };		
+		
+		//●팝업호출
+		this.smfDialog("_auto", "pa_ecc_eec_om::ecc_eecom02_p02.xfdl", popupParams);	
+};
+
+
+
+/**
+ * 양식다운로드 버튼 클릭
+ * @param : N/A
+ * @return : N/A
+ */
+this.btnDownload_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+	//해당 월에 돌봄기간이 하루도 없으면 빠꾸
+	var careBgngYmd = this.dsCareYmd.getColumn(0, "careBgngYmd");  //돌봄 시작일자
+	var careEndYmd  = this.dsCareYmd.getColumn(0, "careEndYmd");   //돌봄 종료일자
+	var ymdCnt = 0;
+
+	for(var i=0; i<this.dsListUpMth.rowcount; i++){
+		var nathoYmd = this.dsListUpMth.getColumn(i, "nathoYmd");
+		if((careBgngYmd <= nathoYmd) && (careEndYmd >= nathoYmd)){
+			ymdCnt++; //돌봄기간 카운트	
+		}	
+	}
+	
+	if(ymdCnt < 1){
+		this.smfAlert('PA057', ["해당 월은 돌봄기간이 아닙니", "\n돌봄기간 : "+this.dsCareYmd.getColumn(0, "careBgngYmdF")+"~"+this.dsCareYmd.getColumn(0, "careEndYmdF")], this.fnMessageCallback ); //{0}다. \n{1}
+		return;
+	}
+	
+	
+	
+	//양식다운로드
+	var objOption = {
+						objGrid : this.grdMainExel00
+					,   sheetname : "Sheet1"
+					,   filename : this.dsSearch.getColumn(0,"ayr")+"학년도 "+(this.dsSearch.getColumn(0,"mlsnYmd")).substr(4,2)+"월 급간식메뉴관리 양식_"+this.smfToday().dateFormat("yyyyMMdd")+this.smfTodayTime().dateFormat("hhmmss")
+					};
+	
+	this.smfExcelExport(objOption);	
+};
+
+
+/**
+ * 결과업로드 버튼 클릭
+ * @param : N/A
+ * @return : N/A
+ */
+this.btnUpload_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+	//돌봄기간 아니면 빠꾸
+	if(this.dsListUpMth.rowcount < 1){
+		this.smfAlert('PA057', ["해당 월은 돌봄기간이 아닙니", "\n돌봄기간 : "+this.dsCareYmd.getColumn(0, "careBgngYmdF")+"~"+this.dsCareYmd.getColumn(0, "careEndYmdF")], this.fnMessageCallback ); //{0}다. \n{1}
+		return;
+	}
+
+	//해당월에 보존식, 일지 있으면 빠꾸
+	if(this.fnChkPfdDir("업로드") == false) return;
+	
+	//업로드
+	this.dsListExUpload.clearData();
+	var objOption = {
+						datasetname : "dsListExUpload"
+					,   sheetname   : "Sheet1"
+					,   startcell   : "A3"
+					,   callback    : "fnImportCallback"
+					,   importId    : "import"
+					,   objForm     : this
+					};
+					
+	this.smfExcelImport(objOption);	
+};]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">list</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsListDirYnCk=dsListDir dsListPfdYnCk=dsListPfd dsListUpMth=dsListMth dsMain=dsList dsListSum=dsSum dsCareYmd=dsCareYmd</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/ecc_eec_om02_001.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+          <Row>
+            <Col id="id">delete</Col>
+            <Col id="url">/ecc_eec_om02_002.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="callback">fnTransCallback</Col>
+          </Row>
+          <Row>
+            <Col id="id">save</Col>
+            <Col id="url">/ecc_eec_om02_003.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsList=dsListExUpload</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드-세션orgCd"/>
+          <Column id="ayr" type="STRING" size="256" description="학년도-세션"/>
+          <Column id="mm" type="STRING" size="256" description="조회월"/>
+          <Column id="eccSem" type="STRING" size="256" description="돌봄학기"/>
+          <Column id="eccScCd" type="STRING" size="256" description="돌봄구분"/>
+          <Column id="clrSeqNo" type="STRING" size="256" description="교실순서번호"/>
+          <Column id="mlsnYmd" type="STRING" size="256" description="조회년월"/>
+          <Column id="cntnCtpvScCd" type="STRING" size="256" description="접속시도코드-세션"/>
+          <Column id="flag" type="STRING" size="256" description="나이스에서 삭제(&quot;D&quot;)인지 업로드(&quot;U&quot;)인지 급간식등록팝업 저장(P)인지 구분하는 구분자(삭제랑 저장이랑 인터페이스가 안나눠져 있음. 같은 인터페이스 안에서 호출해야해서 구분자 넣음)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="az" type="STRING" size="256" description="칸 만들기 용" sumtext=""/>
+          <Column id="zz" type="STRING" size="256" description="-1: 날짜  / 0: 단가SUM / 1~5: 메뉴" sumtext=""/>
+          <Column id="dfkMon" type="STRING" size="256" description="월" sumtext=""/>
+          <Column id="dfkTue" type="STRING" size="256" description="화" sumtext=""/>
+          <Column id="dfkWed" type="STRING" size="256" description="수" sumtext=""/>
+          <Column id="dfkThu" type="STRING" size="256" sumtext="" description="목"/>
+          <Column id="dfkFri" type="STRING" size="256" sumtext="" description="금"/>
+          <Column id="rs" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsAyr">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEccSem">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEccScCd">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEccNm">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsListUpMth" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="nathoYmd" type="STRING" size="256" description="공휴일일자" sumtext=""/>
+          <Column id="nathoYr" type="STRING" size="256" description="공휴일연도" sumtext=""/>
+          <Column id="nathoMm" type="STRING" size="256" description="공휴일월" sumtext=""/>
+          <Column id="nathoDd" type="STRING" size="256" description="공휴일일" sumtext=""/>
+          <Column id="dfkScCd" type="STRING" size="256" description="요일구분코드" sumtext=""/>
+          <Column id="nathoYn" type="STRING" size="256" sumtext="" description="공휴일여부"/>
+          <Column id="mlsnYmd" type="STRING" size="256" sumtext="" description="급간식일자"/>
+          <Column id="mlsnNm" type="STRING" size="256" sumtext="" description="급간식종류"/>
+          <Column id="mlsnUtp" type="STRING" size="256" sumtext="" description="급간식단가"/>
+          <Column id="comyNm" type="STRING" size="256" sumtext="" description="거래처명"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsListDirYnCk" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드" sumtext=""/>
+          <Column id="ayr" type="STRING" size="256" description="학년도" sumtext=""/>
+          <Column id="eccSem" type="STRING" size="256" description="초등돌봄교실학기" sumtext=""/>
+          <Column id="careDiaryYmd" type="STRING" size="256" description="돌봄일지일자" sumtext=""/>
+          <Column id="careDiarySeqNo" type="STRING" size="256" description="돌봄일지순서번호" sumtext=""/>
+          <Column id="eccScCd" type="STRING" size="256" sumtext="" description="교실구분코드"/>
+          <Column id="clrSeqNo" type="STRING" size="256" sumtext="" description="교실순서번호"/>
+          <Column id="mlsnOprtnScCd" type="STRING" size="256" sumtext="" description="급간식실시구분코드"/>
+          <Column id="mdfrId" type="STRING" size="256" sumtext="" description="수정자ID"/>
+          <Column id="mdfcnDt" type="STRING" size="256" sumtext="" description="수정일시"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsListSum" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="allMlsnUtp" type="STRING" size="256" description="1인당 월 총금액 sum" sumtext=""/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsListPfdYnCk" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="mlsnYmd" type="STRING" size="256" description="급간식일자" sumtext=""/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsListExUpload" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="mlsnYmd" type="STRING" size="256" description="급간식일자" sumtext=""/>
+          <Column id="mlsnNm" type="STRING" size="256" description="급간식종류" sumtext=""/>
+          <Column id="mlsnUtp" type="STRING" size="256" description="급간식단가" sumtext=""/>
+          <Column id="comyNm" type="STRING" size="256" description="거래처명" sumtext=""/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMm">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">01</Col>
+            <Col id="value">1월</Col>
+          </Row>
+          <Row>
+            <Col id="code">02</Col>
+            <Col id="value">2월</Col>
+          </Row>
+          <Row>
+            <Col id="code">03</Col>
+            <Col id="value">3월</Col>
+          </Row>
+          <Row>
+            <Col id="code">04</Col>
+            <Col id="value">4월</Col>
+          </Row>
+          <Row>
+            <Col id="code">05</Col>
+            <Col id="value">5월</Col>
+          </Row>
+          <Row>
+            <Col id="code">06</Col>
+            <Col id="value">6월</Col>
+          </Row>
+          <Row>
+            <Col id="code">07</Col>
+            <Col id="value">7월</Col>
+          </Row>
+          <Row>
+            <Col id="code">08</Col>
+            <Col id="value">8월</Col>
+          </Row>
+          <Row>
+            <Col id="code">09</Col>
+            <Col id="value">9월</Col>
+          </Row>
+          <Row>
+            <Col id="code">10</Col>
+            <Col id="value">10월</Col>
+          </Row>
+          <Row>
+            <Col id="code">11</Col>
+            <Col id="value">11월</Col>
+          </Row>
+          <Row>
+            <Col id="code">12</Col>
+            <Col id="value">12월</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCareYmd" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="careBgngYmd" type="STRING" size="256" sumtext="" description="돌봄시작일자"/>
+          <Column id="careEndYmd" type="STRING" size="256" sumtext="" description="돌봄종료일자"/>
+          <Column id="careBgngYmdF" type="STRING" size="256" sumtext="" description="돌봄시작일자 YYYY-MM-DD 형식"/>
+          <Column id="careEndYmdF" type="STRING" size="256" sumtext="" description="돌봄종료일자 YYYY-MM-DD 형식"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.cboAyr" propid="value" datasetid="dsSearch" columnid="ayr"/>
+      <BindItem id="item1" compid="divSearch.form.cboSem" propid="value" datasetid="dsSearch" columnid="eccSem"/>
+      <BindItem id="item2" compid="divSearch.form.cboSc" propid="value" datasetid="dsSearch" columnid="eccScCd"/>
+      <BindItem id="item3" compid="divSearch.form.cboClr" propid="value" datasetid="dsSearch" columnid="clrSeqNo"/>
+      <BindItem id="item4" compid="divSearch.form.cboClr00" propid="value" datasetid="dsSearch" columnid="mm"/>
+    </Bind>
+  </Form>
+</FDL>

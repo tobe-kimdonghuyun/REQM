@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Main_sub4_steps_mobile" width="220" height="30" titletext="Main_sub4_steps(Mobile용)" background="transparent" ontimer="Main_sub4_steps_pc_ontimer">
+    <Layouts>
+      <Layout height="30" screenid="mobileP" width="220">
+        <Button id="btnPause" taborder="5" top="0" width="30" height="30" cssclass="btn_main_sub4_stepPauseM" initvalueid="ivBtnAccessibilityButton" left="190" onclick="btnPause_onclick" visible="false" text=""/>
+        <Button id="btnPlay" taborder="6" top="30" width="30" height="30" cssclass="btn_main_sub4_stepPlayM" left="190" initvalueid="ivBtnAccessibilityButton" visible="false" enable="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  대국민포탈 - 배너 스텝
+*  @MenuPath    commP > Main_sub4_step_mobile.xfdl
+*  @FileName 	Main_sub4_step_mobile.xfdl 
+*  @Creator 	최영아
+*  @CreateDate 	2022.11.25
+*  @Desction    Main
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.11.25     		최영아		 	  	    최초 생성 
+*******************************************************************************
+*/
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.listCnt = 0;  
+this.frmNm;		// 호출한 부모폼
+this.stepNo=0;  // 현재 활성화된 step의 번호
+
+//배너 변경 타이머
+this.fv_TIMER_ID = "BANN";  
+this.fv_TIMER_INTER = 5000;  // 1000=1초
+this.fv_timerState = "OFF";  // "ON" : 타이머 가동중, "OFF" : 타이머 중지중
+
+this.commpop_step_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+
+};
+
+this.btnStep_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+	var objNo = obj.name.substring(7);
+	this.btnStepMv(parseInt(objNo));
+	
+};
+
+//step버튼 이동
+this.btnStepMv = function(objNo)
+{
+	var vObjNo = objNo;
+
+	if(objNo < 0){ //첫번째 배너에서 앞으로 갈 경우 맨 뒷배너 표시
+		vObjNo = this.listCnt -1;
+	}else if(objNo >= this.listCnt){  //맨 뒷배너에서 뒤로 갈 경우 첫번째 배너 표시
+		vObjNo = 0;
+	}
+
+	this.stepNo=vObjNo; //현재 활성화된 step의 번호
+	
+	//초기화
+	for(var i=0;i<this.listCnt;i++)
+	{
+		this.components["btnStep"+i].set_cssclass("btn_main_sub4_stepM");
+	}
+	
+	this.components["btnStep"+vObjNo].set_cssclass("btn_main_sub4_stepM_S");
+
+	this.frmNm.fnStepClik(vObjNo);
+	
+};
+
+// 스텝 버튼 생성
+this.fnCreateBtn = function(cnt, frmNm)
+{
+	this.fvTopMargin   = 2;
+	this.fvWidthMargin = 12;
+	var nWidth  = 26;
+	var nHeight = 26;
+	this.fvLastLeft = 0;
+	
+	this.listCnt = cnt;
+	if(cnt > 0){
+		for(var i=0;i<this.listCnt; i++)
+		{
+			var objBtn = new Button();
+			objBtn.init("btnStep"+i,this.fvLastLeft,this.fvTopMargin,nWidth,nHeight);
+			this.fvLastLeft += nWidth + this.fvWidthMargin;
+			
+			this.addChild(objBtn.name, objBtn);
+			if ( i == 0 ){
+				objBtn.set_cssclass("btn_main_sub4_stepM_S");		
+			}else
+			{
+				objBtn.set_cssclass("btn_main_sub4_stepM");
+			}
+
+			objBtn.step = "step"+i;
+			
+			objBtn.setEventHandler("onclick", this.btnStep_onclick, this);
+			objBtn.set_visible(true);
+			objBtn.show();
+		}
+		
+		this.btnPause.set_left(this.fvLastLeft);
+
+		this.btnPause.set_visible(true);
+		
+		this.frmNm = frmNm;
+	}
+	
+	this.fnRollingStart();
+};
+this.btnPause_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var btnCss = this.btnPause.cssclass;
+
+	if(this.fv_timerState == "ON"){
+		this.btnPause.set_cssclass("btn_main_sub4_stepPlayM"); 
+		
+		this.fnRollingEnd(); 
+	}else{
+		this.btnPause.set_cssclass("btn_main_sub4_stepPauseM");
+		
+		this.fnRollingStart();
+	}
+};
+
+this.Main_sub4_steps_pc_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if(e.timerid==this.fv_TIMER_ID)
+	{
+		var vStepNo = this.stepNo+1;
+		this.btnStepMv(vStepNo);
+	}
+};
+
+
+this.fnRollingStart = function()
+{	
+	// 타이머를 가동
+	this.setTimer(this.fv_TIMER_ID,this.fv_TIMER_INTER);
+	
+	// Flag를 설정
+	this.fv_timerState="ON";
+}
+
+this.fnRollingEnd = function()
+{
+	// 타이머를 중단
+	this.killTimer(this.fv_TIMER_ID);
+
+	// Flag를 설정
+	this.fv_timerState="OFF";
+}]]></Script>
+  </Form>
+</FDL>

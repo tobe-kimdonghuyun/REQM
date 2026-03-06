@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleMessage" width="888" height="1440" titletext="메세지 샘플" onload="form_onload">
+    <Layouts>
+      <Layout height="1440" mobileorientation="landscape" width="888" screenid="Desktop_screen">
+        <Static id="Static00" taborder="0" text="메세지" left="0" top="0" width="108" height="60" cssclass="sta_WF_H2_pc" fittocontents="width" accessibilityrole="heading2"/>
+        <Static id="Static01" taborder="1" left="Static00:15" top="20" width="1" height="21" cssclass="sta_WF_line" accessibilityenable="false"/>
+        <Static id="Static00_02" taborder="2" text="Message" left="Static01:15" top="0" width="149" height="60" cssclass="sta_WF_ParaH4_pc"/>
+        <TextArea id="txaGuide" taborder="3" left="0" top="100" height="560" right="0" value="1. 메시지 팝업을 통해 사용자에게 알림, 확인창을 호출할 수 있습니다.&#10;&#10;2. 메시지는 서비스를 통해 가져온 AppVariables의 gdsMessage에 등록된 코드만 사용가능합니다.&#10;&#10;3. 업무화면에서 메시지는 아래와 같이 기술하여야 합니다.&#10;// {0} 이(가) {1} 와(과) 일치하지 않습니다.&#10;[팝업] this.gfnAlert(&quot;msg.err.validator.equalto&quot;, [&quot;이름&quot;, &quot;홍길동&quot;]);&#9;&#10;[토스트] this.gfnToast(&quot;msg.err.validator.equalto&quot;, [&quot;이름&quot;, &quot;홍길동&quot;]);&#9;&#10;&#10;4. 팝업 확인창에서는 버튼의 명칭과 버튼 클릭시 리턴된 값을 변경할 수 있습니다.&#10;this.gfnAlert(sMsgId, arrArg, sPopId, sMsgCallback, [&quot;예&quot;, &quot;아니오&quot;, &quot;취소&quot;], [&quot;Y&quot;, &quot;N&quot;, &quot;C&quot;]);&#10;&#10;5. 토스트 메세지에서는 메세지가 표시될 위치를 변경 할 수 있습니다.&#10;this.gfnToast(&quot;msg.err.validator.equalto&quot;, [&quot;이름&quot;, &quot;홍길동&quot;], &quot;RT&quot;);&#10;&#10;6. 토스트 확인용 메세지 필터를 적용하여 타입별 메세지를 확인할 수 있습니다.&#10;  - 메세지 코드에 &quot;success&quot; 가 포함될 경우 success 타입&#10;  - 메세지 코드에 &quot;err&quot; 이 포함될 경우 error 타입&#10;  - 메세지 타입이 &quot;WAN&quot; 인 경우 warning 타입&#10;  - 그 외 메세지는 information 타입으로 표시 됩니다." scrolltype="horizontal" cssclass="txt_WF_Nochar"/>
+        <Div id="divSearch" taborder="4" left="0" top="txaGuide:40" height="192" cssclass="div_WF_SchBar" text="" right="0" fittocontents="height" accessibilityenable="false" tabstop="false">
+          <Layouts>
+            <Layout type="horizontal" spacing="40px 40px 40px 40px" horizontalgap="40" flexcrossaxisalign="start" flexwrap="wrap" verticalgap="16">
+              <Panel id="Panel03" taborder="0" left="24" top="24" width="400" height="112" verticalgap="16" flexwrap="wrap" horizontalgap="24" fittocontents="height" flexgrow="1">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="Panel00"/>
+                  <PanelItem id="PanelItem01" componentid="Panel01"/>
+                  <PanelItem id="PanelItem02" componentid="Panel02"/>
+                </Contents>
+              </Panel>
+              <Panel id="Panel00" taborder="1" left="24" top="24" width="310" height="48" flexgrow="1" type="horizontal">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staSearchTitle00"/>
+                  <PanelItem id="PanelItem01" componentid="cboMessageType"/>
+                </Contents>
+              </Panel>
+              <Static id="staSearchTitle00" taborder="2" text="메세지 타입" left="24" top="24" width="102" height="48" cssclass="sta_WF_SchDetail" fittocontents="width"/>
+              <Combo id="cboMessageType" taborder="3" text="system message" left="126" top="24" width="220" height="48" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" index="0" value="system" onitemchanged="divSearch_cboMessageType_onitemchanged" flexgrow="0" accessibilitylabel="[@staSearchTitle00]">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">popup</Col>
+                      <Col id="datacolumn">popup message</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">system</Col>
+                      <Col id="datacolumn">system message</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Panel id="Panel01" taborder="4" left="24" top="96" width="322" height="48" visible="false">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staMessagePosition"/>
+                  <PanelItem id="PanelItem01" componentid="cboMessagePosition"/>
+                </Contents>
+              </Panel>
+              <Static id="staMessagePosition" taborder="5" text="메세지 위치" left="24" top="96" width="102" height="48" cssclass="sta_WF_SchDetail" fittocontents="width" visible="false"/>
+              <Combo id="cboMessagePosition" taborder="6" left="staMessagePosition:0" top="96" width="220" height="48" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" value="C" index="0" text="중앙" visible="false" flexgrow="0" accessibilitylabel="[@staMessagePosition]">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">C</Col>
+                      <Col id="datacolumn">중앙</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">LT</Col>
+                      <Col id="datacolumn">왼쪽-위</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">LB</Col>
+                      <Col id="datacolumn">왼쪽-아래</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">RT</Col>
+                      <Col id="datacolumn">오른쪽-위</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">RB</Col>
+                      <Col id="datacolumn">오른쪽-아래</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Panel id="Panel02" taborder="7" left="370" top="96" width="287" height="48" visible="false">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staMessagePosition00"/>
+                  <PanelItem id="PanelItem01" componentid="chkToaskFilter"/>
+                </Contents>
+              </Panel>
+              <Static id="staMessagePosition00" taborder="8" text="토스트 확인용 메세지 필터" left="cboMessagePosition:24" top="96" width="190" height="48" cssclass="sta_WF_SchDetail" fittocontents="width" visible="false"/>
+              <CheckBox id="chkToaskFilter" taborder="9" text="적용" left="staMessagePosition00:24" top="96" width="97" height="48" onchanged="divSearch_chkToaskFilter_onchanged" visible="false" onclick="divSearch_chkToaskFilter_onclick" accessibilitylabel="[@staMessagePosition00]"/>
+              <Button id="btnSearch" taborder="10" text="조회" top="40" width="120" height="48" cssclass="btn_WF_Sch" onclick="divSearch_btnSearch_onclick" visible="true" left="744" flexgrow="0"/>
+            </Layout>
+            <Layout name="Layout0" spacing="16px">
+              <Button id="btnSearch" width="432" height="48" left="24" top="cboMessageType:24" flexgrow="1"/>
+              <Static id="staMessagePosition00" left="126" top="168" width="190" height="48"/>
+              <CheckBox id="chkToaskFilter" left="190" top="168" width="97" height="48"/>
+              <Combo id="cboMessageType" left="126" top="24" height="48" flexgrow="1" width="200"/>
+              <Combo id="cboMessagePosition" left="102" top="96" height="48" width="200" flexgrow="1"/>
+              <Panel id="Panel01" flexgrow="1"/>
+              <Panel id="Panel00" left="24" top="24" width="400" height="48"/>
+              <Panel id="Panel03" left="24" top="24" width="400" height="176"/>
+              <Panel id="Panel02" flexgrow="1"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staBg01" taborder="5" left="0" top="divSearch:40" height="464" cssclass="sta_WF_Detailbox" right="0" accessibilityenable="false"/>
+        <Static id="staTitle" taborder="6" text="메세지 조회" left="40" top="divSearch:80" height="40" cssclass="sta_WF_ParaH4_pc" right="40" accessibilityrole="heading4"/>
+        <Grid id="grdList" taborder="7" left="40" top="staTitle:20" binddataset="dsMsgList" autofittype="col" right="40" oncelldblclick="grdList_oncelldblclick" maxwidth="" maxheight="" height="324" tabstop="false">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="238"/>
+                <Column size="581"/>
+                <Column size="199"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="메세지아이디"/>
+                <Cell col="1" text="메세지 내용"/>
+                <Cell col="2" text="메세지타입"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:MSGE_CD" displaytype="expr:dataset.getRowType(currow)=='2'?'editcontrol':'normal'" edittype="expr:dataset.getRowType(currow)=='2'?'text':'none'"/>
+                <Cell col="1" text="bind:KORN_MSGE"/>
+                <Cell col="2" combodataset="dsMsgType" combodatacol="name" combocodecol="code" text="bind:MSGE_FLAG_CD" displaytype="combotext"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+      <Layout height="1560" mobileorientation="Portrait" name="Layout0" type="default" width="480" screenid="Desktop_screen,mobile_small">
+        <Static id="staTitle" left="16" top="divSearch:46" height="40" right="16" cssclass="sta_WF_ParaH4_m"/>
+        <Grid id="grdList" left="16" top="staTitle:10" height="392" right="16"/>
+        <Div id="divSearch" text="" height="280" left="0" top="txaGuide:24" right="0" cssclass="div_WF_SchBar"/>
+        <Static id="staBg01" top="divSearch:24" left="0" height="476" right="0"/>
+        <TextArea id="txaGuide" top="104" left="0" height="560" right="0"/>
+        <Static id="Static00" cssclass="sta_WF_H2_m" width="76" left="0" top="0" height="60"/>
+        <Static id="Static01" left="Static00:15" top="20" width="1" height="21"/>
+        <Static id="Static00_02" left="Static01:15" top="0" height="60" right="0" cssclass="sta_WF_ParaH4_m"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsMsgType">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="name" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">CFN</Col>
+            <Col id="name">확인</Col>
+          </Row>
+          <Row>
+            <Col id="code">INF</Col>
+            <Col id="name">알림</Col>
+          </Row>
+          <Row>
+            <Col id="code">WAN</Col>
+            <Col id="name">경고</Col>
+          </Row>
+          <Row>
+            <Col id="code">ERR</Col>
+            <Col id="name">에러</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMsgList" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false" onrowposchanged="dsList_onrowposchanged">
+        <ColumnInfo>
+          <Column id="MSGE_CD" type="string" size="32"/>
+          <Column id="MSGE_FLAG_CD" type="string" size="32"/>
+          <Column id="KORN_MSGE" type="string" size="32"/>
+          <Column id="ENGL_MSGE" type="string" size="32"/>
+          <Column id="USED_YN" type="string" size="32"/>
+          <Column id="INPT_ID" type="string" size="32"/>
+          <Column id="CHGE_ID" type="string" size="32"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsToastMsgList">
+        <ColumnInfo>
+          <Column id="MSGE_CD" type="string" size="32"/>
+          <Column id="MSGE_FLAG_CD" type="string" size="32"/>
+          <Column id="KORN_MSGE" type="string" size="32"/>
+          <Column id="ENGL_MSGE" type="string" size="32"/>
+          <Column id="USED_YN" type="string" size="32"/>
+          <Column id="INPT_ID" type="string" size="32"/>
+          <Column id="CHGE_ID" type="string" size="32"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="MSGE_CD">msg.save.nodata</Col>
+            <Col id="MSGE_FLAG_CD">INF</Col>
+            <Col id="KORN_MSGE">저장 할 데이터가 없습니다.</Col>
+          </Row>
+          <Row>
+            <Col id="MSGE_CD">msg.save.success</Col>
+            <Col id="MSGE_FLAG_CD">INF</Col>
+            <Col id="KORN_MSGE">저장되었습니다.</Col>
+          </Row>
+          <Row>
+            <Col id="MSGE_CD">msg.session.timeout</Col>
+            <Col id="MSGE_FLAG_CD">WAN</Col>
+            <Col id="KORN_MSGE">세션이 종료되었습니다. 다시 로그인해주세요.</Col>
+          </Row>
+          <Row>
+            <Col id="MSGE_CD">msg.err.updateafter</Col>
+            <Col id="MSGE_FLAG_CD">ERR</Col>
+            <Col id="KORN_MSGE">변경된 내역을 저장 후 작업하세요.</Col>
+          </Row>
+          <Row>
+            <Col id="MSGE_CD">msg.general</Col>
+            <Col id="MSGE_FLAG_CD">INF</Col>
+            <Col id="KORN_MSGE">커스텀 메세지 입니다.</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleMessage.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/11/26
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/11/26			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	nexacro.setEnvironmentVariable("evMessagePopup", "true");
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+this.cfnSearch = function ()
+{
+	this.fnSearch();
+};
+
+this.cfnRefresh = function ()
+{
+	this.fnInit();
+};
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+this.fnSearch = function ()
+{
+	this.dsMsgList.clear();
+	this.dsMsgList.copyData(nexacro.getApplication().gdsMessage);
+};
+
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+this.fnMsgCallback = function (sMsgId, sRtn)
+{
+	trace("message id : " + sMsgId + " // return value : " + sRtn);
+};
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+this.fnInit = function ()
+{
+	this.dsMsgList.clearData();
+};
+
+this.fnMsgFilter = function ()
+{
+	var isCheck = this.divSearch.form.chkToaskFilter.value;
+	
+	if (isCheck)
+	{
+		this.grdList.setBindDataset(this.dsToastMsgList);
+	}
+	else
+	{
+		this.grdList.setBindDataset(this.dsMsgList);
+	}
+};
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.grdList_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var objDs = obj.getBindDataset();
+	var nRow = e.row;
+	var sMsgId = objDs.getColumn(nRow,"MSGE_CD");
+	var sPopId = sMsgId;
+	var sCallback = "fnMsgCallback";
+	var arrArg = ["test1","test2","test3"];
+
+	var sMsgType = objDs.getColumn(nRow, "MSGE_FLAG_CD");
+	
+	// Toast
+	if (this.divSearch.form.cboMessageType.value == "toast") 
+	{
+		this.gfnToast(sMsgId, arrArg, this.divSearch.form.cboMessagePosition.value);
+		return;
+	};
+	
+	// Confirm일 때 
+	if (sMsgType == "CFN")
+	{
+		this.gfnAlert(sMsgId, arrArg, sPopId, sCallback, ["예", "아니오", "취소"], ["Y", "N", "C"]);
+	// Alert일 때
+	} else 
+	{
+		this.gfnAlert(sMsgId, arrArg, sPopId, sCallback);
+	}
+	
+	
+};
+
+this.divSearch_cboMessageType_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	var sPopupMsgYN = "true";
+	if(e.postvalue == "system") sPopupMsgYN = "false";
+
+	if (e.postvalue == "toast") 
+	{
+		this.divSearch.form.staMessagePosition.set_visible(true);
+		this.divSearch.form.cboMessagePosition.set_visible(true);
+		this.divSearch.form.staMessagePosition00.set_visible(true);
+		this.divSearch.form.chkToaskFilter.set_visible(true);
+	} 
+	else 
+	{
+		this.divSearch.form.staMessagePosition.set_visible(false);
+		this.divSearch.form.cboMessagePosition.set_visible(false);
+		this.divSearch.form.staMessagePosition00.set_visible(false);
+		this.divSearch.form.chkToaskFilter.set_visible(false);
+		this.divSearch.form.chkToaskFilter.set_value(false);
+	};
+	
+	this.fnMsgFilter();
+	nexacro.setEnvironmentVariable("evMessagePopup", sPopupMsgYN);
+};
+
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.cfnSearch();
+};
+
+this.divSearch_chkToaskFilter_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	this.fnMsgFilter();
+};
+this.divSearch_chkToaskFilter_onclick = function(obj:nexacro.CheckBox,e:nexacro.ClickEventInfo)
+{
+	
+};
+]]></Script>
+  </Form>
+</FDL>

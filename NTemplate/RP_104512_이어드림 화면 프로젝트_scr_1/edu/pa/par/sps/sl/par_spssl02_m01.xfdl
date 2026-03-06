@@ -1,0 +1,696 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="par_spssl02_m01" width="1200" height="1161" titletext="월간학사일정" onload="fnOnload">
+    <Layouts>
+      <Layout height="1161" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="월간학사일정" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="195" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+            <Layout name="Layout0">
+              <ImageViewer id="imgTitle" width="255" left="0" top="0" height="65" taborder="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnBefore" taborder="1" height="30" cssclass="btn_WF_PageL" left="469" top="144" initvalueid="ivBtnAccessibilityButton" width="50" onclick="btnBefore_onclick" accessibilitylabel="이전년도"/>
+        <Static id="staYear" taborder="2" left="btnBefore:26" top="144" width="111" height="30" cssclass="sta_WF_Tit20B" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+        <Button id="btnNext" taborder="3" height="30" cssclass="btn_WF_PageR" left="staYear:26" top="144" onclick="btnNext_onclick" width="50" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="다음년도"/>
+        <Combo id="cboMonth" taborder="4" height="30" innerdataset="dsMonth" codecolumn="num" datacolumn="month" value="1" index="0" top="144" text="1월" onitemchanged="cboMonth_onitemchanged" width="80" left="btnNext:10" initvalueid="ivCmbNormal" accessibilitylabel="월"/>
+        <Button id="btnPrinter" taborder="5" text="인쇄" top="144" height="30" width="68" cssclass="btn_WF_Printer" visible="true" right="0" initvalueid="ivBtnAccessibilityButton" onclick="btnPrinter_onclick"/>
+        <Div id="divGrid" taborder="6" left="0" top="194" width="1200" height="839" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Grid id="grdGrid00" taborder="0" left="0" binddataset="dsAaFxList" autofittype="col" top="0" height="839" oncellclick="grdGrid00_oncellclick" right="0" cssclass="grd_WF_WeekList" initvalueid="ivGrdAccessibilityOn" scrolltype="both" scrollbartype="auto" selecttype="cell" formatid="default" accessibilitylabel="월간학사일정목록" onsize="divGrid_grdGrid00_onsize">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="40"/>
+                      <Row size="120"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="일요일" cssclass="cell_Font_Red"/>
+                      <Cell col="1" text="월요일"/>
+                      <Cell col="2" text="화요일"/>
+                      <Cell col="3" text="수요일"/>
+                      <Cell col="4" text="목요일"/>
+                      <Cell col="5" text="금요일"/>
+                      <Cell col="6" text="토요일" cssclass="LineNo,cell_Font_Blue"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell cssclass="cell_WF_Sunday" text="bind:day1" expr="comp.parent.parent.parent.smfLtrim(day1, &quot;0&quot;)" textAlign="left"/>
+                      <Cell col="1" text="bind:day2" cssclass="cell_WF_day" expr="comp.parent.parent.parent.smfLtrim(day2, &quot;0&quot;)" textAlign="left"/>
+                      <Cell col="2" text="bind:day3" cssclass="cell_WF_day" expr="comp.parent.parent.parent.smfLtrim(day3, &quot;0&quot;)" textAlign="left"/>
+                      <Cell col="3" text="bind:day4" cssclass="cell_WF_day" expr="comp.parent.parent.parent.smfLtrim(day4, &quot;0&quot;)" textAlign="left"/>
+                      <Cell col="4" text="bind:day5" cssclass="cell_WF_day" expr="comp.parent.parent.parent.smfLtrim(day5, &quot;0&quot;)" textAlign="left"/>
+                      <Cell col="5" text="bind:day6" cssclass="cell_WF_day" expr="comp.parent.parent.parent.smfLtrim(day6, &quot;0&quot;)" textAlign="left"/>
+                      <Cell col="6" text="bind:day7" cssclass="cell_WF_Saturday" expr="comp.parent.parent.parent.smfLtrim(day7, &quot;0&quot;)" textAlign="left"/>
+                      <Cell row="1" text="bind:event1" expr="comp.parent.parent.parent.fnSetEnter(event1)" displaytype="decoratetext" cursor="pointer" textAlign="left"/>
+                      <Cell row="1" col="1" text="bind:event2" expr="comp.parent.parent.parent.fnSetEnter(event2)" cursor="pointer" displaytype="decoratetext" textAlign="left"/>
+                      <Cell row="1" col="2" text="bind:event3" expr="comp.parent.parent.parent.fnSetEnter(event3)" cursor="pointer" displaytype="decoratetext" textAlign="left"/>
+                      <Cell row="1" col="3" text="bind:event4" expr="comp.parent.parent.parent.fnSetEnter(event4)" cursor="pointer" displaytype="decoratetext" textAlign="left"/>
+                      <Cell row="1" col="4" text="bind:event5" expr="comp.parent.parent.parent.fnSetEnter(event5)" cursor="pointer" displaytype="decoratetext" textAlign="left"/>
+                      <Cell row="1" col="5" text="bind:event6" expr="comp.parent.parent.parent.fnSetEnter(event6)" cursor="pointer" displaytype="decoratetext" textAlign="left"/>
+                      <Cell row="1" col="6" text="bind:event7" expr="comp.parent.parent.parent.fnSetEnter(event7)" cursor="pointer" displaytype="decoratetext" textAlign="left"/>
+                    </Band>
+                  </Format>
+                  <Format id="default_00">
+                    <Columns>
+                      <Column size="1" band="left"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="60" band="head"/>
+                      <Row size="60"/>
+                      <Row size="208"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell/>
+                      <Cell col="1" text="일요일" cssclass="cell_Font_Red"/>
+                      <Cell col="2" text="월요일"/>
+                      <Cell col="3" text="화요일"/>
+                      <Cell col="4" text="수요일"/>
+                      <Cell col="5" text="목요일"/>
+                      <Cell col="6" text="금요일"/>
+                      <Cell col="7" text="토요일" cssclass="LineNo,cell_Font_Blue"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell/>
+                      <Cell col="1" text="bind:day1" cssclass="cell_WF_Sunday" textAlign="left" expr="comp.parent.parent.parent.smfLtrim(day1, &quot;0&quot;)"/>
+                      <Cell col="2" text="bind:day2" cssclass="cell_WF_day" textAlign="left" expr="comp.parent.parent.parent.smfLtrim(day2, &quot;0&quot;)"/>
+                      <Cell col="3" text="bind:day3" cssclass="cell_WF_day" textAlign="left" expr="comp.parent.parent.parent.smfLtrim(day3, &quot;0&quot;)"/>
+                      <Cell col="4" text="bind:day4" cssclass="cell_WF_day" textAlign="left" expr="comp.parent.parent.parent.smfLtrim(day4, &quot;0&quot;)"/>
+                      <Cell col="5" text="bind:day5" cssclass="cell_WF_day" textAlign="left" expr="comp.parent.parent.parent.smfLtrim(day5, &quot;0&quot;)"/>
+                      <Cell col="6" text="bind:day6" cssclass="cell_WF_day" textAlign="left" expr="comp.parent.parent.parent.smfLtrim(day6, &quot;0&quot;)"/>
+                      <Cell col="7" text="bind:day7" cssclass="cell_WF_Saturday" textAlign="left" expr="comp.parent.parent.parent.smfLtrim(day7, &quot;0&quot;)"/>
+                      <Cell row="1"/>
+                      <Cell row="1" col="1" expr="comp.parent.parent.parent.fnSetEnter(event1)" displaytype="decoratetext" text="bind:event1" textAlign="left"/>
+                      <Cell row="1" col="2" expr="comp.parent.parent.parent.fnSetEnter(event2)" displaytype="decoratetext" text="bind:event2" textAlign="left"/>
+                      <Cell row="1" col="3" expr="comp.parent.parent.parent.fnSetEnter(event3)" displaytype="decoratetext" text="bind:event3" textAlign="left"/>
+                      <Cell row="1" col="4" expr="comp.parent.parent.parent.fnSetEnter(event4)" displaytype="decoratetext" text="bind:event4" textAlign="left"/>
+                      <Cell row="1" col="5" expr="comp.parent.parent.parent.fnSetEnter(event5)" displaytype="decoratetext" text="bind:event5" textAlign="left"/>
+                      <Cell row="1" col="6" expr="comp.parent.parent.parent.fnSetEnter(event6)" displaytype="decoratetext" text="bind:event6" textAlign="left"/>
+                      <Cell row="1" col="7" expr="comp.parent.parent.parent.fnSetEnter(event7)" displaytype="decoratetext" text="bind:event7" textAlign="left"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <PopupDiv id="pdvDaysList" visible="false" left="474" top="80" width="190" height="50" background="whitesmoke">
+                <Layouts>
+                  <Layout>
+                    <Grid id="grd00" taborder="0" left="5" top="5" binddataset="dsDaysList" autofittype="col" scrolltype="none" oncellclick="pdvDaysList_grd00_oncellclick" right="5" bottom="5" scrollbartype="none" initvalueid="ivGrdAccessibilityOff">
+                      <Formats>
+                        <Format id="default">
+                          <Columns>
+                            <Column size="376"/>
+                          </Columns>
+                          <Rows>
+                            <Row size="40"/>
+                          </Rows>
+                          <Band id="body">
+                            <Cell text="bind:event" displaytype="normal" expr="comp.parent.smfDispLongTextGrid(comp, 0, currow, event)"/>
+                          </Band>
+                        </Format>
+                        <Format id="default_00">
+                          <Columns>
+                            <Column size="231"/>
+                          </Columns>
+                          <Rows>
+                            <Row size="70"/>
+                          </Rows>
+                          <Band id="body">
+                            <Cell text="bind:event" displaytype="normal" expr="comp.parent.parent.parent.parent.parent.fnDisplayText(comp, 0, currow, event)"/>
+                          </Band>
+                        </Format>
+                      </Formats>
+                    </Grid>
+                  </Layout>
+                  <Layout name="Layout0">
+                    <Grid id="grd00" formatid="default_00"/>
+                  </Layout>
+                </Layouts>
+              </PopupDiv>
+            </Layout>
+            <Layout name="Layout0">
+              <Grid id="grdGrid00" left="0" top="0" formatid="default_00" width="1100" extendsizetype="row" autosizingtype="row" height="1400"/>
+              <PopupDiv id="pdvDaysList" left="286" top="80" width="240" height="84"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta1" taborder="7" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta2" taborder="8" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta3" taborder="9" left="0" top="174" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="divPrint" taborder="10" left="1260" top="194" width="1100" height="176" initvalueid="ivDivAccessibilityOff" background="#ffffff" visible="false">
+          <Layouts>
+            <Layout>
+              <Grid id="grdGrid00" taborder="0" left="0" binddataset="dsAaFxList" autofittype="col" top="40" height="839" oncellclick="grdGrid00_oncellclick" right="0" cssclass="grd_WF_WeekList" initvalueid="ivGrdAccessibilityOn" scrolltype="both" scrollbartype="auto" selecttype="cell" formatid="default">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="40"/>
+                      <Row size="120"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="일요일" cssclass="cell_Font_Red"/>
+                      <Cell col="1" text="월요일"/>
+                      <Cell col="2" text="화요일"/>
+                      <Cell col="3" text="수요일"/>
+                      <Cell col="4" text="목요일"/>
+                      <Cell col="5" text="금요일"/>
+                      <Cell col="6" text="토요일" cssclass="LineNo,cell_Font_Blue"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell cssclass="cell_WF_Sunday" text="bind:day1" expr="comp.parent.parent.parent.smfLtrim(day1, &quot;0&quot;)" textAlign="left"/>
+                      <Cell col="1" text="bind:day2" cssclass="cell_WF_day" expr="comp.parent.parent.parent.smfLtrim(day2, &quot;0&quot;)" textAlign="left"/>
+                      <Cell col="2" text="bind:day3" cssclass="cell_WF_day" expr="comp.parent.parent.parent.smfLtrim(day3, &quot;0&quot;)" textAlign="left"/>
+                      <Cell col="3" text="bind:day4" cssclass="cell_WF_day" expr="comp.parent.parent.parent.smfLtrim(day4, &quot;0&quot;)" textAlign="left"/>
+                      <Cell col="4" text="bind:day5" cssclass="cell_WF_day" expr="comp.parent.parent.parent.smfLtrim(day5, &quot;0&quot;)" textAlign="left"/>
+                      <Cell col="5" text="bind:day6" cssclass="cell_WF_day" expr="comp.parent.parent.parent.smfLtrim(day6, &quot;0&quot;)" textAlign="left"/>
+                      <Cell col="6" text="bind:day7" cssclass="cell_WF_Saturday" expr="comp.parent.parent.parent.smfLtrim(day7, &quot;0&quot;)" textAlign="left"/>
+                      <Cell row="1" text="bind:event1" expr="comp.parent.parent.parent.fnSetEnter(event1)" displaytype="decoratetext" cursor="pointer" textAlign="left" wordWrap="char"/>
+                      <Cell row="1" col="1" text="bind:event2" expr="comp.parent.parent.parent.fnSetEnter(event2)" cursor="pointer" displaytype="decoratetext" textAlign="left" wordWrap="char"/>
+                      <Cell row="1" col="2" text="bind:event3" expr="comp.parent.parent.parent.fnSetEnter(event3)" cursor="pointer" displaytype="decoratetext" textAlign="left" wordWrap="char"/>
+                      <Cell row="1" col="3" text="bind:event4" expr="comp.parent.parent.parent.fnSetEnter(event4)" cursor="pointer" displaytype="decoratetext" textAlign="left" wordWrap="char"/>
+                      <Cell row="1" col="4" text="bind:event5" expr="comp.parent.parent.parent.fnSetEnter(event5)" cursor="pointer" displaytype="decoratetext" textAlign="left" wordWrap="char"/>
+                      <Cell row="1" col="5" text="bind:event6" expr="comp.parent.parent.parent.fnSetEnter(event6)" cursor="pointer" displaytype="decoratetext" textAlign="left" wordWrap="char"/>
+                      <Cell row="1" col="6" text="bind:event7" expr="comp.parent.parent.parent.fnSetEnter(event7)" cursor="pointer" displaytype="decoratetext" textAlign="left" wordWrap="char"/>
+                    </Band>
+                  </Format>
+                  <Format id="default_00">
+                    <Columns>
+                      <Column size="1" band="left"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                      <Column size="260"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="60" band="head"/>
+                      <Row size="60"/>
+                      <Row size="208"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell/>
+                      <Cell col="1" text="일요일" cssclass="cell_Font_Red"/>
+                      <Cell col="2" text="월요일"/>
+                      <Cell col="3" text="화요일"/>
+                      <Cell col="4" text="수요일"/>
+                      <Cell col="5" text="목요일"/>
+                      <Cell col="6" text="금요일"/>
+                      <Cell col="7" text="토요일" cssclass="LineNo,cell_Font_Blue"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell/>
+                      <Cell col="1" text="bind:day1" cssclass="cell_WF_Sunday" textAlign="left" expr="comp.parent.parent.parent.smfLtrim(day1, &quot;0&quot;)"/>
+                      <Cell col="2" text="bind:day2" cssclass="cell_WF_day" textAlign="left" expr="comp.parent.parent.parent.smfLtrim(day2, &quot;0&quot;)"/>
+                      <Cell col="3" text="bind:day3" cssclass="cell_WF_day" textAlign="left" expr="comp.parent.parent.parent.smfLtrim(day3, &quot;0&quot;)"/>
+                      <Cell col="4" text="bind:day4" cssclass="cell_WF_day" textAlign="left" expr="comp.parent.parent.parent.smfLtrim(day4, &quot;0&quot;)"/>
+                      <Cell col="5" text="bind:day5" cssclass="cell_WF_day" textAlign="left" expr="comp.parent.parent.parent.smfLtrim(day5, &quot;0&quot;)"/>
+                      <Cell col="6" text="bind:day6" cssclass="cell_WF_day" textAlign="left" expr="comp.parent.parent.parent.smfLtrim(day6, &quot;0&quot;)"/>
+                      <Cell col="7" text="bind:day7" cssclass="cell_WF_Saturday" textAlign="left" expr="comp.parent.parent.parent.smfLtrim(day7, &quot;0&quot;)"/>
+                      <Cell row="1"/>
+                      <Cell row="1" col="1" expr="comp.parent.parent.parent.fnSetEnter(event1)" displaytype="decoratetext" text="bind:event1"/>
+                      <Cell row="1" col="2" expr="comp.parent.parent.parent.fnSetEnter(event2)" displaytype="decoratetext" text="bind:event2"/>
+                      <Cell row="1" col="3" expr="comp.parent.parent.parent.fnSetEnter(event3)" displaytype="decoratetext" text="bind:event3"/>
+                      <Cell row="1" col="4" expr="comp.parent.parent.parent.fnSetEnter(event4)" displaytype="decoratetext" text="bind:event4"/>
+                      <Cell row="1" col="5" expr="comp.parent.parent.parent.fnSetEnter(event5)" displaytype="decoratetext" text="bind:event5"/>
+                      <Cell row="1" col="6" expr="comp.parent.parent.parent.fnSetEnter(event6)" displaytype="decoratetext" text="bind:event6"/>
+                      <Cell row="1" col="7" expr="comp.parent.parent.parent.fnSetEnter(event7)" displaytype="decoratetext" text="bind:event7"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Edit id="edt00" taborder="1" left="3" top="2" width="183" height="35" readonly="true" cssclass="edi_WF_Input"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Grid id="grdGrid00" left="0" top="0" formatid="default_00" width="1400" bottom="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="640" height="1720" mobileorientation="portrait" type="default" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tabledirection="horizontal">
+        <Div id="divTitle" left="20" top="70" height="65" right="20" taborder="0"/>
+        <Button id="btnBefore" left="20" top="194" height="60" cssclass="btn_WF_SpinPrev" width="46" taborder="1"/>
+        <Static id="staYear" left="86" top="194" height="60" width="141" taborder="2" text="2023"/>
+        <Button id="btnNext" left="247" top="194" width="49" height="60" cssclass="btn_WF_SpinNext" taborder="3"/>
+        <Combo id="cboMonth" text="" top="194" height="60" width="160" right="20" taborder="4"/>
+        <Div id="divGrid" left="20" top="274" taborder="5" right="20" cssclass="div_WF_GridBox_M" formscrollbarsize="1" height="1402"/>
+        <Button id="btnPrinter" top="25" width="68" height="30" right="2" taborder="5" visible="false"/>
+        <Static id="sta1" left="20" top="0" height="70" right="20" taborder="6"/>
+        <Static id="sta2" left="20" top="135" height="60" right="20" text="60" taborder="7"/>
+        <Static id="sta3" left="0" top="254" height="20" right="0" text="20" taborder="8"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsMonth">
+        <ColumnInfo>
+          <Column id="num" type="STRING" size="256"/>
+          <Column id="month" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="month">1월</Col>
+            <Col id="num">01</Col>
+          </Row>
+          <Row>
+            <Col id="month">2월</Col>
+            <Col id="num">02</Col>
+          </Row>
+          <Row>
+            <Col id="month">3월</Col>
+            <Col id="num">03</Col>
+          </Row>
+          <Row>
+            <Col id="month">4월</Col>
+            <Col id="num">04</Col>
+          </Row>
+          <Row>
+            <Col id="month">5월</Col>
+            <Col id="num">05</Col>
+          </Row>
+          <Row>
+            <Col id="month">6월</Col>
+            <Col id="num">06</Col>
+          </Row>
+          <Row>
+            <Col id="month">7월</Col>
+            <Col id="num">07</Col>
+          </Row>
+          <Row>
+            <Col id="month">8월</Col>
+            <Col id="num">08</Col>
+          </Row>
+          <Row>
+            <Col id="month">9월</Col>
+            <Col id="num">09</Col>
+          </Row>
+          <Row>
+            <Col id="month">10월</Col>
+            <Col id="num">10</Col>
+          </Row>
+          <Row>
+            <Col id="month">11월</Col>
+            <Col id="num">11</Col>
+          </Row>
+          <Row>
+            <Col id="num">12</Col>
+            <Col id="month">12월</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="10" sumtext="" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="4" sumtext="" description="학년도"/>
+          <Column id="stuInvlNo" type="STRING" size="10" sumtext="" description="학생개인번호"/>
+          <Column id="aaFxType" type="STRING" size="1" sumtext="" description="학사일정타입"/>
+          <Column id="sem" type="STRING" size="1" sumtext="" description="학기"/>
+          <Column id="searchYr" type="STRING" size="4" description="년"/>
+          <Column id="month" type="STRING" size="2" sumtext="" description="월"/>
+          <Column id="cddcScCd" type="STRING" size="3"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsAaFxList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="dd" type="STRING" size="2"/>
+          <Column id="day1" type="STRING" size="3"/>
+          <Column id="event1" type="STRING" size="500"/>
+          <Column id="class1" type="STRING" size="200"/>
+          <Column id="day2" type="STRING" size="3"/>
+          <Column id="event2" type="STRING" size="500"/>
+          <Column id="class2" type="STRING" size="200"/>
+          <Column id="day3" type="STRING" size="3"/>
+          <Column id="event3" type="STRING" size="500"/>
+          <Column id="class3" type="STRING" size="200"/>
+          <Column id="day4" type="STRING" size="3"/>
+          <Column id="event4" type="STRING" size="500"/>
+          <Column id="class4" type="STRING" size="200"/>
+          <Column id="day5" type="STRING" size="3"/>
+          <Column id="event5" type="STRING" size="500"/>
+          <Column id="class5" type="STRING" size="200"/>
+          <Column id="day6" type="STRING" size="3"/>
+          <Column id="event6" type="STRING" size="500"/>
+          <Column id="class6" type="STRING" size="200"/>
+          <Column id="day7" type="STRING" size="3"/>
+          <Column id="event7" type="STRING" size="500"/>
+          <Column id="class7" type="STRING" size="200"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="day1"/>
+            <Col id="event1"/>
+          </Row>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256"/>
+          <Column id="outDatasets" type="STRING" size="256"/>
+          <Column id="asynctp" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="url">/par_sps_sl02_001.do</Col>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsAaFxList</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDaysList" useclientlayout="false">
+        <ColumnInfo>
+          <Column id="dd" type="STRING" size="2" description="일자" sumtext="년간:일자"/>
+          <Column id="day" type="STRING" size="3" description="요일(일자)1" sumtext="요일(일자)1"/>
+          <Column id="event" type="STRING" size="500" description="이벤트명1" sumtext="이벤트명1"/>
+          <Column id="classNm" type="STRING" size="200" description="적용 학급연령1" sumtext="적용 학급연령1"/>
+          <Column id="ddcDdScCd" type="STRING" size="1" sumtext="휴일구분"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  대국민 - 학부모서비스(유)
+*  @MenuPath    TEMPLATE
+*  @FileName 	par_spssl02_m01
+*  @Creator 	김지영
+*  @CreateDate 	2022.06.20
+*  @Desction    학사일정 월간학사일정
+*
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.06.20            김지영                   최초 생성 
+*******************************************************************************
+*/ 
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::par_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_years;
+
+ /************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// Form의 default 초기처리를 한다.
+	this.smfInitForm(this);
+	
+	// 년도, 월
+	var objDate = new Date();
+	fv_years = objDate.getFullYear();	// 현재 년도
+	month = objDate.getMonth();	// 현재 월
+	
+	this.staYear.set_text(fv_years+"년");
+
+	// 콤보: 현재 월 설정
+	this.cboMonth.set_index(nexacro.toNumber(month));	
+	
+	//검색조건 설정
+	var objParForm = this.getOwnerFrame().form.divTop.form.divDispArea.form.divPARLink.form;
+	this.dsSearch.copyRow(0, objParForm.dsStuIduzEduYn, 0);
+	this.dsSearch.setColumn(0, "aaFxType", "2");
+	
+	//소재정보, 개인번호 체크
+	var validate = this.parfValidate(this.dsSearch);	
+	if(!validate) return false;
+	
+	//  페이지를 조회한다.
+	this.fnSearch();
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnSearch = function(obj, e)
+{
+	this.dsSearch.setColumn(0, "searchYr", nexacro.replaceAll(this.staYear.text, "년", ""));
+
+ 	// 서비스 객체 생성
+	this.smfSearchService("select")		
+		.run()// 실행
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+
+			var grdH = this._smfappendHeight(this.divGrid.form.grdGrid00);
+			this.divGrid.form.grdGrid00.setOffsetHeight(grdH);
+			this.divGrid.setOffsetHeight(grdH);
+			this.smfResetScroll(this);
+		});	
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd <= -1) return;
+	
+	if(svcid == "select"){
+		this.divPrint.form.edt00.set_value(this.staYear.text + " " + this.cboMonth.text);
+	}
+};
+
+/**
+ * 팝업 콜백
+ */
+this.fnPopupCallback = function(context, responseParams, sender){
+}
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnDisplayText = function(obj,nCell,nRow,sLongText)
+{
+	var sFont = 'normal 400 26px/normal "Noto Sans KR","NotoSansKR-Regular"';
+	var nPadding = 15;
+
+	return this.smfDispLongTextGrid(obj,nCell,nRow,sLongText,sFont,nPadding);
+};
+
+ /************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.grdGrid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if (e.cell < 7 || e.row < 0) return;
+
+	var dsObj = obj.getBindDataset();
+	var sColID = obj.getCellProperty("body", e.cell, "text");
+
+ 	sColID = sColID.slice(5); 
+ 	sColVal = dsObj.getColumn(e.row, sColID);
+
+	if (this.smfIsNull(sColVal) || String(this.smfTrim(sColVal)).length == 0) {
+		return;
+	}
+
+	// Popup Div Dataset에 행사목록 추가 === 시작
+	var sValList = String(sColVal).substr(0, String(sColVal).length - 1).split("|");
+
+	this.dsDaysList.set_enableevent(false);
+	this.dsDaysList.clearData();
+
+	var nRow = -1;
+
+	for (var k = 0; k < sValList.length; k++) {
+		var arrValList = new String(sValList[k]).split(":");	
+		
+		nRow = this.dsDaysList.addRow();
+		this.dsDaysList.setColumn(nRow, "dd", arrValList[0]);
+		this.dsDaysList.setColumn(nRow, "day", arrValList[1]);
+		this.dsDaysList.setColumn(nRow, "event", arrValList[2]);
+		this.dsDaysList.setColumn(nRow, "classNm", nexacro.replaceAll(this.smfLtrim(arrValList[3], "/"), "/", ", "));
+		this.dsDaysList.setColumn(nRow, "ddcDdScCd", arrValList[4]);		
+	}
+	this.dsDaysList.set_enableevent(true);
+
+	//div00 form 선언
+	var objDiv00Form = this.divGrid.form;
+	
+	if (this.dsDaysList.getRowCount() > 0) this.dsDaysList.set_rowposition(0);
+
+	// Popup Div 높이 초기화
+	if(this.smfIsMobile()){
+		objDiv00Form.pdvDaysList.setOffsetHeight(84);
+	}else{
+		objDiv00Form.pdvDaysList.setOffsetHeight(50);
+	}	
+
+	//변경된 그리드의 높이에 맞춰 PopupDiv 높이를 변경
+	var nVarHeight = objDiv00Form.pdvDaysList.form.grd00.getRealRowFullSize();
+	objDiv00Form.pdvDaysList.setOffsetHeight(nVarHeight + 10);  // Popup Div Height 변경
+
+	// popup Division open
+	//var objRect= this.grdGrid00.getCellRect(e.row, 2);
+	//this.pdvDaysList.trackPopupByComponent(this.grdGrid00, objRect.left, objRect.bottom+1);	
+	if(sValList.length > 1){
+		objDiv00Form.pdvDaysList.trackPopupByComponent(objDiv00Form.grdGrid00, e.clientx, e.clienty);
+	}else{
+		this.fnAaFxPop(0);
+	}
+};
+
+// '<'버튼
+this.btnBefore_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsAaFxList.reset();
+	this.staYear.set_text(--fv_years+"년");
+	this.fnSearch();
+};
+
+// '>'버튼
+this.btnNext_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsAaFxList.reset();
+	this.staYear.set_text(++fv_years+"년");
+	this.fnSearch();
+};
+
+this.cboMonth_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.dsAaFxList.reset();	// 선택 값 바뀔때마다 데이터 지우고 다시 그리기
+	
+ 	month = e.postindex+1;	// 선택된(클릭되어진) 인덱스
+
+	this.fnSearch();
+};
+
+// Grid에 행사명만 나타내기 위한 함수 <fc value='red'>column</fc>
+// argVal    9003:20220301:3·1절:전체:1|0001:20220301:학부모서비스 테스트:전체:1
+this.fnSetEnter = function(argVal)
+{
+	argVal =  this.smfTrim(argVal);
+	if(this.smfIsNull(argVal)) return "";
+
+	var arrValList = new String(argVal).split("|");
+	var len = arrValList.length;
+	var sRtn = "";
+
+	if(len < 1) len = 1;
+
+	for(var i=0; i < len; i++){
+		var oldInArrCode = arrValList[i].split(":");
+		
+		if(this.smfIsNull(oldInArrCode[2])){ 
+			break;
+		}
+		
+		var eventNm = oldInArrCode[2];
+		var scCode = oldInArrCode[4]; 
+
+		if(scCode == "2"){
+			eventNm = "<fc v='#2b71bf'>" + eventNm +"</fc>";
+		}else if(scCode == "1"){
+			eventNm = "<fc v='#e52058'>" + eventNm +"</fc>";
+		}
+		
+		if (i == 0) {
+			sRtn += eventNm;
+		} else {
+			sRtn += "\r\n" + eventNm;
+		}
+	}
+
+	if (this.smfIsNull(sRtn)) sRtn = "";
+
+	return sRtn; 
+}
+
+this.pdvDaysList_grd00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.fnAaFxPop(e.row);	
+};
+
+//상세조회 팝업
+this.fnAaFxPop = function(nRow){
+	var procType = "search";
+	
+	// 팝업을 동작에 필요한 파라메터 지정
+	var popupParams = {
+		callback : this.fnPopupCallback, // 콜백함수 지정
+		sender : obj, // sender 지정
+		// 팝업 전달 파라메터 지정
+		params : {
+			// 처리타입 지정
+			procType 	: procType,
+			// 파라메터 전달
+			//dataset 	: this.dsDaysList,
+			selRow 		: nRow
+		},
+	};
+	
+	if(this.smfIsMobile()){
+		var srcInfo = this.smfCurScreenInfo();
+		var srcInfoW = 640;
+		var srcInfoH = srcInfo[1];
+		if(srcInfoH > 626) srcInfoH = 626;
+		this.smfDialog("_auto", "pa_par_sps_sl::par_spssl02_p00.xfdl", popupParams, "", "", srcInfoW, srcInfoH);
+	}else{
+		this.smfDialog("_auto", "pa_par_sps_sl::par_spssl02_p00.xfdl", popupParams);
+	}
+}
+
+//인쇄 버튼
+this.btnPrinter_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	bSucc = system.print(this.divPrint);
+};
+
+this.divGrid_grdGrid00_onsize = function(obj:nexacro.Grid,e:nexacro.SizeEventInfo)
+{
+	this.smfResetScroll();
+};]]></Script>
+    <Bind>
+      <BindItem id="item1" compid="cboMonth" propid="value" datasetid="dsSearch" columnid="month"/>
+    </Bind>
+  </Form>
+</FDL>

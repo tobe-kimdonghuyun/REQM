@@ -1,0 +1,27 @@
+(function ()
+{
+    const DICTS = {
+        en: { "title.reports": "Reports", "title.allProjects": "All Projects", "ui.generated": "Generated", "badge.items": "items", "badge.files": "files", "btn.auto": "Auto", "btn.sort": "Sort", "btn.reset": "Reset", "panel.overview": "Overview" },
+        ko: { "title.reports": "리포트", "title.allProjects": "전체 프로젝트", "ui.generated": "생성됨", "badge.items": "항목", "badge.files": "파일", "btn.auto": "자동", "btn.sort": "정렬", "btn.reset": "초기화", "panel.overview": "개요" }
+    };
+    function currentLang()
+    {
+        const url = new URL(window.location.href);
+        const q = url.searchParams.get('lang');
+        if (q) { localStorage.setItem('lang', q); return q; }
+        return localStorage.getItem('lang') || (navigator.language || 'en').slice(0, 2);
+    }
+    function t(key) { const lang = currentLang(); return (DICTS[lang] && DICTS[lang][key]) || DICTS.en[key] || key; }
+    function apply(root = document)
+    {
+        root.querySelectorAll('[data-i18n]').forEach(el =>
+        {
+            const k = el.getAttribute('data-i18n'); const txt = t(k || '');
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') { el.setAttribute('placeholder', txt); }
+            else el.textContent = txt;
+        });
+    }
+    (window).I18N = { t, apply, currentLang };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => apply());
+    else apply();
+})();

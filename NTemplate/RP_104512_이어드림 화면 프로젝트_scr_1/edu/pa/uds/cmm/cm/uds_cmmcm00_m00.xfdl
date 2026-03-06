@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="uds_cmmcm00_m00" width="1200" height="1000" titletext="대입전형자료수신서비스로그인" onload="fnOnload" oninit="fnInit">
+    <Layouts>
+      <Layout height="1000" width="1200" screenid="ScreenDeskTop">
+        <ImageViewer id="img00" taborder="0" text="대입전형 자료수신&#13;&#10;서비스 로그인" left="390" top="190" height="95" cssclass="font34B_C" width="420" initvalueid="ivTitleAccessibilityOn"/>
+        <Div id="divLogin" taborder="1" left="250" top="img00:49" width="700" height="236" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Edit id="edtUserId" taborder="0" left="176" top="0" width="348" height="50" text="성명을 입력하세요" initvalueid="ivEdtNormal" cssclass="edi_Login_Normal" displaynulltext="아이디를 입력하세요" maxlength="30" onkeyup="divLogin_edtUserId_onkeyup" imemode="alpha" visible="false"/>
+              <Static id="sta00" taborder="1" text="대학 사용자 아이디를 입력해주세요." left="177" top="55" width="333" height="26" cssclass="sta_Login_MemberNotice" initvalueid="ivStcAccessibilityOn" usedecorate="true" visible="false"/>
+              <Button id="btnLogin" taborder="2" text="대학사용자&#13;&#10;대입전형업무용 인증서 로그인" left="176" top="92" width="348" height="80" cssclass="btn_Login_PartyCert" initvalueid="ivBtnAccessibilityButton" onclick="btnLogin_onclick"/>
+              <CheckBox id="chkScrty" taborder="3" text="키보드 보안 사용" left="534" top="btnLogin:16" width="354" height="30" initvalueid="ivChkNormal" cssclass="chk_Login_Normal" visible="false"/>
+              <Button id="btnLoginTest" taborder="4" text="테스트 로그인" left="357" top="182" width="167" height="50" initvalueid="ivBtnAccessibilityButton" onclick="btnLoginTest_onclick" visible="false" escapebutton="false" enableevent="true" enable="true" defaultbutton="false" cssclass="btn_Login_PartyCert" padding="0px"/>
+              <Edit id="edtUserId00" taborder="5" left="176" top="182" width="167" height="50" text="성명을 입력하세요" initvalueid="ivEdtNormal" cssclass="edi_Login_Normal" displaynulltext="아이디를 입력하세요" maxlength="30" onkeyup="divLogin_edtUserId00_onkeyup" imemode="alpha" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div00_00" taborder="2" left="0" top="670" cssclass="div_Login_Notice02" initvalueid="ivDivAccessibilityOff" width="1200" height="266" visible="false">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <WebBrowser id="webEpkiLogin" taborder="3" left="0" top="0" width="0" height="0" tabstop="false" visible="false" onsize="webEpkiLogin_onsize" onusernotify="webEpkiLogin_onusernotify"/>
+        <Static id="guide09" taborder="4" text="h100" left="0" top="divLogin:0" height="100" cssclass="sta_WF_Size" visible="false" initvalueid="ivStcAccessibilityOff" right="0"/>
+        <Static id="sta00" taborder="5" left="462" top="296" height="115" cssclass="sta_Login_PartyCert" text="" width="276" initvalueid="ivStcAccessibilityOn"/>
+        <Div id="divInstallCheck" taborder="6" text="div01" left="1219" top="0" width="501" height="147" url="frame::uds/frameInstallCheck.xfdl" cssclass="div_WF_Complain" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+ *	대입전형자료수신서비스로그인
+ *	@MenuPath	대입전형-대입전형자료수신서비스로그인
+ *	@FileName 	uds_cmmcm00_m00.xfdl
+ *	@Creator 	김동업
+ *	@CreateDate	2023.03.03 
+ *	@Desction	대입전형자료수신서비스로그인 
+ ************** 소스 수정 이력 ***********************************************
+ *	date			Modifier			Description
+ *******************************************************************************
+ *	2023.03.03		김동업				최초 생성
+ *******************************************************************************
+ */
+ 
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::cm_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_param;
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * Onload
+ * @param : obj
+ * @param : e
+ */
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	this.fv_param = this.smfGetFormParams();
+	
+	var bResult = this.divInstallCheck.form.fnCheckInstall();
+	if(!bResult){
+		this.fnPopupInstallCheck();
+	}else{
+		this.divLogin.setFocus();
+	}
+	
+	//테스트 로그인
+	//this.fnTempInit(this.sta00, this.divLogin.form.edtUserId00, this.divLogin.form.btnLoginTest);
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/**
+ * TransCallback
+ * @param : svcid
+ * @param : errcd
+ * @param : errmsg
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+};
+
+/**
+ * 팝업의 콜백함수 지정한다 (공동인증서)
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+	var sLog = "";
+	var obj = sender.divLogin.form;
+	
+	if(e.result){
+		if(this.isNotNil(e.data.certDtcNm)){
+			this.dsSearch.setColumn(0, "certDtcNm", e.data.certDtcNm);
+			this.dsSearch.setColumn(0, "serialNumber", e.data.serialNumber);
+			this.fnCallbackConfirmAuth(obj);
+		}
+	} else {
+		var alertMsg = e.data.resMsg;
+		if(this.isNotNil(e.data.resultCode)){
+			alertMsg += "\n(" + e.data.resultCode + ")";
+		}
+		
+		if(this.isNotNil(alertMsg)){
+			this.smfLiteralAlert(alertMsg);
+		}
+	}
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+/************************************************************************************************
+/**
+ * Init
+ * @param : obj
+ * @param : e
+ */
+this.fnInit = function(obj:nexacro.Form,e:nexacro.EventInfo)
+{
+	var objDivTop = this.getOwnerFrame().form.divTop;
+	objDivTop.set_visible(false);
+	objDivTop.setOffsetHeight(0);
+	
+	var objDivNotice = this.getOwnerFrame().form.divNotice;
+	objDivNotice.set_visible(false);
+	objDivNotice.setOffsetHeight(0);
+	
+	var objDivBottom = this.getOwnerFrame().form.divAll.form.divBottom;
+	objDivBottom.form.divPolicy.set_visible(false);
+	objDivBottom.form.divPolicy.setOffsetHeight(0);
+};
+
+/**
+ * 인증후처리
+ * @param : obj
+ */
+this.fnCallbackConfirmAuth = function(obj){
+
+	//세션에 정보담기
+	this.smfSearchService("selectLgnInfo")
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors){
+				this.divLogin.form.btnLogin.set_enable(true);
+				return;
+			}
+			
+			//로그인로그등록
+			//로그인 유형코드
+			//LG001:EPKI/GPKI
+			//LG002:NPKI
+			//LG003:디지털원패스
+			//LG004:교육디지털원패스
+			//LG005:간편인증
+			//LG006:ID/Password
+			//LG007:비회원
+			//LG008:IPIN
+			var sLgnTypCd = "LG001"; 
+			this.smfSendLoginLog(this, sLgnTypCd);
+			
+			//세션에 담기
+			this.smfSetSessionDataset(this.dsSession);
+			
+			this.getOwnerFrame().form.divTop.form.fnLoginAfter();
+			// 로그인 상태 변경
+			this.smfSetLoginState(true);
+			
+			var objParams={};
+			var sUrl = "frame::uds/frameFirstMain.xfdl";
+			var bIsHeadShow = false;
+			this.smfSetWorkPage(sUrl,objParams,bIsHeadShow);
+		});
+};
+
+this.fnPopupInstallCheck = function(){
+	// 팝업 파라메터
+	var popupParams = {
+		callback: function(arg){}, // 콜백함수 지정
+		sender: obj, // sender 지정
+		params: {
+			procType: "save" // 처리타입 지정
+		},
+	};
+
+	// 모달팝업 실행
+	this.smfDialog("uds_ueudd00_p09", "frame::uds/frameInstallCheck.xfdl", popupParams);
+}
+
+/**
+ * 테스트 로그인
+ * @param : obj 클릭이밴트 오브젝트
+ * @param : objs 활성화 오브젝트
+ */
+this.fnTempInit = function(obj, ...objs){
+	try{
+		if(obj != null){
+			obj.addEventHandler('onclick' , function(obj, e){
+				if(e.shiftkey && e.metakey && e.ctrlkey){
+					objs.forEach((o) => o.set_visible(true));
+				}
+			});
+		}
+	}catch(e){}
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+//테스트로그인
+this.btnLoginTest_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.smfIsNull(this.dsSearch.getColumn(0, "userId"))){
+		this.smfAlert("CM006", ["아이디"]);
+		return;
+	}
+	
+	var userId = this.dsSearch.getColumn(0, "userId");
+
+	//세션에 정보담기
+	this.smfSearchService("selectLgnTest")
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			//세션에 담기
+			this.smfSetSessionDataset(this.dsSession);
+			
+			this.getOwnerFrame().form.divTop.form.fnLoginAfter();
+			
+			// 로그인 상태 변경
+			this.smfSetLoginState(true);
+			
+			var objParams={};
+			var sUrl = "frame::uds/frameFirstMain.xfdl";
+			var bIsHeadShow = false;
+			this.smfSetWorkPage(sUrl,objParams,bIsHeadShow);
+		});
+};
+ 
+// 공동인증서 로그인
+this.btnLogin_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo) {
+	var bResult = this.divInstallCheck.form.fnCheckInstall();
+	if(!bResult){
+		this.fnPopupInstallCheck();
+	}else{
+		/* 아이디 없이 로그인 
+		if (this.smfIsNull(this.dsSearch.getColumn(0, "userId"))){
+			this.smfAlert("CM006", ["아이디"]);
+			return;
+		}
+		
+		var userId = this.dsSearch.getColumn(0, "userId");
+		*/
+		this.dsSearch.setColumn(0, "userId", '');
+		
+		var sBaseUrl = nexacro.getEnvironment().services["baseUrl"].url;
+		var sInitUrl  = sBaseUrl + "/uds_ueu_cm00_001.do";
+		var sLoginUrl = sBaseUrl + "/uds_ueu_cm00_002.do";
+		var objLoginInfo = {	initUrl  : sInitUrl    // init시 사용하는 서비스명(앞에 "/"을 붙일 것)
+							,   loginUrl : sLoginUrl   // login시 사용하는 서비스명(앞에 "/"을 붙일 것)
+							//,	userId : userId
+						   };
+		var objParam = {objForm:this, popupcallback :this.fnPopupCallback, loginInfo:objLoginInfo};
+		this.fnExecNpkiAuth(objParam);
+	}
+};
+
+/**
+ * @class 로그인(공동인증서)를 실행한다.	
+ * @example
+ */
+// prForm.smfExecNpkiAuth = function(objParam)
+this.fnExecNpkiAuth = function(objParam){
+	var objFuncCallback   = objParam.popupcallback;
+	var objForm = objParam.objForm;
+	// 팝업을 동작에 필요한 파라메터 지정
+	var popupParams = {
+		callback: objFuncCallback, // 콜백함수 지정
+		sender: objForm, // sender 지정
+		titlebar:false,  // 타이틀바를 표시하지 않는다.
+		// 팝업 전달 파라메터 지정
+		params: {
+			// 처리타입 지정(필수)
+			procType : "none",  // "none","search","insert","update","delete"
+			loginInfo : objParam.loginInfo
+		}
+	};
+
+	// 모달팝업 실행
+	this.smfDialog("_auto", "pa_uds_cmm_cm::uds_cmmcm00_m01.xfdl", popupParams);
+};
+
+/**
+ * 아이디 입력 시
+ * @param  : obj		   - [object]Edit
+ * @param  : e		       - [string]KeyEventInfo
+ * @return : N/A
+ */
+this.divLogin_edtUserId_onkeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if (e.keycode == 13){
+		this.btnLogin_onclick(null, null);
+	}
+};
+
+/**
+ * 테스트 로그인
+ * @param  : obj		   - [object]Edit
+ * @param  : e		       - [string]KeyEventInfo
+ * @return : N/A
+ */
+this.divLogin_edtUserId00_onkeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if (e.keycode == 13){
+		this.btnLoginTest_onclick(null, null);
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsSession</Col>
+            <Col id="url">uds_ueu_cm00_003.do</Col>
+            <Col id="id">selectLgnInfo</Col>
+          </Row>
+          <Row>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsSession</Col>
+            <Col id="url">uds_ueu_cm00_004.do</Col>
+            <Col id="id">selectLgnTest</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" oncolumnchanged="dsSearch_oncolumnchanged" useclientlayout="false">
+        <ColumnInfo>
+          <Column id="userId" type="STRING" size="256"/>
+          <Column id="certDtcNm" type="STRING" size="256"/>
+          <Column id="serialNumber" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true" canrowposchange="dsMain_canrowposchange" onrowposchanged="dsMain_onrowposchanged">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSession" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="userId" type="STRING" size="256" description="사용자ID"/>
+          <Column id="userDtcNo" type="STRING" size="256" description="사용자고유번호"/>
+          <Column id="userNm" type="STRING" size="256" description="사용자명"/>
+          <Column id="instCd" type="STRING" size="256" description="기관코드"/>
+          <Column id="instNm" type="STRING" size="256" description="기관코드명"/>
+          <Column id="orgCd" type="STRING" size="256" description="조직코드"/>
+          <Column id="orgNm" type="STRING" size="256" description="조직명"/>
+          <Column id="instClfCd" type="STRING" size="256" description="기관분류코드"/>
+          <Column id="userScCd" type="STRING" size="256" description="사용자구분코드"/>
+          <Column id="coaAyr" type="STRING" size="256" description="대입학년도"/>
+          <Column id="coaRcritScCd" type="STRING" size="256" description="대입모집구분코드"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divLogin.form.edtUserId" propid="value" datasetid="dsSearch" columnid="userId"/>
+      <BindItem id="item1" compid="divLogin.form.divUserRno.form.edtNm" propid="value" datasetid="dsSearch" columnid="userNm"/>
+      <BindItem id="item2" compid="divLogin.form.divUserRno.form.div00.form.edtNm" propid="value" datasetid="dsSearch" columnid="userNm"/>
+      <BindItem id="item3" compid="divLogin.form.divBrno.form.edtNm" propid="value" datasetid="dsSearch" columnid="userNm"/>
+      <BindItem id="item4" compid="divLogin.form.divBrno.form.div00.form.div00_00.form.edtNm" propid="value" datasetid="dsSearch" columnid="userNm"/>
+      <BindItem id="item5" compid="divLogin.form.divBrno.form.edtBrno" propid="value" datasetid="dsSearch" columnid="brno"/>
+      <BindItem id="item6" compid="divLogin.form.edtUserId00" propid="value" datasetid="dsSearch" columnid="userId"/>
+    </Bind>
+  </Form>
+</FDL>

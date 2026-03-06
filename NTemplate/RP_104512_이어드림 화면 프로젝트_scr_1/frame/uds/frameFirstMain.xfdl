@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameFirstMain" width="1920" height="846" onload="frameFirstMain_onload" titletext="대입전형(학생부) 게이트화면" onsize="frameFirstMain_onsize" oninit="frameFirstMain_oninit">
+    <Layouts>
+      <Layout height="846" width="1920" screenid="ScreenDeskTop">
+        <Div id="divTop" taborder="0" left="0" top="0" height="500" cssclass="div_WF_Main06" initvalueid="ivDivAccessibilityOn" formscrollbartype="none none" formscrolltype="none" width="1700">
+          <Layouts>
+            <Layout>
+              <Div id="divTitle" taborder="0" text="div00" left="351" top="120" width="588" height="234">
+                <Layouts>
+                  <Layout>
+                    <Static id="staTitle" taborder="0" text="대입전형 자료수신" left="0" top="62" width="580" height="75" cssclass="sta_WF_MainTxt" initvalueid="ivStcAccessibilityOn"/>
+                    <Static id="staSTitle" taborder="1" text="대입전형 자료를 온라인으로 제공하는 서비스입니다." left="0" top="147" width="565" height="40" cssclass="font18R" initvalueid="ivStcAccessibilityOn"/>
+                  </Layout>
+                  <Layout name="Layout0"/>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta00" taborder="1" left="0" top="500" width="247" height="214" cssclass="sta_WF_Graphic_Left" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta00_00" taborder="2" width="280" height="296" cssclass="sta_WF_Graphic" initvalueid="ivStcAccessibilityOff" right="0" bottom="0" visible="false"/>
+        <Div id="div00" taborder="3" text="div00" left="370" top="530" width="1284" height="202">
+          <Layouts>
+            <Layout>
+              <Static id="sta01" taborder="0" text="원하는 &#13;&#10;업무를&#13;&#10;선택해주세요." left="0" top="0" width="280" height="148" cssclass="sta_WF_Txt34B" initvalueid="ivStcAccessibilityOn" usedecorate="true" verticalAlign="top"/>
+              <Button id="btnLink01" taborder="1" text="학생부" top="2" width="332" height="134" cssclass="btn_WF_CollegeStud" left="554" initvalueid="ivBtnAccessibilityLink" onclick="btnLink01_onclick" btnValue="UDS" btnSubValue=""/>
+              <Button id="btnLink02" taborder="2" text="검정고시" top="2" height="134" cssclass="btn_WF_CollegeGED" left="914" initvalueid="ivBtnAccessibilityLink" width="332" onclick="btnLink02_onclick" btnValue="SQA" btnSubValue="103"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divInstallCheck" taborder="4" text="div01" left="1019" top="153" width="501" height="147" url="frame::uds/frameInstallCheck.xfdl" cssclass="div_WF_Complain" visible="false"/>
+        <Button id="btnIsInstalled" taborder="5" text="Install여부 확인(Test용)" left="219" top="679" width="184" height="40" onclick="btnIsInstalled_onclick" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	frameFirstMain.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2023.1.2
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.1.2     	정인혁 	        최초 생성  
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::pam_script.xjs";
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_workPageParams = {};	//화면전환시 넘길 parameter
+this.fv_isMobile;	//모바일로 접속여부
+this.fv_device;		//device 종류
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ 
+/**
+ * 화면 onload시 처리내역
+*/
+this.frameFirstMain_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{	
+	this.smfInitForm(this);
+	//pbancNtcScCd 
+	//pbancNtcDtlCd
+	this.fv_param = this.smfGetFormParams();
+
+	// 메인 페이지를 보여주기 위한 정보를 표시한다.
+	var objMainForminfo = {
+						  quickmenu : {
+										  use : "N"                      //
+										, url : ""   //
+									  }
+						, toplink : {
+										  use   : "N"                                 //
+										, link  : [ ]                                  // 링크정보(배열)
+									  }		
+						, noticeband : {
+										  use   : "N"                 //
+										, serviceurl : ""    //  
+									   }
+						, wildmode : "Y"	
+					  }	
+	this.pamfSetMainPageInfo(objMainForminfo);
+		
+	//this.fnRearrageCenter();
+	
+	this.fnInit();	
+};
+
+/**
+ * @description 사이즈 변경시 위치변경
+*/
+this.frameMain_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+
+
+};
+
+this.fnInit = function()
+{
+// return;
+// 	if(!this.smfIsLogin()){
+// 		trace(" this.smfIsLogin() : " + this.smfIsLogin());
+// 		var oParam = {};
+// 		this.smfSetWorkPage("pa_uds_cmm_cm::uds_cmmcm00_m00.xfdl",oParam,false);
+// 	} else {
+		var objDivTop = this.getOwnerFrame().form.divTop;
+		objDivTop.set_visible(true);
+		objDivTop.setOffsetHeight(45);
+		
+		// divDispArea
+		// objDivTop.form.divDispArea.form.btnLogin.set_visible(false);
+		objDivTop.form.divDispArea.form.btnSitemap.set_visible(false);
+		
+		var objDivNotice = this.getOwnerFrame().form.divNotice;
+		objDivNotice.set_visible(false);
+		objDivNotice.setOffsetHeight(0);
+		
+		var objDivBottom = this.getOwnerFrame().form.divAll.form.divBottom;
+		objDivBottom.form.divPolicy.set_visible(false);
+		objDivBottom.form.divPolicy.setOffsetHeight(0);
+//	}
+}	
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/ 
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnRearrageCenter = function()
+{
+	// 모바일
+	if(this.smfIsMobile())
+	{
+
+	}
+	// 데스크탑
+	else
+	{
+		var nWidth = this.getOffsetWidth();
+		if(nWidth > 1200)
+		{
+			var nLeftGap = parseInt((nWidth-1200)/2);
+
+			// 이미지를 조정한다.
+			var nImageWidth = nWidth - 230; // 190: right gap
+			if(nImageWidth<(nLeftGap+1200)) nImageWidth = nLeftGap+1200;
+			else if(nImageWidth<1200) nImageWidth = 1200;
+			
+			this.divTop.setOffsetWidth(nImageWidth);	
+			
+			this.divTop.form.divTitle.setOffsetLeft(nLeftGap);
+			
+			this.div00.setOffsetLeft(nLeftGap);
+
+		}	
+	}
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.btnLink01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfSetSubSystemGb(obj.btnValue);
+	this.smfSetSubSystemDetailGb(obj.btnSubValue);
+	
+	var objDivBottom = this.getOwnerFrame().form.divAll.form.divBottom;
+	objDivBottom.form.divPolicy.set_visible(true);
+	objDivBottom.form.divPolicy.setOffsetHeight(60);
+	
+	var oParam = {};	
+	this.smfSetWorkPage("frame::uds/frameSubMain.xfdl",oParam,false);
+};
+
+this.btnLink02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfSetSubSystemGb(obj.btnValue);
+	this.smfSetSubSystemDetailGb(obj.btnSubValue);
+	
+	var objDivBottom = this.getOwnerFrame().form.divAll.form.divBottom;
+	objDivBottom.form.divPolicy.set_visible(true);
+	objDivBottom.form.divPolicy.setOffsetHeight(60);
+	
+	var oParam = {};	
+	this.smfSetWorkPage("frame::sqa/frameSubMain3.xfdl",oParam,false);
+};
+
+this.frameFirstMain_oninit = function(obj:nexacro.Form,e:nexacro.EventInfo)
+{
+return;
+	if(!this.smfIsLogin()){
+		trace(" this.smfIsLogin() : " + this.smfIsLogin());
+		var oParam = {};
+		this.smfSetWorkPage("pa_uds_cmm_cm::uds_cmmcm00_m00.xfdl",oParam,false);
+	} else {
+		var objDivTop = this.getOwnerFrame().form.divTop;
+		objDivTop.set_visible(true);
+		objDivTop.setOffsetHeight(45);
+		
+		// divDispArea
+		// objDivTop.form.divDispArea.form.btnLogin.set_visible(false);
+		objDivTop.form.divDispArea.form.btnSitemap.set_visible(false);
+		
+		var objDivNotice = this.getOwnerFrame().form.divNotice;
+		objDivNotice.set_visible(false);
+		objDivNotice.setOffsetHeight(0);
+		
+		var objDivBottom = this.getOwnerFrame().form.divAll.form.divBottom;
+		objDivBottom.form.divPolicy.set_visible(false);
+		objDivBottom.form.divPolicy.setOffsetHeight(0);
+	}
+};
+
+this.btnIsInstalled_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var bResult = this.divInstallCheck.form.fnCheckInstall();
+	
+	if(!bResult)
+	{
+		// this.divInstallCheck
+		this.divInstallCheck.set_visible(true);
+		
+		this.div00.form.btnLink01.set_enable(false);
+		this.div00.form.btnLink02.set_enable(false);
+	}
+	
+	// TEST를 위해
+	this.divInstallCheck.set_visible(true);
+	
+};
+
+]]></Script>
+  </Form>
+</FDL>

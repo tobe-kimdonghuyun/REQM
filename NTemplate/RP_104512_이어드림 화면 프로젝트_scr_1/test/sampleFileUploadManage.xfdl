@@ -1,0 +1,411 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleFileUploadManage" width="1280" height="745" titletext="New Form" onload="sampleFileUploadManage_onload">
+    <Layouts>
+      <Layout height="745" width="1280">
+        <Div id="divUpload00" taborder="0" text="div00" left="35" top="95" width="480" height="30">
+          <Layouts>
+            <Layout>
+              <Edit id="edtFile" taborder="0" left="0" top="0" height="30" right="38" text="wewewe" readonly="true" initvalueid="ivEdtNormal"/>
+              <Button id="btnFileSelect" taborder="1" left="450" top="0" width="30" height="30" cssclass="btn_WF_FileAdd01" initvalueid="ivBtnAccessibilityLink" onclick="Button_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divUpload01" taborder="1" text="div00" left="35" top="135" width="480" height="30">
+          <Layouts>
+            <Layout>
+              <Edit id="edtFile" taborder="0" left="0" top="0" height="30" right="38" text="wewewe" readonly="true" initvalueid="ivEdtNormal"/>
+              <Button id="btnFileSelect" taborder="1" left="450" top="0" width="30" height="30" cssclass="btn_WF_FileAdd01" initvalueid="ivBtnAccessibilityLink" onclick="Button_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divUpload02" taborder="2" text="div00" left="35" top="175" width="480" height="30" _gbnNo="101">
+          <Layouts>
+            <Layout>
+              <Edit id="edtFile" taborder="0" left="0" top="0" height="30" right="38" text="wewewe" readonly="true" initvalueid="ivEdtNormal"/>
+              <Button id="btnFileSelect" taborder="1" left="450" top="0" width="30" height="30" cssclass="btn_WF_FileAdd01" initvalueid="ivBtnAccessibilityLink" onclick="Button_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div text="div00" width="541" height="180" url="comm::comm_fileAdd.xfdl" Mode="upload" uploadLocation="PA.SAM.PLE" addProp="fnSetRaonProp" privInfoFiltYn="N" fileEncryptYn="N" fileSaveStg="SV" fileInfSaveYn="Y" id="divFileUpload" left="35" top="226" taborder="3"/>
+        <Button id="btn00" taborder="4" text="업로드" left="35" top="52" width="92" height="31" onclick="btn00_onclick"/>
+        <Button id="btnDelete00" taborder="5" text="삭제" left="523" top="96" width="47" height="30" onclick="ButtonDelete_onclick" cssclass="btn_WF_Crud"/>
+        <Button id="btnDelete01" taborder="6" text="삭제" left="523" top="136" width="47" height="30" onclick="ButtonDelete_onclick" cssclass="btn_WF_Crud"/>
+        <Button id="btnDelete02" taborder="7" text="삭제" left="523" top="176" width="47" height="30" onclick="ButtonDelete_onclick" cssclass="btn_WF_Crud"/>
+        <Button id="btn02" taborder="8" text="존재여부Check" left="666" top="52" width="132" height="31" onclick="btn02_onclick"/>
+        <Static id="staCheck00" taborder="9" text="" left="666" top="94" width="424" height="30" border="1px solid lightgray"/>
+        <Static id="staCheck01" taborder="10" text="" left="666" top="134" width="424" height="30" border="1px solid lightgray"/>
+        <Static id="staCheck02" taborder="11" text="" left="666" top="174" width="424" height="30" border="1px solid lightgray"/>
+        <Grid id="grd00" taborder="12" left="36" top="432" width="1004" height="140" binddataset="outFileinfo" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="347"/>
+                <Column size="62"/>
+                <Column size="163"/>
+                <Column size="293"/>
+                <Column size="138"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="fileRefrnId"/>
+                <Cell col="1" text="fileId"/>
+                <Cell col="2" text="atchFileNm"/>
+                <Cell col="3" text="atchFileGuid"/>
+                <Cell col="4" text="atchFileMg"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:fileRefrnId"/>
+                <Cell col="1" text="bind:fileId"/>
+                <Cell col="2" text="bind:atchFileNm"/>
+                <Cell col="3" text="bind:atchFileGuid"/>
+                <Cell col="4" text="bind:atchFileMg"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnDown00" taborder="13" text="다운" top="96" width="74" height="30" cssclass="btn_WF_FileDown" left="576" onclick="ButtonDownload_onclick"/>
+        <Button id="btnDown01" taborder="14" text="다운" top="136" width="74" height="30" cssclass="btn_WF_FileDown" left="576" onclick="ButtonDownload_onclick"/>
+        <Button id="btnDown02" taborder="15" text="다운" top="176" width="74" height="30" cssclass="btn_WF_FileDown" left="576" onclick="ButtonDownload_onclick"/>
+        <Static id="sta04" taborder="16" text="fileRefrnId" left="41" top="596" width="72" height="33"/>
+        <Edit id="edtFileRefrnId" taborder="17" left="120" top="598" width="420" height="28"/>
+        <Button id="btnUpload_TotalFileSize00" taborder="18" text="파일검색" left="552" top="598" width="88" height="28" onclick="btnUpload_FileSearch_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleFileUploadManage.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.10.31
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.10.31     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.sampleFileUploadManage_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//this.divFileUpload.UPLOAD_CreateComplete = this.fnEventUploadCreateComplete;  // 필요한 경우만 세팅
+	this.divFileUpload.UPLOAD_UploadComplete = this.fnEventUploadComplete;        // 필요한 경우만 세팅(세팅권장)
+	this.divFileUpload.UPLOAD_OnError        = this.fnEventUploadError;           // 필요한 경우만 세팅(세팅권장)
+	this.divFileUpload.UPLOAD_AfterAddFile   = this.fnEventAfterAddFile;           // 필요한 경우만 세팅(세팅권장)
+	this.divFileUpload.UPLOAD_Form           = this;                              // 위의 함수가 존재하는 Form (보통은 this)
+	
+	// 삭제버튼 클릭시 처리를 할 div를 세팅(샘플을 진행하기 위해)
+	this.btnDelete00._divUploadObj = this.divUpload00;
+	this.btnDelete01._divUploadObj = this.divUpload01;
+	this.btnDelete02._divUploadObj = this.divUpload02;
+
+	// 다운로드버튼 클릭시 처리를 할 div를 세팅(샘플을 진행하기 위해)
+	this.btnDown00._divUploadObj = this.divUpload00;
+	this.btnDown01._divUploadObj = this.divUpload01;
+	this.btnDown02._divUploadObj = this.divUpload02;
+
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+this.fnEventUploadComplete = function(obj,paramObj,objResultDataset)
+{
+
+	// 신규서비스
+	trace("=== Sample : fnEventUploadComplete");	
+	trace( "objResultDataset===========================\n" 
+	     + objResultDataset.saveXML() 
+		 + "\n==================================");
+	
+	this.outFileinfo.copyData(objResultDataset);
+	
+	// 업로드 성공 후, newfile에 있는 파일들을 webfile로 옮긴다.
+	this.divFileUpload.form.fnSetUploadCompleteState(obj,paramObj);	
+	
+	// 업로드한 file을 가져오는 법(샘플 가이드)
+	if(objResultDataset)
+	{
+		trace("====업로드한 결과 데이터셋 ========== \n"+objResultDataset.saveXML());
+		
+		var sFileRefrnId = objResultDataset.getColumn(0,"fileRefrnId");
+		trace("업로드결과 데이터셋의 첫번째 row의 fileRefrnId=["+sFileRefrnId+"]");
+		
+		// 나중에 다운로드하기 위해 관련 정보 세팅
+		this.divUpload00._FileRefrnId = sFileRefrnId;
+		this.divUpload00._FileRefrnId = sFileRefrnId;
+		this.divUpload00._FileRefrnId = sFileRefrnId;	
+		
+		// 테스트를 위해
+		this.edtFileRefrnId.set_value(sFileRefrnId);
+	}
+	return;
+}
+
+this.fnEventUploadError = function(obj,paramObj)
+{
+	trace("=== Sample : fnEventUploadError");		
+}
+
+
+this.fnEventAfterAddFile = function(obj,paramObj,sCustomValue,sFileName,nFileSize)
+{
+	trace("=== Sample : fnEventAfterAddFile");		
+	
+	var sFileGbnValue    = sFileName;   //sCustomValue.split(",")[7];
+	var objdivFormObj    = obj.parent.parent._divFormObj;
+	var sFileGbnValueOrg = objdivFormObj.parent._FileGbnValue;
+	
+	if(!this.smfIsNull(sFileGbnValueOrg))
+	{
+		//obj.parent.fnGetMatchFileIndex(sFileGbnValueOrg);
+		obj.parent.fnDeleteFileFromFileGbnValue(sFileGbnValueOrg);
+	}
+	
+	objdivFormObj.parent._FileGbnValue = sFileGbnValue;
+	objdivFormObj.edtFile.set_value(sFileName);
+	
+}
+
+
+/**
+ * KUpload를 생성시 지정할 property값을 지정
+ * @param  : N/A
+ * @return : N/A
+ */
+this.fnSetRaonProp = function()
+{
+	// 설정할 property
+	var objAddRaonProps = {
+							 DisableAlertMessage	: {
+								DisableDeleteConfirm: "1" 										// "1"로 설정시 파일 삭제시 confirm창 비활성.
+							 }
+							};
+	return objAddRaonProps;
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+// 파일선택
+this.Button_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divFileUpload._divFormObj   = obj.parent;
+	this.divFileUpload._FileGbnValue = obj.parent._FileGbnValue;
+	this.divFileUpload.form.fnAddFile();
+};
+
+// 삭제처리
+this.ButtonDelete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objDiv = obj._divUploadObj;
+	var sFileGbnValueOrg = objDiv._FileGbnValue;
+
+	if(!this.smfIsNull(sFileGbnValueOrg))
+	{
+		// 2022-12-23 삭제처리가 실패시(유저의 취소 포함) 삭제를 피하기 위해 내부에서 작세하도록 변경
+		this.divFileUpload.form.fnDeleteFileFromFileGbnValue(sFileGbnValueOrg,objDiv);
+	}
+	
+};
+
+// 다운로드처리
+this.ButtonDownload_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objDiv = obj._divUploadObj;
+	var sFileGbnValueOrg = objDiv._FileGbnValue;
+	var sFileRefrnId     = objDiv._FileRefrnId;
+
+	if((!this.smfIsNull(sFileGbnValueOrg))&&(!this.smfIsNull(sFileRefrnId)))
+	{
+		var nIndex = this.divFileUpload.form.fnGetMatchFileIndex(sFileGbnValueOrg);
+		this.divFileUpload.form.fnDownloadByIndex(nIndex);
+	}
+};
+
+
+
+// 업로드
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divFileUpload.form.fnFileUpload();
+};
+
+// 존재 여부 확인
+this.btn02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 클리어
+	this.staCheck00.set_text("");
+	this.staCheck01.set_text("");
+	this.staCheck02.set_text("");
+	
+	// 
+	if(!this.smfIsNull(this.divUpload00._FileGbnValue)) this.staCheck00.set_text("존재");
+	if(!this.smfIsNull(this.divUpload01._FileGbnValue)) this.staCheck01.set_text("존재");
+	if(!this.smfIsNull(this.divUpload02._FileGbnValue)) this.staCheck02.set_text("존재");
+	
+	
+	
+	
+};
+
+this.btnUpload_FileSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+/*
+	var sFileSn = this.edtFileRefrnId.value;
+	// 업로드 초기화
+	this.divFileUpload.form.fnResetUpload();
+	
+	
+	this.smfSearchService("select")
+	    .run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+		   for (var i = 0; i < this.outFileinfo.rowcount; i++) {
+					//trace("=== Sample : fnEventUploadComplete"+this.smfUploadInfoFileSn(jsonNew.responseCustomValue[i],0));	
+					var responseCustomValue = "";
+					var handlerCode      = "PA.SAM.PLE"; //업무코드넣어주기
+					//var fileSn           = "476";  //this.smfUploadInfoFileSn(jsonWebFile.customValue[i],1);
+					var fileSn           =  this.outFileinfo.getColumn(i,"fileRefrnId");
+					var fileSeq          =  this.outFileinfo.getColumn(i,"fileId");
+					var fileSize         = this.outFileinfo.getColumn(i,"atchFileMg");
+					var backendFilename  = this.outFileinfo.getColumn(i,"atchFileGuid");
+					var forntendFilename = this.outFileinfo.getColumn(i,"atchFileNm");
+					
+					var sFileEncryptYn   = this.outFileinfo.getColumn(i,"fileEncryptYn" );
+					var sPrivInfoFiltYn  = this.outFileinfo.getColumn(i,"privInfoFiltYn");
+					var sFileSaveStg     = this.outFileinfo.getColumn(i,"fileSaveStg"   );
+					var sFileInfSaveYn   = this.outFileinfo.getColumn(i,"fileInfSaveYn" );
+					this.divFileUpload.form.fnAddUploadedFile(handlerCode, fileSn, fileSize, backendFilename, forntendFilename, fileSeq
+															 , sFileEncryptYn, sPrivInfoFiltYn, sFileSaveStg, sFileInfSaveYn);			
+					
+					// 이 부분에서 해당하는 원래 DB값에 있는 값과 비교하여 해당 div에 넣는다.
+					var objDiv = this["divUpload0"+i];
+					objDiv._FileRefrnId = fileSn;
+					objDiv._FileGbnValue = fileSn+"_"+fileSeq;
+					objDiv.form.edtFile.set_value(forntendFilename);
+					
+					
+					trace("[" + responseCustomValue + "] [" + handlerCode + "]  [" + fileSn + "]  [" + backendFilename + "]  [" + forntendFilename+ "]  [" + fileSize+"]");
+			}			
+		});
+					//,"fileRefrnId='"+sFileSn+"'"
+*/
+
+	var sFileSn = this.edtFileRefrnId.value;
+	
+	// 업로드 초기화
+	this.divFileUpload.form.fnResetUpload();
+	
+	    this.transaction("fn_filesearch" // serviceId
+	                ,"baseUrl::/cm_cmc_file_upload_001.do" // url
+					,"" // inDataset
+					,"outFileinfo=atchFileinfo" // outDataset
+					//,"fileRefrnId='wERMhEHwrN7re8VIlylqrb8SJIU2nkZFMOu9EAa3Q3s='"
+					,"fileRefrnId='"+sFileSn+"'"
+					,this.btnUpload_FileSearch_callback // callbackFunction
+					,false // true: 비동기, false:동기
+	   );
+	   
+	   for (var i = 0; i < this.outFileinfo.rowcount; i++) {
+		        //trace("=== Sample : fnEventUploadComplete"+this.smfUploadInfoFileSn(jsonNew.responseCustomValue[i],0));	
+				var responseCustomValue = "";
+				var sDownloadUrl       = "";   // 
+				var sPrivInfoFiltYn    = "";   // 항목 관리안함
+				var sFileInfSaveYn     = "Y";  // 업무에 맞게 개발자가 세팅(Y/N)
+				var sHandlerCode       = "PA.SAM.PLE";  //this.smfUploadInfoFileSn(jsonWebFile.customValue[i],0);
+				//var fileSn           = "476";  //this.smfUploadInfoFileSn(jsonWebFile.customValue[i],1);
+				var sFileSn            = this.outFileinfo.getColumn(i,"fileRefrnId"   );
+				var sFileSeq           = this.outFileinfo.getColumn(i,"fileId"        );
+				var sFileSize          = this.outFileinfo.getColumn(i,"atchFileMg"    );
+				var sBackendFilename   = this.outFileinfo.getColumn(i,"atchFileGuid"  );
+				var sForntendFilename  = this.outFileinfo.getColumn(i,"atchFileNm"    );
+				var sFileEncryptYn     = this.outFileinfo.getColumn(i,"fileEncryptYn" );
+				var sFileSaveStg       = this.outFileinfo.getColumn(i,"fileSaveStg"   );
+				
+				this.divFileUpload.form.fnAddUploadedFile(sHandlerCode, sFileSn, sFileSize, sBackendFilename, sForntendFilename, sFileSeq, sDownloadUrl
+														  ,sFileEncryptYn,sPrivInfoFiltYn,sFileSaveStg,sFileInfSaveYn );		
+				
+				// 이 부분에서 해당하는 원래 DB값에 있는 값과 비교하여 해당 div에 넣는다.
+				var objDiv = this["divUpload0"+i];
+				objDiv._FileRefrnId  = sFileSn;
+				objDiv._FileGbnValue = sForntendFilename;  //fileSn+"_"+fileSeq;
+				objDiv.form.edtFile.set_value(sForntendFilename);
+				
+				
+				trace("[" + responseCustomValue + "] [" + sHandlerCode + "]  [" + sFileSn + "]  [" + sBackendFilename + "]  [" + sForntendFilename+ "]  [" + sFileSize+"]");
+		}
+
+
+};
+this.btnUpload_FileSearch_callback = function()
+{
+}
+]]></Script>
+    <Objects>
+      <Dataset id="outFileinfo">
+        <ColumnInfo>
+          <Column id="fileRefrnId" type="STRING" size="256" description="파일SEQ ID"/>
+          <Column id="fileId" type="STRING" size="256" description="파일 아이디"/>
+          <Column id="suc" type="STRING" size="256"/>
+          <Column id="atchFileNm" type="STRING" size="256" description="파일명"/>
+          <Column id="atchFileGuid" type="STRING" size="256" description="파일 GUID"/>
+          <Column id="atchFileMg" type="STRING" size="256"/>
+          <Column id="fileExtsnNm" type="STRING" size="256" description="파일확장자"/>
+          <Column id="minTypeNm" type="STRING" size="256" description="파일의 mime type"/>
+          <Column id="fileCoursNm" type="STRING" size="256" description="서버파일저장위치"/>
+          <Column id="fileObjKey" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets"/>
+            <Col id="outDatasets">outFileinfo=atchFileinfo</Col>
+            <Col id="url">cm_cmc_file_upload_001.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

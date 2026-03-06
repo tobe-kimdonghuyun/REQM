@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameInstallCheck" width="490" height="160" titletext="프로그램 설치여부 확인" onload="frameInstallCheck_onload">
+    <Layouts>
+      <Layout height="160" width="490" screenid="ScreenDeskTop">
+        <Static id="staComment" taborder="0" text="이 시스템을 사용하기 위해서는 아래의 프로그램이 설치 되어 이어야 합니다." left="27" top="6" width="450" height="30" initvalueid="ivStcAccessibilityOn"/>
+        <Div id="divAxNeis" taborder="1" left="30" top="68" width="443" height="30">
+          <Layouts>
+            <Layout>
+              <Static id="staInstallTitle" taborder="0" text="나이스 인증서 - 암복화프로그램" left="0" top="0" width="272" height="30" initvalueid="ivStcAccessibilityOn"/>
+              <Button id="btnInstall" taborder="1" text="다운로드" top="0" width="100" height="30" right="0" progFile="AxNEIS.exe" onclick="Button_onclick" initvalueid="ivBtnAccessibilityDown"/>
+              <Plugin id="plgInstall" taborder="2" top="7" width="20" height="17" classid="{93D5247D-EBA7-4713-A8BF-448BD277E7AD}" visible="false" right="130" classid64="{93D5247D-EBA7-4713-A8BF-448BD277E7AD}"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staDevComment" taborder="2" text="* 새로운 프로그램 추가시, &#13;&#10;   - 다운로드 버튼에 프로그램파일명을 userproperty( progFile )에 세팅&#13;&#10;   - plugin에 classid를 세팅&#13;&#10;   - 가능하면 Exe형태로 다운로드 후 수동설치를 권장하며, OCX파일만 있는 경우만 &#13;&#10;      codebase를 통해 다운로드 세팅" left="-3" top="174" width="493" height="96" visible="false"/>
+        <Button id="btn00" taborder="3" text="Test" left="5" top="128" width="50" height="24" onclick="btn00_onclick" visible="false" initvalueid="ivBtnAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	frameInstallCheck.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2023.4.14
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.4.14     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frameInstallCheck_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitDiv(this);
+	
+	this.fnCheckInstall();
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnCheckInstall = function()
+{
+	//var arrCheckDiv = [this.divAcrobatReader,this.divAxNeis]
+	var arrCheckDiv = [this.divAxNeis]
+	//var arrResult = [];   // 각 프로그램별설치여부를 저장
+	var sInstalledText = "설치완료";
+	
+	var bResult = true;
+	
+	for(var i=0;i<arrCheckDiv.length;i++)
+	{
+		var objDivform = arrCheckDiv[i].form;
+		var bInstalled = objDivform.plgInstall.isInstalled();
+		
+		trace("objDivform.plgInstall.classid="+objDivform.plgInstall.classid);
+		trace("objDivform.plgInstall.classid64="+objDivform.plgInstall.classid64);
+		trace("bInstalled="+bInstalled);
+		if(bInstalled)
+		{
+			objDivform.btnInstall.set_text(sInstalledText);
+			objDivform.btnInstall.set_enable(false);
+		}
+		else
+		{
+			// 특별체크를 한다.
+			if(objDivform.parent.id=="divAxNeis")
+			{
+				// 64비트에서 체크가 안되는 현상에 대응 - 레지스토리 체크
+				var objExtCommon = this.smfCreateExtCommonAPI();
+				var sKey = "HKEY_LOCAL_MACHINE";
+				var sRegPath = "SOFTWARE\\Classes\\AxNEIS.AxNEIS";
+				
+				//var sRegPath64 = "";
+				var arrRegValue = objExtCommon._ext_getRegNameList(sKey,sRegPath) || "";
+				
+				//var sRegValue64 = objExtCommon._ext_getRegValue(sRegPath64) || "";
+				trace("arrRegValue.length="+arrRegValue.length);
+				
+				if(arrRegValue.length > 0)
+				{
+					bResult=true;
+					
+					objDivform.btnInstall.set_text(sInstalledText);
+					objDivform.btnInstall.set_enable(false);
+				}
+				else
+				{
+					bResult=false
+				}
+			}
+			else
+			{
+				bResult=false;
+			}
+		}
+		
+		// 각 프로그램별설치여부를 저장
+		//arrResult.push(bInstalled);
+	}
+	
+	return bResult;
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+// 프로그램 다운로드 누른 경우 
+this.Button_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sProgFile = obj.progFile;	
+	
+	var sUrl = this.smfGetBaseUrl() + "/install/nexaN_WS/etc/" + sProgFile;
+	
+	system.execDefaultBrowser(sUrl);
+	
+};
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnCheckInstall();
+};
+]]></Script>
+  </Form>
+</FDL>

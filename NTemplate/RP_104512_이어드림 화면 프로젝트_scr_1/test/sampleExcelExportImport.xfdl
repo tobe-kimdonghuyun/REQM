@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleExcelExportImport" width="1280" height="745" titletext="New Form" onload="sampleExcelExportImport_onload">
+    <Layouts>
+      <Layout height="745" width="1280">
+        <Static id="sta00" taborder="0" text="엑셀 Export / Import 샘플" left="26" top="17" width="520" height="40"/>
+        <Grid id="grdExport" taborder="1" left="58" top="100" width="584" height="244" binddataset="dsGridExport">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="166"/>
+                <Column size="119"/>
+                <Column size="97"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="데이터 0"/>
+                <Cell col="1" text="데이터 1"/>
+                <Cell col="2" text="데이터 2"/>
+                <Cell col="3" text="데이터 3"/>
+                <Cell col="4" text="데이터 4"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2"/>
+                <Cell col="3" text="bind:Column3"/>
+                <Cell col="4" text="bind:Column4"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnExport" taborder="2" text="Export" left="52" top="368" width="158" height="33" onclick="btnExport_onclick"/>
+        <Grid id="grdImport" taborder="3" left="48" top="440" width="584" height="244" binddataset="dsGridImport">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column99"/>
+                <Cell col="1" text="Column88"/>
+                <Cell col="2" text="Column23"/>
+                <Cell col="3" text="Column34"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column99"/>
+                <Cell col="1" text="bind:Column88"/>
+                <Cell col="2" text="bind:Column23"/>
+                <Cell col="3" text="bind:Column34"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnImport" taborder="4" text="Import" left="42" top="708" width="158" height="33" onclick="btnImport_onclick"/>
+        <Button id="btnMultiExport" taborder="5" text="Multi Export" left="222" top="368" width="158" height="33" onclick="btnMultiExport_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleExcelExportImport.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.9.21
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.9.21     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ this.sampleExcelExportImport_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+
+this.btnExport_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objOption = {
+						objGrid : this.grdExport    // [필수] export할 그리드 오브젝트
+					,   sheetname : "샘플시트1"       // [필수] export할 시트명
+					,   filename : "샘플엑셀Export"   // [필수] export할 파일이름
+					//,   startcell : "A1"            // [선택] 그리드를 export를 할 시작 위치(default="A1")
+					//,   exporttype : "select"    // [선택] "select": 팝업에서 유저가 선택, nexacro.ExportTypes.EXCEL2007(default)  , nexacro.ExportTypes.HANCELL2014 , nexacro.ExportTypes.CSV  , 
+					};
+	
+	this.smfExcelExport(objOption);
+};
+
+// 여러 그리드를 하나의 파일(여러시트 가능)로 Export
+this.btnMultiExport_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objOption = {
+						exportInfo : [ {
+											objGrid : this.grdExport   // [필수] export할 그리드 오브젝트
+										,   sheetname : "샘플시트1"       // [필수] export할 시트명 
+										//,   startcell : "A1"           // [선택] 그리드를 export를 할 시작 위치(default="A1")
+										}
+									,	{
+											objGrid : this.grdExport     // [필수] export할 그리드 오브젝트
+										,   sheetname : "샘플시트2"         // [필수] export할 시트명 
+										//,   startcell : "A10"            // [선택] 그리드를 export를 할 시작 위치(default="A1")
+										}
+									]
+					,   filename : "샘플엑셀MultiExport"
+					, multiExport : true
+					//,   exporttype : "select"  // [선택] "select": 팝업에서 유저가 선택, nexacro.ExportTypes.EXCEL2007(default)  , nexacro.ExportTypes.HANCELL2014 , nexacro.ExportTypes.CSV  , 
+					};
+	
+	this.smfExcelExport(objOption);
+};
+
+
+this.btnImport_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objOption = {
+						datasetname : "dsGridImport"
+					,   sheetname   : "Sheet1"
+					,   startcell   : "A2"
+					,   callback    : "fnImportCallback"
+					,   importId    : "import"
+					,   objForm     : this
+					//,   filefilter  : "Excel Files(*.xlsx)|*.xls;*.xlsx|Word Files(*.docx)|*.doc;*.docx|ALL Files(*.*)|*.*|" // (Runtime만 지원)
+					};
+					
+	this.smfExcelImport(objOption);
+};
+
+// Import의 callback함수
+this.fnImportCallback = function(sImportId,bResult,sFilename)
+{
+	trace("=====Import결과 : " + sImportId + " -- filename=[" + sFilename + "]");
+	if(bResult)
+	{
+		trace("Import성공");
+	}
+	else
+	{
+		trace("Import실패");
+	}
+}
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsGridExport">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">TEST01</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">TEST02</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">TEST03</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">TEST04</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">TEST05</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">TEST06</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsGridImport">
+        <ColumnInfo>
+          <Column id="Column99" type="STRING" size="256"/>
+          <Column id="Column88" type="STRING" size="256"/>
+          <Column id="Column23" type="STRING" size="256"/>
+          <Column id="Column34" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

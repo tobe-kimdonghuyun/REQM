@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmMain" width="800" height="450" titletext="계약제교원인력풀-기타사항 팝업" onload="frmMain_onload" canlayoutchange="btnCancel_onclick">
+    <Layouts>
+      <Layout height="450" width="800" screenid="ScreenDeskTop">
+        <Static id="staPopupTitleAss" taborder="0" left="20" top="20" width="20" height="20" initvalueid="ivStcAccessibilityOn"/>
+        <Div id="divMain" taborder="1" left="20" height="83" top="20" text="" cssclass="div_WF_Detail" right="20" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="staCont00" taborder="0" left="120" height="42" cssclass="sta_WF_Input02Top" top="0" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="staCont04" taborder="1" left="120" height="42" cssclass="sta_WF_Input02" top="41" right="0" initvalueid="ivStcAccessibilityOff" text=""/>
+              <Static id="staTltEmpNm" taborder="2" left="0" width="120" height="42" cssclass="sta_WF_Input01Top" text="내용" top="0" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtEtcContent" taborder="3" left="125" top="6" height="30" initvalueid="ivEdtNormal" onchanged="divMain_edtInstNm_onchanged" right="5"/>
+              <Static id="staTltAttachFl" taborder="4" left="0" width="120" height="42" cssclass="sta_WF_Input01" text="첨부파일" top="41" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn"/>
+              <Div id="divFileContent2" taborder="5" left="125" top="47" width="420" height="30" url="comm::comm_fileAdd2.xfdl" Mode="upload" uploadLocation="PA.HRD.OEW" addProp="fnSetRaonProp" privInfoFiltYn="Y" fileEncryptYn="Y" fileSaveStg="SV"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnCancel" taborder="2" text="취소" height="30" width="50" left="43.25%" fittocontents="width" cssclass="btn_WF_Custom" initvalueid="ivBtnAccessibilityButton" top="400" onclick="btnCancel_onclick"/>
+        <Button id="btnRegist" taborder="3" text="적용" height="30" width="50" fittocontents="width" left="btnCancel:8" initvalueid="ivBtnAccessibilityButton" top="400" onclick="btnRegist_onclick"/>
+        <Static id="staGd00" taborder="4" left="20" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGd04" taborder="5" left="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" height="20" bottom="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGd01" taborder="6" left="0" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" width="20" bottom="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGd02" taborder="7" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" width="20" bottom="0" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGd03" taborder="8" left="20" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" bottom="50" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="divFileAddInfo" taborder="9" left="20" top="120" height="259" right="20" cssclass="div_WF_Detail" initvalueid="ivDivAccessibilityOff" text="">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitleFileAdd" taborder="0" text="기타첨부파일" left="0" width="130" height="30" cssclass="img_WF_SubTit04" initvalueid="ivTitleAccessibilityOn" top="-3"/>
+              <Static id="staAwardsCont00" taborder="1" left="0" cssclass="sta_WF_Input02Top" top="34" right="0" initvalueid="ivStcAccessibilityOff" text="" bottom="0"/>
+              <Static id="staTltFileAddAttach" taborder="2" left="1" width="190" cssclass="sta_WF_Input01" text="기타첨부파일" top="35" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn" bottom="0"/>
+              <Div id="divFileContent" taborder="3" text="div00" left="196" top="41" width="559" height="212" url="comm::comm_fileAdd.xfdl" Mode="upload" uploadLocation="PA.HRD.OEW" addProp="fnSetRaonProp" privInfoFiltYn="N" fileEncryptYn="N" fileSaveStg="SV" fileInfSaveYn="Y" initvalueid="ivDivAccessibilityOff"/>
+              <Static id="staGD00" taborder="4" left="0" top="24" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="atchFileNm" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  온라인통합채용-계약제교원인력풀-지원서작성-기타사항 추가 팝업
+*  @MenuPath    pa_hrd_oew_ap
+*  @FileName 	pa_hrd_oewap02_p05.xfdl
+*  @Creator 	최지원
+*  @CreateDate 	2022.09.01
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.09.01    	최지원 	        최초 생성 
+*******************************************************************************
+*/
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ //** 미사용 **//
+this.frmMain_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+
+	// default 초기처리를 한다.
+	this.smfInitPopup(obj);
+
+	// 파라메터 셋
+	this.pv_params = this.smfGetPopupParams();
+	// 팝업 타이틀 변경
+	this.smfUpdatePopupTitle("기타사항");
+	
+	// 파일 업로드
+	this.divFileAddInfo.form.divFileContent.UPLOAD_UploadComplete  = this.fnFileUploadCompleteCallback;
+	this.divFileAddInfo.form.divFileContent.UPLOAD_OnError         = this.fnFileUploadErrorCallback;
+	this.divFileAddInfo.form.divFileContent.UPLOAD_AfterAddFile    = this.fnFileUploadChangeCallback;     
+	this.divFileAddInfo.form.divFileContent.UPLOAD_Form            = this;
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+// 파일 업로드 성공 콜백
+this.fnFileUploadCompleteCallback = function(obj, paramObj, objResultDataset)
+{
+
+	this.divFileAddInfo.form.divFileContent.form.fnSetUploadCompleteState(obj,paramObj);
+	this.dsMain.setColumn(0, "fileRefrnId", objResultDataset.getColumn(0, "fileRefrnId"));
+	this.dsMain.setColumn(0, "atchFileNm", objResultDataset.getColumn(0, "atchFileNm"));
+};
+
+// 파일 업로드 실패 콜백
+this.fnFileUploadErrorCallback = function(obj, paramObj)
+{
+	//this.smfAlert('파일 업로드에 실패 하였습니다.');
+};
+
+// 파일 업로드 변경 콜백
+this.fnFileUploadChangeCallback = function(obj, paramObj, sCustomValue, sFileName, nFileSize)
+{
+	this.divFileAddInfo.form.divFileContent.form.fnFileUpload();	
+};
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * 확인버튼 클릭	
+ */
+this.btnRegist_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 입력값 부모창 전달
+	this.smfSendResponseToOpener({
+		"atchFileCtn" : this.divMain.form.edtEtcContent.value,
+		"fileRefrnId" : this.dsMain.getColumn(0, "fileRefrnId"), // 파일참조ID
+		"atchFileNm" : this.dsMain.getColumn(0, "atchFileNm") // 첨부파일명
+	});
+	this.close(true);
+};
+
+/**
+ * 취소버튼 클릭
+ */
+this.btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 닫기 버튼을 이용한 팝업종료의 파라메터는 false를 전달
+	this.close(false);
+};
+
+
+]]></Script>
+  </Form>
+</FDL>

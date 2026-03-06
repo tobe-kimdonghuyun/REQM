@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="notice4" width="538" height="580" titletext="공지팝업01" background="transparent" onload="notice4_onload">
+    <Layouts>
+      <Layout height="580" screenid="ScreenDeskTop" width="538">
+        <Static id="title" taborder="0" text="대국민에서 이벤트 안내점검 " left="48" top="30" height="130" cssclass="font40B" initvalueid="ivStcAccessibilityOn" font="normal 700 36px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;" width="315"/>
+        <ImageViewer id="img00" taborder="1" left="390" top="53" width="92" height="92" cssclass="display" image="url('imagerc::common/img_popup_2.png')" initvalueid="ivTitleAccessibilityOff" accessibilitylabel="대국민서버점검 안내 이미지" stretch="fit"/>
+        <Static id="sta00" taborder="2" left="34" top="175" width="470" height="354" cssclass="sta_Notice_bg" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="divText" taborder="3" text="**에디트영역**" left="60" top="198" height="156" width="418" initvalueid="ivDivAccessibilityOn" url="comm::comp_webEditor.xfdl"/>
+        <Static id="sta01" taborder="4" text="작업내용" left="54" top="376" width="100" height="36" cssclass="sta_Notice_bg01" initvalueid="ivStcAccessibilityOn"/>
+        <Static id="staJobCn" taborder="5" text="서버점검 안내 서버점검 안내 서버점검 안내 서버점검 안내 서버점검 안내 서버" left="170" top="369" width="308" height="50" cssclass="font16R" initvalueid="ivStcAccessibilityOn" font="normal 400 16px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;"/>
+        <Static id="sta01_00" taborder="6" text="점검시간" left="54" top="424" width="100" height="36" cssclass="sta_Notice_bg01" initvalueid="ivStcAccessibilityOn"/>
+        <Static id="staYmd" taborder="7" text="2023.01.01 12:00 ~ 2023.01.03 18:00" left="170" top="417" width="308" height="50" cssclass="font16R" initvalueid="ivStcAccessibilityOn" font="normal 400 16px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;"/>
+        <Static id="sta01_01" taborder="8" text="중단업무" left="54" top="472" width="100" height="36" cssclass="sta_Notice_bg01" initvalueid="ivStcAccessibilityOn"/>
+        <Static id="staWrkCn" taborder="9" text="서버점검 안내 서버점검 안내 서버점검 안내 서버점검 안내 서버점검 안내 서버" left="170" top="465" width="308" height="50" cssclass="font16R" initvalueid="ivStcAccessibilityOn" font="normal 400 16px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="560" height="660" mobileorientation="portrait" type="default">
+        <Static id="title" cssclass="font50B" left="45" top="9" height="149" width="355" text="대국민에서 이벤트안내점검 이벤트안내점검 " font="normal 700 40px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;"/>
+        <Static id="staJobCn" cssclass="font22R" left="165" top="409" height="64" font="normal 400 22px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;" text="서버점검 안내 서버점검 안내 서버점검 안내 서버점검 안내 서버점검 안내 서버" letterSpacing="-2px" right="50"/>
+        <ImageViewer id="img00" width="90" left="410" top="36" height="90" image="url('imagerc::common_M/img_popup_2_M.png')"/>
+        <Static id="staYmd" left="165" top="484" height="50" cssclass="font22R" font="normal 400 22px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;" letterSpacing="-2px" right="50"/>
+        <Static id="sta00" left="20" top="160" right="20" bottom="30" cssclass="sta_Notice_bg"/>
+        <Static id="staWrkCn" left="165" top="545" height="64" cssclass="font22R" font="normal 400 22px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;" letterSpacing="-2px" right="50"/>
+        <Static id="sta01" left="30" top="415" width="125" height="52" cssclass="sta_Notice_bg01_M"/>
+        <Static id="sta01_00" left="30" top="483" width="125" height="52" cssclass="sta_Notice_bg01_M"/>
+        <Static id="sta01_01" left="30" top="551" width="125" height="52" cssclass="sta_Notice_bg01_M"/>
+        <Div id="divText" left="46" top="185" height="211" right="46"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.notice4_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.title.set_text(this.parent.params.eventTitlNm);		//팝업타이틀
+	
+	this.divText.form.fnInit(this, this.fnWebEditorCallback, this.fnWebEditorSetHtmlCallback);
+	//this.divText.autoHeight = "Y";
+	this.divText._html = this.parent.params.popupCn; //팝업 내용
+	
+	this.staJobCn.set_text(this.parent.params.jobCn);		//작업내용
+	this.staYmd.set_text(this.parent.params.eventYmd); 	    //작업시간
+	this.staWrkCn.set_text(this.parent.params.haltWrkCn);	//중단업무내용
+	trace("공지 팝업1");
+};
+
+/*
+*	웹에디터가 onload된 이후 호출되는 callback
+*   obj : 웹에디터 Div오브젝트
+*/
+this.fnWebEditorCallback = function(obj)
+{
+	// 일반적으로는 데이터를 세팅
+	obj.form.fnSetHtml(obj._html);
+};
+
+
+/*
+*	웹에디터가 text를 변경 할 경우 호출하는 callback
+*   obj : 웹에디터 Div오브젝트
+*/
+this.fnWebEditorSetHtmlCallback = function(obj,contentHeight)
+{
+	trace("***  웹에디터에 Text를 세팅했습니다.["+obj.id+"] contentHeight[=" + contentHeight + "]");
+	
+	// 일반적으로는 WebEditor Div를 resetScroll해줌.
+	//  (Web Editor의 높이가 변경이 되어 있음(autoHeight="Y"인 경우))
+	//this.smfResetScroll(this.divDetail.form.divWebEditor);
+};]]></Script>
+  </Form>
+</FDL>

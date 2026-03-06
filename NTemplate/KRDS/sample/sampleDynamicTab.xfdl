@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleDynamicTab" width="888" height="1100" titletext="Tabpage 동적 생성" onload="form_onload">
+    <Layouts>
+      <Layout height="1100" mobileorientation="landscape" width="888" screenid="Desktop_screen">
+        <Static id="Static01" taborder="0" left="332" top="20" width="1" height="21" cssclass="sta_WF_line" accessibilityenable="false"/>
+        <Static id="Static00_02" taborder="1" text="DynamicTabpage" left="Static01:15" top="0" width="213" height="60" cssclass="sta_WF_ParaH4_pc"/>
+        <Static id="Static00_00" taborder="2" text="Tabpage 동적생성" left="0" top="0" width="316" height="60" cssclass="sta_WF_H2_pc" fittocontents="width" accessibilityrole="heading2"/>
+        <Panel id="Panel01" taborder="3" left="0" top="0" height="60" right="0" flexcrossaxisalign="center" horizontalgap="16" fittocontents="height" flexwrap="wrap">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Static00_00"/>
+            <PanelItem id="PanelItem01" componentid="Static01"/>
+            <PanelItem id="PanelItem02" componentid="Static00_02"/>
+          </Contents>
+        </Panel>
+        <Static id="Static00" taborder="4" text="탭페이지" left="0" top="Panel01:40" height="43" cssclass="sta_WF_ParaH3_pc" accessibilityrole="heading3" right="0"/>
+        <Button id="btnTabpageMove" taborder="5" text="현재탭을 제일앞으로 이동" top="50" width="231" height="48" right="819" onclick="btnTabpageMove_onclick"/>
+        <Button id="btnAddTabpageM" taborder="6" text="특정위치에 Tabpage  생성" top="50" width="234" height="48" right="577" onclick="btnAddTabpageM_onclick"/>
+        <Button id="btnDelTabpage" taborder="7" text="TabPage 삭제" top="50" width="136" height="48" right="433" onclick="btnDelTabpage_onclick"/>
+        <Button id="btnAddTabpage" taborder="8" text="TabPage생성" width="130" right="20" onclick="btnAddTabpage_onclick" height="48" bottom="688"/>
+        <Panel id="Panel00" taborder="9" top="Static00:16" height="48" horizontalgap="8" flexwrap="wrap" flexmainaxisalign="end" left="0" right="0" fittocontents="height" verticalgap="16">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="btnTabpageMove"/>
+            <PanelItem id="PanelItem01" componentid="btnAddTabpageM"/>
+            <PanelItem id="PanelItem02" componentid="btnDelTabpage"/>
+            <PanelItem id="PanelItem03" componentid="btnAddTabpage"/>
+          </Contents>
+        </Panel>
+        <Tab id="tabMain" taborder="10" tabindex="0" left="0" top="Panel00:24" right="0" showextrabutton="true" onextrabuttonclick="tabMain_onextrabuttonclick" ondrop="tabMain_ondrop" ondrag="tabMain_ondrag" height="790">
+          <Tabpages>
+            <Tabpage id="Tabpage1" text="Tabpage1" url="sample::sampleDynamicTabLink.xfdl"/>
+          </Tabpages>
+        </Tab>
+      </Layout>
+      <Layout height="1100" mobileorientation="Portrait" name="Layout0" type="default" width="480" screenid="Desktop_screen,mobile_small">
+        <Static id="Static00_00" cssclass="sta_WF_H2_m" width="222" left="0" top="0" height="60"/>
+        <Static id="Static00_02" cssclass="sta_WF_ParaH4_m" width="220" left="Static01:15" top="0" height="60"/>
+        <Static id="Static00" cssclass="sta_WF_ParaH3_m" text="탭페이지" right="0" left="0" top="Panel01:40" height="43"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleDynamicTab.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/12/14
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/12/14			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+this.fnGetMaxCnt = function ()
+{
+	var nMax = -1;
+	for( var i=0; i<this.tabMain.getTabpageCount(); i++){
+		var sCompaId = parseInt(this.tabMain.tabpages[i].id.replace("Tabpage",""));
+		if( sCompaId > nMax) nMax = sCompaId;
+	}
+	return nMax;
+};
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.btnAddTabpage_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nMax = this.fnGetMaxCnt() + 1;
+	var sNewId = "Tabpage"+nMax;
+	var nIndex = this.tabMain.insertTabpage(sNewId, -1); 
+	if (nIndex > -1) this.tabMain.tabpages[nIndex].set_url("sample::sampleDynamicTabLink.xfdl");
+};
+
+this.btnDelTabpage_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.tabMain.removeTabpage(this.tabMain.tabindex);
+};
+
+this.btnAddTabpageM_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nMax = this.fnGetMaxCnt() + 1;
+	var sNewId = "Tabpage"+nMax;
+	
+	var nIndex = this.tabMain.insertTabpage(sNewId, 1);
+	if (nIndex > -1) this.tabMain.tabpages[nIndex].set_url("sample::sampleDynamicTabLink.xfdl");
+};
+
+this.tabMain_onextrabuttonclick = function(obj:nexacro.Tab,e:nexacro.TabMouseEventInfo)
+{
+	var nIdx = e.index;
+	this.tabMain.removeTabpage(nIdx);
+};
+
+this.btnTabpageMove_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nIdx = this.tabMain.tabindex;
+	this.tabMain.moveTabpage(nIdx, 0);
+};
+
+//drag & drop으로 index변경
+this.tabMain_ondrop = function(obj:nexacro.Tab,e:nexacro.DragEventInfo)
+{
+	var nEndIdx = this.tabMain.getIndex(e.clientx, e.clienty);
+	var nStartIdx = e.userdata;
+	if( nEndIdx == -1 ){
+		nEndIdx = this.tabMain.getTabpageCount() -1;
+	}
+	this.tabMain.moveTabpage(nStartIdx, nEndIdx);
+};
+
+this.tabMain_ondrag = function(obj:nexacro.Tab,e:nexacro.DragEventInfo)
+{
+	var nStartIdx = this.tabMain.getIndex(e.canvasx, e.canvasy);
+	e.set_userdata(nStartIdx);
+	return true;
+};
+]]></Script>
+  </Form>
+</FDL>

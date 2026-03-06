@@ -1,0 +1,489 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameLoginNpki02" width="1200" height="745" titletext="공동인증서 로그인" onload="fnOnload">
+    <Layouts>
+      <Layout height="745" width="1200" screenid="ScreenDeskTop">
+        <ImageViewer id="img00" taborder="0" text="로그인" left="527" top="117" height="58" cssclass="font34B_C" width="147" initvalueid="ivTitleAccessibilityOn" onkeydown="img00_onkeydown" onkeyup="img00_onkeyup"/>
+        <Div id="div00" taborder="1" left="250" top="170" height="350" initvalueid="ivDivAccessibilityOff" right="250">
+          <Layouts>
+            <Layout>
+              <Button id="btnLogin" taborder="1" text="공동인증서 로그인" left="176" top="160" width="348" height="60" cssclass="btn_WF_Custom" initvalueid="ivBtnAccessibilityButton" onclick="div00_btnLogin_onclick"/>
+              <Button id="btnLogin00" taborder="2" text="테스트 로그인" left="176" top="160" width="348" height="60" cssclass="btn_Login_PartyCert" initvalueid="ivBtnAccessibilityButton" onclick="div00_btnLogin00_onclick" visible="false"/>
+              <Div id="divBrno" taborder="0" text="div00" left="0" top="0" height="160" right="0">
+                <Layouts>
+                  <Layout>
+                    <Edit id="edtBrno" taborder="0" left="177" top="25" width="347" height="50" text="앞 6자리" initvalueid="ivEdtNormal" cssclass="edi_Login_Normal" maxlength="10" inputtype="digit" onkeyup="onkeyup"/>
+                    <Static id="sta00" taborder="1" text="사업자등록번호를 입력해주세요." left="177" top="88" width="333" height="26" cssclass="sta_Login_MemberNotice" initvalueid="ivStcAccessibilityOn" usedecorate="true"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    업무지원 > 로그인
+*  @FileName 	frameLoginNpki02.xfdl 
+*  @Creator 	김민성
+*  @CreateDate 	2022.12.02
+*  @Desction    업무지원 공동인증서 로그인(성명, 사업자등록번호)
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.12.02            김민성                   최초 생성
+*******************************************************************************
+*/
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_params;
+this.userType;
+this.tmpLoginYn = false;
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	this.fv_params = this.smfGetFormParams();
+	this.dsSearch.setColumn(0, 'cddcCd', this.smfGetCddcCode());
+	this.dsSearch.setColumn(0, 'ymd', this.smfToday().substr(0, 4)); // 교과용 도서 파라미터
+	this.userType = this.fv_params.usertype;
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+};
+
+/**
+ * 팝업의 콜백함수
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+	if(e.result) {
+		var sData = e.data;
+		var vidResult = JSON.parse(sData).vidResult;
+		
+		if(vidResult == "true"){
+			this.dsSearch.setColumn(0, 'lgnMthScCd', '02'); // 로그인 구분 01: 교육디지털원패스, 02: 공동인증서, 03: 간편인증
+			this.dsSearch.setColumn(0, 'sysCd', this.smfGetSubSystemGb());
+			this.fnSearchSession();
+		}else if(vidResult.indexOf("VID") != -1){
+			this.smfAlert('PA024', []); // 입력된 사업자등록번호와 일치하지 않습니다. 다시한번 확인해 주세요.
+			return;
+		}else{
+			this.smfAlert('PA025', []); // 인증서 인증에 에러가 발생했습니다. 관리자에게 문의하세요.
+			return;
+		}
+	}else {
+		return;
+	}
+};
+
+/**
+ * 메세지 콜백함수
+ * @param : N/A
+ * @return : N/A
+ */
+this.fnMessageCallback = function(){
+	this.fnCallbackConfirmAuth();
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * 로그인 세션 조회서비스
+ * @param : N/A
+ * @param : N/A
+ */
+this.fnSearchSession = function()
+{
+ 	// 서비스 객체 생성
+	this.smfSearchService("check")
+		// (권장) 데이터 존재 필수
+		.requireExistsData(this.dsSearch)
+		// 데이터 변경 필수
+		.requireModifredData(this.dsSearch)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors){
+				return;
+			}
+			
+			if (this.dsApiResponseList.getColumn(0, 'code') == 'succ'){
+				if (this.dsApiResponseList.getColumn(0, 'usePslYn') == 'Y'){
+					this.dsMain.setColumn(0, 'kornFlnm', this.dsMain.getColumn(0, 'userNm'));
+					this.smfSetSessionDataset(this.dsMain);
+					this.smfSendLoginLog(this, "LG002");
+					this.fnCallbackConfirmAuth();
+				}else{
+					this.smfAlert('LI155', ['로그인 정보가 올바르지 않습니다.']);
+				}
+			}else{
+				this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'message')]);
+			}
+		});
+};
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ /**
+ * 화면이동
+ * @param : N/A
+ * @param : N/A
+ */
+this.fnCallbackConfirmAuth = function(){
+	// 로그인 됐다고 판정
+	this.smfSetLoginState(true);
+	
+	// Top영역을 변경
+	var objTopFrameForm = this.getOwnerFrame().form.divTop.form;
+	if(objTopFrameForm){
+		objTopFrameForm.fnLoginAfter();
+	}
+	
+	// 다음화면으로 이동
+	var params = {};
+	
+	var sSubSystemGb = this.smfGetSubSystemGb();
+	if(  (sSubSystemGb=="AFS")   // 업무지원(외부강사)
+		  || (sSubSystemGb=="ECC")   // 업무지원(돌봄인력서비스)
+		  || (sSubSystemGb=="IBM")   // 업무지원(교과용도서)
+		  || (sSubSystemGb=="SEM")   // 업무지원(학교환경관리)
+		  || (sSubSystemGb=="SPR")   // 업무지원(교육복지)
+		  )	
+	{
+		if(objTopFrameForm)		objTopFrameForm.fnRearrageTopComp(sSubSystemGb,"expand");
+		// 메뉴의 첫번째화면으로 이동
+		
+		var sUrl = this.fnFindFirstWorkPageUrl(sSubSystemGb);
+		
+		// 방과후학교 사업자 URL 설정
+		if (sSubSystemGb=="AFS" && this.userType == 2){
+			sUrl = "pa_afs_ats_cm::afs_atscm00_m00.xfdl";
+		}
+		
+		var bShowHead = true;
+		this.smfSetWorkPage(sUrl,params,false);
+	}
+};
+
+/**
+ * 서브시스템에 맞는 URL가져오기
+ * @param : sSubSystemGb	- 서브시스템코드
+ * @return : sUrl			- URL
+ */
+this.fnFindFirstWorkPageUrl = function(sSubSystemGb)
+{
+	var sUrl = "";
+	var objTopFrameForm = this.getOwnerFrame().form.divTop.form;
+	var objDs = objTopFrameForm.dsMenu;
+	
+	for(var i=0; i < objDs.rowcount; i++){
+		var sMenuUrl = objDs.getColumn(i, "menuUrl");
+		var sIsShow = objDs.getColumn(i, "isShow");
+		
+		if((!this.smfIsNull(sMenuUrl)) && sIsShow!="N"){
+			sUrl =  sMenuUrl;
+			break;
+		}
+	}
+	return sUrl;
+};
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * 공동인증서 로그인 버튼 클릭 시
+ * @param  : obj		   - [object]Button
+ * @param  : e		       - [string]ClickEventInfo
+ * @return : N/A
+ */
+this.div00_btnLogin_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	if(this.userType == 2){
+		if (this.smfIsNull(this.dsSearch.getColumn(0, 'brno'))){
+			this.smfAlert('CM006', ['사업자등록번호']);
+			return;
+		}
+		if (this.dsSearch.getColumn(0, 'brno').length != 10 ){
+			this.smfAlert('CM121', ['사업자등록번호 10' ]); //{0}자리로 입력하세요
+			return;
+		}
+		if (this.smfIsCorpRegNo(this.dsSearch.getColumn(0, 'brno'))){
+			this.smfAlert('PA058', ['올바른 사업자등록번호를 입력']); //{0}해주세요.
+			return;
+		}
+	}
+	
+	var sConnectBaseUrl = window.location.protocol + "//" + window.location.host;
+
+	var sInitUrl  = sConnectBaseUrl + "/cmc_fcm_es01_003.do";
+	var sLoginUrl = sConnectBaseUrl + "/cmc_fcm_es01_004.do";
+
+	var userId = this.dsSearch.getColumn(0, this.userType == 1 ? 'userRrno' : 'brno');
+	
+	var objLoginInfo = {
+							initUrl  : sInitUrl    // init시 사용하는 서비스명(앞에 "/"을 붙일 것)
+						,   loginUrl : sLoginUrl   // login시 사용하는 서비스명(앞에 "/"을 붙일 것)
+						,	userId : userId
+					   };   // 생략가능
+
+	var objParam = {objForm:this, popupcallback :this.fnPopupCallback, loginInfo:objLoginInfo};
+	this.smfExecNpkiAuth(objParam);
+};
+
+/**
+ * 입력창 입력 시
+ * @param  : obj		   - [object]Edit
+ * @param  : e		       - [string]KeyEventInfo
+ * @return : N/A
+ */
+this.onkeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if (e.keycode == 13){
+		this.div00_btnLogin_onclick(null, null);
+	}
+};
+
+// 임시 로그인 소스 코드 삭제예정 start//
+this.div00_btnLogin00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	if (this.smfIsNull(this.dsSearch.getColumn(0, 'brno'))){
+		this.smfAlert('CM006', ['사업자등록번호']);
+		return;
+	}
+	if (this.dsSearch.getColumn(0, 'brno').length != 10 ){
+		this.smfAlert('CM121', ['사업자등록번호 10' ]); //{0}자리로 입력하세요
+		return;
+	}
+	if (this.smfIsCorpRegNo(this.dsSearch.getColumn(0, 'brno'))){
+		this.smfAlert('PA058', ['올바른 사업자등록번호를 입력']); //{0}해주세요.
+		return;
+	}
+	this.dsSearch.setColumn(0, 'lgnMthScCd', '02'); // 로그인 구분 01: 교육디지털원패스, 02: 공동인증서, 03: 간편인증
+	this.dsSearch.setColumn(0, 'sysCd', this.smfGetSubSystemGb());
+	this.dsSearch.setColumn(0, 'testYn', 'Y');
+	this.fnSearchSession();
+};
+this.img00_onkeydown = function(obj:nexacro.ImageViewer,e:nexacro.KeyEventInfo)
+{
+	this.tmpLoginYn = e.ctrlkey && e.shiftkey ? true : false;
+};
+
+this.img00_onkeyup = function(obj:nexacro.ImageViewer,e:nexacro.KeyEventInfo)
+{
+	if (this.tmpLoginYn && e.keycode == 32){
+		var isVisible = this.div00.form.btnLogin.visible ? false : true;
+		
+		this.div00.form.btnLogin.set_visible(isVisible);
+		this.div00.form.btnLogin00.set_visible(!isVisible);
+	}
+};
+// 임시 로그인 소스 코드 삭제예정 end//]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">check</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsMain=dsMain dsApiResponseList=dsApiResponseList</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/sac_cmm_cm00_004.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="ymd" type="STRING" size="256"/>
+          <Column id="userNm" type="STRING" size="256"/>
+          <Column id="userRrno" type="STRING" size="256"/>
+          <Column id="brno" type="STRING" size="256"/>
+          <Column id="resultCode" type="STRING" size="256"/>
+          <Column id="certDtcNm" type="STRING" size="256"/>
+          <Column id="issuerDn" type="STRING" size="256"/>
+          <Column id="serialNumber" type="STRING" size="256"/>
+          <Column id="notBefore" type="STRING" size="256"/>
+          <Column id="notAfter" type="STRING" size="256"/>
+          <Column id="policyGbn" type="STRING" size="256"/>
+          <Column id="lgnMthScCd" type="STRING" size="256"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="testYn" type="STRING" size="256"/>
+          <Column id="sysCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="userId" type="STRING" size="256"/>
+          <Column id="userNm" type="STRING" size="256"/>
+          <Column id="connectNo" type="STRING" size="256"/>
+          <Column id="userTypCd" type="STRING" size="256"/>
+          <Column id="ordScCd" type="STRING" size="256"/>
+          <Column id="grd" type="STRING" size="256"/>
+          <Column id="dddepCd" type="STRING" size="256"/>
+          <Column id="clsCd" type="STRING" size="256"/>
+          <Column id="ordScNm" type="STRING" size="256"/>
+          <Column id="grdNm" type="STRING" size="256"/>
+          <Column id="dddepNm" type="STRING" size="256"/>
+          <Column id="clsNm" type="STRING" size="256"/>
+          <Column id="cno" type="STRING" size="256"/>
+          <Column id="cddcOrgCd" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="dghtCrseScCd" type="STRING" size="256"/>
+          <Column id="shlTypCd" type="STRING" size="256"/>
+          <Column id="sgByCrseScCd" type="STRING" size="256"/>
+          <Column id="aplcnTrgtShlScCd" type="STRING" size="256"/>
+          <Column id="sem" type="STRING" size="256"/>
+          <Column id="shlNm" type="STRING" size="256"/>
+          <Column id="semNm" type="STRING" size="256"/>
+          <Column id="mnrDsgnYn" type="STRING" size="256"/>
+          <Column id="relData" type="STRING" size="256"/>
+          <Column id="ncnm" type="STRING" size="256"/>
+          <Column id="shlCrseScCdList" type="STRING" size="256"/>
+          <Column id="cntnIpAddr" type="STRING" size="256"/>
+          <Column id="atchFileVrfcId" type="STRING" size="256"/>
+          <Column id="linkAprvNo" type="STRING" size="256"/>
+          <Column id="accesTknNm" type="STRING" size="256"/>
+          <Column id="linkSiId" type="STRING" size="256"/>
+          <Column id="userDtcNo" type="STRING" size="256"/>
+          <Column id="userRrno" type="STRING" size="256"/>
+          <Column id="invlNo" type="STRING" size="256"/>
+          <Column id="ogdpOrgCd" type="STRING" size="256"/>
+          <Column id="corpCd" type="STRING" size="256"/>
+          <Column id="corpNm" type="STRING" size="256"/>
+          <Column id="ogdpOrgNm" type="STRING" size="256"/>
+          <Column id="ayr" type="STRING" size="256"/>
+          <Column id="ptyAuthCd" type="STRING" size="256"/>
+          <Column id="instCd" type="STRING" size="256"/>
+          <Column id="instNm" type="STRING" size="256"/>
+          <Column id="cntnCtpvScCd" type="STRING" size="256"/>
+          <Column id="cntnCtpvOrgCd" type="STRING" size="256"/>
+          <Column id="orgScCd" type="STRING" size="256"/>
+          <Column id="orgCd" type="STRING" size="256"/>
+          <Column id="orgNm" type="STRING" size="256"/>
+          <Column id="instClfCd" type="STRING" size="256"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="cddcNm" type="STRING" size="256"/>
+          <Column id="cteOrgCd" type="STRING" size="256"/>
+          <Column id="cteOrgNm" type="STRING" size="256"/>
+          <Column id="cteOrgInstClfCd" type="STRING" size="256"/>
+          <Column id="ogdpInstCd" type="STRING" size="256"/>
+          <Column id="shlKndScCd" type="STRING" size="256"/>
+          <Column id="shlFndnScCd" type="STRING" size="256"/>
+          <Column id="shlCrseScCd" type="STRING" size="256"/>
+          <Column id="sysCd" type="STRING" size="256"/>
+          <Column id="userScCd" type="STRING" size="256"/>
+          <Column id="usePosblYn" type="STRING" size="256"/>
+          <Column id="useBgngYmd" type="STRING" size="256"/>
+          <Column id="useEndYmd" type="STRING" size="256"/>
+          <Column id="initInstClfCd" type="STRING" size="256"/>
+          <Column id="initInstCd" type="STRING" size="256"/>
+          <Column id="initInstNm" type="STRING" size="256"/>
+          <Column id="initCteOrgInstClfCd" type="STRING" size="256"/>
+          <Column id="initCteOrgCd" type="STRING" size="256"/>
+          <Column id="initCteOrgNm" type="STRING" size="256"/>
+          <Column id="initShlCrseScCd" type="STRING" size="256"/>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="cntnCddcNm" type="STRING" size="256"/>
+          <Column id="brno" type="STRING" size="256"/>
+          <Column id="apprIpAddr" type="STRING" size="256"/>
+          <Column id="trprRrno" type="STRING" size="256"/>
+          <Column id="rcptNo" type="STRING" size="256"/>
+          <Column id="sqeExmtNo" type="STRING" size="256"/>
+          <Column id="mblTelNo" type="STRING" size="256"/>
+          <Column id="emlAddr" type="STRING" size="256"/>
+          <Column id="brdt" type="STRING" size="256"/>
+          <Column id="appoExamScCd" type="STRING" size="256"/>
+          <Column id="trpRrno" type="STRING" size="256"/>
+          <Column id="cteOfcdcCd" type="STRING" size="256"/>
+          <Column id="acaDsgnNo" type="STRING" size="256"/>
+          <Column id="invlDsgnNo" type="STRING" size="256"/>
+          <Column id="kornFlnm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsApiResponseList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="연계상태값"/>
+          <Column id="message" type="STRING" size="256"/>
+          <Column id="usePslYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearchValid" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="ymd" type="STRING" size="256"/>
+          <Column id="userNm" type="STRING" size="256"/>
+          <Column id="userRrno" type="STRING" size="256"/>
+          <Column id="brno" type="STRING" size="256"/>
+          <Column id="resultCode" type="STRING" size="256"/>
+          <Column id="certDtcNm" type="STRING" size="256"/>
+          <Column id="issuerDn" type="STRING" size="256"/>
+          <Column id="serialNumber" type="STRING" size="256"/>
+          <Column id="notBefore" type="STRING" size="256"/>
+          <Column id="notAfter" type="STRING" size="256"/>
+          <Column id="policyGbn" type="STRING" size="256"/>
+          <Column id="lgnMthScCd" type="STRING" size="256"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="testYn" type="STRING" size="256"/>
+          <Column id="sysCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="div00.form.edtNm" propid="value" datasetid="dsSearch" columnid="userNm"/>
+      <BindItem id="item1" compid="div00.form.divUserRno.form.edtNm" propid="value" datasetid="dsSearch" columnid="userNm"/>
+      <BindItem id="item2" compid="div00.form.divUserRno.form.div00.form.edtNm" propid="value" datasetid="dsSearch" columnid="userNm"/>
+      <BindItem id="item3" compid="div00.form.divBrno.form.edtNm" propid="value" datasetid="dsSearch" columnid="userNm"/>
+      <BindItem id="item4" compid="div00.form.divBrno.form.div00.form.div00_00.form.edtNm" propid="value" datasetid="dsSearch" columnid="userNm"/>
+      <BindItem id="item5" compid="div00.form.divBrno.form.edtBrno" propid="value" datasetid="dsSearch" columnid="brno"/>
+    </Bind>
+  </Form>
+</FDL>

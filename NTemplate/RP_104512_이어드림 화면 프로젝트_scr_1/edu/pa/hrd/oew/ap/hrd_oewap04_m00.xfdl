@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmMain" width="1200" height="860" titletext="계약제교원인력풀-지원서변경요청현황" onload="frmMain_onload">
+    <Layouts>
+      <Layout height="860" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="인력풀정보변경" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="233" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staText00" taborder="1" top="144" width="270" height="30" cssclass="sta_WF_Red14R" text="※ 채용 중에는 변경이 불가합니다." initvalueid="ivStcAccessibilityOn" right="0"/>
+        <Div id="divSearch" taborder="2" left="0" top="184" height="70" cssclass="div_WF_Search" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="staText" taborder="0" text="승인 인력풀 신청서" left="0" top="20" width="159" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboSearchType00" taborder="1" left="169" width="581" height="30" index="-1" top="20" initvalueid="ivCmbNormal" text="" onitemchanged="divSearch_cboSearchType00_onitemchanged" displaynulltext="-선택-" innerdataset="dsResultApplyList" codecolumn="mnplReqsId" datacolumn="mnplOtlNm" ondropdown="divSearch_cboSearchType00_ondropdown"/>
+              <Button id="btnSearch" taborder="2" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="163" onclick="divSearch_btnSearch_onclick" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btnModify" taborder="3" text="인력풀정보변경" top="20" width="125" height="30" cssclass="btn_WF_Custom" right="30" initvalueid="ivBtnAccessibilityButton" onclick="divSearch_btnModify_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divAdmit" taborder="3" text="div00" left="0" top="254" height="500" right="0" cssclass="div_WF_Detail" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="img00_00_00" taborder="0" text="인력풀 정보 변경 내역" left="0" top="20" width="179" height="30" cssclass="img_WF_SubTit04" initvalueid="ivTitleAccessibilityOn"/>
+              <Grid id="grdAdmit" taborder="1" left="0" top="60" height="440" right="0" binddataset="dsAprvStsList" autofittype="col" selecttype="cell" initvalueid="ivGrdAccessibilityOn" accessibilitylabel="신청내역목록">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="30"/>
+                      <Column size="100"/>
+                      <Column size="215"/>
+                      <Column size="70"/>
+                      <Column size="100"/>
+                      <Column size="70"/>
+                      <Column size="50"/>
+                      <Column size="240"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="NO"/>
+                      <Cell col="1" text="변경구분"/>
+                      <Cell col="2" text="내용"/>
+                      <Cell col="3" text="변경신청일자"/>
+                      <Cell col="4" text="처리상태"/>
+                      <Cell col="5" text="확인일자"/>
+                      <Cell col="6" text="삭제여부"/>
+                      <Cell col="7" text="사유"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="currow +1" textAlign="center"/>
+                      <Cell col="1" text="bind:chgSc" textAlign="center"/>
+                      <Cell col="2" text="bind:chgNm"/>
+                      <Cell col="3" text="bind:chgAplyYmd" textAlign="center" displaytype="date" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd" calendardisplaynulltype="none"/>
+                      <Cell col="4" text="bind:aplcnScCd" textAlign="center" expr="[aplcnScCd]=='INS'?'추가신청':([aplcnScCd]=='DEL'?'삭제신청':none)"/>
+                      <Cell col="5" text="bind:idntyYmd" displaytype="date" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd" calendardisplaynulltype="none"/>
+                      <Cell col="6" text="bind:delYn" textAlign="center" expr="[delYn]=='Y'?'삭제':'미삭제'"/>
+                      <Cell col="7" text="bind:rjctRsnCn"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="staGD00" taborder="2" left="0" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" right="0" initvalueid="ivStcAccessibilityOff" visible="false"/>
+              <Static id="staGD01" taborder="3" left="0" top="50" height="10" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" right="0" initvalueid="ivStcAccessibilityOff" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staText01" taborder="4" left="0" top="764" width="340" height="30" cssclass="sta_WF_Red14" text="※ 승인 처리된 인력풀 신청서만 변경이 가능합니다." initvalueid="ivStcAccessibilityOn"/>
+        <Static id="staGD00" taborder="5" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGD0" taborder="6" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGD02" taborder="7" left="0" top="174" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" right="0" initvalueid="ivStcAccessibilityOff" visible="false"/>
+        <Static id="staGD02_00" taborder="8" left="0" top="754" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" right="0" initvalueid="ivStcAccessibilityOff" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsAprvStsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="NO" type="STRING" size="256"/>
+          <Column id="chgSc" type="STRING" size="256" description="인력풀개요"/>
+          <Column id="chgNm" type="STRING" size="256"/>
+          <Column id="chgAplyYmd" type="STRING" size="256"/>
+          <Column id="aplcnScCd" type="STRING" size="256"/>
+          <Column id="aplcnScCdNm" type="STRING" size="256"/>
+          <Column id="idntyYmd" type="STRING" size="256" description="변경신청일자"/>
+          <Column id="delYn" type="STRING" size="256" description="인력풀승인구분코"/>
+          <Column id="rjctRsnCn" type="STRING" size="256" description="확인일자"/>
+          <Column id="mnplAprvScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="mnplAprvStsCd" type="STRING" size="256" description="인력풀승인상태코드"/>
+          <Column id="cddcScCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="mnplReqsId" type="STRING" size="256"/>
+          <Column id="apstFlnm" type="STRING" size="256"/>
+          <Column id="brdt" type="STRING" size="256"/>
+          <Column id="mblTelno" type="STRING" size="256"/>
+          <Column id="pafrUserId" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsResultApplyList=dsResultApplyList</Col>
+            <Col id="asynctp"/>
+            <Col id="url">hrd_oew_ap04_000.do</Col>
+            <Col id="id">selectAprvMnplReqs</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectModifyAprvList</Col>
+            <Col id="url">hrd_oew_ap04_001.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsAprvStsList=dsAprvStsList</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResultApplyList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="mnplReqsId" type="STRING" size="256" description="인력풀신청서ID"/>
+          <Column id="mnplOtlNm" type="STRING" size="256" description="인력풀개요ID"/>
+          <Column id="mnplOtlId" type="STRING" size="256" description="인력풀개요명"/>
+          <Column id="mnplEmpmnYn" type="STRING" size="256" description="인력풀채용여부"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsLogInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="brdt" type="STRING" size="256" description="생년월일"/>
+          <Column id="apstFlnm" type="STRING" size="256" description="지원자성명"/>
+          <Column id="mblTelno00" type="STRING" size="256"/>
+          <Column id="mblTelno01" type="STRING" size="256"/>
+          <Column id="mblTelno02" type="STRING" size="256"/>
+          <Column id="mblTelno" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  온라인통합채용-계약제교원인력풀-지원서 변경요청 현황
+*  @MenuPath    pa_hrd_oew_ap
+*  @FileName 	pa_hrd_oewap04_m00.xfdl
+*  @Creator 	최지원
+*  @CreateDate 	2022.8.18
+*  @Desction    온라인통합채용-계약제교원인력풀-지원서 변경요청 현황
+************** 소스 수정 이력 ***********************************************
+*  date                Modifier            Description
+*******************************************************************************
+*  2022.8.18    	 	최지원             최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::ore_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+//파라미터
+this.apstFlnm;
+this.brdt;
+this.mblTelno;
+this.userDtcNo;
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frmMain_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 주민번호로 로그인의 경우 brdt check & set
+	this.brdt = this.smfGetSessionValue('brdt');
+	if(this.smfIsNull(this.brdt)){
+		 this.brdt = this.applpRrnoToBrdt(nexacro.base64Decode(this.smfGetSessionValue('userRrno')));
+	}
+/*	trace(this.brdt);*/
+	// 휴대전화번호 필수 로그인 세션 체크
+	var logInChkParam = {
+		 redirectUrl : 'pa_hrd_oew_ap::hrd_oewap04_m00.xfdl' // 현재 PAGE URL
+		, redirectMenuId : '3003' // 계약제교원 인력풀정보변경 메뉴 ID
+	};
+	// 휴대전화번호 세션 없을 시 로그인 페이지이동
+	this.isEssenMblTelnoLogin(logInChkParam);
+
+	// Form 초기화
+	this.smfInitForm(obj);
+	
+ 	// 파라메터 세팅 test 
+ 	var cddcCd = this.smfGetCddcCode();
+	this.dsSearch.setColumn(0, 'cddcScCd', cddcCd.substring(0, 3));
+	// 로그인 정보 set
+	this.apstFlnm  = this.smfGetSessionValue('userNm');
+	this.mblTelno  = this.smfGetSessionValue('mblTelNo');
+	this.userDtcNo = this.smfGetSessionValue('userDtcNo');
+// 	this.dsLogInfo.setColumn(0, 'brdt',		this.brdt);
+// 	this.dsLogInfo.setColumn(0, 'apstFlnm', this.apstFlnm);
+// 	this.dsLogInfo.setColumn(0, 'mblTelno', this.mblTelno);
+	
+// 	// 휴대전화 (미사용)
+// 	var mblTelno00 = this.mblTelno.substr(0,3);
+// 	var mblTelno01 = this.mblTelno.substr(4,4);
+// 	var mblTelno02 = this.mblTelno.substr(9,4);
+// 	this.dsLogInfo.setColumn(0, 'mblTelno00', 	mblTelno00);
+// 	this.dsLogInfo.setColumn(0, 'mblTelno01', 	mblTelno01);
+// 	this.dsLogInfo.setColumn(0, 'mblTelno02', 	mblTelno02);
+	
+	// 승인 신청서 set
+	this.dsSearch.setColumn(0, 'mnplAprvStsCd', '2');
+	this.dsSearch.setColumn(0, 'apstFlnm',   this.apstFlnm);
+	this.dsSearch.setColumn(0, 'brdt', 	 	 this.brdt);
+	this.dsSearch.setColumn(0, 'mblTelno',   this.mblTelno);
+	this.dsSearch.setColumn(0, 'pafrUserId', this.userDtcNo);
+// 	trace("사용자Ci \n" + this.userDtcNo );
+// 	trace("mblTelno \n" + this.mblTelno );
+// 	trace("apstFlnm \n" + this.apstFlnm );
+// 	trace("brdt \n" + this.brdt);
+	// 조회
+	this.fnSearch();
+	
+};
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ this.fnTransCallback  = function(svcid,errcd,errmsg) {
+
+};
+ /************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ // 
+ this.fnSearch = function()
+ {
+	// 서비스 객체 생성
+	this.smfSearchService("selectAprvMnplReqs")
+ 		// 데이터 존재 필수(검색 조건)
+		.requireExistsData(this.dsSearch)
+ 		// 실행
+ 		.run()
+		// 콜백
+		.callback(function(callbackParams){
+ 			if(callbackParams.errors) return;
+ 		});	
+};
+
+/**
+ * 정보변경 내역 리스트 조회
+ */
+this.fnSearchList = function()
+{	
+	// 서비스 객체 생성
+	this.smfSearchService("selectModifyAprvList")
+		// 실행
+ 		.run()
+		// 콜백
+		.callback(function(callbackParams){
+ 			if(callbackParams.errors) return;
+ 	});	
+		
+}
+ /************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ /**
+ * 승인 인력풀 신청서 콤보 선택 시 
+ */
+this.divSearch_cboSearchType00_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.dsSearch.setColumn(0, "mnplReqsId" , obj.value);
+// 	trace("====선택한 인력풀 신청서 ID========== \n"+this.dsSearch.getColumn(0, "mnplReqsId"));
+// 	trace("====선택한 인력풀 신청서 pafrUserId========== \n"+this.dsSearch.getColumn(0, "pafrUserId"));
+};
+ 
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+// 조회 버튼
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.smfIsNull(this.divSearch.form.cboSearchType00.value))
+	{
+		// 서비스 객체 생성
+		this.smfSearchService("selectModifyAprvList")
+ 		// 실행
+ 		.run()
+		// 콜백
+		.callback(function(callbackParams){
+ 			if(callbackParams.errors) return;
+ 		});	
+	} else {
+		this.smfAlert('신청서를 선택하세요.');
+		return;
+	}
+};
+
+
+/**
+ *	인력풀정보변경 버튼 클릭
+ */
+this.divSearch_btnModify_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.smfIsNull(this.divSearch.form.cboSearchType00.value))
+	{
+		var eplmYn = 'Y';
+		/*
+		2024.09 채용중일 때 변경가능하도록 개선(김소은 연구원 요청)
+		for(var i=0; i < this.dsResultApplyList.rowcount; i++){ 						
+		
+			if(eplmYn == this.dsResultApplyList.getColumn(i, 'mnplEmpmnYn')){
+				this.divSearch.form.btnModify.set_enable(false);
+				this.smfAlert('채용 중에는 변경이 불가합니다.')
+				return;
+			}		
+		}*/
+		var params = {
+			mnplReqsId	:this.dsSearch.getColumn(0, "mnplReqsId")		
+		};
+		this.smfSetWorkPage("pa_hrd_oew_ap::hrd_oewap04_m01.xfdl", params);
+	} else {
+		this.smfAlert('신청서를 선택하세요.');
+		return;
+	}
+	
+};
+
+]]></Script>
+  </Form>
+</FDL>

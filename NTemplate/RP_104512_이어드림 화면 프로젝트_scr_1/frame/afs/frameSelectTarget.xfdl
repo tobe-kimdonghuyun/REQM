@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameSelectTarget" width="1920" height="1080" nHeight="754" titletext="업무지원 사용자구분" onload="frameSelectTarget_onload" onsize="frameSelectTarget_onsize">
+    <Layouts>
+      <Layout height="1080" width="1920" screenid="ScreenDeskTop">
+        <Div id="divBg" taborder="0" left="0" top="0" text="" initvalueid="ivDivAccessibilityOff" background="url('theme://images/img_MF_WorkSup.png') no-repeat center top #ffffff" bottom="0" right="0">
+          <Layouts>
+            <Layout>
+              <Static id="staTitleImg" taborder="0" top="163" height="78" background="url('theme://images/img_WF_UserCheck.png') no-repeat center" initvalueid="ivStcAccessibilityOff" width="462" left="729"/>
+              <Static id="staTitleText" taborder="1" text="사용자 구분을 선택해주세요." top="255" width="462" height="50" cssclass="sta_WF_WhiteTxt34" textAlign="center" initvalueid="ivStcAccessibilityOn" left="729"/>
+              <Div id="div00" taborder="2" left="410" top="340" width="1100" height="400">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnUserSelect01" taborder="0" text="교직원" top="42" height="328" cssclass="btn_WF_UserSelect01" initvalueid="ivBtnAccessibilityLink" enable="true" onclick="Button_onclick" type="0" width="328" left="38"/>
+                    <Button id="btnUserSelect02" taborder="1" text="개인" left="btnUserSelect01:20" top="42" width="328" height="328" cssclass="btn_WF_UserSelect02" initvalueid="ivBtnAccessibilityLink" enable="true" onclick="Button_onclick" type="1"/>
+                    <Button id="btnUserSelect03" taborder="2" text="사업자" top="42" height="328" cssclass="btn_WF_UserSelect03" initvalueid="ivBtnAccessibilityLink" enable="true" left="btnUserSelect02:20" width="328" onclick="Button_onclick" type="2"/>
+                  </Layout>
+                  <Layout name="Layout0">
+                    <Button id="btnUserSelect03" left="24.38%" top="798" height="328" right="24.38%"/>
+                    <Button id="btnUserSelect02" left="24.38%" top="420" height="328" right="24.38%"/>
+                    <Button id="btnUserSelect01" left="24.38%" top="42" height="328" right="24.38%"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="div01" taborder="3" left="410" top="340" width="1100" height="400" visible="false">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnUserSelect01" taborder="0" text="교직원" left="38" top="42" width="500" height="328" cssclass="btn_WF_UserSelect01" initvalueid="ivBtnAccessibilityLink" enable="true" onclick="Button_onclick" type="0"/>
+                    <Button id="btnUserSelect02" taborder="1" text="개인" top="42" height="328" cssclass="btn_WF_UserSelect02" initvalueid="ivBtnAccessibilityLink" enable="true" left="btnUserSelect01:20" width="500" onclick="Button_onclick" type="1"/>
+                  </Layout>
+                  <Layout name="Layout0"/>
+                </Layouts>
+              </Div>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="staTitleImg" left="0" top="0" height="300" text="" background="url('theme://images/img_WF_UserSelect_M.png') no-repeat center bottom" right="0" taborder="0"/>
+              <Static id="staTitleText" left="64" top="148" height="70" cssclass="sta_WF_Txt42WB" right="64" wordWrap="char" fittocontents="height" taborder="1"/>
+              <Div id="div00" left="0" top="344" right="0" bottom="0"/>
+              <Div id="div01" left="670" top="314" width="1200" height="400" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="640" height="1860" mobileorientation="portrait" type="default">
+        <Div id="divBg" height="1549" left="0" top="96" formscrollbartype="none none" taborder="0" right="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	frameSelectTarget.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.10.13
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.10.13     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.userType;
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frameSelectTarget_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitForm(this);
+	this.fv_params = this.smfGetFormParams();
+	this.userType = this.fv_params.usertype;
+	
+	this.divBg.form.div00.set_visible(this.userType == "AFS" ? true : false);
+	this.divBg.form.div01.set_visible(this.userType == "AFS" ? false : true);
+};
+
+this.frameSelectTarget_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	if (!this.smfIsMobile()){
+		this.fnResizeComponent();
+	}
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+}
+
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnResizeComponent = function()
+{
+	var nFormWidth = this.getOffsetWidth();
+	var nTitleWidth = this.divBg.form.staTitleImg.getOffsetWidth();
+	var nBtnWidth2 = this.divBg.form.div00.getOffsetWidth();
+	var nBtnWidth3 = this.divBg.form.div01.getOffsetWidth();
+	
+	this.divBg.form.staTitleImg.setOffsetLeft(parseInt((nFormWidth-nTitleWidth)/2));
+	this.divBg.form.staTitleText.setOffsetLeft(parseInt((nFormWidth-nTitleWidth)/2));
+	this.divBg.form.div00.setOffsetLeft(parseInt((nFormWidth-nBtnWidth2)/2));
+	this.divBg.form.div01.setOffsetLeft(parseInt((nFormWidth-nBtnWidth3)/2));
+	
+	this.smfResetScroll(this.divBg.form);
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.Button_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nType = obj.type;   // 0:교직원, 1:개인, 2:사업자
+	var objParams = {usertype:nType}
+	var sUrl;
+	if (nType == 0){
+		sUrl = "frame::frameLoginOnePass.xfdl";
+	}else if(nType == 1){
+		sUrl = "frame::frameLoginNpki01.xfdl";
+	}else{
+		sUrl = "frame::frameLoginNpki02.xfdl";
+	}
+	
+	this.smfSetWorkPage(sUrl,objParams);
+};]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

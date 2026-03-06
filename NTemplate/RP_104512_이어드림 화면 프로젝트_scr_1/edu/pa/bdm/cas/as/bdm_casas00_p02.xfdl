@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="bdm_casas00_p03" width="640" height="277" titletext="민원반려사유" onload="form_onload">
+    <Layouts>
+      <Layout height="277" width="640" screenid="ScreenDeskTop">
+        <Static id="staPopupTitleAss" taborder="0" left="20" top="20" width="20" height="20" initvalueid="ivStcAccessibilityOn"/>
+        <ImageViewer id="img00_00_01_00_00" taborder="1" text="민원반려사유" left="20" top="20" width="110" height="30" cssclass="img_WF_SubTit04" onclick="img00_00_01_00_00_onclick" initvalueid="ivTitleAccessibilityOn"/>
+        <Div id="divMain" taborder="2" left="20" top="60" right="20" initvalueid="ivDivAccessibilityOff" height="147">
+          <Layouts>
+            <Layout>
+              <Static id="Static44" taborder="0" left="0" height="42" cssclass="sta_WF_Input02Top" top="0" right="0" text="" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="Static45" taborder="1" left="0" width="140" height="42" cssclass="sta_WF_Input01Top" text="민원명" top="0" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtCvlcptNm" taborder="2" left="145" top="6" height="30" text="우리날" initvalueid="ivEdtReadOnly" accessibilitylabel="법인명" readonly="true" right="5"/>
+              <Static id="Static44_00" taborder="3" left="0" height="106" cssclass="sta_WF_Input02" top="41" right="0" text="" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="Static45_00" taborder="4" left="0" width="140" height="106" cssclass="sta_WF_Input01" text="반려사유" top="41" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn"/>
+              <TextArea id="txtCvlcptRcptSmy" taborder="5" left="145" top="47" height="94" right="5" initvalueid="ivTxtReadOnly" readonly="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnClose" taborder="3" text="닫기" width="50" left="295" fittocontents="width" initvalueid="ivBtnAccessibilityButton" cssclass="btn_WF_Custom" onclick="btnClose_onclick" height="30" top="divMain:20"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01" taborder="4" left="20" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00" taborder="5" left="20" top="50" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01_00_00" taborder="6" left="20" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff" top="207"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01_00" taborder="7" left="20" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff" bottom="0"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01_00_00_00" taborder="8" left="0" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" width="20" bottom="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01_00_00_00_00" taborder="9" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" width="20" bottom="0" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    대국민 비영리법인 민원신청 민원취하사유
+*  @FileName 	bdm_calap00_p03.xfdl
+*  @Creator 	서광명
+*  @CreateDate 	2022.9.28
+*  @Desction    
+*
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.9.28     	서광명 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitPopup(obj);
+	this.pv_params = this.smfGetPopupParams();
+	var objDs = this.dsCvlcptRjct;
+	
+	objDs.setColumn("0","cvlcptNm",this.pv_params.cvlcptNm);
+	objDs.setColumn("0","rjctRsnCn",this.pv_params.rjctRsnCn);
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+ * @description Transaction CallBack 함수(선택)
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	if(errcd == -1) return;
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+/**
+ * @description 닫기버튼 클릭시
+*/
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsCvlcptRjct">
+        <ColumnInfo>
+          <Column id="cvlcptNm" type="STRING" size="256" description="민원명"/>
+          <Column id="rjctRsnCn" type="STRING" size="256" description="취하사유내용"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="description" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divMain.form.edtCvlcptNm" propid="value" datasetid="dsCvlcptRjct" columnid="cvlcptNm"/>
+      <BindItem id="item1" compid="divMain.form.txtCvlcptRcptSmy" propid="value" datasetid="dsCvlcptRjct" columnid="rjctRsnCn"/>
+    </Bind>
+  </Form>
+</FDL>

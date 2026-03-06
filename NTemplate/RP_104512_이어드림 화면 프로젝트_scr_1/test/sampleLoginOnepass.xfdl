@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleLoginOnepass" width="1280" height="745" titletext="행안부 디지털원패스 로그인을 위한 샘플" onload="sampleLoginOnepass_onload">
+    <Layouts>
+      <Layout height="745" width="1280">
+        <Static id="sta00" taborder="0" text="행안부 디지털원패스 로그인을 위한 샘플" left="29" top="28" width="611" height="60"/>
+        <Static id="staFinLogo" taborder="1" left="98" top="120" height="115" cssclass="sta_Login_PartyCert" text="" width="276" initvalueid="ivStcAccessibilityOn"/>
+        <Button id="btnDoLogin" taborder="2" text="행안부 디지털원패스 로그인" left="62" top="263" width="348" height="60" cssclass="btn_Login_PartyCert" initvalueid="ivBtnAccessibilityButton" onclick="btnDoLogin_onclick"/>
+        <Static id="sta01" taborder="3" text="실행결과 :" left="63" top="357" width="120" height="30"/>
+        <TextArea id="txt00" taborder="4" left="57" top="397" width="453" height="230"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleLoginOnepass.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2023.3.29
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.3.29     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.sampleLoginOnepass_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+	trace("====> fnPopupCallback");
+	
+	// jwt값을 가져온다
+	this.txt00.set_value(e.data);
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.btnDoLogin_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 테스트를 위해 실행결과를 지운다.
+	this.txt00.set_value("");
+
+	var objParam = {objForm:this, popupcallback :this.fnPopupCallback};
+	this.smfExecMoisDOAuth(objParam);
+	
+};
+
+]]></Script>
+  </Form>
+</FDL>

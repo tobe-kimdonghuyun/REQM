@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Pop" width="520" height="769" cssclass="sta_POP_foot" scrolltype="none">
+    <Layouts>
+      <Layout height="769" width="520">
+        <Static id="Static01_00" taborder="0" left="0" height="40" cssclass="sta_POP_TitleBg" top="0" text="" right="0"/>
+        <ImageViewer id="ImageViewer00" taborder="1" left="0" top="40" width="520" height="687" stretch="fit" image="url('theme://images/bannerMP3.3EOS.png')" imagealign="left top" border="0px solid" text=""/>
+        <Static id="Static00" taborder="2" left="149" top="532" width="215" height="66" onclick="Static00_onclick" cursor="pointer" accessibilityenable="false"/>
+        <Static id="Static01" taborder="3" left="0" width="520" top="727" cssclass="sta_POP_foot" accessibilityenable="false" height="42"/>
+        <CheckBox id="CheckBox00" taborder="4" text="일주일간 이 창을 띄우지 않음" left="20" top="735" width="190" height="25" onclick="CheckBox00_onclick" cssclass="check_POP_notToday" value="false" tabstop="true" initvalueid="iv_CheckBox0"/>
+        <Button id="Button00" taborder="5" text="닫기" top="735" width="55" height="25" cssclass="btn_POP_close" left="455" onclick="Button00_onclick"/>
+        <Button id="Button00_00" taborder="6" top="0" width="40" height="40" right="0" cssclass="btn_POP_CloseIcon" accessibilitylabel="닫기" onclick="Button00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[        this.CheckBox00_onclick = function(obj,e)
+        {
+            // 날짜를 문자열로 저장
+        	nexacro.setPrivateProfile("mTodayPop2",this.gfnAddDate(this.gfnGetDate(),7));	//일주일 후 날짜 저장
+        	//nexacro.setPrivateProfile("mTodayPop2",this.gfnGetDate());
+        	this.close();
+        };
+
+        this.Button00_onclick = function(obj,e)
+        {
+        	this.close();
+        };
+
+        this.Static00_onclick = function(obj,e)
+        {
+
+        	//system.execBrowser("http://tobetong.com/?p=16122");
+        	//system.execBrowser("https://support.tobesoft.co.kr/Support/?menu=Conversion_Info");
+        	//this.close();
+        	//return;
+        	// 해당 이벤트 공지사항으로 이동
+        	nexacro.getApplication().gv_mainFrame.param = {
+        		'menu': "Notice_View",
+        		'keyword': "",
+        		'page': 1,
+        		'postId': 240
+        		};
+        	nexacro.getApplication().gv_mainFrame.gfnGoMain();
+        	this.close();
+        };]]></Script>
+  </Form>
+</FDL>

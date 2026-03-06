@@ -1,0 +1,498 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="par_spsms01_m00" width="1200" height="755" titletext="지원자격 조회" onload="par_spsms01_m00_onload" oninit="par_spsms01_m00_oninit">
+    <Layouts>
+      <Layout height="755" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="56" height="54" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="유아학비 지원자격 조회" left="0" top="0" height="54" cssclass="img_WF_SubTit01" width="370" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+            <Layout name="Layout0">
+              <ImageViewer id="imgTitle" height="65" left="0" top="0" width="420"/>
+            </Layout>
+            <Layout name="Layout1">
+              <ImageViewer id="imgTitle" height="65" left="0" top="0" width="420"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staText1" taborder="1" text="유치원에서 유아 등록 후 국민행복카드 인증된 보호자(카드발급자)만 확인 가능합니다." left="0" top="124" width="820" height="30" cssclass="sta_WF_Txt16" initvalueid="ivStcAccessibilityOn"/>
+        <ImageViewer id="imgTitle2" taborder="2" text="복지서비스 자격(유아학비)" left="0" top="194" height="30" cssclass="img_WF_SubTit04" width="240" initvalueid="ivTitleAccessibilityOn"/>
+        <Static id="staText3" taborder="3" text="※ 해당 정보는 주민센터/복지로에서 보호자가 신청한 유아학비 자격 정보입니다. 오류 시 해당 주민센터 또는 복지로(1566-0313)로 문의하여 주세요." left="234" top="197" height="25" cssclass="sta_WF_Blue14" width="900" initvalueid="ivStcAccessibilityOn"/>
+        <Div id="divGrid01" taborder="4" left="0" top="234" height="236" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Grid id="grdGrid" taborder="0" left="0" binddataset="dsWelfSvcQlfcList" autofittype="col" top="0" right="0" initvalueid="ivGrdAccessibilityOn" bottom="0" selecttype="cell" accessibilitylabel="복지서비스 자격(유아학비)">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="120" band="left"/>
+                      <Column size="80" band="left"/>
+                      <Column size="150" band="left"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="유아성명"/>
+                      <Cell col="1" text="성별"/>
+                      <Cell col="2" text="자격"/>
+                      <Cell col="3" text="자격신청일"/>
+                      <Cell col="4" text="자격결정일"/>
+                      <Cell col="5" text="자격시작일"/>
+                      <Cell col="6" text="자격종료일"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:stuFlnm" textAlign="center"/>
+                      <Cell col="1" text="bind:sxds" textAlign="center" expr="sxds == &quot;1&quot; ? &quot;남&quot; : &quot;여&quot;"/>
+                      <Cell col="2" text="bind:qlfcNm" textAlign="center"/>
+                      <Cell col="3" text="bind:qlfcAplyYmd" displaytype="expr:qlfcAplyYmd!=undefined?'mask':'none'" calendardateformat="yyyy-MM-dd" edittype="none" maskeditformat="@@@@.@@.@@." maskedittype="string" textAlign="center"/>
+                      <Cell col="4" text="bind:qlfcDcsnYmd" displaytype="expr:qlfcDcsnYmd!=undefined?'mask':'none'" calendardateformat="yyyy-MM-dd" maskeditformat="@@@@.@@.@@." maskedittype="string" textAlign="center"/>
+                      <Cell col="5" text="bind:qlfcBngnYmd" displaytype="expr:qlfcBngnYmd!=undefined?'mask':'none'" calendardateformat="yyyy-MM-dd" maskeditformat="@@@@.@@.@@." maskedittype="string" textAlign="center"/>
+                      <Cell col="6" text="bind:qlfcEndYmd" calendardateformat="yyyy-MM-dd" displaytype="expr:qlfcEndYmd!=undefined?'mask':'none'" maskeditformat="@@@@.@@.@@." maskedittype="string" textAlign="center"/>
+                    </Band>
+                  </Format>
+                  <Format id="format00">
+                    <Columns>
+                      <Column size="250"/>
+                      <Column size="250"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="50"/>
+                      <Row size="50"/>
+                      <Row size="50"/>
+                      <Row size="50"/>
+                      <Row size="50"/>
+                      <Row size="50"/>
+                      <Row size="50"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell text="유아성명" cssclass="cell_WF_Label"/>
+                      <Cell col="1" text="bind:stuFlnm"/>
+                      <Cell row="1" text="성별" cssclass="cell_WF_Label"/>
+                      <Cell row="1" col="1" text="bind:sxds" expr="sxds == &quot;1&quot; ? &quot;남&quot; : &quot;여&quot;"/>
+                      <Cell row="2" text="자격" cssclass="cell_WF_Label"/>
+                      <Cell row="2" col="1" text="bind:qlfcNm"/>
+                      <Cell row="3" text="자격신청일" cssclass="cell_WF_Label"/>
+                      <Cell row="3" col="1" text="bind:qlfcAplyYmd" maskeditformat="@@@@.@@.@@." maskedittype="string" displaytype="expr:qlfcAplyYmd!=undefined?'mask':'none'"/>
+                      <Cell row="4" text="자격결정일" cssclass="cell_WF_Label"/>
+                      <Cell row="4" col="1" text="bind:qlfcDcsnYmd" maskedittype="string" maskeditformat="@@@@.@@.@@." displaytype="expr:qlfcDcsnYmd!=undefined?'mask':'none'"/>
+                      <Cell row="5" text="자격시작일" cssclass="cell_WF_Label"/>
+                      <Cell row="5" col="1" text="bind:qlfcBngnYmd" maskeditformat="@@@@.@@.@@." maskedittype="string" displaytype="expr:qlfcBngnYmd!=undefined?'mask':'none'"/>
+                      <Cell row="6" text="자격종료일" cssclass="cell_WF_Label, cell_WF_MiddleLine"/>
+                      <Cell row="6" col="1" text="bind:qlfcEndYmd" maskedittype="string" maskeditformat="@@@@.@@.@@." displaytype="expr:qlfcEndYmd!=undefined?'mask':'none'" cssclass="cell_WF_MiddleLine"/>
+                    </Band>
+                  </Format>
+                  <Format id="tablet">
+                    <Columns>
+                      <Column size="120" band="left"/>
+                      <Column size="80" band="left"/>
+                      <Column size="150" band="left"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="60" band="head"/>
+                      <Row size="70"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="유아성명"/>
+                      <Cell col="1" text="성별"/>
+                      <Cell col="2" text="자격"/>
+                      <Cell col="3" text="자격신청일"/>
+                      <Cell col="4" text="자격결정일"/>
+                      <Cell col="5" text="자격시작일"/>
+                      <Cell col="6" text="자격종료일"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:stuFlnm" textAlign="center"/>
+                      <Cell col="1" text="bind:sxds" textAlign="center" expr="sxds == &quot;1&quot; ? &quot;남&quot; : &quot;여&quot;"/>
+                      <Cell col="2" text="bind:qlfcNm" textAlign="center"/>
+                      <Cell col="3" text="bind:qlfcAplyYmd" displaytype="expr:qlfcAplyYmd!=undefined?'mask':'none'" calendardateformat="yyyy-MM-dd" edittype="none" maskeditformat="@@@@.@@.@@." maskedittype="string" textAlign="center"/>
+                      <Cell col="4" text="bind:qlfcDcsnYmd" displaytype="expr:qlfcDcsnYmd!=undefined?'mask':'none'" calendardateformat="yyyy-MM-dd" maskeditformat="@@@@.@@.@@." maskedittype="string" textAlign="center"/>
+                      <Cell col="5" text="bind:qlfcBngnYmd" displaytype="expr:qlfcBngnYmd!=undefined?'mask':'none'" calendardateformat="yyyy-MM-dd" maskeditformat="@@@@.@@.@@." maskedittype="string" textAlign="center"/>
+                      <Cell col="6" text="bind:qlfcEndYmd" calendardateformat="yyyy-MM-dd" displaytype="expr:qlfcEndYmd!=undefined?'mask':'none'" maskeditformat="@@@@.@@.@@." maskedittype="string" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+            <Layout name="Layout0">
+              <Grid id="grdGrid" formatid="format00" cssclass="grd_WF_Mobile" autosizingtype="row" extendsizetype="row" selecttype="cell"/>
+            </Layout>
+            <Layout name="Layout1">
+              <Grid id="grdGrid" formatid="tablet" selecttype="cell" minwidth="950" maxwidth=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <ImageViewer id="imgTitle3" taborder="5" text="유아학비지원 36개월 이력" left="0" top="500" height="30" cssclass="img_WF_SubTit04" width="230" initvalueid="ivTitleAccessibilityOn"/>
+        <Static id="staText4" taborder="6" text="※ 무상교육(보육료, 유아학비) 기간은 3년을 초과할 수 없습니다." left="229" top="503" height="25" cssclass="sta_WF_Blue14" width="400" initvalueid="ivStcAccessibilityOn"/>
+        <Div id="divGrid02" taborder="7" left="0" top="540" right="0" initvalueid="ivDivAccessibilityOff" height="215">
+          <Layouts>
+            <Layout>
+              <Grid id="grdGrid2" taborder="0" left="0" binddataset="dsMt36HstrList" autofittype="col" top="0" right="0" bottom="0" initvalueid="ivGrdAccessibilityOn" selecttype="cell" accessibilitylabel="유아학비지원 36개월 이력">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="180"/>
+                      <Column size="180"/>
+                      <Column size="180"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="지원년도"/>
+                      <Cell col="1" text="지원시작일"/>
+                      <Cell col="2" text="지원종료일"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:sprtYr" textAlign="center"/>
+                      <Cell col="1" text="bind:sprtBngnYmd" displaytype="expr:sprtBngnYmd!=undefined?'mask':'none'" calendardateformat="yyyy-MM-dd" maskeditformat="@@@@.@@.@@." maskedittype="string" textAlign="center"/>
+                      <Cell col="2" text="bind:sprtEndYmd" displaytype="expr:sprtEndYmd!=undefined?'mask':'none'" calendardateformat="yyyy-MM-dd" maskeditformat="@@@@.@@.@@." maskedittype="string" textAlign="center"/>
+                    </Band>
+                  </Format>
+                  <Format id="format00">
+                    <Columns>
+                      <Column size="250"/>
+                      <Column size="250"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="50"/>
+                      <Row size="50"/>
+                      <Row size="50"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell text="지원년도" cssclass="cell_WF_Label"/>
+                      <Cell col="1" text="bind:sprtYr"/>
+                      <Cell row="1" text="지원시작일" cssclass="cell_WF_Label"/>
+                      <Cell row="1" col="1" text="bind:sprtBngnYmd" maskedittype="string" maskeditformat="@@@@.@@.@@." displaytype="expr:sprtBngnYmd!=undefined?'mask':'none'"/>
+                      <Cell row="2" text="지원종료일" cssclass="cell_WF_Label, cell_WF_MiddleLine"/>
+                      <Cell row="2" col="1" text="bind:sprtEndYmd" displaytype="expr:sprtEndYmd!=undefined?'mask':'none'" maskeditformat="@@@@.@@.@@." maskedittype="string" cssclass="cell_WF_MiddleLine"/>
+                    </Band>
+                  </Format>
+                  <Format id="tablet">
+                    <Columns>
+                      <Column size="180"/>
+                      <Column size="180"/>
+                      <Column size="180"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="60" band="head"/>
+                      <Row size="70"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="지원년도"/>
+                      <Cell col="1" text="지원시작일"/>
+                      <Cell col="2" text="지원종료일"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:sprtYr" textAlign="center"/>
+                      <Cell col="1" text="bind:sprtBngnYmd" displaytype="expr:sprtBngnYmd!=undefined?'mask':'none'" calendardateformat="yyyy-MM-dd" maskeditformat="@@@@.@@.@@." maskedittype="string" textAlign="center"/>
+                      <Cell col="2" text="bind:sprtEndYmd" displaytype="expr:sprtEndYmd!=undefined?'mask':'none'" calendardateformat="yyyy-MM-dd" maskeditformat="@@@@.@@.@@." maskedittype="string" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+            <Layout name="Layout0">
+              <Grid id="grdGrid2" formatid="format00" cssclass="grd_WF_Mobile" autosizingtype="row" extendsizetype="row" selecttype="cell"/>
+            </Layout>
+            <Layout name="Layout1">
+              <Grid id="grdGrid2" formatid="tablet" selecttype="cell"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta1" taborder="8" left="0" top="0" height="60" cssclass="sta_GD_Size" text="60" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta4" taborder="9" left="0" top="104" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta3" taborder="10" left="0" top="154" height="40" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta6" taborder="11" left="0" top="224" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="sta7" taborder="12" left="0" top="470" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta9" taborder="13" left="0" top="530" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile" width="640" height="1286" mobileorientation="portrait" type="default" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tabledirection="horizontal">
+        <Div id="divTitle" height="65" left="20" top="68" right="20" taborder="0"/>
+        <Static id="staText1" left="20" top="148" height="56" cssclass="sta_WF_Text24" taborder="1" right="20" fittocontents="height"/>
+        <ImageViewer id="imgTitle2" left="20" top="staText1:60" height="54" taborder="2" cssclass="img_WF_SubTit02" width="460"/>
+        <Static id="staText3" left="20" top="imgTitle2:15" height="86" cssclass="sta_WF_Text24Red" right="20" taborder="3" fittocontents="height"/>
+        <Div id="divGrid01" left="20" top="staText3:20" height="367" right="20" taborder="4"/>
+        <ImageViewer id="imgTitle3" left="20" top="divGrid01:50" height="54" taborder="5" cssclass="img_WF_SubTit02" width="450"/>
+        <Static id="staText4" left="20" top="imgTitle3:15" height="58" cssclass="sta_WF_Text24Red" right="20" taborder="6" fittocontents="height"/>
+        <Div id="divGrid02" left="20" top="staText4:20" right="20" taborder="7" height="264"/>
+        <Static id="sta1" taborder="8" height="70" left="0" top="0" right="0" text="70"/>
+        <Static id="sta3" left="0" top="118" height="30" right="0" taborder="9"/>
+        <Static id="sta4" left="0" top="204" height="60" right="0" text="60" taborder="10"/>
+        <Static id="sta6" left="0" top="420" height="20" right="0" taborder="11" text="20"/>
+        <Static id="sta7" left="0" top="806" height="60" right="0" taborder="12" text="60"/>
+        <Static id="sta9" left="0" top="981" height="20" right="0" taborder="13" text="20"/>
+      </Layout>
+      <Layout name="Layout1" screenid="tablet" width="1000" height="1286" mobileorientation="portrait" type="default" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tabledirection="horizontal">
+        <Div id="divTitle" height="65" left="20" top="68" right="20" taborder="0"/>
+        <Static id="staText1" left="20" top="148" height="56" cssclass="sta_WF_Text24" taborder="1" right="20" fittocontents="height"/>
+        <ImageViewer id="imgTitle2" left="20" top="staText1:60" height="54" taborder="2" cssclass="img_WF_SubTit02" width="460"/>
+        <Static id="staText3" left="20" top="imgTitle2:15" height="86" cssclass="sta_WF_Text24Red" right="20" taborder="3" fittocontents="height"/>
+        <Div id="divGrid01" left="20" top="staText3:20" height="365" right="20" taborder="4"/>
+        <ImageViewer id="imgTitle3" left="20" top="divGrid01:50" height="54" taborder="5" cssclass="img_WF_SubTit02" width="450"/>
+        <Static id="staText4" left="20" top="imgTitle3:15" height="58" cssclass="sta_WF_Text24Red" right="20" taborder="6" fittocontents="height"/>
+        <Div id="divGrid02" left="20" top="staText4:20" right="20" taborder="7" height="265"/>
+        <Static id="sta1" taborder="8" height="70" left="0" top="0" right="0" text="70"/>
+        <Static id="sta3" left="0" top="118" height="30" right="0" taborder="9"/>
+        <Static id="sta4" left="0" top="204" height="60" right="0" text="60" taborder="10"/>
+        <Static id="sta6" left="0" top="420" height="20" right="0" taborder="11" text="20"/>
+        <Static id="sta7" left="0" top="806" height="60" right="0" taborder="12" text="60"/>
+        <Static id="sta9" left="0" top="981" height="20" right="0" taborder="13" text="20"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsWelfSvcQlfcList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="stuFlnm" type="STRING" size="150" sumtext="성명"/>
+          <Column id="stuInvlNo" type="STRING" size="10" description="" sumtext="학생개인번호"/>
+          <Column id="sxds" type="STRING" size="1" sumtext="성별"/>
+          <Column id="qlfcNm" type="STRING" size="150" sumtext="자격명"/>
+          <Column id="qlfcAplyYmd" type="STRING" size="8" sumtext="자격신청일자"/>
+          <Column id="qlfcDcsnYmd" type="STRING" size="8" sumtext="자격결정일자"/>
+          <Column id="qlfcBngnYmd" type="STRING" size="8" sumtext="자격시작일자"/>
+          <Column id="qlfcEndYmd" type="STRING" size="8" sumtext="자격종료일자"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMt36HstrList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="sprtYr" type="STRING" size="4" sumtext="지원년도"/>
+          <Column id="sprtBngnYmd" type="STRING" size="8" sumtext="지원시작일자"/>
+          <Column id="sprtEndYmd" type="STRING" size="8" sumtext="지원종료일자"/>
+          <Column id="sprtDds" type="INT" size="4" sumtext="지원일수"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256"/>
+          <Column id="outDatasets" type="STRING" size="256"/>
+          <Column id="asynctp" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="url">/par_sps_ms01_001.do</Col>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsWelfSvcQlfcList dsMt36HstrList</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="10" description="" sumtext="학교코드"/>
+          <Column id="ayr" type="STRING" size="4" description="" sumtext="학년도"/>
+          <Column id="stuInvlNo" type="STRING" size="10" description="" sumtext="학생개인번호"/>
+          <Column id="schpaDtcNo" type="STRING" size="256" sumtext="학부모고유번호"/>
+          <Column id="cddcScCd" type="STRING" size="3"/>
+          <Column id="sprtYr" type="STRING" size="4" description="지원연도"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsStu">
+        <ColumnInfo>
+          <Column id="stdntNm" type="STRING" size="150" sumtext="성명"/>
+          <Column id="stuInvlNo" type="STRING" size="10" sumtext="학생개인번호"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  대국민 - 학부모서비스(유)
+*  @MenuPath    TEMPLATE
+*  @FileName 	par_spsms01_m00
+*  @Creator 	김지영
+*  @CreateDate 	2022.06.20
+*  @Desction    MY유아학비 지원자격 조회
+*
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.06.20            김지영                   최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::par_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.par_spsms01_m00_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// Form의 default 초기처리
+	this.smfInitForm(this);
+	
+	var objParForm = this.getOwnerFrame().form.divTop.form.divDispArea.form.divPARLink.form;
+	this.dsSearch.copyRow(0, objParForm.dsStuIduzEduYn, 0);
+	
+	//소재정보, 개인번호 체크
+	var validate = this.parfValidate(this.dsSearch);	
+	if(!validate) return false;
+	
+	// 페이지를 조회한다.
+ 	this.fnSearch();
+	
+	/*
+	varSum = this.dsMt36HstrList.getSum("sprtDds");
+	trace(varSum);
+	this.grdGrid2.setCellProperty("summary",1,"text",varSum);
+	*/
+};
+
+
+
+ /************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnSearch = function(obj, e)
+{
+ 	// 서비스 객체 생성
+	this.smfSearchService("select")
+		.run()// 실행
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		});	
+};
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd <= -1) return;
+	
+	if(svcid== "select"){
+		this.copy();
+		//this.mathDays();
+	}
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+// 콤보박스에 데이터(유아이름) 불러오기
+//유아명 중복 X처리
+ this.copy = function()
+ {	
+ 	for(j=0; j<this.dsWelfSvcQlfcList.rowcount; j++){
+		stuNm = this.dsWelfSvcQlfcList.getColumn(j,"stdntNm");
+		this.dsStu.insertRow(j);
+		this.dsStu.setColumn(j,"stdntNm",stuNm);
+	}
+	
+	this.dsStu.insertRow();
+	this.dsStu.setColumn(0,"stdntNm","전체");
+	this.cbo1.set_index(0);
+	idx = this.cbo1.index;
+	
+	//var arr = [];
+	var arr = this.dsStu.extractRows( "stdntNm" );
+	var strArr = this.dsWelfSvcQlfcList.getColumn(arr,"stdntNm");
+// 	var emptyArr = {};
+// 	var uniqueArr = strArr.filter(function(item){
+// 		return emptyArr.hasOwnProperty(item) ? false : (emptyArr[item] = true);
+// 	})
+ };
+ 
+ this.setName = function()
+{
+	stuName = selectName
+		if(stuName){
+			this.imgTitle3.set_text(stuName+"의 유아학비 36개월 이력");
+		}
+ 		if(idx==0 && selectName=="전체" && selectName!=stuName){
+ 			this.imgTitle3.set_text("유아학비 36개월 이력");
+		}
+};
+ 
+ /*
+ // 지원일수 구하기
+ this.mathDays = function ()
+ {
+ 	for(i=0; i<this.dsMt36HstrList.rowcount; i++){
+		var bngnYmd = this.dsMt36HstrList.getColumn(i,"sprtBngnYmd");	//지원시작일 날짜텍스트
+		var bngnYY = bngnYmd.substring(0,4);	//년도
+		var bngnMM = bngnYmd.substring(4,6);	//월
+		var bngnDD = bngnYmd.substring(6,9);	//일
+		var endYmd = this.dsMt36HstrList.getColumn(i,"sprtEndYmd");	//지원종료일 날짜텍스트
+		var endYY = endYmd.substring(0,4);		//년도
+		var endMM = endYmd.substring(4,6);		//월
+		var endDD = endYmd.substring(6,9);		//일
+		
+		var date1 = new nexacro.Date(bngnYY, bngnMM, bngnDD);
+		var date2 = new nexacro.Date(endYY, endMM, endDD);
+		
+		var diffDate = date2.getTime() - date1.getTime();	// 지원시작일 - 지원종료일 (지원일수 계산식)
+		
+		day = (Math.round(diffDate / (1000*60*60*24)+1));	// 밀리세컨*초*분*시 = 일
+		
+		// 지원일수 칸 채우기
+		this.dsMt36HstrList.setColumn(i,"sprtDds",day);
+	}
+ };
+ */
+ 
+ this.delAll = function ()
+ {
+ 	this.dsWelfSvcQlfcList.deleteAll();
+	this.dsMt36HstrList.deleteAll();
+ };
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.cbo1_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	selectName = e.posttext;	// 선택된 콤보값
+};
+
+// 조회 버튼 클릭
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	this.dsWelfSvcQlfcList.reset();
+	//this.dsMt36HstrList.reset();
+	
+	this.dsWelfSvcQlfcList.filter("");
+	
+	a = this.dsWelfSvcQlfcList.rowcount;
+	for(i=0; i<a; i++){		//유아 이름 배열
+		stuName = this.dsWelfSvcQlfcList.getColumn(i,"stdntNm");
+
+		//유아 이름에 따라 콤보에 해당하는 이름만 조회되도록
+		if(selectName==stuName){
+			this.dsWelfSvcQlfcList.filter("stdntNm=='"+selectName+"'");
+		}
+ 		if(idx==0 && selectName=="전체" && selectName!=stuName){
+ 			this.dsWelfSvcQlfcList.filter("");
+		}
+	}
+	this.setName();
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,1382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1200" height="890" titletext="출결등록" onload="form_onload" visible="true">
+    <Layouts>
+      <Layout height="890" width="1200" screenid="ScreenDeskTop" stepcount="0">
+        <Static id="staPopupTitleAss" taborder="0" left="20" top="20" width="20" height="20" initvalueid="ivStcAccessibilityOn"/>
+        <Div id="divTitle" taborder="1" left="0" top="20" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="출결등록" left="20" top="0" height="44" cssclass="img_WF_SubTit01" initvalueid="ivTitleAccessibilityOn" width="133" accessibilitylabel="출결등록"/>
+            </Layout>
+            <Layout name="mobile">
+              <ImageViewer id="imgTitle" height="65" left="20" top="0" width="170"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSearch" taborder="2" left="20" top="94" height="70" cssclass="div_WF_Search" right="20" initvalueid="ivDivAccessibilityOn" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staAyr" taborder="0" text="학년도" left="0" top="20" width="68" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn" accessibilitylabel="학년도"/>
+              <Edit id="edtAyr" taborder="1" left="68" width="100" height="30" top="20" initvalueid="ivEdtNormal" readonly="true" accessibilitylabel="학년도 입력"/>
+              <Static id="staAslSem" taborder="2" text="기간명" left="168" top="20" width="68" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn" accessibilitylabel="기간명"/>
+              <Edit id="edtAslSem" taborder="3" left="236" width="120" height="30" top="20" initvalueid="ivEdtNormal" readonly="true" accessibilitylabel="기간명 입력"/>
+              <Static id="staYm" taborder="4" text="*년월" left="356" top="20" width="62" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" accessibilitylabel="년월"/>
+              <Combo id="cboYm" taborder="5" left="418" width="115" height="30" innerdataset="dsYm" codecolumn="unyCdValue" datacolumn="unyCdValueNm" index="0" readonly="false" top="20" initvalueid="ivCmbEssential" onitemchanged="divSearch_cboYm_onitemchanged" accessibilitylabel="년월 구분"/>
+              <Static id="staAslLectNm" taborder="8" text="프로그램명" left="753" top="20" width="94" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn" accessibilitylabel="프로그램명"/>
+              <Edit id="edtAslLectNm" taborder="9" left="847" width="143" height="30" top="20" initvalueid="ivEdtNormal" readonly="true" accessibilitylabel="프로그램명 입력"/>
+              <Button id="btnInit" taborder="10" text="초기화" top="20" width="88" height="30" cssclass="btn_WF_Refresh03" onclick="divSearch_btnInit_onclick" right="102" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="초기화"/>
+              <Button id="btnSearch" taborder="11" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" initvalueid="ivBtnAccessibilityButton" onclick="divSearch_btnSearch_onclick" accessibilitylabel="조회"/>
+              <Static id="staYm00" taborder="6" text="*일자" left="536" top="20" width="62" height="30" cssclass="sta_WF_Essential01" initvalueid="ivStcEssential" accessibilitylabel="일자"/>
+              <Combo id="cboDd" taborder="7" left="598" height="30" innerdataset="dsDd" codecolumn="unyCdValue" datacolumn="unyCdValueNm" index="0" readonly="false" top="20" onitemchanged="divSearch_cboDd_onitemchanged" width="155" accessibilitylabel="일자 구분"/>
+            </Layout>
+            <Layout name="mobile">
+              <Static id="staAyr" top="11" left="0" height="42" width="110" taborder="0"/>
+              <Edit id="edtAyr" left="20" top="63" height="60" right="20" taborder="1"/>
+              <Static id="staAslSem" left="0" top="134" height="42" width="110" taborder="2"/>
+              <Edit id="edtAslSem" left="20" top="186" height="60" right="20" taborder="3"/>
+              <Button id="btnSearch" top="652" width="164" right="20" height="60" taborder="9"/>
+              <Button id="btnInit" top="652" width="185" height="60" right="204" taborder="8"/>
+              <Static id="staAslLectNm" left="0" top="500" height="42" width="160" taborder="6"/>
+              <Combo id="cboYm" left="20" top="309" height="60" right="20" taborder="5" cssclass="essential"/>
+              <Static id="staYm" left="-10" top="257" height="42" text="년월" cssclass="sta_WF_Essential" width="90" taborder="4"/>
+              <Edit id="edtAslLectNm" left="20" top="552" height="60" right="20" taborder="7"/>
+              <Static id="staYm00" left="4" top="385" width="62" height="30" text="일자"/>
+              <Combo id="cboDd" left="20" top="425" height="60" cssclass="essential" right="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staLetPrd" taborder="3" text="강의기간 : " left="10" top="186" height="26" initvalueid="ivStcAccessibilityOn" width="91" cssclass="sta_WF_Searchtxt01" accessibilitylabel="강의기간"/>
+        <MaskEdit id="mskAslLectBgngYmd" taborder="4" left="94" top="184" width="120" height="30" type="string" textAlign="center" format="####.##.##" initvalueid="ivMskNormal" accessibilitylabel="강의시작일자" enable="true" readonly="true" maskchar="_"/>
+        <Static id="sta00_00_00_00" taborder="5" text="~" left="214" top="185" width="20" height="26" initvalueid="ivStcAccessibilityOn" textAlign="center"/>
+        <MaskEdit id="mskAslLectEndYmd" taborder="6" left="234" top="184" width="120" height="30" type="string" textAlign="center" format="####.##.##" initvalueid="ivMskNormal" accessibilitylabel="강의종료일자" enable="true" readonly="true"/>
+        <Button id="btnCancel" taborder="8" text="취소" top="184" height="30" width="72" cssclass="btn_WF_ActionLine" right="98" initvalueid="ivBtnAccessibilityButton" onclick="btnCancel_onclick" visible="false"/>
+        <Button id="btnSave" taborder="9" text="저장" top="184" height="30" width="70" cssclass="btn_WF_Action" right="20" initvalueid="ivBtnAccessibilityButton" onclick="btnSave_onclick"/>
+        <Div id="divGrid" taborder="10" left="20" top="224" height="425" right="20">
+          <Layouts>
+            <Layout>
+              <Grid id="grdAtteList" taborder="0" left="0" top="0" height="100%" autofittype="none" binddataset="dsAtteList" selecttype="cell" initvalueid="ivGrdAccessibilityOn" oncellclick="grdAtteList_oncellclick" right="0" accessibilitylabel="출결등록">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="140"/>
+                      <Column size="50"/>
+                      <Column size="50"/>
+                      <Column size="50"/>
+                      <Column size="120"/>
+                      <Column size="48"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                      <Column size="35"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="36" band="head"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell rowspan="2" text="원적교"/>
+                      <Cell col="1" rowspan="2" text="학년"/>
+                      <Cell col="2" rowspan="2" text="반"/>
+                      <Cell col="3" rowspan="2" text="번호"/>
+                      <Cell col="4" rowspan="2" text="수강생명"/>
+                      <Cell col="5" rowspan="2" text="차시"/>
+                      <Cell col="6" text="1"/>
+                      <Cell col="7" text="2"/>
+                      <Cell col="8" text="3"/>
+                      <Cell col="9" text="4"/>
+                      <Cell col="10" text="5"/>
+                      <Cell col="11" text="6" cssclass="cell_Font_Blue"/>
+                      <Cell col="12" text="7" cssclass="cell_Font_Red"/>
+                      <Cell col="13" text="8"/>
+                      <Cell col="14" text="9"/>
+                      <Cell col="15" text="10"/>
+                      <Cell col="16" text="11"/>
+                      <Cell col="17" text="12"/>
+                      <Cell col="18" text="13" cssclass="cell_Font_Blue"/>
+                      <Cell col="19" text="14" cssclass="cell_Font_Red"/>
+                      <Cell col="20" text="15"/>
+                      <Cell col="21" text="16"/>
+                      <Cell col="22" text="17"/>
+                      <Cell col="23" text="18"/>
+                      <Cell col="24" text="19"/>
+                      <Cell col="25" text="20" cssclass="cell_Font_Blue"/>
+                      <Cell col="26" text="21" cssclass="cell_Font_Red"/>
+                      <Cell col="27" text="22"/>
+                      <Cell col="28" text="23"/>
+                      <Cell col="29" text="24"/>
+                      <Cell col="30" text="25"/>
+                      <Cell col="31" text="26"/>
+                      <Cell col="32" text="27"/>
+                      <Cell col="33" text="28" cssclass="cell_Font_Blue"/>
+                      <Cell col="34" text="29" cssclass="cell_Font_Red"/>
+                      <Cell col="35" text="30"/>
+                      <Cell col="36" text="31" cssclass="LineNo"/>
+                      <Cell row="1" col="6" text="월"/>
+                      <Cell row="1" col="7" text="화"/>
+                      <Cell row="1" col="8" text="수"/>
+                      <Cell row="1" col="9" text="목"/>
+                      <Cell row="1" col="10" text="금"/>
+                      <Cell row="1" col="11" text="토" cssclass="cell_Font_Blue"/>
+                      <Cell row="1" col="12" text="일" cssclass="cell_Font_Red"/>
+                      <Cell row="1" col="13" text="월"/>
+                      <Cell row="1" col="14" text="화"/>
+                      <Cell row="1" col="15" text="수"/>
+                      <Cell row="1" col="16" text="목"/>
+                      <Cell row="1" col="17" text="금"/>
+                      <Cell row="1" col="18" text="토" cssclass="cell_Font_Blue"/>
+                      <Cell row="1" col="19" text="일" cssclass="cell_Font_Red"/>
+                      <Cell row="1" col="20" text="월"/>
+                      <Cell row="1" col="21" text="화"/>
+                      <Cell row="1" col="22" text="수"/>
+                      <Cell row="1" col="23" text="목"/>
+                      <Cell row="1" col="24" text="금"/>
+                      <Cell row="1" col="25" text="토" cssclass="cell_Font_Blue"/>
+                      <Cell row="1" col="26" text="일" cssclass="cell_Font_Red"/>
+                      <Cell row="1" col="27" text="월"/>
+                      <Cell row="1" col="28" text="화"/>
+                      <Cell row="1" col="29" text="수"/>
+                      <Cell row="1" col="30" text="목"/>
+                      <Cell row="1" col="31" text="금"/>
+                      <Cell row="1" col="32" text="토"/>
+                      <Cell row="1" col="33" text="일" cssclass="cell_Font_Blue"/>
+                      <Cell row="1" col="34" text="월" cssclass="cell_Font_Red"/>
+                      <Cell row="1" col="35" text="화"/>
+                      <Cell row="1" col="36" text="수" cssclass="LineNo"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:enrShlCdNm" suppress="1"/>
+                      <Cell col="1" displaytype="text" text="bind:grdNm" tooltiptext="bind:grdNm" suppress="1"/>
+                      <Cell col="2" displaytype="text" text="bind:clsNm" suppress="1"/>
+                      <Cell col="3" text="bind:clsNo" suppress="1"/>
+                      <Cell col="4" displaytype="normal" text="bind:stuFlnm" cssclass="expr:midYn == '1' ? 'cell_WF_BgColorEmrd' : midYn == '2' ? 'cell_WF_BgColorYelw' : ''" suppress="1"/>
+                      <Cell col="5" textAlign="left" text="bind:tmsCopy"/>
+                      <Cell col="6" text="bind:dNm1" cssclass="expr:clrm1 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="7" text="bind:dNm2" cssclass="expr:clrm2 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="8" text="bind:dNm3" cssclass="expr:clrm3 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="9" text="bind:dNm4" cssclass="expr:clrm4 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="10" text="bind:dNm5" cssclass="expr:clrm5 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="11" text="bind:dNm6" cssclass="expr:clrm6 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="12" text="bind:dNm7" cssclass="expr:clrm7 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="13" text="bind:dNm8" cssclass="expr:clrm8 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="14" text="bind:dNm9" cssclass="expr:clrm9 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="15" text="bind:dNm10" cssclass="expr:clrm10=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="16" text="bind:dNm11" cssclass="expr:clrm11=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="17" text="bind:dNm12" cssclass="expr:clrm12=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="18" text="bind:dNm13" cssclass="expr:clrm13=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="19" text="bind:dNm14" cssclass="expr:clrm14=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="20" text="bind:dNm15" cssclass="expr:clrm15=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="21" text="bind:dNm16" cssclass="expr:clrm16=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="22" text="bind:dNm17" cssclass="expr:clrm17=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="23" text="bind:dNm18" cssclass="expr:clrm18=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="24" text="bind:dNm19" cssclass="expr:clrm19=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="25" text="bind:dNm20" cssclass="expr:clrm20=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="26" text="bind:dNm21" cssclass="expr:clrm21=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="27" text="bind:dNm22" cssclass="expr:clrm22=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="28" text="bind:dNm23" cssclass="expr:clrm23=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="29" text="bind:dNm24" cssclass="expr:clrm24=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="30" text="bind:dNm25" cssclass="expr:clrm25=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="31" text="bind:dNm26" cssclass="expr:clrm26=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="32" text="bind:dNm27" cssclass="expr:clrm27=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="33" text="bind:dNm28" cssclass="expr:clrm28=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="34" text="bind:dNm29" cssclass="expr:clrm29=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="35" text="bind:dNm30" cssclass="expr:clrm30=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="36" text="bind:dNm31" cssclass="expr:clrm31=='000' ? 'cell_BG_Gray' : ''"/>
+                    </Band>
+                  </Format>
+                  <Format id="mobile">
+                    <Columns>
+                      <Column size="170"/>
+                      <Column size="80"/>
+                      <Column size="70"/>
+                      <Column size="80"/>
+                      <Column size="200"/>
+                      <Column size="70"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="50" band="head"/>
+                      <Row size="50" band="head"/>
+                      <Row size="70"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell rowspan="2" text="재학학교"/>
+                      <Cell col="1" rowspan="2" text="학년"/>
+                      <Cell col="2" rowspan="2" text="반"/>
+                      <Cell col="3" rowspan="2" text="번호"/>
+                      <Cell col="4" rowspan="2" text="수강생명"/>
+                      <Cell col="5" rowspan="2" text="차시"/>
+                      <Cell col="6" text="1"/>
+                      <Cell col="7" text="2"/>
+                      <Cell col="8" text="3"/>
+                      <Cell col="9" text="4"/>
+                      <Cell col="10" text="5"/>
+                      <Cell col="11" text="6" cssclass="cell_Font_Blue"/>
+                      <Cell col="12" text="7" cssclass="cell_Font_Red"/>
+                      <Cell col="13" text="8"/>
+                      <Cell col="14" text="9"/>
+                      <Cell col="15" text="10"/>
+                      <Cell col="16" text="11"/>
+                      <Cell col="17" text="12"/>
+                      <Cell col="18" text="13" cssclass="cell_Font_Blue"/>
+                      <Cell col="19" text="14" cssclass="cell_Font_Red"/>
+                      <Cell col="20" text="15"/>
+                      <Cell col="21" text="16"/>
+                      <Cell col="22" text="17"/>
+                      <Cell col="23" text="18"/>
+                      <Cell col="24" text="19"/>
+                      <Cell col="25" text="20" cssclass="cell_Font_Blue"/>
+                      <Cell col="26" text="21" cssclass="cell_Font_Red"/>
+                      <Cell col="27" text="22"/>
+                      <Cell col="28" text="23"/>
+                      <Cell col="29" text="24"/>
+                      <Cell col="30" text="25"/>
+                      <Cell col="31" text="26"/>
+                      <Cell col="32" text="27"/>
+                      <Cell col="33" text="28" cssclass="cell_Font_Blue"/>
+                      <Cell col="34" text="29" cssclass="cell_Font_Red"/>
+                      <Cell col="35" text="30"/>
+                      <Cell col="36" text="31" cssclass="LineNo"/>
+                      <Cell row="1" col="6" text="월"/>
+                      <Cell row="1" col="7" text="화"/>
+                      <Cell row="1" col="8" text="수"/>
+                      <Cell row="1" col="9" text="목"/>
+                      <Cell row="1" col="10" text="금"/>
+                      <Cell row="1" col="11" text="토" cssclass="cell_Font_Blue"/>
+                      <Cell row="1" col="12" text="일" cssclass="cell_Font_Red"/>
+                      <Cell row="1" col="13" text="월"/>
+                      <Cell row="1" col="14" text="화"/>
+                      <Cell row="1" col="15" text="수"/>
+                      <Cell row="1" col="16" text="목"/>
+                      <Cell row="1" col="17" text="금"/>
+                      <Cell row="1" col="18" text="토" cssclass="cell_Font_Blue"/>
+                      <Cell row="1" col="19" text="일" cssclass="cell_Font_Red"/>
+                      <Cell row="1" col="20" text="월"/>
+                      <Cell row="1" col="21" text="화"/>
+                      <Cell row="1" col="22" text="수"/>
+                      <Cell row="1" col="23" text="목"/>
+                      <Cell row="1" col="24" text="금"/>
+                      <Cell row="1" col="25" text="토" cssclass="cell_Font_Blue"/>
+                      <Cell row="1" col="26" text="일" cssclass="cell_Font_Red"/>
+                      <Cell row="1" col="27" text="월"/>
+                      <Cell row="1" col="28" text="화"/>
+                      <Cell row="1" col="29" text="수"/>
+                      <Cell row="1" col="30" text="목"/>
+                      <Cell row="1" col="31" text="금"/>
+                      <Cell row="1" col="32" text="토"/>
+                      <Cell row="1" col="33" text="일" cssclass="cell_Font_Blue"/>
+                      <Cell row="1" col="34" text="월" cssclass="cell_Font_Red"/>
+                      <Cell row="1" col="35" text="화"/>
+                      <Cell row="1" col="36" text="수" cssclass="LineNo"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:enrShlCdNm" suppress="1"/>
+                      <Cell col="1" displaytype="text" text="bind:grdNm" suppress="1"/>
+                      <Cell col="2" displaytype="text" text="bind:clsNm" suppress="1"/>
+                      <Cell col="3" text="bind:clsNo" suppress="1"/>
+                      <Cell col="4" displaytype="normal" text="bind:stuFlnm" cssclass="expr:midYn == '1' ? 'cell_WF_BgColorEmrd' : midYn == '2' ? 'cell_WF_BgColorYelw' : ''" suppress="1"/>
+                      <Cell col="5" text="bind:tmsCopy"/>
+                      <Cell col="6" text="bind:dNm1" cssclass="expr:clrm1 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="7" text="bind:dNm2" cssclass="expr:clrm2 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="8" text="bind:dNm3" cssclass="expr:clrm3 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="9" text="bind:dNm4" cssclass="expr:clrm4 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="10" text="bind:dNm5" cssclass="expr:clrm5 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="11" text="bind:dNm6" cssclass="expr:clrm6 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="12" text="bind:dNm7" cssclass="expr:clrm7 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="13" text="bind:dNm8" cssclass="expr:clrm8 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="14" text="bind:dNm9" cssclass="expr:clrm9 =='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="15" text="bind:dNm10" cssclass="expr:clrm10=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="16" text="bind:dNm11" cssclass="expr:clrm11=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="17" text="bind:dNm12" cssclass="expr:clrm12=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="18" text="bind:dNm13" cssclass="expr:clrm13=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="19" text="bind:dNm14" cssclass="expr:clrm14=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="20" text="bind:dNm15" cssclass="expr:clrm15=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="21" text="bind:dNm16" cssclass="expr:clrm16=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="22" text="bind:dNm17" cssclass="expr:clrm17=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="23" text="bind:dNm18" cssclass="expr:clrm18=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="24" text="bind:dNm19" cssclass="expr:clrm19=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="25" text="bind:dNm20" cssclass="expr:clrm20=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="26" text="bind:dNm21" cssclass="expr:clrm21=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="27" text="bind:dNm22" cssclass="expr:clrm22=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="28" text="bind:dNm23" cssclass="expr:clrm23=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="29" text="bind:dNm24" cssclass="expr:clrm24=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="30" text="bind:dNm25" cssclass="expr:clrm25=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="31" text="bind:dNm26" cssclass="expr:clrm26=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="32" text="bind:dNm27" cssclass="expr:clrm27=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="33" text="bind:dNm28" cssclass="expr:clrm28=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="34" text="bind:dNm29" cssclass="expr:clrm29=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="35" text="bind:dNm30" cssclass="expr:clrm30=='000' ? 'cell_BG_Gray' : ''"/>
+                      <Cell col="36" text="bind:dNm31" cssclass="expr:clrm31=='000' ? 'cell_BG_Gray' : ''"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+            <Layout name="mobile">
+              <Grid id="grdAtteList" formatid="mobile" bottom="0" left="0" top="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staEnrShlCdNm" taborder="11" left="20" width="258" height="42" text="원적교" top="679" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn" cssclass="sta_WF_Input01TopLeft_Box" accessibilitylabel="원적교"/>
+        <Div id="divEnrShlCdNm" taborder="19" left="20" height="42" top="721" formscrolltype="none" width="258" cssclass="sta_WF_Input02Top" border="0px none,1px solid #d6d9e1,1px solid #d6d9e1,0px none" background="#ffffff">
+          <Layouts>
+            <Layout>
+              <Edit id="edtEnrShlCdNm" taborder="0" height="30" text="넥사크로17" left="5" top="6" readonly="true" onchanged="Div01_Edit00_onchanged" maxlength="30" accessibilitylabel="원적교 입력" initvalueid="ivEdtEssential" right="5" textAlign="center"/>
+            </Layout>
+            <Layout name="Layout0"/>
+            <Layout name="mobile">
+              <Edit id="edtEnrShlCdNm" height="60" left="10" top="10" right="10"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staGrd" taborder="12" left="277" width="72" height="42" text="학년" top="679" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn" cssclass="sta_WF_Input01TopRight_Box" accessibilitylabel="학년"/>
+        <Div id="divGrd" taborder="20" left="277" height="42" top="721" formscrolltype="none" width="72" cssclass="sta_WF_Input02Top" border="0px none,0px none,1px solid #d6d9e1,1px solid #d6d9e1" background="#ffffff">
+          <Layouts>
+            <Layout>
+              <Edit id="edtGrd" taborder="0" height="30" text="넥사크로17" left="5" top="6" readonly="true" onchanged="Div01_Edit00_onchanged" maxlength="30" accessibilitylabel="학년 입력" initvalueid="ivEdtEssential" right="5" textAlign="center"/>
+            </Layout>
+            <Layout name="Layout0"/>
+            <Layout name="mobile">
+              <Edit id="edtGrd" height="60" left="10" top="10" right="10"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staClsNm" taborder="13" left="348" width="54" height="42" text="반" top="679" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn" cssclass="sta_WF_Input01TopRight_Box" accessibilitylabel="반"/>
+        <Div id="divClsNm" taborder="21" left="348" height="42" top="721" formscrolltype="none" width="54" cssclass="sta_WF_Input02Top" border="0px none,0px none,1px solid #d6d9e1,1px solid #d6d9e1" background="#ffffff">
+          <Layouts>
+            <Layout>
+              <Edit id="edtClsNm" taborder="1" height="30" text="넥사크로17" left="5" top="6" readonly="true" onchanged="Div01_Edit00_onchanged" maxlength="30" accessibilitylabel="반 입력" initvalueid="ivEdtEssential" right="5" textAlign="center"/>
+            </Layout>
+            <Layout name="Layout0"/>
+            <Layout name="mobile">
+              <Edit id="edtClsNm" height="60" left="10" top="10" right="10"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staClsNo" taborder="14" left="401" height="42" text="번호" top="679" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn" cssclass="sta_WF_Input01TopRight_Box" width="64" accessibilitylabel="번호"/>
+        <Div id="divClsNo" taborder="22" left="401" height="42" top="721" formscrolltype="none" width="64" cssclass="sta_WF_Input02Top" border="0px none,0px none,1px solid #d6d9e1,1px solid #d6d9e1" background="#ffffff">
+          <Layouts>
+            <Layout>
+              <Edit id="edtClsNo" taborder="1" height="30" text="넥사크로17" left="5" top="6" readonly="true" onchanged="Div01_Edit00_onchanged" maxlength="30" accessibilitylabel="번호 입력" initvalueid="ivEdtEssential" right="5" textAlign="center"/>
+            </Layout>
+            <Layout name="Layout0"/>
+            <Layout name="mobile">
+              <Edit id="edtClsNo" height="60" left="10" top="10" right="10"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staStuFlnm" taborder="15" left="464" width="98" height="42" text="성명" top="679" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn" cssclass="sta_WF_Input01TopRight_Box" accessibilitylabel="성명"/>
+        <Div id="divStuFlnm" taborder="23" left="464" height="42" top="721" formscrolltype="none" width="98" cssclass="sta_WF_Input02Top" border="0px none,0px none,1px solid #d6d9e1,1px solid #d6d9e1" background="#ffffff">
+          <Layouts>
+            <Layout>
+              <Edit id="edtStuFlnm" taborder="1" height="30" text="넥사크로17" left="5" top="6" readonly="true" onchanged="Div01_Edit00_onchanged" maxlength="30" accessibilitylabel="성명 입력" initvalueid="ivEdtEssential" right="5"/>
+            </Layout>
+            <Layout name="Layout0"/>
+            <Layout name="mobile">
+              <Edit id="edtStuFlnm" height="60" left="10" top="10" right="10" text="홍길동"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staTiYmd" taborder="16" left="561" width="122" height="42" text="수업일" top="679" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn" cssclass="sta_WF_Input01TopRight_Box" accessibilitylabel="수업일"/>
+        <Div id="divTiYmd" taborder="24" left="561" height="42" top="721" formscrolltype="none" width="122" cssclass="sta_WF_Input02Top" border="0px none,0px none,1px solid #d6d9e1,1px solid #d6d9e1" background="#ffffff">
+          <Layouts>
+            <Layout>
+              <MaskEdit id="mskTiYmd" taborder="0" left="5" top="6" height="30" type="string" textAlign="left" format="####.##.##" initvalueid="ivEdtEssential" accessibilitylabel="수업일 입력" enable="true" readonly="true" width="110"/>
+            </Layout>
+            <Layout name="Layout0"/>
+            <Layout name="mobile">
+              <MaskEdit id="mskTiYmd" height="60" left="10" top="10" right="10"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staTms" taborder="17" left="682" width="64" height="42" text="차시" top="679" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn" cssclass="sta_WF_Input01TopRight_Box" accessibilitylabel="차시"/>
+        <Div id="divTms" taborder="25" left="682" height="42" top="721" formscrolltype="none" width="64" cssclass="sta_WF_Input02Top" border="0px none,0px none,1px solid #d6d9e1,1px solid #d6d9e1" background="#ffffff">
+          <Layouts>
+            <Layout>
+              <Edit id="edtTms" taborder="0" height="30" text="넥사크로17" left="5" top="6" readonly="true" onchanged="Div01_Edit00_onchanged" maxlength="30" accessibilitylabel="차시 입력" initvalueid="ivEdtEssential" right="5"/>
+            </Layout>
+            <Layout name="Layout0"/>
+            <Layout name="mobile">
+              <Edit id="edtTms" height="60" left="10" top="10" right="10" text="10"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staAtteCd" taborder="18" left="745" height="42" text="출결구분" top="679" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn" cssclass="sta_WF_Input01TopRight_Box" right="20" accessibilitylabel="출결구분"/>
+        <Div id="divAtteCd" taborder="26" left="745" height="42" top="721" formscrolltype="none" cssclass="sta_WF_Input02Top" border="0px none,0px none,1px solid #d6d9e1,1px solid #d6d9e1" right="20" background="#ffffff">
+          <Layouts>
+            <Layout>
+              <Radio id="rdoAtteCd" taborder="0" left="5" top="5" innerdataset="dsAtteCd" codecolumn="unyCdValue" datacolumn="unyCdValueNm" direction="vertical" index="0" text="교육부" value="1" height="30" initvalueid="ivRdoNormal" accessibilitylabel="출결구분" cssclass="sta_WF_Input02Top" right="5" onitemchanged="divAtteCd_rdoAtteCd_onitemchanged"/>
+            </Layout>
+            <Layout name="Layout0"/>
+            <Layout name="mobile">
+              <Radio id="rdoAtteCd" left="10" top="10" right="10" direction="vertical" columncount="3" height="120"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staAtteRmkCn" taborder="27" left="19" height="42" text="비고" top="762" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn" cssclass="sta_WF_Input01" right="922" border="1px solid #d6d9e1,1px solid #d6d9e1,1px solid #d6d9e1,0px none" accessibilitylabel="비고"/>
+        <Div id="divAtteRmkCn" taborder="28" left="278" height="42" top="762" formscrolltype="none" right="20" cssclass="sta_WF_Input02Top" border="1px solid #d6d9e1, 0px none,1px solid #d6d9e1,0px none" text="" background="#ffffff">
+          <Layouts>
+            <Layout>
+              <Edit id="edtAtteRmkCn" taborder="0" height="30" text="넥사크로17" left="5" top="5" maxlength="30" accessibilitylabel="비고 입력" initvalueid="ivEdtEssential" right="5" onchanged="divAtteRmkCn_edtAtteRmkCn_onchanged"/>
+            </Layout>
+            <Layout name="mobile">
+              <Edit id="edtAtteRmkCn" height="60" left="10" top="10" right="10"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnClose" taborder="29" text="닫기" height="30" width="70" left="47.50%" initvalueid="ivBtnAccessibilityButton" top="830" onclick="btnClose_onclick" accessibilitylabel="닫기"/>
+        <Static id="sta06" taborder="30" left="0" visible="true" right="0" initvalueid="ivStcAccessibilityOff" top="860" text="" height="30"/>
+        <Div id="divTms00" taborder="7" height="40" top="179" formscrolltype="none" width="269" left="374">
+          <Layouts>
+            <Layout>
+              <Static id="sta332" taborder="0" left="5" top="10" width="20" height="20" background="#87e0ba"/>
+              <Static id="sta332_00" taborder="1" text="중도추가" left="sta332:5" top="10" width="50" height="20" accessibilitylabel="중도추가"/>
+              <Static id="sta332_01" taborder="2" left="sta332_00:20" top="10" width="20" height="20" background="#ffef85"/>
+              <Static id="sta332_00_00" taborder="3" text="중도취소" left="sta332_01:5" top="10" width="60" height="20" accessibilitylabel="중도취소"/>
+            </Layout>
+            <Layout name="Layout0"/>
+            <Layout name="mobile">
+              <Static id="sta332_00" height="60" left="sta332:10" top="10" width="100"/>
+              <Static id="sta332_00_00" height="60" left="sta332_01:10" top="10" width="100"/>
+              <Static id="sta332" left="5" top="30" width="20" height="20"/>
+              <Static id="sta332_01" left="sta332_00:20" top="30" width="20" height="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="mobile" width="640" height="2409" mobileorientation="portrait" type="default" screenid="mobile,tablet">
+        <Div id="divTitle" height="70" left="0" top="20" right="0" taborder="0"/>
+        <Div id="divSearch" height="720" left="20" top="90" taborder="1" right="20"/>
+        <Button id="btnCancel" right="160" top="872" width="120" height="60" taborder="2" cssclass="btn_WF_Custom"/>
+        <Button id="btnSave" height="60" top="872" width="120" right="20" taborder="3"/>
+        <Div id="divGrid" left="20" top="952" height="500" right="20" taborder="4"/>
+        <Static id="staEnrShlCdNm" left="20" top="1512" width="29.69%" height="80" taborder="5" cssclass="sta_WF_DtlLabel01TopLeft_Box"/>
+        <Div id="divEnrShlCdNm" left="20" top="1592" width="29.69%" height="80" taborder="6" border="0px none,1px solid #d6d9e1,1px solid #d6d9e1,0px none"/>
+        <Static id="staGrd" height="80" left="staEnrShlCdNm:0" top="1512" width="26.56%" taborder="7" cssclass="sta_WF_DtlLabel01TopLeft_Box"/>
+        <Div id="divGrd" left="divEnrShlCdNm:0" top="1592" width="26.56%" taborder="8" height="80" border="0px none,1px solid #d6d9e1,1px solid #d6d9e1,0px none"/>
+        <Static id="staClsNm" height="80" left="staGrd:0" top="1512" width="18.75%" taborder="9" cssclass="sta_WF_DtlLabel01TopLeft_Box"/>
+        <Div id="divClsNm" left="divGrd:0" top="1592" width="18.75%" height="80" taborder="10" border="0px none,1px solid #d6d9e1,1px solid #d6d9e1,0px none"/>
+        <Static id="staClsNo" height="80" left="staClsNm:0" top="1512" taborder="11" cssclass="sta_WF_DtlLabel01Top" right="20"/>
+        <Div id="divClsNo" left="divClsNm:0" top="1592" height="80" taborder="12" right="20" border="0px none,0px none,1px solid #d6d9e1"/>
+        <Static id="staStuFlnm" height="80" left="20" top="1671" taborder="13" cssclass="sta_WF_DtlLabel01RLine" width="40.63%"/>
+        <Div id="divStuFlnm" left="20" top="1751" height="80" taborder="14" width="40.63%" border="0px none,1px solid #d6d9e1,1px solid #d6d9e1,0px none"/>
+        <Static id="staTiYmd" height="80" left="staStuFlnm:0" top="1671" width="34.38%" taborder="15" cssclass="sta_WF_DtlLabel01RLine"/>
+        <Div id="divTiYmd" left="divStuFlnm:0" top="1751" width="34.38%" height="80" taborder="16" border="0px none,1px solid #d6d9e1,1px solid #d6d9e1,0px none"/>
+        <Static id="staTms" height="80" left="staTiYmd:0" top="1671" taborder="17" cssclass="sta_WF_DtlLabel01" right="21"/>
+        <Div id="divTms" left="divTiYmd:0" top="1751" height="80" taborder="18" border="0px none,0px none,1px solid #d6d9e1" right="20"/>
+        <Static id="staAtteCd" height="80" left="20" top="1830" taborder="19" right="20" cssclass="sta_WF_DtlLabel01"/>
+        <Div id="divAtteCd" left="20" top="1910" height="140" text="" taborder="20" right="20" border="0px none,0px none,1px solid #d6d9e1"/>
+        <Static id="staAtteRmkCn" height="80" left="21" top="2049" taborder="21" cssclass="sta_WF_DtlLabel01" right="19" border="1px solid #d6d9e1,0px none"/>
+        <Div id="divAtteRmkCn" top="2128" left="21" height="81" taborder="22" right="19"/>
+        <Button id="btnClose" left="20" top="divAtteRmkCn:60" height="80" taborder="23" right="20" text="닫기"/>
+        <Static id="sta06" left="0" top="btnClose:0" right="0" taborder="24" height="60"/>
+        <Static id="staLetPrd" visible="false" taborder="25" left="20" top="813" width="120" height="60" cssclass="sta_WF_Text24"/>
+        <MaskEdit id="mskAslLectBgngYmd" visible="false" taborder="26" left="162" top="813" width="160" height="60"/>
+        <Static id="sta00_00_00_00" visible="false" taborder="27" left="332" top="813" width="19" height="60" cssclass="sta_WF_Text24"/>
+        <MaskEdit id="mskAslLectEndYmd" visible="false" taborder="28" left="361" top="813" width="160" height="60"/>
+        <Div id="divTms00" left="20" top="862" height="60" right="336"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  
+*  @MenuPath    대국민 > 방과후학교(외부강사) > 프로그램관리
+*  @FileName 	afs_atstc30_m00.xfdl 
+*  @Creator 	임대성
+*  @CreateDate 	2022.05.31
+*  @Desction    방과후학교(외부강사) 프로그램관리
+*
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.05.31            임대성                   최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::afs_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역 
+ ************************************************************************************************/
+this.fv_userId   = "";
+this.fv_insrRrno = "";
+this.fv_cddcCd   = "";
+
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitPopup(obj);
+	if(this.smfIsMobile()){
+		this.divGrid.form.grdAtteList.set_formatid("mobile");
+	}else{
+		this.divGrid.form.grdAtteList.set_formatid("default");
+	}
+	// 서버단에서 설정한 유효성 검증 목록을 획득하여 설정
+	/*this.smfValidateService("validateMain", {
+			url : "/afs_ats_tc30_000.do",
+		})
+		.mappingRulesetToForm(this.divSearch, "dsSearch")
+		.run()
+		.callback(function(callbackParams) {
+			
+		});*/
+		
+	// 파라메터 세팅
+	this.pv_params = this.smfGetPopupParams();
+	this.dsSearch.copyRow(0, this.pv_params.dsPgm, 0);	
+	
+	this.afsfMakeYm(this.dsYm, "", "", this.dsSearch.getColumn(0, "aslLectBgngYmd"), this.dsSearch.getColumn(0, "aslLectEndYmd"), "", "N");
+	
+	this.afsfCodeList(this.dsCd);
+
+	// 2023.07.28 데이터 크기 조절
+	this.dsSearch.setColumn(0, "dd", "");
+	
+	if(this.dsSearch.getColumn(0, "scaSysScCd") == "HIS"){
+		this.divGrid.form.grdAtteList.setCellProperty("head", 1, "text", "계열/학년/학과"); 
+		if(this.smfIsMobile()){
+			this.divGrid.form.grdAtteList.setFormatColProperty(1, "size", 200);
+		}else{
+			this.divGrid.form.grdAtteList.setFormatColProperty(1, "size", 120);
+		}
+		this.staGrd.set_text("계열/학년/학과");
+		//this.staGrd.set_width("10%");
+		//this.divGrd.set_width("10%");
+		
+	}else if(this.dsSearch.getColumn(0, "scaSysScCd") == "SPS"){
+		this.divGrid.form.grdAtteList.setFormatColProperty(1, "size", 100);
+	}
+	//this.cboYm.redrow();
+};
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+ * @description Transaction CallBack 함수(선택)
+*/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	console.log("svcid : "+svcid);
+	if(errcd == -1) return;
+	
+	switch(svcid) {
+		case "listAtteCd" : 
+		    this.dsAtteCd.insertRow(0);
+			this.dsAtteCd.setColumn(0, "unyCdValue",   "0");
+			this.dsAtteCd.setColumn(0, "unyCdValueNm", "출석");
+			break;
+		
+	}
+};
+
+/**
+ * @description Popup CallBack 함수(선택)
+*/
+this.fnPopupCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+	
+	switch(svcid) {
+		case "" : 
+			break;
+	}
+};
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * 출석부 조회
+ */
+this.fnListSearch = function(){
+	if(this.dsSearch.getColumn(0, "tiMonth") == ""){
+		this.smfAlert('CM022', ['년월'] );
+		return;
+	}
+	
+	// 2023.07.28 데이터 크기 조절
+	if(this.dsSearch.getColumn(0, "dd") == ""){
+		this.smfAlert('CM022', ['일자'] );
+		return;
+	}	
+	var dd = this.dsSearch.getColumn(0, "dd")
+	this.dsSearch.setColumn(0, "ddFirst", dd.substr(0,2));
+	this.dsSearch.setColumn(0, "ddSecond", dd.substr(2,2));
+
+	// 서비스 객체 생성
+	this.smfSearchService("list")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			console.log(this.dsAtteList.saveXML());
+			
+			var nColCnt   = this.divGrid.form.grdAtteList.getFormatColCount();
+			var sLastDay  = this.smfLastDateNum(this.dsSearch.getColumn(0, "tiMonth")+"01");
+			//this.divGrid.form.grdAtteList.set_autofittype(false);
+			
+			//주석풀기
+// 			for(var nIdx=5; nIdx<=(nColCnt-1); nIdx++){
+// 				var sDfkNm = this.afsfGetDfkNm(this.dsSearch.getColumn(0, "tiMonth")+String(nIdx-4).padLeft(2, "0"));
+// 				var sDfkCd = this.afsfGetDfk(this.dsSearch.getColumn(0, "tiMonth")+String(nIdx-4).padLeft(2, "0"));
+// 				var sCss   = "";
+// 				if(sDfkCd == "6"){
+// 					sCss   = "cell_Font_Blue";
+// 				}else if(sDfkCd == "7"){
+// 					sCss   = "cell_Font_Red";
+// 				}
+// 				
+// 				this.divGrid.form.grdAtteList.setCellProperty("head",(1*nColCnt-5)+nIdx, "text",     sDfkNm); // 헤더명(2행)
+// 				this.divGrid.form.grdAtteList.setCellProperty("head",nIdx,               "cssclass", sCss);   // 헤더색
+// 				this.divGrid.form.grdAtteList.setCellProperty("head",(1*nColCnt-5)+nIdx, "cssclass", sCss);   // 헤더색(2행)
+// 
+// 				if(this.smfIsMobile()){
+// 					if(this.isNil(this.dsAtteList.getColumn(this.divGrid.form.grdAtteList.currentrow, "tiSeqNo"+(nIdx-4)))){
+// 						this.divGrid.form.grdAtteList.setFormatColProperty(nIdx, "size", 0);
+// 					}else{
+// 						this.divGrid.form.grdAtteList.setFormatColProperty(nIdx, "size", 60);
+// 					}
+// 				}else{
+// 					if(sLastDay < nIdx -4){
+// 						this.divGrid.form.grdAtteList.setFormatColProperty(nIdx, "size", 0);
+// 					}else{
+// 						this.divGrid.form.grdAtteList.setFormatColProperty(nIdx, "size", 35);
+// 					}
+// 				}
+// 			}
+
+			//수정본
+			for(var nIdx=6; nIdx<=(nColCnt-1); nIdx++){
+				var sDfkNm = this.afsfGetDfkNm(this.dsSearch.getColumn(0, "tiMonth")+String(nIdx-5).padLeft(2, "0"));
+				var sDfkCd = this.afsfGetDfk(this.dsSearch.getColumn(0, "tiMonth")+String(nIdx-5).padLeft(2, "0"));
+				var sCss   = "";
+				var cnt    = 0;						
+				if(sDfkCd == "6"){
+					sCss   = "cell_Font_Blue";
+				}else if(sDfkCd == "7"){
+					sCss   = "cell_Font_Red";
+				}
+				
+				this.divGrid.form.grdAtteList.setCellProperty("head",(1*nColCnt-6)+nIdx, "text",     sDfkNm); // 헤더명(2행)
+				this.divGrid.form.grdAtteList.setCellProperty("head",nIdx,               "cssclass", sCss);   // 헤더색
+				this.divGrid.form.grdAtteList.setCellProperty("head",(1*nColCnt-6)+nIdx, "cssclass", sCss);   // 헤더색(2행)
+
+				if(this.smfIsMobile()){				
+					var tiseqIdNum = this.dsAtteList.findRowExpr("tiSeqNo"+(nIdx-5) +"!= null &&" + "tiSeqNo"+(nIdx-5) +"!= ''")
+					if (tiseqIdNum != -1){
+						this.divGrid.form.grdAtteList.setFormatColProperty(nIdx, "size", 60);						
+					}else{
+						this.divGrid.form.grdAtteList.setFormatColProperty(nIdx, "size", 0);
+					}
+				}else{
+// 					if(sLastDay < nIdx -5){
+// 						this.divGrid.form.grdAtteList.setFormatColProperty(nIdx, "size", 0);
+// 					}else{
+// 						this.divGrid.form.grdAtteList.setFormatColProperty(nIdx, "size", 35);
+// 					}		
+					//2023.08.02 pc화면도 출결일자만 나오게 수정
+					var tiseqIdNum = this.dsAtteList.findRowExpr("tiSeqNo"+(nIdx-5) +"!= null &&" + "tiSeqNo"+(nIdx-5) +"!= ''")
+					if (tiseqIdNum != -1){
+						this.divGrid.form.grdAtteList.setFormatColProperty(nIdx, "size", 35);						
+					}else{
+						this.divGrid.form.grdAtteList.setFormatColProperty(nIdx, "size", 0);
+					}					
+					
+				}
+			}
+
+			//this.divGrid.form.grdAtteList.set_autofittype(true);
+		});
+}
+
+ /**
+  * 해당월 마지막 일자 리턴 
+  *
+  * @param  날짜
+  * @return 요일
+  * @see    afsfDfk('20220101');
+  */
+// 2023.08.02 출결 데이터 양 초과로 인한 조회조건 관련 스크립트
+this.afsfGetLastDd = function(dt){
+ 	var nMonth = 0;
+ 	var nLastDate = 0;
+
+ 	if (this.isNil(dt)){
+ 		return 0;
+ 	}
+ 	var nY = parseInt(dt.substring(0,4),10); 	
+ 	nMonth = parseInt(dt.substr(4,2),10);
+ 	if (nMonth == 1 || nMonth == 3 || nMonth == 5 || nMonth == 7 || nMonth == 8 || nMonth == 10 || nMonth == 12){
+ 		nLastDate = 31;
+ 	}
+ 	else if (nMonth == 2){
+		//윤달 체크
+		if ((nY % 4) == 0){
+			if ((nY % 100) != 0 || (nY % 400) == 0){
+				nLastDate = 29;
+			}else{
+				nLastDate = 28;
+			}
+		}else{
+			nLastDate = 28;
+		}
+ 	}
+ 	else{
+ 		nLastDate = 30;
+ 	}
+ 	return nLastDate;
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ // 초기화버튼
+this.divSearch_btnInit_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsSearch.setColumn(0, "tiMonth", "");
+	
+	// 2023.07.28 데이터 크기 조절	
+	this.dsSearch.setColumn(0, "dd", "");
+};
+// 조회버튼
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnListSearch();
+};
+
+// 저장버튼
+this.btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 서비스 객체 생성 
+	this.smfSaveService("save")
+		// 데이터 변경 필수 
+		.requireModifredData(this.dsAtteList)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams) {
+			if(callbackParams.errors) return;
+			
+			this.smfAlert('CM002');	//저장이 완료되었습니다.
+			this.dsCd2.setColumn(0, "insrRrno",    this.fv_insrRrno);
+			this.afsfCodeList(this.dsCd2);
+			
+		});
+};
+// 닫기버튼
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(false);
+};
+
+// this.grdAtteList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+// {
+// 	if(e.col > 4){
+// 		if(this.dsAtteList.getColumn(this.divGrid.form.grdAtteList.currentrow, "clrm"+(this.divGrid.form.grdAtteList.currentcol-4)) != "000"){
+// 			this.dsAtteList.set_updatecontrol(false);
+// 			this.dsAtteList.setColumn(e.row, "tiYmd",     this.dsAtteList.getColumn(e.row, "scMonth")+String(obj.getCellProperty("head",e.col,"text")).padLeft(2, "0"));
+// 			this.dsAtteList.setColumn(e.row, "tms",       this.dsAtteList.getColumn(e.row, "tms"+(e.col-4)));
+// 			this.dsAtteList.setColumn(e.row, "atteCd",    this.dsAtteList.getColumn(e.row, "d"+(e.col-4)));
+// 			this.dsAtteList.setColumn(e.row, "atteRmkCn", this.dsAtteList.getColumn(e.row, "atteRmkCn"+(e.col-4)));
+// 			this.dsAtteList.set_updatecontrol(true);
+// 			this.divAtteCd.form.rdoAtteCd.set_readonly(false);
+// 			this.divAtteRmkCn.form.edtAtteRmkCn.set_readonly(false);
+// 		}else{
+// 			this.dsAtteList.setColumn(e.row, "tiYmd",     "");
+// 			this.dsAtteList.setColumn(e.row, "tms",       "");
+// 			this.dsAtteList.setColumn(e.row, "atteCd",    "");
+// 			this.dsAtteList.setColumn(e.row, "atteRmkCn", "");
+// 			this.divAtteCd.form.rdoAtteCd.set_readonly(true);
+// 			this.divAtteRmkCn.form.edtAtteRmkCn.set_readonly(true);
+// 		}
+// 	}else{
+// 		this.dsAtteList.setColumn(e.row, "tiYmd",     "");
+// 		this.dsAtteList.setColumn(e.row, "tms",       "");
+// 		this.dsAtteList.setColumn(e.row, "atteCd",    "");
+// 		this.dsAtteList.setColumn(e.row, "atteRmkCn", "");
+// 		this.divAtteCd.form.rdoAtteCd.set_readonly(true);
+// 		this.divAtteRmkCn.form.edtAtteRmkCn.set_readonly(true);
+// 	}
+// };
+
+//수정후
+this.grdAtteList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(e.col > 5){
+		if(this.dsAtteList.getColumn(this.divGrid.form.grdAtteList.currentrow, "clrm"+(this.divGrid.form.grdAtteList.currentcol-5)) != "000"){
+			this.dsAtteList.set_updatecontrol(false);
+			this.dsAtteList.setColumn(e.row, "tiYmd",     this.dsAtteList.getColumn(e.row, "scMonth")+String(obj.getCellProperty("head",e.col,"text")).padLeft(2, "0"));
+			this.dsAtteList.setColumn(e.row, "tms",       this.dsAtteList.getColumn(e.row, "tms"+(e.col-5)));
+			this.dsAtteList.setColumn(e.row, "atteCd",    this.dsAtteList.getColumn(e.row, "d"+(e.col-5)));
+			this.dsAtteList.setColumn(e.row, "atteRmkCn", this.dsAtteList.getColumn(e.row, "atteRmkCn"+(e.col-5)));
+			this.dsAtteList.set_updatecontrol(true);
+			this.divAtteCd.form.rdoAtteCd.set_readonly(false);
+			this.divAtteRmkCn.form.edtAtteRmkCn.set_readonly(false);
+		}else{
+			this.dsAtteList.setColumn(e.row, "tiYmd",     "");
+			this.dsAtteList.setColumn(e.row, "tms",       "");
+			this.dsAtteList.setColumn(e.row, "atteCd",    "");
+			this.dsAtteList.setColumn(e.row, "atteRmkCn", "");
+			this.divAtteCd.form.rdoAtteCd.set_readonly(true);
+			this.divAtteRmkCn.form.edtAtteRmkCn.set_readonly(true);
+		}
+	}else {
+		this.dsAtteList.setColumn(e.row, "tiYmd",     "");
+		this.dsAtteList.setColumn(e.row, "tms",       "");
+		this.dsAtteList.setColumn(e.row, "atteCd",    "");
+		this.dsAtteList.setColumn(e.row, "atteRmkCn", "");
+		this.divAtteCd.form.rdoAtteCd.set_readonly(true);
+		this.divAtteRmkCn.form.edtAtteRmkCn.set_readonly(true);
+	}
+};
+
+// this.divAtteCd_rdoAtteCd_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+// {
+// 	if(this.dsAtteList.getColumn(this.divGrid.form.grdAtteList.currentrow, "clrm"+(this.divGrid.form.grdAtteList.currentcol-4)) != "000"){
+// 		this.dsAtteList.setColumn(this.divGrid.form.grdAtteList.currentrow, "d"+(this.divGrid.form.grdAtteList.currentcol-4),        e.postvalue);
+// 		this.dsAtteList.setColumn(this.divGrid.form.grdAtteList.currentrow, "dNm"+(this.divGrid.form.grdAtteList.currentcol-4),      e.posttext.substring(0, 1));
+// 		this.dsAtteList.setColumn(this.divGrid.form.grdAtteList.currentrow, "updateYn"+(this.divGrid.form.grdAtteList.currentcol-4), "Y");
+// 	}
+// };
+// 
+// this.divAtteRmkCn_edtAtteRmkCn_onchanged = function(obj:nexacro.Edit,e:nexacro.ChangeEventInfo)
+// {
+// 	if(this.dsAtteList.getColumn(this.divGrid.form.grdAtteList.currentrow, "clrm"+(this.divGrid.form.grdAtteList.currentcol-4)) != "000"){
+// 		this.dsAtteList.setColumn(this.divGrid.form.grdAtteList.currentrow, "atteRmkCn"+(this.divGrid.form.grdAtteList.currentcol-4), e.posttext);
+// 		this.dsAtteList.setColumn(this.divGrid.form.grdAtteList.currentrow, "updateYn"+(this.divGrid.form.grdAtteList.currentcol-4),  "Y");
+// 	}
+// };
+
+//수정후
+this.divAtteCd_rdoAtteCd_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	if(this.dsAtteList.getColumn(this.divGrid.form.grdAtteList.currentrow, "clrm"+(this.divGrid.form.grdAtteList.currentcol-5)) != "000"){
+		this.dsAtteList.setColumn(this.divGrid.form.grdAtteList.currentrow, "d"+(this.divGrid.form.grdAtteList.currentcol-5),        e.postvalue);
+		this.dsAtteList.setColumn(this.divGrid.form.grdAtteList.currentrow, "dNm"+(this.divGrid.form.grdAtteList.currentcol-5),      e.posttext.substring(0, 1));
+		this.dsAtteList.setColumn(this.divGrid.form.grdAtteList.currentrow, "updateYn"+(this.divGrid.form.grdAtteList.currentcol-5), "Y");
+	}
+};
+
+this.divAtteRmkCn_edtAtteRmkCn_onchanged = function(obj:nexacro.Edit,e:nexacro.ChangeEventInfo)
+{
+	if(this.dsAtteList.getColumn(this.divGrid.form.grdAtteList.currentrow, "clrm"+(this.divGrid.form.grdAtteList.currentcol-5)) != "000"){
+		this.dsAtteList.setColumn(this.divGrid.form.grdAtteList.currentrow, "atteRmkCn"+(this.divGrid.form.grdAtteList.currentcol-5), e.posttext);
+		this.dsAtteList.setColumn(this.divGrid.form.grdAtteList.currentrow, "updateYn"+(this.divGrid.form.grdAtteList.currentcol-5),  "Y");
+	}
+};
+
+//2023.08.02 데이터 양 초과로 조회조건 추가에 따른 세팅
+this.divSearch_cboYm_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if (this.dsSearch.getColumn(0, "tiMonth") == ""){
+		this.dsDd.clearData();
+		var nRow = this.dsDd.addRow();		
+		
+		this.dsDd.setColumn(nRow, "unyCdValue", "");	
+		this.dsDd.setColumn(nRow, "unyCdValueNm", "- 선택 -");
+		this.dsSearch.setColumn(0, "dd", "");		
+		return;
+	}
+	
+	this.dsDd.clearData();
+	var nRow = this.dsDd.addRow();		
+	
+	this.dsDd.setColumn(nRow, "unyCdValue", "");	
+	this.dsDd.setColumn(nRow, "unyCdValueNm", "- 선택 -");
+	this.dsSearch.setColumn(0, "dd", "");		
+	
+	var dt = this.dsSearch.getColumn(0, "tiMonth");
+	var lastDd = this.afsfGetLastDd(dt);
+	var day = "";
+	var weekCnt = 0;
+
+	for(var i = 1; i <= lastDd; i++){
+		day = dt+String(i).padLeft(2, "0");
+		var dfkNum = this.afsfGetDfk(day);
+		var dfkName = this.afsfGetDfk(day);
+		if (dfkNum == '6'){
+			var nRow = this.dsDd.addRow();		
+			weekCnt++;
+			if (String(1).padLeft(2, "0") == String(i).padLeft(2, "0")){		
+				this.dsDd.setColumn(nRow, "unyCdValue", String(1).padLeft(2, "0")+String(i).padLeft(2, "0"))	
+				this.dsDd.setColumn(nRow, "unyCdValueNm", String(1).padLeft(2, "0")+"일 ("+nRow+"주차)")					
+			}
+			else if (i < 7){	
+				this.dsDd.setColumn(nRow, "unyCdValue", String(1).padLeft(2, "0")+String(i).padLeft(2, "0"))
+				this.dsDd.setColumn(nRow, "unyCdValueNm", String(1).padLeft(2, "0") + "일 ~ "+String(i).padLeft(2, "0")+"일 ("+nRow+"주차)")				
+			}
+			else{		
+				this.dsDd.setColumn(nRow, "unyCdValue", String(i-6).padLeft(2, "0")+String(i).padLeft(2, "0"))
+				this.dsDd.setColumn(nRow, "unyCdValueNm", String(i-6).padLeft(2, "0") + "일 ~ "+String(i).padLeft(2, "0")+"일 ("+nRow+"주차)")				
+			}
+		}
+		if (i+6 > lastDd && dfkNum == '7'){
+			var nRow = this.dsDd.addRow();			
+			if (i == lastDd && dfkNum == '7'){
+				this.dsDd.setColumn(nRow, "unyCdValue", String(i).padLeft(2, "0")+String(lastDd).padLeft(2, "0"))
+				this.dsDd.setColumn(nRow, "unyCdValueNm", String(i).padLeft(2, "0") + "일 ("+nRow+"주차)")						
+			}else{
+				this.dsDd.setColumn(nRow, "unyCdValue", String(i).padLeft(2, "0")+String(lastDd).padLeft(2, "0"))
+				this.dsDd.setColumn(nRow, "unyCdValueNm", String(i).padLeft(2, "0") + "일 ~ "+String(lastDd).padLeft(2, "0")+"일 ("+nRow+"주차)")				
+			}
+			
+		}
+	};	
+	
+	
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsAtteList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="ayr" type="STRING" size="256"/>
+          <Column id="aslSem" type="STRING" size="256"/>
+          <Column id="lectIdfNo" type="STRING" size="256"/>
+          <Column id="enrShlCd" type="STRING" size="256"/>
+          <Column id="enrShlCdNm" type="STRING" size="256"/>
+          <Column id="shlCrseScCd" type="STRING" size="256"/>
+          <Column id="stuInvlNo" type="STRING" size="256"/>
+          <Column id="grd" type="STRING" size="256"/>
+          <Column id="grdNm" type="STRING" size="256"/>
+          <Column id="clsCd" type="STRING" size="256"/>
+          <Column id="clsNm" type="STRING" size="256"/>
+          <Column id="clsNo" type="STRING" size="256"/>
+          <Column id="stuFlnm" type="STRING" size="256"/>
+          <Column id="atteCd" type="STRING" size="256"/>
+          <Column id="atteRmkCn" type="STRING" size="256"/>
+          <Column id="scMonth" type="STRING" size="256"/>
+          <Column id="tiYmd" type="STRING" size="256"/>
+          <Column id="tms" type="STRING" size="256"/>
+          <Column id="midYn" type="STRING" size="256"/>
+          <Column id="tiSeqNo1" type="STRING" size="256"/>
+          <Column id="tiSeqNo2" type="STRING" size="256"/>
+          <Column id="tiSeqNo3" type="STRING" size="256"/>
+          <Column id="tiSeqNo4" type="STRING" size="256"/>
+          <Column id="tiSeqNo5" type="STRING" size="256"/>
+          <Column id="tiSeqNo6" type="STRING" size="256"/>
+          <Column id="tiSeqNo7" type="STRING" size="256"/>
+          <Column id="tiSeqNo8" type="STRING" size="256"/>
+          <Column id="tiSeqNo9" type="STRING" size="256"/>
+          <Column id="tiSeqNo10" type="STRING" size="256"/>
+          <Column id="tiSeqNo11" type="STRING" size="256"/>
+          <Column id="tiSeqNo12" type="STRING" size="256"/>
+          <Column id="tiSeqNo13" type="STRING" size="256"/>
+          <Column id="tiSeqNo14" type="STRING" size="256"/>
+          <Column id="tiSeqNo15" type="STRING" size="256"/>
+          <Column id="tiSeqNo16" type="STRING" size="256"/>
+          <Column id="tiSeqNo17" type="STRING" size="256"/>
+          <Column id="tiSeqNo18" type="STRING" size="256"/>
+          <Column id="tiSeqNo19" type="STRING" size="256"/>
+          <Column id="tiSeqNo20" type="STRING" size="256"/>
+          <Column id="tiSeqNo21" type="STRING" size="256"/>
+          <Column id="tiSeqNo22" type="STRING" size="256"/>
+          <Column id="tiSeqNo23" type="STRING" size="256"/>
+          <Column id="tiSeqNo24" type="STRING" size="256"/>
+          <Column id="tiSeqNo25" type="STRING" size="256"/>
+          <Column id="tiSeqNo26" type="STRING" size="256"/>
+          <Column id="tiSeqNo27" type="STRING" size="256"/>
+          <Column id="tiSeqNo28" type="STRING" size="256"/>
+          <Column id="tiSeqNo29" type="STRING" size="256"/>
+          <Column id="tiSeqNo30" type="STRING" size="256"/>
+          <Column id="tiSeqNo31" type="STRING" size="256"/>
+          <Column id="tms1" type="STRING" size="256"/>
+          <Column id="tms2" type="STRING" size="256"/>
+          <Column id="tms3" type="STRING" size="256"/>
+          <Column id="tms4" type="STRING" size="256"/>
+          <Column id="tms5" type="STRING" size="256"/>
+          <Column id="tms6" type="STRING" size="256"/>
+          <Column id="tms7" type="STRING" size="256"/>
+          <Column id="tms8" type="STRING" size="256"/>
+          <Column id="tms9" type="STRING" size="256"/>
+          <Column id="tms10" type="STRING" size="256"/>
+          <Column id="tms11" type="STRING" size="256"/>
+          <Column id="tms12" type="STRING" size="256"/>
+          <Column id="tms13" type="STRING" size="256"/>
+          <Column id="tms14" type="STRING" size="256"/>
+          <Column id="tms15" type="STRING" size="256"/>
+          <Column id="tms16" type="STRING" size="256"/>
+          <Column id="tms17" type="STRING" size="256"/>
+          <Column id="tms18" type="STRING" size="256"/>
+          <Column id="tms19" type="STRING" size="256"/>
+          <Column id="tms20" type="STRING" size="256"/>
+          <Column id="tms21" type="STRING" size="256"/>
+          <Column id="tms22" type="STRING" size="256"/>
+          <Column id="tms23" type="STRING" size="256"/>
+          <Column id="tms24" type="STRING" size="256"/>
+          <Column id="tms25" type="STRING" size="256"/>
+          <Column id="tms26" type="STRING" size="256"/>
+          <Column id="tms27" type="STRING" size="256"/>
+          <Column id="tms28" type="STRING" size="256"/>
+          <Column id="tms29" type="STRING" size="256"/>
+          <Column id="tms30" type="STRING" size="256"/>
+          <Column id="tms31" type="STRING" size="256"/>
+          <Column id="d1" type="STRING" size="256"/>
+          <Column id="d2" type="STRING" size="256"/>
+          <Column id="d3" type="STRING" size="256"/>
+          <Column id="d4" type="STRING" size="256"/>
+          <Column id="d5" type="STRING" size="256"/>
+          <Column id="d6" type="STRING" size="256"/>
+          <Column id="d7" type="STRING" size="256"/>
+          <Column id="d8" type="STRING" size="256"/>
+          <Column id="d9" type="STRING" size="256"/>
+          <Column id="d10" type="STRING" size="256"/>
+          <Column id="d11" type="STRING" size="256"/>
+          <Column id="d12" type="STRING" size="256"/>
+          <Column id="d13" type="STRING" size="256"/>
+          <Column id="d14" type="STRING" size="256"/>
+          <Column id="d15" type="STRING" size="256"/>
+          <Column id="d16" type="STRING" size="256"/>
+          <Column id="d17" type="STRING" size="256"/>
+          <Column id="d18" type="STRING" size="256"/>
+          <Column id="d19" type="STRING" size="256"/>
+          <Column id="d20" type="STRING" size="256"/>
+          <Column id="d21" type="STRING" size="256"/>
+          <Column id="d22" type="STRING" size="256"/>
+          <Column id="d23" type="STRING" size="256"/>
+          <Column id="d24" type="STRING" size="256"/>
+          <Column id="d25" type="STRING" size="256"/>
+          <Column id="d26" type="STRING" size="256"/>
+          <Column id="d27" type="STRING" size="256"/>
+          <Column id="d28" type="STRING" size="256"/>
+          <Column id="d29" type="STRING" size="256"/>
+          <Column id="d30" type="STRING" size="256"/>
+          <Column id="d31" type="STRING" size="256"/>
+          <Column id="dNm1" type="STRING" size="256"/>
+          <Column id="dNm2" type="STRING" size="256"/>
+          <Column id="dNm3" type="STRING" size="256"/>
+          <Column id="dNm4" type="STRING" size="256"/>
+          <Column id="dNm5" type="STRING" size="256"/>
+          <Column id="dNm6" type="STRING" size="256"/>
+          <Column id="dNm7" type="STRING" size="256"/>
+          <Column id="dNm8" type="STRING" size="256"/>
+          <Column id="dNm9" type="STRING" size="256"/>
+          <Column id="dNm10" type="STRING" size="256"/>
+          <Column id="dNm11" type="STRING" size="256"/>
+          <Column id="dNm12" type="STRING" size="256"/>
+          <Column id="dNm13" type="STRING" size="256"/>
+          <Column id="dNm14" type="STRING" size="256"/>
+          <Column id="dNm15" type="STRING" size="256"/>
+          <Column id="dNm16" type="STRING" size="256"/>
+          <Column id="dNm17" type="STRING" size="256"/>
+          <Column id="dNm18" type="STRING" size="256"/>
+          <Column id="dNm19" type="STRING" size="256"/>
+          <Column id="dNm20" type="STRING" size="256"/>
+          <Column id="dNm21" type="STRING" size="256"/>
+          <Column id="dNm22" type="STRING" size="256"/>
+          <Column id="dNm23" type="STRING" size="256"/>
+          <Column id="dNm24" type="STRING" size="256"/>
+          <Column id="dNm25" type="STRING" size="256"/>
+          <Column id="dNm26" type="STRING" size="256"/>
+          <Column id="dNm27" type="STRING" size="256"/>
+          <Column id="dNm28" type="STRING" size="256"/>
+          <Column id="dNm29" type="STRING" size="256"/>
+          <Column id="dNm30" type="STRING" size="256"/>
+          <Column id="dNm31" type="STRING" size="256"/>
+          <Column id="clrm1" type="STRING" size="256"/>
+          <Column id="clrm2" type="STRING" size="256"/>
+          <Column id="clrm3" type="STRING" size="256"/>
+          <Column id="clrm4" type="STRING" size="256"/>
+          <Column id="clrm5" type="STRING" size="256"/>
+          <Column id="clrm6" type="STRING" size="256"/>
+          <Column id="clrm7" type="STRING" size="256"/>
+          <Column id="clrm8" type="STRING" size="256"/>
+          <Column id="clrm9" type="STRING" size="256"/>
+          <Column id="clrm10" type="STRING" size="256"/>
+          <Column id="clrm11" type="STRING" size="256"/>
+          <Column id="clrm12" type="STRING" size="256"/>
+          <Column id="clrm13" type="STRING" size="256"/>
+          <Column id="clrm14" type="STRING" size="256"/>
+          <Column id="clrm15" type="STRING" size="256"/>
+          <Column id="clrm16" type="STRING" size="256"/>
+          <Column id="clrm17" type="STRING" size="256"/>
+          <Column id="clrm18" type="STRING" size="256"/>
+          <Column id="clrm19" type="STRING" size="256"/>
+          <Column id="clrm20" type="STRING" size="256"/>
+          <Column id="clrm21" type="STRING" size="256"/>
+          <Column id="clrm22" type="STRING" size="256"/>
+          <Column id="clrm23" type="STRING" size="256"/>
+          <Column id="clrm24" type="STRING" size="256"/>
+          <Column id="clrm25" type="STRING" size="256"/>
+          <Column id="clrm26" type="STRING" size="256"/>
+          <Column id="clrm27" type="STRING" size="256"/>
+          <Column id="clrm28" type="STRING" size="256"/>
+          <Column id="clrm29" type="STRING" size="256"/>
+          <Column id="clrm30" type="STRING" size="256"/>
+          <Column id="clrm31" type="STRING" size="256"/>
+          <Column id="atteRmkCn1" type="STRING" size="256"/>
+          <Column id="atteRmkCn2" type="STRING" size="256"/>
+          <Column id="atteRmkCn3" type="STRING" size="256"/>
+          <Column id="atteRmkCn4" type="STRING" size="256"/>
+          <Column id="atteRmkCn5" type="STRING" size="256"/>
+          <Column id="atteRmkCn6" type="STRING" size="256"/>
+          <Column id="atteRmkCn7" type="STRING" size="256"/>
+          <Column id="atteRmkCn8" type="STRING" size="256"/>
+          <Column id="atteRmkCn9" type="STRING" size="256"/>
+          <Column id="atteRmkCn10" type="STRING" size="256"/>
+          <Column id="atteRmkCn11" type="STRING" size="256"/>
+          <Column id="atteRmkCn12" type="STRING" size="256"/>
+          <Column id="atteRmkCn13" type="STRING" size="256"/>
+          <Column id="atteRmkCn14" type="STRING" size="256"/>
+          <Column id="atteRmkCn15" type="STRING" size="256"/>
+          <Column id="atteRmkCn16" type="STRING" size="256"/>
+          <Column id="atteRmkCn17" type="STRING" size="256"/>
+          <Column id="atteRmkCn18" type="STRING" size="256"/>
+          <Column id="atteRmkCn19" type="STRING" size="256"/>
+          <Column id="atteRmkCn20" type="STRING" size="256"/>
+          <Column id="atteRmkCn21" type="STRING" size="256"/>
+          <Column id="atteRmkCn22" type="STRING" size="256"/>
+          <Column id="atteRmkCn23" type="STRING" size="256"/>
+          <Column id="atteRmkCn24" type="STRING" size="256"/>
+          <Column id="atteRmkCn25" type="STRING" size="256"/>
+          <Column id="atteRmkCn26" type="STRING" size="256"/>
+          <Column id="atteRmkCn27" type="STRING" size="256"/>
+          <Column id="atteRmkCn28" type="STRING" size="256"/>
+          <Column id="atteRmkCn29" type="STRING" size="256"/>
+          <Column id="atteRmkCn30" type="STRING" size="256"/>
+          <Column id="atteRmkCn31" type="STRING" size="256"/>
+          <Column id="updateYn1" type="STRING" size="256"/>
+          <Column id="updateYn2" type="STRING" size="256"/>
+          <Column id="updateYn3" type="STRING" size="256"/>
+          <Column id="updateYn4" type="STRING" size="256"/>
+          <Column id="updateYn5" type="STRING" size="256"/>
+          <Column id="updateYn6" type="STRING" size="256"/>
+          <Column id="updateYn7" type="STRING" size="256"/>
+          <Column id="updateYn8" type="STRING" size="256"/>
+          <Column id="updateYn9" type="STRING" size="256"/>
+          <Column id="updateYn10" type="STRING" size="256"/>
+          <Column id="updateYn11" type="STRING" size="256"/>
+          <Column id="updateYn12" type="STRING" size="256"/>
+          <Column id="updateYn13" type="STRING" size="256"/>
+          <Column id="updateYn14" type="STRING" size="256"/>
+          <Column id="updateYn15" type="STRING" size="256"/>
+          <Column id="updateYn16" type="STRING" size="256"/>
+          <Column id="updateYn17" type="STRING" size="256"/>
+          <Column id="updateYn18" type="STRING" size="256"/>
+          <Column id="updateYn19" type="STRING" size="256"/>
+          <Column id="updateYn20" type="STRING" size="256"/>
+          <Column id="updateYn21" type="STRING" size="256"/>
+          <Column id="updateYn22" type="STRING" size="256"/>
+          <Column id="updateYn23" type="STRING" size="256"/>
+          <Column id="updateYn24" type="STRING" size="256"/>
+          <Column id="updateYn25" type="STRING" size="256"/>
+          <Column id="updateYn26" type="STRING" size="256"/>
+          <Column id="updateYn27" type="STRING" size="256"/>
+          <Column id="updateYn28" type="STRING" size="256"/>
+          <Column id="updateYn29" type="STRING" size="256"/>
+          <Column id="updateYn30" type="STRING" size="256"/>
+          <Column id="updateYn31" type="STRING" size="256"/>
+          <Column id="tmsCopy" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsYm">
+        <ColumnInfo>
+          <Column id="unyCdValue" type="STRING" size="256"/>
+          <Column id="unyCdValueNm" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="unyCdValueNm">- 선택 -</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="ayr" type="STRING" size="256"/>
+          <Column id="ayrNm" type="STRING" size="256"/>
+          <Column id="aslSem" type="STRING" size="256"/>
+          <Column id="aslSemNm" type="STRING" size="256"/>
+          <Column id="tiMonth" type="STRING" size="256"/>
+          <Column id="lectIdfNo" type="STRING" size="256"/>
+          <Column id="aslLectNm" type="STRING" size="256"/>
+          <Column id="aslLectBgngYmd" type="STRING" size="256"/>
+          <Column id="aslLectEndYmd" type="STRING" size="256"/>
+          <Column id="midRtrcnYn" type="STRING" size="256"/>
+          <Column id="cntnCtpvScCd" type="STRING" size="256"/>
+          <Column id="scaSysScCd" type="STRING" size="256"/>
+          <Column id="ddFirst" type="STRING" size="256"/>
+          <Column id="ddSecond" type="STRING" size="256"/>
+          <Column id="dd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="shlCd"/>
+            <Col id="ayr"/>
+            <Col id="aslSem"/>
+            <Col id="aslLectEndYmd"/>
+            <Col id="aslLectBgngYmd"/>
+            <Col id="aslLectNm"/>
+            <Col id="lectIdfNo"/>
+            <Col id="tiMonth"/>
+            <Col id="aslSemNm"/>
+            <Col id="ayrNm"/>
+            <Col id="cddcCd"/>
+            <Col id="midRtrcnYn">Y</Col>
+            <Col id="cntnCtpvScCd"/>
+            <Col id="scaSysScCd"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">list</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsAtteList=dsAtteList</Col>
+            <Col id="url">/afs_ats_tc30_003.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">save</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsAtteList=dsAtteList:U</Col>
+            <Col id="url">/afs_ats_tc30_004.do</Col>
+            <Col id="outDatasets">dsAtteList=dsAtteList</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsAtteCd" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="unyCdValue" type="STRING" size="256"/>
+          <Column id="unyCdValueNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCd">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="outDs" type="STRING" size="256"/>
+          <Column id="allYn" type="STRING" size="256"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="brno" type="STRING" size="256"/>
+          <Column id="cnsgnComyId" type="STRING" size="256"/>
+          <Column id="insrRrno" type="STRING" size="256"/>
+          <Column id="userId" type="STRING" size="256"/>
+          <Column id="clfCdValue" type="STRING" size="256"/>
+          <Column id="aplyYn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="url">/tmp_tmp_tm00_000.do</Col>
+            <Col id="id">listAtteCd</Col>
+            <Col id="outDs">dsAtteCd</Col>
+            <Col id="allYn"/>
+            <Col id="aplyYn"/>
+            <Col id="clfCdValue">ATTE_CD</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDd">
+        <ColumnInfo>
+          <Column id="unyCdValue" type="STRING" size="256"/>
+          <Column id="unyCdValueNm" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="unyCdValueNm">- 선택 -</Col>
+            <Col id="unyCdValue"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtAyr" propid="value" datasetid="dsSearch" columnid="ayr"/>
+      <BindItem id="item1" compid="divSearch.form.edtAslSem" propid="value" datasetid="dsSearch" columnid="aslSemNm"/>
+      <BindItem id="item2" compid="divSearch.form.cboYm" propid="value" datasetid="dsSearch" columnid="tiMonth"/>
+      <BindItem id="item3" compid="divSearch.form.edtAslLectNm" propid="value" datasetid="dsSearch" columnid="aslLectNm"/>
+      <BindItem id="item6" compid="mskAslLectBgngYmd" propid="value" datasetid="dsSearch" columnid="aslLectBgngYmd"/>
+      <BindItem id="item4" compid="mskAslLectEndYmd" propid="value" datasetid="dsSearch" columnid="aslLectEndYmd"/>
+      <BindItem id="item5" compid="divAtteCd.form.rdoAtteCd" propid="value" datasetid="dsAtteList" columnid="atteCd"/>
+      <BindItem id="item7" compid="divGrd.form.edtGrd" propid="value" datasetid="dsAtteList" columnid="grdNm"/>
+      <BindItem id="item8" compid="divClsNm.form.edtClsNm" propid="value" datasetid="dsAtteList" columnid="clsNm"/>
+      <BindItem id="item9" compid="divClsNo.form.edtClsNo" propid="value" datasetid="dsAtteList" columnid="clsNo"/>
+      <BindItem id="item10" compid="divStuFlnm.form.edtStuFlnm" propid="value" datasetid="dsAtteList" columnid="stuFlnm"/>
+      <BindItem id="item12" compid="divTms.form.edtTms" propid="value" datasetid="dsAtteList" columnid="tms"/>
+      <BindItem id="item13" compid="divAtteRmkCn.form.edtAtteRmkCn" propid="value" datasetid="dsAtteList" columnid="atteRmkCn"/>
+      <BindItem id="item11" compid="divTiYmd.form.mskTiYmd" propid="value" datasetid="dsAtteList" columnid="tiYmd"/>
+      <BindItem id="item14" compid="divEnrShlCdNm.form.edtEnrShlCdNm" propid="value" datasetid="dsAtteList" columnid="enrShlCdNm"/>
+      <BindItem id="item15" compid="divTms00.form.edtTms" propid="value" datasetid="dsAtteList" columnid="tms"/>
+      <BindItem id="item16" compid="divSearch.form.cboDd" propid="value" datasetid="dsSearch" columnid="dd"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="myServiceSetting" width="1920" height="1080" titletext="나의 서비스 설정하기" background="transparent" onload="commmyServiceSetting_onload">
+    <Layouts>
+      <Layout height="1080" width="1920" screenid="ScreenDeskTopP">
+        <Div id="divBox" visible="true" left="360" top="168" width="1200" height="743" cssclass="div_mySetting" initvalueid="ivDivAccessibilityOn">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="0" top="23" width="48" height="48" cssclass="btn_mySetting_close" right="23" onclick="divBox_btnClose_onclick" initvalueid="ivBtnAccessibilityButton"/>
+              <Static id="sta00" taborder="1" text="&lt;b v=&quot;true&quot;&gt;&lt;fc v='#2b72de'&gt;나의 서비스&lt;/fc&gt;&lt;/b&gt; 설정하기" left="396" top="65" width="408" height="60" cssclass="font46R" usedecorate="true" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta01" taborder="2" text="&lt;b v=&quot;true&quot;&gt;우선적으로 표시할 관심서비스 5가지를 순서대로 설정&lt;/b&gt;하여 편리하게 사용해보세요." left="322" top="135" width="556" height="33" cssclass="font16R" usedecorate="true" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Button id="btnNice" taborder="3" text="나이스플러스" left="363" top="198" width="130" height="161" cssclass="btn_mySetting_nice" onclick="divOrder_onclick" orgcssClass="_nice" refcssClass="btn_main_sub0_service1" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btnParents" taborder="4" text="학부모서비스" left="535" top="198" width="130" height="161" cssclass="btn_mySetting_parents" onclick="divOrder_onclick" orgcssClass="_parents" refcssClass="btn_main_sub0_service2" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btnExam" taborder="5" text="검정고시" left="707" top="198" width="130" height="161" cssclass="btn_mySetting_exam" onclick="divOrder_onclick" orgcssClass="_exam" refcssClass="btn_main_sub0_service4" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btnComplaint" taborder="6" text="학원서비스" left="448" top="375" width="130" height="161" cssclass="btn_mySetting_complaint" onclick="divOrder_onclick" orgcssClass="_complaint" refcssClass="btn_main_sub0_service5" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btnNonProfitCo" taborder="7" text="비영리법인" left="621" top="375" width="130" height="161" cssclass="btn_mySetting_nonProfitCo" onclick="divOrder_onclick" orgcssClass="_nonProfitCo" refcssClass="btn_main_sub0_service6" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btnCashSave" taborder="9" text="저장" left="605" width="300" height="60" cssclass="btn_Pop_save" bottom="80" onclick="divBox_btnCashSave_onclick" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btnReSet" taborder="8" text="초기화" left="295" top="603" width="300" height="60" onclick="divBox_btn00_onclick" initvalueid="ivBtnAccessibilityButton" cssclass="btn_Pop_save_blue"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btn02_01" taborder="0" text="나이스플러스" left="540" top="1095" width="130" height="161" cssclass="btn_mySetting_no1" visible="false"/>
+        <Button id="btn02_00_01" taborder="1" text="학부모서비스" left="750" top="1095" width="130" height="161" cssclass="btn_mySetting_no2" visible="false"/>
+        <Button id="btn02_00_00_01" taborder="2" text="검정고시" left="950" top="1095" width="130" height="161" cssclass="btn_mySetting_no3" visible="false"/>
+        <Button id="btn02_00_00_00_01" taborder="3" text="학원 민원" left="1130" top="1095" width="169" height="161" cssclass="btn_mySetting_no4" visible="false"/>
+        <Button id="btn02_00_00_00_00_00" taborder="4" text="비영리법인" left="1330" top="1095" width="130" height="161" cssclass="btn_mySetting_no5" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민포탈메인 - 나의서비스 설정하기
+*  @MenuPath    commP
+*  @FileName 	commmyServiceSetting.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022.08.09
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.8.09     	TOBESOFT 	        최초 생성 
+*******************************************************************************
+*/
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.preFix = "btn_mySetting";
+this.arrCssClass = ["_nice","_parents","_exam","_complaint", "_nonProfitCo"];
+this.arrUnSelectedCssClass = ["_no1","_no2","_no3","_no4","_no5"];
+this.arrSelectedCssClass = [];
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.commmyServiceSetting_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.fnLoad();	
+};
+
+this.divBox_btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objDiv = this.getOwnerFrame().form.removeChild(this.name); 
+	objDiv.destroy();
+	objDiv = null;	
+};
+
+//선택
+//라스트만 취소 가능
+//order 넘버
+this.divOrder_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	if (obj.cssclass == this.preFix + obj.orgcssClass )
+	{
+		obj.set_cssclass(this.preFix + this.arrUnSelectedCssClass[0]);
+		//push : 추가(맨뒤)
+		this.arrSelectedCssClass.push(this.arrUnSelectedCssClass[0]);		
+		//shift : 삭제(맨앞)
+		this.arrUnSelectedCssClass.shift();
+	}else
+	{
+		if ( obj.cssclass == this.preFix + this.arrSelectedCssClass[this.arrSelectedCssClass.length-1] )
+		{
+			obj.set_cssclass( this.preFix + obj.orgcssClass );
+			//unshift : 추가( 맨앞 )
+			this.arrUnSelectedCssClass.unshift(this.arrSelectedCssClass.pop(0)); // pop : 삭제 (맨뒤)		
+		}
+	}
+};
+//저장
+this.divBox_btnCashSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//btnNice      : btn_main_sub0_service1
+	//btnParents   : btn_main_sub0_service2
+	//btnReCruit   : btn_main_sub0_service3
+	//btnExam      : btn_main_sub0_service4
+	//btnComplaint : btn_main_sub0_service5
+
+	this.dsSaveProfile.clearData();
+	for(var i=0;i<this.divBox.form.components.length;i++)
+	{
+		if ( this.divBox.form.components[i].cssclass.indexOf(this.preFix) > -1 )
+		{
+			if ( this.divBox.form.components[i].cssclass == "btn_mySetting_close" ) continue;	
+			
+			var nRow = this.dsSaveProfile.addRow();
+			this.dsSaveProfile.setColumn(nRow,"compId",this.divBox.form.components[i].id);
+			
+			//초기화후 저장 시 디폴트 순서로 버튼 보여주기
+/*			if (this.divBox.form.components[i].cssclass == this.preFix + this.divBox.form.components[i].orgcssClass )
+			{
+				this.dsSaveProfile.setColumn(nRow,"compClass",this.preFix + this.arrUnSelectedCssClass[0]);
+				//push : 추가(맨뒤)
+				this.arrSelectedCssClass.push(this.arrUnSelectedCssClass[0]);		
+				//shift : 삭제(맨앞)
+				this.arrUnSelectedCssClass.shift();
+			}else{
+				this.dsSaveProfile.setColumn(nRow,"compClass",this.divBox.form.components[i].cssclass);
+			}
+*/			
+			this.dsSaveProfile.setColumn(nRow,"compClass",this.divBox.form.components[i].cssclass);
+			this.dsSaveProfile.setColumn(nRow,"refClass",this.divBox.form.components[i].refcssClass);
+			this.dsSaveProfile.setColumn(nRow,"sTitle",this.divBox.form.components[i].text);
+		}
+	}
+	//nexacro.setPrivateProfile( strKey, varVal )
+	if ( this.dsSaveProfile.rowcount > 0 )
+	{
+		nexacro.setPrivateProfile("neis",this.dsSaveProfile.saveCSV());
+		nexacro.setPrivateProfile("selectedneis",this.arrSelectedCssClass.toString());
+		nexacro.setPrivateProfile("unselectedneis",this.arrUnSelectedCssClass.toString());		
+	}
+	
+	this.getOwnerFrame().form.divAll.form.divWork.form.divSubMain1.form.div00.form.fnChange();
+};
+
+//웹 브라우저 데이터 로드
+//웹 브라우저 별 데이터 저장소 다름
+//웹 브라우저 캐쉬 삭제 --> 초기화 됨
+this.fnLoad = function()
+{
+	this.fndivAlignCenter();
+	
+	if ( !this.isNil( nexacro.getPrivateProfile("neis")) )
+	{
+		this.dsSaveProfile.loadCSV(nexacro.getPrivateProfile("neis"));
+	}
+};
+this.dsSaveProfile_onload = function(obj:nexacro.NormalDataset,e:nexacro.DSLoadEventInfo)
+{
+	if ( e.reason == 0 )
+	{
+		for(var i=0;i<this.dsSaveProfile.rowcount;i++)
+		{
+			var compId = this.dsSaveProfile.getColumn(i,"compId");
+			var compClass = this.dsSaveProfile.getColumn(i,"compClass");
+			
+			this.divBox.form.components[compId].set_cssclass(compClass);
+			//this.arrSelectedCssClass.push[compClass];
+			//this.arrUnSelectedCssClass.unshift[compClass];
+		}
+		this.arrUnSelectedCssClass = [];
+		var tempArr = [];
+		var tempUnArr = [];		
+		if ( !this.isNil(nexacro.getPrivateProfile("selectedneis")) ) 
+		{
+			tempArr = nexacro.getPrivateProfile("selectedneis").toString().split(",");
+		}
+		for(var j=0;j<tempArr.length;j++)
+		{
+			this.arrSelectedCssClass.push(tempArr[j]);			
+		}
+		
+		if ( !this.isNil(nexacro.getPrivateProfile("unselectedneis")) ) 
+		{
+			tempUnArr = nexacro.getPrivateProfile("unselectedneis").toString().split(",");
+		}
+		for(var j=0;j<tempUnArr.length;j++)
+		{
+			this.arrUnSelectedCssClass.push(tempUnArr[j]);
+		}
+		
+		this.arrSelectedCssClass.sort();
+		this.arrUnSelectedCssClass.sort();
+	}
+};
+
+//Center 정렬
+this.fndivAlignCenter = function()
+{
+	var nAllWidth = this.width;                    //전체 form의 사이즈(width)
+	var nMaxWidth = this.divBox.getOffsetWidth();
+
+	var nAllHeight = this.getOwnerFrame().height;  //전체 form의 사이즈(height)
+	var nMaxHeight = this.divBox.getOffsetHeight();
+
+	var nLeft,nTop;
+		
+	nLeft = parseInt((nAllWidth - nMaxWidth) / 2);	
+	this.divBox.setOffsetLeft(nLeft);
+	
+	nTop = parseInt((nAllHeight - nMaxHeight) / 2);
+	this.divBox.setOffsetTop(nTop);
+};
+
+//초기화
+this.divBox_btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.arrCssClass = ["_nice","_parents","_exam","_complaint", "_nonProfitCo"];
+	this.arrUnSelectedCssClass = ["_no1","_no2","_no3","_no4","_no5"];
+	this.arrSelectedCssClass = [];
+	
+	nexacro.setPrivateProfile("neis","");
+	nexacro.setPrivateProfile("selectedneis","");
+	nexacro.setPrivateProfile("unselectedneis","");
+		
+	this.dsSaveProfile.clearData();
+	
+	for(var i=0;i<this.divBox.form.components.length;i++)
+	{
+		var objbtn = this.divBox.form.components[i];
+
+		if ( objbtn.cssclass.indexOf("btn_mySetting_") == -1 ) continue;
+		if ( objbtn.cssclass.indexOf(this.preFix) > -1 )
+		{
+			if ( objbtn )
+			{		
+				if ( objbtn.orgcssClass )
+				{
+					objbtn.set_cssclass(this.preFix + objbtn.orgcssClass);
+				}
+			}
+		}
+	}
+};]]></Script>
+    <Objects>
+      <Dataset id="dsSaveProfile" onload="dsSaveProfile_onload">
+        <ColumnInfo>
+          <Column id="key" type="STRING" size="256"/>
+          <Column id="compId" type="STRING" size="256"/>
+          <Column id="compClass" type="STRING" size="256"/>
+          <Column id="refClass" type="STRING" size="256"/>
+          <Column id="sTitle" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

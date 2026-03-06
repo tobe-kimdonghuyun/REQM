@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="NP11M1" width="1200" height="350" titletext="학부모서비스">
+    <Layouts>
+      <Layout height="350" width="1200" screenid="ScreenDeskTopP">
+        <ImageViewer id="img01" taborder="0" left="0" top="0" width="530" height="350" cssclass="Roundbox20" image="url('imagerc::pas_mmssi00/sub_serviceReport2_N.gif')" initvalueid="ivImgAccessibilityOn" accessibilitylabel="학부모서비스소개"/>
+        <Div id="div_group2" taborder="1" text="div00" left="600" top="0" height="350" width="600" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="subTitle1" taborder="0" text="학부모서비스" left="10" top="0" width="220" height="62" cssclass="font40B" initvalueid="ivTitleAccessibilityOn"/>
+              <Static id="sta00" taborder="1" text="학부모서비스는 학부모(보호자)에게 자녀의 성장&#13;발달 상황을 한 눈에 확인할 수 &#13;&#10;있는 다양한 유치원 및 &#13;학교생활 정보를 제공합니다." left="10" top="82" width="564" height="60" cssclass="sta_WF_HangTxt_blue" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta01" taborder="2" text="학부모서비스에서 학부모(보호자)는 자녀의 성적, 건강, 급식, 유아학비 및 각종 &#13;&#10;신청 정보를 온라인으로 &#13;편리하게 조회할 수 있습니다." left="10" top="152" width="564" height="60" cssclass="sta_WF_HangTxt_blue" initvalueid="ivStcAccessibilityOn"/>
+              <Button id="btn_serviceLink" taborder="3" text="서비스 바로가기" left="10" top="290" width="240" height="60" cssclass="btn_WF_serviceLink_blue" initvalueid="ivBtnAccessibilityLink" onclick="btnServiceLink_onclick" accessibilitydescription="새창열림"/>
+            </Layout>
+            <Layout name="Layout0">
+              <ImageViewer id="subTitle1" cssclass="font42B" left="0" top="0" width="240" height="62" text="학부모서비스"/>
+              <Static id="sta00" cssclass="sta_WF_HangTxt_blue_M" right="0" left="0" top="subTitle1:17" height="127" text="학부모서비스는 학부모(보호자)에게 자녀의 성장&#13;발달 상황을 한눈에 확인할 수 있는 다양한 유치원 및 학교생활 정보를 제공합니다." fittocontents="height"/>
+              <Static id="sta01" cssclass="sta_WF_HangTxt_blue_M" left="0" top="sta00:11" height="127" text="학부모서비스에서 학부모(보호자)는 자녀의 성적,&#13;건강, 급식, 유아학비 및 각종 신청 정보를 온라인으로 &#13;편리하게 조회할 수 있습니다." right="0" fittocontents="height"/>
+              <Button id="btn_serviceLink" cssclass="btn_WF_serviceLink_blue_M" left="0" height="120" top="sta01:43" right="0" text="서비스 바로가기"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="640" height="1150" mobileorientation="portrait" type="default">
+        <ImageViewer id="img01" left="20" top="0" height="600" image="url('imagerc::pas_mmssi00_M/sub_serviceReport2_M_N.gif')" cssclass="Roundbox16" right="20" imagealign="right middle"/>
+        <Div id="div_group2" left="20" top="img01:41" height="507" right="20"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.btnServiceLink_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var pNum = String(obj.parent.parent.name).substr(8);
+	var pageUrl = null;
+	var param = {};
+
+	if(this.smfContainsStr(window.location.host, "local")){		//로컬인 경우
+		param.server = "local";
+	}else if (this.smfContainsStr(window.location.host, "dev")){	//개발인 경우
+		param.server = "dev";
+	}else if (this.smfContainsStr(window.location.host, "tst")){	//시험인 경우
+		param.server = "test";
+	}else if (!this.smfContainsStr(window.location.host, "local") && 
+			  !this.smfContainsStr(window.location.host, "dev") &&
+			  !this.smfContainsStr(window.location.host, "tst")){	//운영인 경우
+		param.server = "prod";
+	}
+
+	//param.subSys = "PAR";
+	
+	param.subSys = this.getOwnerFrame().form.divTop.form.dsMenu.lookup("menuId","8003","menuUrlAddr");
+	var type = "link";
+	
+	this.smfSetServiceLink(pageUrl,type,param);
+};
+]]></Script>
+  </Form>
+</FDL>

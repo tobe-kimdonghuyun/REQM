@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleKorToEng" titletext="한글영문으로 변경" onload="form_onload" left="0" top="0" width="1300" height="950" nHeight="674">
+    <Layouts>
+      <Layout>
+        <Static id="sta00" taborder="0" text="한글입력을 영문으로 변경" left="18" top="15" width="520" height="50"/>
+        <Edit id="edt00" taborder="1" left="48" top="133" width="885" height="58" oninput="edt00_oninput" imemode="alpha"/>
+        <Static id="sta01" taborder="2" text="한글입력시 영문으로 나오도록 처리" left="48" top="106" width="352" height="30"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset preload="true" firefirstcount="0" firenextcount="0" useclientlayout="true" updatecontrol="true" enableevent="true" id="dsMessage">
+        <ColumnInfo>
+          <Column type="STRING" size="500" id="messageId"/>
+          <Column type="STRING" size="200" id="messageType"/>
+          <Column type="STRING" size="100" id="messageCn"/>
+          <Column id="businessCode" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset preload="true" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" id="dsUseYn">
+        <ColumnInfo>
+          <Column type="STRING" size="500" id="code"/>
+          <Column type="STRING" size="200" id="name"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">Y</Col>
+            <Col id="name">Y</Col>
+          </Row>
+          <Row>
+            <Col id="code">N</Col>
+            <Col id="name">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="messageId" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPageInfo">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">list</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsMessage=dsMessage</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/cmc_sam_pl02_001.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+          <Row>
+            <Col id="id">save</Col>
+            <Col id="inDatasets">dsMessage=dsMessage:U</Col>
+            <Col id="outDatasets"/>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/cmc_sam_pl02_002.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMainValid" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="messageId" type="STRING" size="256" prop="NONE"/>
+          <Column id="messageType" type="STRING" size="256"/>
+          <Column id="messageCn" type="STRING" size="256"/>
+          <Column id="businessCode" type="STRING" size="256" prop="NONE"/>
+          <Column id="useYn" type="STRING" size="256" prop="NONE"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="messageId"/>
+            <Col id="messageType">title:메시지타입,required,minlength:2,maxlength:100</Col>
+            <Col id="messageCn">title:메시지내용,required,minlength:2,maxlength:100</Col>
+            <Col id="businessCode">title:메세지코드,required</Col>
+            <Col id="useYn">title:사용여부,required</Col>
+          </Row>
+          <Row>
+            <Col id="messageId">title:메세지아이디,required</Col>
+            <Col id="messageType">=</Col>
+            <Col id="messageCn">=</Col>
+            <Col id="businessCode">=</Col>
+            <Col id="useYn">=</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+* @file			: sample002.xfdl
+* @title		: Grid CRUD
+* @author		: kmp
+* @date			: 2021.12.30
+* @description	: Grid CRUD 샘플
+* @history		: 
+* 1.2021.12.30 . / kmp / 신규 
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::cm_script.xjs" 
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼을 초기화
+	this.smfInitForm(obj);
+
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+@class fnSearch
+@description 조회 서비스
+@param N/A
+@return N/A
+*/
+
+this.fnSearch = function ()
+{ 
+
+};	
+
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+@class fnTransCallback
+@description Transaction CallBack 함수
+@param 필수 {String} svcid - 서비스 아이디 
+	   필수 {Number} errcd - 에러코드 (0 : 정상, 0 보다 작으면 에러)
+	   옵션 {String} errmsg - 에러메시지
+@return N/A
+*/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+	
+};
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ 
+ 
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 한글입력
+*/
+
+this.txt01_oninput = function(obj:nexacro.TextArea,e:nexacro.InputEventInfo)
+{
+	this.txt00.set_value(this.smfKorToEng(obj.value));
+};
+
+this.edt00_oninput = function(obj:nexacro.Edit,e:nexacro.InputEventInfo)
+{
+	this.edt00.set_value(this.smfKorTypeToEng(obj.value));
+};
+]]></Script>
+  </Form>
+</FDL>

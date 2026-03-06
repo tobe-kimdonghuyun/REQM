@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameGrade" width="1200" height="190" titletext="frameGrade" onload="frameGrade_onload" onsize="frameGrade_onsize">
+    <Layouts>
+      <Layout height="190" width="1200" screenid="ScreenDeskTop">
+        <Div id="divGrade" taborder="0" left="0" cssclass="div_WF_Grade" height="60" right="0" top="0" formscrollbartype="none none" minwidth="1200" maxwidth="">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="만족도 평가" left="19" top="18" width="84" height="25" cssclass="sta_WF_Tit14B" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta00_00" taborder="1" left="107" top="24" width="1" height="13" cssclass="sta_WF_SectionLine02" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta00_01" taborder="2" text="제공된 정보의 만족도를 평가해주세요." left="126" top="15" width="273" height="30" cssclass="sta_WF_Tit14" initvalueid="ivStcAccessibilityOn"/>
+              <Button id="btnGradeStar01" taborder="3" left="970" top="15" width="30" height="30" cssclass="btn_WF_Star" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="첫번째평가별" onclick="btnGradStar_onclick"/>
+              <Button id="btnGradeStar02" taborder="4" left="999" top="15" width="30" height="30" cssclass="btn_WF_Star" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="두번째평가별" onclick="btnGradStar_onclick"/>
+              <Button id="btnGradeStar03" taborder="5" left="1028" top="15" width="30" height="30" cssclass="btn_WF_Star" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="세번째평가별" onclick="btnGradStar_onclick"/>
+              <Button id="btnGradeStar04" taborder="6" left="1057" top="15" width="30" height="30" cssclass="btn_WF_StarG" text="" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="네번째평가별" onclick="btnGradStar_onclick"/>
+              <Button id="btnGradeStar05" taborder="7" left="1086" top="15" width="30" height="30" cssclass="btn_WF_StarG" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="다섯번째평가별" onclick="btnGradStar_onclick"/>
+              <Button id="btnGrade" taborder="8" text="등록" top="16" width="48" height="30" cssclass="btn_WF_Crud" right="20" onclick="divGrade_btnGrade_onclick" enable="false" initvalueid="ivBtnAccessibilityButton"/>
+            </Layout>
+            <Layout name="default0">
+              <Static id="sta00" taborder="0" text="만족도 평가" left="50" top="40" height="40" cssclass="sta_WF_Tit26B" initvalueid="ivStcAccessibilityOn" textAlign="center" right="50"/>
+              <Static id="sta00_00" taborder="8" left="229" top="64" width="1" height="13" cssclass="sta_WF_SectionLine02" initvalueid="ivStcAccessibilityOff" visible="false"/>
+              <Static id="sta00_01" taborder="1" text="제공된 정보의 만족도를 평가해주세요." left="50" top="sta00:11" height="36" cssclass="sta_WF_Tit26" initvalueid="ivStcAccessibilityOn" right="50" textAlign="center"/>
+              <Button id="btnGradeStar01" taborder="2" left="164" top="142" width="44" height="42" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="첫번째평가별" text="" cssclass="btn_WF_Star_M"/>
+              <Button id="btnGradeStar02" taborder="3" left="btnGradeStar01:13" top="142" width="44" height="42" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="두번째평가별" cssclass="btn_WF_Star_M"/>
+              <Button id="btnGradeStar04" taborder="5" left="btnGradeStar03:13" top="142" width="44" height="42" text="" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="네번째평가별" cssclass="btn_WF_StarG_M"/>
+              <Button id="btnGradeStar03" taborder="4" left="btnGradeStar02:13" top="142" width="44" height="42" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="세번째평가별" cssclass="btn_WF_Star_M"/>
+              <Button id="btnGradeStar05" taborder="6" left="btnGradeStar04:13" top="142" width="44" height="42" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="다섯번째평가별" cssclass="btn_WF_StarG_M"/>
+              <Button id="btnGrade" taborder="7" text="등록" height="80" cssclass="btn_WF_Crud" enable="false" initvalueid="ivBtnAccessibilityButton" left="50" right="50" top="btnGradeStar03:39"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout height="450" width="640" screenid="mobile,tablet" name="default0">
+        <Div id="divGrade" taborder="0" left="20" cssclass="div_WF_Grade_M" height="349" right="20" top="0" minwidth="600" maxwidth=""/>
+        <Button id="btn00"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    TEMPLATE
+*  @FileName 	frameGrade.xfdl
+*  @Creator 	홍길동
+*  @CreateDate 	2022.7.19
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.7.19     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+// 별점오브젝트의 리스트 
+this.fv_objGradeStar = [ this.divGrade.form.btnGradeStar01
+                       , this.divGrade.form.btnGradeStar02
+					   , this.divGrade.form.btnGradeStar03
+					   , this.divGrade.form.btnGradeStar04
+					   , this.divGrade.form.btnGradeStar05
+					   ];
+					   
+// 선택/비선택 별점의 cssclass					   
+this.fv_selectCssClass = "btn_WF_Star, btn_WF_Star_M";					   
+this.fv_unselectCssClass = "btn_WF_StarG, btn_WF_StarG_M";	
+
+this.fv_grade = 0;
+
+this.fvGradeCompleted = false;  // 만족도 평가를 했는지 여부
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frameGrade_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitDiv(this);
+	
+	this.fnClearGrade();
+};
+
+
+
+this.frameGrade_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	//@KBR 모바일 별표위치 수정
+	var nFormWidth = this.divGrade.getOffsetWidth();
+
+	if(this.smfIsMobile()){
+		var nWidth = (this.divGrade.form.btnGradeStar01.getOffsetWidth() * 5) + 52; // 별5개 Gap 52px
+		var nLeft = parseInt((nFormWidth-nWidth)/2);
+		this.divGrade.form.btnGradeStar01.setOffsetLeft(nLeft);	
+		this.divGrade.form.resetScroll();
+	}
+	
+};
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd <= -1) return;
+	
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnClearGrade = function()
+{
+	// Grade값을 초기화
+	this.fv_grade = 0;
+	this.fvGradeCompleted = false;
+	
+	// cssclass를 초기화
+	var nBtnCnt = this.fv_objGradeStar.length;
+	for(var i=0;i<nBtnCnt;i++)
+	{
+		this.fv_objGradeStar[i].set_cssclass(this.fv_unselectCssClass);	
+	}
+}
+
+// 별점을 가져온다
+this.fnGetGrade = function()
+{
+	return this.fv_grade;
+}
+
+// 별점을 세팅한다.
+this.fnSetGrade = function(nGrade)
+{
+	//
+	this.fv_grade = nGrade;
+
+
+	var nBtnCnt = this.fv_objGradeStar.length;
+	for(var i=0;i<nBtnCnt;i++)
+	{
+		if(i < nGrade)
+		{  // 별점 체크
+			this.fv_objGradeStar[i].set_cssclass(this.fv_selectCssClass);
+		}
+		else
+		{  // 별점 해제
+			this.fv_objGradeStar[i].set_cssclass(this.fv_unselectCssClass);
+		}
+		
+	}
+
+	// 등록버튼을 활성화한다.
+	if(nGrade==0)
+	{
+		this.divGrade.form.btnGrade.set_enable(false);
+	}
+	else
+	{
+		this.divGrade.form.btnGrade.set_enable(true);
+	}
+}
+
+// 메뉴URL을 구한다.
+this.fnGetMenuUrl = function()
+{
+	var sMenuUrl = "";
+	
+	// divWork오브젝트를 구한다.
+	var objDivWork = this.fnGetDivWork();
+	
+	if(objDivWork)
+	{
+		sMenuUrl = objDivWork.url;
+	}
+
+	return sMenuUrl;	
+}
+
+
+// 최상위메뉴명을 구한다. - divHead에서 추출(divHead없으면 "")
+this.fnGetMenuNameLvl1 = function()
+{
+	var objDivHead = this.fnGetDivHead();
+	
+	// divHead가 없으면 ""
+	if(!objDivHead) return "";
+	
+	// divHead가 사용중이 아니면....
+	if((objDivHead.getOffsetHeight()==0)||(!objDivHead.visible))	return "";
+	
+	var sMenuName = objDivHead.form.divMenuIndicator.form.btnMenuLevel0.text || "";
+	
+	return sMenuName;
+	
+}
+
+// 화면명을 구한다. - divWork의 titleText를 구한다.
+this.fnGetCurMenuName = function()
+{
+	var sTitleText = "";
+	
+	// divWork오브젝트를 구한다.
+	var objDivWork = this.fnGetDivWork();
+	
+	if(objDivWork)
+	{
+		sTitleText = objDivWork.form.titletext;
+	}
+
+	return sTitleText;
+}
+
+
+// divWork오브젝트를 구한다.
+this.fnGetDivWork = function()
+{
+	var objWork = this.getOwnerFrame().form.divAll.form.divWork;
+	
+	return objWork;
+}
+
+// divHead오브젝트를 구한다.
+this.fnGetDivHead = function()
+{
+	var objHead = this.getOwnerFrame().form.divAll.form.divHead;
+	
+	return objHead;
+}
+
+// divTop오브젝트를 구한다.
+this.fnGetDivTop = function()
+{
+	var objTop = this.getOwnerFrame().form.divTop;
+	
+	return objTop;
+}
+
+this.fnGetMenuPathInfo = function(sMenuId,objMenuDs)
+{
+	var objApp = nexacro.getApplication();
+	var arrMenuPathInfo = [];
+	var objWorkMenuDs;
+	if(objMenuDs)
+	{
+		objWorkMenuDs = objMenuDs;
+	}
+	else
+	{
+		objWorkMenuDs = objApp.gdsMenu;
+	}
+	
+	var nFindRow = objWorkMenuDs.findRowNF(objApp.gv_menuColumns.menuId,sMenuId);
+	var nWorkRow;
+	var sLastLevel = "9";  // 한자리의 가장 큰 숫자 지정
+	if(nFindRow>-1)
+	{
+		nWorkRow = nFindRow;
+		while (nWorkRow>-1)
+		{
+			var sLevel  = objWorkMenuDs.getColumn(nWorkRow,objApp.gv_menuColumns.menuLevel);
+			var sMenuid = objWorkMenuDs.getColumn(nWorkRow,objApp.gv_menuColumns.menuId   );
+			var sMenuNm = objWorkMenuDs.getColumn(nWorkRow,objApp.gv_menuColumns.menuNm   );			
+			
+			if(sLevel>=sLastLevel) continue;
+			
+			
+			var objMenuPathInfo = {
+			        "lvl"    : sLevel                     
+			      , "menuId" : sMenuid                     
+			      , "menuNm" : sMenuNm                     
+			                      };
+			arrMenuPathInfo.push(objMenuPathInfo);			
+			
+			sLastLevel = sLevel;
+			nWorkRow--;
+			
+			if(sLevel==0)	break;		
+		}
+	}
+	
+	return arrMenuPathInfo;
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+// 별점오브젝트버튼을 눌렀을 경우의 처리
+this.btnGradStar_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 이미 설정했으면 처리를 하지 않음
+	if(this.fvGradeCompleted) return;
+	
+	this.fnClearGrade();
+	
+	var nBtnCnt = this.fv_objGradeStar.length;
+	for(var i=0;i<nBtnCnt;i++)
+	{
+		// 선택한 오브젝트까지만 세팅한다.
+		if(obj.id == this.fv_objGradeStar[i].id) break;
+	}
+	
+	this.fnSetGrade(i+1);
+
+};
+
+// 별점등록버튼
+this.divGrade_btnGrade_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 이미 설정했으면 처리를 하지 않음 - 혹시 몰라서....
+	if(this.fvGradeCompleted) return;
+	
+	var sSubSystemDetailGb = this.smfNvl(this.smfGetSubSystemDetailGb(),"000")
+	sSubSystemDetailGb = sSubSystemDetailGb.padLeft(3,"0")  // 온라인채용이 1자리일 수도 있어서 
+	
+	var sPafrSysClfCd = this.smfGetSubSystemGb()     ;  // 대국민시스템분류코드
+	var sPafrSysSubCd = sSubSystemDetailGb           ;  // 대국민시스템서브코드
+	var sMenuUrlAddr  = this.fnGetMenuUrl()          ;  // 메뉴URL주소
+	var sMenu1Lvl     = this.fnGetMenuNameLvl1()     ;  // 최상위메뉴명
+	var sMenu2Lvl     = this.fnGetCurMenuName()      ;  // 현재화면명
+	var sSfmScr       = this.fv_grade                ;  // 만족도점수            
+	
+	this.dsGradeIn.setColumn(0,"pafrSysClfCd", sPafrSysClfCd);  // 대국민시스템분류코드
+	this.dsGradeIn.setColumn(0,"pafrSysSubCd", sPafrSysSubCd);  // 대국민시스템서브코드
+	this.dsGradeIn.setColumn(0,"menuUrlAddr" , sMenuUrlAddr );  // 메뉴URL주소
+	this.dsGradeIn.setColumn(0,"menu1Lvl"    , sMenu1Lvl    );  // 최상위메뉴명
+	this.dsGradeIn.setColumn(0,"menu2Lvl"    , sMenu2Lvl    );  // 현재화면명
+	this.dsGradeIn.setColumn(0,"pafrSfmScr"  , sSfmScr      );  // 만족도점수              
+	
+	// 서버를 호출한다.
+	this.smfSaveService("insert")
+	.showConfirm(false)   // confirm메세지를 표시하지 않음
+	.run()
+	.callback(function(callbackParams){
+		if(callbackParams.errors) return;
+		// 저장이 완료되었습니다.
+		
+		this.divGrade.form.btnGrade.set_enable(false);
+		
+		// 만족도완료여부를 세팅
+		this.fvGradeCompleted = true; 
+	})
+	
+	
+};
+
+this.divGrade_btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objTop = this.fnGetDivTop();
+	
+	var sMenuId = "";
+	
+	var params = this.smfGetFormParams();
+	
+	if((params)&&(params.menu))
+	{
+		sMenuId = params.menu;
+	}
+	
+	var arrMenuPathInfo = this.fnGetMenuPathInfo(sMenuId,objTop.form.dsMenu);
+	
+	trace(arrMenuPathInfo);
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsGradeIn">
+        <ColumnInfo>
+          <Column id="pafrSysClfCd" type="STRING" size="256" description="대국민시스템분류코드"/>
+          <Column id="pafrSysSubCd" type="STRING" size="256" description="대국민시스템서브코드"/>
+          <Column id="menuUrlAddr" type="STRING" size="256" description="메뉴URL주소"/>
+          <Column id="pafrSfmScr" type="STRING" size="256" description="만족도점수"/>
+          <Column id="menu1Lvl" type="STRING" size="256" description="최상위메뉴명"/>
+          <Column id="menu2Lvl" type="STRING" size="256" description="현재화면명"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">insert</Col>
+            <Col id="inDatasets">dsMain=dsGradeIn</Col>
+            <Col id="outDatasets"/>
+            <Col id="url">pas_mms_pc00_006.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

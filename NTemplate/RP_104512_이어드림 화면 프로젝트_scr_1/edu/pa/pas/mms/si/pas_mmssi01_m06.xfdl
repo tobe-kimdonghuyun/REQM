@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="NP11M1" width="1200" height="350" titletext="교육비원클릭">
+    <Layouts>
+      <Layout height="350" width="1200" screenid="ScreenDeskTopP">
+        <ImageViewer id="img01" taborder="0" left="0" top="0" width="530" height="350" cssclass="Roundbox20" image="url('imagerc::pas_mmssi00/sub_serviceReport7_N.gif')" initvalueid="ivImgAccessibilityOn" accessibilitylabel="교육비원클릭소개"/>
+        <Div id="divGroup7" taborder="1" text="div00" left="600" top="0" height="350" width="600" initvalueid="ivDivAccessibilityOff" visible="true">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="subTitle1" taborder="0" text="교육비 원클릭 신청시스템" left="10" top="0" width="400" height="62" initvalueid="ivTitleAccessibilityOn" cssclass="font40B"/>
+              <Static id="sta00" taborder="1" text="교육비 원클릭 신청시스템은 초중고 학생 교육급여 및 교육비지원 기준을 &#13;&#10;확인할 수 있는 기능을 제공합니다." left="10" top="82" width="564" height="60" cssclass="sta_WF_HangTxt_blue" initvalueid="ivStcAccessibilityOn" onclick="divGroup7_sta00_onclick"/>
+              <Static id="sta01" taborder="2" text="교육비 원클릭 신청시스템을 통해 전년도 교육비지원 대상자의 납부유예 &#13;&#10;대상 여부를 확인할 수 있습니다." left="10" top="152" width="564" height="60" cssclass="sta_WF_HangTxt_blue" initvalueid="ivStcAccessibilityOn" onclick="divGroup7_sta01_onclick"/>
+              <Button id="btnServiceLink" taborder="3" text="서비스 바로가기" left="10" top="290" width="240" height="60" cssclass="btn_WF_serviceLink_blue" initvalueid="ivBtnAccessibilityLink" onclick="btnServiceLink_onclick" accessibilitydescription="새창열림"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="sta00" cssclass="sta_WF_HangTxt_blue_M" left="0" top="subTitle1:17" height="85" text="교육비 원클릭 신청시스템은 초중고 학생 교육급여 및 교육비지원기준을 확인할 수 있는 기능을 제공합니다." right="0" fittocontents="height"/>
+              <Static id="sta01" cssclass="sta_WF_HangTxt_blue_M" left="0" top="sta00:11" height="85" text="교육비 원클릭 신청시스템을 통해 전년도 교육비지원 대상자의 납부유예 대상여부를 확인 할 수 있습니다." right="0" fittocontents="height"/>
+              <Button id="btnServiceLink" cssclass="btn_WF_serviceLink_blue_M" left="0" height="120" right="0" top="sta01:43" text="서비스 바로가기"/>
+              <ImageViewer id="subTitle1" left="0" top="0" width="410" height="62"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="640" height="1150" mobileorientation="portrait" type="default">
+        <ImageViewer id="img01" left="20" top="0" height="600" image="url('imagerc::pas_mmssi00_M/sub_serviceReport7_M_N.gif')" cssclass="Roundbox16" right="20" imagealign="right middle"/>
+        <Div id="divGroup7" height="507" left="20" top="img01:41" right="20"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.btnServiceLink_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var pNum = String(obj.parent.parent.name).substr(8);
+	var pageUrl = null;
+	var param = {};
+
+	if(this.smfContainsStr(window.location.host, "local")){		//로컬인 경우
+		param.server = "local";
+	}else if (this.smfContainsStr(window.location.host, "dev")){	//개발인 경우
+		param.server = "dev";
+	}else if (this.smfContainsStr(window.location.host, "tst")){	//시험인 경우
+		param.server = "test";
+	}else if (!this.smfContainsStr(window.location.host, "local") && 
+			  !this.smfContainsStr(window.location.host, "dev") &&
+			  !this.smfContainsStr(window.location.host, "tst")){	//운영인 경우
+		param.server = "prod";
+	}
+
+	//param.subSys = "EWS";
+	var type = "link";
+	
+	param.subSys = this.getOwnerFrame().form.divTop.form.dsMenu.lookup("menuId","8007","menuUrlAddr");
+	
+	this.smfSetServiceLink(pageUrl,type,param);
+};
+this.divGroup7_sta01_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	
+};
+
+this.divGroup7_sta00_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	
+};
+
+//0501 CF 일괄등록]]></Script>
+  </Form>
+</FDL>

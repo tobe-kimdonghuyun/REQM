@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sqa_ueudr10_m00" width="1280" height="900" titletext="대입전형자료온라인제공" onload="fnOnload" nHeight="754">
+    <Layouts>
+      <Layout height="900" width="1280" screenid="ScreenDeskTop">
+        <ImageViewer id="imgTitle" taborder="0" text="대입전형자료요청관리" left="0" top="80" height="44" cssclass="img_WF_SubTit01" width="360" initvalueid="ivTitleAccessibilityOn"/>
+        <Button id="btnStep01" taborder="1" text="대학기본정보관리" left="0" top="164" height="66" cssclass="btn_WF_StepS" width="11.88%" onclick="btnStep_onclick" initvalueid="ivBtnAccessibilityButton"/>
+        <Static id="staNextStep01" taborder="2" left="btnStep01:17" top="174" width="38" height="47" cssclass="sta_WF_NextStep" initvalueid="ivStcAccessibilityOn" accessibilitylabel="다음"/>
+        <Button id="btnStep02" taborder="3" text="대상학생자료&#13;&#10;올리기" left="staNextStep01:12.936000000000007" top="164" width="11.88%" height="66" cssclass="btn_WF_StepN" onclick="btnStep_onclick" initvalueid="ivBtnAccessibilityButton"/>
+        <Static id="staNextStep01_00" taborder="4" left="btnStep02:17.872000000000014" top="174" width="38" height="47" cssclass="sta_WF_NextStep" initvalueid="ivStcAccessibilityOn" accessibilitylabel="다음"/>
+        <Button id="btnStep03" taborder="5" text="대상학생자료요청" left="staNextStep01_00:8.872000000000014" top="164" width="14.50%" cssclass="btn_WF_StepN" onclick="btnStep_onclick" initvalueid="ivBtnAccessibilityButton" bottom="staNextStep01_00:-20"/>
+        <Button id="btnStep04" taborder="6" text="재송부학생자료요청" left="staNextStep01_00:8.872000000000014" top="200" width="14.5%" height="30" cssclass="btn_WF_StepN" onclick="btnStep_onclick" initvalueid="ivBtnAccessibilityButton"/>
+        <Static id="staNextStep01_00_00" taborder="7" left="btnStep03:14.807999999999993" top="174" width="38" height="47" cssclass="sta_WF_NextStep" initvalueid="ivStcAccessibilityOn" accessibilitylabel="다음"/>
+        <Button id="btnStep05" taborder="8" text="전형자료생성" left="staNextStep01_00_00:9.807999999999993" top="164" width="11.88%" height="66" cssclass="btn_WF_StepN" onclick="btnStep_onclick" initvalueid="ivBtnAccessibilityButton"/>
+        <Static id="staNextStep01_00_01" taborder="9" left="btnStep05:17.744000000000028" top="174" width="38" height="47" cssclass="sta_WF_NextStep" initvalueid="ivStcAccessibilityOn" accessibilitylabel="다음"/>
+        <Button id="btnStep06" taborder="10" text="전형자료수신" left="staNextStep01_00_01:13.744000000000028" top="164" width="11.88%" height="66" cssclass="btn_WF_StepN" onclick="btnStep_onclick" initvalueid="ivBtnAccessibilityButton"/>
+        <Static id="staNextStep01_00_02" taborder="11" left="btnStep06:10.68100000000004" top="174" width="48" height="47" cssclass="sta_WF_NextStep" initvalueid="ivStcAccessibilityOn" accessibilitylabel="다음"/>
+        <Button id="btnStep07" taborder="12" text="전형자료복호화" top="164" height="66" cssclass="btn_WF_StepN" onclick="btnStep_onclick" initvalueid="ivBtnAccessibilityButton" left="staNextStep01_00_02:1.68100000000004" right="0"/>
+        <Div id="divMain" taborder="13" left="0" top="250" cssclass="div_WF_Detail" url="pa_sqa_ueu_dr::sqa_ueudr00_m00.xfdl" text="" bottom="30" right="0" initvalueid="ivDivAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00" taborder="14" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01" taborder="15" left="0" top="134" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_01" taborder="16" left="0" top="230" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+ *	전형자료온라인수신
+ *	@MenuPath	대입전형자료 온라인제공
+ *	@FileName 	sqa_ueudr10_m00.xfdl
+ *	@Creator 	박가혜
+ *	@CreateDate	2022.08.31
+ *	@Desction	
+ ************** 소스 수정 이력 ***********************************************
+ *	date			Modifier			Description
+ *******************************************************************************
+ *	2022.08.31		박가혜				최초 생성
+ *******************************************************************************
+ */
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::cm_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리
+ */
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+};
+
+/************************************************************************************************
+ * TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd <= -1) return;
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 스텝 변경
+ */
+this.btnStep_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	// 초기화
+	this.btnStep01.set_cssclass("btn_WF_StepN");
+	this.btnStep02.set_cssclass("btn_WF_StepN");
+	this.btnStep03.set_cssclass("btn_WF_StepN");
+	this.btnStep04.set_cssclass("btn_WF_StepN");
+	this.btnStep05.set_cssclass("btn_WF_StepN");
+	this.btnStep06.set_cssclass("btn_WF_StepN");
+	this.btnStep07.set_cssclass("btn_WF_StepN");
+	
+	if(obj.name == 'btnStep01'){
+		this.btnStep01.set_cssclass("btn_WF_StepS");
+		this.divMain.set_url("pa_sqa_ueu_dr::sqa_ueudr00_m00.xfdl"); //대학기본정보관리
+	}else if(obj.name == 'btnStep02'){
+		this.btnStep02.set_cssclass("btn_WF_StepS");
+		this.divMain.set_url("pa_sqa_ueu_dr::sqa_ueudr01_m00.xfdl"); //대상학생자료올리기
+	}else if(obj.name == 'btnStep03'){
+		this.btnStep03.set_cssclass("btn_WF_StepS");
+		this.divMain.set_url("pa_sqa_ueu_dr::sqa_ueudr03_m00.xfdl"); //전형자료요청
+	}else if(obj.name == 'btnStep04'){
+		this.btnStep04.set_cssclass("btn_WF_StepS");
+		this.divMain.set_url("pa_sqa_ueu_dr::sqa_ueudr04_m00.xfdl"); //시도별재송부학생자료요청
+	}else if(obj.name == 'btnStep05'){
+		this.btnStep05.set_cssclass("btn_WF_StepS");
+		this.divMain.set_url("pa_sqa_ueu_dr::sqa_ueudr06_m00.xfdl"); //전형자료생성
+	}else if(obj.name == 'btnStep06'){
+		this.btnStep06.set_cssclass("btn_WF_StepS");
+		this.divMain.set_url("pa_sqa_ueu_dd::sqa_ueudd00_m00.xfdl"); //전형자료수신
+	}else if(obj.name == 'btnStep07'){
+		this.btnStep07.set_cssclass("btn_WF_StepS");
+		this.divMain.set_url("pa_sqa_ueu_dd::sqa_ueudd01_m00.xfdl"); //전형자료복호화
+	}
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

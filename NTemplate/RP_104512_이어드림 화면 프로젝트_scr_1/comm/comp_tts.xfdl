@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comp_tts" width="190" height="50" titletext="TTS연동공통모듈" onload="comp_tts_onload">
+    <Layouts>
+      <Layout height="50" width="190">
+        <VideoPlayer id="vpTTS" taborder="0" left="1" top="0" right="0" bottom="0" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	comp_tts.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.8.9
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.8.9     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+  
+this.comp_tts_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ this.fnSearch = function(obj, e)
+{
+ 	// 서비스 객체 생성
+	this.smfExecuteService("execute") // TTS처리 실행
+
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			// 값을 세팅
+			var sUrl = this.dsResult.getColumn(0,"url");
+			trace("TTS url:["+sUrl+"]");
+			
+			// TTS의 URL을 세팅한다.
+			this.vpTTS.set_url(sUrl);
+			
+			// 플레이를 한다.
+			this.fnPlay();
+		});
+};
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+// 플레이를 실행한다.
+this.fnPlay = function()
+{
+	this.vpTTS.play();
+}
+
+// 플레이를 일시중단한다.
+this.fnPause = function()
+{
+	this.vpTTS.pause();
+}
+
+// 플레이를 중지한다.
+this.fnStop = function()
+{
+	this.vpTTS.stop();
+}
+
+// TTS텍스트를 서버에 보낸다.
+this.fnTTS = function(sTTSData)
+{
+	// 값을 세팅한다.
+	this.dsMain.setColumn(0,"text", sTTSData);  // TTS처리할 텍스트
+
+	// 서버에 요청한다.
+	this.fnSearch();
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectRprsTelno</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsRprsTelno=dsRprsTelno</Col>
+            <Col id="url">sqa_cmm_cm02_001.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectTtsData</Col>
+            <Col id="inDatasets">dsIn=dsIn</Col>
+            <Col id="outDatasets">dsOut=dsOut</Col>
+            <Col id="url">xxx.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">execute</Col>
+            <Col id="inDatasets">dsMain=dsMain:U</Col>
+            <Col id="outDatasets">dsResult=dsResult</Col>
+            <Col id="url">cmc_fcm_vt00_000.do</Col>
+            <Col id="asynctp"></Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="keys" type="STRING" size="30" value="columnText:&quot;성명&quot;name"/>
+          <Column id="text" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="result" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

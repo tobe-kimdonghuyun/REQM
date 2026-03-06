@@ -1,0 +1,680 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleTemp04" width="1280" height="832" titletext="검정고시-공지사항목록조회p73 (타이틀+조회+그리드+페이징)" nHeight="754" onload="sampleTemp04_onload">
+    <Layouts>
+      <Layout height="832" width="1280" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="공지사항" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="137" initvalueid="ivTitleAccessibilityOn" onclick="divTitle_imgTitle_onclick"/>
+            </Layout>
+            <Layout name="Layout0">
+              <ImageViewer id="imgTitle" left="20" top="0" height="65" right="20" text="공지사항m"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSearch" taborder="1" left="0" top="144" height="70" cssclass="div_WF_Search" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="검색" left="0" top="20" width="57" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboSearchType" taborder="1" left="57" width="105" height="30" innerdataset="dsSearchTypeCd" codecolumn="cd" datacolumn="text" index="0" text="제목+내용" readonly="false" top="20" value="ALL" initvalueid="ivCmbNormal"/>
+              <Edit id="edtSearchKeyword" taborder="2" left="170" top="20" width="503" height="30" initvalueid="ivEdtNormal"/>
+              <Button id="btnSearch" taborder="3" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="divSearch_btnSearch_onclick" initvalueid="ivBtnAccessibilityButton"/>
+              <Static id="Static99_00_00_00_00_00_01" taborder="4" left="1360" top="6" height="50" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" initvalueid="ivStcAccessibilityOff" width="20"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Edit id="edtSearchKeyword" left="0" top="0" height="60" displaynulltext="검색어를 입력해주세요." right="0" taborder="0"/>
+              <Static id="Static00" left="682" top="20" width="57" height="30" visible="false" taborder="2"/>
+              <Combo id="cboSearchType" left="739" top="20" width="105" height="30" visible="false" taborder="3"/>
+              <Button id="btnSearch" height="60" top="0" width="70" right="0" cssclass="btn_WF_Search01" taborder="1"/>
+              <Static id="Static99_00_00_00_00_00_01" top="1" height="58" width="20" right="0" taborder="4"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta00" taborder="2" text="Total  232" left="0" top="236" width="120" height="26" cssclass="sta_WF_Total" fittocontents="width" initvalueid="ivStcAccessibilityOn"/>
+        <Combo id="cbo02" taborder="3" left="sta00:0" width="113" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" value="1" index="0" text="NEIS 업무시스템" top="234" initvalueid="ivCmbNormal">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">1</Col>
+                <Col id="datacolumn">10개씩보기</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">2</Col>
+                <Col id="datacolumn">15개씩보기</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">3</Col>
+                <Col id="datacolumn">20개씩보기</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Button id="btn03" taborder="4" text="확인" top="234" height="30" width="50" left="cbo02:8" fittocontents="width" cssclass="btn_WF_Crud" initvalueid="ivBtnAccessibilityButton"/>
+        <Grid id="grd01" taborder="5" left="0" top="273" height="439" autofittype="col" right="0" binddataset="ds_M" initvalueid="ivGrdAccessibilityOn" selecttype="cell" oncellclick="grd01_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="481"/>
+                <Column size="195"/>
+                <Column size="110"/>
+                <Column size="72"/>
+                <Column size="77"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="번호"/>
+                <Cell col="1" text="제목"/>
+                <Cell col="2" text="파일"/>
+                <Cell col="3" text="등록일"/>
+                <Cell col="4" text="조회수"/>
+                <Cell col="5" text="공지여부" cssclass="LineNo"/>
+              </Band>
+              <Band id="body">
+                <Cell text="1" displaytype="text"/>
+                <Cell col="1" displaytype="normal" edittype="text" text="bind:Column1"/>
+                <Cell col="2" displaytype="normal" edittype="text" text="bind:Column2"/>
+                <Cell col="3" displaytype="date" edittype="normal" text="20210315" calendardateformat="yyyy-MM-dd "/>
+                <Cell col="4" text="26" displaytype="text"/>
+                <Cell col="5" displaytype="text" edittype="text" text="Y" cssclass="LineNo"/>
+              </Band>
+            </Format>
+            <Format id="format00">
+              <Columns>
+                <Column size="67"/>
+                <Column size="141"/>
+                <Column size="77"/>
+                <Column size="81"/>
+                <Column size="104"/>
+                <Column size="64"/>
+                <Column size="48"/>
+              </Columns>
+              <Rows>
+                <Row size="10"/>
+                <Row size="50"/>
+                <Row size="70"/>
+              </Rows>
+              <Band id="body">
+                <Cell/>
+                <Cell col="1"/>
+                <Cell col="2"/>
+                <Cell col="3"/>
+                <Cell col="4"/>
+                <Cell col="5"/>
+                <Cell col="6"/>
+                <Cell row="1" text="bind:Column0" cssclass="cell_WF_Number" autosizerow="limitmin"/>
+                <Cell row="1" col="1" colspan="6" text="bind:Column1" cssclass="cell_WF_NoticeTit" autosizerow="limitmin"/>
+                <Cell row="2" cssclass="cell_WF_Label,cell_WF_MiddleLine" autosizerow="none"/>
+                <Cell row="2" col="1" text="bind:Column3" cssclass="cell_WF_Label,cell_WF_MiddleLine" autosizerow="none"/>
+                <Cell row="2" col="2" text="조회수" cssclass="cell_WF_Label,cell_WF_MiddleLine" autosizerow="none"/>
+                <Cell row="2" col="3" text="bind:Column4" cssclass="cell_WF_Label,cell_WF_MiddleLine" autosizerow="none"/>
+                <Cell row="2" col="4" text="공지여부" cssclass="cell_WF_Label,cell_WF_MiddleLine" autosizerow="none"/>
+                <Cell row="2" col="5" text="bind:Column5" cssclass="cell_WF_Label,cell_WF_MiddleLine" autosizerow="none"/>
+                <Cell row="2" col="6" cssclass="cell_WF_Label, cell_WF_MiddleLine, btn_WF_FileAdd_M" displaytype="buttoncontrol" autosizerow="none"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="div01" taborder="6" width="366" height="30" text="" top="732" left="456" initvalueid="ivDivAccessibilityOn">
+          <Layouts>
+            <Layout>
+              <Button id="btn06" taborder="0" left="0" width="24" height="24" cssclass="btn_WF_PageP" top="0" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btn02" taborder="1" left="23" width="24" height="24" cssclass="btn_WF_PageL" top="0" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btn08" taborder="2" text="1" left="53" width="26" height="26" cssclass="btn_WF_PageS" top="0" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btn09" taborder="3" text="2" left="79" width="26" height="26" cssclass="btn_WF_Page" top="0" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btn10" taborder="4" text="3" left="105" width="26" height="26" cssclass="btn_WF_Page" top="0" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btn11" taborder="5" text="4" left="131" width="26" height="26" cssclass="btn_WF_Page" top="0" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btn12" taborder="6" text="5" left="157" width="26" height="26" cssclass="btn_WF_Page" top="0" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btn13" taborder="7" text="6" left="183" width="26" height="26" cssclass="btn_WF_Page" top="0" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btn14" taborder="8" text="7" left="209" width="26" height="26" cssclass="btn_WF_Page" top="0" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btn15" taborder="9" text="8" left="235" width="26" height="26" cssclass="btn_WF_Page" top="0" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btn16" taborder="10" text="9" left="261" width="26" height="26" cssclass="btn_WF_Page" top="0" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btn17" taborder="11" text="10" left="287" width="26" height="26" cssclass="btn_WF_Page" top="0" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btn05" taborder="12" cssclass="btn_WF_PageR" left="319" top="0" height="24" width="24" initvalueid="ivBtnAccessibilityButton"/>
+              <Button id="btn07" taborder="13" cssclass="btn_WF_PageN" left="342" top="0" height="24" width="24" initvalueid="ivBtnAccessibilityButton"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Button id="btn02" visible="false"/>
+              <Button id="btn05" visible="false"/>
+              <Button id="btn06" visible="false"/>
+              <Button id="btn07" visible="false"/>
+              <Button id="btn08" visible="false"/>
+              <Button id="btn09" visible="false"/>
+              <Button id="btn10" visible="false"/>
+              <Button id="btn11" visible="false"/>
+              <Button id="btn12" visible="false"/>
+              <Button id="btn13" visible="false"/>
+              <Button id="btn14" visible="false"/>
+              <Button id="btn15" visible="false"/>
+              <Button id="btn16" visible="false"/>
+              <Button id="btn17" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnAdd" taborder="7" text="등록" top="792" height="40" width="120" cssclass="btn_WF_Action" right="0" onclick="btnAdd_onclick" initvalueid="ivBtnAccessibilityButton"/>
+        <Static id="Static99_00_00_00_00" taborder="8" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01" taborder="9" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_01" taborder="10" left="0" top="214" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_00_00" taborder="11" left="0" top="712" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_01_00" taborder="12" left="0" top="264" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_00_00_00" taborder="13" left="0" top="762" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Button id="Button04_02_00_00" taborder="14" text="버튼" left="1430" top="535" width="240" height="80" cssclass="btn_WF_CustomB" visible="false" initvalueid="ivBtnAccessibilityButton" onclick="fnAdd"/>
+        <Static id="sta00_00" taborder="15" left="1500" top="377" width="240" height="70" initvalueid="ivStcAccessibilityOff" cssclass="sta_WF_Botbox" visible="false"/>
+      </Layout>
+      <Layout name="Layout0" width="640" height="1216" mobileorientation="landscape" type="default" screenid="mobile" titletext="[모바일] 더보기 그리드 샘플">
+        <Div id="div01" left="1056" top="732" width="366" height="30" visible="false" taborder="8"/>
+        <Div id="divTitle" height="65" left="0" top="70" right="0" taborder="0"/>
+        <Static id="Static99_00_00_00_00_01" left="20" top="135" height="60" right="20" text="60" taborder="10"/>
+        <Div id="divSearch" left="20" top="195" right="20" formscrolltype="none" height="70" taborder="1"/>
+        <Static id="Static99_00_00_00_00_00_01" left="20" top="255" height="30" text="30" right="20" taborder="11"/>
+        <Static id="Static99_00_00_00_00_00_00_00" left="0" top="1016" height="60" right="0" text="60" taborder="12"/>
+        <Button id="btnAdd" top="285" width="108" height="60" right="20" cssclass="btn_WF_Crud" text="등록" taborder="3"/>
+        <Static id="Static99_00_00_00_00_00_01_00" left="20" top="345" height="20" right="20" text="20" taborder="13"/>
+        <Grid id="grd01" left="20" top="365" height="721" right="20" cssclass="grd_WF_Mobile" formatid="format00" taborder="4" autofittype="col" autosizingtype="row" extendsizetype="row"/>
+        <Static id="sta00" left="20" top="312" width="120" height="40" text="총 77건" taborder="2"/>
+        <Combo id="cbo02" left="1047" top="555" width="113" height="30" visible="false" taborder="6"/>
+        <Button id="btn03" left="1168" top="555" width="50" height="30" visible="false" taborder="7"/>
+        <Static id="Static99_00_00_00_00_00_00_00_00" left="810" top="1160" height="60" right="-810" taborder="14"/>
+        <Static id="Static99_00_00_00_00" left="20" top="0" height="70" right="20" taborder="9"/>
+        <Button id="Button04_02_00_00" left="30.47%" top="grd01:60" width="246" height="60" visible="true" cssclass="btn_WF_CustomR" text="더보기" taborder="5"/>
+        <Static id="sta00_00" left="0" right="0" height="60" top="Button04_02_00_00:0" visible="true"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    [모바일] 더보기 그리드 샘플
+*  @FileName 	sampleTemp04.xfdl
+*  @Creator 	투비소프트
+*  @CreateDate 	2022.06.22
+*  @Desction    모바일 더보기
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.06.22     	투비소프트 	               최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+this.sampleTemp04_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+// 	var isMobile = this.smfIsMobile(true);
+// 
+// 	//this.smfIsMobile() 모바일 체크 공통 함수
+// 	if( isMobile )
+// 	{
+		this.ds_M.objGrd = this.grd01;
+		this._smfappendHeight(this.grd01);
+//	}
+	//onload 이벤트
+	//this.smfResetScroll(this.ds_M); 또는
+	//this.smfDataAppend(this,this.grd01,this.ds_M); 사용 금지!!!!
+};
+
+/**
+ * [모바일] 그리드 늘리기
+ * smfResetScroll 호출
+ * @param : scope
+ */
+this.btnAdd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+// 	var isMobile = this.smfIsMobile(true);
+// 
+// 	//this.smfIsMobile() 모바일 체크 공통 함수
+// 	if( isMobile )
+// 	{
+		this.ds_M.objGrd = this.grd01;
+		this.smfResetScroll(this);
+//	}
+};
+
+// 조회
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+};
+
+/**
+ * [모바일] 더보기
+ * this.fnAdd 
+ * @param : scope
+ */
+this.fnAdd = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var isMobile = this.smfIsMobile(true);
+
+	//this.smfIsMobile() 모바일 체크 공통 함수
+	if( isMobile )
+	{
+		this.smfDataAppend(this,this.grd01,this.ds_M);
+		//divWork 부모 늘리기
+		this._smfFrameResetScroll(parentH);	
+	}	
+};
+this.divTitle_imgTitle_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	var nexacroFrame = nexacro.getApplication().mainframe.VFrameSet.frameMain.form;	
+	
+	trace(" nexacroFrame.divAll.form.getOffsetHeight() : " + nexacroFrame.divAll.form.getOffsetHeight());
+	//nexacro.getApplication().mainframe.VFrameSet.frameMain.form.scrollTo(nexacroFrame.divAll.form.getOffsetWidth(),nexacroFrame.divAll.form.getOffsetHeight());	
+};
+]]></Script>
+    <Objects>
+      <Dataset id="ds00">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">가나</Col>
+            <Col id="Column1">가나다</Col>
+            <Col id="Column2">가나</Col>
+            <Col id="Column3">가나다</Col>
+            <Col id="Column4">가나</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다라</Col>
+            <Col id="Column1">가나다라마</Col>
+            <Col id="Column2">가나다라</Col>
+            <Col id="Column3">가나다라마</Col>
+            <Col id="Column4">가나다라</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나</Col>
+            <Col id="Column1">가나다</Col>
+            <Col id="Column2">가나</Col>
+            <Col id="Column3">가나다</Col>
+            <Col id="Column4">가나</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다라</Col>
+            <Col id="Column1">가나다라마</Col>
+            <Col id="Column2">가나다라</Col>
+            <Col id="Column3">가나다라마</Col>
+            <Col id="Column4">가나다라</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나</Col>
+            <Col id="Column1">가나다</Col>
+            <Col id="Column2">가나</Col>
+            <Col id="Column3">가나다</Col>
+            <Col id="Column4">가나</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다라</Col>
+            <Col id="Column1">가나다라마</Col>
+            <Col id="Column2">가나다라</Col>
+            <Col id="Column3">가나다라마</Col>
+            <Col id="Column4">가나다라</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나</Col>
+            <Col id="Column1">가나다</Col>
+            <Col id="Column2">가나</Col>
+            <Col id="Column3">가나다</Col>
+            <Col id="Column4">가나</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다라</Col>
+            <Col id="Column1">가나다라마</Col>
+            <Col id="Column2">가나다라</Col>
+            <Col id="Column3">가나다라마</Col>
+            <Col id="Column4">가나다라</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나</Col>
+            <Col id="Column1">가나다</Col>
+            <Col id="Column2">가나</Col>
+            <Col id="Column3">가나다</Col>
+            <Col id="Column4">가나</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다라</Col>
+            <Col id="Column1">가나다라마</Col>
+            <Col id="Column2">가나다라</Col>
+            <Col id="Column3">가나다라마</Col>
+            <Col id="Column4">가나다라</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_M">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+          <Column id="Column5" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">999</Col>
+            <Col id="Column1">나이스 학부모서비스 방과후학교 조회 및 변경사항 안내에 관한 첨부사항</Col>
+            <Col id="Column2">참고파일1</Col>
+            <Col id="Column3">2022.05.18</Col>
+            <Col id="Column4">2541</Col>
+            <Col id="Column5">Y</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">998</Col>
+            <Col id="Column1">졸업학교 생활기록부 조회방법 안내</Col>
+            <Col id="Column2">참고파일21</Col>
+            <Col id="Column3">2022.05.17</Col>
+            <Col id="Column4">3625</Col>
+            <Col id="Column5">Y</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">997</Col>
+            <Col id="Column1">시도교육청 나이스 상담센터 전화번호</Col>
+            <Col id="Column2">첨부</Col>
+            <Col id="Column3">2022.05.17</Col>
+            <Col id="Column4">2541</Col>
+            <Col id="Column5">Y</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">996</Col>
+            <Col id="Column1">대국민 플러그인 제거에 따른 화면 변경사항 안내</Col>
+            <Col id="Column2">플러그인첨부</Col>
+            <Col id="Column3">2022.05.17</Col>
+            <Col id="Column4">369</Col>
+            <Col id="Column5">Y</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">995</Col>
+            <Col id="Column1">교직원 온라인 채용 및 검정고시 사이트 안내</Col>
+            <Col id="Column2">사이트 첨부</Col>
+            <Col id="Column3">2022.05.17</Col>
+            <Col id="Column4">862</Col>
+            <Col id="Column5">Y</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds00_00">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">가나</Col>
+            <Col id="Column1">가나다</Col>
+            <Col id="Column2">가나</Col>
+            <Col id="Column3">가나다</Col>
+            <Col id="Column4">가나</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다라</Col>
+            <Col id="Column1">가나다라마</Col>
+            <Col id="Column2">가나다라</Col>
+            <Col id="Column3">가나다라마</Col>
+            <Col id="Column4">가나다라</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나</Col>
+            <Col id="Column1">가나다</Col>
+            <Col id="Column2">가나</Col>
+            <Col id="Column3">가나다</Col>
+            <Col id="Column4">가나</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다라</Col>
+            <Col id="Column1">가나다라마</Col>
+            <Col id="Column2">가나다라</Col>
+            <Col id="Column3">가나다라마</Col>
+            <Col id="Column4">가나다라</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나</Col>
+            <Col id="Column1">가나다</Col>
+            <Col id="Column2">가나</Col>
+            <Col id="Column3">가나다</Col>
+            <Col id="Column4">가나</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다라</Col>
+            <Col id="Column1">가나다라마</Col>
+            <Col id="Column2">가나다라</Col>
+            <Col id="Column3">가나다라마</Col>
+            <Col id="Column4">가나다라</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나</Col>
+            <Col id="Column1">가나다</Col>
+            <Col id="Column2">가나</Col>
+            <Col id="Column3">가나다</Col>
+            <Col id="Column4">가나</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다라</Col>
+            <Col id="Column1">가나다라마</Col>
+            <Col id="Column2">가나다라</Col>
+            <Col id="Column3">가나다라마</Col>
+            <Col id="Column4">가나다라</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나</Col>
+            <Col id="Column1">가나다</Col>
+            <Col id="Column2">가나</Col>
+            <Col id="Column3">가나다</Col>
+            <Col id="Column4">가나</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다라</Col>
+            <Col id="Column1">가나다라마</Col>
+            <Col id="Column2">가나다라</Col>
+            <Col id="Column3">가나다라마</Col>
+            <Col id="Column4">가나다라</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_M00" onrowposchanged="ds_M_onrowposchanged">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+          <Column id="Column5" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsResultValid" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="256" prop="NONE"/>
+          <Column id="prlDataId" type="string" size="256"/>
+          <Column id="prlDataTitlNm" type="string" size="256"/>
+          <Column id="prlDataCn" type="string" size="256"/>
+          <Column id="fileRefrnId" type="string" size="256"/>
+          <Column id="prlDataInqCnt" type="bigdecimal" size="256"/>
+          <Column id="regDt" type="string" size="256"/>
+          <Column id="rgtrId" type="string" size="256"/>
+          <Column id="rgtrNm" type="string" size="256"/>
+          <Column id="rgtrDptNm" type="string" size="256"/>
+          <Column id="mdfcnDt" type="string" size="256"/>
+          <Column id="mdfrId" type="string" size="256"/>
+          <Column id="mdfrNm" type="string" size="256"/>
+          <Column id="mdfrDptNm" type="string" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="_chk"/>
+          </Row>
+          <Row>
+            <Col id="_chk"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsResult=dsResult dsPageInfo=dsPageInfo</Col>
+            <Col id="url">pas_mns_cn04_m01.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">selectm</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsResultM=dsResult dsPageInfo=dsPageInfo</Col>
+            <Col id="url">pas_mns_cn04_m01.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="inDatasets">dsDelList=dsResult:U</Col>
+            <Col id="outDatasets"/>
+            <Col id="asynctp"/>
+            <Col id="url">pas_mns_cn04_m05.do</Col>
+            <Col id="id">delete</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex">1</Col>
+            <Col id="pageSize">10</Col>
+            <Col id="totalCount">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="searchType" type="STRING" size="256"/>
+          <Column id="searchKeyword" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="searchType">TITL</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearchTypeCd">
+        <ColumnInfo>
+          <Column id="cd" type="STRING" size="256"/>
+          <Column id="text" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cd">ALL</Col>
+            <Col id="text">제목+내용</Col>
+          </Row>
+          <Row>
+            <Col id="cd">TITL</Col>
+            <Col id="text">제목</Col>
+          </Row>
+          <Row>
+            <Col id="cd">CN</Col>
+            <Col id="text">내용</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResultM" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="int" size="1"/>
+          <Column id="prlDataId" type="string" size="256"/>
+          <Column id="prlDataTitlNm" type="string" size="256"/>
+          <Column id="prlDataCn" type="string" size="256"/>
+          <Column id="fileRefrnId" type="string" size="256"/>
+          <Column id="prlDataInqCnt" type="bigdecimal" size="256"/>
+          <Column id="regDt" type="string" size="256"/>
+          <Column id="rgtrId" type="string" size="256"/>
+          <Column id="rgtrNm" type="string" size="256"/>
+          <Column id="rgtrDptNm" type="string" size="256"/>
+          <Column id="mdfcnDt" type="string" size="256"/>
+          <Column id="mdfrId" type="string" size="256"/>
+          <Column id="mdfrNm" type="string" size="256"/>
+          <Column id="mdfrDptNm" type="string" size="256"/>
+          <Column id="fileNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_orgM">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+          <Column id="Column5" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">999</Col>
+            <Col id="Column1">나이스 학부모서비스 방과후학교 조회 및 변경사항 안내에 관한 첨부사항</Col>
+            <Col id="Column2">참고파일1</Col>
+            <Col id="Column3">2022.05.18</Col>
+            <Col id="Column4">2541</Col>
+            <Col id="Column5">Y</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">998</Col>
+            <Col id="Column1">졸업학교 생활기록부 조회방법 안내</Col>
+            <Col id="Column2">참고파일21</Col>
+            <Col id="Column3">2022.05.17</Col>
+            <Col id="Column4">3625</Col>
+            <Col id="Column5">Y</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">997</Col>
+            <Col id="Column1">시도교육청 나이스 상담센터 전화번호</Col>
+            <Col id="Column2">첨부</Col>
+            <Col id="Column3">2022.05.17</Col>
+            <Col id="Column4">2541</Col>
+            <Col id="Column5">Y</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">996</Col>
+            <Col id="Column1">대국민 플러그인 제거에 따른 화면 변경사항 안내</Col>
+            <Col id="Column2">플러그인첨부</Col>
+            <Col id="Column3">2022.05.17</Col>
+            <Col id="Column4">369</Col>
+            <Col id="Column5">Y</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">995</Col>
+            <Col id="Column1">교직원 온라인 채용 및 검정고시 사이트 안내</Col>
+            <Col id="Column2">사이트 첨부</Col>
+            <Col id="Column3">2022.05.17</Col>
+            <Col id="Column4">862</Col>
+            <Col id="Column5">Y</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.cboSearchType" propid="value" datasetid="dsSearch" columnid="searchType"/>
+      <BindItem id="item1" compid="divSearch.form.edtSearchKeyword" propid="value" datasetid="dsSearch" columnid="searchKeyword"/>
+    </Bind>
+  </Form>
+</FDL>

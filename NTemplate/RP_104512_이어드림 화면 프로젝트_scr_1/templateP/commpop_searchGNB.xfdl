@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="commpop_searchGNB" width="1200" height="980" titletext="GNB Search" onload="samplePortalResize" onsize="samplePortalResize_onsize">
+    <Layouts>
+      <Layout height="980" width="1200" screenid="ScreenDeskTopP">
+        <Div id="div0011" taborder="0" left="0" top="0" cssclass="div_SA_Opacity40" bottom="0" initvalueid="ivDivAccessibilityOff" right="0">
+          <Layouts>
+            <Layout/>
+            <Layout name="Layout0"/>
+          </Layouts>
+        </Div>
+        <Div id="div01" taborder="1" left="0" top="0" width="1200" height="200" background="#ffffff" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Div id="div00" taborder="0" text="div00" left="298" top="0" width="600" height="200" initvalueid="ivDivAccessibilityOn">
+                <Layouts>
+                  <Layout>
+                    <Edit id="edtSearch" taborder="0" left="10" top="46" width="520" height="48" cssclass="edt_GNB_search" displaynulltext="검색어를 입력해주세요." initvalueid="ivEdtNormal"/>
+                    <Button id="btnSearch" taborder="1" top="46" width="48" height="48" right="21" cssclass="btn_Top_search_B" initvalueid="ivBtnAccessibilityButton"/>
+                    <Static id="staLine" taborder="2" left="0" top="100" height="5" cssclass="sta_GNB_line" right="0" initvalueid="ivStcAccessibilityOff"/>
+                    <Button id="btn00" taborder="3" text="#연혁" left="77" top="125" width="72" height="24" cssclass="btn_GNB_link" initvalueid="ivBtnAccessibilityLink"/>
+                    <Button id="btn01" taborder="4" text="#나이스플러스" left="159" top="125" width="124" height="24" cssclass="btn_GNB_link" initvalueid="ivBtnAccessibilityLink"/>
+                    <Button id="btn02" taborder="5" text="#대국민안내" left="293" top="125" width="111" height="24" cssclass="btn_GNB_link" initvalueid="ivBtnAccessibilityLink"/>
+                    <Button id="btn03" taborder="6" text="#나이스소개" left="414" top="125" width="111" height="24" cssclass="btn_GNB_link" initvalueid="ivBtnAccessibilityLink"/>
+                  </Layout>
+                  <Layout name="Layout0">
+                    <Edit id="edtSearch" cssclass="edt_GNB_search_M" left="0" top="0" height="52" right="98" taborder="0"/>
+                    <Button id="btnSearch" cssclass="btn_pop_search_M" width="52" top="0" height="52" right="28" taborder="1"/>
+                    <Static id="staLine" left="0" top="62" height="5" right="0" taborder="2"/>
+                    <Button id="btn00" cssclass="btn_GNB_txtLink_M" height="50" left="0" top="105" width="132" taborder="3"/>
+                    <Button id="btn01" cssclass="btn_GNB_txtLink_M" height="50" left="142" top="105" width="221" taborder="4"/>
+                    <Button id="btn02" cssclass="btn_GNB_txtLink_M" height="50" left="373" top="btnSearch:53" width="199" taborder="5"/>
+                    <Button id="btn03" cssclass="btn_GNB_txtLink_M" height="50" left="0" top="175" width="199" visible="false" taborder="6"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Button id="btnClose" taborder="1" top="32" width="38" height="38" cssclass="btn_mySetting_close" right="23" padding="0px" initvalueid="ivBtnAccessibilityButton"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Div id="div00" left="20" top="126" height="225" right="20" taborder="1"/>
+              <Button id="btnClose" top="26" width="48" height="48" right="20" cssclass="btn_pop_close_M" taborder="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP" width="640" height="800" mobileorientation="portrait" type="default">
+        <Div id="div01" height="421" left="0" top="0" right="0" taborder="1"/>
+        <Div id="div0011" taborder="0" cssclass="div_SA_Opacity40_M" right="0" left="0" top="0" bottom="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    대국민포탈메인사이즈 테스트
+*  @FileName 	samplePortalResize
+*  @Creator 	투비소프트
+*  @CreateDate 	2022.07.21
+*  @Desction    대국민포탈메인사이즈 테스트
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.07.21     	TOBESOFT 	               최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+
+this.samplePortalResize = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.fnMiddleAlign();
+};
+
+this.fnMiddleAlign = function()
+{
+	var nAllWidth = this.width;  // 전체 form의 사이즈
+	var nMaxWidth = 600; // 가운데정렬되는 Div의 가로사이즈(기존1200)
+	var nLeft,nWidth;
+	
+	if(nAllWidth >= nMaxWidth)	//1280 사용
+	{
+		nLeft = parseInt((nAllWidth - nMaxWidth) / 2);
+		if(nLeft < 0) nLeft = 0;
+		
+		nWidth = nMaxWidth;
+	}
+	else
+	{
+		nLeft = 0;
+		nWidth = nAllWidth;
+	}
+	// 1번째 
+	this.div00.setOffsetLeft(nLeft);
+	this.div00.setOffsetWidth(nWidth);	
+	// 2번째 
+	this.div00_00.setOffsetLeft(nLeft);
+	this.div00_00.setOffsetWidth(nWidth);		
+}
+
+this.samplePortalResize_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	this.fnMiddleAlign();		
+};]]></Script>
+  </Form>
+</FDL>

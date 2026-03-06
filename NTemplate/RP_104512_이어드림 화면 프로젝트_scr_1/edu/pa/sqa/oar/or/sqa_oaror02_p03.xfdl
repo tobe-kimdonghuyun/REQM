@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frm01" width="1090" height="470" titletext="작성방법(고사장선택)" onload="frm01_onload" nHeight="754">
+    <Layouts>
+      <Layout height="470" width="1090" screenid="ScreenDeskTop">
+        <ImageViewer id="img00" taborder="0" text="고사장선택" left="0" top="18" width="150" height="35" cssclass="img_WF_SubTit02" initvalueid="ivTitleAccessibilityOn"/>
+        <Static id="sta00_02_02" taborder="2" text="※ 고사장 별 수용인원이 도달할 때까지 응시자가 신청가능" top="402" width="320" height="30" cssclass="edi_WF_Input" initvalueid="ivStcAccessibilityOn" right="0"/>
+        <Grid id="grd00" taborder="3" left="0" top="166" height="231" right="0" binddataset="ds_grd" autofittype="col" selecttype="row" initvalueid="ivGrdAccessibilityOn" readonly="true">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="338"/>
+                <Column size="269"/>
+                <Column size="157"/>
+                <Column size="145"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="고사장"/>
+                <Cell col="1" text="수용가능인원/전체인원"/>
+                <Cell col="2" text="신청인원"/>
+                <Cell col="3" text="신청"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:고사장"/>
+                <Cell col="1" text="bind:수용가능인원"/>
+                <Cell col="2" text="bind:신청인원"/>
+                <Cell col="3" text="bind:신청" displaytype="buttoncontrol" edittype="button"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01" taborder="4" left="0" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_00" taborder="5" left="0" top="46" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOn"/>
+        <Static id="sta99_00_00_00_00_01_00_00" taborder="6" left="0" top="146" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="divSearch" taborder="1" left="0" top="75" height="70" right="0" initvalueid="ivDivAccessibilityOn" text="" accessibilitylabel="조회영역" cssclass="div_WF_Search">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="시행년도" left="0" top="20" width="81" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtEnfcYr" taborder="1" left="81" top="20" width="80" height="30" text="2023" initvalueid="ivEdtReadOnly" accessibilitylabel="시행년도" readonly="true" value="2023"/>
+              <Static id="sta00_00" taborder="2" text="시험회차" left="161" top="20" width="81" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtEnfcTme" taborder="3" left="242" top="20" width="50" height="30" text="1" initvalueid="ivEdtReadOnly" accessibilitylabel="시행회차" readonly="true" value="1"/>
+              <Button id="btnSearch" taborder="4" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="40" initvalueid="ivBtnAccessibilityButton"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_grd">
+        <ColumnInfo>
+          <Column id="고사장" type="STRING" size="256"/>
+          <Column id="수용가능인원" type="STRING" size="256"/>
+          <Column id="신청인원" type="STRING" size="256"/>
+          <Column id="신청" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="고사장">인천중학교</Col>
+            <Col id="수용가능인원">98/100</Col>
+            <Col id="신청인원">2</Col>
+            <Col id="신청">신청</Col>
+          </Row>
+          <Row>
+            <Col id="고사장">인송삼천중학교</Col>
+            <Col id="수용가능인원">99/100</Col>
+            <Col id="신청인원">1</Col>
+            <Col id="신청">신청완료</Col>
+          </Row>
+          <Row>
+            <Col id="고사장">안산중학교</Col>
+            <Col id="수용가능인원">89/100</Col>
+            <Col id="신청인원">11</Col>
+            <Col id="신청">신청</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  
+*  @MenuPath    대국민 검정고시서비스 원서작성방법안내 
+*  @FileName 	sqa_oaror02_p03.xfdl 
+*  @Creator 	박가혜
+*  @CreateDate 	2022.08.18
+*  @Desction    원서작성방법 안내(고사장선택)
+*
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.08.18         박가혜                 최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+
+
+
+include "lib::cm_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역 
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtEnfcYr" propid="value" datasetid="dsSelectedExmhNo" columnid="enfcYr"/>
+      <BindItem id="item1" compid="divSearch.form.edtEnfcTme" propid="value" datasetid="dsSelectedExmhNo" columnid="enfcTme"/>
+    </Bind>
+  </Form>
+</FDL>

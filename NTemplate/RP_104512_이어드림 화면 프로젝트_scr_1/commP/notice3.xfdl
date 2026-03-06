@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="notice3" width="538" height="580" titletext="대국민서버점검 안내2" background="transparent" onload="notice3_onload">
+    <Layouts>
+      <Layout height="580" screenid="ScreenDeskTopP" width="538">
+        <ImageViewer id="img00" taborder="0" left="122" top="40" width="295" height="204" cssclass="display" image="url('imagerc::common/img_popup_1.png')" initvalueid="ivImgAccessibilityOn" accessibilitylabel="대국민서버점검 안내 이미지" stretch="fixaspectratio"/>
+        <Static id="title" taborder="1" text="대국민서버점검 안내" left="60" top="261" height="130" cssclass="font36B" textAlign="center" right="60" initvalueid="ivStcAccessibilityOn" font="normal 700 36px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;"/>
+        <Static id="subTitle" taborder="2" text="서버점검 안내 공지드립니다." left="60" top="404" width="418" height="66" cssclass="font18R" initvalueid="ivStcAccessibilityOn" textAlign="center" font="normal 400 16px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;"/>
+        <Button id="btnLink" taborder="3" text="공고 자세히보기" left="149" width="240" height="60" cssclass="btn_WF_noticePop" initvalueid="ivBtnAccessibilityButton" padding="0px 20px 1px" top="490" onclick="btnLink_onclick"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="560" height="660" mobileorientation="portrait" type="default">
+        <ImageViewer id="img00" width="279" left="141" top="47" height="196" image="url('imagerc::common/img_popup_1.png')" text=""/>
+        <Static id="title" cssclass="font50B" height="160" left="27" top="264" right="27" font="normal 700 44px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;"/>
+        <Static id="subTitle" left="20" top="430" height="90" cssclass="font24R" right="20" font="normal 400 19.5px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;" text="서버점검 안내 공지드립니다."/>
+        <Button id="btnLink" left="40" height="90" cssclass="btn_Pop_yes01_M" right="40" top="540" text="공고 자세히보기"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.notice3_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	
+	var popupCn = this.parent.params.popupCn;
+	
+	if(popupCn.length >= 85)
+	{
+		popupCn = popupCn.substr(0,85) + "...";
+	}
+	
+	this.title.set_text(this.parent.params.eventTitlNm);		//팝업타이틀
+	this.btnLink.set_text(this.parent.params.lnkNm);			//팝업 버튼 명
+	this.img00.set_accessibilitylabel(this.parent.params.rplcText);	//팝업 이미지 대체 텍스트
+	this.subTitle.set_text(popupCn); //팝업 내용
+	if(this.parent.params.lnkTypCd == '0'){	//링크유형이 없을 경우 버튼 숨김
+		this.btnLink.set_visible(false);
+	}
+};
+
+this.btnLink_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getOwnerFrame().form.commNoticeAll.form.fnClickEvt(obj,e);	//링크 클릭시 이벤트
+};
+
+]]></Script>
+  </Form>
+</FDL>

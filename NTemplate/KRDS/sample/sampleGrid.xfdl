@@ -1,0 +1,2761 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleGrid" width="888" height="4800" titletext="그리드 기능" onload="form_onload" stepalign="left top">
+    <Layouts>
+      <Layout height="4800" mobileorientation="landscape" width="888" screenid="Desktop_screen">
+        <Static id="staH2" taborder="0" text="그리드 공통기능" left="0" top="0" width="260" height="60" cssclass="sta_WF_H2_pc" fittocontents="width" accessibilityrole="heading2"/>
+        <Static id="staDivider" taborder="1" left="staH2:15" top="20" width="1" height="21" cssclass="sta_WF_line" accessibilityenable="false"/>
+        <Static id="staEtit" taborder="2" text="Grid" left="staDivider:15" top="0" width="69" height="60" cssclass="sta_WF_ParaH4_pc"/>
+        <Static id="sta02" taborder="3" text="다양한 그리드 기능" left="0" top="104" height="38" cssclass="sta_WF_ParaH3_pc" accessibilityrole="heading3" right="0"/>
+        <TextArea id="txaGuide" taborder="4" left="0" top="sta02:20" height="500" right="0" onchanged="txaGuide_onchanged" value="그리드기능&#10; - 정렬(sort), 열고정(colfix), 필터(filter), 컬럼숨기기/보이기(colhide) , 그리드데이터찾기(find)&#10;   초기화(initial), 셀copy&amp;paste(cellcopypaste), 그리드설정초기화(initail) 기능들이 제공된다.&#10;&#10; - 그리드에 아무것도 설정하지 않을 시,  [정렬, 셀copy&amp;paste] 기능을 사용 할 수 있다.&#10;&#10; - 기본기능외 다른 기능을 추가 할 경우 그리드에 userproperties를 추가하여 사용합니다&#10;    ※ 추가방법 :  그리드를 선택하고 프로퍼티창에서 마우스 우클릭 - add properties 를 선택하여 유저 프로퍼티를 추가 후 사용할 기능을 콤마(,)로 구분하여 나열한다.&#10;    예] user property name : uFunction&#10;          user property value : !sort,colhide&#10;&#10; - 기본 기능 중 사용하지 않을 기능 앞엔 느낌표(!)를 붙여 명시한다.&#10;    예] !sort,!cellcopypaste&#10;&#10;  - 소트,  셀copy&amp;paste의 기능을 제외한 기능은 마우스 우클릭시 나오는 팝업메뉴를 띄워 제공한다." cssclass="txt_WF_Nochar" scrolltype="horizontal"/>
+        <Static id="Static03" taborder="5" text="정렬 (ctrl key= multisort)" left="0" top="txaGuide:40" height="36" cssclass="sta_WF_ParaH4_pc" accessibilityrole="heading4" fittocontents="height" right="0"/>
+        <Panel id="Panel01" taborder="6" left="0" top="Static03:16" height="321" right="0" horizontalgap="24" verticalgap="16" flexwrap="wrap" fittocontents="height">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="grd04"/>
+            <PanelItem id="PanelItem01" componentid="grd05"/>
+          </Contents>
+        </Panel>
+        <Grid id="grd04" taborder="7" left="0" top="Static03:20" height="321" binddataset="dsSort" selecttype="row" width="320" flexgrow="1">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2"/>
+                <Cell col="3" text="bind:Column3"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grd05" taborder="8" left="451" top="Static03:20" height="321" binddataset="dsSortMultiheader" width="320" flexgrow="1">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell row="1" colspan="2" text="Column3"/>
+                <Cell row="1" col="2" text="Column4"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2"/>
+                <Cell row="1" colspan="2" text="bind:Column3"/>
+                <Cell row="1" col="2" text="bind:Column4"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static05" taborder="9" text="열고정, 행고정" left="0" top="Panel01:40" height="36" cssclass="sta_WF_ParaH4_pc" fittocontents="height" right="0" accessibilityrole="heading4"/>
+        <Grid id="grd07" taborder="10" left="0" top="Static05:16" height="321" binddataset="dsColfix" uFunction="colfix,rowfix" scrollpixel="none" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="normal"/>
+                <Cell col="1" text="button"/>
+                <Cell col="2" text="calendar"/>
+                <Cell col="3" text="check"/>
+                <Cell col="4" text="combo"/>
+                <Cell col="5" text="comboText"/>
+                <Cell col="6" text="date"/>
+                <Cell col="7" text="editControl"/>
+                <Cell col="8" text="number"/>
+                <Cell col="9" text="text"/>
+                <Cell col="10" text="Column0"/>
+                <Cell col="11" text="Column1"/>
+                <Cell col="12" text="Column2"/>
+                <Cell col="13" text="Column3"/>
+                <Cell col="14" text="Column4"/>
+                <Cell col="15" text="Column5"/>
+                <Cell col="16" text="Column6"/>
+                <Cell col="17" text="Column7"/>
+                <Cell col="18" text="Column8"/>
+                <Cell col="19" text="Column9"/>
+                <Cell col="20" text="Column10"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:normal"/>
+                <Cell col="1" text="bind:button"/>
+                <Cell col="2" text="bind:calendar"/>
+                <Cell col="3" text="bind:check"/>
+                <Cell col="4" text="bind:combo"/>
+                <Cell col="5" text="bind:comboText"/>
+                <Cell col="6" text="bind:date"/>
+                <Cell col="7" text="bind:editControl"/>
+                <Cell col="8" text="bind:number"/>
+                <Cell col="9" text="bind:text"/>
+                <Cell col="10" text="bind:Column0"/>
+                <Cell col="11" text="bind:Column1"/>
+                <Cell col="12" text="bind:Column2"/>
+                <Cell col="13" text="bind:Column3"/>
+                <Cell col="14" text="bind:Column4"/>
+                <Cell col="15" text="bind:Column5"/>
+                <Cell col="16" text="bind:Column6"/>
+                <Cell col="17" text="bind:Column7"/>
+                <Cell col="18" text="bind:Column8"/>
+                <Cell col="19" text="bind:Column9"/>
+                <Cell col="20" text="bind:Column10"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static06" taborder="11" text="그리드필터 (전체 설정) + 그리드 데이터 찾기, sort 방지" left="0" top="grd07:40" height="36" cssclass="sta_WF_ParaH4_pc" right="0" fittocontents="height" accessibilityrole="heading4"/>
+        <Grid id="grd08" taborder="12" left="0" top="Static06:16" height="321" binddataset="dsFilter" uFunction="filter,find,!sort" scrollpixel="none" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="120"/>
+                <Column size="100"/>
+                <Column size="150"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="normal"/>
+                <Cell col="1" text="button"/>
+                <Cell col="2" text="calendar"/>
+                <Cell col="3" text="check"/>
+                <Cell col="4" text="combo"/>
+                <Cell col="5" text="comboText"/>
+                <Cell col="6" text="date"/>
+                <Cell col="7" text="editControl"/>
+                <Cell col="8" text="number"/>
+                <Cell col="9" text="text"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:normal"/>
+                <Cell col="1" text="bind:button"/>
+                <Cell col="2" text="bind:calendar"/>
+                <Cell col="3" text="bind:check"/>
+                <Cell col="4" text="bind:combo"/>
+                <Cell col="5" text="bind:comboText"/>
+                <Cell col="6" text="bind:date"/>
+                <Cell col="7" text="bind:editControl"/>
+                <Cell col="8" text="bind:number"/>
+                <Cell col="9" text="bind:text"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static06_01" taborder="13" text="그리드필터 (컬럼별 설정) + 그리드 데이터 찾기" left="0" top="grd08:40" height="36" cssclass="sta_WF_ParaH4_pc" right="0" fittocontents="height" accessibilityrole="heading4"/>
+        <Grid id="grd14" taborder="14" left="0" top="Static06_01:16" height="321" binddataset="dsFilterNew" uFunction="filterNew,find,sort" scrollpixel="none" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="normal"/>
+                <Cell col="1" text="button"/>
+                <Cell col="2" text="calendar"/>
+                <Cell col="3" text="check"/>
+                <Cell col="4" text="combo"/>
+                <Cell col="5" text="comboText"/>
+                <Cell col="6" text="date"/>
+                <Cell col="7" text="editControl"/>
+                <Cell col="8" text="number"/>
+                <Cell col="9" text="text"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:normal"/>
+                <Cell col="1" text="bind:button"/>
+                <Cell col="2" text="bind:calendar"/>
+                <Cell col="3" text="bind:check"/>
+                <Cell col="4" text="bind:combo"/>
+                <Cell col="5" text="bind:comboText"/>
+                <Cell col="6" text="bind:date"/>
+                <Cell col="7" text="bind:editControl"/>
+                <Cell col="8" text="bind:number"/>
+                <Cell col="9" text="bind:text"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static06_00_01" taborder="15" text="칼럼 숨기기, 초기화 (전체 설정)" left="0" top="grd14:40" height="36" cssclass="sta_WF_ParaH4_pc" fittocontents="height" right="0" accessibilityrole="heading4"/>
+        <Grid id="grd09_01" taborder="16" left="0" top="Static06_00_01:16" height="321" binddataset="dsColhide" uFunction="colhide,initial,colhidefree" cellmovingtype="col" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="160"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="160"/>
+                <Column size="160"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="stlInfo"/>
+                <Cell col="1" text="test1"/>
+                <Cell col="2" text="nocharge"/>
+                <Cell col="3" text="todayw"/>
+                <Cell col="4" text="sun"/>
+                <Cell col="5" text="rain"/>
+                <Cell col="6" text="stlStatus"/>
+                <Cell col="7" text="stlYN"/>
+                <Cell col="8" text="stn"/>
+                <Cell col="9" text="nochargeyn"/>
+                <Cell col="10" text="yestest"/>
+                <Cell col="11" text="notest"/>
+                <Cell col="12" text="test11"/>
+                <Cell col="13" text="test22"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:stlInfo"/>
+                <Cell col="1" text="bind:test1"/>
+                <Cell col="2" text="bind:nocharge"/>
+                <Cell col="3" text="bind:todayw"/>
+                <Cell col="4" text="bind:sun"/>
+                <Cell col="5" text="bind:rain"/>
+                <Cell col="6" text="bind:stlStatus"/>
+                <Cell col="7" text="bind:stlYN"/>
+                <Cell col="8" text="bind:stn"/>
+                <Cell col="9" text="bind:nochargeyn"/>
+                <Cell col="10" text="bind:yestest"/>
+                <Cell col="11" text="bind:notest"/>
+                <Cell col="12" text="bind:test11"/>
+                <Cell col="13" text="bind:test22"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static06_00" taborder="17" text="칼럼 숨기기, 초기화 (컬럼별 설정)" left="0" top="grd09_01:40" height="36" cssclass="sta_WF_ParaH4_pc" right="0" fittocontents="height" accessibilityrole="heading4"/>
+        <Grid id="grd09" taborder="18" left="0" top="Static06_00:16" height="321" binddataset="dsColhideNew" uFunction="colhideNew,initial,colhidefreeNew" cellmovingtype="col" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="80"/>
+                <Column size="160"/>
+                <Column size="160"/>
+                <Column size="120"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="stlInfo"/>
+                <Cell col="1" text="test1"/>
+                <Cell col="2" text="nocharge"/>
+                <Cell col="3" text="todayw"/>
+                <Cell col="4" text="sun"/>
+                <Cell col="5" text="rain"/>
+                <Cell col="6" text="stlStatus"/>
+                <Cell col="7" text="stlYN"/>
+                <Cell col="8" text="stn"/>
+                <Cell col="9" text="nochargeyn"/>
+                <Cell col="10" text="yestest"/>
+                <Cell col="11" text="notest"/>
+                <Cell col="12" text="test11"/>
+                <Cell col="13" text="test22"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:stlInfo"/>
+                <Cell col="1" text="bind:test1"/>
+                <Cell col="2" text="bind:nocharge"/>
+                <Cell col="3" text="bind:todayw"/>
+                <Cell col="4" text="bind:sun"/>
+                <Cell col="5" text="bind:rain"/>
+                <Cell col="6" text="bind:stlStatus"/>
+                <Cell col="7" text="bind:stlYN"/>
+                <Cell col="8" text="bind:stn"/>
+                <Cell col="9" text="bind:nochargeyn"/>
+                <Cell col="10" text="bind:yestest"/>
+                <Cell col="11" text="bind:notest"/>
+                <Cell col="12" text="bind:test11"/>
+                <Cell col="13" text="bind:test22"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static06_00_00" taborder="19" text="스크롤, 복잡한 그리드 표현" left="0" top="grd09:40" height="36" cssclass="sta_WF_ParaH4_pc" accessibilityrole="heading4" right="0"/>
+        <Grid id="grd10" taborder="20" left="0" top="Static06_00_00:16" height="570" binddataset="dsUserheader" right="0" uFunction="scroll">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="160"/>
+                <Column size="160"/>
+                <Column size="160"/>
+                <Column size="100"/>
+                <Column size="160"/>
+                <Column size="160"/>
+                <Column size="160"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="39" band="head"/>
+                <Row size="39" band="head"/>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell colspan="6" text="텍스트모드" expandchar="comp.textmode"/>
+                <Cell col="6" rowspan="2" text="달력" expandchar="comp.calendar"/>
+                <Cell col="7" rowspan="2" text="체크박스" expandchar="comp.check"/>
+                <Cell col="8" rowspan="2" text="콤보" expandchar="comp.combo"/>
+                <Cell col="9" rowspan="4" colspan="2" text="테스트" expandchar="comp.test"/>
+                <Cell row="1" colspan="4" text="텍스트" expandchar="comp.text"/>
+                <Cell row="1" col="4" colspan="2" text="숫자" expandchar="comp.number"/>
+                <Cell row="2" text="normal" calendarweekformat="bind:normal"/>
+                <Cell row="2" col="1" rowspan="2" text="text" calendarweekformat="bind:text"/>
+                <Cell row="2" col="2" text="editControl" calendarweekformat="bind:editControl"/>
+                <Cell row="2" col="3" rowspan="2" text="textArea" calendarweekformat="bind:textArea"/>
+                <Cell row="2" col="4" text="maskedit" calendarweekformat="bind:maskEdit"/>
+                <Cell row="2" col="5" rowspan="2" text="number" calendarweekformat="bind:number"/>
+                <Cell row="2" col="6" text="calendar" calendarweekformat="bind:calendar"/>
+                <Cell row="2" col="7" rowspan="2" text="checkbox"/>
+                <Cell row="2" col="8" text="combo"/>
+                <Cell row="3" text="button" calendarweekformat="bind:button"/>
+                <Cell row="3" col="2" text="decoText" calendarweekformat="bind:decoText"/>
+                <Cell row="3" col="4" text="mask" calendarweekformat="bind:mask"/>
+                <Cell row="3" col="6" text="date" calendarweekformat="bind:date"/>
+                <Cell row="3" col="8" text="comboText"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:normal"/>
+                <Cell col="1" rowspan="2" text="bind:text" displaytype="text"/>
+                <Cell col="2" text="bind:editControl" displaytype="editcontrol"/>
+                <Cell col="3" rowspan="2" text="bind:textArea" displaytype="textareacontrol"/>
+                <Cell col="4" text="bind:maskEdit" displaytype="maskeditcontrol"/>
+                <Cell col="5" rowspan="2" displaytype="number" text="bind:number"/>
+                <Cell col="6" text="bind:calendar" displaytype="calendarcontrol"/>
+                <Cell col="7" rowspan="2" text="bind:check" displaytype="checkboxcontrol"/>
+                <Cell col="8" text="bind:combo" displaytype="combocontrol"/>
+                <Cell col="9" text="bind:headTest1" displaytype="editcontrol"/>
+                <Cell col="10" text="bind:headTest13" displaytype="editcontrol"/>
+                <Cell row="1" text="bind:button" displaytype="buttoncontrol"/>
+                <Cell row="1" col="2" text="bind:decoText" displaytype="decoratetext"/>
+                <Cell row="1" col="4" text="bind:mask" displaytype="mask"/>
+                <Cell row="1" col="6" text="bind:date" displaytype="date"/>
+                <Cell row="1" col="8" text="bind:comboText" displaytype="combotext"/>
+                <Cell row="1" col="9" text="bind:headTest12" displaytype="editcontrol"/>
+                <Cell row="1" col="10" text="bind:headTest14" displaytype="editcontrol"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static06_00_00_00" taborder="21" text="Select, Cell copy and paste" left="0" top="grd10:40" height="36" cssclass="sta_WF_ParaH4_pc" right="0" fittocontents="height" accessibilityrole="heading4"/>
+        <Panel id="Panel00" taborder="22" left="0" top="Static06_00_00_00:16" width="100%" height="48" horizontalgap="8" verticalgap="8" flexwrap="wrap" fittocontents="height" flexmainaxisalign="end">
+          <Contents>
+            <PanelItem id="PanelItem04" componentid="btn04"/>
+            <PanelItem id="PanelItem00" componentid="btn02"/>
+            <PanelItem id="PanelItem01" componentid="btn03"/>
+            <PanelItem id="PanelItem03" componentid="btn05"/>
+          </Contents>
+        </Panel>
+        <Button id="btn04" taborder="23" text="selecttype = multirow" top="3923" height="48" onclick="btn04_onclick" right="188" width="200" flexgrow="1"/>
+        <Button id="btn02" taborder="24" text="selecttype = cell" top="3923" width="200" height="48" onclick="btn02_onclick" right="585" flexgrow="1"/>
+        <Button id="btn03" taborder="25" text="selecttype = row" top="3923" width="200" height="48" onclick="btn03_onclick" left="311" flexgrow="1"/>
+        <Button id="btn05" taborder="26" text="selecttype = area" top="3923" width="200" onclick="btn05_onclick" right="0" height="48" flexgrow="1"/>
+        <Panel id="Panel02" taborder="27" left="0" top="Panel00:20" height="321" flexwrap="wrap" horizontalgap="24" verticalgap="16" fittocontents="height" right="0">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="grd12"/>
+            <PanelItem id="PanelItem01" componentid="grd13"/>
+          </Contents>
+        </Panel>
+        <Grid id="grd12" taborder="28" left="0" top="Panel00:20" width="320" height="321" binddataset="dsCopy" uFunction="select,cellcopypaste" flexgrow="1">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2"/>
+                <Cell col="3" text="bind:Column3"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grd13" taborder="29" left="445.5" top="Panel00:20" height="321" binddataset="dsPaste" width="320" flexgrow="1">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2"/>
+                <Cell col="3" text="bind:Column3"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static06_00_00_00_00" taborder="30" text="그리드 전체 기능" left="0" top="Panel02:40" height="36" cssclass="sta_WF_ParaH4_pc" accessibilityrole="heading4" right="0"/>
+        <Grid id="grd09_00" taborder="31" left="0" top="Static06_00_00_00_00:16" height="321" binddataset="dsColhide" uFunction="sort,colfix,rowfix,filter,find,colhide,scroll,select,cellcopypaste,initial" cellmovingtype="col" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="stlInfo"/>
+                <Cell col="1" text="test1"/>
+                <Cell col="2" text="nocharge"/>
+                <Cell col="3" text="todayw"/>
+                <Cell col="4" text="sun"/>
+                <Cell col="5" text="rain"/>
+                <Cell col="6" text="stlStatus"/>
+                <Cell col="7" text="stlYN"/>
+                <Cell col="8" text="stn"/>
+                <Cell col="9" text="nochargeyn"/>
+                <Cell col="10" text="yestest"/>
+                <Cell col="11" text="notest"/>
+                <Cell col="12" text="test11"/>
+                <Cell col="13" text="test22"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:stlInfo"/>
+                <Cell col="1" text="bind:test1"/>
+                <Cell col="2" text="bind:nocharge"/>
+                <Cell col="3" text="bind:todayw"/>
+                <Cell col="4" text="bind:sun"/>
+                <Cell col="5" text="bind:rain"/>
+                <Cell col="6" text="bind:stlStatus"/>
+                <Cell col="7" text="bind:stlYN"/>
+                <Cell col="8" text="bind:stn"/>
+                <Cell col="9" text="bind:nochargeyn"/>
+                <Cell col="10" text="bind:yestest"/>
+                <Cell col="11" text="bind:notest"/>
+                <Cell col="12" text="bind:test11"/>
+                <Cell col="13" text="bind:test22"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+      <Layout height="4800" mobileorientation="Portrait" name="Layout0" type="default" width="480" screenid="Desktop_screen,mobile_small">
+        <Static id="staH2" cssclass="sta_WF_H2_m" width="178" left="0" top="0" height="60"/>
+        <Static id="staEtit" right="0" left="staDivider:15" top="0" height="60" cssclass="sta_WF_ParaH4_m"/>
+        <Static id="sta02" cssclass="sta_WF_ParaH3_m"/>
+        <Static id="Static03" cssclass="sta_WF_ParaH4_m"/>
+        <Static id="Static05" cssclass="sta_WF_ParaH4_m"/>
+        <Static id="Static06" cssclass="sta_WF_ParaH4_m" height="50" left="0" top="grd07:40" right="0"/>
+        <Static id="Static06_01" cssclass="sta_WF_ParaH4_m"/>
+        <Static id="Static06_00_01" cssclass="sta_WF_ParaH4_m"/>
+        <Static id="Static06_00" cssclass="sta_WF_ParaH4_m"/>
+        <Static id="Static06_00_00" cssclass="sta_WF_ParaH4_m"/>
+        <Static id="Static06_00_00_00" cssclass="sta_WF_ParaH4_m"/>
+        <Static id="Static06_00_00_00_00" cssclass="sta_WF_ParaH4_m"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsSort">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">똘기</Col>
+            <Col id="Column1">피카추</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">123</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">떵이</Col>
+            <Col id="Column1">라이츄</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">234</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">호치</Col>
+            <Col id="Column1">파이리</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">345</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">새초미</Col>
+            <Col id="Column1">꼬부기</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">456</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">드라곤</Col>
+            <Col id="Column1">버터플</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">567</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">요롱이</Col>
+            <Col id="Column1">야도란</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">678</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">마초</Col>
+            <Col id="Column1">피존투</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">890</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">미미</Col>
+            <Col id="Column1">또가스</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">321</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">몽키</Col>
+            <Col id="Column1">망나뇽</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">214</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">키키</Col>
+            <Col id="Column1">어니부기</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">543</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">강다리</Col>
+            <Col id="Column1">거북킹</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">345</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">찡찡이</Col>
+            <Col id="Column1">지우</Col>
+            <Col id="Column2">cccc</Col>
+            <Col id="Column3">765</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSortMultiheader">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">똘기</Col>
+            <Col id="Column1">피카추</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">123</Col>
+            <Col id="Column4">가나다라</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">떵이</Col>
+            <Col id="Column1">라이츄</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">234</Col>
+            <Col id="Column4">가다라마</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">호치</Col>
+            <Col id="Column1">파이리</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">345</Col>
+            <Col id="Column4">가라마바</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">새초미</Col>
+            <Col id="Column1">꼬부기</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">456</Col>
+            <Col id="Column4">나다라마</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">드라곤</Col>
+            <Col id="Column1">버터플</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">567</Col>
+            <Col id="Column4">나라마하</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">요롱이</Col>
+            <Col id="Column1">야도란</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">678</Col>
+            <Col id="Column4">다라마바</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">마초</Col>
+            <Col id="Column1">피존투</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">890</Col>
+            <Col id="Column4">아자차카</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">미미</Col>
+            <Col id="Column1">또가스</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">321</Col>
+            <Col id="Column4">다마바아</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">몽키</Col>
+            <Col id="Column1">망나뇽</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">214</Col>
+            <Col id="Column4">다바아자</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">키키</Col>
+            <Col id="Column1">어니부기</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">543</Col>
+            <Col id="Column4">차카타파</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">강다리</Col>
+            <Col id="Column1">거북킹</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">345</Col>
+            <Col id="Column4">카타파하</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">찡찡이</Col>
+            <Col id="Column1">지우</Col>
+            <Col id="Column2">cccc</Col>
+            <Col id="Column3">765</Col>
+            <Col id="Column4">차타파하</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsFilter">
+        <ColumnInfo>
+          <Column id="normal" type="STRING" size="256"/>
+          <Column id="button" type="STRING" size="256"/>
+          <Column id="calendar" type="STRING" size="256"/>
+          <Column id="check" type="STRING" size="256"/>
+          <Column id="combo" type="STRING" size="256"/>
+          <Column id="comboText" type="STRING" size="256"/>
+          <Column id="date" type="STRING" size="256"/>
+          <Column id="editControl" type="STRING" size="256"/>
+          <Column id="number" type="STRING" size="256"/>
+          <Column id="text" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">test</Col>
+            <Col id="number">9999999999999</Col>
+            <Col id="text">test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="number">8888888888</Col>
+            <Col id="text">TEST</Col>
+          </Row>
+          <Row>
+            <Col id="normal">Test</Col>
+            <Col id="button">Test</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">Test</Col>
+            <Col id="number">7777777777</Col>
+            <Col id="text">Test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test1</Col>
+            <Col id="button">test1</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">test1</Col>
+            <Col id="number">88888888888</Col>
+            <Col id="text">test1</Col>
+          </Row>
+          <Row>
+            <Col id="normal">서울특별시</Col>
+            <Col id="button">서울특별시</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">서울특별시</Col>
+            <Col id="number">9999999999</Col>
+            <Col id="text">서울특별시</Col>
+          </Row>
+          <Row>
+            <Col id="normal">경기도</Col>
+            <Col id="button">경기도</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">경기도</Col>
+            <Col id="number">8888888888</Col>
+            <Col id="text">경기도</Col>
+          </Row>
+          <Row>
+            <Col id="normal">서울특별시</Col>
+            <Col id="button">서울특별시</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">서울특별시</Col>
+            <Col id="number">4444444444</Col>
+            <Col id="text">서울특별시</Col>
+          </Row>
+          <Row>
+            <Col id="normal">경기도</Col>
+            <Col id="button">경기도</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">경기도</Col>
+            <Col id="number">5555555555</Col>
+            <Col id="text">경기도</Col>
+          </Row>
+          <Row>
+            <Col id="normal">경기도</Col>
+            <Col id="button">경기도</Col>
+            <Col id="calendar">19880826</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19880826</Col>
+            <Col id="editControl">경기도</Col>
+            <Col id="number">11111111111</Col>
+            <Col id="text">경기도</Col>
+          </Row>
+          <Row>
+            <Col id="normal">서울특별시</Col>
+            <Col id="button">서울특별시</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">서울특별시</Col>
+            <Col id="number">2</Col>
+            <Col id="text">서울특별시</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="number">222222222</Col>
+            <Col id="text">TEST</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19890826</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19890826</Col>
+            <Col id="editControl">test</Col>
+            <Col id="number">2</Col>
+            <Col id="text">test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">Test</Col>
+            <Col id="button">Test</Col>
+            <Col id="calendar">19880826</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19880826</Col>
+            <Col id="editControl">Test</Col>
+            <Col id="number">555555555</Col>
+            <Col id="text">Test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">test</Col>
+            <Col id="number">233</Col>
+            <Col id="text">test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19880810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19880810</Col>
+            <Col id="editControl">test</Col>
+            <Col id="number">555555</Col>
+            <Col id="text">test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">20171019</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">20171019</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="number">4444444</Col>
+            <Col id="text">TEST</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">20171018</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">20171018</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="number">1111111</Col>
+            <Col id="text">TEST</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsColhide">
+        <ColumnInfo>
+          <Column id="stlInfo" type="STRING" size="256"/>
+          <Column id="test1" type="STRING" size="256"/>
+          <Column id="nocharge" type="STRING" size="256"/>
+          <Column id="todayw" type="STRING" size="256"/>
+          <Column id="sun" type="STRING" size="256"/>
+          <Column id="rain" type="STRING" size="256"/>
+          <Column id="stlStatus" type="STRING" size="256"/>
+          <Column id="stlYN" type="STRING" size="256"/>
+          <Column id="stn" type="STRING" size="256"/>
+          <Column id="nochargeyn" type="STRING" size="256"/>
+          <Column id="yestest" type="STRING" size="256"/>
+          <Column id="notest" type="STRING" size="256"/>
+          <Column id="test11" type="STRING" size="256"/>
+          <Column id="test22" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST33</Col>
+            <Col id="nocharge">10000</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">하하하</Col>
+            <Col id="notest">dsfsdf</Col>
+            <Col id="test11">eeeeeeeeeeeeee</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">what</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST33</Col>
+            <Col id="nocharge">9999</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">계좌이체</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">가가가</Col>
+            <Col id="notest">sdfsdf</Col>
+            <Col id="test11">tttttttttttttttttt</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">how</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST33</Col>
+            <Col id="nocharge">3333</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">개인계좌</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">나나나</Col>
+            <Col id="notest">gaewqr</Col>
+            <Col id="test11">tttttttttttt</Col>
+            <Col id="test22">02</Col>
+            <Col id="todayw">who</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제2</Col>
+            <Col id="test1">TEST33</Col>
+            <Col id="nocharge">7777</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">다다다</Col>
+            <Col id="notest">afsd</Col>
+            <Col id="test11">rrrrrrrrrrrrrrr</Col>
+            <Col id="test22">02</Col>
+            <Col id="todayw">when</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제2</Col>
+            <Col id="test1">TEST33</Col>
+            <Col id="nocharge">6666</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">Y</Col>
+            <Col id="yestest">라라라</Col>
+            <Col id="notest">ghq2erwett</Col>
+            <Col id="test11">eeeeeeeeeeeee</Col>
+            <Col id="test22">03</Col>
+            <Col id="todayw">where</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제2</Col>
+            <Col id="test1">TEST33</Col>
+            <Col id="nocharge">45464</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">텔레뱅킹</Col>
+            <Col id="nochargeyn">Y</Col>
+            <Col id="yestest">하하하</Col>
+            <Col id="notest">asfdsf</Col>
+            <Col id="test11">wwwwwwww</Col>
+            <Col id="test22">03</Col>
+            <Col id="todayw">why</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST3344</Col>
+            <Col id="nocharge">1564</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">텔레뱅킹</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">가가가</Col>
+            <Col id="notest">dsfdgsafdsf</Col>
+            <Col id="test11">qqqqqqqqqqqqq</Col>
+            <Col id="test22">04</Col>
+            <Col id="todayw">when</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST3344</Col>
+            <Col id="nocharge">11</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">현금</Col>
+            <Col id="stlYN">N</Col>
+            <Col id="stn">텔레뱅킹</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">나나나</Col>
+            <Col id="notest">tqrewrwe</Col>
+            <Col id="test11">1111111111</Col>
+            <Col id="test22">02</Col>
+            <Col id="todayw">where</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST3344</Col>
+            <Col id="nocharge">8798</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">현금</Col>
+            <Col id="stlYN">N</Col>
+            <Col id="stn">은행</Col>
+            <Col id="nochargeyn">Y</Col>
+            <Col id="yestest">하하하</Col>
+            <Col id="notest">gafsfsd</Col>
+            <Col id="test11">tttttttttttttttt</Col>
+            <Col id="test22">02</Col>
+            <Col id="todayw">why</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST44</Col>
+            <Col id="nocharge">5464</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">현금</Col>
+            <Col id="stlYN">N</Col>
+            <Col id="stn">은행</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">가가가</Col>
+            <Col id="notest">agsdfsdf</Col>
+            <Col id="test11">eeeeeeeeeeeeeeeeee</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">what</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">0</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">현금</Col>
+            <Col id="stlYN">N</Col>
+            <Col id="stn">은행</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">하하하</Col>
+            <Col id="notest">gafsdfewrwe</Col>
+            <Col id="test11">ssssssssssssssss</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">how</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">4564</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">N</Col>
+            <Col id="stn">은행</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">가가가</Col>
+            <Col id="notest">gadfsdfccc</Col>
+            <Col id="test11">sfffffff</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">who</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제3</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">54654</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">N</Col>
+            <Col id="stn">은행</Col>
+            <Col id="nochargeyn">Y</Col>
+            <Col id="yestest">나나나</Col>
+            <Col id="notest">asfaewqrew</Col>
+            <Col id="test11">dssssssss</Col>
+            <Col id="test22">03</Col>
+            <Col id="todayw">when</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제4</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">564</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">다다다</Col>
+            <Col id="notest">afsdfsdg</Col>
+            <Col id="test11">zzzzzzzzzzzzzz</Col>
+            <Col id="test22">03</Col>
+            <Col id="todayw">where</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제2</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">45688</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">Y</Col>
+            <Col id="yestest">하하하</Col>
+            <Col id="notest">asfdsghweee</Col>
+            <Col id="test11">zasaaaaaaaaaa</Col>
+            <Col id="test22">02</Col>
+            <Col id="todayw">why</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제2</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">99</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">가가가</Col>
+            <Col id="notest">afdsfqfdsfds</Col>
+            <Col id="test11">eeeeeeeeeeeee</Col>
+            <Col id="test22">02</Col>
+            <Col id="todayw">when</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제2</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">77</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">Y</Col>
+            <Col id="yestest">나나나</Col>
+            <Col id="notest">sdfsdfcccc</Col>
+            <Col id="test11">sssssssssssss</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">why</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">1111</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">현금</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">텔레뱅킹</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">다다다</Col>
+            <Col id="notest">yyerjfgdfdsa</Col>
+            <Col id="test11">rrrrrrrrrrrrrrrrrrr</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">when</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST3344</Col>
+            <Col id="nocharge">100</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">현금</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">텔레뱅킹</Col>
+            <Col id="nochargeyn">Y</Col>
+            <Col id="yestest">하하하</Col>
+            <Col id="notest">dsfhyeertwq</Col>
+            <Col id="test11">eeeeeeeeeeee</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">why</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST3344</Col>
+            <Col id="nocharge">212</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">현금</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">텔레뱅킹</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">가가가</Col>
+            <Col id="notest">dsdsfsd</Col>
+            <Col id="test11">wwwwwwwwwww</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">when</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST3344</Col>
+            <Col id="nocharge">1546</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">무통장입금</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">텔레뱅킹</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">나나나</Col>
+            <Col id="notest">gsdfsdf</Col>
+            <Col id="test11">qqqqqqqqqqqqq</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">what</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsUserheader">
+        <ColumnInfo>
+          <Column id="normal" type="STRING" size="256"/>
+          <Column id="button" type="STRING" size="256"/>
+          <Column id="calendar" type="STRING" size="256"/>
+          <Column id="check" type="STRING" size="256"/>
+          <Column id="combo" type="STRING" size="256"/>
+          <Column id="comboText" type="STRING" size="256"/>
+          <Column id="date" type="STRING" size="256"/>
+          <Column id="decoText" type="STRING" size="256"/>
+          <Column id="editControl" type="STRING" size="256"/>
+          <Column id="mask" type="STRING" size="256"/>
+          <Column id="maskEdit" type="STRING" size="256"/>
+          <Column id="number" type="STRING" size="256"/>
+          <Column id="text" type="STRING" size="256"/>
+          <Column id="textArea" type="STRING" size="256"/>
+          <Column id="headTest1" type="STRING" size="256"/>
+          <Column id="headTest12" type="STRING" size="256"/>
+          <Column id="headTest13" type="STRING" size="256"/>
+          <Column id="headTest14" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890912</Col>
+            <Col id="decoText">&lt;fs v='16'&gt;TEST&lt;/fs&gt;</Col>
+            <Col id="editControl">test</Col>
+            <Col id="mask">8508301</Col>
+            <Col id="maskEdit">8508301</Col>
+            <Col id="number">9999999999999</Col>
+            <Col id="text">test</Col>
+            <Col id="textArea">test</Col>
+            <Col id="headTest1">aa</Col>
+            <Col id="headTest12">aa</Col>
+            <Col id="headTest13">aa</Col>
+            <Col id="headTest14">aa</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890912</Col>
+            <Col id="decoText">&lt;fc v='red'&gt;T&lt;/fc&gt;&lt;fc v='orange'&gt;E&lt;/fc&gt;&lt;fc v='purple'&gt;S&lt;/fc&gt;&lt;fc v='green'&gt;E&lt;/fc&gt;</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="mask">8303301</Col>
+            <Col id="maskEdit">8303301</Col>
+            <Col id="number">8888888888</Col>
+            <Col id="text">TEST</Col>
+            <Col id="textArea">TEST</Col>
+            <Col id="headTest1">bb</Col>
+            <Col id="headTest12">aa</Col>
+            <Col id="headTest13">bb</Col>
+            <Col id="headTest14">aa</Col>
+          </Row>
+          <Row>
+            <Col id="normal">Test</Col>
+            <Col id="button">Test</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19890912</Col>
+            <Col id="decoText">&lt;ff v='굴림'&gt;TEST&lt;/ff&gt;</Col>
+            <Col id="editControl">Test</Col>
+            <Col id="mask">8902022</Col>
+            <Col id="maskEdit">8902022</Col>
+            <Col id="number">7777777777</Col>
+            <Col id="text">Test</Col>
+            <Col id="textArea">Test</Col>
+            <Col id="headTest1">cc</Col>
+            <Col id="headTest12">aa</Col>
+            <Col id="headTest13">cc</Col>
+            <Col id="headTest14">bb</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test1</Col>
+            <Col id="button">test1</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890810</Col>
+            <Col id="decoText">&lt;b v='true'&gt;TE&lt;/b&gt;&lt;b v='false'&gt;ST&lt;/b&gt;</Col>
+            <Col id="editControl">test1</Col>
+            <Col id="mask">9201012</Col>
+            <Col id="maskEdit">9201012</Col>
+            <Col id="number">88888888888</Col>
+            <Col id="text">test1</Col>
+            <Col id="textArea">test1</Col>
+            <Col id="headTest1">dd</Col>
+            <Col id="headTest12">bb</Col>
+            <Col id="headTest13">aa</Col>
+            <Col id="headTest14">bb</Col>
+          </Row>
+          <Row>
+            <Col id="normal">서울특별시</Col>
+            <Col id="button">서울특별시</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890810</Col>
+            <Col id="decoText">&lt;i v='true'&gt;TE&lt;/i&gt;&lt;i v='false'&gt;ST&lt;/i&gt;</Col>
+            <Col id="editControl">서울특별시</Col>
+            <Col id="mask">8702022</Col>
+            <Col id="maskEdit">8702022</Col>
+            <Col id="number">9999999999</Col>
+            <Col id="text">서울특별시</Col>
+            <Col id="textArea">서울특별시gsdfdsfdddddddddddddddddddddddddddddddddddddddddddddddddddddddddggggggggggggggaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</Col>
+            <Col id="headTest1">ee</Col>
+            <Col id="headTest12">bbb</Col>
+            <Col id="headTest13">bb</Col>
+            <Col id="headTest14">bb</Col>
+          </Row>
+          <Row>
+            <Col id="normal">경기도</Col>
+            <Col id="button">경기도</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19890810</Col>
+            <Col id="decoText">&lt;u v='true'&gt;TE&lt;/u&gt;&lt;u v='false'&gt;ST&lt;/u&gt;</Col>
+            <Col id="editControl">경기도</Col>
+            <Col id="mask">8801012</Col>
+            <Col id="maskEdit">8801012</Col>
+            <Col id="number">8888888888</Col>
+            <Col id="text">경기도</Col>
+            <Col id="textArea">경기도</Col>
+            <Col id="headTest1">ff</Col>
+            <Col id="headTest12">bb</Col>
+            <Col id="headTest13">cc</Col>
+            <Col id="headTest14">bb</Col>
+          </Row>
+          <Row>
+            <Col id="normal">서울특별시</Col>
+            <Col id="button">서울특별시</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890912</Col>
+            <Col id="decoText">&lt;s v='true'&gt;TE&lt;/s&gt;&lt;s v='false'&gt;ST&lt;/s&gt;</Col>
+            <Col id="editControl">서울특별시</Col>
+            <Col id="mask">9008301</Col>
+            <Col id="maskEdit">9008301</Col>
+            <Col id="number">4444444444</Col>
+            <Col id="text">서울특별시</Col>
+            <Col id="textArea">서울특별시</Col>
+            <Col id="headTest1">gg</Col>
+            <Col id="headTest12">cc</Col>
+            <Col id="headTest13">aa</Col>
+            <Col id="headTest14">cc</Col>
+          </Row>
+          <Row>
+            <Col id="normal">경기도</Col>
+            <Col id="button">경기도</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890810</Col>
+            <Col id="decoText">&lt;fs v='16'&gt;TEST&lt;/fs&gt;</Col>
+            <Col id="editControl">경기도</Col>
+            <Col id="mask">9103301</Col>
+            <Col id="maskEdit">9103301</Col>
+            <Col id="number">5555555555</Col>
+            <Col id="text">경기도</Col>
+            <Col id="textArea">경기도</Col>
+            <Col id="headTest1">hh</Col>
+            <Col id="headTest12">ccc</Col>
+            <Col id="headTest13">bb</Col>
+            <Col id="headTest14">cc</Col>
+          </Row>
+          <Row>
+            <Col id="normal">경기도</Col>
+            <Col id="button">경기도</Col>
+            <Col id="calendar">19880826</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19880826</Col>
+            <Col id="decoText">&lt;fc v='red'&gt;T&lt;/fc&gt;&lt;fc v='orange'&gt;E&lt;/fc&gt;&lt;fc v='purple'&gt;S&lt;/fc&gt;&lt;fc v='green'&gt;E&lt;/fc&gt;</Col>
+            <Col id="editControl">경기도</Col>
+            <Col id="mask">9205052</Col>
+            <Col id="maskEdit">9205052</Col>
+            <Col id="number">11111111111</Col>
+            <Col id="text">경기도</Col>
+            <Col id="textArea">경기도</Col>
+            <Col id="headTest1">ii</Col>
+            <Col id="headTest12">ccc</Col>
+            <Col id="headTest13">cc</Col>
+            <Col id="headTest14">cc</Col>
+          </Row>
+          <Row>
+            <Col id="normal">서울특별시</Col>
+            <Col id="button">서울특별시</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890912</Col>
+            <Col id="decoText">&lt;ff v='굴림'&gt;TEST&lt;/ff&gt;</Col>
+            <Col id="editControl">서울특별시</Col>
+            <Col id="mask">9208302</Col>
+            <Col id="maskEdit">9208302</Col>
+            <Col id="number">2</Col>
+            <Col id="text">서울특별시</Col>
+            <Col id="textArea">서울특별시</Col>
+            <Col id="headTest1">jj</Col>
+            <Col id="headTest12">ddd</Col>
+            <Col id="headTest13">aa</Col>
+            <Col id="headTest14">dd</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890810</Col>
+            <Col id="decoText">&lt;b v='true'&gt;TE&lt;/b&gt;&lt;b v='false'&gt;ST&lt;/b&gt;</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="mask">8508301</Col>
+            <Col id="maskEdit">8508301</Col>
+            <Col id="number">222222222</Col>
+            <Col id="text">TEST</Col>
+            <Col id="textArea">TEST</Col>
+            <Col id="headTest1">kk</Col>
+            <Col id="headTest12">ddd</Col>
+            <Col id="headTest13">bb</Col>
+            <Col id="headTest14">dd</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19890826</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19890826</Col>
+            <Col id="decoText">&lt;i v='true'&gt;TE&lt;/i&gt;&lt;i v='false'&gt;ST&lt;/i&gt;</Col>
+            <Col id="editControl">test</Col>
+            <Col id="mask">8303301</Col>
+            <Col id="maskEdit">8303301</Col>
+            <Col id="number">2</Col>
+            <Col id="text">test</Col>
+            <Col id="textArea">test</Col>
+            <Col id="headTest1">ll</Col>
+            <Col id="headTest12">ddd</Col>
+            <Col id="headTest13">cc</Col>
+            <Col id="headTest14">dd</Col>
+          </Row>
+          <Row>
+            <Col id="normal">Test</Col>
+            <Col id="button">Test</Col>
+            <Col id="calendar">19880826</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19880826</Col>
+            <Col id="decoText">&lt;u v='true'&gt;TE&lt;/u&gt;&lt;u v='false'&gt;ST&lt;/u&gt;</Col>
+            <Col id="editControl">Test</Col>
+            <Col id="mask">8902022</Col>
+            <Col id="maskEdit">8902022</Col>
+            <Col id="number">555555555</Col>
+            <Col id="text">Test</Col>
+            <Col id="textArea">Test</Col>
+            <Col id="headTest1">nn</Col>
+            <Col id="headTest12">eee</Col>
+            <Col id="headTest13">aa</Col>
+            <Col id="headTest14">ee</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890912</Col>
+            <Col id="decoText">&lt;fs v='16'&gt;TEST&lt;/fs&gt;</Col>
+            <Col id="editControl">test</Col>
+            <Col id="mask">9201012</Col>
+            <Col id="maskEdit">9201012</Col>
+            <Col id="number">233</Col>
+            <Col id="text">test</Col>
+            <Col id="textArea">test</Col>
+            <Col id="headTest1">mm</Col>
+            <Col id="headTest12">eee</Col>
+            <Col id="headTest13">bb</Col>
+            <Col id="headTest14">ee</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19880810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19880810</Col>
+            <Col id="decoText">&lt;fc v='red'&gt;T&lt;/fc&gt;&lt;fc v='orange'&gt;E&lt;/fc&gt;&lt;fc v='purple'&gt;S&lt;/fc&gt;&lt;fc v='green'&gt;E&lt;/fc&gt;</Col>
+            <Col id="editControl">test</Col>
+            <Col id="mask">8702022</Col>
+            <Col id="maskEdit">8702022</Col>
+            <Col id="number">555555</Col>
+            <Col id="text">test</Col>
+            <Col id="textArea">test</Col>
+            <Col id="headTest1">oo</Col>
+            <Col id="headTest12">eee</Col>
+            <Col id="headTest13">cc</Col>
+            <Col id="headTest14">ee</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">20171019</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">20171019</Col>
+            <Col id="decoText">&lt;ff v='굴림'&gt;TEST&lt;/ff&gt;</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="mask">8801012</Col>
+            <Col id="maskEdit">8801012</Col>
+            <Col id="number">4444444</Col>
+            <Col id="text">TEST</Col>
+            <Col id="textArea">TEST</Col>
+            <Col id="headTest1">pp</Col>
+            <Col id="headTest12">eee</Col>
+            <Col id="headTest13">cc</Col>
+            <Col id="headTest14">ee</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">20171018</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">20171018</Col>
+            <Col id="decoText">&lt;b v='true'&gt;TE&lt;/b&gt;&lt;b v='false'&gt;ST&lt;/b&gt;</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="mask">9008301</Col>
+            <Col id="maskEdit">9008301</Col>
+            <Col id="number">1111111</Col>
+            <Col id="text">TEST</Col>
+            <Col id="textArea">TEST</Col>
+            <Col id="headTest1">qq</Col>
+            <Col id="headTest12">ee</Col>
+            <Col id="headTest13">aa</Col>
+            <Col id="headTest14">ee</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsColfix">
+        <ColumnInfo>
+          <Column id="normal" type="STRING" size="256"/>
+          <Column id="button" type="STRING" size="256"/>
+          <Column id="calendar" type="STRING" size="256"/>
+          <Column id="check" type="STRING" size="256"/>
+          <Column id="combo" type="STRING" size="256"/>
+          <Column id="comboText" type="STRING" size="256"/>
+          <Column id="date" type="STRING" size="256"/>
+          <Column id="editControl" type="STRING" size="256"/>
+          <Column id="number" type="STRING" size="256"/>
+          <Column id="text" type="STRING" size="256"/>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+          <Column id="Column5" type="STRING" size="256"/>
+          <Column id="Column6" type="STRING" size="256"/>
+          <Column id="Column7" type="STRING" size="256"/>
+          <Column id="Column8" type="STRING" size="256"/>
+          <Column id="Column9" type="STRING" size="256"/>
+          <Column id="Column10" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">test</Col>
+            <Col id="number">9999999999999</Col>
+            <Col id="text">test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="number">8888888888</Col>
+            <Col id="text">TEST</Col>
+          </Row>
+          <Row>
+            <Col id="normal">Test</Col>
+            <Col id="button">Test</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">Test</Col>
+            <Col id="number">7777777777</Col>
+            <Col id="text">Test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test1</Col>
+            <Col id="button">test1</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">test1</Col>
+            <Col id="number">88888888888</Col>
+            <Col id="text">test1</Col>
+          </Row>
+          <Row>
+            <Col id="normal">서울특별시</Col>
+            <Col id="button">서울특별시</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">서울특별시</Col>
+            <Col id="number">9999999999</Col>
+            <Col id="text">서울특별시</Col>
+          </Row>
+          <Row>
+            <Col id="normal">경기도</Col>
+            <Col id="button">경기도</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">경기도</Col>
+            <Col id="number">8888888888</Col>
+            <Col id="text">경기도</Col>
+          </Row>
+          <Row>
+            <Col id="normal">서울특별시</Col>
+            <Col id="button">서울특별시</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">서울특별시</Col>
+            <Col id="number">4444444444</Col>
+            <Col id="text">서울특별시</Col>
+          </Row>
+          <Row>
+            <Col id="normal">경기도</Col>
+            <Col id="button">경기도</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">경기도</Col>
+            <Col id="number">5555555555</Col>
+            <Col id="text">경기도</Col>
+          </Row>
+          <Row>
+            <Col id="normal">경기도</Col>
+            <Col id="button">경기도</Col>
+            <Col id="calendar">19880826</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19880826</Col>
+            <Col id="editControl">경기도</Col>
+            <Col id="number">11111111111</Col>
+            <Col id="text">경기도</Col>
+          </Row>
+          <Row>
+            <Col id="normal">서울특별시</Col>
+            <Col id="button">서울특별시</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">서울특별시</Col>
+            <Col id="number">2</Col>
+            <Col id="text">서울특별시</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="number">222222222</Col>
+            <Col id="text">TEST</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19890826</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19890826</Col>
+            <Col id="editControl">test</Col>
+            <Col id="number">2</Col>
+            <Col id="text">test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">Test</Col>
+            <Col id="button">Test</Col>
+            <Col id="calendar">19880826</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19880826</Col>
+            <Col id="editControl">Test</Col>
+            <Col id="number">555555555</Col>
+            <Col id="text">Test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">test</Col>
+            <Col id="number">233</Col>
+            <Col id="text">test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19880810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19880810</Col>
+            <Col id="editControl">test</Col>
+            <Col id="number">555555</Col>
+            <Col id="text">test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">20171019</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">20171019</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="number">4444444</Col>
+            <Col id="text">TEST</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">20171018</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">20171018</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="number">1111111</Col>
+            <Col id="text">TEST</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCopy">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">똘기</Col>
+            <Col id="Column1">피카추</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">123</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">떵이</Col>
+            <Col id="Column1">라이츄</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">234</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">호치</Col>
+            <Col id="Column1">파이리</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">345</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">새초미</Col>
+            <Col id="Column1">꼬부기</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">456</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">드라곤</Col>
+            <Col id="Column1">버터플</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">567</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">요롱이</Col>
+            <Col id="Column1">야도란</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">678</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">마초</Col>
+            <Col id="Column1">피존투</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">890</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">미미</Col>
+            <Col id="Column1">또가스</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">321</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">몽키</Col>
+            <Col id="Column1">망나뇽</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">214</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">키키</Col>
+            <Col id="Column1">어니부기</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">543</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">강다리</Col>
+            <Col id="Column1">거북킹</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">345</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">찡찡이</Col>
+            <Col id="Column1">지우</Col>
+            <Col id="Column2">cccc</Col>
+            <Col id="Column3">765</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPaste">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">똘기</Col>
+            <Col id="Column1">피카추</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">123</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">떵이</Col>
+            <Col id="Column1">라이츄</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">234</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">호치</Col>
+            <Col id="Column1">파이리</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">345</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">새초미</Col>
+            <Col id="Column1">꼬부기</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">456</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">드라곤</Col>
+            <Col id="Column1">버터플</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">567</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">요롱이</Col>
+            <Col id="Column1">야도란</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">678</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">마초</Col>
+            <Col id="Column1">피존투</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">890</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">미미</Col>
+            <Col id="Column1">또가스</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">321</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">몽키</Col>
+            <Col id="Column1">망나뇽</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">214</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">키키</Col>
+            <Col id="Column1">어니부기</Col>
+            <Col id="Column2">bbbb</Col>
+            <Col id="Column3">543</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">강다리</Col>
+            <Col id="Column1">거북킹</Col>
+            <Col id="Column2">aaaa</Col>
+            <Col id="Column3">345</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">찡찡이</Col>
+            <Col id="Column1">지우</Col>
+            <Col id="Column2">cccc</Col>
+            <Col id="Column3">765</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsFilterNew">
+        <ColumnInfo>
+          <Column id="normal" type="STRING" size="256"/>
+          <Column id="button" type="STRING" size="256"/>
+          <Column id="calendar" type="STRING" size="256"/>
+          <Column id="check" type="STRING" size="256"/>
+          <Column id="combo" type="STRING" size="256"/>
+          <Column id="comboText" type="STRING" size="256"/>
+          <Column id="date" type="STRING" size="256"/>
+          <Column id="editControl" type="STRING" size="256"/>
+          <Column id="number" type="STRING" size="256"/>
+          <Column id="text" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">test</Col>
+            <Col id="number">9999999999999</Col>
+            <Col id="text">test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="number">8888888888</Col>
+            <Col id="text">TEST</Col>
+          </Row>
+          <Row>
+            <Col id="normal">Test</Col>
+            <Col id="button">Test</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">Test</Col>
+            <Col id="number">7777777777</Col>
+            <Col id="text">Test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test1</Col>
+            <Col id="button">test1</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">test1</Col>
+            <Col id="number">88888888888</Col>
+            <Col id="text">test1</Col>
+          </Row>
+          <Row>
+            <Col id="normal">서울특별시</Col>
+            <Col id="button">서울특별시</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">서울특별시</Col>
+            <Col id="number">9999999999</Col>
+            <Col id="text">서울특별시</Col>
+          </Row>
+          <Row>
+            <Col id="normal">경기도</Col>
+            <Col id="button">경기도</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">경기도</Col>
+            <Col id="number">8888888888</Col>
+            <Col id="text">경기도</Col>
+          </Row>
+          <Row>
+            <Col id="normal">서울특별시</Col>
+            <Col id="button">서울특별시</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">서울특별시</Col>
+            <Col id="number">4444444444</Col>
+            <Col id="text">서울특별시</Col>
+          </Row>
+          <Row>
+            <Col id="normal">경기도</Col>
+            <Col id="button">경기도</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">경기도</Col>
+            <Col id="number">5555555555</Col>
+            <Col id="text">경기도</Col>
+          </Row>
+          <Row>
+            <Col id="normal">경기도</Col>
+            <Col id="button">경기도</Col>
+            <Col id="calendar">19880826</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19880826</Col>
+            <Col id="editControl">경기도</Col>
+            <Col id="number">11111111111</Col>
+            <Col id="text">경기도</Col>
+          </Row>
+          <Row>
+            <Col id="normal">서울특별시</Col>
+            <Col id="button">서울특별시</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">서울특별시</Col>
+            <Col id="number">2</Col>
+            <Col id="text">서울특별시</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">19890810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890810</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="number">222222222</Col>
+            <Col id="text">TEST</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19890826</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19890826</Col>
+            <Col id="editControl">test</Col>
+            <Col id="number">2</Col>
+            <Col id="text">test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">Test</Col>
+            <Col id="button">Test</Col>
+            <Col id="calendar">19880826</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">19880826</Col>
+            <Col id="editControl">Test</Col>
+            <Col id="number">555555555</Col>
+            <Col id="text">Test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19890912</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">19890912</Col>
+            <Col id="editControl">test</Col>
+            <Col id="number">233</Col>
+            <Col id="text">test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">test</Col>
+            <Col id="button">test</Col>
+            <Col id="calendar">19880810</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">all</Col>
+            <Col id="comboText">all</Col>
+            <Col id="date">19880810</Col>
+            <Col id="editControl">test</Col>
+            <Col id="number">555555</Col>
+            <Col id="text">test</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">20171019</Col>
+            <Col id="check">1</Col>
+            <Col id="combo">prev</Col>
+            <Col id="comboText">prev</Col>
+            <Col id="date">20171019</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="number">4444444</Col>
+            <Col id="text">TEST</Col>
+          </Row>
+          <Row>
+            <Col id="normal">TEST</Col>
+            <Col id="button">TEST</Col>
+            <Col id="calendar">20171018</Col>
+            <Col id="check">0</Col>
+            <Col id="combo">next</Col>
+            <Col id="comboText">next</Col>
+            <Col id="date">20171018</Col>
+            <Col id="editControl">TEST</Col>
+            <Col id="number">1111111</Col>
+            <Col id="text">TEST</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsColhideNew">
+        <ColumnInfo>
+          <Column id="stlInfo" type="STRING" size="256"/>
+          <Column id="test1" type="STRING" size="256"/>
+          <Column id="nocharge" type="STRING" size="256"/>
+          <Column id="todayw" type="STRING" size="256"/>
+          <Column id="sun" type="STRING" size="256"/>
+          <Column id="rain" type="STRING" size="256"/>
+          <Column id="stlStatus" type="STRING" size="256"/>
+          <Column id="stlYN" type="STRING" size="256"/>
+          <Column id="stn" type="STRING" size="256"/>
+          <Column id="nochargeyn" type="STRING" size="256"/>
+          <Column id="yestest" type="STRING" size="256"/>
+          <Column id="notest" type="STRING" size="256"/>
+          <Column id="test11" type="STRING" size="256"/>
+          <Column id="test22" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST33</Col>
+            <Col id="nocharge">10000</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">하하하</Col>
+            <Col id="notest">dsfsdf</Col>
+            <Col id="test11">eeeeeeeeeeeeee</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">what</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST33</Col>
+            <Col id="nocharge">9999</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">계좌이체</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">가가가</Col>
+            <Col id="notest">sdfsdf</Col>
+            <Col id="test11">tttttttttttttttttt</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">how</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST33</Col>
+            <Col id="nocharge">3333</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">개인계좌</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">나나나</Col>
+            <Col id="notest">gaewqr</Col>
+            <Col id="test11">tttttttttttt</Col>
+            <Col id="test22">02</Col>
+            <Col id="todayw">who</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제2</Col>
+            <Col id="test1">TEST33</Col>
+            <Col id="nocharge">7777</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">다다다</Col>
+            <Col id="notest">afsd</Col>
+            <Col id="test11">rrrrrrrrrrrrrrr</Col>
+            <Col id="test22">02</Col>
+            <Col id="todayw">when</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제2</Col>
+            <Col id="test1">TEST33</Col>
+            <Col id="nocharge">6666</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">Y</Col>
+            <Col id="yestest">라라라</Col>
+            <Col id="notest">ghq2erwett</Col>
+            <Col id="test11">eeeeeeeeeeeee</Col>
+            <Col id="test22">03</Col>
+            <Col id="todayw">where</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제2</Col>
+            <Col id="test1">TEST33</Col>
+            <Col id="nocharge">45464</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">텔레뱅킹</Col>
+            <Col id="nochargeyn">Y</Col>
+            <Col id="yestest">하하하</Col>
+            <Col id="notest">asfdsf</Col>
+            <Col id="test11">wwwwwwww</Col>
+            <Col id="test22">03</Col>
+            <Col id="todayw">why</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST3344</Col>
+            <Col id="nocharge">1564</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">텔레뱅킹</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">가가가</Col>
+            <Col id="notest">dsfdgsafdsf</Col>
+            <Col id="test11">qqqqqqqqqqqqq</Col>
+            <Col id="test22">04</Col>
+            <Col id="todayw">when</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST3344</Col>
+            <Col id="nocharge">11</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">현금</Col>
+            <Col id="stlYN">N</Col>
+            <Col id="stn">텔레뱅킹</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">나나나</Col>
+            <Col id="notest">tqrewrwe</Col>
+            <Col id="test11">1111111111</Col>
+            <Col id="test22">02</Col>
+            <Col id="todayw">where</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST3344</Col>
+            <Col id="nocharge">8798</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">현금</Col>
+            <Col id="stlYN">N</Col>
+            <Col id="stn">은행</Col>
+            <Col id="nochargeyn">Y</Col>
+            <Col id="yestest">하하하</Col>
+            <Col id="notest">gafsfsd</Col>
+            <Col id="test11">tttttttttttttttt</Col>
+            <Col id="test22">02</Col>
+            <Col id="todayw">why</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST44</Col>
+            <Col id="nocharge">5464</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">현금</Col>
+            <Col id="stlYN">N</Col>
+            <Col id="stn">은행</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">가가가</Col>
+            <Col id="notest">agsdfsdf</Col>
+            <Col id="test11">eeeeeeeeeeeeeeeeee</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">what</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">0</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">현금</Col>
+            <Col id="stlYN">N</Col>
+            <Col id="stn">은행</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">하하하</Col>
+            <Col id="notest">gafsdfewrwe</Col>
+            <Col id="test11">ssssssssssssssss</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">how</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">4564</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">N</Col>
+            <Col id="stn">은행</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">가가가</Col>
+            <Col id="notest">gadfsdfccc</Col>
+            <Col id="test11">sfffffff</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">who</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제3</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">54654</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">N</Col>
+            <Col id="stn">은행</Col>
+            <Col id="nochargeyn">Y</Col>
+            <Col id="yestest">나나나</Col>
+            <Col id="notest">asfaewqrew</Col>
+            <Col id="test11">dssssssss</Col>
+            <Col id="test22">03</Col>
+            <Col id="todayw">when</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제4</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">564</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">다다다</Col>
+            <Col id="notest">afsdfsdg</Col>
+            <Col id="test11">zzzzzzzzzzzzzz</Col>
+            <Col id="test22">03</Col>
+            <Col id="todayw">where</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제2</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">45688</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">Y</Col>
+            <Col id="yestest">하하하</Col>
+            <Col id="notest">asfdsghweee</Col>
+            <Col id="test11">zasaaaaaaaaaa</Col>
+            <Col id="test22">02</Col>
+            <Col id="todayw">why</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제2</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">99</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">가가가</Col>
+            <Col id="notest">afdsfqfdsfds</Col>
+            <Col id="test11">eeeeeeeeeeeee</Col>
+            <Col id="test22">02</Col>
+            <Col id="todayw">when</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제2</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">77</Col>
+            <Col id="sun">I Hate it</Col>
+            <Col id="rain">I Hate it</Col>
+            <Col id="stlStatus">카드</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">인터넷</Col>
+            <Col id="nochargeyn">Y</Col>
+            <Col id="yestest">나나나</Col>
+            <Col id="notest">sdfsdfcccc</Col>
+            <Col id="test11">sssssssssssss</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">why</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST55</Col>
+            <Col id="nocharge">1111</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">현금</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">텔레뱅킹</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">다다다</Col>
+            <Col id="notest">yyerjfgdfdsa</Col>
+            <Col id="test11">rrrrrrrrrrrrrrrrrrr</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">when</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST3344</Col>
+            <Col id="nocharge">100</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">현금</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">텔레뱅킹</Col>
+            <Col id="nochargeyn">Y</Col>
+            <Col id="yestest">하하하</Col>
+            <Col id="notest">dsfhyeertwq</Col>
+            <Col id="test11">eeeeeeeeeeee</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">why</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST3344</Col>
+            <Col id="nocharge">212</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">현금</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">텔레뱅킹</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">가가가</Col>
+            <Col id="notest">dsdsfsd</Col>
+            <Col id="test11">wwwwwwwwwww</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">when</Col>
+          </Row>
+          <Row>
+            <Col id="stlInfo">결제1</Col>
+            <Col id="test1">TEST3344</Col>
+            <Col id="nocharge">1546</Col>
+            <Col id="sun">I Like it</Col>
+            <Col id="rain">I Like it</Col>
+            <Col id="stlStatus">무통장입금</Col>
+            <Col id="stlYN">Y</Col>
+            <Col id="stn">텔레뱅킹</Col>
+            <Col id="nochargeyn">N</Col>
+            <Col id="yestest">나나나</Col>
+            <Col id="notest">gsdfsdf</Col>
+            <Col id="test11">qqqqqqqqqqqqq</Col>
+            <Col id="test22">01</Col>
+            <Col id="todayw">what</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleGird.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/12/07
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/12/07			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description cell copy and paste 그리드 selecttype변경
+*/
+this.btn02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.grd12.set_selecttype("cell");
+	this.grd13.set_selecttype("cell");
+};
+
+/**
+ * @description cell copy and paste 그리드 selecttype변경
+*/
+this.btn03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.grd12.set_selecttype("row");
+	this.grd13.set_selecttype("row");
+};
+
+/**
+ * @description cell copy and paste 그리드 selecttype변경
+*/
+this.btn04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.grd12.set_selecttype("multirow");
+	this.grd13.set_selecttype("multirow");
+};
+
+/**
+ * @description cell copy and paste 그리드 selecttype변경
+*/
+this.btn05_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.grd12.set_selecttype("area");
+	this.grd13.set_selecttype("area");
+};
+
+]]></Script>
+  </Form>
+</FDL>

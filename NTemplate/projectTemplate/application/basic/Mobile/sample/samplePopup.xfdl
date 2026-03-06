@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="samplePopup" width="480" height="768" titletext="팝업" onload="form_onload">
+    <Layouts>
+      <Layout height="768" mobileorientation="portrait" width="480">
+        <Button id="btnPopup" taborder="0" text="모달팝업" left="30" top="30" height="60" onclick="btnPopup_onclick" right="51.04%"/>
+        <Button id="btnPopup00" taborder="1" text="모달리스 팝업" top="30" height="60" onclick="btnPopup00_onclick" left="btnPopup:10" right="30"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  Mobile 프로젝트
+*  @FileName 	samplePopup.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2023/10/30
+*  @Desction   
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2023/10/30			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+this.objApp = nexacro.getApplication();
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoadM(obj); //필수함수
+};
+
+this.fnClose = function()
+{
+    trace("fnClose 호출");
+}
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+ this.fnPopupCallback = function(strId, strVal)
+ {
+	if(this.gfnIsNull(strVal)){
+		trace("strId : " + strId + " objVal : " + this._variant);
+	}else{
+		trace(" strId : " + strId + " strVal : " + strVal);
+	}
+ };
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+/**
+* btnPopup_onclick : modal popup open
+* @param  : obj		   - [object]Button
+* @param  : e		   - [string]ClickEventInfo
+* @return : N/A
+*/
+this.btnPopup_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var oArg = {paramCode:"abcd", paramNum:12345};
+	
+	var sPopupCallBack = "fnPopupCallback";
+	this.gfnOpenPopupM( "popup","design::Template/Temp19P.xfdl",oArg,sPopupCallBack);	
+};
+/**
+* btnPopup00_onclick : modaless popup open
+* @param  : obj		   - [object]Button
+* @param  : e		   - [string]ClickEventInfo
+* @return : N/A
+*/
+this.btnPopup00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+    //모바일앱이면
+    if (system.navigatorname =="nexacro" && this.objApp.gvOs.indexOf("WINDOWS") == -1)
+    {
+        alert("현재 브라우저에서는 지원하지 않습니다");
+        return;
+    }
+
+	var oArg = {paramCode:"abcd", paramNum:12345};
+	var oOption = {popuptype:"modeless"};
+	var sPopupCallBack = "fnPopupCallback";
+	this.gfnOpenPopupM( "popup","design::Template/Temp19P.xfdl",oArg,sPopupCallBack,oOption);	
+};
+
+
+
+]]></Script>
+  </Form>
+</FDL>

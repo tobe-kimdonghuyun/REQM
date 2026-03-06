@@ -1,0 +1,370 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="zzz_fwcms01_m00" width="1552" height="754" titletext="암호화컬럼관리" onload="form_onload" onbeforeclose="zzz_fwcms01_m00_onbeforeclose">
+    <Layouts>
+      <Layout height="754" width="1552">
+        <Div id="divSearch" taborder="0" text="div00" left="0" top="30" height="52" right="0" cssclass="div_WF_Search">
+          <Layouts>
+            <Layout>
+              <Static id="staSecId" taborder="0" text="암호화ID" left="0" top="11" height="30" cssclass="sta_WF_Searchtxt01" width="85"/>
+              <Edit id="edtSecId" taborder="1" left="85" top="11" width="150" height="30" enable="true" textAlign="left"/>
+              <Static id="staSecDomain" taborder="2" text="암호화도메인" left="235" top="11" height="30" cssclass="sta_WF_Searchtxt01" onclick="divSearch_staJobId00_onclick" width="113"/>
+              <Static id="staSecColumn" taborder="4" text="암호화컬럼" left="498" top="11" height="30" cssclass="sta_WF_Searchtxt01" onclick="divSearch_staJobId00_onclick" width="99"/>
+              <Button id="btnSearch" top="11" height="30" taborder="6" text="조회" tooltiptext="조회" onclick="btnSearch_onclick" right="20" width="74" cssclass="btn_WF_Search03"/>
+              <Edit id="edtDomain" taborder="3" left="348" top="11" width="150" height="30" enable="true" textAlign="left"/>
+              <Edit id="edtColumn" taborder="5" left="597" top="11" width="150" height="30" enable="true" textAlign="left"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnAddRow" taborder="2" position="absolute" defaultbutton="true" right="129" width="63" top="102" height="30" cssclass="btn_WF_Custom" text="행추가" onclick="btnAddRow_onclick"/>
+        <Button id="btnDeleteRow" taborder="3" position="absolute" defaultbutton="true" right="58" width="63" top="102" height="30" cssclass="btn_WF_Custom" text="행삭제" onclick="btnDeleteRow_onclick"/>
+        <Button id="btnSave" taborder="4" position="absolute" defaultbutton="true" right="0" width="50" top="102" height="30" cssclass="btn_WF_Custom" text="저장" onclick="btnSave_onclick"/>
+        <Grid id="grdMain" taborder="1" left="0" top="142" binddataset="dsSec" autoenter="select" cellcombopopuptype="center" right="0" autofittype="col" onheadclick="grdMain_onheadclick" bottom="10">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="50"/>
+                <Column size="60"/>
+                <Column size="130"/>
+                <Column size="176"/>
+                <Column size="183"/>
+                <Column size="179"/>
+                <Column size="159"/>
+                <Column size="300"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="34" band="head"/>
+                <Row size="34"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="순번"/>
+                <Cell col="2" text="암호화ID"/>
+                <Cell col="3" text="암호화도메인"/>
+                <Cell col="4" text="암호화컬럼명"/>
+                <Cell col="5" text="암호화컬럼별칭"/>
+                <Cell col="6" text="암호화적용타입"/>
+                <Cell col="7" text="암호화설명"/>
+                <Cell col="8" text="대상여부"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:_chk"/>
+                <Cell col="1" edittype="none" textAlign="center" text="expr:currow+1"/>
+                <Cell col="2" text="bind:secId" edittype="text" textAlign="center"/>
+                <Cell col="3" text="bind:secDomain" edittype="text" displaytype="normal" combodataset="dsMessageType" combocodecol="code" combodatacol="name" textAlign="center"/>
+                <Cell col="4" text="bind:secColumn" edittype="text" textAlign="center"/>
+                <Cell col="5" text="bind:secColumnAlias" edittype="text" displaytype="normal" combodataset="dsBusinessCode" combocodecol="code" combodatacol="name" textAlign="center"/>
+                <Cell col="6" displaytype="combotext" edittype="combo" text="bind:secType" combodataset="dsSecType" combocodecol="code" combodatacol="name" textAlign="center"/>
+                <Cell col="7" text="bind:secDesc" edittype="text"/>
+                <Cell col="8" displaytype="combotext" edittype="combo" text="bind:secTargetYn" combodataset="dsTargetYn" combocodecol="code" combodatacol="name"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static99_00_00_00_00" taborder="5" left="0" top="0" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="Static99_00_00_00_00_00_00_00_01" taborder="6" left="0" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" height="10" bottom="0"/>
+        <Static id="Static99_00_00_00_00_00" taborder="7" left="0" top="82" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="Static99_00_00_00_00_00_00" taborder="8" left="0" top="132" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    암호화도메인관리
+*  @FileName 	zzz_fwcms00_m00
+*  @Creator 	AA
+*  @CreateDate 	2022.01.02
+*  @Desction    암호화도메인관리
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.02.10     	AA 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::cm_script.xjs" 
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼을 초기화
+	this.smfInitForm(obj);
+	
+	// 조회 입력값 엔터키입력시 조회수행 이벤트 설정
+	this.smfBindEnterKeyToSearch(this.divSearch, this.divSearch.form.btnSearch);
+};
+
+/**
+ * @description 폼 닫기전 이벤트
+*/
+this.zzz_fwcms01_m00_onbeforeclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	// 변경내역이 발생한 경우 종료전 confirm수행
+	return this.smfCloseFormConfirm(this.dsSec);
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * @description 조회
+*/
+this.fnSearch = function ()
+{
+	// 서비스 객체 생성
+	this.smfSearchService("listSecData")
+		// 데이터가 변경되었으면 확인메시지
+		.confirmIfModifiedGrid(this.grdMain)
+		// 데이터 검증
+		.validateForm(this.divSearch)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		})
+	;
+};	
+
+/**
+ * @description 저장
+*/
+this.fnSave = function ()
+{
+	// 서비스 객체 생성 
+	this.smfSaveService("saveSecList")
+		// 데이터 검증
+		// dsMainValid의 row는 2개가 있는데
+		// 첫번째는 Dataset.ROWTYPE_INSERT에 해당하는 유효성검사 룰셋을 담당한다
+		// 두번째는 Dataset.ROWTYPE_UPDATE에 해당하는 유효성검사 룰셋을 담당한다
+		// 컬럼값에 = 은 INSERT와 동일한 룰셋을 사용한다는 의미이다
+		.validateGrid(this.grdMain, this.dsMainValid)
+		
+		// 그리드 영역에서 중복검사
+		.validateDuplicate({
+			grid: this.grdMain,
+			columnNames: ["secId"], // 중복검사할 컬럼명
+			columnText: "암호화ID",
+		})
+
+		// 실행
+		.run()
+
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			// 저장이 완료되었습니다.
+			this.smfAlert('CM002', [], this.btnSearch_onclick);
+		});
+};
+
+/**
+ * @description 삭제
+*/
+this.fnDelete = function()
+{
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+ * @description Transaction CallBack 함수(선택)
+*/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+	
+};
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ 
+ 
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+/**
+ * @description 그리드 헤더 클릭
+*/
+this.grdMain_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	//this.smfCheckAndSort(obj, e); 
+	var columnName = obj.getCellProperty("body",e.cell,"text");
+	if ("bind:_chk" == columnName){
+		this.smfToggleChkHeader(obj, e, this.fnRenderGridCheckbox);
+	}else{
+		// 정렬
+		this.smfCheckAndSort(obj, e);
+	}
+};
+
+
+
+/**
+ * @description 조회버튼
+*/
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 검색조건 세팅
+	this.dsSearch.clearData();
+	var idx = this.dsSearch.addRow();
+	
+	this.dsSearch.setColumn(idx, "secId", this.divSearch.form.edtSecId.value);
+	this.dsSearch.setColumn(idx, "secDomain", this.divSearch.form.edtDomain.value);
+	this.dsSearch.setColumn(idx, "secColumn", this.divSearch.form.edtColumn.value);
+
+	this.fnSearch();
+};
+
+/**
+ * @description 저장버튼
+*/
+this.btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSave();
+};
+
+/**
+ * @description 행추가버튼
+*/
+this.btnAddRow_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 조회를 수행했는지 검증후 그리드에 row를 추가한다
+	var nRow = this.smfAddGridRow(this.grdMain, "listSecData");
+	if(nRow == -1) return;
+	//var idx = this.dsSec.addRow();
+};
+
+/**
+ * @description 행삭제버튼
+*/
+this.btnDeleteRow_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var rowCnt = this.dsSec.getRowCount();
+	for(i=rowCnt-1; i>=0; i--) {
+		if(this.dsSec.getColumn(i, '_chk') == '1') {
+			this.dsSec.deleteRow(i);
+		}
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listSecData</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsSearch=dsSearch dsSec=dsSec</Col>
+            <Col id="asynctp"/>
+            <Col id="url">/zzz_fwc_ms01_001.do</Col>
+          </Row>
+          <Row>
+            <Col id="url">/zzz_fwc_ms01_002.do</Col>
+            <Col id="id">saveSecList</Col>
+            <Col id="inDatasets">dsSec=dsSec:U</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset preload="true" firefirstcount="0" firenextcount="0" useclientlayout="true" updatecontrol="true" enableevent="true" id="dsSec">
+        <ColumnInfo>
+          <Column type="STRING" size="500" id="secId"/>
+          <Column type="STRING" size="200" id="secDomain"/>
+          <Column type="STRING" size="100" id="secColumn"/>
+          <Column id="secColumnAlias" type="STRING" size="256"/>
+          <Column id="secType" type="STRING" size="256"/>
+          <Column id="secDesc" type="STRING" size="256"/>
+          <Column id="_chk" type="STRING" size="256"/>
+          <Column id="secTargetYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSecType" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="name" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">0</Col>
+            <Col id="name">단방향</Col>
+          </Row>
+          <Row>
+            <Col id="code">1</Col>
+            <Col id="name">양방향</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMainValid" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="secId" type="STRING" size="256" prop="NONE"/>
+          <Column id="secDomain" type="STRING" size="256"/>
+          <Column id="secColumn" type="STRING" size="256"/>
+          <Column id="secColumnAlias" type="STRING" size="256" prop="NONE"/>
+          <Column id="secType" type="STRING" size="256" prop="NONE"/>
+          <Column id="secDesc" type="STRING" size="256"/>
+          <Column id="secTargetYn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="secId">title:암호화ID,required</Col>
+            <Col id="secDomain">title:암호화도메인,required,minlength:2,maxlength:100</Col>
+            <Col id="secColumn">title:암호화컬럼,required,minlength:2,maxlength:100</Col>
+            <Col id="secColumnAlias">title:암호화컬럼별칭,required</Col>
+            <Col id="secType">title:암호화적용타입,required</Col>
+            <Col id="secTargetYn">title:대상여부,required</Col>
+          </Row>
+          <Row>
+            <Col id="secId">=</Col>
+            <Col id="secDomain">=</Col>
+            <Col id="secColumn">=</Col>
+            <Col id="secColumnAlias">=</Col>
+            <Col id="secType">=</Col>
+            <Col id="secTargetYn">=</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="secId" type="STRING" size="256"/>
+          <Column id="secDomain" type="STRING" size="256"/>
+          <Column id="secColumn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsTargetYn" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="name" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">Y</Col>
+            <Col id="name">Y</Col>
+          </Row>
+          <Row>
+            <Col id="code">N</Col>
+            <Col id="name">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

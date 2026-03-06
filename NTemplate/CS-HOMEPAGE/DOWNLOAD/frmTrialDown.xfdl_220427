@@ -1,0 +1,766 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="productDown" classname="WorkFrame" left="0" top="0" width="1300" height="700" onload="productDown_onload">
+    <Layouts>
+      <Layout>
+        <Combo id="cmb_kind" taborder="0" innerdataset="@dsCategoryProduct" codecolumn="code" datacolumn="name" left="1324" top="70" width="186" height="22" onitemchanged="cmb_kind_onitemchanged" value="2" text="nexacro platform" index="0" visible="false"/>
+        <WebBrowser id="webBrowResult" left="0" top="250" width="1300" height="443" taborder="2" onloadcompleted="webBrowResult_onloadcompleted" onusernotify="webBrowResult_onusernotify" visible="true"/>
+        <Static id="stcSechCmnt_MP" taborder="4" cssclass="sta_WF_viewDetail" left="0" top="89" width="786" height="56" style="linespace:10;color:#bc0000ff;align:center middle;" text="• 개발용 라이센스는 1년 사용이 가능하며, 기술지원은 제공하지 않습니다.&#13;&#10;(홈페이지의 개발용 라이센스는 12월에 갱신이 됩니다.)" visible="false"/>
+        <Div id="Div00" taborder="5" text="Div00" left="0" top="250" width="1300" height="450" visible="false" border="0px solid"/>
+        <Tab id="tabProduct" taborder="1" tabindex="0" left="0" top="0" width="1300" height="66" cssclass="tab_WF_license" onchanged="tabProduct_onchanged">
+          <Tabpages>
+            <Tabpage id="Tabpage1" text="Nexacro N"/>
+            <Tabpage id="Tabpage2" text="nexacro 17"/>
+            <Tabpage id="Tabpage3" text="nexacro 14"/>
+            <Tabpage id="Tabpage4" text="XPLATFORM"/>
+            <Tabpage id="Tabpage5" text="MiPlatform"/>
+            <Tabpage id="Tabpage6" text="Nex-UP"/>
+            <Tabpage id="Tabpage7" text="X-UP"/>
+            <Tabpage id="Tabpage8" text="X-PUSH"/>
+          </Tabpages>
+        </Tab>
+        <Static id="stcSechCmnt" taborder="3" text="• Trial Version은 60일 사용이 가능하며, 기술지원은 제공하지 않습니다.&#13;&#10;• Trial Verson은 매월 첫째주에 갱신됩니다.&#13;&#10;• 이메일 정보수정을 원하실 경우 회원정보수정 후 진행해 주시기 바랍니다.&#13;&#10;• XPLATFORM의 경우 버전과 상관없이 동일하게 사용을 해주시기 바랍니다. 단, 9.0의 경우 클라이언트 라이선스가 다르기 때문에 메일의 내용을 참고해 주시기 바랍니다." left="0" top="90" height="132" cssclass="sta_WF_viewDetail" wordWrap="char" width="1300"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_file_info" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="idx" type="STRING" size="256"/>
+          <Column id="seq" type="STRING" size="256"/>
+          <Column id="file_key" type="STRING" size="256"/>
+          <Column id="file_url" type="STRING" size="256"/>
+          <Column id="file_name" type="STRING" size="256"/>
+          <Column id="file_save_name" type="STRING" size="256"/>
+          <Column id="lang" type="STRING" size="256"/>
+          <Column id="goods_gbn" type="STRING" size="256"/>
+          <Column id="remark" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_goods" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="goods_code" type="STRING" size="256"/>
+          <Column id="goods_name" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="goods_code">%</Col>
+            <Col id="goods_name">ALL</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">000</Col>
+            <Col id="goods_name">MiPlatform Server</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">001</Col>
+            <Col id="goods_name">MiPlatform 3.2</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">002</Col>
+            <Col id="goods_name">MiPlatform 3.3</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">100</Col>
+            <Col id="goods_name">XPLATFORM Server</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">101</Col>
+            <Col id="goods_name">XPLATFORM 9.1</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">102</Col>
+            <Col id="goods_name">XPLATFORM 9.2</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">200</Col>
+            <Col id="goods_name">nexacro plaftorm server</Col>
+          </Row>
+          <Row>
+            <Col id="goods_name">nexacro platform 14</Col>
+            <Col id="goods_code">201</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_goods_kind" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="goods_code" type="STRING" size="256"/>
+          <Column id="kind_code" type="STRING" size="256"/>
+          <Column id="kind_name" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="goods_code">000</Col>
+            <Col id="kind_code">000001</Col>
+            <Col id="kind_name">API ( ASP )</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">000</Col>
+            <Col id="kind_code">000002</Col>
+            <Col id="kind_name">API ( ASP x64 )</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">000</Col>
+            <Col id="kind_code">000003</Col>
+            <Col id="kind_name">API ( Java )</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">001</Col>
+            <Col id="kind_code">001001</Col>
+            <Col id="kind_name">All ( Ansi)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">001</Col>
+            <Col id="kind_code">001002</Col>
+            <Col id="kind_name">Developer (Ansi)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">001</Col>
+            <Col id="kind_code">001003</Col>
+            <Col id="kind_name">History (Ansi)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">001</Col>
+            <Col id="kind_code">001004</Col>
+            <Col id="kind_name">All ( Unicode)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">001</Col>
+            <Col id="kind_code">001005</Col>
+            <Col id="kind_name">Developer (Unicode)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">001</Col>
+            <Col id="kind_code">001006</Col>
+            <Col id="kind_name">History (Unicode)</Col>
+          </Row>
+          <Row>
+            <Col id="kind_name">Manual 1</Col>
+            <Col id="goods_code">001</Col>
+            <Col id="kind_code">101101</Col>
+          </Row>
+          <Row>
+            <Col id="kind_name">Manual 2</Col>
+            <Col id="goods_code">001</Col>
+            <Col id="kind_code">101102</Col>
+          </Row>
+          <Row>
+            <Col id="kind_name">Manual 3</Col>
+            <Col id="goods_code">001</Col>
+            <Col id="kind_code">101103</Col>
+          </Row>
+          <Row>
+            <Col id="kind_name">Manual 4</Col>
+            <Col id="goods_code">001</Col>
+            <Col id="kind_code">101104</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">002</Col>
+            <Col id="kind_code">002001</Col>
+            <Col id="kind_name">All ( Ansi)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">002</Col>
+            <Col id="kind_code">002002</Col>
+            <Col id="kind_name">Developer (Ansi)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">002</Col>
+            <Col id="kind_code">002003</Col>
+            <Col id="kind_name">History (Ansi)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">002</Col>
+            <Col id="kind_code">002004</Col>
+            <Col id="kind_name">All ( Unicode)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">002</Col>
+            <Col id="kind_code">002005</Col>
+            <Col id="kind_name">Developer (Unicode)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">002</Col>
+            <Col id="kind_code">002006</Col>
+            <Col id="kind_name">History (Unicode)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">002</Col>
+            <Col id="kind_code">002101</Col>
+            <Col id="kind_name">Manual 1</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">002</Col>
+            <Col id="kind_code">002102</Col>
+            <Col id="kind_name">Manual 2</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">002</Col>
+            <Col id="kind_code">002103</Col>
+            <Col id="kind_name">Manual 3</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">002</Col>
+            <Col id="kind_code">002104</Col>
+            <Col id="kind_name">Manual 4</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">100</Col>
+            <Col id="kind_code">100001</Col>
+            <Col id="kind_name">X-API ( ASP )</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">100</Col>
+            <Col id="kind_code">100002</Col>
+            <Col id="kind_name">X-API ( ASP x64)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">100</Col>
+            <Col id="kind_code">100003</Col>
+            <Col id="kind_name">X-API ( Java )</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">101</Col>
+            <Col id="kind_code">101001</Col>
+            <Col id="kind_name">All </Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">101</Col>
+            <Col id="kind_code">101002</Col>
+            <Col id="kind_name">Developer </Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">101</Col>
+            <Col id="kind_code">101003</Col>
+            <Col id="kind_name">History </Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">102</Col>
+            <Col id="kind_code">102001</Col>
+            <Col id="kind_name">All</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">102</Col>
+            <Col id="kind_code">102002</Col>
+            <Col id="kind_name">Developer</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">102</Col>
+            <Col id="kind_code">102003</Col>
+            <Col id="kind_name">History</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">102</Col>
+            <Col id="kind_code">102101</Col>
+            <Col id="kind_name">Manual 1</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">102</Col>
+            <Col id="kind_code">102102</Col>
+            <Col id="kind_name">Manual 2</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">102</Col>
+            <Col id="kind_code">102103</Col>
+            <Col id="kind_name">Manual 3</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">102</Col>
+            <Col id="kind_code">102104</Col>
+            <Col id="kind_name">Manual 4</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">102</Col>
+            <Col id="kind_code">102105</Col>
+            <Col id="kind_name">License(Trial)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">200</Col>
+            <Col id="kind_code">200001</Col>
+            <Col id="kind_name">API ( java )</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">200</Col>
+            <Col id="kind_code">200002</Col>
+            <Col id="kind_name">XENI</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">200</Col>
+            <Col id="kind_code">200003</Col>
+            <Col id="kind_name">License(Trial)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">201</Col>
+            <Col id="kind_code">201001</Col>
+            <Col id="kind_name">All</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">201</Col>
+            <Col id="kind_code">201002</Col>
+            <Col id="kind_name">Developer</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">201</Col>
+            <Col id="kind_code">201101</Col>
+            <Col id="kind_name">Manual 1</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">201</Col>
+            <Col id="kind_code">201102</Col>
+            <Col id="kind_name">Manual 2</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">201</Col>
+            <Col id="kind_code">201103</Col>
+            <Col id="kind_name">Manual 3</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">201</Col>
+            <Col id="kind_code">201104</Col>
+            <Col id="kind_name">Manual 4</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">201</Col>
+            <Col id="kind_code">201105</Col>
+            <Col id="kind_name">License(Trial)</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">201</Col>
+            <Col id="kind_code">201106</Col>
+            <Col id="kind_name">Runtime 14 for Android</Col>
+          </Row>
+          <Row>
+            <Col id="goods_code">201</Col>
+            <Col id="kind_code">201107</Col>
+            <Col id="kind_name">Runtime 14 for iOS</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_list" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="idx" type="STRING" size="256"/>
+          <Column id="ymd" type="STRING" size="256"/>
+          <Column id="goods" type="STRING" size="256"/>
+          <Column id="version" type="STRING" size="256"/>
+          <Column id="note_kr" type="STRING" size="256"/>
+          <Column id="note_en" type="STRING" size="256"/>
+          <Column id="note_jp" type="STRING" size="256"/>
+          <Column id="use_yn" type="STRING" size="256"/>
+          <Column id="remark" type="STRING" size="256"/>
+          <Column id="base_path" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_gubun" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="name" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">001</Col>
+            <Col id="name">DownLoad</Col>
+          </Row>
+          <Row>
+            <Col id="code">002</Col>
+            <Col id="name">Document</Col>
+          </Row>
+          <Row>
+            <Col id="code">003</Col>
+            <Col id="name">Demo</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_list_detail" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="idx" type="STRING" size="256"/>
+          <Column id="ymd" type="STRING" size="256"/>
+          <Column id="goods_gbn" type="STRING" size="256"/>
+          <Column id="lang" type="STRING" size="256"/>
+          <Column id="file_key" type="STRING" size="256"/>
+          <Column id="file_url" type="STRING" size="256"/>
+          <Column id="file_name" type="STRING" size="256"/>
+          <Column id="file_save_name" type="STRING" size="256"/>
+          <Column id="remark" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_kind" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="name" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">001</Col>
+            <Col id="name">Developer</Col>
+          </Row>
+          <Row>
+            <Col id="code">002</Col>
+            <Col id="name">Server</Col>
+          </Row>
+          <Row>
+            <Col id="code">003</Col>
+            <Col id="name">X-Series</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCategoryProduct" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="name" type="STRING" size="256"/>
+          <Column id="lang" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">2</Col>
+            <Col id="name">nexacro platform</Col>
+            <Col id="lang">002</Col>
+          </Row>
+          <Row>
+            <Col id="code">102</Col>
+            <Col id="name">XPLATFORM</Col>
+          </Row>
+          <Row>
+            <Col id="code">0</Col>
+            <Col id="name">MiPlatform</Col>
+          </Row>
+          <Row>
+            <Col id="code">100</Col>
+            <Col id="name">X-Series</Col>
+          </Row>
+          <Row>
+            <Col id="code">2</Col>
+            <Col id="name">nexacro platform</Col>
+            <Col id="lang">003</Col>
+          </Row>
+          <Row>
+            <Col id="code">100</Col>
+            <Col id="name">X-Series</Col>
+            <Col id="lang">003</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_version"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  라이선스(개발용) 다운로드
+*
+*  @MenuPath 
+*  @FileName 		DOWNLOAD::frmTrialDown.xfdl 
+*  @Creator 		김광호
+*  @CreateDate 		2022.01.01
+*  @LastModifier  
+*  @LastModifyDate  
+*  @Version 		1.0
+*  @Outline 		라이선스(개발용) 다운로드
+*  @Desction 
+************** 소스 수정 이력 *************************************************
+*    date          Modifier            Description
+*******************************************************************************
+*  2022.01.01      김광호	           최초 생성 
+*******************************************************************************
+*/ 
+
+this.fn_callback = function(sid,errcode,errmsg)
+{
+	if ( errcode < nexacro.getApplication().ERROR_CODE_SUCCESS) { 
+		alert(errmsg);
+	}    
+	
+	if(sid == 'codedata')
+	{
+		this.fn_LicenseEmail();	
+		 
+	} else if(sid == 'select')
+	{
+		this.doc = this.webBrowResult.getProperty("document");
+		var strTmp;
+		var strHeml = "<table  width='100%'   border='0' cellpadding='0' cellspacing='0'>";
+		strHeml += "<tr><td>";
+		strHeml += "<table  width='100%'   border='0' cellpadding='0' cellspacing='3'>";
+    
+		for (var i = 0; i < this.ds_list.rowcount; i++) {	   
+   		
+			strHeml += "<tr>";       
+			strHeml += "<td  background='../../Image/TitleLine.png' colspan='2'  height='31' valign='center' border=0><strong><font size=3>&nbsp;" + this.ds_list.getColumn(i,"ymd").substr(0,4)+ "-" + this.ds_list.getColumn(i,"ymd").substr(4,2) + "-" + this.ds_list.getColumn(i,"ymd").substr(6,2)  + "</font></strong></td>";
+			strHeml += "</tr>";               
+			var strTmp;
+			if(nexacro.getApplication().gv_NationCd == "002") {  
+				strTmp = this.ds_list.getColumn(i,"note_en");   
+			} else if(nexacro.getApplication().gv_NationCd == "003") {
+				strTmp = this.ds_list.getColumn(i,"note_jp");     
+			} else {
+				strTmp = this.ds_list.getColumn(i,"note_kr");   
+			}  
+			strTmp = (strTmp.replace(new RegExp(String.fromCharCode(9), "g"), "&nbsp;&nbsp;&nbsp;&nbsp"));  
+
+			if(String(strTmp) == 'undefined') strTmp = "";	  
+
+			strHeml += "<tr>";   
+			strHeml += "<td  height='20' colspan=2 align=left><table width=100% cellpadding='2' cellspacing='3' bkcolor='#f3f3f3'><td max-width:500px;word-wrap:break-word;><font size='2'>"  + strTmp  + "</font></td></tr></table></td>";
+			strHeml += "</tr>"; 
+			strHeml += "<tr>";   	  
+   
+   
+			strHeml += "<tr><td colspan='2'><table  width='100%'  cellpadding='0' cellspacing='0' border='1' rules=all bordercolor='#b1b1b1'>";             
+
+				strHeml += "<tr bordercolor='#b1b1b1'>";
+				strHeml += "<td  height='25' align=center bgcolor=#ededed>Files</td>";			   	
+				strHeml += "<td  height='25' align=center bgcolor=#ededed>Description</td>";				
+				strHeml += "</tr>";   
+
+			for (var j = 0; j < this.ds_list_detail.rowcount; j++) {
+				this.ds_list_detail.filter("idx == '" + this.ds_list.getColumn(i,"idx") + "'");
+				 
+				strHeml += "<tr bordercolor='#b1b1b1'>";
+				strHeml += "<td  height='23' width=300 align=left>&nbsp;<a href='" + nexacro.getEnvironment().services["SVC_JSP"].url+"FileDownload/fileDownload2.jsp?path="+"Setup/MiPlatform_Trial"+ "&file="+ encodeURIComponent(this.ds_list_detail.getColumn(j,"file_name")) + "&realFileNm="+encodeURIComponent(this.ds_list_detail.getColumn(j,"file_name")) + "&uid=" + nexacro.getApplication().gds_UserInfo.getColumn(nexacro.getApplication().gds_UserInfo.rowposition,"User_id") + "&category=" +  this.cmb_kind.text + "&date=" + this.ds_list.getColumn(i,"ymd").substr(0,4)+ "-" + this.ds_list.getColumn(i,"ymd").substr(4,2) + "-" + this.ds_list.getColumn(i,"ymd").substr(6,2) + "(trial)'>" + this.ds_list_detail.getColumn(j,"file_name") + "</a></td>";								
+    				
+				strHeml += "<td height='23' width=300 align=left>&nbsp;" +  String(this.ds_list_detail.getColumn(j,"remark")).replace('undefined','') + "</td>";			
+				strHeml += "</tr>"; 
+				strHeml += "<tr>";      
+			}    
+			this.ds_list_detail.filter(""); 
+			strHeml += "</table></td></tr>";					   
+			strHeml += "<tr><td colspan=2 height=3 colspan=2 bgcolor=#ffffff </td></tr>";					   
+			
+		}    
+
+		strHeml += "<tr><td height=0 colspan=2 bgcolor=#D3D3D3></td></tr> ";		
+		strHeml += "<tr><td height=20 colspan=2 bgcolor=#ffffff></td></tr> ";				
+		strHeml += "</table>";
+
+		this.webBrowResult.callMethod("setContent", strHeml.replaceAll("<p>", "").replaceAll("</p>", ""), true);
+		nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, this.height + 220);
+	
+	}  
+}
+
+// editor.html 영역에서 특정 값을 얻어온다.
+this.getHTMLValue = function(name)
+{
+	this.webBrowResult.callMethod("getHTMLValue", name);
+	
+	var el = this.webBrowResult.getProperty("document").callMethod("getElementById", "transfer");
+	var val = el.getProperty("value");
+	
+	el.setProperty("value", "");
+		
+	return val;	
+}
+   
+this.Pro_gbn = "N";
+this.fn_QueryData = function()
+{  	
+	this.webBrowResult.set_visible(true);
+	this.Div00.set_visible(false);	
+	var args = "Nation='" + nexacro.getApplication().gv_NationCd + "'";
+
+	args += "&goods_gbn=" + nexacro.getApplication().com_SetQuote(this.Pro_gbn);
+	nexacro.getApplication().gds_MiWizard.clearData();
+	nexacro.getApplication().com_AddMiWizard("","output1",args,"XPLATFORM,TECH_MAIN,39");	           
+	nexacro.getApplication().com_AddMiWizard("","output2",args,"XPLATFORM,TECH_MAIN,40");	                          
+	
+	this.com_CallService("select", "", "", "ds_list=output1 ds_list_detail=output2" , "fn_callback", "CS", true);		
+}   
+   
+
+this.btn_list_onclick = function(obj:Button,  e:nexacro.ClickEventInfo)
+{
+	this.fn_QueryData();
+}
+
+  
+this.productDown_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	if(nexacro.getApplication().gds_UserInfo.getRowCount() <= 0)
+	{
+		nexacro.getApplication().gv_mainFrame.TargetUrl = "License_Info";
+		nexacro.getApplication().gv_mainFrame.param = {
+			'menu': "login",
+			'keyword': "",
+			'page': 1,
+			'postId': ""
+			};
+		nexacro.getApplication().gv_mainFrame.gfnGoMain();
+      
+	} else {
+		this.Div00.set_url("DOWNLOAD::frmLicense_mail.xfdl");
+		this.LocationUrl=window.location;
+		this.webBrowResult.set_url(nexacro.getApplication().gv_DomainInfo+"CKEDITOR/editor/view_FAQ.html");
+	}
+}
+
+this.webBrowResult_onloadcompleted = function(obj:WebBrowser, e:nexacro.WebLoadCompEventInfo)
+{  
+
+	var args = "goods_gbn='X%'&Nation='" + nexacro.getApplication().gv_NationCd + "'";
+	
+	if(nexacro.getApplication().gv_mainFrame.PCategory2 == "nexacro platform")
+	{
+		args = "goods_gbn='2%'&Nation='" + nexacro.getApplication().gv_NationCd + "'";
+	} else if(nexacro.getApplication().gv_mainFrame.PCategory2 == "XPLATFORM")
+	{  
+		args = "goods_gbn='1%'&Nation='" + nexacro.getApplication().gv_NationCd + "'";
+	} else if(nexacro.getApplication().gv_mainFrame.PCategory2 == "MiPlatform")
+	{
+		args = "goods_gbn='0%'&Nation='" + nexacro.getApplication().gv_NationCd + "'";
+	}	
+
+	nexacro.getApplication().gds_MiWizard.clearData();
+	nexacro.getApplication().com_AddMiWizard("","output1",args,"XPLATFORM,TECH_MAIN,31");	           
+	this.com_CallService("codedata", "", "", "ds_version=output1", "fn_callback", "CS", true);		
+	
+}
+
+this.webBrowResult_onusernotify = function(obj:WebBrowser, e:nexacro.WebTitleChangeEventInfo)
+{
+
+}
+
+this.cmb_kind_onitemchanged = function(obj:Combo, e:nexacro.ItemChangeEventInfo)
+{
+	this.fn_QueryData();
+}
+
+this.fn_LicenseEmail = function()
+{
+	this.webBrowResult.set_visible(false);
+	this.Div00.set_visible(true);
+	
+	if(this.Pro_gbn == 102)
+	{
+		this.Div00.form.cb_Product2.set_value("XP92");
+	}
+	else if(this.Pro_gbn == "039")
+	{
+		this.Div00.form.cb_Product2.set_value("NP17");
+	}
+	else if(this.Pro_gbn == 2)
+	{
+		this.Div00.form.cb_Product2.set_value("NP14");
+	}
+	else if(this.Pro_gbn == 100)
+	{
+		this.Div00.form.cb_Product2.set_value("XUP");
+	}
+	else if(this.Pro_gbn == 103)
+	{
+		this.Div00.form.cb_Product2.set_value("XP13");
+	}	
+	else if(this.Pro_gbn == "038")
+	{
+		this.Div00.form.cb_Product2.set_value("NUP");
+	}
+	else if(this.Pro_gbn == "016")
+	{
+		this.Div00.form.cb_Product2.set_value("XPUSH");
+	}
+	else if(this.Pro_gbn == "N")	// NPN
+	{
+		this.Div00.form.cb_Product2.set_value("NPN");
+	}
+	this.set_height(500);
+	this.parent.set_height(700);
+	this.Div00.set_height(340);
+	this.webBrowResult.set_height(308);
+	nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, this.height + 105);
+}
+
+
+// 제품 변경 이벤트
+this.tabProduct_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	//e.postindex
+	// 0 N
+	// 1 17
+	// 2 14
+	// 3 XP
+	// 4 MP
+	// 5 Nex-UP
+	// 6 X-UP
+	// 7 X-PUSH
+	if(e.postindex == 0) // "N"
+	{
+		this.Pro_gbn = "N"; //nexacro platform
+		if(nexacro.getApplication().gv_NationCd == "001")
+		{
+			this.fn_LicenseEmail();
+		}
+		else this.fn_QueryData();		
+	}
+	else if(e.postindex == 2) // "btn_nexa14")
+	{
+		this.Pro_gbn = 2; //nexacro platform
+		if(nexacro.getApplication().gv_NationCd == "001")
+		{
+			this.fn_LicenseEmail();
+		}
+		else this.fn_QueryData();		
+	}
+	else if(e.postindex == 1)//obj.name == "btn_nexa17")
+	{
+		this.Pro_gbn = "039"; //nexacro platform
+		
+		if(nexacro.getApplication().gv_NationCd == "001")
+		{
+			this.fn_LicenseEmail();
+		}
+		else this.fn_QueryData();	
+	}
+	else if(e.postindex == 3)//obj.name == "btn_XP")
+	{
+		this.Pro_gbn = 102; //XPLATFORM
+		
+		if(nexacro.getApplication().gv_NationCd == "001")
+		{
+			this.fn_LicenseEmail();
+		}
+		else this.fn_QueryData();
+	}
+	else if(e.postindex == 4)// obj.name == "btn_MP")
+	{
+		this.Pro_gbn = '001'; // Miplatform
+		this.fn_QueryData();
+	}
+	else if(e.postindex == 6)//obj.name == "btn_XS")
+	{
+		this.Pro_gbn = 100; //X-Series
+		
+		if(nexacro.getApplication().gv_NationCd == "001")
+		{
+			this.fn_LicenseEmail();
+		}
+		else this.fn_QueryData();
+	}
+	else if(e.postindex == 5)//obj.name == "btn_NexUP")
+	{
+		this.Pro_gbn = "038"; //Nex-UP
+
+		if(nexacro.getApplication().gv_NationCd == "001")
+		{
+			this.fn_LicenseEmail();
+		}
+		else this.fn_QueryData();
+	}
+	else if(e.postindex == 7)//obj.name == "btn_PUSH")
+	{
+		this.Pro_gbn = "016"; //Nex-UP
+
+		if(nexacro.getApplication().gv_NationCd == "001")
+		{
+			this.fn_LicenseEmail();
+		}
+		else this.fn_QueryData();
+	}
+	if(e.postindex == 4)//obj.name == "btn_MP")
+	{
+		this.stcSechCmnt.set_visible(false);
+		this.stcSechCmnt_MP.set_visible(true);
+	}
+	else
+	{
+		this.stcSechCmnt.set_visible(true);
+		this.stcSechCmnt_MP.set_visible(false);
+	}	
+};
+]]></Script>
+  </Form>
+</FDL>

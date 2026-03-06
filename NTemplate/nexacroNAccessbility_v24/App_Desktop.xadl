@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ADL version="2.0">
+  <Application id="App_Desktop" screenid="Desktop_screen" onload="Application_onload" licenseurl="./NexacroN_client_license.xml">
+    <Layout>
+      <MainFrame id="mainframe" showtitlebar="true" showstatusbar="false" width="1280" height="960" titletext="접근성지원시스템" showcascadetitletext="false">
+        <ChildFrame id="childframe" formurl="FrameBase::Base.xfdl" showtitlebar="false" enableaccessibility="true"/>
+      </MainFrame>
+    </Layout>
+  </Application>
+  <Script type="xscript5.1"><![CDATA[this.nexacroBase = null;
+
+this.Application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo)
+{
+	//RP 101592 : [접근성] 그리드 head/body의 checkbox 상태 변경 시 음성 출력하기 위한 가이드 코드						
+	nexacro._GridCellControl.prototype._getAccessibilityMakeAddLabel  = function ()
+	{
+		var tmp_label = nexacro._CellControl.prototype._getAccessibilityMakeAddLabel.call(this);
+		 if (this._curDisplayType == "checkboxcontrol")
+		{
+			var cellinfo = this._refinfo;
+			if(cellinfo) 
+			{
+				var value = cellinfo._getValue(this._rowidx);
+				tmp_label = (value == "1" ? "선택" : "해제") + " " + tmp_label;
+			}
+		}
+		return tmp_label;
+	};
+	
+	//RP 101978  : [접근성] 센스리더가 실행되지 않는상태에서 Div의 scroll이 있을 경우 상하 방향키로 Div의 scroll이 움직일수잇도록 요청 (700 엔진에 적용됨)
+// 	nexacro.Div.prototype.on_fire_user_onkeydown = function (keycode, alt_key, ctrl_key, shift_key, refer_comp, meta_key)
+// 	{
+// 		var ret = nexacro.Component.prototype.on_fire_user_onkeydown.call(this, keycode, alt_key, ctrl_key, shift_key, refer_comp, meta_key);
+// 		if (nexacro._enableaccessibility && nexacro._accessibilitycontentsearchkey == false)
+// 		{
+// 			if (this._isComponentKeydownAction() && (keycode == nexacro.Event.KEY_UP || keycode == nexacro.Event.KEY_DOWN))
+// 			{
+// 				var form = this._p_form;
+// 				if (form)
+// 				{
+// 					var vscrollbar = form.vscrollbar;
+// 					if (vscrollbar)
+// 					{
+// 						var line = vscrollbar.line;
+// 						if (line <= 0)
+// 								line = vscrollbar._linedown;
+// 						if (keycode == nexacro.Event.KEY_UP)
+// 								line *= -1;
+// 
+// 
+// 						vscrollbar.set_pos(vscrollbar.pos + line);
+// 						ret = true;
+// 					}
+// 				}
+// 			}
+// 		}
+// 		return ret;
+// 	};
+
+	this.gvOs = system.osversion.toUpperCase();	
+	trace("osVersion : "+ this.gvOs + "  sBrowser : "+ system.navigatorname);
+	//osVersion : WINDOWS 7  		sBrowser : RUNTIME 		, nexacro   	- 런타임
+	//osVersion : WINDOWS 7  		sBrowser : CHROME 		, Chrome     	- html5
+	//osVersion : Android 6.0.1   	sBrowser : RUNTIME 		, nexacro		- 런타임
+	//osVersion : Android 6.0.1   	sBrowser : CHROME 		, CHROME		- html5
+	//osVersion : iOS 10.3.3   		sBrowser : MobileSafari , nexacro		- 런타임
+	//osVersion : iOS 10.3.3   		sBrowser : MobileSafari , MobileSafari	- html5
+
+};
+]]></Script>
+</ADL>

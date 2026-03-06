@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="bizBoardInputPopup" width="950" height="700" titletext="게시판 입력 팝업" onload="form_onload" ontimer="bizBoardInputPopup_ontimer">
+    <Layouts>
+      <Layout height="700" mobileorientation="landscape" width="950" screenid="Desktop_screen">
+        <Button id="Button00" taborder="0" text="캡쳐" left="232" top="5" width="198" height="46" onclick="Button00_onclick"/>
+        <ImageViewer id="ImageViewer00" taborder="1" text="ImageViewer00" left="33" top="61" width="747" height="389" stretch="fixaspectratio" border="1px solid black"/>
+        <Button id="Button01" taborder="2" text="close" left="840" top="3" width="97" height="37" onclick="Button01_onclick"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile" width="480" height="700" mobileorientation="portrait"/>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  DevPACK
+*  @FileName 	bizBoardInputPopup.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2021/03/09
+*  @Desction   
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2021/03/09			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+this.fvApndYn    = ""; //첨부파일유무
+this.fvAnswYn	 = ""; //답변유무
+this.fvOpenType  = ""; //오픈상태
+this.fvTitle  	 = ""; //게시판 타이틀
+this.fvInputId 	 = ""; //작성자ID
+this.fvInputEmpNo= ""; //작성자EMP_NO
+this.fvBoardCd   = ""; //게시판코드
+this.fvNotiNo    = ""; //게시물넘버
+this.fvHrank	 = ""; //상위게시물넘버
+this.fvAnswLvl   = ""; //답변레벨
+this.fvLoginUser = ""; //로그인유저ID
+this.fvFileId    = ""; //파일아이디
+
+this.fvCard		 = ""; //카드형 구분
+
+this.sServerUrl = "http://localhost:8080/npN/accessbility/";
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	if (system.navigatorname != "nexacro"){		
+		//html2canvas - 0.5.0-beta4 버전이 그나마 Canvas 처리를 정상적으로 하네여
+		this.fnJsInclude(this.sServerUrl+"js/html2canvas.js");
+	}	
+
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+
+this.fnJsInclude = function(FileDir, strIntegrity, strCrossorigin) 
+{ 
+    var includejs = document.createElement("script");
+    includejs.src = FileDir;
+    
+    if (strIntegrity)includejs.integrity = strIntegrity;
+    if (strCrossorigin)includejs.crossOrigin = strCrossorigin;
+    
+    document.head.appendChild(includejs);
+};
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (system.navigatorname == "nexacro")
+	{		
+		var sRtn =  system.saveToImageBase64String(nexacro.getApplication().mainframe, false, "PNG");
+		this.ImageViewer00.set_image(sRtn);		
+	}
+	else
+	{
+	// 	var ele = document.getElementById(objComp.getElement().handle.id);
+		var oForm = this;
+	// 	if (!ele){
+	// 		trace('ele is not exist.')
+	// 		return false;
+	// 	}			
+		var ele = opener.document.body;
+		html2canvas(ele, {
+			onrendered : function(canvas){
+				sImageData = canvas.toDataURL('image/png'); //Image 코드로 뽑아내기 // image 추가 	
+				oForm.ImageViewer00.set_image(sImageData);
+			}
+		});	
+	}
+};
+
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="BLBD_CD" type="STRING" size="256"/>
+          <Column id="NOTI_NO" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="CNTN" type="STRING" size="256"/>
+          <Column id="INQ_CNT" type="STRING" size="256"/>
+          <Column id="RCMD_CNT" type="STRING" size="256"/>
+          <Column id="ANSW_YN" type="STRING" size="256"/>
+          <Column id="HRANK_NOTI_NO" type="STRING" size="256"/>
+          <Column id="ANSW_ORDER" type="STRING" size="256"/>
+          <Column id="ANSW_LEVL" type="STRING" size="256"/>
+          <Column id="FILE_ID" type="STRING" size="256"/>
+          <Column id="DEL_YN" type="STRING" size="256"/>
+          <Column id="CTNS_ATTR" type="STRING" size="256"/>
+          <Column id="INPT_ID" type="STRING" size="256"/>
+          <Column id="INPT_EMP_NO" type="STRING" size="256"/>
+          <Column id="STATUS" type="STRING" size="256"/>
+          <Column id="CNTN_CLOB" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsUpload">
+        <ColumnInfo>
+          <Column id="FILE_ID" type="STRING" size="256"/>
+          <Column id="FILE_SEQ" type="STRING" size="256"/>
+          <Column id="SAVE_FILE_NM" type="STRING" size="256"/>
+          <Column id="OTXT_FILE_NM" type="STRING" size="256"/>
+          <Column id="FILE_SIZE" type="STRING" size="256"/>
+          <Column id="FILE_TYPE" type="STRING" size="256"/>
+          <Column id="FILE_PATH_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

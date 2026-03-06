@@ -1,0 +1,564 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comm_mobileMenu" width="640" height="1590" titletext="모바일 메뉴" cssclass="frm_Pop_bg40" scrollbartype="default default" scrollbarsize="1" scrollbardecbuttonsize="0" scrollbarincbuttonsize="0" onload="comm_mobileMenu_onload" onsize="comm_mobileMenu_onsize">
+    <Layouts>
+      <Layout height="1590" mobileorientation="portrait" screenid="mobileP,mobile" width="640">
+        <Div id="divMenu" taborder="0" top="0" width="602" cssclass="div_Pop_menuGroup" right="0" initvalueid="ivDivAccessibilityOn" accessibilitylabel="메뉴목록 팝업" height="1590">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divServiceLink" taborder="1" top="1590" height="561" cssclass="div_Pop_menuSub" right="0" width="602" initvalueid="ivDivAccessibilityOff" visible="false">
+          <Layouts>
+            <Layout>
+              <Static id="staSubTitle" taborder="0" text="대국민서비스 바로가기" left="142" top="52" width="318" height="60" cssclass="font30M" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Button id="btnServiceLink1" taborder="1" text="나이스플러스" left="38" top="126" width="189" height="187" cssclass="btn_Pop_menu_serviceLink1" initvalueid="ivBtnAccessibilityLink"/>
+              <Button id="btnServiceLink2" taborder="2" text="학부모서비스" left="233" top="126" width="179" height="187" cssclass="btn_Pop_menu_serviceLink2" initvalueid="ivBtnAccessibilityLink" icon="url('imagerc::common_M/icon_serviceLink_M01.png')"/>
+              <Button id="btnServiceLink3" taborder="3" text="검정고시" left="426" top="126" width="147" height="184" cssclass="btn_Pop_menu_serviceLink2" initvalueid="ivBtnAccessibilityLink" icon="url('imagerc::common_M/icon_serviceLink_M02.png')"/>
+              <Button id="btnServiceLink4" taborder="4" text="민원서비스" left="38" top="313" width="189" height="187" cssclass="btn_Pop_menu_serviceLink2" initvalueid="ivBtnAccessibilityLink" icon="url('imagerc::common_M/icon_serviceLink_M03.png')"/>
+              <Button id="btnServiceLink5" taborder="5" text="비영리법인" left="233" top="313" width="189" height="187" cssclass="btn_Pop_menu_serviceLink2" initvalueid="ivBtnAccessibilityLink" icon="url('imagerc::common_M/icon_serviceLink_M04.png')"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  모바일 메뉴
+*  @MenuPath    comm
+*  @FileName 	commp_mobileMenu.xfdl 
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022.10.07
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  	2022.10.07	     	TOBESOFT			    최초 생성
+*******************************************************************************
+*/
+//하위 메뉴 없을 경우 : btn_Pop_menu_lev0_subNone
+//메뉴 접을때 : btn_Pop_menu_lev0
+//메뉴 펼칠때 : btn_Pop_menu_lev0_S
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::sm_script.xjs";
+
+this.objApp = nexacro.getApplication();
+this.divContainer = this.divMenu;
+this.btnSiteMap;
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+************************************************************************************************/
+
+this.comm_mobileMenu_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitDiv(obj);
+
+	this.dsMenu.copyData(this.getOwnerFrame().form.divTop.form.dsMenu);
+
+	//@KBR 대국민포탈/서브포탈 구분
+	var sSubSystemGb = this.smfGetSubSystemGb();
+	if( sSubSystemGb == "PAS" ) 
+	{
+		this.btnSiteMap = this.getOwnerFrame().form.divTop.form.divTopB.form.btnSitemap;
+	}
+	else
+	{
+		this.btnSiteMap = this.getOwnerFrame().form.divTop.form.divDispArea.form.btnSitemap;
+		
+		// divMenu minHeight 설정
+		this.divMenu.set_minheight(this.getOffsetHeight());
+		
+		// 필터를 건다 (isShow에 맞게 메뉴를 조정) 
+		var sIsShowId = this.objApp.gv_menuColumns.isShow;
+		var sFilter = "((" + sIsShowId + "!='N') && (" + sIsShowId + "!='1'))"
+		this.dsMenu.filter(sFilter); 	
+	}	
+	
+	this.fnLoad();
+};
+
+
+this.comm_mobileMenu_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	//div height변경 (잘림방지)
+	var sSubSystemGb = this.smfGetSubSystemGb();
+	if( sSubSystemGb != "PAS" ) 
+	{
+		// divMenu minHeight 재설정
+		this.divMenu.set_minheight(this.getOffsetHeight());
+	}		
+	this.divMenu.form.resetScroll();
+	this.resetScroll();
+};
+
+/**
+@class fnLoad
+@description topmenu를 dsMenu로 copy
+@param N/A
+@return N/A
+*/ 
+this.fnLoad = function ()
+{
+	// 메뉴를 재생성
+	this.fnSetTopMenu("btn_Top_menuB");	
+	// 필터를 해제  @KBR 주석
+	//this.dsMenu.filter("");
+};
+
+/**
+@class fnSetTopMenu
+@description topmenu 세팅
+@param N/A
+@return N/A
+*/ 
+this.fnSetTopMenu = function(pCssclass)
+{
+	var btnObj;
+	var nCnt = this.dsMenu.getRowCount();
+
+	for (var i = 0; i < nCnt; i++)
+	{
+		var strID   = this.dsMenu.getColumn(i, this.objApp.gv_menuColumns.menuId );  		// 메뉴아이디
+		var strName = this.dsMenu.getColumn(i,this.objApp.gv_menuColumns.menuNm );  		// 메뉴명
+		var befStrName = this.dsMenu.getColumn(i-1, this.objApp.gv_menuColumns.menuNm ); 	// 메뉴명
+		var strUrl = this.dsMenu.getColumn(i, this.objApp.gv_menuColumns.pageUrl );  		// 메뉴URL
+		var isShow = this.dsMenu.getColumn(i, this.objApp.gv_menuColumns.isShow );  		// 메뉴아이디
+		var lvl    = this.dsMenu.getColumn(i, this.objApp.gv_menuColumns.menuLevel );  									// 메뉴레벨
+		var parentMenuId = this.dsMenu.getColumn(i,this.objApp.gv_menuColumns.parentMenuId);  							// 부모메뉴아이디
+		var isChildLeaf  = this.dsMenu.findRow(this.objApp.gv_menuColumns.parentMenuId,strID) > -1?true:false;			// 하위메뉴여부
+		
+		if ( lvl == "0" )
+		{
+			this.fnCreateMMenu(strID, strName, strUrl, i,pCssclass,lvl,befStrName,isChildLeaf);
+		}else if ( strID != "8000" && lvl == "1" )
+		{
+			this.fnSubCreateMMenu(strID, strName, strUrl, i,pCssclass,lvl,parentMenuId,befStrName,isChildLeaf);
+		}
+	}
+	// 하위 메뉴 숨기기
+	for(var j=0;j<this.divContainer.form.components.length;j++)
+	{
+		if ( this.divContainer.form.components[j] instanceof nexacro.Div )
+		{
+			var orgH = this.divContainer.form.components[j].getOffsetHeight();
+			this.divContainer.form.components[j].orgH = orgH;
+			this.divContainer.form.components[j].setOffsetHeight(0);
+			this.divContainer.form.components[j].set_visible(false);
+		}
+	}
+	this.currBottom = 0;
+	for(var b=0;b<this.divContainer.form.components.length;b++)
+	{
+		var curComponent = this.divContainer.form.components[b].getOffsetBottom();
+		this.currBottom = curComponent;
+		if ( this.divContainer.form.components[b+1] )
+		{
+			this.divContainer.form.components[b+1].setOffsetTop(curComponent);
+			this.currBottom = this.divContainer.form.components[b+1].getOffsetBottom();
+		}
+	}
+	
+	this.divContainer.setOffsetBottom(this.currBottom);
+	this.resetScroll();	
+	this.setFocus();
+};
+
+this.nTop = 0;
+this.nSubTop = 0;
+this.MenuHeight   = 72;
+this.topMargin    = 28;
+this.bottomMargin = 28;
+
+//레벨 0 메뉴 버튼 생성 
+//레벨 0 메뉴 버튼 크릭 이벤트 설정
+this.fnCreateMMenu = function(pStrID,pStrName,pStrUrl,i,pCssclass,pLvl,pbefStrName,pIsChildLeaf)
+{
+	// Create Object
+	var objBtn = new Button();
+	objBtn.init("btn"+pStrID, 0, this.nTop, null, 120,0,null);
+
+	// Add Object to Parent Form
+	this.divContainer.form.addChild("btn"+pStrID, objBtn);
+	//objBtn.set_initvalueid("ivBtnAccessibilityLink");
+	!pIsChildLeaf?objBtn.set_cssclass("btn_Pop_menu_lev0_subNone"):objBtn.set_cssclass("btn_Pop_menu_lev0");
+	!pIsChildLeaf?objBtn.set_initvalueid("ivBtnAccessibilityLink"):objBtn.set_initvalueid("ivBtnAccessibilityDown");
+
+	objBtn.setEventHandler("onclick",function(obj,e){
+
+		if ( this.divContainer.form["divSubPage"+pStrID] )
+		{
+			if ( this.divContainer.form["divSubPage"+pStrID].getOffsetHeight() > 0 )
+			{
+				obj.set_cssclass("btn_Pop_menu_lev0");
+				this.divContainer.form["divSubPage"+pStrID].orgH = this.divContainer.form["divSubPage"+pStrID].getOffsetHeight();
+				this.divContainer.form["divSubPage"+pStrID].setOffsetHeight(0);
+			}else
+			{	
+				obj.set_cssclass("btn_Pop_menu_lev0_S");
+				this.divContainer.form["divSubPage"+pStrID].setOffsetHeight(this.divContainer.form["divSubPage"+pStrID].orgH);
+				this.divContainer.form["divSubPage"+pStrID].set_visible(true);
+			}
+			
+			this.currBottom = 0;
+			for( var i=0; i < this.divContainer.form.components.length;i++)
+			{
+				var objMenu = this.divContainer.form.components[i];
+				if ( this.divContainer.form.components[i] instanceof nexacro.Button )
+				{
+					if ( obj.name != this.divContainer.form.components[i].name )
+					{
+						if ( !objMenu.pIsChildLeaf ) 
+						{
+							objMenu.set_cssclass("btn_Pop_menu_lev0_subNone");
+						}else
+						{
+							var subStrID = this.divContainer.form.components[i].name.substr(3);
+							this.divContainer.form["divSubPage"+subStrID].setOffsetHeight(0);
+							this.divContainer.form["divSubPage"+subStrID].set_visible(false);
+							objMenu.set_cssclass("btn_Pop_menu_lev0");
+						}
+					}
+				}
+				
+				var curComponent = this.divContainer.form.components[i].getOffsetBottom();
+				if ( this.divContainer.form.components[i+1] )
+				{
+					this.divContainer.form.components[i+1].setOffsetTop(curComponent);
+					this.currBottom = this.divContainer.form.components[i+1].getOffsetBottom();
+				}
+			}
+
+			this.divContainer.setOffsetBottom(this.currBottom);
+			this.resetScroll();
+		}else
+		{
+			var sUrl = pStrUrl;
+			
+			if(!this.smfIsNull(sUrl))
+			{
+				var params = {};
+				this.smfSetWorkPage(sUrl, params);
+				this.btnSiteMap.set_cssclass("btn_Top_sitemap_M");
+				this.btnSiteMap.set_accessibilitylabel("메뉴열기");
+				this.smfClose(this);			
+			}
+		}
+	}, this);
+	objBtn.set_text(pStrName);
+	objBtn.show();
+	
+	objBtn.pStrID = pStrID;
+	objBtn.pStrName = pStrName;
+	objBtn.pStrUrl = pStrUrl;
+	objBtn.pCssclass = pCssclass;
+	objBtn.pLvl = pLvl;
+	objBtn.pbefStrName = pbefStrName;
+	objBtn.pIsChildLeaf = pIsChildLeaf;
+	
+	this.nTop = this.nTop  + 120;
+};
+
+//레벨 1 메뉴 버튼 생성
+//레벨 1 메뉴 버튼 클릭 이벤트
+this.fnSubCreateMMenu = function(pStrID,pStrName,pStrUrl,i,pCssclass,pLvl,pParentMenuId,pbefStrName)
+{
+	if ( !this.divContainer.form["divSubPage" + pParentMenuId] )
+	{
+		var divSubPage = new Div();
+		var nCaseCnt = this.dsMenu.getCaseCount(this.objApp.gv_menuColumns.parentMenuId + " ==" + pParentMenuId);
+		var nSubHeight = this.topMargin + (this.MenuHeight * nCaseCnt) + this.bottomMargin;
+
+		divSubPage.init("divSubPage"+pParentMenuId,0,this.nTop,null,nSubHeight,0,null);
+
+		// Add Object to Parent Form
+		this.divContainer.form.addChild("divSubPage" + pParentMenuId,divSubPage);
+		divSubPage.set_initvalueid("ivDivAccessibilityOff");
+		divSubPage.set_cssclass("div_Pop_menuSub");
+		divSubPage.set_formscrollbartype("none none");
+		divSubPage.show();
+
+		divSubPage.ParentMenuId = pParentMenuId;
+		this.nSubTop = 28; // 초기화
+		this.nTop = this.nTop  + this.topMargin + this.bottomMargin;
+	}
+
+	// Create Object
+	var objBtn = new Button();
+	objBtn.init("btn" +pStrID,0,this.nSubTop,null,72,0,null);
+
+	// Add Object to Parent Form
+	this.divContainer.form["divSubPage"+pParentMenuId].form.addChild("btn"+pStrID, objBtn);
+	objBtn.set_initvalueid("ivBtnAccessibilityLink");
+	objBtn.set_cssclass("btn_Pop_menu_lev1");
+
+	objBtn.setEventHandler("onclick",function(obj,e){
+		var sUrl = pStrUrl;
+		var sType = "link";
+		if(!this.smfIsNull(sUrl))
+		{	
+			var params = {};
+			
+			if(pParentMenuId == "8000"){	//대국민포털-서브포털 링크
+				
+				if(sUrl.length == 3){	//서비스 코드인 경우 url 받아오기
+					sUrl = this._smfGoNexacro("dev",sUrl); // 추후 운영서버일 경우 변경 필요(현재 안씀. 사용시 운영 추가)
+				}
+				if(pStrID == "8001"){	//대국민포털 메인
+					sType = "redirect";
+				}
+				this.smfSetServiceLink(sUrl,sType,params);
+			}else{
+				this.smfSetWorkPage(sUrl, params);
+			}
+			
+			this.btnSiteMap.set_cssclass("btn_Top_sitemap_M");
+			this.btnSiteMap.set_accessibilitylabel("메뉴열기");
+			this.smfClose(this);
+			
+		}else
+		{
+			this.smfClose(this);
+		}
+	}, this);
+	objBtn.set_text(pStrName);
+	objBtn.show();
+
+	this.nSubTop = this.nSubTop + 72;
+	this.nTop = this.nTop  + 72;
+	this.divContainer.setOffsetHeight(this.nTop);
+	//this.smfResetScroll(this.divContainer.form);
+	//this.smfResetScroll(this.divServiceLink.form);
+	//this.smfResetScroll(this);
+};
+
+
+// @KBR 주석처리
+// this.dsMenu_onrowposchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo)
+// {
+// 	if( e.reason == 51 )
+// 	{
+// 		this.fnLoad();
+// 	}	
+// };
+
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsMenu" onrowposchanged="dsMenu_onrowposchanged">
+        <ColumnInfo>
+          <Column id="lvl" type="INT" size="256"/>
+          <Column id="parentMenuId" type="STRING" size="256"/>
+          <Column id="menuId" type="STRING" size="256"/>
+          <Column id="menuName" type="STRING" size="256"/>
+          <Column id="menuUrl" type="STRING" size="256"/>
+          <Column id="isShow" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMenu_pas">
+        <ColumnInfo>
+          <Column id="lvl" type="INT" size="256"/>
+          <Column id="parentMenuId" type="STRING" size="256"/>
+          <Column id="menuId" type="STRING" size="256"/>
+          <Column id="menuName" type="STRING" size="256"/>
+          <Column id="menuUrl" type="STRING" size="256"/>
+          <Column id="isShow" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="lvl">0</Col>
+            <Col id="menuId">1000</Col>
+            <Col id="menuName">나이스 소개</Col>
+            <Col id="menuUrl">pa_pas_mms_si::pas_mmssi00_m00.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="menuName">나이스개요</Col>
+            <Col id="menuUrl">pa_pas_mms_si::pas_mmssi00_m.xfdl</Col>
+            <Col id="parentMenuId">1000</Col>
+            <Col id="menuId">1001</Col>
+            <Col id="lvl">1</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">1</Col>
+            <Col id="parentMenuId">1000</Col>
+            <Col id="menuId">1002</Col>
+            <Col id="menuName">서비스소개</Col>
+            <Col id="menuUrl">pa_pas_mms_si::pas_mmssi00_m04.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">0</Col>
+            <Col id="parentMenuId"/>
+            <Col id="menuId">2000</Col>
+            <Col id="menuName">이벤트·공모전</Col>
+            <Col id="menuUrl">pa_pas_mms_cn::pas_mmscn03_m01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">0</Col>
+            <Col id="parentMenuId"/>
+            <Col id="menuId">3000</Col>
+            <Col id="menuName">이용안내</Col>
+            <Col id="menuUrl">pa_pas_mms_cn::pas_mmscn04_m01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">1</Col>
+            <Col id="parentMenuId">3000</Col>
+            <Col id="menuId">3001</Col>
+            <Col id="menuName">자주묻는질문</Col>
+            <Col id="menuUrl">pa_pas_mms_cn::pas_mmscn01_m01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">1</Col>
+            <Col id="parentMenuId">3000</Col>
+            <Col id="menuId">3002</Col>
+            <Col id="menuName">이용문의</Col>
+            <Col id="menuUrl">pa_pas_mms_cn::pas_mmscn00_m20.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">0</Col>
+            <Col id="parentMenuId"/>
+            <Col id="menuId">4000</Col>
+            <Col id="menuName">공지사항</Col>
+            <Col id="menuUrl">pa_pas_mms_cn::pas_mmscn00_m01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="menuName">교육민원서비스</Col>
+            <Col id="menuId">6000</Col>
+            <Col id="lvl">0</Col>
+            <Col id="menuUrl">pa_pas_mms_cs::pas_mmscs00.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="menuName">온라인 민원현황</Col>
+            <Col id="menuId">6001</Col>
+            <Col id="parentMenuId">6000</Col>
+            <Col id="lvl">1</Col>
+            <Col id="menuUrl">pa_pas_mms_cs::pas_mmscs00_m00.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="menuId">6002</Col>
+            <Col id="menuName">온라인 민원 발급기준연도</Col>
+            <Col id="parentMenuId">6000</Col>
+            <Col id="lvl">1</Col>
+            <Col id="menuUrl">pa_pas_mms_cs::pas_mmscs01_m01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="menuId">6003</Col>
+            <Col id="menuName">민원실조회</Col>
+            <Col id="parentMenuId">6000</Col>
+            <Col id="lvl">1</Col>
+            <Col id="menuUrl">pa_pas_mms_cs::pas_mmscs02_m01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="menuName">발급문서 진위확인</Col>
+            <Col id="menuId">6004</Col>
+            <Col id="parentMenuId">6000</Col>
+            <Col id="lvl">1</Col>
+            <Col id="menuUrl">pa_pas_mms_cs::pas_mmscs00_m07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="menuName">폐지학교 관리기관조회</Col>
+            <Col id="menuId">6005</Col>
+            <Col id="parentMenuId">6000</Col>
+            <Col id="lvl">1</Col>
+            <Col id="menuUrl">pa_pas_mms_cs::pas_mmscs04_m01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="menuId">5006</Col>
+            <Col id="menuName">교육소식마당</Col>
+            <Col id="parentMenuId">5000</Col>
+            <Col id="lvl">1</Col>
+            <Col id="menuUrl">pa_pas_mms_cn::pas_mmscn02_m01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">0</Col>
+            <Col id="parentMenuId"/>
+            <Col id="menuId">9100</Col>
+            <Col id="menuName">저작권보호정책</Col>
+            <Col id="menuUrl">pa_pas_mms_sp::pas_mmssp00_m02.xfdl</Col>
+            <Col id="isShow">0</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">0</Col>
+            <Col id="parentMenuId"/>
+            <Col id="menuId">9200</Col>
+            <Col id="menuName">웹접근성정책</Col>
+            <Col id="menuUrl">pa_pas_mms_sp::pas_mmssp00_m01.xfdl</Col>
+            <Col id="isShow">0</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">0</Col>
+            <Col id="menuId">8000</Col>
+            <Col id="menuName">나이스대국민전체서비스</Col>
+            <Col id="parentMenuId">8000</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">1</Col>
+            <Col id="parentMenuId">8000</Col>
+            <Col id="menuId">8001</Col>
+            <Col id="menuName">나이스대국민포털</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">1</Col>
+            <Col id="menuName">나이스플러스</Col>
+            <Col id="menuId">8002</Col>
+            <Col id="parentMenuId">8000</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">1</Col>
+            <Col id="menuName">학부모서비스</Col>
+            <Col id="menuId">8003</Col>
+            <Col id="parentMenuId">8000</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">1</Col>
+            <Col id="menuName">검정고시</Col>
+            <Col id="menuId">8004</Col>
+            <Col id="parentMenuId">8000</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">1</Col>
+            <Col id="menuName">교육설문</Col>
+            <Col id="menuId">8005</Col>
+            <Col id="parentMenuId">8000</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">1</Col>
+            <Col id="menuName">교육비 원클릭 신청시스템</Col>
+            <Col id="menuId">8006</Col>
+            <Col id="parentMenuId">8000</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">1</Col>
+            <Col id="menuName">교직원채용</Col>
+            <Col id="menuId">8007</Col>
+            <Col id="parentMenuId">8000</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">1</Col>
+            <Col id="menuName">학원민원</Col>
+            <Col id="menuId">8008</Col>
+            <Col id="parentMenuId">8000</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">1</Col>
+            <Col id="menuName">학원·교습소정보조회</Col>
+            <Col id="menuId">8009</Col>
+            <Col id="parentMenuId">8000</Col>
+          </Row>
+          <Row>
+            <Col id="lvl">1</Col>
+            <Col id="menuName">비영리법인민원</Col>
+            <Col id="menuId">8010</Col>
+            <Col id="parentMenuId">8000</Col>
+          </Row>
+          <Row>
+            <Col id="menuName">대입전형자료수신</Col>
+            <Col id="lvl">1</Col>
+            <Col id="menuId">8011</Col>
+            <Col id="parentMenuId">8000</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

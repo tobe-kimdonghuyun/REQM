@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_PopSystem01" width="480" height="320" titletext="시스템 종료 팝업" onload="Form_PopSystem01_onload" ontimer="form_ontimer">
+    <Layouts>
+      <Layout height="320" width="480" screenid="desktopScr">
+        <Div id="Div00" taborder="0" text="Div00" left="0" top="0" cssclass="div_POP_Bg" right="0" bottom="0">
+          <Layouts>
+            <Layout>
+              <Button id="Button12_00_00" taborder="3" text="확인" height="40" width="15.27%" left="203" cssclass="btn_WF_Crud02" initvalueid="iv_Button" bottom="29" onclick="Div00_Button12_00_00_onclick"/>
+              <Static id="Static00" taborder="2" left="40" top="90" height="40" cssclass="sta_POP_Info" right="40"/>
+              <Static id="Static00_00" taborder="0" left="20" top="0" height="74" right="18" accessibilityrole="heading" cssclass="sta_POP_Title" text="안내"/>
+              <Button id="Button00" taborder="1" top="21" width="40" height="40" right="18" cssclass="btn_POP_Close" accessibilitydescription="팝업닫기" initvalueid="iv_Button" onclick="Div00_Button00_onclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static01" taborder="1" text="정보보호를 위해 시스템을 종료합니다." left="40" top="162" height="24" cssclass="sta_WF_TxtCenter" right="40"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템
+*  @MenuPath    공통
+*  @FileName 	scr_comm_extend.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+ /***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ 
+ 
+ /************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ 
+ 
+ /************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+/* 닫기버튼 */
+this.Div00_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+
+
+/* 확인버튼 */
+this.Div00_Button12_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.killTimer(this.fvTimerId);
+	this.smfSendResponseToOpener({
+		 "logoutYn" : false
+	});		
+	this.close();
+};
+
+]]></Script>
+  </Form>
+</FDL>

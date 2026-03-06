@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="spr_ewsit00_m00" width="1280" height="745" titletext="인터넷통신비정산" onload="fnOnload" nHeight="754">
+    <Layouts>
+      <Layout height="745" width="1280" screenid="ScreenDeskTop">
+        <Static id="sta224" taborder="0" text="인터넷 통신비정산" left="40" top="30" width="285" height="53" cssclass="sta_WF_MainTit_B34" initvalueid="ivStcAccessibilityOn"/>
+        <Combo id="cbo01" taborder="1" text="cbo00" left="558" top="180" width="210" height="52" cssclass="Pas" initvalueid="ivCmbNormal" innerdataset="dsApsFamRelCd" codecolumn="unyCdValue" datacolumn="unyCdValueNm" onitemchanged="cbo01_onitemchanged"/>
+        <Edit id="edt01" taborder="2" left="778" top="180" width="210" height="52" text="입력값" cssclass="edi_Login_Normal" initvalueid="ivEdtNormal" displaynulltext="직접입력"/>
+        <Button id="btn00_02_00_00" taborder="3" text="정산양식 내려받기" left="1008" top="180" width="177" height="52" cssclass="btn_WF_MapSC" initvalueid="ivBtnAccessibilityButton" onclick="btnExport_onclick"/>
+        <Button id="btn00" taborder="4" text="인터넷 통신비 지원대상&#13;&#10;다운로드" left="88" top="266" width="530" height="328" cssclass="btn_WF_UserSelect04" initvalueid="ivBtnAccessibilityButton" enable="true"/>
+        <Button id="btnFile" taborder="5" text="인터넷 통신비 정산내역&#13;&#10;업로드" left="658" top="265" width="530" height="328" cssclass="btn_WF_UserSelect04" initvalueid="ivBtnAccessibilityButton" enable="true" onclick="btnFileSelect_onclick"/>
+        <Grid id="grdExport" taborder="6" left="558" top="50" width="482" height="120" binddataset="dsGridExport" visible="false">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="60"/>
+                <Column size="150"/>
+                <Column size="60"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="300"/>
+                <Column size="200"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="200"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell rowspan="2" text="통신사" background="orange"/>
+                <Cell col="1" rowspan="2" text="학교명" background="orange"/>
+                <Cell col="2" rowspan="2" text="학년" background="orange"/>
+                <Cell col="3" rowspan="2" text="학생생년월일" background="orange"/>
+                <Cell col="4" rowspan="2" text="학생명"/>
+                <Cell col="5" colspan="3" text="가입자"/>
+                <Cell col="8" rowspan="2" text="우편번호"/>
+                <Cell col="9" rowspan="2" text="주소"/>
+                <Cell col="10" rowspan="2" text="상세주소"/>
+                <Cell col="11" colspan="3" text="VAT포함"/>
+                <Cell col="14" rowspan="2" text="비고"/>
+                <Cell row="1" col="5" text="성명"/>
+                <Cell row="1" col="6" text="생년월일"/>
+                <Cell row="1" col="7" text="전화번호"/>
+                <Cell row="1" col="11" text="인터넷(원)"/>
+                <Cell row="1" col="12" text="유해차단(원)"/>
+                <Cell row="1" col="13" text="합계(원)"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2"/>
+                <Cell col="3" text="bind:Column3"/>
+                <Cell col="4" text="bind:Column4"/>
+                <Cell col="5" text="bind:Column5"/>
+                <Cell col="6" text="bind:Column6"/>
+                <Cell col="7" text="bind:Column7"/>
+                <Cell col="8" text="bind:Column8"/>
+                <Cell col="9" text="bind:Column9"/>
+                <Cell col="10" text="bind:Column10"/>
+                <Cell col="11" text="bind:Column11"/>
+                <Cell col="12" text="bind:Column12"/>
+                <Cell col="13" text="bind:Column13"/>
+                <Cell col="14" text="bind:Column14"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divFileUpload" taborder="7" left="225" top="604" url="comm::comm_fileAdd.xfdl" Mode="upload" uploadLocation="PA.EWS.OCL" addProp="fnSetRaonProp" privInfoFiltYn="N" fileEncryptYn="N" fileSaveStg="OS" fileInfSaveYn="Y" bottom="24" right="55" visible="false" initvalueid="ivDivAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleExcelExportImport.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.9.21
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.9.21     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	//파라미터 세팅
+	//=======================================
+	// 업로드관련 초기설정을 한다.
+	//=======================================
+	// 업로드시 저장위치등을 판별할 정보 세팅(대문자 : 시스템코드(2)+"."+서브시스템코드(3)+"."+대분류코드(3))
+	this.divFileUpload.UPLOAD_CreateComplete = this.fnEventUploadCreateComplete;  // 필요한 경우만 세팅
+	this.divFileUpload.UPLOAD_UploadComplete = this.fnEventUploadComplete;        // 필요한 경우만 세팅(세팅권장)
+	this.divFileUpload.UPLOAD_OnError        = this.fnEventUploadError;           // 필요한 경우만 세팅(세팅권장)
+	this.divFileUpload.UPLOAD_AfterAddFile   = this.fnEventUploadAfterAddFile;
+	
+	this.divFileUpload.UPLOAD_Form           = this;                              // 위의 함수가 존재하는 Form (보통은 this)
+	
+	
+	// 공통코드의 코드구분
+	this.smfCodeList("code", [this.dsApsFamRelCd])
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			this.cbo01.set_index(0);
+		});
+	
+};
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd <= -1) return;
+};
+
+/**
+ * raonkupload가 화면을 생성된 이후 발생 콜백함수
+ * @param : obj
+ * @param : paramObj
+ * @return : N/A
+ */
+this.fnEventUploadCreateComplete = function(obj,paramObj)
+{
+};
+
+/**
+ * raonkupload가 파일을upload한 후 발생 콜백함수
+ * @param : obj
+ * @param : paramObj
+ * @param : objResultDataset
+ * @return : N/A
+ */
+this.fnEventUploadComplete = function(obj,paramObj,objResultDataset)
+{
+	// 업로드 초기화
+	this.divFileUpload.form.fnResetUpload();
+	
+	if(objResultDataset != null){
+		for(var i = 0; i < objResultDataset.getRowCount(); i++){
+			var row = this.dsOutFileinfo.addRow();
+			this.dsOutFileinfo.copyRow(row, objResultDataset, i);
+		}
+	}
+	
+};
+
+/**
+ * raonkupload가 파일을upload실패 후 발생 콜백함수
+ * @param : obj
+ * @param : paramObj
+ * @return : N/A
+ */
+this.fnEventUploadError = function(obj,paramObj)
+{
+};
+
+/**
+ * raonkupload가 파일을 추가 후 발생 콜백함수
+ * @param : obj
+ * @param : paramObj
+ * @param : sCustomValue
+ * @param : sFileName
+ * @param : nFileSize
+ * @return : N/A
+ */
+this.fnEventUploadAfterAddFile = function(obj,paramObj,sCustomValue,sFileName,nFileSize)
+{
+	this.divFileUpload.form.fnFileUpload();
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+
+this.btnExport_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objOption = {
+						objGrid : this.grdExport    // [필수] export할 그리드 오브젝트
+					,   sheetname : "양식시트1"       // [필수] export할 시트명
+					,   filename : "정산양식 내려받기"   // [필수] export할 파일이름
+					//,   startcell : "A1"            // [선택] 그리드를 export를 할 시작 위치(default="A1")
+					//,   exporttype : "select"    // [선택] "select": 팝업에서 유저가 선택, nexacro.ExportTypes.EXCEL2007(default)  , nexacro.ExportTypes.HANCELL2014 , nexacro.ExportTypes.CSV  , 
+					};
+	
+	this.smfExcelExport(objOption);
+};
+
+
+
+
+
+this.btnFileSelect_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+	if(this.cbo01.index == 0 && (this.edt01.value == null || this.edt01.value == "" || this.edt01.value == "undefined")){
+		this.alert("통신사를 직접입력하세요.");
+		return false;
+	}
+	
+	this.divFileUpload.form.fnAddFile();
+};
+
+this.cbo01_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if( obj.value == "00" ){
+		this.edt01.set_visible(true);
+	}else{
+		this.edt01.set_visible(false);
+	}
+	
+	this.edt01.set_value(null);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsSearch"/>
+      <Dataset id="dsGridExport">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+          <Column id="Column5" type="STRING" size="256"/>
+          <Column id="Column6" type="STRING" size="256"/>
+          <Column id="Column7" type="STRING" size="256"/>
+          <Column id="Column8" type="STRING" size="256"/>
+          <Column id="Column9" type="STRING" size="256"/>
+          <Column id="Column10" type="STRING" size="256"/>
+          <Column id="Column11" type="STRING" size="256"/>
+          <Column id="Column12" type="STRING" size="256"/>
+          <Column id="Column13" type="STRING" size="256"/>
+          <Column id="Column14" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsOutFileinfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="fileRefrnId" type="STRING" size="256" description="파일SEQ ID"/>
+          <Column id="fileId" type="STRING" size="256" description="파일 아이디"/>
+          <Column id="suc" type="STRING" size="256"/>
+          <Column id="atchFileNm" type="STRING" size="256" description="파일명"/>
+          <Column id="atchFileGuid" type="STRING" size="256" description="파일 GUID"/>
+          <Column id="atchFileMg" type="STRING" size="256"/>
+          <Column id="fileExtsnNm" type="STRING" size="256" description="파일확장자"/>
+          <Column id="minTypeNm" type="STRING" size="256" description="파일의 mime type"/>
+          <Column id="fileCoursNm" type="STRING" size="256" description="서버파일저장위치"/>
+          <Column id="fileObjKey" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsApsFamRelCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="FirstCode" type="STRING" size="30" value="" datapath=""/>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value="INO_SPRT_CMMU_CO_CD"/>
+          <ConstColumn id="FilterExpr" type="STRING" size="30" value=""/>
+          <ConstColumn id="UnyCdGrpId" type="STRING" size="30" value=""/>
+          <ConstColumn id="BfrClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd1Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd2Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd3Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd4Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd5Value" type="STRING" size="30" value=""/>
+          <Column id="pgeId" type="STRING" size="256"/>
+          <Column id="clfCdValue" type="STRING" size="30"/>
+          <Column id="clfCdValueNm" type="STRING" size="120"/>
+          <Column id="clfCdUseYn" type="STRING" size="150"/>
+          <Column id="unyCdValue" type="STRING" size="10"/>
+          <Column id="unyCdValueNm" type="STRING" size="30"/>
+          <Column id="userDfnCd1Value" type="STRING" size="100"/>
+          <Column id="userDfnCd2Value" type="STRING" size="100"/>
+          <Column id="userDfnCd3Value" type="STRING" size="100"/>
+          <Column id="userDfnCd4Value" type="STRING" size="100"/>
+          <Column id="userDfnCd5Value" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

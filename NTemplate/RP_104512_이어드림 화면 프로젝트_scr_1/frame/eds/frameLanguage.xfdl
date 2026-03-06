@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmTemp01" width="330" height="240" titletext="교육설문-학교폭력(언어선택pdiv)" onload="frmTemp01_onload">
+    <Layouts>
+      <Layout height="240" width="330" screenid="ScreenDeskTop">
+        <Static id="sta00" taborder="0" text="언어선택" left="32" top="11" width="79" height="35" cssclass="sta_WF_Txt16B" initvalueid="ivStcAccessibilityOn"/>
+        <Button id="btnSelLang00" taborder="1" text="한국어" left="35" top="58" width="120" height="30" cssclass="btn_TF_LanggChoiceS" initvalueid="ivBtnAccessibilityLink" accessibilitydescription="한국어언어선택" langVal="1" onclick="Button_onclick"/>
+        <Button id="btnSelLang01" taborder="2" text="English" top="58" width="120" height="30" cssclass="btn_TF_LanggChoice" initvalueid="ivBtnAccessibilityLink" left="175" accessibilitydescription="영어언어선택" langVal="2" onclick="Button_onclick"/>
+        <Button id="btnSelLang02" taborder="3" text="中文" left="35" top="98" width="120" height="30" cssclass="btn_TF_LanggChoice" initvalueid="ivBtnAccessibilityLink" accessibilitydescription="중국어언어선택" langVal="3" onclick="Button_onclick"/>
+        <Button id="btnSelLang03" taborder="4" text="日本語" top="98" width="120" height="30" cssclass="btn_TF_LanggChoice" left="175" initvalueid="ivBtnAccessibilityLink" accessibilitydescription="일본어언어선택" langVal="4" onclick="Button_onclick"/>
+        <Button id="btnSelLang04" taborder="5" text="Tiếng Việt" left="35" top="138" width="120" height="30" cssclass="btn_TF_LanggChoice" initvalueid="ivBtnAccessibilityLink" accessibilitydescription="베트남어언어선택" langVal="5" onclick="Button_onclick"/>
+        <Button id="btnSelLang05" taborder="6" text="Filipino" top="138" width="120" height="30" cssclass="btn_TF_LanggChoice" left="175" initvalueid="ivBtnAccessibilityLink" accessibilitydescription="필리핀어언어선택" langVal="6" onclick="Button_onclick"/>
+        <Button id="btnSelLang06" taborder="7" text="Русский" left="35" top="178" width="120" height="30" cssclass="btn_TF_LanggChoice" initvalueid="ivBtnAccessibilityLink" accessibilitydescription="러시아어언어선택" langVal="7" onclick="Button_onclick"/>
+        <Button id="btnSelLang07" taborder="8" text="ภาษาไทย" top="178" width="120" cssclass="btn_TF_LanggChoice" left="175" initvalueid="ivBtnAccessibilityLink" height="30" accessibilitydescription="아랍어언어선택" langVal="8" onclick="Button_onclick"/>
+        <Button id="btnClose" taborder="9" left="268" top="14" width="30" height="30" cssclass="btn_WF_SurvPopClose" initvalueid="ivBtnAccessibilityButton" onclick="btnClose_onclick" accessibilitylabel="팝업 닫기"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="600" height="492" mobileorientation="portrait" type="default">
+        <Static id="sta00" cssclass="sta_WF_Txt34B" left="40" top="40" width="179" height="50" taborder="0"/>
+        <Button id="btnSelLang00" left="40" top="122" width="230" height="65" taborder="2"/>
+        <Button id="btnSelLang01" top="122" height="65" taborder="3" right="40" width="230"/>
+        <Button id="btnSelLang02" left="40" top="207" width="230" height="65" taborder="4"/>
+        <Button id="btnSelLang03" top="207" height="65" taborder="5" right="40" width="230"/>
+        <Button id="btnSelLang04" left="40" top="292" width="230" height="65" text="Tiếng Việt" taborder="6"/>
+        <Button id="btnSelLang05" top="292" height="65" taborder="7" right="40" width="230"/>
+        <Button id="btnSelLang06" left="40" top="377" width="230" height="65" taborder="8"/>
+        <Button id="btnSelLang07" top="377" height="65" taborder="9" right="40" width="230"/>
+        <Button id="btnClose" top="45" width="40" height="40" cssclass="btn_WF_PopupClose" taborder="1" right="40"/>
+        <Static id="sta01"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	frameLanguage.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.11.3
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.11.3     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frameLanguage_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * 버튼 css 설정
+ * @param : langCd			- 언어코드
+ */
+this.fnSetSelectCss = function(langCd){
+	for(var i = 0; i < 8; i++){
+		this['btnSelLang0' + i].set_cssclass('btn_TF_LanggChoice');
+	}
+	this['btnSelLang0' + (langCd-1)].set_cssclass('btn_TF_LanggChoiceS');
+};
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.parent.closePopup("");
+};
+
+this.Button_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	for(var i = 0; i < 8; i++){
+		this['btnSelLang0' + i].set_cssclass('btn_TF_LanggChoice');
+	}
+	this['btnSelLang0' + (obj.langVal-1)].set_cssclass('btn_TF_LanggChoiceS');
+	
+	this.parent.closePopup(obj.langVal+"|"+obj.text);	
+};]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,551 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sample_crudGridPage" width="1280" height="720" titletext="그리드 저장" onload="fnOnload" border="1px solid" onbeforeclose="sample_gridSave_onbeforeclose">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Static id="staMain" taborder="0" text="사용자관리" left="10" cssclass="sta_Ctitle" top="6" right="90" height="40" font="bold 20px/normal &quot;Consolas&quot;"/>
+        <Grid id="grdMain" taborder="1" top="230" height="400" binddataset="dsMain" autofittype="col" scrollbardecbuttonsize="0" scrollbarincbuttonsize="0" left="5" right="91" autoupdatetype="comboselect" autoenter="select" onheadclick="grdMain_onheadclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="27"/>
+                <Column size="48"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="34" band="head"/>
+                <Row size="34"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="순번"/>
+                <Cell col="2" text="아이디"/>
+                <Cell col="3" text="성명"/>
+                <Cell col="4" text="아티스트"/>
+                <Cell col="5" text="음반릴리즈"/>
+                <Cell col="6" text="앨범타입"/>
+                <Cell col="7" text="장르"/>
+                <Cell col="8" text="등급"/>
+                <Cell col="9" text="가격"/>
+                <Cell col="10" text="다운로드횟수"/>
+                <Cell col="11" text="청취횟수"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:_chk" displaytype="checkboxcontrol" edittype="checkbox" checkboxfalsevalue="0" checkboxtruevalue="1"/>
+                <Cell col="1" text="expr:currow+1" textAlign="center"/>
+                <Cell col="2" text="bind:id" edittype="none"/>
+                <Cell col="3" text="bind:name" edittype="text" editautoselect="false"/>
+                <Cell col="4" text="bind:artist" edittype="text" editautoselect="false"/>
+                <Cell col="5" text="bind:release" edittype="date" editautoselect="true" displaytype="date" calendareditformat="yyyy.MM.dd" calendarautoselect="true" calendardisplayinvalidtype="none" calendardisplaynulltype="none" calendardateformat="yyyy.MM.dd"/>
+                <Cell col="6" text="bind:typeCode" edittype="combo" editautoselect="true" combodataset="dsTypeCode" combocodecol="cdcValue" combodatacol="cdcValueNm" displaytype="combocontrol"/>
+                <Cell col="7" text="bind:genreCode" edittype="combo" editautoselect="true" displaytype="combocontrol" combodataset="dsGenreScCd2" combocodecol="cdcValue" combodatacol="cdcValueNm" combotype="filterlike"/>
+                <Cell col="8" text="bind:grade" edittype="combo" editautoselect="true" combodataset="dsGrade" combocodecol="cdcValue" combodatacol="cdcValueNm" displaytype="combocontrol" combotype="filterlike"/>
+                <Cell col="9" text="bind:price" edittype="text" editautoselect="true" displaytype="number" maskeditformat="###,##0"/>
+                <Cell col="10" text="bind:downCnt" edittype="text" editautoselect="true" maskeditformat="###,##0" displaytype="number"/>
+                <Cell col="11" text="bind:listenCnt" edittype="text" editautoselect="true" maskeditformat="###,##0" displaytype="number"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divSearch" taborder="2" left="5" top="61" width="1265" height="119" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta_01" taborder="6" left="79" top="6" cssclass="sta_WF_tablebg" width="265" height="34"/>
+              <Static id="sta_02" taborder="0" text="사용자명" left="0" top="6" cssclass="sta_WF_tablelabel" width="80" height="34"/>
+              <Static id="sta_03" taborder="2" text="아티스트" left="353" top="6" cssclass="sta_WF_tablelabel" width="80" height="34"/>
+              <Static id="sta_04" taborder="7" left="472" top="6" cssclass="sta_WF_tablebg" width="225" height="34"/>
+              <Edit id="edtName" taborder="1" text="-선택-" left="90" top="6" height="34" leftbase="" topbase="" bottombase="" rightbase="" widthbase="" heightbase="" innerdataset="@ds_dep" codecolumn="code" datacolumn="data" scrollbarbarminsize="20" value="" index="-1" scrollbarbaroutsize="20" scrollbarsize="10" scrollbartrackbarsize="25" itemheight="20" width="243"/>
+              <Static id="sta_06" taborder="4" text="장르" left="696" top="6" cssclass="sta_WF_tablelabel" width="80" height="34"/>
+              <Static id="sta_16" taborder="8" left="845" top="6" cssclass="sta_WF_tablebg" width="225" height="34"/>
+              <Combo id="cboGenreCode" taborder="5" top="6" height="34" leftbase="" topbase="" bottombase="" rightbase="" widthbase="" heightbase="" right="302" width="203" innerdataset="dsGenreScCd" codecolumn="cdcValue" datacolumn="cdcValueNm"/>
+              <Edit id="edtArtist" taborder="3" text="-선택-" left="450" top="6" height="34" leftbase="" topbase="" rightbase="" widthbase="" heightbase="" innerdataset="@ds_dep" codecolumn="code" datacolumn="data" value="" index="-1" scrollbarbaroutsize="20" scrollbarsize="10" scrollbartrackbarsize="25" itemheight="20" width="203" validate="maxlength:20"/>
+              <Button id="btnSearch" taborder="9" text="페이징검색-기본" top="6" height="34" width="196" right="84" onclick="div_search_btn_search_onclick"/>
+              <Button id="btnSearch00" taborder="10" text="페이징검색-함수이용" top="46" height="34" width="196" right="84" onclick="divSearch_btnSearch00_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnSave" taborder="3" text="저장" top="185" height="34" width="76" right="172" onclick="btn_save_onclick"/>
+        <Button id="btnDelete" taborder="4" text="삭제" top="185" height="34" width="76" right="95" onclick="btn_delete_onclick"/>
+        <Button id="btnAdd" taborder="5" text="추가" top="185" height="34" width="76" right="249" onclick="btn_add_onclick"/>
+        <Div id="divPaginator" taborder="6" left="5" top="640" width="1184" height="30" url="comm::comp_paginator.xfdl" visible="true" pageViewSize="100" dsPage="dsPage"/>
+        <Div id="divPageSummary" taborder="7" left="7" top="190" width="331" height="30" url="comm::comp_pageSummary.xfdl" visible="true"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsOrdScCode" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="firstCode" type="STRING" size="30" value=""/>
+          <ConstColumn id="filterExpr" type="STRING" size="30" value=""/>
+          <ConstColumn id="clsfCode" type="STRING" size="30" value="ORD_SC_CODE"/>
+          <ConstColumn id="userDfnSet" type="STRING" size="30" value=""/>
+          <Column id="cdcValue" type="STRING" size="30"/>
+          <Column id="cdcValueNm" type="STRING" size="120"/>
+          <Column id="cdcValueAbrvNm" type="STRING" size="150"/>
+          <Column id="codeValueSeq" type="BIGDECIMAL" size="10"/>
+          <Column id="upperClsfCodeValue" type="STRING" size="30"/>
+          <Column id="upperCdcValue" type="STRING" size="30"/>
+          <Column id="userDfnCodeValue01" type="STRING" size="100"/>
+          <Column id="userDfnCodeValue02" type="STRING" size="100"/>
+          <Column id="userDfnCodeValue03" type="STRING" size="100"/>
+          <Column id="userDfnCodeValue04" type="STRING" size="100"/>
+          <Column id="userDfnCodeValue05" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="inDatasets">search=dsSearch pageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsMain=main dsPageInfo=pageInfo</Col>
+            <Col id="asynctp"/>
+            <Col id="url">cmc_sam_pl13_001.do</Col>
+            <Col id="id">list</Col>
+          </Row>
+          <Row>
+            <Col id="inDatasets">main=dsMain:U</Col>
+            <Col id="outDatasets"/>
+            <Col id="asynctp"/>
+            <Col id="url">cmc_sam_pl13_002.do</Col>
+            <Col id="id">save</Col>
+          </Row>
+          <Row>
+            <Col id="inDatasets">main=dsMain</Col>
+            <Col id="outDatasets"/>
+            <Col id="asynctp"/>
+            <Col id="url">cmc_sam_pl13_003.do</Col>
+            <Col id="id">delete</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" oncolumnchanged="dsSearch_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="name" type="STRING" size="150"/>
+          <Column id="genreCode" type="STRING" size="1"/>
+          <Column id="artist" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="name"/>
+            <Col id="genreCode"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="keys" type="STRING" size="30" value="columnText:&quot;성명&quot;name"/>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="_pageRow" type="STRING" size="256"/>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="name" type="STRING" size="256"/>
+          <Column id="artist" type="STRING" size="256"/>
+          <Column id="release" type="STRING" size="256"/>
+          <Column id="typeCode" type="STRING" size="256"/>
+          <Column id="genreCode" type="STRING" size="256"/>
+          <Column id="grade" type="STRING" size="256"/>
+          <Column id="price" type="STRING" size="256"/>
+          <Column id="downCnt" type="STRING" size="256"/>
+          <Column id="listenCnt" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSecurity" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="key" size="255" type="STRING"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="key">sample_select</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMainValid" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="id" type="STRING" size="256" prop="NONE"/>
+          <Column id="name" type="STRING" size="256"/>
+          <Column id="artist" type="STRING" size="256"/>
+          <Column id="release" type="STRING" size="256"/>
+          <Column id="typeCode" type="STRING" size="256"/>
+          <Column id="genreCode" type="STRING" size="256"/>
+          <Column id="grade" type="STRING" size="256"/>
+          <Column id="price" type="STRING" size="256"/>
+          <Column id="downCnt" type="STRING" size="256"/>
+          <Column id="listenCnt" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id"/>
+            <Col id="name">title:사용자이름,required,minlength:2,maxlength:100</Col>
+            <Col id="artist">required,minlength:2,maxlength:100</Col>
+            <Col id="release">required,date</Col>
+            <Col id="price">required,digits:6</Col>
+            <Col id="downCnt">required,digits:8</Col>
+            <Col id="listenCnt">required,digits:8</Col>
+            <Col id="typeCode">required</Col>
+            <Col id="genreCode">required</Col>
+            <Col id="grade">required</Col>
+          </Row>
+          <Row>
+            <Col id="id">title:아이디,required</Col>
+            <Col id="name">=</Col>
+            <Col id="artist">=</Col>
+            <Col id="release">=</Col>
+            <Col id="price">=</Col>
+            <Col id="downCnt">=</Col>
+            <Col id="listenCnt">=</Col>
+            <Col id="typeCode">=</Col>
+            <Col id="genreCode">=</Col>
+            <Col id="grade">=</Col>
+            <Col id="_chk"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsGenreScCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="firstCode" size="30" type="STRING" value="ALL"/>
+          <ConstColumn id="filterExpr" size="30" type="STRING" value=""/>
+          <ConstColumn id="clsfCode" size="30" type="STRING" value="GENRE_SC_CD"/>
+          <ConstColumn id="userDfnSet" size="30" type="STRING" value=""/>
+          <Column id="cdcValue" size="30" type="STRING"/>
+          <Column id="cdcValueNm" size="120" type="STRING"/>
+          <Column id="cdcValueAbrvNm" size="150" type="STRING"/>
+          <Column id="cdcValueSn" size="10" type="BIGDECIMAL"/>
+          <Column id="cmmnCdYn" type="STRING" size="256"/>
+          <Column id="stnrdCdYn" type="STRING" size="256"/>
+          <Column id="upperClsfCdValue" size="30" type="STRING"/>
+          <Column id="upperCdcValue" size="30" type="STRING"/>
+          <Column id="userDfnCdValue01" size="100" type="STRING"/>
+          <Column id="userDfnCdValue02" size="100" type="STRING"/>
+          <Column id="userDfnCdValue03" size="100" type="STRING"/>
+          <Column id="userDfnCdValue04" size="100" type="STRING"/>
+          <Column id="userDfnCdValue05" size="100" type="STRING"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cdcValue">1</Col>
+            <Col id="cdcValueNm">댄스</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">2</Col>
+            <Col id="cdcValueNm">발라드</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">3</Col>
+            <Col id="cdcValueNm">팝</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsGenreScCd2" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="firstCode" size="30" type="STRING" value="EMP"/>
+          <ConstColumn id="filterExpr" size="30" type="STRING" value=""/>
+          <ConstColumn id="clsfCode" size="30" type="STRING" value="GENRE_SC_CD"/>
+          <ConstColumn id="userDfnSet" size="30" type="STRING" value=""/>
+          <Column id="cdcValue" size="30" type="STRING"/>
+          <Column id="cdcValueNm" size="120" type="STRING"/>
+          <Column id="cdcValueAbrvNm" size="150" type="STRING"/>
+          <Column id="cdcValueSn" size="10" type="BIGDECIMAL"/>
+          <Column id="cmmnCdYn" type="STRING" size="256"/>
+          <Column id="stnrdCdYn" type="STRING" size="256"/>
+          <Column id="upperClsfCdValue" size="30" type="STRING"/>
+          <Column id="upperCdcValue" size="30" type="STRING"/>
+          <Column id="userDfnCdValue01" size="100" type="STRING"/>
+          <Column id="userDfnCdValue02" size="100" type="STRING"/>
+          <Column id="userDfnCdValue03" size="100" type="STRING"/>
+          <Column id="userDfnCdValue04" size="100" type="STRING"/>
+          <Column id="userDfnCdValue05" size="100" type="STRING"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cdcValue">1</Col>
+            <Col id="cdcValueNm">댄스</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">2</Col>
+            <Col id="cdcValueNm">발라드</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">3</Col>
+            <Col id="cdcValueNm">팝</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsGrade" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="firstCode" size="30" type="STRING" value="EMP"/>
+          <ConstColumn id="filterExpr" size="30" type="STRING" value=""/>
+          <ConstColumn id="clsfCode" size="30" type="STRING" value="GRADE"/>
+          <ConstColumn id="userDfnSet" size="30" type="STRING" value=""/>
+          <Column id="cdcValue" size="30" type="STRING"/>
+          <Column id="cdcValueNm" size="120" type="STRING"/>
+          <Column id="cdcValueAbrvNm" size="150" type="STRING"/>
+          <Column id="cdcValueSn" size="10" type="BIGDECIMAL"/>
+          <Column id="cmmnCdYn" type="STRING" size="256"/>
+          <Column id="stnrdCdYn" type="STRING" size="256"/>
+          <Column id="upperClsfCdValue" size="30" type="STRING"/>
+          <Column id="upperCdcValue" size="30" type="STRING"/>
+          <Column id="userDfnCdValue01" size="100" type="STRING"/>
+          <Column id="userDfnCdValue02" size="100" type="STRING"/>
+          <Column id="userDfnCdValue03" size="100" type="STRING"/>
+          <Column id="userDfnCdValue04" size="100" type="STRING"/>
+          <Column id="userDfnCdValue05" size="100" type="STRING"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cdcValue">1</Col>
+            <Col id="cdcValueNm">최정상</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">2</Col>
+            <Col id="cdcValueNm">가능성있는</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">3</Col>
+            <Col id="cdcValueNm">신입</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTypeCode" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="firstCode" size="30" type="STRING" value="SEL"/>
+          <ConstColumn id="filterExpr" size="30" type="STRING" value=""/>
+          <ConstColumn id="clsfCode" size="30" type="STRING" value="TYPE_CODE"/>
+          <ConstColumn id="userDfnSet" size="30" type="STRING" value=""/>
+          <Column id="cdcValue" size="30" type="STRING"/>
+          <Column id="cdcValueNm" size="120" type="STRING"/>
+          <Column id="cdcValueAbrvNm" size="150" type="STRING"/>
+          <Column id="cdcValueSn" size="10" type="BIGDECIMAL"/>
+          <Column id="cmmnCdYn" type="STRING" size="256"/>
+          <Column id="stnrdCdYn" type="STRING" size="256"/>
+          <Column id="upperClsfCdValue" size="30" type="STRING"/>
+          <Column id="upperCdcValue" size="30" type="STRING"/>
+          <Column id="userDfnCdValue01" size="100" type="STRING"/>
+          <Column id="userDfnCdValue02" size="100" type="STRING"/>
+          <Column id="userDfnCdValue03" size="100" type="STRING"/>
+          <Column id="userDfnCdValue04" size="100" type="STRING"/>
+          <Column id="userDfnCdValue05" size="100" type="STRING"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cdcValue">1</Col>
+            <Col id="cdcValueNm">정규앨범</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">2</Col>
+            <Col id="cdcValueNm">미니앨범</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="initPageIndex" type="INT" size="30" value="1"/>
+          <ConstColumn id="initPageSize" type="INT" size="30" value="4"/>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[// 서비스 콜백
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+};
+
+// 폼 로드
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+
+	// 서비스 객체 생성 
+	this.smfValidateService("validateMain", {
+			url: "/cmc_sam_pl13_000.do",
+		})
+  		.mappingRulesetToForm(this.divSearch, "search")
+  		.mappingRulesetToDataset(this.dsMainValid, "save")
+		.callback(function(callbackParams){
+		})
+		.run()
+	;	
+	
+
+	////////////////////////////////////////////
+	// 샘플을 위한  함수 호출
+	// 장르 콤보에 "전체"를 추가한다
+	this.smfSetFirstCode(this.dsGenreScCd);
+	// 장르 콤보에 ""를 추가한다
+	this.smfSetFirstCode(this.dsGenreScCd2);
+	// 등급 콤보에 ""를 추가한다
+	this.smfSetFirstCode(this.dsGrade);
+	////////////////////////////////////////////
+
+	// Grid Checkbox 활성화/활성화 제어
+	this.smfUpdateRednerGridCheckbox(this.grdMain, 0, this.fnRenderGridCheckbox); 
+
+	// 조회 입력창에서 'Ctrl' + 'Enter' 키 입력시 조회수행 이벤트 설정
+	this.smfBindEnterKeyToSearch(this.divSearch, this.divSearch.form.btnSearch);
+};
+
+// 그리드 체크박스 enable 처리
+this.fnRenderGridCheckbox = function(ds, nRow){
+	// '아이유' 데이터는 삭제 불가
+    return this.dsMain.getColumn(nRow, "artist") != "아이유";
+};
+
+// 페이징검색-기본
+this.div_search_btn_search_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 서비스 객체 생성
+	this.smfSearchService("list")
+		// 페이징처리
+		.paginator(this.grdMain, this.divPaginator, this.divPageSummary, this.dsPageInfo, obj, e)
+		// 데이터가 변경되었으면 확인메시지
+		.confirmIfModifiedGrid(this.grdMain)
+		// 데이터 검증
+		.validateForm(this.divSearch)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		})
+	;
+};
+
+
+
+// 페이징검색-함수이용
+this.divSearch_btnSearch00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSearch(obj, e);
+};
+
+this.fnSearch = function(obj, e){
+	// 서비스 객체 생성
+	this.smfSearchService("list")
+		// 페이징처리
+		.paginator(this.grdMain, this.divPaginator, this.divPageSummary, this.dsPageInfo, this.fnSearch, e)
+		// 데이터가 변경되었으면 확인메시지
+		.confirmIfModifiedGrid(this.grdMain)
+		// 데이터 검증
+		.validateForm(this.divSearch)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		})
+	;
+};
+
+
+
+// 추가 버튼 클릭
+this.btn_add_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 조회를 수행했는지 검증 후 그리드에 row를 추가
+	var nRow = this.smfAddGridRow(this.grdMain, "list");
+	if(nRow == -1) return;
+};
+
+// 저장 버튼 클릭 
+this.btn_save_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 서비스 객체 생성 
+	this.smfSaveService("save")
+		// 데이터 검증
+		// dsMainValid의 row는 2개가 있는데
+		// 첫번째는 Dataset.ROWTYPE_INSERT에 해당하는 유효성검사 룰셋을 담당한다
+		// 두번째는 Dataset.ROWTYPE_UPDATE에 해당하는 유효성검사 룰셋을 담당한다
+		// 컬럼값에 = 은 INSERT와 동일한 룰셋을 사용한다는 의미이다
+		.validateGrid(this.grdMain, this.dsMainValid)
+
+		// 그리드 영역에서 중복검사
+		.validateDuplicate({
+			grid: this.grdMain,
+			// gridText: "음반목록",
+			columnNames: ["name", "artist", "release"], // 중복검사할 컬럼명
+			columnText: "이름, 아티스트, 출시일자",
+		})
+
+		// 실행
+		.run()
+
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			// 저장이 완료되었습니다.
+			// 재조회
+			this.smfAlert('CM002', [], this.div_search_btn_search_onclick);
+		});
+		
+};
+
+// 삭제 버튼 클릭
+this.btn_delete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 삭제처리
+	this.smfDeleteService("delete")
+		.validateGridDelete(this.grdMain, this.dsMainValid)
+		.run()
+		// 콜백
+		.callback(function(callbackParams){ 
+			alert('[참고] 본 샘플에서 데이터 삭제는 서버에서 동작하지 않도록 처리하였습니다');
+			if(callbackParams.errors) return;
+			
+			// 삭제하였습니다 알림 후 재조회
+			this.smfAlert(this.smfAfterServiceMessage(), this.fnSearch);
+		})
+};
+
+// 그리드 헤더 클릭
+this.grdMain_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+    var columnName = obj.getCellProperty("body",e.cell,"text");
+	if ("bind:_chk" == columnName){
+		this.smfToggleChkHeader(obj, e, this.fnRenderGridCheckbox);
+	}else{
+		// 정렬
+		this.smfCheckAndSort(obj, e);
+	}
+};
+
+// 폼 닫기전 이벤트
+this.sample_gridSave_onbeforeclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	// 변경내역이 발생한 경우 종료전 confirm수행
+	return this.smfCloseFormConfirm(this.dsMain);
+};
+
+// 조회조건이 변경된 경우
+this.dsSearch_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	// list에 관련된 데이터를 클리어 한다
+	this.smfClearDataByService("list");
+};
+
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtName" propid="value" datasetid="dsSearch" columnid="name"/>
+      <BindItem id="item1" compid="divSearch.form.edtArtist" propid="value" datasetid="dsSearch" columnid="artist"/>
+      <BindItem id="item2" compid="divSearch.form.cboGenreCode" propid="value" datasetid="dsSearch" columnid="genreCode"/>
+    </Bind>
+  </Form>
+</FDL>

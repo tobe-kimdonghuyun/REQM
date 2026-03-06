@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="messageActionSample" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="Button00" taborder="0" text="Trigger로 메시지 호출" left="10" top="10" width="190" height="50"/>
+        <Button id="Button00_00" taborder="1" text="스크립트로 메시지 호출" left="10" top="70" width="190" height="50" onclick="Button00_00_onclick"/>
+        <Button id="Button00_00_00" taborder="2" text="메시지 코드에 없는 메시지 호출" left="10" top="130" width="230" height="50" onclick="Button00_00_00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <MessageAction id="MessageAction00" messagetype="alert" messagecode="MSG_000069" messageparam="test">
+        <Contents/>
+      </MessageAction>
+      <MessageAction id="MessageAction01" messagetype="alert" onerror="MessageAction01_onerror" onsuccess="MessageAction01_onsuccess">
+        <Contents/>
+      </MessageAction>
+      <MessageAction id="MessageAction02" messagetype="alert">
+        <Contents/>
+      </MessageAction>
+    </Objects>
+    <Trigger>
+      <TriggerItem id="item0" triggertype="Click" triggerview="messageActionSample" triggerobj="Button00" targetaction="MessageAction00" condition=""/>
+    </Trigger>
+    <Script type="xscript5.1"><![CDATA[
+this.Button00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.MessageAction01.set_messagecode("MSG_000069");
+	this.MessageAction01.set_messageparam("가나다라");
+	this.MessageAction01.set_messagetype("confirm");
+	
+	if(this.MessageAction01.run()==true)
+	{
+		trace("Confirm 확인");
+	}else
+	{
+		trace("Confirm 취소");
+	}
+};
+
+this.Button00_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.MessageAction02.set_messagecode("메시지코드에 없는 메시지를 출력합니다.");
+	this.MessageAction02.run();
+};
+
+this.MessageAction01_onerror = function(obj:nexacro.MessageAction, e:nexacro.ActionErrorEventInfo)
+{
+	trace("Confirm 취소 이벤트");
+};
+
+this.MessageAction01_onsuccess = function(obj:nexacro.MessageAction, e:nexacro.ActionSuccessEventInfo)
+{
+	trace("Confirm 확인 이벤트");
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+};
+]]></Script>
+  </Form>
+</FDL>

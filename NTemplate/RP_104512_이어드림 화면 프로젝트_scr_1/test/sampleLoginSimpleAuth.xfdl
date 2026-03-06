@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleLoginOnepass" width="1280" height="970" titletext="간편인증 로그인을 위한 샘플" onload="sampleLoginOnepass_onload">
+    <Layouts>
+      <Layout height="970" width="1280">
+        <Static id="sta00" taborder="0" text="간편인증 로그인을 위한 샘플" left="29" top="28" width="611" height="60"/>
+        <Static id="sta01" taborder="1" text="실행결과 :" left="63" top="537" width="120" height="30"/>
+        <TextArea id="txt00" taborder="2" left="57" top="577" width="453" height="230"/>
+        <Static id="sta01_00" taborder="3" text="기존에 발급받은 간편인증서로 편리하게 로그인하세요." left="76" top="125" width="329" height="30" cssclass="sta_Login_CertTxt02" initvalueid="ivStcAccessibilityOn"/>
+        <Div id="div01" taborder="4" left="67" top="167" width="348" height="66" cssclass="div_Login_CertBox" initvalueid="ivDivAccessibilityOn">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" left="15" top="13" width="40" height="40" cssclass="sta_Login_KTalk" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta00_00" taborder="1" left="61" top="13" width="40" height="40" cssclass="sta_Login_KB" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta00_00_00" taborder="2" left="107" top="13" width="40" height="40" cssclass="sta_Login_Paycc" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta00_00_00_00" taborder="3" left="153" top="13" width="40" height="40" cssclass="sta_Login_Pass" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta00_00_00_00_00" taborder="4" left="199" top="13" width="40" height="40" cssclass="sta_Login_SPass" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta00_00_00_00_00_00" taborder="5" left="245" top="13" width="40" height="40" cssclass="sta_Login_Naver" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta00_00_00_00_00_00_00" taborder="6" top="13" width="40" height="40" cssclass="sta_Login_Shinhan" right="15" initvalueid="ivStcAccessibilityOn"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnDoLogin" taborder="5" text="간편인증 로그인" left="62" top="293" width="348" height="60" cssclass="btn_Login_PartyCert" initvalueid="ivBtnAccessibilityButton" onclick="btnDoLogin_onclick"/>
+        <Radio id="chkOpenType" taborder="6" left="58" top="407" width="450" height="44" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" value="birth" text="생년월일" index="0" columncount="2">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">birth</Col>
+                <Col id="datacolumn">생년월일</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">ssn</Col>
+                <Col id="datacolumn">주민등록번호</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Radio id="chkActionType" taborder="7" left="58" top="447" width="450" height="44" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" value="trans" text="중계형(온라인채용/검정고시)" index="0" columncount="2" enable="true">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">trans</Col>
+                <Col id="datacolumn">중계형(온라인채용/검정고시)</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">instl</Col>
+                <Col id="datacolumn">설치형(그외)</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Static id="sta02" taborder="8" text="* (개발자용 문구) 로컬 / 개발에서는 카카오톡만 지원" left="87" top="240" width="328" height="40"/>
+        <Static id="sta02_00" taborder="9" text="* 미지정시 subSys를 체크하여 설정. 미지정을 권장&#13;&#10;" left="90" top="490" width="395" height="40"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleLoginOnepass.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2023.3.29
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.3.29     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.sampleLoginOnepass_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+	trace("====> fnPopupCallback");
+	
+	// 인증결과값을 가져온다.
+	// JSON.parse(e.data);
+	// 값이 없는 경우는 처리가 중단된 경우
+	this.txt00.set_value(e.data);
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.btnDoLogin_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 테스트를 위해 실행결과를 지운다.
+	this.txt00.set_value("");
+	
+	// 오픈방식을 설정한다.
+	var sOpenType   = this.chkOpenType.value;  // [선택] Open방식 -  "birth"(default) : 생년월일 , "ssn" : 주민등록번호
+	var sActionType = this.chkActionType.value;  // [선택] 간편인증 동작방식 -  "trans" : 중계형(온라인채용/검정고시) , "instl" : 설치형(교육비원클릭/그외)
+	                                             // 미지정시 subSys를 체크하여 설정. 미지정을 권장
+
+	var objParam = {objForm:this, popupcallback :this.fnPopupCallback , openType: sOpenType, actionType: sActionType };
+	this.smfExecSimpleAuth(objParam);
+	
+};
+
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfSetSubSystemGb("HRD");
+
+};
+
+this.btn00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfSetSubSystemGb("EWS");	
+};
+]]></Script>
+  </Form>
+</FDL>

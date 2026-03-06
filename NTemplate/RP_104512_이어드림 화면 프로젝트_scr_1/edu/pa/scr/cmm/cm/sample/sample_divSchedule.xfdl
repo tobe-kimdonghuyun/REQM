@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sample_divSchedule" left="0" top="0" width="1340" height="778" titletext="일정관리(Div) 샘플" onload="form_onload">
+    <Layouts>
+      <Layout height="778" width="1340" screenid="desktopScr">
+        <Div id="divCalendar" taborder="0" left="16" top="25" width="780" height="722" url="comm::comm_divScheduleScr.xfdl"/>
+        <Grid id="Grid02" taborder="1" left="856" top="100" width="214" height="350" binddataset="dsDate" autofittype="col" fillareatype="none" nodatatext="No Data">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="45" band="head"/>
+                <Row size="60"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="List"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:TITLE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="Grid00" taborder="2" left="1075" top="100" width="233" height="44" autofittype="col" fillareatype="none">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="45" band="head"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Detail"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <TextArea id="txtOutput" taborder="3" left="1075" top="144" width="233" height="306" wordWrap="" enable="true" displaynulltext="No Data" readonly="true"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템
+*  @MenuPath    공통
+*  @FileName 	sample_divSchedule.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    일정관리(Div) 샘플
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = nexacro.getApplication();
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.scrInitForm(obj);	//필수(화면초기화)
+	
+	//일정 설정하기(초기화)
+	this.fnSetCalendar();
+};
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+//일정 설정하기
+this.fnSetCalendar = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//일정 초기화
+	var oArgs = { ownerForm   : this
+				, monthDs     : this.dsMonth
+				,callbackFunc : this.fnCallbackDate
+				};
+	this.divCalendar.form.fnInitMonthCalendar(oArgs);
+	
+	//선택날짜 지정하기
+	this.divCalendar.form.fnSetDate(10);
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.fnCallbackDate = function(sDate) 
+{
+    this.dsDate.filter("DATE == '" +sDate + "'");
+    this.dsDate.set_rowposition(0);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsMonth">
+        <ColumnInfo>
+          <Column id="closeDate" size="256" type="STRING"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="closeDate">20250401</Col>
+          </Row>
+          <Row>
+            <Col id="closeDate">20250404</Col>
+          </Row>
+          <Row>
+            <Col id="closeDate">20250412</Col>
+          </Row>
+          <Row>
+            <Col id="closeDate">20250413</Col>
+          </Row>
+          <Row>
+            <Col id="closeDate">20250428</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDate">
+        <ColumnInfo>
+          <Column id="DATE" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="MEMO" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DATE">20250401</Col>
+            <Col id="TITLE">미팅</Col>
+            <Col id="MEMO">협력업체&#13;
+2층회의실</Col>
+          </Row>
+          <Row>
+            <Col id="DATE">20250401</Col>
+            <Col id="TITLE">회의</Col>
+            <Col id="MEMO">주간회의</Col>
+          </Row>
+          <Row>
+            <Col id="DATE">20250401</Col>
+            <Col id="TITLE">저녁약속</Col>
+            <Col id="MEMO">친구랑</Col>
+          </Row>
+          <Row>
+            <Col id="DATE">20250401</Col>
+            <Col id="TITLE">보고서 작성</Col>
+            <Col id="MEMO">이날까지!!!</Col>
+          </Row>
+          <Row>
+            <Col id="DATE">20250404</Col>
+            <Col id="TITLE">오늘</Col>
+            <Col id="MEMO">까지</Col>
+          </Row>
+          <Row>
+            <Col id="DATE">20250412</Col>
+            <Col id="TITLE">회의</Col>
+            <Col id="MEMO">3층 회의실</Col>
+          </Row>
+          <Row>
+            <Col id="DATE">20250412</Col>
+            <Col id="TITLE">점심약속</Col>
+            <Col id="MEMO">양꼬치엔&#13;
+칭따오</Col>
+          </Row>
+          <Row>
+            <Col id="DATE">20250413</Col>
+            <Col id="TITLE">칼퇴</Col>
+            <Col id="MEMO">13일의 금요일</Col>
+          </Row>
+          <Row>
+            <Col id="DATE">20250428</Col>
+            <Col id="TITLE">월말회의</Col>
+            <Col id="MEMO">TEST28&#13;
+111</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="txtOutput" propid="value" datasetid="dsDate" columnid="MEMO"/>
+    </Bind>
+  </Form>
+</FDL>

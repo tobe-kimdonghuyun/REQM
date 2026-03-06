@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleMain_sub4" width="1920" height="782" titletext="대국민 소식" background="#ffffff" onsize="samplePortalResize_onsize" onload="Main_sub4_onload">
+    <Layouts>
+      <Layout height="782" screenid="ScreenDeskTopP" width="1920">
+        <Static id="staBG_left" taborder="0" left="0" top="0" width="423" height="424" cssclass="sta_main_sub4_BgLeft" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staBG_right" taborder="1" width="502" height="554" cssclass="sta_main_sub4_BgRight" initvalueid="ivStcAccessibilityOff" right="0" bottom="0"/>
+        <Div id="div00" taborder="2" left="360" top="100" width="1200" height="600" formscrolltype="none" text="" initvalueid="ivDivAccessibilityOn">
+          <Layouts>
+            <Layout>
+              <Static id="staTitle_small" taborder="0" text="NEIS Notice" left="540" top="8" width="120" height="28" cssclass="font20M,color2b72" initvalueid="ivStcAccessibilityOn" textAlign="center"/>
+              <Static id="sta00" taborder="1" text="대국민 소식" left="474" top="84" width="253" height="60" cssclass="font42B" textAlign="center"/>
+              <Button id="btnTab1" taborder="2" text="설문조사" left="440" top="183" width="150" height="45" cssclass="btn_main_sub4_tab_S" initvalueid="ivBtnAccessibilityButton" onclick="div00_btnTab1_onclick"/>
+              <Button id="btnTab2" taborder="3" text="교직원 채용" left="610" top="183" width="150" height="45" cssclass="btn_main_sub4_tab" initvalueid="ivBtnAccessibilityButton" onclick="div00_btnTab2_onclick"/>
+              <Static id="staGuide00" taborder="4" text="h&#13;&#10;100" left="930" top="0" height="100" cssclass="sta_WF_Size" visible="false" initvalueid="ivStcAccessibilityOff" width="30"/>
+              <Static id="staGuide01" taborder="5" text="h67" left="570" top="30" height="67" cssclass="sta_WF_Size" visible="false" initvalueid="ivStcAccessibilityOff" right="590"/>
+              <Static id="staGuide02" taborder="6" text="h48" left="540" top="135" height="48" cssclass="sta_WF_Size" visible="false" initvalueid="ivStcAccessibilityOff" right="557"/>
+              <Static id="staGuide03" taborder="7" text="w&#13;&#10;20" left="590" top="192" height="28" cssclass="sta_WF_Size" visible="false" initvalueid="ivStcAccessibilityOff" width="20"/>
+              <Static id="staGuide04" taborder="8" text="h70" left="540" top="228" height="70" cssclass="sta_WF_Size" visible="false" initvalueid="ivStcAccessibilityOff" right="557"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnPrev" taborder="3" top="506" width="64" height="64" cssclass="btn_main_sub2_prev" right="div00:-33" initvalueid="ivBtnAccessibilityButton" onclick="btnPrev_onclick"/>
+        <Button id="btnNext" taborder="4" left="div00:-33" top="506" width="64" height="64" cssclass="btn_main_sub2_next" initvalueid="ivBtnAccessibilityButton" onclick="btnNext_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.SurveyInfo = {
+	Survey1  : ["","",""],
+	Survey1  : ["","",""],
+	Survey1  : ["","",""],
+	Survey1  : ["","",""],
+	Survey1  : ["","",""]	
+}
+
+
+this.Main_sub4_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfSurvayAnimationDiv(this.div00);
+};
+
+
+this.btnNext_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	this.smfSurvayBtnNext();
+	trace(" width : " +  this.div00.form.divTabPage1.form.getOffsetWidth() );
+};
+
+this.btnPrev_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfSurvayBtnPrev();
+	trace(" width : " +  this.div00.form.divTabPage1.form.getOffsetWidth() );	
+};
+
+this.div00_btnTab1_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if ( obj.cssclass == "btn_main_sub4_tab" )
+	{
+		this.div00.form.btnTab2.set_cssclass("btn_main_sub4_tab");
+		obj.set_cssclass("btn_main_sub4_tab_S");		
+	}
+
+	this.div00.form.divTabPage1.set_visible(true);
+	this.div00.form.divTabPage1.bringToFront();
+	this.div00.form.divTabPage1.set_visible(true);
+	
+	this.btnNext.set_visible(true);
+	this.btnPrev.set_visible(true);	
+};
+
+this.div00_btnTab2_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if ( obj.cssclass == "btn_main_sub4_tab" )
+	{
+		this.div00.form.btnTab1.set_cssclass("btn_main_sub4_tab");	
+		obj.set_cssclass("btn_main_sub4_tab_S");
+	}
+	
+	this.div00.form.divTabPage1.set_visible(false);
+	this.div00.form.divTabPage2.bringToFront();
+	this.div00.form.divTabPage2.set_visible(true);
+	
+	this.btnNext.set_visible(false);
+	this.btnPrev.set_visible(false);
+};]]></Script>
+  </Form>
+</FDL>

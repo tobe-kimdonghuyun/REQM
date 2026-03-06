@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[/*
+ * @fileoverview hes_script (학원민원)
+ * @author 최경진
+ */
+
+/**
+ * @description 세션정보Get
+ */
+ /* 학원지정번호 */
+ this.hesGetAcaDsgnNo = this.smfGetSessionValue("acaDsgnNo");
+ /* 학원교습소구분코드 */
+ this.hesGetAcaInstiScCd = this.smfGetSessionValue("acaInstiScCd");
+ /* 개인지정번호 */
+ this.hesGetInvlDsgnNo = this.smfGetSessionValue("invlDsgnNo");
+ /* 시도교육청코드 */
+ this.hesGetAtptOfcdcOrgCode = this.smfGetSessionValue("cteOfcdcCd");
+ 
+/* 이전 화면 URL */
+ this.hesGoUrl = "frame::hes/frameSubMain.xfdl";
+ this.hesGetGoUrl = this.hesGoUrl;
+ this.hesSetGoUrl = function(newUrl){
+	var objSessionDs = nexacro.getApplication().gdsSession;
+	
+	if(objSessionDs.getColumn(0,"hesGoUrl") != undefined){
+		this.smfSetSessionValue("hesGoUrl", newUrl); 
+	}else{
+		objSessionDs.addColumn("hesGoUrl");
+		this.smfSetSessionValue("hesGoUrl", newUrl); 
+	}
+ }
+ 
+ /* 로그인 후 return화면 */
+ this.hesAftrLgnUrl = "";
+ 
+/**
+ * @description 로그인확인
+ */
+this.hesChkLogin = function(acaInstiScCd, returnUrl){
+	var pass = true;
+	var acaInstiScNm = "";
+	var objSessionDs = nexacro.getApplication().gdsSession;
+	if(!this.smfIsLogin()){ //로그인을 하지 않은 경우
+		pass = false;
+	}else{
+		switch(acaInstiScCd){
+			case "1" : //학원메뉴
+				if(this.hesGetAcaInstiScCd != "1"){
+					pass = false;
+				}
+			break;
+			case "2" : //교습소메뉴
+				if(this.hesGetAcaInstiScCd != "2" || this.hesGetInvlDsgnNo == "" || this.hesGetInvlDsgnNo == null){
+					pass = false;
+				}
+			break;
+			case "3" : //개인교습자메뉴
+				if(this.hesGetAcaInstiScCd != "3" || this.hesGetInvlDsgnNo == "" || this.hesGetInvlDsgnNo == null){
+					pass = false;
+				}
+			break;
+		}
+		
+		//현재 로그인한 계정 권한
+		switch(this.hesGetAcaInstiScCd){
+			case "1" :
+				acaInstiScNm = "학원";
+			break;
+			case "2" : 
+				acaInstiScNm = "교습소";
+			break;
+			case "3" :
+				acaInstiScNm = "개인과외교습자";
+			break;
+		}
+	}
+	
+	if(!pass){
+		var sUrl = "pa_hes_lle_lv::hes_llelv00_m00.xfdl"; //로그인페이지
+		var objFrame = this.getOwnerFrame();
+		
+		if(this.smfIsLogin()){
+			var returnMsg = acaInstiScNm + "민원계정으로 로그인하셨습니다.\n";
+				returnMsg += acaInstiScNm + "민원 외 다른 민원서비스에 접속하실 수 없습니다.\n";
+				returnMsg += "[확인]버튼을 클릭하시면 자동 로그아웃 후 로그인 페이지로 이동합니다.\n";
+				returnMsg += "계속 서비스를 이용하시는 경우 [취소]버튼을 클릭해주세요.";
+			
+			this.smfConfirm(returnMsg, function(result){
+				if(result.confirmResult){
+					//로그인 후 돌아갈 url 세팅
+					this.hesAftrLgnUrl = returnUrl;
+					
+					//로그아웃 후 로그인페이지로 이동하도록 mainUrl 변경
+					
+					objFrame.form.fv_mainformUrl = sUrl;
+					this.getOwnerFrame().form.divTop.form.fnLogout(); //로그아웃
+					
+				}else{
+					var url = this.smfGetSessionValue("hesGoUrl");
+					//이전 화면으로 이동
+					if(url == undefined || url == ""){
+						objFrame.form.fnSetMainpage(objFrame.form.fv_mainformUrl);
+					}else{
+						var params = {};
+						this.smfSetWorkPage(url , params); 
+					}
+				}
+			});	
+		}else{
+			this.smfAlert("사용자 로그인이 필요합니다.", function() {	
+				//로그인 후 돌아갈 url 세팅
+				this.hesAftrLgnUrl = returnUrl;
+					
+				var params = {};
+				this.smfSetWorkPage(sUrl, params);
+			});
+		}
+	}	
+	
+	return pass;
+}
+
+this.hesGoCvlcptDclrList = function(){
+	var params = {};
+	this.smfSetWorkPage("pa_hes_mle_dc::hes_mledc00_m00.xfdl", params);
+}
+]]></Script>

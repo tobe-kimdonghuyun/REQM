@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="notice2" width="538" height="580" titletext="대국민서버점검 안내1" background="transparent" onload="notice2_onload">
+    <Layouts>
+      <Layout height="580" screenid="ScreenDeskTopP" width="538">
+        <Static id="title" taborder="0" text="대국민서버점검 안내" left="60" top="55" height="60" cssclass="font48B" textAlign="center" right="60" initvalueid="ivStcAccessibilityOn"/>
+        <Static id="subTitle" taborder="1" text="서버점검 안내 공지드립니다." left="60" top="140" width="418" height="30" cssclass="font18R" initvalueid="ivStcAccessibilityOn" textAlign="center"/>
+        <ImageViewer id="img00" taborder="2" left="122" top="210" width="295" height="204" cssclass="display" image="url('imagerc::common/img_popup_1.png')" initvalueid="ivImgAccessibilityOn" accessibilitylabel="대국민서버점검 안내 이미지" stretch="fit"/>
+        <Button id="btnLink" taborder="3" text="공고 자세히보기" left="149" width="240" height="60" initvalueid="ivBtnAccessibilityButton" padding="0px 20px 1px" top="470" onclick="btnLink_onclick" cssclass="btn_WF_noticePop"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="560" height="660" mobileorientation="portrait" type="default">
+        <Static id="title" cssclass="font50B" left="0" top="45" height="108" right="0"/>
+        <Static id="subTitle" left="20" top="172" height="40" cssclass="font24R" right="20"/>
+        <ImageViewer id="img00" left="141" top="255" width="279" height="196" image="url('imagerc::common_M/img_popup_1_M.png')"/>
+        <Button id="btnLink" left="40" height="90" cssclass="btn_Pop_yes01_M" right="40" top="510"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.notice2_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.title.set_text(this.parent.params.eventTitlNm);		//팝업타이틀
+	this.subTitle.set_text(this.parent.params.popupCn);			//팝업 내용
+	this.btnLink.set_text(this.parent.params.lnkNm);			//팝업 버튼 명
+	this.img00.set_accessibilitylabel(this.parent.params.rplcText);	//팝업 이미지 대체 텍스트
+	trace("대국민서버점검안내 팝업");
+};
+
+this.btnLink_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getOwnerFrame().form.commNoticeAll.form.fnClickEvt(this.parent.params.popNo);	//링크 클릭시 이벤트
+};
+]]></Script>
+  </Form>
+</FDL>

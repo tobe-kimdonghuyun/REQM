@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Menu" width="1280" height="720" titletext="Menu" background="#ffffff">
+    <Layouts>
+      <Layout height="720" width="1280" screenid="Desktop_screen">
+        <Static id="Static00" taborder="0" text="메뉴화면" left="8" top="7" width="260" height="49"/>
+        <Grid id="grdMenu" taborder="1" left="0" top="90" width="260" height="250" binddataset="dsMenu" treeinitstatus="expand,all" treeusecheckbox="false" treeusebutton="noclick" oncellclick="grdMenu_oncellclick" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="149"/>
+              </Columns>
+              <Rows>
+                <Row size="40"/>
+              </Rows>
+              <Band id="body">
+                <Cell displaytype="treeitemcontrol" edittype="tree" text="bind:menuText" treelevel="bind:menuLevel"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnClose" taborder="2" text="X" left="390" top="10" width="80" height="50" accessibilitylabel="메뉴닫기" onclick="btnClose_onclick"/>
+      </Layout>
+      <Layout height="768" mobileorientation="Portrait" name="Layout0" type="default" width="480" screenid="Mobile_screen">
+        <Grid id="grdMenu" left="0" top="90" width="380" height="250" taborder="1"/>
+        <Static id="Static00" taborder="0"/>
+        <Button id="btnClose" taborder="2"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsMenu">
+        <ColumnInfo>
+          <Column id="menuText" type="STRING" size="256"/>
+          <Column id="menuLevel" type="STRING" size="256"/>
+          <Column id="menuId" type="STRING" size="256"/>
+          <Column id="menuUrl" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="menuLevel">0</Col>
+            <Col id="menuText">첫번째대메뉴</Col>
+            <Col id="menuId">1</Col>
+          </Row>
+          <Row>
+            <Col id="menuLevel">1</Col>
+            <Col id="menuText">기본</Col>
+            <Col id="menuId">2</Col>
+            <Col id="menuUrl">Etc::sample01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="menuLevel">1</Col>
+            <Col id="menuText">그리드</Col>
+            <Col id="menuId">3</Col>
+            <Col id="menuUrl">Etc::sample03.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="menuLevel">0</Col>
+            <Col id="menuText">두번째대메뉴</Col>
+            <Col id="menuId">4</Col>
+          </Row>
+          <Row>
+            <Col id="menuLevel">1</Col>
+            <Col id="menuText">컴포넌트</Col>
+            <Col id="menuId">5</Col>
+            <Col id="menuUrl">Etc::sample07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="menuLevel">1</Col>
+            <Col id="menuText">트랜잭션</Col>
+            <Col id="menuId">6</Col>
+            <Col id="menuUrl">Etc::sample13.xfdl</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[
+this.grdMenu_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+    if (obj.isTreeLeafRow(e.row))    
+	{
+		
+		var sUrl = this.dsMenu.getColumn(e.row, "menuUrl");
+		var sName = this.dsMenu.getColumn(e.row, "menuText");
+		
+		nexacro.getApplication().mainframe.set_titletext(sName + "|접근성지원시스템");
+		nexacroBase.fnMenuClick(false, sUrl);
+		
+	}
+	else
+	{
+		var nStatus  = obj.getTreeStatus(obj.getTreeRow(e.row));	
+		var nStatusRow = obj.getTreeRow(e.row);			
+
+		if (nStatus == 1)
+		{
+			obj.setTreeStatus(nStatusRow, false);			
+		}
+		else
+		{
+			obj.setTreeStatus(nStatusRow, true);
+		}
+	}	
+};
+
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	nexacroBase.fnMenuClick(false);
+};
+]]></Script>
+  </Form>
+</FDL>

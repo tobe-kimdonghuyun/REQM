@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ADL version="2.0">
+  <Application id="Application_Phone" screenid="Mobile_screen" onload="Application_onload" licenseurl="./NexacroN_client_license.xml">
+    <Layout>
+      <MainFrame id="mainframe" showtitlebar="true" showstatusbar="true" left="0" top="0" width="480" height="768" titletext="FullFrame" onsize="mainframe_onsize">
+        <ChildFrame id="childframe" showtitlebar="false" showstatusbar="false" formurl="FrameBase::Base.xfdl"/>
+      </MainFrame>
+    </Layout>
+  </Application>
+  <Script type="xscript5.1"><![CDATA[this.nexacroBase = null;
+
+this.Application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo)
+{
+	this.gvOs = system.osversion.toUpperCase();	
+	trace("osVersion : "+ this.gvOs + "  sBrowser : "+ system.navigatorname);
+	//osVersion : WINDOWS 7  		sBrowser : RUNTIME 		, nexacro   	- 런타임
+	//osVersion : WINDOWS 7  		sBrowser : CHROME 		, Chrome     	- html5
+	//osVersion : Android 6.0.1   	sBrowser : RUNTIME 		, nexacro		- 런타임
+	//osVersion : Android 6.0.1   	sBrowser : CHROME 		, CHROME		- html5
+	//osVersion : iOS 10.3.3   		sBrowser : MobileSafari , nexacro		- 런타임
+	//osVersion : iOS 10.3.3   		sBrowser : MobileSafari , MobileSafari	- html5
+
+	if (system.navigatorname == "nexacro")
+	{
+		return;
+	}
+
+	//PC와 모바일의 Combo 분리
+	this.fnComboOverriding();	
+};
+
+this.fnComboOverriding = function()
+{
+	var _pCombo = nexacro.Combo.prototype;
+	
+	_pCombo._$_on_drop_mobile_onclick 		= _pCombo._on_drop_mobile_onclick;
+	_pCombo._$_on_edit_mobile_oneditclick 	= _pCombo._on_edit_mobile_oneditclick;
+	_pCombo._$_on_drop_onlbuttondown 		= _pCombo._on_drop_onlbuttondown;
+	_pCombo._$_on_edit_onlbuttondown 		= _pCombo._on_edit_onlbuttondown;
+	
+	// 함수 추가 모바일일때 dropdown 이외의  속성을 지정시 comboedit를 터치를 하는 순간 키패드가 올라오고 그후 showPopupList동작하기에 
+	// 기존 엔진에서 _pCombo.set_type함수를 이용하여 모바일 환경일 경우 dropdown으로 고정하여 사용할수 있도록 처리 
+	_pCombo.set_type = function (v)
+    {
+		if (!nexacro._isMobile()){
+			var type_enum = ["dropdown", "search", "filter", "filterlike", "caseisearch", "caseifilter", "caseifilterlike"];
+			if (type_enum.indexOf(v) == -1)
+			{
+				return;
+			}
+
+			if (this.type != v)
+			{
+				this.type = v;
+				this.on_apply_type(v);
+			}
+		}else
+		{
+			this.type = "dropdown";
+			this.on_apply_type("dropdown");
+		}
+    };
+	_pCombo.on_drop_mobile_onclick = function (obj, e) 
+	{
+		if (this.readonly)
+			return false;
+			
+		if (this.on_fire_ondropdown(this) == false)
+		{
+			return;
+		}
+
+		this.showPopupList(obj,e);		
+		return false;
+	}
+ 
+	_pCombo._on_drop_mobile_onclick = function (obj, e) 
+	{
+		if (nexacro._isMobile())
+		{
+			this.on_drop_mobile_onclick(obj, e);
+		}
+		else
+		{
+			this._$_on_drop_mobile_onclick(obj, e) ;
+		}
+	};
+	
+	_pCombo._on_edit_mobile_oneditclick = function (obj, e) 
+	{
+		if (nexacro._isMobile())
+		{
+			this.on_drop_mobile_onclick(obj, e);
+		}
+		else
+		{
+			this._$_on_edit_mobile_oneditclick(obj, e) ;
+		}
+	};
+	
+	_pCombo._on_drop_onlbuttondown = function (obj, e) 
+	{
+		if (nexacro._isMobile())
+		{
+			this.on_drop_mobile_onclick(obj, e);
+		}
+		else
+		{
+			this._$_on_drop_onlbuttondown(obj, e) ;
+		}
+	};	
+	
+    _pCombo._on_edit_onlbuttondown = function (obj, e)
+    {
+		if (nexacro._isMobile())
+		{
+			this.on_drop_mobile_onclick(obj, e);
+		}
+		else
+		{
+			this._$_on_edit_onlbuttondown(obj, e) ;
+		}
+    };	
+	
+	_pCombo.showPopupList = function(obj,e)
+	{
+		// this.displayrowcount 는 무시한다. 모바일 화면에서 표현할수 있는 만큼 포현한다.
+		// 화면 회전시 mainframe_onsize에서 _pExtCbo_폼으로 resize함수 호출하여 전환시 처리함
+
+		// 기본 아이템 높이px
+		var nUnitItemHeight = 60;
+		
+		var nLeft, nTop;
+		var nWidth, nHeight;  
+		var npHeight,npWidth;
+		var nFullDispCount = -1;
+		//if(sTitle == "" || sTitle == undefined) sTitle = "";
+
+		if(!this.innerdataset) return;
+		var ds = this._innerdataset;		
+		if(!ds)
+		{
+			ds = application[this.innerdataset];
+			if(!ds) return false;
+		}
+
+		if(ds.rowcount == 0) return false;
+		
+		npWidth = nexacro.getApplication().mainframe.getOffsetWidth();
+		npHeight = nexacro.getApplication().mainframe.getOffsetHeight();
+
+		
+		// 10 + 완료버튼(50) + 5 + List + 10 + = 75				
+		//nFullDispCount = parseInt((npHeight-75)/nUnitItemHeight);	
+		
+		
+		nFullDispCount = parseInt((npHeight-60)/nUnitItemHeight);
+		nHeight = nUnitItemHeight*(ds.rowcount>nFullDispCount?nFullDispCount:ds.rowcount) + 60 + 4 ;
+		nWidth = npWidth-100 ;
+		
+		nLeft = 50;
+		nTop = (npHeight - nHeight)/2;
+		
+		this.popupurl = "cm::pExtCombo.xfdl";
+		//if(this.popupurl == undefined) return false;
+		if(this.combotitle == undefined) this.combotitle = "";
+		var objOpener = this.parent;
+		var sCallback = this.gfnViewComboListCallback; // 사용 안함 set_item()으로 기능추가
+		var sUrl = this.popupurl;
+		var objArgs = {data:ds, cdCol:this.codecolumn , nmCol:this.datacolumn , objcombo:this , sText:this.combotitle , nUnitItemHeight:nUnitItemHeight , nFullDispCount:nFullDispCount };
+		var pid = "_pExtCbo_"+this.name;
+
+		var cf = new ChildFrame;
+		cf.init(pid, nLeft, nTop, nWidth, nHeight, null, null, sUrl);
+		cf.set_showtitlebar(false);
+		cf.set_showstatusbar(false);
+		//cf.style.set_titlebarheight(10);
+		//cf.style.set_statusbarheight(10);
+		cf.set_titletext("") ;
+		cf.set_statustext(""); 
+		cf.set_border("1 solid blue"); 
+		cf.set_autosize(false);
+		//cf.set_openalign("center middle");
+		cf.set_dragmovetype("none");
+	//	cf.set_background("white");
+		cf.set_overlaycolor("rgba(0, 0, 0, 0.5)");
+		
+		cf._modaltype = "extcombo";	//milpaso adl의 onsize 처리를 위해 추가.
+
+		cf.showModal(pid, nexacro.getApplication().mainframe, objArgs, objOpener);
+	};
+	// 팝업에서 combo.set_item()
+	_pCombo.set_item = function(v)
+	{
+		var pre_index = this.index;
+		var pre_value = this.value;
+		var pre_text = this.text;
+		var post_index = v.index;
+		var post_value = v.value;
+		var post_text = v.text;
+
+		//                        (obj, preindex  , pretext  , prevalue  , postindex, posttext  , postvalue)
+		if(pre_index != post_index && pre_value != post_value)
+		{
+			var rtn = this.on_fire_canitemchange(this, pre_index  , pre_text  , pre_value, post_index  , post_text, post_value);
+
+			if(rtn) 
+			{
+				this._accessibility_index = this.index = post_index;
+				this.text = post_text;
+				
+				this.set_value(post_value);			
+				
+				this.applyto_bindSource("value", post_value);
+				this.on_fire_onitemchanged(this, pre_index  , pre_text  , pre_value, post_index  , post_text, post_value);
+			}
+		}
+
+		nexacro.getPopupFrames()[v.frame].form.close();
+	};	
+}
+
+this.mainframe_onsize = function(obj:nexacro.MainFrame,e:nexacro.SizeEventInfo)
+{
+	var mf = nexacro.getApplication().mainframe;
+	var objf = nexacro.getPopupFrames(); 	//모달리스도 포함되므로 필요 시 구분하여 처리
+	
+	for (var icnt = objf.length-1; icnt >= 0; icnt--)
+	{
+		var new_left = 0;
+		var new_top = 0;
+		var new_width = objf[icnt].org_width;
+		var new_height = objf[icnt].org_height;
+		if ("extcombo" == objf[icnt]._modaltype)
+		{
+			objf[icnt].form.fnCallFrameResize();
+		}
+		else if ("full" == objf[icnt]._modaltype)
+		{
+			new_width = mf.width;
+			new_height = mf.height;
+			objf[icnt].move(new_left,new_top,new_width,new_height);
+		}
+		else
+		{
+			if (mf.width <= objf[icnt].width)
+			{
+				////trace("1-1");
+				//팝업 너비가 부모 너비보다 큰 경우 원하는 동작
+				new_left = 0;
+				new_width = mf.width;
+				//new_width = objf[icnt].width;
+			}
+			else
+			{
+				////trace("1-2");
+				new_left = (mf.width-objf[icnt].width)/2;
+				if (objf[icnt].width < objf[icnt].org_width)
+				{
+					new_width = objf[icnt].org_width;
+				}
+				else
+				{
+					new_width = objf[icnt].width;
+				}
+			}
+			if (mf.height <= objf[icnt].height)
+			{
+				////trace("1-3");
+				//팝업 높이가 부모 높이보다 큰 경우 원하는 동작
+				new_top = 0;
+				new_height = mf.height;
+				//new_height = objf[icnt].height;
+			}
+			else
+			{
+				////trace("1-4");
+				new_top = (mf.height-objf[icnt].height)/2;
+				if (objf[icnt].height < objf[icnt].org_height)
+				{
+					new_height = objf[icnt].org_height;
+				}
+				else
+				{
+					new_height= objf[icnt].height;
+				}
+			}
+
+			objf[icnt].move(new_left,new_top,new_width,new_height);
+		}
+	}	
+};]]></Script>
+</ADL>

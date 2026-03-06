@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleOzReport" width="1280" height="745" titletext="OzViewer 샘플(Html5방식)" onload="sampleOzReport_onload">
+    <Layouts>
+      <Layout height="745" width="1280">
+        <Static id="sta00" taborder="0" text="오즈리포트 샘플" left="3" top="3" width="397" height="40"/>
+        <Div id="divReportViewer" taborder="1" text="div00" left="570" top="93" url="comm::comp_ozreport.xfdl" right="17" bottom="45"/>
+        <Button id="btnReportView" taborder="2" text="리포트표시" left="31" top="302" width="153" height="36" onclick="btnReportView_onclick"/>
+        <CheckBox id="chkSecurityYN" taborder="3" text="위변조방지 바코드 삽입" left="36" top="146" width="320" height="30" value="false"/>
+        <CheckBox id="chkVoiceBarcodeYN" taborder="4" text="보이스바코드 삽입 (미사용)" left="36" top="174" width="320" height="30" value="false" visible="false"/>
+        <CheckBox id="chkBrailleCodeYN" taborder="5" text="점자문서 생성(미사용)" left="36" top="202" width="320" height="30" value="false"/>
+        <Static id="sta01" taborder="6" text="리포트파일명 : " left="36" top="100" width="114" height="30"/>
+        <Edit id="edtReportFileName" taborder="7" left="189" top="100" width="350" height="30" value="/jsonsample.ozr" text="/jsonsample.ozr"/>
+        <Radio id="rdoReportViewType" taborder="8" left="191" top="60" width="359" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" columncount="2" value="embedded" text="Form내부 삽입방식" index="0">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">embedded</Col>
+                <Col id="datacolumn">Form내부 삽입방식(DIV)</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">popup</Col>
+                <Col id="datacolumn">팝업 방식</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Static id="sta01_00" taborder="9" text="리포트표시방식 :" left="36" top="60" width="114" height="30"/>
+        <Static id="staZoom" taborder="10" text="Zoom" left="42" top="251" width="97" height="26"/>
+        <Static id="sta02_00" taborder="11" text="Default:100" left="360" top="252" width="137" height="26"/>
+        <Edit id="edtZoom" taborder="12" left="192" top="253" width="154" height="29" value="100" text="100"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    TEMPLATE
+*  @FileName 	sampleOzReport.xfdl
+*  @Creator 	홍길동
+*  @CreateDate 	2022.7.22
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.7.22     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_arrDispName = [];
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ this.sampleOzReport_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// Form 로드하면서 표시하는 경우를 테스트하기 위해 넣음.
+	//this.btnReportView.click();
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnReportCallback = function()
+{
+	alert("===> popupcallback");
+}
+
+this.fnReportLoadCallback = function (obj,sDisplayName)
+{
+	trace("====> fnReportLoadCallback ");
+
+	var nIdx = this.fv_arrDispName.indexOf(sDisplayName);
+	if(nIdx>-1) this.fv_arrDispName.splice(nIdx,1);
+	
+	if(this.fv_arrDispName.length==0)
+	{
+		trace("====> 모든 리포트 파일이 처리됐습니다.");
+	}
+	
+}
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+this.btnReportView_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sSecurityYN     = this.chkSecurityYN.value     ?"Y":"N";   // 위변조방지 삽입
+	var sVoiceBarcodeYN = this.chkVoiceBarcodeYN.value ?"Y":"N";   // 보이스바코드 삽입
+	//var sBrailleCodeYN  = this.chkBrailleCodeYN.value  ?"Y":"N";   // 점자문서 생성
+
+	var sReportName  = this.edtReportFileName.value;
+
+	// 필요한 경우만 세팅
+	var objButton = {
+	                    "toolbar.save"              : "false"    // 저장 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)           
+	                //,   "toolbar.print"             : "false"    // 인쇄 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)	
+					                       
+	                //,   "toolbar.addmemo"           : "false"    // 메모 추가 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+	                //,   "toolbar.savedm"            : "false"    // 데이터 모듈 저장 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+					
+	                //,   "toolbar.zoom"              : "false"    // 줌 아이콘 그룹의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+	                //,   "toolbar.zoomin"            : "false"    // 확대 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+	                //,   "toolbar.zoomout"           : "false"    // 축소 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+	                //,   "toolbar.zoomtype"          : "false"    // 줌 선택 콤보 박스의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+					                                   
+	                //,   "toolbar.etc"               : "false"    // 다른 메뉴 아이콘의 표시 여부 및 비활성화 여부를 설정합니다.(true,false,disable)
+					
+	
+	                //,   "etcmenu.open"              : "false"    // 다른 메뉴에 [열기] 메뉴 표시 여부를 설정합니다.(true,false)        
+	                //,   "etcmenu.close"             : "false"    // 다른 메뉴에 [닫기] 메뉴 표시 여부를 설정합니다.(true,false)        
+	                //,   "etcmenu.closeall"          : "false"    // 다른 메뉴에 [모두 닫기] 메뉴 표시 여부를 설정합니다.(true,false)        
+	                //,   "etcmenu.handtool"          : "false"    // 다른 메뉴에 [손 모드] 메뉴 표시 여부를 설정합니다.(true,false)        
+	                //,   "etcmenu.edittool"          : "false"    // 다른 메뉴에 [편집 모드] 메뉴 표시 여부를 설정합니다.(true,false)        
+	                //,   "etcmenu.showtree"          : "false"    // 다른 메뉴에 [트리 보기] 메뉴 표시 여부를 설정합니다.(true,false)        
+	                //,   "etcmenu.showthumbnail"     : "false"    // 다른 메뉴에 [페이지 축소판 보기] 메뉴 표시 여부를 설정합니다.(true,false)        
+	                //,   "etcmenu.refresh"           : "false"    // 다른 메뉴에 [보고서 새로 고침] 메뉴 표시 여부를 설정합니다.(true,false)        
+	                //,   "etcmenu.pagenavigator"     : "false"    // 다른 메뉴에 [페이지 네비게이터] 또는 [페이지 선택 창] 메뉴 표시 여부를 설정합니다.(true,false)        
+	                //,   "etcmenu.pagesetup"         : "false"    // 다른 메뉴에 [페이지 설정] 메뉴 표시 여부를 설정합니다.(true,false)        
+	                //,   "etcmenu.about"             : "false"    // 다른 메뉴에 [제품정보] 메뉴 표시 여부를 설정합니다.(true,false)        
+	                //,   "etcmenu.help"              : "false"    // 다른 메뉴에 [도움말] 메뉴 표시 여부를 설정합니다.(true,false)        
+           
+	                }
+
+	// 리포트를 생성하기 위한 옵션을 설정한다.
+	var oOzOption = {
+					    reports : [	
+							{	
+								// 기본데이터
+								  displayname         : "리포트1"   // [필수] 멀티리포트시 Tree에 보여줄 이름
+								, reportname : sReportName // [필수] 리포트명  "/jsonsample.ozr"
+								
+								// json연동형
+								//  - Odi인 경우 지정안해도 됨
+								//  - jsonDs/jsonDsName은 갯수가 같아야 됨
+								, jsonDs     : [this.dsCategory,this.dsProduct]  // [선택] json으로 변환할 데이터셋
+								, jsonDsName : ["Category","Product"]            // [선택] json으로 변환할 데이터의이름(ozr파일에서 지정된 값과 일치)
+								, jsonParam  : ["viewerType=HTML5 Canvas Viewer 1"]  // [선택] json이외에추가할 데이터(KEY=VALUE형태의 스트링(배열))
+								
+								// odi연동형
+								//  - json인 경우 지정안해도 됨
+								//  - odiDs/odiDsName은 갯수가 같아야 됨
+								, odiDs      : [this.dsOdiParam]  // [선택] odi로 변환할 데이터셋
+								, odiDsName  : ["userdata"]       // [선택] odi로 변환할 데이터의이름(ozr파일에서 지정된 값과 일치)
+								
+								// 추가/보안옵션
+								, security     : sSecurityYN       // [선택] 위변조방지 삽입   ("Y"(default):표시,"N":비표시)
+								, voiceBarcode : sVoiceBarcodeYN   // [선택] 보이스바코드 삽입 ("Y"(default):표시,"N":비표시)
+							}
+/* 멀티보고서일 경우							
+							,{	
+								// 기본데이터
+								  displayname : "리포트2"   // [선택] 멀티리포트시 Tree에 보여줄 이름
+								, reportname : sReportName // [필수] 리포트명  "/jsonsample.ozr"
+								
+								// json연동형
+								//  - Odi인 경우 지정안해도 됨
+								//  - jsonDs/jsonDsName은 갯수가 같아야 됨
+								, jsonDs     : [this.dsCategory,this.dsProduct]    // [선택] json으로 변환할 데이터셋
+								, jsonDsName : ["Category","Product"]              // [선택] json으로 변환할 데이터의이름(ozr파일에서 지정된 값과 일치)
+								, jsonParam  : ["viewerType=HTML5 Canvas Viewer 2"]  // [선택] json이외에추가할 데이터(KEY=VALUE형태의 스트링(배열))
+								// odi연동형
+								//  - json인 경우 지정안해도 됨
+								//  - odiDs/odiDsName은 갯수가 같아야 됨
+								, odiDs      : [this.dsOdiParam]  // [선택] odi로 변환할 데이터셋
+								, odiDsName  : ["userdata"]       // [선택] odi로 변환할 데이터의이름(ozr파일에서 지정된 값과 일치)
+								
+								// 추가/보안옵션
+								, security     : sSecurityYN       // [선택] 위변조방지 삽입   ("Y"(default):표시,"N":비표시)
+								, voiceBarcode : sVoiceBarcodeYN   // [선택] 보이스바코드 삽입 ("Y"(default):표시,"N":비표시)
+							}
+*/							
+						]
+					//, popupWidth  : 1000	// [선택]  팝업으로 띄울 경우 팝업의 width(팝업의 기본width:1000)
+					//, popupHeight : 500	// [선택]  팝업으로 띄울 경우 팝업의 height(팝업의 기본width:610)
+					//, zoom : this.edtZoom.value   // [선택] 보고서 화면의 비율을 백분율로 설정(default:"100")
+					, reportloadevent : this.fnReportLoadCallback    // [선택] 레포트 로드된 이후 불려지는 함수(인쇄시에도 발생)
+					, button : objButton    // [선택] 버튼의 표시 비표시를 통제
+					, hidestatus : true
+	                };
+	
+	// 멀티리포트의 완료 이벤트를 받을 경우	(reportloadeven를 사용하는 경우)
+	if(oOzOption.reportloadevent)
+	{
+		this.fv_arrDispName = [];
+		for(var i=0;i<oOzOption.reports.length;i++)
+		{
+			this.fv_arrDispName.push( oOzOption.reports[i].displayname);
+		}
+	}
+	
+	//리포트를 그린다.
+	var sReportViewType = this.rdoReportViewType.value;  // Report View Type ("embedded" : Form안의 Div에 표시 , "popup": 공통팝업으로 표시)
+	if(sReportViewType=="embedded")
+	{
+		this.smfReportView(this,sReportViewType,oOzOption,this.divReportViewer);            // Div로 표시
+	}
+	else
+	{
+		this.smfReportView(this,sReportViewType,oOzOption,this.fnReportCallback);  // 팝업으로 표시(아직기능구현안됨)
+	}
+};
+
+
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsCategory">
+        <ColumnInfo>
+          <Column id="CategoryID" type="INT" size="256"/>
+          <Column id="CategoryName" type="STRING" size="256"/>
+          <Column id="Description" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CategoryID">1</Col>
+            <Col id="CategoryName">음료</Col>
+            <Col id="Description">청량음료,커피,홍차,맥주</Col>
+          </Row>
+          <Row>
+            <Col id="CategoryID">2</Col>
+            <Col id="CategoryName">조미료</Col>
+            <Col id="Description">감미료,향신료,양념,스프레드</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsProduct">
+        <ColumnInfo>
+          <Column id="ProductID" type="STRING" size="256"/>
+          <Column id="ProductName" type="STRING" size="256"/>
+          <Column id="CategoryID" type="STRING" size="256"/>
+          <Column id="QuantityPerUnit" type="STRING" size="256"/>
+          <Column id="UnitPrice" type="STRING" size="256"/>
+          <Column id="UnitsInStock" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="ProductID">75</Col>
+            <Col id="ProductName">알파인맥주</Col>
+            <Col id="CategoryID">1</Col>
+            <Col id="QuantityPerUnit">24-0.5lbottles</Col>
+            <Col id="UnitPrice">24000.0000</Col>
+            <Col id="UnitsInStock">125</Col>
+          </Row>
+          <Row>
+            <Col id="ProductID">39</Col>
+            <Col id="ProductName">OK바닐라셰이크</Col>
+            <Col id="CategoryID">1</Col>
+            <Col id="QuantityPerUnit">750ccperbottle</Col>
+            <Col id="UnitPrice">28000.0000</Col>
+            <Col id="UnitsInStock">69</Col>
+          </Row>
+          <Row>
+            <Col id="ProductID">34</Col>
+            <Col id="ProductName">태일라이트맥주</Col>
+            <Col id="QuantityPerUnit">24-12ozbottles</Col>
+            <Col id="UnitPrice">34000.0000</Col>
+            <Col id="UnitsInStock">111</Col>
+            <Col id="CategoryID">1</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsOdiParam">
+        <ColumnInfo>
+          <Column id="formdate" type="STRING" size="256"/>
+          <Column id="todate" type="STRING" size="256"/>
+          <Column id="id" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="formdate">20220701</Col>
+            <Col id="todate">20220710</Col>
+            <Col id="id">neis</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

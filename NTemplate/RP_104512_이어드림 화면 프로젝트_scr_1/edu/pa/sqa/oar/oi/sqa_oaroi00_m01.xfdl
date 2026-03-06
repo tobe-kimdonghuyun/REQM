@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frm01" width="1200" height="1110" titletext="원서출력" onload="frm01_onload">
+    <Layouts>
+      <Layout height="1110" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="65" height="54" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="온라인접수조회" left="0" top="0" height="54" cssclass="img_WF_SubTit01" width="240" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <ImageViewer id="imgSubTitle" taborder="1" left="0" top="140" width="490" height="40" cssclass="img_WF_SubTit02" initvalueid="ivTitleAccessibilityOn" text="2021년도 1회차 초등학교 졸업학력 검정고시"/>
+        <Div id="divApplpInfo" taborder="2" left="0" height="42" top="194" text="" cssclass="div_WF_Detail" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="sta44" taborder="0" left="0" height="42" cssclass="sta_WF_Input02Top" top="0" right="0" text="" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta45" taborder="1" left="0" width="160" height="42" cssclass="sta_WF_Input01Top" text="접수번호" top="0" initvalueid="ivStcAccessibilityOn" accessibilitylabel="성명"/>
+              <Edit id="edtRcptNo" taborder="2" height="30" text="중학교졸업" left="165" width="325" top="6" readonly="true" cssclass="edi_WF_Input" initvalueid="ivEdtReadOnly" accessibilitylabel="성명"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divReportViewer" taborder="3" left="0" top="256" right="0" height="727" initvalueid="ivDivAccessibilityOff"/>
+        <Button id="btnPrev" taborder="4" text="이전" left="565" top="1003" width="120" cssclass="btn_WF_FunctionP_B" enable="true" initvalueid="ivBtnAccessibilityLink" onclick="btnPrev_onclick" height="40"/>
+        <Static id="Static99_00_00_00_00" taborder="5" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01" taborder="6" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_00" taborder="7" left="0" top="174" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta99_00_00_00_00_01_01_00" taborder="8" left="0" top="236" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta99_00_00_00_00_01_01_00_00" taborder="9" left="0" top="983" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsOneUserInfo=dsOneUserInfo dsAllUserInfo=dsAllUserInfo dsCancelChk=dsCancelChk</Col>
+            <Col id="url">sqa_oar_oi00_001.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">saveCancelList</Col>
+            <Col id="inDatasets">dsOneUserInfo=dsOneUserInfo</Col>
+            <Col id="url">sqa_oar_oi00_002.do</Col>
+            <Col id="outDatasets">dsMain=dsMain:U</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCancelChk" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="itnRcptRtrcnBgngYmd" type="STRING" size="256"/>
+          <Column id="itnRcptRtrcnEndYmd" type="STRING" size="256"/>
+          <Column id="itnRcptRtrcnBgngTm" type="STRING" size="256"/>
+          <Column id="itnRcptRtrcnEndTm" type="STRING" size="256"/>
+          <Column id="exmhRlsYmd" type="STRING" size="256"/>
+          <Column id="exmhChcYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsAllUserInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="sqeSbjtNoNm" type="STRING" size="256"/>
+          <Column id="sbjtAplemScCdNm" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="enfcYr" type="STRING" size="256"/>
+          <Column id="enfcTme" type="STRING" size="256"/>
+          <Column id="sqeScCd" type="STRING" size="256"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="rcptNo" type="STRING" size="256"/>
+          <Column id="returnVal" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsOneUserInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="sqeScCd" type="STRING" size="256"/>
+          <Column id="enfcYr" type="STRING" size="256"/>
+          <Column id="enfcTme" type="STRING" size="256"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="sqeScCdNm" type="STRING" size="256"/>
+          <Column id="kornFlnm" type="STRING" size="256"/>
+          <Column id="rcptNo" type="STRING" size="256"/>
+          <Column id="sqeExmtNo" type="STRING" size="256"/>
+          <Column id="trprRrno" type="STRING" size="256"/>
+          <Column id="ihtRegRoadNmZip" type="STRING" size="256"/>
+          <Column id="ihtRegRoadNmAddr" type="STRING" size="256"/>
+          <Column id="ihtRegRoadNmDaddr" type="STRING" size="256"/>
+          <Column id="ihtRegRoadNm" type="STRING" size="256"/>
+          <Column id="claiTelno" type="STRING" size="256"/>
+          <Column id="mblTelno" type="STRING" size="256"/>
+          <Column id="dltYn" type="STRING" size="256"/>
+          <Column id="rcgnDltScCdNm" type="STRING" size="256"/>
+          <Column id="prsrScCd" type="STRING" size="256"/>
+          <Column id="prsrScCdNm" type="STRING" size="256"/>
+          <Column id="applpScCd" type="STRING" size="256"/>
+          <Column id="applpScCdNm" type="STRING" size="256"/>
+          <Column id="acbgScCd" type="STRING" size="256"/>
+          <Column id="acbgScCdNm" type="STRING" size="256"/>
+          <Column id="grdtnExpelYmd" type="STRING" size="256"/>
+          <Column id="shlNm" type="STRING" size="256"/>
+          <Column id="shlLctnCtpvCd" type="STRING" size="256"/>
+          <Column id="shlLctnCtpvCdNm" type="STRING" size="256"/>
+          <Column id="shlLctnAddr" type="STRING" size="256"/>
+          <Column id="sbmsnYn" type="STRING" size="256"/>
+          <Column id="sbmsnYmd" type="STRING" size="256"/>
+          <Column id="exmhNo" type="STRING" size="256"/>
+          <Column id="exmmScNm" type="STRING" size="256"/>
+          <Column id="photoFileCn" type="STRING" size="256"/>
+          <Column id="photoFileNm" type="STRING" size="256"/>
+          <Column id="sqe1CnvAplyCdNm" type="STRING" size="256"/>
+          <Column id="sqe2CnvAplyCdNm" type="STRING" size="256"/>
+          <Column id="sqe3CnvAplyCdNm" type="STRING" size="256"/>
+          <Column id="orgName" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="enfcYr" type="STRING" size="256"/>
+          <Column id="enfcTme" type="STRING" size="256"/>
+          <Column id="sqeScCd" type="STRING" size="256"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="rcptNo" type="STRING" size="256"/>
+          <Column id="returnVal" type="STRING" size="256"/>
+          <Column id="trprRrno" type="STRING" size="256"/>
+          <Column id="kornFlnm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  
+*  @MenuPath    대국민 검정고시서비스 원서출력
+*  @FileName 	sqa_oaroi00_m01.xfdl 
+*  @Creator 	박가혜
+*  @CreateDate 	2022.11.01
+*  @Desction   원서출력
+*
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.11.01           박가혜                 최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+
+
+
+include "lib::cm_script.xjs"
+include "lib::sqa_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역 
+ ************************************************************************************************/
+this.fv_param;
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frm01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼을 초기화
+	this.smfInitForm(obj);
+	this.dsSearch.addRow();
+	
+
+	// 파라메터 세팅
+	this.fv_param = this.smfGetFormParams();
+
+	this.fnSetInitParam(this.smfGetFormParams());
+
+	//로그인이나 세션에서 넘어온 값
+	this.dsSearch.setColumn(0, "enfcYr", this.fv_enfcYr);
+	this.dsSearch.setColumn(0, "enfcTme", this.fv_enfcTme);
+	this.dsSearch.setColumn(0, "sqeScCd", this.fv_sqeScCd);
+	this.dsSearch.setColumn(0, "cddcCd", this.fv_cddcCd);
+	this.dsSearch.setColumn(0, "rcptNo", this.fv_rcptNo);
+	this.dsSearch.setColumn(0, "trprRrno", this.smfGetTrprRrno());
+	this.dsSearch.setColumn(0, "kornFlnm", this.smfGetKornFlnm());
+	this.fnInit();
+	
+	//this.smfResetScroll(this.divMain1.form) //div사이즈 최적화
+	
+	
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnInit = function()
+{
+	this.smfSearchService("select")
+		// 실행
+		.run()
+
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			var enfcYr = this.dsOneUserInfo.getColumn(0,"enfcYr");
+			var enfcTme = this.dsOneUserInfo.getColumn(0,"enfcTme")
+			var sqeExmtNo = this.dsOneUserInfo.getColumn(0, "sqeExmtNo")
+			//서브타이틀
+			this.imgSubTitle.set_text(enfcYr + "년도 " + enfcTme + "회차 " + this.dsOneUserInfo.getColumn(0,"sqeScCdNm"))
+			//접수번호
+			this.divApplpInfo.form.edtRcptNo.set_value(this.fv_rcptNo);
+			this.fnSetReportData();
+		});	
+	
+	
+}
+
+//리포트용 기초데이터 셋팅
+this.fnSetReportData = function(){
+	
+	//주민등록번호
+	var trprRrno = this.dsOneUserInfo.getColumn(0,"trprRrno")
+	if(trprRrno.length > 0){
+		this.dsOneUserInfo.setColumn(0,"trprRrno",trprRrno.substring(0,6) + "-" + trprRrno.substring(6,13))
+	}
+	
+	//주소
+	var zipCd = this.dsOneUserInfo.getColumn(0,"ihtRegRoadNmZip")
+	var rdnAddr = this.dsOneUserInfo.getColumn(0,"ihtRegRoadNmAddr")
+	this.dsOneUserInfo.setColumn(0, "ihtRegRoadNm", zipCd + " " + rdnAddr)
+	
+	//장애여부
+	var dltYn = this.dsOneUserInfo.getColumn(0,"dltYn")
+	if(dltYn == "N"){ 
+		this.dsOneUserInfo.setColumn(0,"dltYn","일반인")
+	}else{
+		this.dsOneUserInfo.setColumn(0,"dltYn","장애인")
+	}
+	
+
+	//재소구분
+	var prsrScCd = this.dsOneUserInfo.getColumn(0, "prsrScCd")
+	
+	if(prsrScCd != "" || !this.smfIsNull(prsrScCd)){
+		if(prsrScCd ==  0){
+			this.dsOneUserInfo.setColumn(0,"prsrScCdNm","일반인")
+		}else if(prsrScCd == 1){
+			this.dsOneUserInfo.setColumn(0,"prsrScCdNm","교도소재소자")
+		}else{
+			this.dsOneUserInfo.setColumn(0,"prsrScCdNm","소년원재소자")
+		}
+	}
+	
+
+	//제출일자
+	var sbmsnYmd = this.dsOneUserInfo.getColumn(0, "sbmsnYmd")
+	
+	if(this.smfIsNull(sbmsnYmd)){
+		this.dsOneUserInfo.setColumn(0,"sbmsnYmd","-")
+	}else{
+		var ymd = sbmsnYmd.substr(0, 4) + "-" + sbmsnYmd.substr(4, 2) + "-" + sbmsnYmd.substr(6, 2)
+		this.dsOneUserInfo.setColumn(0,"sbmsnYmd", ymd)
+	}
+	
+	//졸업제적일
+	var grdtnExpelYmd = this.dsOneUserInfo.getColumn(0, "grdtnExpelYmd")
+	
+	if(this.smfIsNull(grdtnExpelYmd)){
+		this.dsOneUserInfo.setColumn(0,"grdtnExpelYmd","-")
+	}else{
+		var ymd = grdtnExpelYmd.substr(0, 4) + "-" + grdtnExpelYmd.substr(4, 2) + "-" + grdtnExpelYmd.substr(6, 2)
+		this.dsOneUserInfo.setColumn(0,"grdtnExpelYmd", ymd)
+	}
+	
+		//고사장
+	var cddc = this.smfGetCddcCode().substring(0,3)
+// 	if(this.dsCancelChk.getColumn(0,"exmhChcYn") =="Y" && !this.smfIsNull(this.dsCancelChk.getColumn(0,"exmhChcYn"))
+// 		&& (this.smfToday() < this.dsCancelChk.getColumn(0,"exmhRlsYmd"))){
+// 		
+// 		this.dsOneUserInfo.setColumn(0,"exmmScNm","고사장 발표 전")
+// 		
+// 	}else
+	if(this.dsCancelChk.getColumn(0,"exmhChcYn") == "N" && this.smfToday() < this.dsCancelChk.getColumn(0,"exmhRlsYmd")){
+		
+		this.dsOneUserInfo.setColumn(0,"exmmScNm","고사장 발표 전")
+	}else{
+	
+		this.dsOneUserInfo.setColumn(0,"exmmScNm",this.dsOneUserInfo.getColumn(0,"exmmScNm"))
+		
+	}
+		
+	this.fnSetOiReport();
+	
+}
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+ * @description Transaction CallBack 함수(선택)
+*/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	if(errcd == -1) return;
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * @description Oz 리포트 셋팅 (OZ Report)
+*/
+this.fnSetOiReport = function(){
+
+	//var sSecurityYN     = this.chkSecurityYN.value     ?"Y":"N";   // 위변조방지 삽입
+	//var sVoiceBarcodeYN = this.chkVoiceBarcodeYN.value ?"Y":"N";   // 보이스바코드 삽입
+	//var sBrailleCodeYN  = this.chkBrailleCodeYN.value  ?"Y":"N";   // 점자문서 생성
+	
+	var sReportName  = "/edu/pa/sqa/oar/oi/sqa_oaroi00_r00.ozr";
+	var subTitle = this.imgSubTitle.text
+	var orgName = this.dsOneUserInfo.getColumn(0,"orgName")
+
+	// 리포트를 생성하기 위한 옵션을 설정한다.
+	var oOzOption = {
+					    reports : [	
+							{	
+								// 기본데이터
+								  displayname         : "원서출력"   // [필수] 멀티리포트시 Tree에 보여줄 이름
+								, reportname : sReportName // [필수] 리포트명  "/jsonsample.ozr"
+								
+								// json연동형
+								//  - Odi인 경우 지정안해도 됨
+								//  - jsonDs/jsonDsName은 갯수가 같아야 됨
+								, jsonDs     : [this.dsOneUserInfo,this.dsAllUserInfo]  // [선택] json으로 변환할 데이터셋
+								, jsonDsName : ["dsOneUserInfo","dsAllUserInfo"]            // [선택] json으로 변환할 데이터의이름(ozr파일에서 지정된 값과 일치)
+								, jsonParam  : ["subTitle="+subTitle,"orgName="+orgName]  // [선택] json이외에추가할 데이터(KEY=VALUE형태의 스트링(배열))
+								
+								
+								// 추가/보안옵션
+								, security     : "N"       // [선택] 위변조방지 삽입   ("Y"(default):표시,"N":비표시)
+								, voiceBarcode : "N"   // [선택] 보이스바코드 삽입 ("Y"(default):표시,"N":비표시)
+								, brailleCode  : "N"    // [선택] 점자문서 생성     ("Y":생성,"N"(default):미생성)
+							}						
+						]
+	                };
+					
+	//리포트를 그린다.
+	this.divReportViewer.optionReport = oOzOption;
+	
+	// report를 그린다.
+	this.divReportViewer.set_url("comm::comp_ozreport.xfdl");
+	//this.smfReportView(this,"embedded",oOzOption,this.divReportViewer);            // Div로 표시
+
+	
+}
+/************************************************************************************
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+
+this.btnPrev_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+		params = {
+				enfcYr : this.fv_param.enfcYr
+				,enfcTme : this.fv_param.enfcTme
+				,cddcCd : this.fv_param.cddcCd
+				,sqeScCd : this.fv_param.sqeScCd
+				,rcptNo : this.fv_param.rcptNo
+				}
+	this.smfSetWorkPage("pa_sqa_oar_oi::sqa_oaroi00_m00.xfdl", params);
+};
+]]></Script>
+  </Form>
+</FDL>

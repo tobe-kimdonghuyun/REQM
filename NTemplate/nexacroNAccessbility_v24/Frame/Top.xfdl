@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Top" width="1280" height="100" titletext="상단영역" onload="form_onload">
+    <Layouts>
+      <Layout height="100" width="1280" screenid="Desktop_screen">
+        <Static id="staLogo" taborder="0" left="30" top="35" width="160" height="35" cssclass="sta_MF_Logo" accessibilitylabel="투비소프트" onclick="staLogo_onclick" accessibilitydescription="메인으로 바로가기 링크" accessibilityrole="heading"/>
+        <Div id="divSkip" taborder="1" top="0" height="30" background="#0D3769" onsetfocus="divSkip_onsetfocus" onkillfocus="divSkip_onkillfocus" accessibilityenable="false" left="30" visible="true" right="30" text="본문 바로가기" color="#ffffff" font="bold 10pt/normal &quot;맑은 고딕&quot;">
+          <Layouts>
+            <Layout>
+              <Button id="btnGoBody" taborder="0" text="본문 바로가기" left="389" top="0" accessibilityenable="true" onclick="divSkip_btnGoBody_onclick" right="328" bottom="0" background="#0D3769" border="0px none" color="#ffffff" font="bold 10pt/normal &quot;맑은 고딕&quot;"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTopBtn" taborder="2" text="Div00" left="210" top="27" height="50" right="210" accessibilityenable="false"/>
+        <Static id="Static00" taborder="3" top="26" width="50" height="50" cssclass="sta_MF_User" usedecorate="true" text="&lt;fc ='#5C5E5C'&gt;&lt;fs v='8'&gt;&lt;b v='true'&gt;홍길동&lt;/b&gt; 님&lt;/fs&gt;&lt;/fc&gt;" right="111" accessibilitylabel="홍길동님"/>
+        <Static id="Static04" taborder="4" top="29" width="1" height="45" background="#E7E7E7" right="95" accessibilityenable="false"/>
+        <Static id="Static03" taborder="5" top="26" width="50" height="50" cssclass="sta_MF_Alerm" right="30" usedecorate="true" text="&lt;fc ='#5C5E5C'&gt;&lt;fs v='8'&gt;알람&lt;/fs&gt;&lt;/fc&gt;&lt;/b&gt;" accessibilitylabel="알람"/>
+        <Button id="btnMenu" taborder="6" left="1141" top="131" width="89" height="89" cssclass="btn_MF_mMenu" visible="false" onclick="btnMenu_onclick"/>
+      </Layout>
+      <Layout height="100" name="mobile" width="480" screenid="Mobile_screen">
+        <Div id="divTopBtn" visible="false"/>
+        <Button id="btnMenu" top="18" height="66" right="20" width="74" visible="true"/>
+        <Div id="divSkip" left="0" top="0" height="50" right="0" visible="false"/>
+        <Static id="Static03" visible="false" top="36" width="50" height="50" right="120"/>
+        <Static id="Static00" visible="false" top="36" width="50" height="50" right="201"/>
+        <Static id="Static04" top="39" width="1" height="45" right="185" visible="false"/>
+        <Static id="staLogo" left="10" top="35" width="160" height="35"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  Nexacro Accessibility
+*  @FileName 	Top.xfdl 
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022.12.15
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.12.15     		TOBESOFT		 		최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = this.gfnGetApplication();
+this.fvFirstGap 		= 0;
+this.fvBtnGap 			= 20;
+this.fvBtnHeight 		= 50;
+this.fvTopBtnPrefix 	= "TOP_";
+this.fvObjDs = null;
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.divSkip.set_height(0);
+
+	if (this.objApp.gvOs.indexOf("WINDOWS") > -1)
+	{	
+		this.fvObjDs = this.objApp.gdsMenu;	
+		this.fnSetTopMenu();	
+	}
+};
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+this.fnSetTopMenu = function ()
+{
+	for (var i = 0; i < this.fvObjDs.getRowCount(); i++) 
+	{
+		var sMenuId = this.fvObjDs.getColumn(i, "MENUID");
+		var sMenuName = this.fvObjDs.getColumn(i, "MENUNM");
+		
+		this.fnCreateTopMenu(sMenuId, sMenuName, i);
+	}
+};
+
+/**
+ * @description Top menu creation
+ */
+this.fnCreateTopMenu = function (sTopId, sName, index)
+{
+	// Creating page button
+	var objBtn = new Button();
+	objBtn.init(this.fvTopBtnPrefix + sTopId, this.fnGetLeft(sTopId), 0, 130, this.fvBtnHeight, null, null);
+	this.divTopBtn.form.addChild(objBtn.name, objBtn);
+
+	objBtn.set_text(sName);
+	objBtn.menuid = sTopId;
+	objBtn.show();
+	
+	// 버튼 width 셋팅
+	objBtn.set_fittocontents("width");
+	var nWidth = objBtn.getOffsetWidth();
+	objBtn.set_fittocontents("none");
+	objBtn.set_width(nWidth + 20);
+	objBtn.set_accessibilitydescription("링크");
+	objBtn.set_cssclass("btn_MF_Menu");	
+	
+	objBtn.setEventHandler("onclick", this.btnTopMenu_onclick, this);
+	
+};
+
+this.fnGetLeft = function (sTopId)
+{
+	var nCurRow = this.fvObjDs.findRow("MENUID", sTopId);
+	if (nCurRow == 0) return this.fvFirstGap;
+
+	var objPrevTab = this.fnFindObj(this.fvTopBtnPrefix + this.fvObjDs.getColumn(nCurRow - 1, "MENUID"));
+	return objPrevTab.getOffsetRight() + this.fvBtnGap;
+};
+
+this.fnFindObj = function (sId)
+{
+	return this.divTopBtn.form.components[sId];
+};
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.divSkip_onkillfocus = function(obj:nexacro.Div,e:nexacro.KillFocusEventInfo)
+{
+	this.divSkip.set_height(0);
+	var elem = this.divSkip.getElement();
+	if(elem)
+	{
+		elem.setElementZIndex("");
+	}	
+};
+
+this.divSkip_onsetfocus = function(obj:nexacro.Div,e:nexacro.SetFocusEventInfo)
+{
+	this.divSkip.set_height(43);
+
+	//RP 95735
+	var elem = this.divSkip.getElement();
+	if(elem)
+	{
+		elem.setElementZIndex(1);
+	}	
+};
+
+this.divSkip_btnGoBody_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//RP 95883
+	var divFirstFocus = this.objApp.nexacroBase.divContents.form.divCenter.form.getFirstAccessibilityComponent(true);
+	trace(divFirstFocus.name);
+	
+    divFirstFocus.setFocus();
+};
+
+this.btnTopMenu_onclick = function(obj, e)
+{
+	var sid = obj.name.split("_")[1];
+
+	for (var i = 0; i < this.fvObjDs.getRowCount(); i++) 
+	{
+		this.fnFindObj(this.fvTopBtnPrefix + this.fvObjDs.getColumn(i, "MENUID")).set_cssclass("btn_MF_Menu");
+	}
+	
+	obj.set_cssclass("btn_MF_MenuS");
+
+	this.objApp.nexacroBase.fnCallMenu(sid);
+}
+
+this.btnMenu_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (system.navigatorname == "nexacro")
+	{
+		return;
+	}
+
+// 	if (nexacro._isMobile())
+// 	{
+		this.objApp.nexacroBase.fnMenuClick(true);
+//	}
+};
+
+this.staLogo_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.objApp.nexacroBase.divContents.form.divCenter.set_url("FrameBase::Main.xfdl");
+
+};
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

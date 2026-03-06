@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ENV version="2.1">
+  <Environment themeid="theme::neisPas" key="NEISP" httpretry="0" filesecurelevel="all" networksecurelevel="all" onerror="Environment_onerror" userfontid="font::NotoSansKR.xfont" enableaccessibility="true">
+    <ScreenDefinition>
+      <Screen id="ScreenDeskTopP" type="desktop" initvaluefileid="initvalue::accessbility.xiv" themeid="theme::neisPas" accessibilitydescreadtype="label,action,description" accessibilitytype="sensereader" locale="ko_KR" loadingimage="url('theme://images/loading.gif')"/>
+      <Screen id="mobileP" type="mobile_medium" initvaluefileid="initvalue::accessbility_M.xiv" themeid="theme::neisPas" enabletouchevent="true" accessibilitytype="standard" accessibilitydescreadtype="label,action,description" loadingimage="url('theme://images/loading.gif')"/>
+      <Screen id="tabletP" type="mobile_large" initvaluefileid="initvalue::accessbility_M.xiv" themeid="theme::neisPas" enabletouchevent="true" accessibilityheadingnexthotkey="ALT+1" accessibilityheadingprevhotkey="ALT+2" accessibilitydescreadtype="label,action,description" loadingimage="url('theme://images/loading.gif')"/>
+      <Screen id="ScreenDeskTop" type="desktop" themeid="theme::neis" loadingimage="url('theme://images/loading.gif')" locale="ko_KR" enableaccessibility="true" accessibilitytype="sensereader" accessibilitydescreadtype="label,action,description" initvaluefileid="initvalue::accessbility.xiv" key="NEIS" tracemode="new" accessibilityheadingnexthotkey="ALT+1" accessibilityheadingprevhotkey="ALT+2"/>
+      <Screen id="mobile" type="mobile_medium" zoomfactortype="portrait" userzoom="false" loadingimage="url('theme://images/loading.gif')" themeid="theme::neis_m" initvaluefileid="initvalue::accessbility_M.xiv" accessibilitytype="standard" key="NEIS" enabletouchevent="true" accessibilityheadingprevhotkey="ALT+2" accessibilityheadingnexthotkey="ALT+1" accessibilitydescreadtype="label,action,description"/>
+      <Screen id="tablet" type="mobile_large" loadingimage="url('theme://images/loading.gif')" themeid="theme::neis" initvaluefileid="initvalue::accessbility_M.xiv" key="NEIS" enabletouchevent="true" accessibilityheadingprevhotkey="ALT+2" accessibilityheadingnexthotkey="ALT+1" accessibilitydescreadtype="label,action,description"/>
+    </ScreenDefinition>
+    <Variables>
+      <Variable id="ev_runMode" initval="1"/>
+      <Variable id="ev_userId"/>
+      <Variable id="ev_userNm"/>
+      <Variable id="ev_traceMode" initval="true"/>
+      <Variable id="ev_language" initval="KO"/>
+      <Variable id="ev_languageChange" initval="KO"/>
+      <Variable id="ev_quikView" initval="Y"/>
+      <Variable id="ev_systemGb" initval="PA"/>
+      <Variable id="ev_subSystemGb" initval="PAS"/>
+      <Variable id="ev_isMobile" initval="N"/>
+      <Variable id="ev_isMgrAuth" initval="N"/>
+      <Variable id="ev_menuType"/>
+      <Variable id="gv_vpnrequest" initval="N"/>
+    </Variables>
+    <Cookies>
+      <Cookie id="jsessionidTest"/>
+    </Cookies>
+    <httpheader>
+      <Variable id="UI" initval="nexacro"/>
+      <Variable id="Accept" initval="text/xml"/>
+    </httpheader>
+  </Environment>
+  <Script type="xscript5.1"><![CDATA[/**
+ * @description 통신오류 알림
+*/
+this.Environment_onerror = function(obj:nexacro.Environment,e:nexacro.ErrorEventInfo)
+{
+	//trace("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Environment_onerror!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	//trace("e.statuscode : " + e.statuscode);
+	//trace("e.errormsg : " + e.errormsg);
+	
+	// 스크립트 에러
+	if (e.statuscode == 0) {
+		//alert(e.statuscode + "\n"+e.errormsg);
+	} 
+	else if (e.statuscode == 404) {
+		alert(e.statuscode+"\n"+"Page Not Found"+"\n"+e.errormsg);
+	} 
+	else if (e.statuscode == 408) {
+		alert(e.statuscode+"\n"+"Request Timeout" + "\n"+e.errormsg);
+	} 
+	else if (e.statuscode == 500) {
+		alert(e.statuscode+"\n"+"Internal Server Error" + "\n"+e.errormsg);
+	} 
+	else if (e.statuscode == 503) {
+		alert(e.statuscode+"\n"+"The service is unavailable" + "\n"+e.errormsg);
+	} 
+	else if (e.statuscode == 12029) {
+		alert(e.statuscode+"\n"+"A connection with the server could not be established" + "\n"+e.errormsg);
+	} 
+	// 미등록 오류 발생
+	else {
+		alert(e.statuscode + "\n" + e.errormsg);
+	}
+};]]></Script>
+</ENV>

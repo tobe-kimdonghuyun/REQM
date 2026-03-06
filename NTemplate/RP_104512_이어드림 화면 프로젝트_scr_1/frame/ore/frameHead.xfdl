@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameHead" width="1200" height="70" titletext="frameHead" onload="form_onload" scrolltype="none" scrollbartype="none" onsize="form_onsize" cssclass="div_WF_Grade">
+    <Layouts>
+      <Layout height="70" width="1200" screenid="ScreenDeskTop">
+        <Div id="divAdmin" taborder="0" left="0" top="7" height="63" text="" initvalueid="ivDivAccessibilityOff" width="1200" cssclass="div_WF_LNB">
+          <Layouts>
+            <Layout>
+              <Button id="btnSet" taborder="3" text="수험생설정" left="894" top="12" width="103" height="42" initvalueid="ivBtnAccessibilityButton" onclick="divAdmin_btnSet_onclick"/>
+              <Edit id="edtNm" taborder="0" left="179" top="12" width="348" height="43" text="성명을 입력하세요" initvalueid="ivEdtNormal" cssclass="edi_Login_Normal" displaynulltext="성명을 입력하세요" maxlength="20" imemode="hangul" inputfilter="comma,dot,space,symbol,sign"/>
+              <Edit id="edtRrno01" taborder="2" left="725" top="12" width="160" height="42" text="뒤 7자리" initvalueid="ivEdtNormal" cssclass="edi_Login_Normal" displaynulltext="뒤 7자리" maxlength="7" inputtype="number" password="true" autoskip="true"/>
+              <Static id="sta01" taborder="4" left="707" top="29" width="9" height="6" border="1px solid #afafaf, 0px none, 0px none, 0px none" initvalueid="ivStcAccessibilityOn" accessibilitylabel="대쉬"/>
+              <Edit id="edtRrno00" taborder="1" left="538" top="12" width="160" height="42" text="앞 6자리" initvalueid="ivEdtNormal" cssclass="edi_Login_Normal" displaynulltext="앞 6자리" maxlength="6" inputtype="number" autoskip="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" width="640" height="70" mobileorientation="portrait" type="default" screenid="mobile,tablet"/>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    TEMPLATE
+*  @FileName 	frameHead.xfdl
+*  @Creator 	홍길동
+*  @CreateDate 	2022.5.27
+*  @Desction    검정고시p72+(공지목록)+(타이틀,그리드)
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.5.27     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::ore_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitDiv(obj);
+};
+
+this.divAdmin_btnSet_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 테스트 이름 공통
+	if(this.smfIsNull(this.divAdmin.form.edtNm.value)){
+		this.divAdmin.form.edtNm.setFocus();
+		this.smfLiteralAlert("성명을 입력 해주세요.");
+		return false;
+	}
+
+	if(this.divAdmin.form.edtRrno00.value == null || this.divAdmin.form.edtRrno00.value.length !=6){
+		this.divAdmin.form.edtRrno00.setFocus();
+		this.smfLiteralAlert("주민번호는 13자리 숫자만 입력 해주세요. ");
+		return false;
+	}
+	
+	if(this.divAdmin.form.edtRrno01.value == null || this.divAdmin.form.edtRrno01.value.length !=7){
+		this.divAdmin.form.edtRrno01.setFocus();
+		this.smfLiteralAlert("주민번호는 13자리 숫자만 입력 해주세요. ");
+		return false;
+	}
+	this.applpRrno = this.divAdmin.form.edtRrno00.value + this.divAdmin.form.edtRrno01.value; 
+	this.applpNm   = this.divAdmin.form.edtNm.value; 
+	this.getOwnerFrame().form.divAll.form.divWork.form.applpNm = this.applpNm;
+	this.getOwnerFrame().form.divAll.form.divWork.form.applpRrno = this.applpRrno; 
+	this.getOwnerFrame().form.divAll.form.divWork.form.applpBrdt = this.applpRrnoToBrdt(this.applpRrno);
+
+	this.getOwnerFrame().form.divAll.form.divWork.form.dsSearch.setColumn(0, "applpRrno", this.applpRrno);
+	this.getOwnerFrame().form.divAll.form.divWork.form.fnSearchRcptList();
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divAdmin.form.edtDmclZipDaddr" propid="value" datasetid="dsMain" columnid="dmclZipDaddr"/>
+    </Bind>
+  </Form>
+</FDL>

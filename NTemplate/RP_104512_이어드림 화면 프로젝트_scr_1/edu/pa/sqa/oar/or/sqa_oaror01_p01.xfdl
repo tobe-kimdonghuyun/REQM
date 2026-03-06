@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frm01" width="800" height="305" titletext="온라인접수불가안내" onload="frm01_onload" nHeight="754">
+    <Layouts>
+      <Layout height="305" width="800" screenid="ScreenDeskTop">
+        <Static id="staPopupTitleAss" taborder="0" left="20" top="20" width="20" height="20" initvalueid="ivStcAccessibilityOn"/>
+        <ImageViewer id="img00_00_01_00_00" taborder="1" text="온라인접수불가 안내" left="20" top="20" width="180" height="30" cssclass="img_WF_SubTit04" initvalueid="ivTitleAccessibilityOn"/>
+        <Static id="staInfo" taborder="2" left="20" cssclass="sta_WF_Input02" top="60" right="20" text="현재 접속한 교육청은 서울교육청입니다. &#13;&#10;접속하신 교육청이 잘못된 경우 시도교육청 선택화면에서 다시 선택해 주시길 바랍니다" bottom="65" onclick="sta10_onclick" initvalueid="ivStcAccessibilityOff" textAlign="center" verticalAlign="middle"/>
+        <Button id="btnClose" taborder="3" text="닫기" height="30" width="50" left="46.75%" fittocontents="width" bottom="20" initvalueid="ivBtnAccessibilityButton" onclick="btnClose_onclick"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01" taborder="4" left="20" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00" taborder="5" left="20" top="50" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01_00" taborder="6" left="20" height="15" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" bottom="50" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01_00_00" taborder="7" left="20" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" bottom="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01_00_00_00" taborder="8" left="0" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" width="20" bottom="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01_00_00_00_00" taborder="9" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" width="20" bottom="0" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[/**
+*  
+*  @MenuPath    대국민 검정고시서비스 원서접수 
+*  @FileName 	sqa_oaror01_p01.xfdl 
+*  @Creator 	박가혜
+*  @CreateDate 	2022.06.21
+*  @Desction    온라인접수불가 안내 팝업
+*
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.06.22           박가혜                 최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+
+
+
+include "lib::cm_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역 
+ ************************************************************************************************/
+this.fv_params;	// 파라메터 세팅
+
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frm01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼을 초기화
+	this.smfInitPopup(obj)
+	
+	this.fv_params = this.smfGetPopupParams();
+	
+	if("notice" == this.fv_params.procType){
+	
+		var beginYmd = this.fv_params.beginYmd
+		var endYmd = this.fv_params.endYmd
+		var enfcYr = this.fv_params.enfcYr
+		var enfcTme = this.fv_params.enfcTme
+		
+		this.staInfo.set_text(enfcYr + "년도 제" + enfcTme + "회 검정고시 온라인접수는 " + beginYmd + " ~ " + endYmd + "입니다")
+		
+	}
+
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+//닫기 버튼 클릭
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//닫기 버튼을 이용한 팝업종료의 파라미터는 false를 전달
+	this.close(false);
+};
+]]></Script>
+  </Form>
+</FDL>

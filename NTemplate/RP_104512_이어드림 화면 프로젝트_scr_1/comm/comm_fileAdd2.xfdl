@@ -1,0 +1,885 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comm_fileAdd" width="480" height="30" titletext="파일첨부" background="white" onload="comm_fileAdd_onload" oninit="comm_fileAdd_oninit">
+    <Layouts>
+      <Layout height="30" width="480" screenid="ScreenDeskTop">
+        <RaonkUpload id="RaonkUpload" taborder="0" left="510" top="90" text="File Upload/Download" RAONKUPLOAD_UploadComplete="RaonkUpload_RAONKUPLOAD_UploadComplete" RAONKUPLOAD_CreationComplete="RaonkUpload_RAONKUPLOAD_CreationComplete" RAONKUPLOAD_BeforeCreation="RaonkUpload_RAONKUPLOAD_BeforeCreation" HeaderBar="0" RAONKUPLOAD_OnError="RaonkUpload_RAONKUPLOAD_OnError" visible="false" width="480" height="120" RAONKUPLOAD_AfterAddFile="RaonkUpload_RAONKUPLOAD_AfterAddFile" RAONKUPLOAD_BeforeAddFile="RaonkUpload_RAONKUPLOAD_BeforeAddFile" DisableDeleteConfirm="3" RAONKUPLOAD_BeforeUpload="RaonkUpload_RAONKUPLOAD_BeforeUpload" RAONKUPLOAD_AfterAddAllFile="RaonkUpload_RAONKUPLOAD_AfterAddAllFile" RAONKUPLOAD_BeforeOpenFile="RaonkUpload_RAONKUPLOAD_BeforeOpenFile" RAONKUPLOAD_Alert="RaonkUpload_RAONKUPLOAD_Alert" UseAlertEvent="1" MultiFileSelect="0"/>
+        <Edit id="edtFile" taborder="1" left="0" top="0" height="30" right="38" text="wewewe" readonly="true" initvalueid="ivEdtNormal"/>
+        <Button id="btnFileSelect" taborder="2" left="edtFile:8" top="0" width="30" height="30" cssclass="btn_WF_FileAdd01" onclick="btnFileSelect_onclick" initvalueid="ivBtnAccessibilityLink" accessibilitylabel="첨부하기"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  파일업로드/다운로드
+*  @MenuPath    common
+*  @FileName 	comm_fileAdd.xfdl
+*  @Creator 	홍길동
+*  @CreateDate 	2022.6.9
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.6.9     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.comm_fileAdd_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// userProperty작업
+	// 필수처리
+	if(this.parent.essential && (this.parent.essential=="Y"))
+	{
+		this.edtFile.set_cssclass("essential")
+	}
+	
+	
+	
+};
+
+// Form의 init이벤트 - Form안의 component가 생성되기 이전 최초이벤트(onload보다 먼저 생성)
+this.comm_fileAdd_oninit = function(obj:nexacro.Form,e:nexacro.EventInfo)
+{
+	var sBaseUrl = "";
+	
+	// runtime인 경우에는 해당 정보를 세팅해주어야 함
+	if (system.navigatorname.indexOf("nexacro")  > -1) 	{
+		// raonkupload_rootUrl이 세팅이 안된경우에만 사용
+		if(this.smfIsNull(raonkupload_rootUrl))
+		{
+			// 현재의 실행모드(서버종류)를 판별한다.
+			var sRunMode = nexacro.getEnvironmentVariable("ev_runMode");
+			
+			//xadl의 url을 구한다
+			var sXadlUrl = nexacro.getApplication().xadl;
+			var nFindIdx = sXadlUrl.indexOf("nxui");
+			
+			//trace("====>>>> sXadlUrl="+sXadlUrl);
+			if(nFindIdx>-1)
+			{
+				var nFindIdx2 = sXadlUrl.indexOf("/",nFindIdx);
+				sBaseUrl = sXadlUrl.substr(0,nFindIdx2);
+				
+			}
+			
+			//trace("====>>>> sBaseUrl="+sBaseUrl);
+			raonkupload_rootUrl = sBaseUrl + "/nexacrolib/component/raonkupload";
+			//trace("====>>>> raonkupload_rootUrl="+raonkupload_rootUrl);
+		}
+	}
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback  = function(svcid,errcd,errmsg) {
+	if(errcd <= -1) return;
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+// 파일업로드
+this.fnFileUpload = function()
+{
+	this.RaonkUpload.Transfer();
+}
+
+// 파일다운로드
+this.fnFileDownload = function()
+{
+	this.RaonkUpload.DownloadAllFile();
+}
+
+
+this.fnGetTotalFileSize = function()
+{
+	return this.RaonkUpload.GetTotalFileSize();
+}
+
+this.fnGetTotalFileCount = function()
+{
+	return this.RaonkUpload.GetTotalFileCount();
+}
+
+this.fnAddUploadedFile = function(handlerCode, atchFileSn, fileSize, backendFilename, frontendFilename, fileSeq, sDownloadPath, sFileEncryptYn, sPrivInfoFiltYn, sFileSaveStg, sFileInfSaveYn)
+{ 
+
+	this.parent._fileRefrnId = 	atchFileSn;
+
+	// 파일명표시영역에 파일명을 추가한다.
+	this.edtFile.set_value(frontendFilename);
+	
+	sFileEncryptYn  = this.smfNvl(sFileEncryptYn , "N" );   // 파일암호화여부(Y/N) 
+	sPrivInfoFiltYn = this.smfNvl(sPrivInfoFiltYn, "N" );   // 개인정보필터여부(Y/N) 
+	sFileSaveStg    = this.smfNvl(sFileSaveStg   , "SV");   // 저장소구분(DB:DB , SV:공유볼륨, OS:오브젝트스토리지)
+	sFileInfSaveYn  = this.smfNvl(sFileInfSaveYn , "Y" );   // 공통테이블(FW_SYMSYEFL001NT)에 저장여부(Y/N)
+	
+	// OS인 경우는 sDownloadPath 를 없앰(SV는?)
+	if((sFileSaveStg=="SV")||(sFileSaveStg=="OS")) 
+	{
+		sDownloadPath = "";
+	}
+	
+	var sCustomValue = handlerCode 
+	                 + "," + atchFileSn 
+					 + "," + fileSeq 
+					 + "," + ((this.smfIsNull(sDownloadPath))?"":sDownloadPath)  // "DB"인 경우 서버에 저장된 Path
+					 + "," + sFileEncryptYn
+					 + "," + sPrivInfoFiltYn
+					 + "," + sFileSaveStg
+					 + "," + sFileInfSaveYn;	
+	// 3번째 파라메터에 backendFilename을 전달한다
+	return this.RaonkUpload.AddUploadedFile(backendFilename, frontendFilename, backendFilename, fileSize, sCustomValue);
+	
+}
+
+this.fnResetUpload = function()
+{
+	if(!this.smfIsNull(this.RaonkUpload._UploadID))
+	{
+		this.RaonkUpload.ResetUpload();
+	}
+	
+	
+	this.edtFile.set_value("");
+	
+	this.parent._fileRefrnId = "";
+	
+}
+
+this.fnSetEssential = function(bValue)
+{
+	if(bValue)
+	{
+		this.edtFile.set_cssclass("essential")
+	}
+	else
+	{
+		this.edtFile.set_cssclass("")
+	}
+}
+
+
+// 서버로부터 받은 파일업로드결과정보를 신규파일의 customValue에 세팅한다.
+this.fnSetCustomValueAfterUpload = function(objRaon:nexacro.RaonkUpload,objDs:nexacro.NormalDataset)
+{
+	var listInfo = objRaon.GetListInfo("json")	    // 전송완료 후 새롭게 업로드 된 파일, 웹파일, 삭제된 파일 리스트 정보를 리턴해 주는 함수 입니다. ('array', 'json', 'xml', 'text')
+	//var jsonNew     = listInfo.newFile;			// 새로 업로드된 파일 정보
+    //var jsonDel     = listInfo.deleteFile;		// 삭제된 파일 정보
+    //var jsonWebFile = listInfo.webFile;			// 웹파일 정보(이미 업로드 된 파일을 추가한 경우(AddUploadedFile()로 추가한 것- 업로드 대상에서 제외))
+	var jsonMerge   = listInfo.mergeFile;		// 신규추가된 파일과 웹파일을 함께 볼수 있는 정보
+
+	var sCustomValue = "";
+	var sHandlerCode    = this.smfNvl(this.parent.uploadLocation, ""  );
+	var sFileEncryptYn  = this.smfNvl(this.parent.fileEncryptYn , "N" );   // 파일암호화여부(Y/N) 
+	var sPrivInfoFiltYn = this.smfNvl(this.parent.privInfoFiltYn, "N" );   // 개인정보필터여부(Y/N) 
+	var sFileSaveStg    = this.smfNvl(this.parent.fileSaveStg   , "SV");   // 저장소구분(DB:DB , SV:공유볼륨, OS:오브젝트스토리지)
+	var sFileInfSaveYn  = this.smfNvl(this.parent.fileInfSaveYn , "Y" );   // 공통테이블(FW_SYMSYEFL001NT)에 저장여부(Y/N)
+	
+	if(jsonMerge)
+	{
+		for(var i=0;i<jsonMerge.fileId.length;i++)
+		{
+			var sMergeCustomValue = jsonMerge.customValue[i];  // customervalue를 
+			var sMergeFileId      = jsonMerge.uploadName [i];  // 변경된 파일이름(이 항목을 사용할 지는 확인 필요)
+			
+			if(jsonMerge.isWebFile[i]=="0")
+			{
+				var nIdx = objDs.findRow("atchFileGuid",sMergeFileId);
+				if(nIdx>-1)
+				{
+					var sFileRefrnId = objDs.getColumn(nIdx,"fileRefrnId" );  // 파일 참조번호
+					var sFileOrder   = objDs.getColumn(nIdx,"fileId"      );  // 파일 순번
+					sCustomValue = sHandlerCode +","+sFileRefrnId+","+sFileOrder+","+sFileEncryptYn+","+sPrivInfoFiltYn+","+sFileSaveStg+","+sFileInfSaveYn;
+
+					nIdx = objRaon.SetFileCustomValue(i,sCustomValue);
+				}
+			}
+			
+		}
+	}
+
+}
+
+
+// 서버로부터 받은 파일업로드결과정보를 신규파일의 customValue에 세팅한다.
+this.fnSetCustomValueBeforeUpload = function(objRaon:nexacro.RaonkUpload)
+{
+/*
+	var listInfo = objRaon.GetListInfo("json")	    // 전송완료 후 새롭게 업로드 된 파일, 웹파일, 삭제된 파일 리스트 정보를 리턴해 주는 함수 입니다. ('array', 'json', 'xml', 'text')
+	//var jsonNew     = listInfo.newFile;			// 새로 업로드된 파일 정보
+    //var jsonDel     = listInfo.deleteFile;		// 삭제된 파일 정보
+    //var jsonWebFile = listInfo.webFile;			// 웹파일 정보(이미 업로드 된 파일을 추가한 경우(AddUploadedFile()로 추가한 것- 업로드 대상에서 제외))
+	var jsonMerge   = listInfo.mergeFile;		// 신규추가된 파일과 웹파일을 함께 볼수 있는 정보
+
+	if(jsonMerge)
+	{
+		var sCustomValue = "";
+		var sHandlerCode    = this.smfNvl(this.parent.uploadLocation, ""  );
+		var sFileEncryptYn  = this.smfNvl(this.parent.fileEncryptYn , "N" );   // 파일암호화여부  (Y/N) 
+		var sPrivInfoFiltYn = this.smfNvl(this.parent.privInfoFiltYn, "N" );   // 개인정보필터여부(Y/N) 
+		var sFileSaveStg    = this.smfNvl(this.parent.fileSaveStg   , "SV");   // 저장소구분       (DB:DB , SV:공유볼륨, OS:오브젝트스토리지)
+		var sFileInfSaveYn  = this.smfNvl(this.parent.fileInfSaveYn , "Y" );   // 공통테이블(FW_SYMSYEFL001NT)에 저장여부(Y/N)
+		
+		for(var i=0;i<jsonMerge.fileId.length;i++)
+		{
+			var sMergeCustomValue = jsonMerge.customValue[i];
+			var sMergeFileId      = jsonMerge.uploadName [i];  // 변경된 파일이름(이 항목을 사용할 지는 확인 필요)
+			
+			if(jsonMerge.isWebFile[i]=="0")
+			{
+				var sFileRefrnId = "";  // 파일참조번호
+				var sFileOrder   = "";  // 파일 순번
+				sCustomValue = sHandlerCode +","+sFileRefrnId+","+sFileOrder+","+sFileEncryptYn+","+sPrivInfoFiltYn+","+sFileSaveStg+","+sFileInfSaveYn;
+
+				nIdx = objRaon.SetFileCustomValue(i,sCustomValue);
+			}
+			
+		}
+	}
+*/	
+
+}
+
+
+// 업로드 이후 newFile의 값을 webfile로 변환한다.
+this.fnSetUploadCompleteState = function(obj,paramObj)
+{
+	// 업로드한 파일들의 정보를 가져옴.
+	var listInfo    = obj.GetListInfo("json");	// 전송완료 후 새롭게 업로드 된 파일, 웹파일, 삭제된 파일 리스트 정보를 리턴해 주는 함수 입니다. ('array', 'json', 'xml', 'text')
+	var jsonNew     = listInfo.newFile;			// 새로 업로드된 파일 정보
+    var jsonDel     = listInfo.deleteFile;		// 삭제된 파일 정보
+    var jsonWebFile = listInfo.webFile;			// 웹파일 정보(이미 업로드 된 파일을 추가한 경우(AddUploadedFile()로 추가한 것- 업로드 대상에서 제외))
+	var jsonMerge   = listInfo.mergeFile;		// 신규추가된 파일과 웹파일을 함께 볼수 있는 정보
+	
+	//========================================================
+	// 업로드 된 데이터를 웹파일로 변경하는 코딩 예
+	//========================================================
+	// 기존에 추가되어 있는 webFile을 다시 추가하기 위한 로직.
+	// 업로드를 초기화
+	this.fnResetUpload();
+	
+	if (jsonMerge) {
+		var jsonMergeFileLength = jsonMerge.uploadPath.length;
+
+		for (var i = 0; i < jsonMergeFileLength; i++) {
+			var nStartIdx = (jsonMerge.isWebFile[i]=="0")?3:4;  // "0" : new file , "1" : web file
+		
+			var sCustomValue = jsonMerge.customValue[i];
+			var handlerCode      = this.smfUploadInfoFileSn(sCustomValue, 0            );
+			var fileSn           = this.smfUploadInfoFileSn(sCustomValue, 1            );
+			var sFileSeq         = this.smfUploadInfoFileSn(sCustomValue, 2            );
+			var sFileEncryptYn   = this.smfUploadInfoFileSn(sCustomValue, nStartIdx + 0);
+			var sPrivInfoFiltYn  = this.smfUploadInfoFileSn(sCustomValue, nStartIdx + 1);
+			var sFileSaveStg     = this.smfUploadInfoFileSn(sCustomValue, nStartIdx + 2);
+			var sFileInfSaveYn   = this.smfUploadInfoFileSn(sCustomValue, nStartIdx + 3);
+			
+			var fileSize         = jsonMerge.size        [i];
+			var isWebFile        = jsonMerge.isWebFile   [i];
+			var backendFilename  = jsonMerge.uniqKey     [i];
+			var forntendFilename = jsonMerge.originalName[i];
+			
+			var sDownloadUrl     = "";  // DB인 경우 URL을 세팅해야 되지만, 이 단계에서는 정보를 알수 없으므로 ""을 세팅
+			
+			if(isWebFile=="0")
+			{
+				backendFilename  = jsonMerge.uploadName[i];
+			}
+			
+			this.fnAddUploadedFile(handlerCode, fileSn, fileSize, backendFilename, forntendFilename, sFileSeq,sDownloadUrl,sFileEncryptYn, sPrivInfoFiltYn, sFileSaveStg, sFileInfSaveYn);
+		}
+	}
+}
+
+this.fnGetMatchFileIndex = function(sOrgFileGbnValue)
+{
+	var nIndex = -1;
+	var listInfo = this.RaonkUpload.GetListInfo("json");
+	var jsonMerge   = listInfo.mergeFile; 
+	
+	for(var i=0;i<jsonMerge.originalName.length;i++)
+	{
+		var sFileGbnValue = jsonMerge.originalName[i];
+		
+		if(sFileGbnValue==sOrgFileGbnValue)
+		{
+			nIndex = i;
+			break;
+		}
+		
+	}
+	
+	return nIndex;
+}
+
+this.fnDeleteFileFromFileGbnValue = function(sOrgFileGbnValue)
+{
+	var nIndex = this.fnGetMatchFileIndex(sOrgFileGbnValue)
+	
+	if(nIndex>-1)
+	{
+		this.RaonkUpload.SetSelectFile(nIndex,0);
+		this.RaonkUpload.DeleteSelectedFile();
+	}
+
+}
+
+// 업로드할 것이 있는지 여부(new + del)
+this.fnIsExistUploadFile = function()
+{
+	var nExist = false;
+	
+	var listInfo = this.RaonkUpload.GetListInfo("json")	    // 전송완료 후 새롭게 업로드 된 파일, 웹파일, 삭제된 파일 리스트 정보를 리턴해 주는 함수 입니다. ('array', 'json', 'xml', 'text')
+	var jsonNew     = listInfo.newFile;			// 새로 업로드된 파일 정보
+    var jsonDel     = listInfo.deleteFile;		// 삭제된 파일 정보
+
+	var nNewFileCnt = 0;
+	var nDelFileCnt = 0;
+	
+	if(jsonNew) nNewFileCnt = jsonNew.originalName.length;
+	if(jsonDel) nDelFileCnt = jsonDel.originalName.length;
+	
+	
+	if((nNewFileCnt+nDelFileCnt)>0) nExist = true;
+
+	return nExist;	
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+// 업로드 이후 발생하는 이벤트
+this.RaonkUpload_RAONKUPLOAD_UploadComplete = function(obj:nexacro.RaonkUpload, paramObj:nexacro.RaonkUploadEventInfo)
+{
+	var _handlerCode    = "";
+	var _atchFileSn     = "";
+	var _fileSeq        = "";
+	var _fileCoursNm    = "";
+	var _fileEncryptYn  = "";
+	var _privInfoFiltYn = "";
+	var _fileSaveStg    = "";
+	var _fileInfSaveYn  = "";
+	
+	// 데이터셋을 클리어한다
+	this.dsNewFile.clearData();
+	this.dsDeleteFile.clearData();
+	
+	//  TODO: 서버처리
+	//var _uploadInfo = obj.GetListInfo('array');
+	var _uploadInfo = obj.GetListInfo('json');
+	//trace(_uploadInfo);
+	
+	// group code
+	var _atchFileSn = _handlerCode = _fileSeq ="";
+	if(_uploadInfo.deleteFile != null) {
+		for(var _idx=0, _len=_uploadInfo.deleteFile.size.length, _fileInfo = _uploadInfo.deleteFile; _idx < _len; _idx++) {
+			if(_fileInfo.customValue[_idx] != '') {
+				var _fileInfoAry = _fileInfo.customValue[_idx].split(',');
+				_handlerCode     = _fileInfoAry[0];
+				_atchFileSn      = _fileInfoAry[1];
+				_fileSeq         = _fileInfoAry[2];
+				_fileCoursNm     = _fileInfoAry[3];
+				_fileEncryptYn   = _fileInfoAry[4];
+				_privInfoFiltYn  = _fileInfoAry[5];
+				_fileSaveStg     = _fileInfoAry[6];
+				_fileInfSaveYn   = _fileInfoAry[7];
+			}
+			var _id = this.dsDeleteFile.insertRow(_idx);
+			this.dsDeleteFile.setColumn(_idx,"suc"            ,  _handlerCode                 );
+			this.dsDeleteFile.setColumn(_idx,"fileRefrnId"    ,  _atchFileSn                  );
+			this.dsDeleteFile.setColumn(_idx,"fileId"         ,  _fileSeq                     );
+			this.dsDeleteFile.setColumn(_idx,"fileEncryptYn"  ,  _fileEncryptYn               );
+			this.dsDeleteFile.setColumn(_idx,"privInfoFiltYn" ,  _privInfoFiltYn              );
+			this.dsDeleteFile.setColumn(_idx,"fileSaveStg"    ,  _fileSaveStg                 );
+			this.dsDeleteFile.setColumn(_idx,"fileInfSaveYn"  ,  _fileInfSaveYn               );
+			this.dsDeleteFile.setColumn(_idx,"originalName"   ,  _fileInfo.originalName[_idx] );
+		}
+	}
+	if(_uploadInfo.newFile != null) {
+			if(_uploadInfo.mergeFile != null) {
+				for(var _idx=0, _len=_uploadInfo.mergeFile.customValue.length, _fileInfo = _uploadInfo.mergeFile; _idx < _len; _idx++) {
+					if(_fileInfo.customValue[_idx] != '') {
+						var _fileInfoAry = _fileInfo.customValue[_idx].split(',');
+						_handlerCode    = _fileInfoAry[0];
+						_atchFileSn     = _fileInfoAry[1];
+						_fileSeq        = _fileInfoAry[2];
+						_fileEncryptYn  = _fileInfoAry[3];
+						_privInfoFiltYn = _fileInfoAry[4];
+						_fileSaveStg    = _fileInfoAry[5];						
+						_fileInfSaveYn  = _fileInfoAry[6];						
+						if(_atchFileSn != '') break;
+					}
+				}
+			}
+			
+			for(var _idx=0, _len=_uploadInfo.newFile.size.length, _fileInfo = _uploadInfo.newFile; _idx < _len; _idx++) {
+				if(_fileInfo.customValue[_idx] != '') {
+					var _fileInfoAry = _fileInfo.customValue[_idx].split(',');
+					_handlerCode = _fileInfoAry[0];
+					_atchFileSn  = _fileInfoAry[1];
+					_fileSeq     = _fileInfoAry[2];
+				}
+				var _id = this.dsNewFile.insertRow(_idx);
+				
+				this.dsNewFile.setColumn(_idx,"fileRefrnId"     , _atchFileSn                 );
+				this.dsNewFile.setColumn(_idx,"fileId"          , _fileSeq                    );
+				this.dsNewFile.setColumn(_idx,"suc"             , _handlerCode                );
+				this.dsNewFile.setColumn(_idx,"originalName"    , _fileInfo.originalName[_idx]);
+				this.dsNewFile.setColumn(_idx,"extension"       , _fileInfo.extension   [_idx]);
+				this.dsNewFile.setColumn(_idx,"mimeType"        , _fileInfo.mimeType    [_idx]);
+				this.dsNewFile.setColumn(_idx,"uploadPath"      , _fileInfo.uploadPath  [_idx]);
+				this.dsNewFile.setColumn(_idx,"uploadName"      , _fileInfo.uploadName  [_idx]);
+				this.dsNewFile.setColumn(_idx,"size"            , _fileInfo.size        [_idx]);
+				
+				this.dsNewFile.setColumn(_idx,"fileEncryptYn"   , _fileEncryptYn              );
+				this.dsNewFile.setColumn(_idx,"privInfoFiltYn"  , _privInfoFiltYn             );
+				this.dsNewFile.setColumn(_idx,"fileSaveStg"     , _fileSaveStg                );
+				this.dsNewFile.setColumn(_idx,"fileInfSaveYn"   , _fileInfSaveYn              );
+			}
+	}
+		
+	var _postUploadObj = {
+		handlerCode: _handlerCode,
+		atchFileSn: _atchFileSn,
+		newFile: _uploadInfo.newFile,
+		deleteFile: _uploadInfo.deleteFile
+	};
+	
+	
+	//  컨트롤러 호출
+	if(_uploadInfo.newFile != null || _uploadInfo.deleteFile != null) {
+		trace("=== Sample : "+_uploadInfo.webFile);	
+		trace("=== Sample2 : "+_uploadInfo.newFile);
+		trace("=== Sample3 : "+this.dsNewFile.getColumn(0,"originalName"));
+		
+		// 서비스 객체 생성 
+		this.smfSaveService("saveFileInfo")
+			.showConfirm(false)  
+			// (필수) 실행
+			.run()
+
+			// (필수) 콜백
+			.callback(function(callbackParams){
+				if(callbackParams.errors) return;
+				
+				// 서버에서 받은 데이터를 바탕으로 값을 세팅한다.
+				this.fnSetCustomValueAfterUpload(obj,this.dsOutFileinfo);
+				
+				// 이벤트가 있으면 이벤트 호출
+				if(this.parent.UPLOAD_UploadComplete)
+				{
+					this.parent.UPLOAD_UploadComplete.call(this.parent.UPLOAD_Form,obj,paramObj,this.dsOutFileinfo);
+				}
+			})
+		;	
+		
+	} else {
+		if(this.parent.UPLOAD_UploadComplete)
+		{
+			this.parent.UPLOAD_UploadComplete.call(this.parent.UPLOAD_Form,obj,paramObj,null);
+		}
+	}
+	
+};
+
+
+this.RaonkUpload_RAONKUPLOAD_CreationComplete = function(obj:nexacro.RaonkUpload,  paramObj:nexacro.RaonkUploadEventInfo)
+{
+	trace("=====RaonkUpload_RAONKUPLOAD_CreationComplete : " + paramObj.userdata);
+	// 저장위치를 지정(대문자 : 시스템코드(2)+"."+서브시스템코드(3)+"."+대분류코드(3) - 예, PA.SAM.PLE)
+	var sUploadLocation = this.parent.uploadLocation;
+	var atchFileSn = this.parent.atchFileSn;	
+	if(!this.smfIsNull(sUploadLocation))
+	{
+		obj.AddFormData("atchFileHandlerCode", sUploadLocation);
+		obj.AddFormData("atchFileSn"         , atchFileSn     ); //수정시 필요한 data
+		obj.AddFormData("ProcMode"           , "upload"       ); //추가시 참조 신규:upload 수정:modify
+	}
+
+	// 이벤트가 있으면 이벤트 호출
+	if(this.parent.UPLOAD_CreateComplete)
+	{
+		this.parent.UPLOAD_CreateComplete.call(this.parent.UPLOAD_Form,obj,paramObj,this.parent);
+	}
+	
+};
+
+
+this.RaonkUpload_RAONKUPLOAD_BeforeCreation = function(obj:nexacro.RaonkUpload)
+{
+	trace("RaonkUpload_RAONKUPLOAD_BeforeCreation=====");
+	// 모드를 세팅한다.
+	var sMode = this.parent.Mode=="download"?"view":"edit";
+	obj.set_Mode(sMode);
+	
+	if(sMode=="edit")
+	{
+		obj.set_ButtonBarEdit("add,remove,remove_all");
+	}
+	
+	// 설정값 변경
+	// 국정원보안 적용 (set_InitXml->set_InitServerXml)
+	//obj.set_InitXml("raonkupload.config.txt");
+	obj.set_InitServerXml("/cm_cmc_file_upload.do?f=raonkupload.config.txt");
+	
+	// 중복체크를 파일명으로로만 함. (사이즈 안봄)
+	obj.set_AllowDuplicationFileOnlyFileName('1');
+
+	// Runtime인 경우 이벤트가 발생하지 않는 경우를 대비
+	// beforeAddFile에 대한 대응 - 기존 정보 삭제
+	if(system.navigatorname.indexOf("nexacro")>-1)
+	{
+		obj.set_ResetBeforeAddNewFile("1");
+	}
+
+	// 유저별로 각각 설정한 값을 Raon에 설정
+	// div userproperty 에 addProp에 함수명 설정
+	// 함수에서는 Json으로 정보전달
+	if(this.parent.addProp)
+	{
+		var sFuncName = this.parent.addProp;
+		var objCur = this.parent.parent;
+		var objFunc;
+		
+		// 함수를 찾아서 없으면 부모까지 전달(mainframe까지만 검색)
+		while(objCur.id != "mainframe")
+		{
+			// 함수가 존재한지 여부(Form인 경우만)
+			if(objCur instanceof nexacro.Form)
+			{
+				objFunc = objCur[sFuncName];
+				// 존재한다면 처리를 중단
+				if(objFunc)
+				{
+					break;
+				}
+			}
+			
+			// 존재하지 않으면, 부모를 계속 찾아감
+			objCur = objCur.parent;
+		}
+		
+		// 함수가 존재하면 해당 함수를 call하여 세팅할 정보를 취득
+		if(objFunc)
+		{
+			// 해당함수 call(리턴은 설정정보 JSON)
+			var objPropList = objFunc.call(objCur);
+			
+			// json오브젝트의 값을 raon에 세팅한다.
+			for(sKey in objPropList)
+			{
+				// 값이 ""인 경우에도 세팅하기 위해
+				if((obj[sKey]!=null)&&(obj[sKey]!="undefined"))
+				{
+					obj[sKey] = objPropList[sKey];
+				}
+			}
+		}
+	}
+		
+};
+
+this.RaonkUpload_RAONKUPLOAD_OnError = function(obj:nexacro.RaonkUpload, paramObj:nexacro.RaonkUploadEventInfo)
+{
+	//trace("RaonkUpload_RAONKUPLOAD_OnError=====");
+	// 에러코드가 "900"인 경우는 서버에서 만든 User에러이므로 Alert을 표시한다.					  
+	if((paramObj.userdata.strCode=="900")&&(this.parent.errorAlertSkip!="Y"))  // 서버에서 만든 에러
+	{
+		this.smfAlert(paramObj.userdata.strMessage,function(){
+			if(this.parent.UPLOAD_OnError)
+			{
+				this.parent.UPLOAD_OnError.call(this.parent.UPLOAD_Form,obj,paramObj,this.parent)
+			}
+		});
+	
+	} else
+	{
+		if(this.parent.UPLOAD_OnError)
+		{
+			this.parent.UPLOAD_OnError.call(this.parent.UPLOAD_Form,obj,paramObj,this.parent)
+		}
+	}	
+};
+
+
+this.btnFileSelect_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var bResult = true;
+
+	// 넥사인 경우는 beforeOpenFile이벤트가 발생하지 않은 경우에 대비
+	if(system.navigatorname.indexOf("nexacro")>-1)
+	{
+		if(this.parent.UPLOAD_BeforeOpenFile)
+		{
+			bResult = this.parent.UPLOAD_BeforeOpenFile.call(this.parent.UPLOAD_Form,obj);
+		}
+	}
+		
+	if(bResult)
+	{
+		this.RaonkUpload.OpenFileDialog();
+	}
+		
+};
+
+// 파일이 추가된 이후 발생하는 이벤트
+this.RaonkUpload_RAONKUPLOAD_AfterAddFile = function(obj:nexacro.RaonkUpload, paramObj:nexacro.RaonkUploadEventInfo)
+{
+	// 중요 : nexacro Runtime에서는 발생안하는 이벤트
+/*
+paramObj  추가 완료된 파일에 대한 정보가 있는 object 입니다.
+- paramObj.strName  파일명을 의미합니다.
+- paramObj.nSize  파일 사이즈를 의미합니다.
+- paramObj.nIndex  0부터 시작되는 파일의 순서 정보를 의미합니다.
+- paramObj.strPath  파일 로컬 경로 정보를 의미합니다.
+
+remarks
+
+K Upload 설정 config.xml에서 use_after_add_event 값이 1일 경우 발생합니다.
+*/
+	
+	// Runtime인 경우는 발생을 안하고 AfterAddAllFile이벤트에서 처리를 하지만 
+	// 만약을 위해 Runtime일 경우는 처리를 안하도록 처리
+	if(system.navigatorname.indexOf("nexacro")>-1)
+	{
+		return ;
+	}	
+	trace("RaonkUpload_RAONKUPLOAD_AfterAddFile====="+paramObj.userdata.strName);
+	
+	var nAddIndex =  0;   //  항상 삭제후 추가하는 것이라paramObj.userdata.nIndex ;
+	var sFileName =  paramObj.userdata.strName;
+	var nFileSize =  paramObj.userdata.nSize  ;
+	
+	if(nFileSize > 10000000 && this.smfNvl(this.parent.uploadLocation, "") == 'PA.EWS.OCL') { // 첨부파일 용량 제한_교육복지(2024.03.15)
+		this.smfAlert('첨부파일 용량은 10MB 이하만 가능합니다.\n첨부파일의 용량을 확인해주시기 바랍니다.');
+		this.RaonkUpload.ResetUpload(paramObj.userdata.update_id);
+		return ;
+	}
+	
+	this.edtFile.set_value(sFileName);
+
+	/*
+	if(this.fvUpdateInfo)
+	{
+		//삭제처리를 한다.
+		var sFileName      = this.fvUpdateInfo.filename;
+		var sCustomerValue = this.fvUpdateInfo.sCustomerValue;
+		
+		var listInfo    = obj.GetListInfo("json");	// 전송완료 후 새롭게 업로드 된 파일, 웹파일, 삭제된 파일 리스트 정보를 리턴해 주는 함수 입니다. ('array', 'json', 'xml', 'text')
+		var jsonNew     = listInfo.newFile;			// 새로 업로드된 파일 정보
+		var jsonDel     = listInfo.deleteFile;		// 삭제된 파일 정보
+		var jsonWebFile = listInfo.webFile;			// 웹파일 정보(이미 업로드 된 파일을 추가한 경우(AddUploadedFile()로 추가한 것- 업로드 대상에서 제외))
+		var jsonMerge   = listInfo.mergeFile;		// 신규추가된 파일과 웹파일을 함께 볼수 있는 정보
+		
+	}
+	*/
+	// CustomValue 세팅
+	var sCustomValue = "";
+	var sHandlerCode    = this.smfNvl(this.parent.uploadLocation, ""  );
+	var sFileEncryptYn  = this.smfNvl(this.parent.fileEncryptYn , "N" );   // 파일암호화여부  (Y/N) 
+	var sPrivInfoFiltYn = this.smfNvl(this.parent.privInfoFiltYn, "N" );   // 개인정보필터여부(Y/N) 
+	var sFileSaveStg    = this.smfNvl(this.parent.fileSaveStg   , "SV");   // 저장소구분       (DB:DB , SV:공유볼륨, OS:오브젝트스토리지)
+	var sFileInfSaveYn  = this.smfNvl(this.parent.fileInfSaveYn , "Y" );   // 공통테이블(FW_SYMSYEFL001NT)에 저장여부(Y/N)
+	var nUploadSeq      = this.smfNvl(this.parent._uploadSeq    , 0   ); 
+	
+	nUploadSeq += 1;
+	this.parent._uploadSeq = nUploadSeq;
+	
+	var sFileRefrnId = (this.smfIsNull(this.parent._fileRefrnId))?"":this.parent._fileRefrnId;  // 파일참조번호
+	var sFileOrder   = "";  // 파일 순번
+	sCustomValue = sHandlerCode +","+sFileRefrnId+","+sFileOrder+","+sFileEncryptYn+","+sPrivInfoFiltYn+","+sFileSaveStg+","+sFileInfSaveYn+","+nUploadSeq;
+
+	nIdx = obj.SetFileCustomValue(nAddIndex,sCustomValue);
+
+	this.fvUpdateInfo = null;
+	
+	if(this.parent.UPLOAD_AfterAddFile)
+	{
+		this.parent.UPLOAD_AfterAddFile.call(this.parent.UPLOAD_Form,obj,paramObj,sCustomValue,sFileName,nFileSize);
+	}
+	
+};
+
+this.RaonkUpload_RAONKUPLOAD_AfterAddAllFile = function(obj:nexacro.RaonkUpload, paramObj:nexacro.RaonkUploadEventInfo)
+{
+
+	// Runtime에서는 AfterAddFile이 발생을 안하여 이 이베느에서 처리를 함.
+	// Runtime이외는 처리를 안하도록 처리
+	if(system.navigatorname.indexOf("nexacro") < 0)
+	{
+		return ;
+	}	
+	trace("RaonkUpload_RAONKUPLOAD_AfterAddAllFile====="+paramObj.userdata.arrFileList[0].strName);
+	
+	var objFileInfo = paramObj.userdata.arrFileList[0];
+
+	
+	var nAddIndex =  0;   //  항상 삭제후 추가하는 것이라paramObj.userdata.nIndex ;
+	var sFileName =  objFileInfo.strName;
+	var nFileSize =  objFileInfo.nSize  ;
+	
+	
+	this.edtFile.set_value(sFileName);
+
+	/*
+	if(this.fvUpdateInfo)
+	{
+		//삭제처리를 한다.
+		var sFileName      = this.fvUpdateInfo.filename;
+		var sCustomerValue = this.fvUpdateInfo.sCustomerValue;
+		
+		var listInfo    = obj.GetListInfo("json");	// 전송완료 후 새롭게 업로드 된 파일, 웹파일, 삭제된 파일 리스트 정보를 리턴해 주는 함수 입니다. ('array', 'json', 'xml', 'text')
+		var jsonNew     = listInfo.newFile;			// 새로 업로드된 파일 정보
+		var jsonDel     = listInfo.deleteFile;		// 삭제된 파일 정보
+		var jsonWebFile = listInfo.webFile;			// 웹파일 정보(이미 업로드 된 파일을 추가한 경우(AddUploadedFile()로 추가한 것- 업로드 대상에서 제외))
+		var jsonMerge   = listInfo.mergeFile;		// 신규추가된 파일과 웹파일을 함께 볼수 있는 정보
+		
+	}
+	*/
+	// CustomValue 세팅
+	var sCustomValue = "";
+	var sHandlerCode    = this.smfNvl(this.parent.uploadLocation, ""  );
+	var sFileEncryptYn  = this.smfNvl(this.parent.fileEncryptYn , "N" );   // 파일암호화여부  (Y/N) 
+	var sPrivInfoFiltYn = this.smfNvl(this.parent.privInfoFiltYn, "N" );   // 개인정보필터여부(Y/N) 
+	var sFileSaveStg    = this.smfNvl(this.parent.fileSaveStg   , "SV");   // 저장소구분       (DB:DB , SV:공유볼륨, OS:오브젝트스토리지)
+	var sFileInfSaveYn  = this.smfNvl(this.parent.fileInfSaveYn , "Y" );   // 공통테이블(FW_SYMSYEFL001NT)에 저장여부(Y/N)
+	var nUploadSeq      = this.smfNvl(this.parent._uploadSeq    , 0   ); 
+	
+	nUploadSeq += 1;
+	this.parent._uploadSeq = nUploadSeq;
+	
+	var sFileRefrnId = (this.smfIsNull(this.parent._fileRefrnId))?"":this.parent._fileRefrnId;  // 파일참조번호
+	var sFileOrder   = "";  // 파일 순번
+	sCustomValue = sHandlerCode +","+sFileRefrnId+","+sFileOrder+","+sFileEncryptYn+","+sPrivInfoFiltYn+","+sFileSaveStg+","+sFileInfSaveYn+","+nUploadSeq;
+
+	nIdx = obj.SetFileCustomValue(nAddIndex,sCustomValue);
+
+	this.fvUpdateInfo = null;
+	
+	// callback을 호출
+	if(this.parent.UPLOAD_AfterAddFile)
+	{
+		//this.parent.UPLOAD_AfterAddFile.call(this.parent.UPLOAD_Form,obj,paramObj,sCustomValue,sFileName,nFileSize);
+		this.parent.UPLOAD_AfterAddFile.call(this.parent.UPLOAD_Form,obj,objFileInfo,sCustomValue,sFileName,nFileSize);		
+	}
+
+};
+
+
+
+this.RaonkUpload_RAONKUPLOAD_BeforeAddFile = function(obj:nexacro.RaonkUpload, paramObj:nexacro.RaonkUploadEventInfo)
+{
+	// 중요 : nexacro Runtime에서는 발생안하는 이벤트
+	
+	// Runtime인 경우는 발생을 안하고 AfterAddAllFile이벤트에서 처리를 하지만 
+	// 만약을 위해 Runtime일 경우는 처리를 안하도록 처리
+	if(system.navigatorname.indexOf("nexacro")>-1)
+	{
+		return ;
+	}	
+	
+	trace("RaonkUpload_RAONKUPLOAD_BeforeAddFile====="+paramObj.userdata.strName);
+	if(this.RaonkUpload.GetTotalFileCount()>0)
+	{
+		this.RaonkUpload.DeleteAllFile();
+	}
+};
+
+// 업로드 하기 전에 호출되는 이벤트
+this.RaonkUpload_RAONKUPLOAD_BeforeUpload = function(obj:nexacro.RaonkUpload, paramObj:nexacro.RaonkUploadEventInfo)
+{
+	trace("RaonkUpload_RAONKUPLOAD_BeforeUpload=====");
+	this.fnSetCustomValueBeforeUpload(obj)
+};
+
+
+this.RaonkUpload_RAONKUPLOAD_BeforeOpenFile = function(obj:nexacro.RaonkUpload, paramObj:nexacro.RaonkUploadEventInfo)
+{
+	// Runtime인 경우 이벤트가 발생하지 않는 경우를 대비
+	// beforeOpenFile에 대한 대응 - 기존 정보 삭제
+	if(system.navigatorname.indexOf("nexacro")>-1)
+	{
+		return ;
+	}
+		
+	trace("RaonkUpload_RAONKUPLOAD_BeforeOpenFile=====");
+	if(this.parent.UPLOAD_BeforeOpenFile)
+	{
+		this.parent.UPLOAD_BeforeOpenFile.call(this.parent.UPLOAD_Form,obj);
+	}
+};
+
+this.RaonkUpload_RAONKUPLOAD_Alert = function(obj:nexacro.RaonkUpload, paramObj:nexacro.RaonkUploadEventInfo)
+{
+	var sMsg = paramObj.userdata.msg;
+	//this.smfAlert("CM000",[sMsg]);
+	this.smfAlert(sMsg);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsNewFile">
+        <ColumnInfo>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="fileId" type="STRING" size="256"/>
+          <Column id="originalName" type="STRING" size="256"/>
+          <Column id="extension" type="STRING" size="256"/>
+          <Column id="fileId" type="STRING" size="256"/>
+          <Column id="mimeType" type="STRING" size="256"/>
+          <Column id="uploadPath" type="STRING" size="256"/>
+          <Column id="uploadName" type="STRING" size="256"/>
+          <Column id="size" type="STRING" size="256"/>
+          <Column id="fileEncryptYn" type="STRING" size="256" description="파일암호화여부  (Y/N)"/>
+          <Column id="privInfoFiltYn" type="STRING" size="256" description="개인정보필터여부(Y/N)"/>
+          <Column id="fileSaveStg" type="STRING" size="256" description="저장소구분       (DB:DB , SV:공유볼륨, OS:오브젝트스토리지)"/>
+          <Column id="fileInfSaveYn" type="STRING" size="256" description="공통테이블(FW_SYMSYEFL001NT)에 저장여부(Y/N)"/>
+          <Column id="suc" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDeleteFile">
+        <ColumnInfo>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="fileId" type="STRING" size="256"/>
+          <Column id="originalName" type="STRING" size="256"/>
+          <Column id="extension" type="STRING" size="256"/>
+          <Column id="fileId" type="STRING" size="256"/>
+          <Column id="mimeType" type="STRING" size="256"/>
+          <Column id="uploadPath" type="STRING" size="256"/>
+          <Column id="uploadName" type="STRING" size="256"/>
+          <Column id="size" type="STRING" size="256"/>
+          <Column id="fileEncryptYn" type="STRING" size="256" description="파일암호화여부  (Y/N)"/>
+          <Column id="privInfoFiltYn" type="STRING" size="256" description="개인정보필터여부(Y/N)"/>
+          <Column id="fileSaveStg" type="STRING" size="256" description="저장소구분       (DB:DB , SV:공유볼륨, OS:오브젝트스토리지)"/>
+          <Column id="fileInfSaveYn" type="STRING" size="256" description="공통테이블(FW_SYMSYEFL001NT)에 저장여부(Y/N)"/>
+          <Column id="suc" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">saveFileInfo</Col>
+            <Col id="url">/cm_cmc_file_upload_003.do</Col>
+            <Col id="inDatasets">inNewFile=dsNewFile inDeleteFile=dsDeleteFile</Col>
+            <Col id="outDatasets">dsOutFileinfo=atchFileinfo</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsOutFileinfo"/>
+    </Objects>
+  </Form>
+</FDL>

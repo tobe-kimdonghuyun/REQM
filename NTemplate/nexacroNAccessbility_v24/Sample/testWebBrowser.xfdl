@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="testWebBrowser" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Button id="btnMake" taborder="0" text="make" left="13" top="11" width="136" height="66" onclick="btnMake_onclick"/>
+        <Button id="Button00" taborder="1" text="Button00" left="16" top="96" width="132" height="70" onclick="Button00_onclick"/>
+        <Button id="Button01" taborder="2" text="Button01" left="18" top="182" width="127" height="81" onclick="Button01_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.nCnt = 10;
+
+this.btnMake_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nTop = 10;
+	for (var i = 0; i < this.nCnt; i++)
+	{
+		var objDiv		= new Div();
+		var sDivName	= "div"+i;
+		objDiv.init(sDivName, 160, nTop, null, 360, 160, null);
+		objDiv.set_url("Sample::testWeb.xfdl");
+		this.addChild(sDivName, objDiv);
+		objDiv.show();	
+		
+		nTop = "div"+i + ":10";
+	}
+	this.resetScroll();
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objComp = this.components;
+	var obj = null;
+	
+ 	for (var i = 0; i < this.nCnt; i++)
+ 	{
+		obj =  objComp["div"+i].form.Div00.form.web0;
+		var docBody = obj.getProperty("document").getProperty("body");
+		var nHeight = docBody.getProperty("offsetHeight");
+		trace("web"+i + " ,,,,,,,,,,,,,,,,, " + nHeight);		
+	}
+};
+
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objComp = this.components;
+
+ 	for (var i = 0; i < this.nCnt; i++)
+ 	{
+		obj =  objComp["div"+i].form.Div00.form.web0;
+		obj.callMethod("getHeight");
+
+	}
+	
+};
+
+]]></Script>
+  </Form>
+</FDL>

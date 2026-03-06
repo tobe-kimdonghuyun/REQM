@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comm_selectExportType" width="290" height="150" titletext="ExportType 선택" onload="comm_selectExportType_onload" onclose="comm_selectExportType_onclose">
+    <Layouts>
+      <Layout height="150" width="290">
+        <Radio id="rdoExportType" taborder="0" left="23" top="22" width="259" height="35" innerdataset="dsExportType" codecolumn="code" datacolumn="value" columncount="3" value="EXCEL" text="엑셀" index="0"/>
+        <Div id="divSelect" taborder="1" text="div_00" left="0" height="50" background="whitesmoke" bottom="0" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Button id="btnOk" taborder="1" text="확인" left="145" width="80" height="30" bottom="10" initvalueid="ivBtnAccessibilityButton" onclick="divSelect_btnOk_onclick"/>
+              <Button id="btnCancel" taborder="0" text="취소" left="55" width="80" height="30" cssclass="btn_WF_Custom" bottom="10" initvalueid="ivBtnAccessibilityButton" onclick="divSelect_btnCancel_onclick"/>
+            </Layout>
+            <Layout name="default0">
+              <Button id="btnOk" taborder="1" text="확인" left="277" top="20" width="108" height="50"/>
+              <Button id="btnCancel" taborder="0" text="취소" left="152" top="20" width="110" height="50" cssclass="btn_WF_Custom"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsExportType">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="value">엑셀</Col>
+            <Col id="code">EXCEL</Col>
+          </Row>
+          <Row>
+            <Col id="value">한셀</Col>
+            <Col id="code">HANCELL</Col>
+          </Row>
+          <Row>
+            <Col id="value">CSV</Col>
+            <Col id="code">CSV</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	comm_selectExportType.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2023.3.13
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.3.13     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_param= {};
+this.fv_return = false;
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.comm_selectExportType_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitPopup(this);
+	
+	this.fv_param = this.smfGetPopupParams();
+	
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+
+this.divSelect_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sExporttype = this.rdoExportType.value;
+	
+	switch(sExporttype)
+	{
+		case "EXCEL"   : this.fv_param.option.exporttype = nexacro.ExportTypes.EXCEL2007  ;break;
+		case "HANCELL" : this.fv_param.option.exporttype = nexacro.ExportTypes.HANCELL2014;break;
+		case "CSV"     : this.fv_param.option.exporttype = nexacro.ExportTypes.CSV        ;break;
+	}
+
+	this.fv_return = true;
+	this.close(true);
+};
+
+this.divSelect_btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fv_return=false;
+	this.close(true);
+};
+
+this.comm_selectExportType_onclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	this.smfSendResponseToOpener({
+		result: this.fv_return,
+		option : this.fv_param.option
+	});	
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+-->
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>CKEditor</title>
+	<script src="../ckeditor.js"></script>
+	<script src="js/sample.js"></script>
+	<link rel="stylesheet" href="css/samples.css">
+	<link rel="stylesheet" href="toolbarconfigurator/lib/codemirror/neo.css">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="description" content="Try the latest sample of CKEditor 4 and learn more about customizing your WYSIWYG editor with endless possibilities.">
+	<script type="text/javascript">
+		// call from nexacro
+		function setContent(content, initHistory)
+		{
+			if (content == undefined || content == null)
+			{
+				return "";
+			}
+
+			content = content.replace(/<br>/ig, '\n');
+			content = content.replace(/<\/br>/ig, '\n');
+			content = content.replace(/<br \/>/ig, '\n');
+			
+			CKEDITOR.instances.editor.setData(content);
+			// _editor.setContent(content);
+			// _editor.setCaretToTop();
+			
+			// if ( initHistory )
+			// {
+				// _editor.history.initHistory({
+					// 'content': content
+				// });
+			// }
+		}
+		
+		// call from nexacro
+		function getHTMLValue(name)
+		{
+			// 값을 바로 nexacro로 전달하지 못하므로 input element에 담아두고
+			// nexacro 에서 element 에 접근하여 값을 취득한다.
+			// 반환값은 string 이므로 형변환이 필요할 수 있다.
+			var val = null;
+			switch(name)
+			{
+				case "editor.content" :
+					CKEDITOR.instances.editor.updateElement();
+					var str = CKEDITOR.instances.editor.getData()
+					if (str == undefined || str == null)
+					{
+						return "";
+					}
+					str = str.replace(/\r\n/ig, '&#10;');
+					str = str.replace(/\\n/ig, '&#10;');
+					str = str.replace(/\n/ig, '&#10;');
+					
+					val = str;
+					//val = _editor.getContent();
+					break;
+				case "contentNoTag" :
+					var text = CKEDITOR.instances.editor.getData()
+					text = text.replace(/<br\/>/ig, "\n");
+					text = text.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+
+					text = text.replace(/(<([^>]+)>)/gi, "");
+					text = text.replace(/&nbsp;/gi,"");
+
+					console.dir(text)
+					val = text;
+					break;
+				case "editorExtend" :
+					CKEDITOR.instances.editor.resize( CKEDITOR.instances.editor.width, 696 );
+					break;
+				case "editorReduce" :
+					CKEDITOR.instances.editor.resize( CKEDITOR.instances.editor.width, 536 );
+					break;
+				// case "editor.textContent" :
+					// val = _editor.getTextContent();
+					// break;					
+				// case "editor.editable" :
+					// val = _editor.editable;
+					// break;
+				// case "editor.selectedContents" :
+					// val = _editor.selectedContents;
+					// break;
+				// case "image.getSetSize" :
+					// val = "0,0";					
+					// if ( !RichTextEditor.Lib.isEmpty(selectedImage) )
+					// {
+						// var naturalWidth = selectedImage.naturalWidth;
+						// var naturalHeight = selectedImage.naturalHeight;						
+						// if (!RichTextEditor.Lib.isEmpty(naturalWidth) && !RichTextEditor.Lib.isEmpty(naturalHeight))
+						// {
+							// val = naturalWidth +","+ naturalHeight;
+							// RichTextEditor.Util.setStyle(selectedImage, {'width' : naturalWidth + 'px', 'height' : naturalHeight + 'px'});
+							// _editor.history.saveHistory();
+						// }
+					// }
+				// case "table.border.color" :
+					// val = _editorTable.borderProperty.color;
+					// break;					
+				default :
+					;
+			}			
+			document.getElementById("transfer").value = val;
+			
+		}
+		
+	</script>
+</head>
+<body id="main">
+<input id="transfer" type="text" style="display:none;" value="">
+<main>
+	<div style="width:auto; height:auto;">
+		<textarea id="editor" >
+		</textarea>
+	</div>
+</main>
+<script>
+	initSample();
+</script>
+
+</body>
+</html>

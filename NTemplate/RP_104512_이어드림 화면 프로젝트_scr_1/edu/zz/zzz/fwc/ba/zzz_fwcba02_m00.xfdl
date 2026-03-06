@@ -1,0 +1,498 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="zzz_fwcba02_m00" width="1552" height="754" titletext="배치스케줄관리" onload="form_onload">
+    <Layouts>
+      <Layout height="754" width="1552">
+        <Div id="divSearch" taborder="0" text="div00" left="0" top="30" height="52" cssclass="div_WF_Search" right="0">
+          <Layouts>
+            <Layout>
+              <Static id="staJobId" taborder="0" text="배치JobId" left="0" top="11" height="30" cssclass="sta_WF_Searchtxt01" width="94"/>
+              <Edit id="edtJobName" taborder="1" left="staJobId:0" top="11" width="130" height="30" enable="true" onkeyup="divSearch_edtJobName_onkeyup"/>
+              <Static id="staJobNm" taborder="2" text="배치명" left="224" top="11" height="30" cssclass="sta_WF_Searchtxt01" width="71"/>
+              <Edit id="edtJobKorName" taborder="3" left="staJobNm:0" top="11" width="140" height="30" onkeyup="divSearch_edtJobKorName_onkeyup"/>
+              <Static id="staBusnScCd" taborder="4" text="업무구분" left="435" top="11" height="30" cssclass="sta_WF_Searchtxt01" onclick="divSearch_staJobId00_onclick" width="85"/>
+              <Combo id="cboBusnScCd" taborder="5" left="staBusnScCd:0" top="11" width="150" height="30" innerdataset="dsBunsCd" codecolumn="businessCode" onitemchanged="divSearch_cboBusnScCd_onitemchanged" datacolumn="businessNm"/>
+              <Button id="btnSearch" top="11" width="74" height="30" taborder="10" text="조회" tooltiptext="조회" onclick="divSearch_btnSearch_onclick" cssclass="btn_WF_Search03" right="20"/>
+              <Static id="staBusnScCd00" taborder="6" text="실행일자" left="670" top="11" height="30" cssclass="sta_WF_Searchtxt01" width="85"/>
+              <Calendar id="calFrom" taborder="7" left="755" top="11" width="120" height="30" dateformat="yyyy.MM.dd" editformat="yyyy.MM.dd"/>
+              <Calendar id="calTo" taborder="9" left="890" top="11" width="120" height="30" dateformat="yyyy.MM.dd" editformat="yyyy.MM.dd"/>
+              <Static id="staFromto" taborder="8" text="~" left="875" top="11" height="30" cssclass="sta_WF_AC" width="15"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdBatchJobList" taborder="2" left="0" top="142" width="650" binddataset="dsMain" autoenter="select" cellcombopopuptype="none" oncellclick="grdBatchJobList_oncellclick" onheadclick="grdBatchJobList_onheadclick" autofittype="col" bottom="10" cellsizingtype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="205"/>
+                <Column size="200"/>
+                <Column size="190"/>
+                <Column size="187"/>
+              </Columns>
+              <Rows>
+                <Row size="40" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="배치JobId"/>
+                <Cell col="1" text="배치명"/>
+                <Cell col="2" text="업무구분"/>
+                <Cell col="3" text="성공여부"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:jobName" edittype="none" displaytype="normal" expandsize="30" textAlign="center"/>
+                <Cell col="1" text="bind:jobKorName" edittype="none"/>
+                <Cell col="2" displaytype="combotext" edittype="none" comboautoselect="false" combocodecol="businessCode" combodatacol="businessNm" combodataset="dsBunsCd" text="bind:businessCode" textAlign="center"/>
+                <Cell col="3" text="bind:status" edittype="none" textAlign="center"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="staJobId" taborder="1" text="Job실행결과" left="0" top="102" height="30" cssclass="sta_WF_Tit18" font="normal 14pt/normal &quot;Arial&quot;" width="119"/>
+        <Grid id="grdBatchStepList" taborder="4" left="680" top="142" height="210" binddataset="dsStep" autofittype="col" oncellclick="grdBatchStepList_oncellclick" right="0" cellsizingtype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="40" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Step ID"/>
+                <Cell col="1" text="시작일시"/>
+                <Cell col="2" text="종료일시"/>
+                <Cell col="3" text="성공여부"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:stepName" textAlign="center"/>
+                <Cell col="1" text="bind:startTime" displaytype="date" calendareditformat="yyyy.MM.dd" calendardateformat="yyyy.MM.dd ddd" textAlign="center"/>
+                <Cell col="2" text="bind:endTime" displaytype="date" calendareditformat="yyyy.MM.dd" calendardateformat="yyyy.MM.dd ddd" textAlign="center"/>
+                <Cell col="3" text="bind:status" textAlign="center"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divStepDetail" taborder="6" left="680" top="412" height="332" width="872">
+          <Layouts>
+            <Layout>
+              <Static id="Static44_00_00_00_00_00" taborder="27" left="0" height="127" cssclass="sta_WF_Input02" top="205" right="0"/>
+              <Static id="Static44_00_00_00_00" taborder="26" left="0" height="42" cssclass="sta_WF_Input02" top="164" right="0"/>
+              <Static id="Static44_00_00" taborder="24" left="0" height="42" cssclass="sta_WF_Input02" top="82" right="0"/>
+              <Static id="Static44_00_00_00" taborder="25" left="0" height="42" cssclass="sta_WF_Input02" top="123" right="0"/>
+              <Static id="Static44_00" taborder="23" left="0" height="42" cssclass="sta_WF_Input02" top="41" right="0"/>
+              <Static id="Static44" taborder="22" left="0" height="42" cssclass="sta_WF_Input02Top" top="0" right="0"/>
+              <Static id="staTxt00" taborder="0" text="Step ID" left="0" top="0" width="154" height="42" cssclass="sta_WF_Input01Top"/>
+              <Edit id="edtStepId" taborder="1" left="159" top="6" width="240" height="30" readonly="true"/>
+              <Static id="staTxt02" taborder="2" left="433" top="0" width="154" height="42" cssclass="sta_WF_Input01Top" text="성공여부"/>
+              <Edit id="edtStatus" taborder="3" left="592" top="6" width="240" height="30" readonly="true"/>
+              <Static id="staTxt04" taborder="4" text="생성일시" left="0" top="41" width="154" height="42" cssclass="sta_WF_Input01"/>
+              <Static id="staTxt15" taborder="7" text="READ COUNT" left="433" top="82" width="154" height="42" cssclass="sta_WF_Input01"/>
+              <Static id="staTxt09" taborder="5" text="시작일시" left="433" top="41" width="154" height="42" cssclass="sta_WF_Input01"/>
+              <Static id="staTxt12" taborder="6" text="종료일시" left="0" top="82" width="154" height="42" cssclass="sta_WF_Input01"/>
+              <Edit id="edtReadCount" taborder="8" left="592" top="88" width="240" height="30" readonly="true"/>
+              <Static id="staTxt18" taborder="9" text="WRITE COUNT" left="0" top="123" width="154" height="42" cssclass="sta_WF_Input01"/>
+              <Static id="staTxt21" taborder="11" text="FILTER COUNT" left="433" top="123" width="154" height="42" cssclass="sta_WF_Input01"/>
+              <Static id="staTxt24" taborder="13" text="COMMIT COUNT" left="0" top="164" width="154" height="42" cssclass="sta_WF_Input01"/>
+              <Static id="staTxt27" taborder="15" text="ROLLBACK COUNT" left="433" top="164" width="154" height="42" cssclass="sta_WF_Input01"/>
+              <Static id="staTxt30" taborder="17" left="0" top="205" width="154" height="127" cssclass="sta_WF_Input01" text="종료메시지"/>
+              <TextArea id="txtExitMessage" taborder="18" left="159" top="211" width="673" height="115" readonly="true"/>
+              <Edit id="edtWriteCount" taborder="10" left="159" top="129" width="240" height="30" readonly="true"/>
+              <Edit id="edtFilterCount" taborder="12" left="592" top="129" width="240" height="30" readonly="true"/>
+              <Edit id="edtCommitCount" taborder="14" left="159" top="170" width="240" height="30" readonly="true"/>
+              <Edit id="edtRollbackCount" taborder="16" left="592" top="170" width="240" height="30" readonly="true"/>
+              <Calendar id="calCreateDate" taborder="19" left="159" top="47" width="240" height="30" headformat="yyyy.MM.dd ddd HH:mm:ss" dateformat="yyyy.MM.dd ddd HH:mm:ss" readonly="true" editformat="yyyy.MM.dd ddd HH:mm:ss" onchanged="divStepDetail_calCreateDate_onchanged" rtl="false"/>
+              <Calendar id="calStartTime" taborder="20" left="592" top="47" width="240" height="30" headformat="yyyy.MM.dd.HH.mm.ss" dateformat="yyyy.MM.dd ddd HH:mm:ss" readonly="true" editformat="yyyy.MM.dd ddd HH:mm:ss"/>
+              <Calendar id="calEndTime" taborder="21" left="159" top="88" width="240" height="30" headformat="yyyy.MM.dd.HH.mm.ss" dateformat="yyyy.MM.dd ddd HH:mm:ss" readonly="true" editformat="yyyy.MM.dd ddd HH:mm:ss"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staStep" taborder="3" text="Step실행결과" left="680" top="102" height="30" cssclass="sta_WF_Tit18" font="normal 14pt/normal &quot;Arial&quot;" width="128"/>
+        <Static id="staStepDetail" taborder="5" text="Step실행상세결과" left="680" top="372" height="30" cssclass="sta_WF_Tit18" font="normal 14pt/normal &quot;Arial&quot;" width="302"/>
+        <Static id="Static99_00_00_00_00" taborder="7" left="0" top="0" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="Static99_00_00_00_00_00" taborder="8" left="0" top="82" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="Static99_00_00_00_00_00_00" taborder="9" left="0" top="132" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="Static99_00_00_00_00_00_00_01" taborder="10" left="650" top="142" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" width="30" bottom="0"/>
+        <Static id="Static99_00_00_00_00_00_00_00" taborder="11" left="680" top="402" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="Static99_00_00_00_00_00_00_00_00" taborder="12" left="680" top="352" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="Static99_00_00_00_00_00_00_00_01" taborder="13" left="0" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" height="10" bottom="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    배치관리
+*  @FileName 	zzz_fwcba00_m00.xfdl 
+*  @Creator 	이준우
+*  @CreateDate 	2022.01.02
+*  @Desction    form CRUD 샘플
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.01.02     	   이준우 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::cm_script.xjs" 
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼을 초기화
+	this.smfInitForm(obj);
+	this.divSearch.form.cboBusnScCd.set_index(0);
+	//날짜셋팅 함수확인후 재작업 필요
+	var objDate = new Date();
+	sToday  = objDate.getFullYear().toString();
+	sToday += this.smfRight("0" + (objDate.getMonth() + 1), 2);
+	sToday += this.smfRight("0" + objDate.getDate(), 2);
+	this.divSearch.form.calFrom.set_value(objDate);
+	this.divSearch.form.calTo.set_value(objDate);
+	// 조회 입력값 엔터키입력시 조회수행 이벤트 설정
+	this.smfBindEnterKeyToSearch(this.divSearch, this.divSearch.form.btnSearch);
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * @description 조회
+*/
+this.fnSearch = function ()
+{ 
+ 	// 서비스 객체 생성
+	this.smfSearchService("listBatchJobMonitoring")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		});
+};
+
+/**
+ * @description 조회
+*/
+this.fnSearchStepList = function (pos)
+{ 
+	this.dsSearchStepParam.setColumn(0, "jobExecutionId", this.dsMain.getColumn(pos, "jobExecutionId"));
+ 	// 서비스 객체 생성
+	this.smfSearchService("listBatchStepMonitoring")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		});
+};
+
+/**
+ * @description 상세조회셋팅
+*/
+this.fnSetStepDetailList = function (pos)
+{ 
+	//필터 초기화
+	this.divStepDetail.form.edtStepId.set_value(this.dsStep.getColumn(pos, "stepName"));
+	this.divStepDetail.form.edtStatus.set_value(this.dsStep.getColumn(pos, "status"));
+	this.divStepDetail.form.calCreateDate.set_value(this.dsStep.getColumn(pos, "createTime"));
+	this.divStepDetail.form.calStartTime.set_value(this.dsStep.getColumn(pos, "startTime"));
+	this.divStepDetail.form.calEndTime.set_value(this.dsStep.getColumn(pos, "endTime"));
+	this.divStepDetail.form.edtReadCount.set_value(this.dsStep.getColumn(pos, "readCount"));
+	this.divStepDetail.form.edtWriteCount.set_value(this.dsStep.getColumn(pos, "writeCount"));
+	this.divStepDetail.form.edtFilterCount.set_value(this.dsStep.getColumn(pos, "filterCount"));
+	this.divStepDetail.form.edtCommitCount.set_value(this.dsStep.getColumn(pos, "commitCount"));
+	this.divStepDetail.form.edtRollbackCount.set_value(this.dsStep.getColumn(pos, "rollbackCount"));
+	this.divStepDetail.form.txtExitMessage.set_value(this.dsStep.getColumn(pos, "exitMessage"));
+};
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+ * @description Transaction CallBack 함수(선택)
+*/
+
+this.fnTransCallback = function(svcid,errcd, errmsg){
+
+	if(errcd == -1) return;
+	
+	if(svcid == "listBatchJobMonitoring"){
+		//Job실행결과가 있을경우에만 Step실행결과조회
+		if(this.dsMain.rowcount > 0){
+			this.dsMain.set_rowposition(0);
+			this.grdBatchJobList.setFocus(true, true);
+			this.dsSearchStepParam.setColumn(0, "jobExecutionId", this.dsMain.getColumn(0, "jobExecutionId"));
+			// 서비스 객체 생성
+			this.smfSearchService("listBatchStepMonitoring")
+				// 실행
+				.run()
+				// 콜백
+				.callback(function(callbackParams){
+					if(callbackParams.errors) return;
+			});
+		}
+		
+	}else if(svcid == "listBatchStepMonitoring"){
+		this.fnSetStepDetailList(0);
+	}
+};
+
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+	// 업무콜백 처리
+	this.dsMain.setColumn(this.dsMain.rowposition, "jobName", e.result.jobName );
+	this.dsMain.setColumn(this.dsMain.rowposition, "jobKorName", e.result.jobKorName );
+	this.dsMain.setColumn(this.dsMain.rowposition, "businessCode", e.result.businessCode );
+};
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+/**
+ * @description 조회버튼
+*/
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 검색조건 세팅
+	this.dsSearch.setColumn(0, "jobName", this.divSearch.form.edtJobName.value);
+	this.dsSearch.setColumn(0, "jobKorName", this.divSearch.form.edtJobKorName.value);
+	this.dsSearch.setColumn(0, "businessCode", this.divSearch.form.cboBusnScCd.value);
+	
+	this.dsMain.clearData();
+	this.dsStep.clearData();
+	this.fnSetStepDetailList(0);
+
+	this.fnSearch();
+};
+
+/**
+ * @description Job실행관리 셀클릭
+**/
+this.grdBatchJobList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.fnSearchStepList(e.row);
+};
+
+
+/**
+* @description Step실행관리 셀클릭
+**/
+this.grdBatchStepList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.fnSetStepDetailList(e.row);
+};
+
+/**
+ * @description 조회조건 엔터키 이벤트
+*/
+this.divSearch_edtJobName_onkeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == "13"){
+		this.divSearch_btnSearch_onclick();
+	}
+};
+
+
+/**
+ * @description 조회조건 엔터키 이벤트
+*/
+this.divSearch_edtJobKorName_onkeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == "13"){
+		this.divSearch_btnSearch_onclick();
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="jobName" type="STRING" size="256" description="배치JOBID"/>
+          <Column id="jobKorName" type="STRING" size="256" description="배치명"/>
+          <Column id="businessCode" type="STRING" size="256" description="업무구분"/>
+          <Column id="startTime" type="STRING" size="256" description="실행시작일자"/>
+          <Column id="endTime" type="STRING" size="256" description="실행종료일자"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true" preload="true">
+        <ColumnInfo>
+          <Column id="jobName" type="STRING" size="256"/>
+          <Column id="jobKorName" type="STRING" size="256"/>
+          <Column id="businessCode" type="STRING" size="256"/>
+          <Column id="jobInstanceId" type="STRING" size="256"/>
+          <Column id="jobExecutionId" type="STRING" size="256"/>
+          <Column id="createTime" type="STRING" size="256"/>
+          <Column id="startTime" type="STRING" size="256"/>
+          <Column id="endTime" type="STRING" size="256"/>
+          <Column id="status" type="STRING" size="256"/>
+          <Column id="exitCode" type="STRING" size="256"/>
+          <Column id="exitMessage" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listBatchJobMonitoring</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsSearch=dsSearch dsMain=dsMain</Col>
+            <Col id="url">/zzz_fwc_ba02_000.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">listBatchStepMonitoring</Col>
+            <Col id="inDatasets">dsSearchStepParam=dsSearchStepParam</Col>
+            <Col id="outDatasets">dsStep=dsStep</Col>
+            <Col id="url">/zzz_fwc_ba02_001.do</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsBunsCd">
+        <ColumnInfo>
+          <Column id="businessCode" type="STRING" size="256" description="업무구분코드"/>
+          <Column id="businessNm" type="STRING" size="256" description="업무구분이름"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="businessCode"/>
+            <Col id="businessNm">선택</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">SM</Col>
+            <Col id="businessNm">시스템관리</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">CM</Col>
+            <Col id="businessNm">공통관리</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">GA</Col>
+            <Col id="businessNm">일반행정</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">SA</Col>
+            <Col id="businessNm">학교행정</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">SW</Col>
+            <Col id="businessNm">교무업무</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">OP</Col>
+            <Col id="businessNm">정보개방</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">EP</Col>
+            <Col id="businessNm">업무포털</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">PA</Col>
+            <Col id="businessNm">대국민서비스</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">CP</Col>
+            <Col id="businessNm">학교수업지원플랫폼</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">US</Col>
+            <Col id="businessNm">사용자지원</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">PM</Col>
+            <Col id="businessNm">프로젝트관리</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">NS</Col>
+            <Col id="businessNm">일반설문</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">EO</Col>
+            <Col id="businessNm">교육디지털원패스</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">LI</Col>
+            <Col id="businessNm">소재정보확인</Col>
+          </Row>
+          <Row>
+            <Col id="businessNm">유치원</Col>
+            <Col id="businessCode">KG</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearchStepParam">
+        <ColumnInfo>
+          <Column id="jobExecutionId" type="STRING" size="256" description="JobId"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsStep" useclientlayout="true" preload="true">
+        <ColumnInfo>
+          <Column id="stepName" type="STRING" size="256"/>
+          <Column id="stepExecutionId" type="STRING" size="256"/>
+          <Column id="createTime" type="STRING" size="256"/>
+          <Column id="startTime" type="STRING" size="256"/>
+          <Column id="endTime" type="STRING" size="256"/>
+          <Column id="readCount" type="STRING" size="256"/>
+          <Column id="writeCount" type="STRING" size="256"/>
+          <Column id="commitCount" type="STRING" size="256"/>
+          <Column id="rollbackCount" type="STRING" size="256"/>
+          <Column id="filterCount" type="STRING" size="256"/>
+          <Column id="readSkipCount" type="STRING" size="256"/>
+          <Column id="writeSkipCount" type="STRING" size="256"/>
+          <Column id="processSkipCount" type="STRING" size="256"/>
+          <Column id="status" type="STRING" size="256"/>
+          <Column id="exitCode" type="STRING" size="256"/>
+          <Column id="exitMessage" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtJobName" propid="value" datasetid="dsSearch" columnid="jobName"/>
+      <BindItem id="item1" compid="divSearch.form.edtJobKorName" propid="value" datasetid="dsSearch" columnid="jobKorName"/>
+      <BindItem id="item2" compid="divSearch.form.calFrom" propid="value" datasetid="dsSearch" columnid="startTime"/>
+      <BindItem id="item3" compid="divSearch.form.calTo" propid="value" datasetid="dsSearch" columnid="endTime"/>
+      <BindItem id="item4" compid="divStepDetail.form.edtStepId" propid="value" datasetid="dsStepDetail" columnid="stepExecutionId"/>
+      <BindItem id="item5" compid="divStepDetail.form.edtStatus" propid="value" datasetid="dsStepDetail" columnid="status"/>
+      <BindItem id="item9" compid="divStepDetail.form.edtReadCount" propid="value" datasetid="dsUserInfoSave" columnid="userNm"/>
+      <BindItem id="item10" compid="divStepDetail.form.edtWriteCount" propid="value" datasetid="dsUserInfoSave" columnid="userNm"/>
+      <BindItem id="item11" compid="divStepDetail.form.edtFilterCount" propid="value" datasetid="dsUserInfoSave" columnid="userNm"/>
+      <BindItem id="item12" compid="divStepDetail.form.edtCommitCount" propid="value" datasetid="dsUserInfoSave" columnid="userNm"/>
+      <BindItem id="item13" compid="divStepDetail.form.edtRollbackCount" propid="value" datasetid="dsUserInfoSave" columnid="userNm"/>
+    </Bind>
+  </Form>
+</FDL>

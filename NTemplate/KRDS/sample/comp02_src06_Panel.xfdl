@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="src06" width="888" height="450" titletext="탐색_페이지네이션" onload="src06_onload">
+    <Layouts>
+      <Layout height="450" width="888" screenid="Desktop_screen">
+        <Static id="staH2" taborder="0" text="페이지네이션" left="0" top="0" width="210" height="60" cssclass="sta_WF_H2_pc" fittocontents="width" accessibilityrole="heading2"/>
+        <Static id="staDivider" taborder="1" left="staH2:15" top="20" width="1" height="21" cssclass="sta_WF_line" accessibilityenable="false"/>
+        <Static id="staEtit" taborder="2" text="Pagination" left="staDivider:15" top="0" width="129" height="60" cssclass="sta_WF_ParaH4_pc"/>
+        <Static id="Static00_01" taborder="3" text="페이지네이션은 많은 양의 콘텐츠를 탐색하기 쉽도록 여러 화면에 나누고, 분할된 화면을 탐색하는 데 사용되는 요소이다." left="0" top="85" height="74" cssclass="sta_WF_Descript" fittocontents="height" right="0"/>
+        <Div id="Div06" taborder="4" text="Div06" left="0" top="Static00_01:80" width="660" height="40" visible="true" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <Button id="Button00" taborder="0" text="이전" left="0" top="0" width="62" height="40" cssclass="btn_WF_PgPrev" visible="true"/>
+              <Button id="Button01" taborder="1" text="1" left="70" top="0" width="40" height="40" cssclass="btn_WF_PgNumS" visible="true"/>
+              <Button id="Button01_00" taborder="2" text="2" left="118" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button01_01" taborder="3" text="3" left="166" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button01_02" taborder="4" text="4" left="214" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button01_03" taborder="5" text="5" left="262" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button01_04" taborder="6" text="6" left="310" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button01_05" taborder="7" text="7" left="358" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button01_06" taborder="8" text="8" left="406" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button01_07" taborder="9" text="9" left="454" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Static id="Static00" taborder="10" left="502" top="0" width="40" height="40" cssclass="sta_WF_Ellipsis" visible="true" accessibilitylabel="줄임"/>
+              <Button id="Button01_07_01" taborder="11" text="99" left="550" top="0" width="40" height="40" cssclass="btn_WF_PgNum" visible="true"/>
+              <Button id="Button00_00" taborder="12" text="다음" left="598" top="0" width="62" height="40" cssclass="btn_WF_PgNext" visible="true"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Button id="Button00" visible="false"/>
+              <Button id="Button01" visible="false"/>
+              <Button id="Button01_00" visible="false"/>
+              <Button id="Button01_01" visible="false"/>
+              <Button id="Button01_02" visible="false"/>
+              <Button id="Button01_03" visible="false"/>
+              <Button id="Button01_04" visible="false"/>
+              <Button id="Button01_05" visible="false"/>
+              <Button id="Button01_06" visible="false"/>
+              <Button id="Button01_07" visible="false"/>
+              <Static id="Static00" visible="false"/>
+              <Button id="Button01_07_01" visible="false"/>
+              <Button id="Button00_00" visible="false"/>
+            </Layout>
+          </Layouts>
+          <InitValue/>
+        </Div>
+        <Edit id="Edit00" taborder="5" left="246" top="Div06:43" width="56" height="40" displaynulltext="1" visible="true" accessibilitylabel="페이지"/>
+        <Static id="Static00" taborder="6" text="/22" left="302" top="Div06:46" width="40" height="34" cssclass="sta_WF_Pg15R" visible="true"/>
+        <Button id="Button00_00_00_00_00_00" taborder="7" text="이동" left="Static00:16" top="Div06:43" width="64" height="40" cssclass="btn_WF_Custom" visible="true" accessibilitylabel="페이지"/>
+        <Grid id="grdList" taborder="8" left="15" top="386" binddataset="ds00" bottom="-540" autofittype="col" right="-157" autoenter="select" oncellclick="grdList_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="37" band="head"/>
+                <Row size="37"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="아이디"/>
+                <Cell col="1" text="성명"/>
+                <Cell col="2" text="부서"/>
+                <Cell col="3" text="비고"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:SAMPLE_ID" displaytype="expr:dataset.getRowType(currow)==2?'editcontrol':'normal'" edittype="expr:dataset.getRowType(currow)==2?'text':'none'" editautoselect="true"/>
+                <Cell col="1" text="bind:SAMPLE_NM" edittype="text" displaytype="editcontrol" editautoselect="true"/>
+                <Cell col="2" text="bind:SAMPLE_DEPT_NM" edittype="text" displaytype="editcontrol" editautoselect="true"/>
+                <Cell col="3" text="bind:SAMPLE_DESC" edittype="text" displaytype="editcontrol" editautoselect="true"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+      <Layout height="580" mobileorientation="Landscape" name="Layout0" type="default" width="480" screenid="Desktop_screen,mobile_small">
+        <Div id="Div06" left="14" top="598" width="660" height="40" visible="false"/>
+        <Edit id="Edit00" left="260" top="681" width="56" height="40" visible="false"/>
+        <Static id="Static00" left="316" top="684" width="40" height="34" visible="false"/>
+        <Button id="Button00_00_00_00_00_00" left="372" top="681" width="64" height="40" visible="false"/>
+        <Static id="Static00_01" left="0" top="85" height="116" right="0"/>
+        <Static id="staH2" cssclass="sta_WF_H2_m" width="152" left="0" top="0" height="60"/>
+        <Static id="staEtit" cssclass="sta_WF_ParaH4_m" right="0" left="staDivider:15" top="0" height="60"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds00">
+        <ColumnInfo>
+          <Column id="SAMPLE_FILE_ID" type="string" size="32"/>
+          <Column id="SAMPLE_DEPT_NM" type="string" size="32"/>
+          <Column id="SAMPLE_DESC" type="string" size="32"/>
+          <Column id="SAMPLE_NM" type="string" size="32"/>
+          <Column id="SAMPLE_ID" type="string" size="32"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="SAMPLE_FILE_ID">FILE_df2b1c57c55146c59a687274f8b1c0ff</Col>
+            <Col id="SAMPLE_DEPT_NM">영업부</Col>
+            <Col id="SAMPLE_DESC">연간 직원 성과 평가</Col>
+            <Col id="SAMPLE_NM">김철수</Col>
+            <Col id="SAMPLE_ID">1</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_FILE_ID">FILE_c11ecffa80204315b4a03a55275c6caf</Col>
+            <Col id="SAMPLE_DEPT_NM">IT부</Col>
+            <Col id="SAMPLE_DESC">2024년 2분기 마케팅 계획 및 예산 배정</Col>
+            <Col id="SAMPLE_NM">김수지</Col>
+            <Col id="SAMPLE_ID">2</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">영업부</Col>
+            <Col id="SAMPLE_DESC">2024년 4월 월간 판매 보고서</Col>
+            <Col id="SAMPLE_NM">박민수</Col>
+            <Col id="SAMPLE_ID">3</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">제품개발부</Col>
+            <Col id="SAMPLE_DESC">신제품 X 출시 계획</Col>
+            <Col id="SAMPLE_NM">최지우</Col>
+            <Col id="SAMPLE_ID">4</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">재무부</Col>
+            <Col id="SAMPLE_DESC">2024년 1분기 내부 감사 보고서</Col>
+            <Col id="SAMPLE_NM">장미영</Col>
+            <Col id="SAMPLE_ID">5</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">IT부</Col>
+            <Col id="SAMPLE_DESC">업데이트된 IT 보안 정책 문서</Col>
+            <Col id="SAMPLE_NM">홍길동</Col>
+            <Col id="SAMPLE_ID">6</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">고객서비스부</Col>
+            <Col id="SAMPLE_DESC">2024년 5월 고객 피드백 종합</Col>
+            <Col id="SAMPLE_NM">유재석</Col>
+            <Col id="SAMPLE_ID">7</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">구매부</Col>
+            <Col id="SAMPLE_DESC">사무용품 신규 공급업체 계약서</Col>
+            <Col id="SAMPLE_NM">신동엽</Col>
+            <Col id="SAMPLE_ID">8</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">교육부</Col>
+            <Col id="SAMPLE_DESC">2024년 6월 직원 교육 일정</Col>
+            <Col id="SAMPLE_NM">박나래</Col>
+            <Col id="SAMPLE_ID">9</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">연구개발부</Col>
+            <Col id="SAMPLE_DESC">신기술 동향에 대한 연구 논문</Col>
+            <Col id="SAMPLE_NM">정우성</Col>
+            <Col id="SAMPLE_ID">10</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">프로젝트관리부</Col>
+            <Col id="SAMPLE_DESC">프로젝트 Z에 대한 상세 계획</Col>
+            <Col id="SAMPLE_NM">기므태희</Col>
+            <Col id="SAMPLE_ID">11</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">재무부</Col>
+            <Col id="SAMPLE_DESC">2025년 회계연도 예산 전망</Col>
+            <Col id="SAMPLE_NM">이병헌</Col>
+            <Col id="SAMPLE_ID">12</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">운영부</Col>
+            <Col id="SAMPLE_DESC">주간 팀 회의록</Col>
+            <Col id="SAMPLE_NM">송혜교</Col>
+            <Col id="SAMPLE_ID">13</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">물류부</Col>
+            <Col id="SAMPLE_DESC">2024년 2분기 분기별 재고 보고서</Col>
+            <Col id="SAMPLE_NM">하정우</Col>
+            <Col id="SAMPLE_ID">14</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">준법감시부</Col>
+            <Col id="SAMPLE_DESC">2024년 규제 준수 체크리스트</Col>
+            <Col id="SAMPLE_NM">공유</Col>
+            <Col id="SAMPLE_ID">15</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">인사부</Col>
+            <Col id="SAMPLE_DESC">업데이트된 인사 정책 및 절차</Col>
+            <Col id="SAMPLE_NM">김혜수</Col>
+            <Col id="SAMPLE_ID">16</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">영업부</Col>
+            <Col id="SAMPLE_DESC">2024년 업데이트된 제품 카탈로그</Col>
+            <Col id="SAMPLE_NM">전지현</Col>
+            <Col id="SAMPLE_ID">17</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">마케팅부</Col>
+            <Col id="SAMPLE_DESC">향후 무역 박람회를 위한 이벤트 계획</Col>
+            <Col id="SAMPLE_NM">주지훈</Col>
+            <Col id="SAMPLE_ID">18</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">인사부</Col>
+            <Col id="SAMPLE_DESC">신규 직원 핸드북</Col>
+            <Col id="SAMPLE_NM">배수지</Col>
+            <Col id="SAMPLE_ID">19</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">고객서비스부</Col>
+            <Col id="SAMPLE_DESC">최신 고객 만족도 조사 결과</Col>
+            <Col id="SAMPLE_NM">손예진</Col>
+            <Col id="SAMPLE_ID">20</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">구매부</Col>
+            <Col id="SAMPLE_DESC">연간 공급업체 평가 보고서</Col>
+            <Col id="SAMPLE_NM">유아인</Col>
+            <Col id="SAMPLE_ID">21</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">영업부</Col>
+            <Col id="SAMPLE_DESC">2024년 1분기 성과 지표</Col>
+            <Col id="SAMPLE_NM">이준기</Col>
+            <Col id="SAMPLE_ID">22</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">연구개발부</Col>
+            <Col id="SAMPLE_DESC">신제품 Y에 대한 기술 사양서</Col>
+            <Col id="SAMPLE_NM">한효주</Col>
+            <Col id="SAMPLE_ID">23</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">경영진</Col>
+            <Col id="SAMPLE_DESC">5개년 전략 계획</Col>
+            <Col id="SAMPLE_NM">고소영</Col>
+            <Col id="SAMPLE_ID">24</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">인사부</Col>
+            <Col id="SAMPLE_DESC">2024년 직원 복리후생 개요</Col>
+            <Col id="SAMPLE_NM">이동욱</Col>
+            <Col id="SAMPLE_ID">25</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">재무부</Col>
+            <Col id="SAMPLE_DESC">2024년 리스크 평가 보고서</Col>
+            <Col id="SAMPLE_NM">김우빈</Col>
+            <Col id="SAMPLE_ID">26</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">운영부</Col>
+            <Col id="SAMPLE_DESC">분기별 부서 성과 검토</Col>
+            <Col id="SAMPLE_NM">수현</Col>
+            <Col id="SAMPLE_ID">27</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">마케팅부</Col>
+            <Col id="SAMPLE_DESC">마케팅 캠페인 성과 분석</Col>
+            <Col id="SAMPLE_NM">김지원</Col>
+            <Col id="SAMPLE_ID">28</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">법무부</Col>
+            <Col id="SAMPLE_DESC">신규 발명 특허 신청서</Col>
+            <Col id="SAMPLE_NM">박서준</Col>
+            <Col id="SAMPLE_ID">29</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">111</Col>
+            <Col id="SAMPLE_DESC">111</Col>
+            <Col id="SAMPLE_NM">111</Col>
+            <Col id="SAMPLE_ID">111</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">112</Col>
+            <Col id="SAMPLE_DESC">112</Col>
+            <Col id="SAMPLE_NM">112</Col>
+            <Col id="SAMPLE_ID">112</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">11113</Col>
+            <Col id="SAMPLE_DESC">1113</Col>
+            <Col id="SAMPLE_NM">1113</Col>
+            <Col id="SAMPLE_ID">1113</Col>
+          </Row>
+          <Row>
+            <Col id="SAMPLE_DEPT_NM">1111</Col>
+            <Col id="SAMPLE_DESC"/>
+            <Col id="SAMPLE_NM">11111</Col>
+            <Col id="SAMPLE_ID">11111</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[
+this.fvPageLeft   = 0; 	// div가운데 위치시키기 위한 left값
+this.fvFnCallback = "";	// 조회함수
+this.fvRecords    = 10;	// 목록수
+this.fvPage       = 1;
+this.fvObjGrid;
+this.fvMsgId = "msg.search.count";
+
+this.src06_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	console.log("src06_onload");
+	this.fnCreatePage(this.grdList, "fnPageCallback", 1, "", this.ds00.getRowCount());
+	
+};
+
+
+/**
+ * @class page 갯수에 맞게 버튼 생성<br>
+ * @param {Grid} objGrid - 페이지와 연결된 Grid (순번 표시)
+ * @param {String} sFnCallback - 페이지 선택시 실행될 callBack 함수명
+ * @param {Number} nPage - 페이지 수
+ * @param {Number} [nRecords] - 페이지 당 건수
+ * @param {Number} [nTotalRecords] - 전체 건수
+ * @return N/A
+ */
+this.fnCreatePage = function(objGrid, sFnCallback, nPage, nRecords, nTotalRecords)
+{
+	this.fvFnCallback = sFnCallback;	// callBack 함수명
+	
+	// 페이지 당 건수 설정
+	nRecords = 10;
+	this.fvRecords = nRecords;
+	let objDs = null;
+	//Grid
+	if(!this.gfnIsNull(objGrid)){
+		objDs = objGrid.getBindDataset();
+		this.fvObjGrid = objGrid;
+		this.fvObjGrid.uPage = nPage;	
+		
+		//건수 설정
+		this.fvObjGrid.uPageSize = nRecords;
+	}
+	
+	let nTotalCount = nTotalRecords;
+	let nRowCount = objDs.rowcount;
+	
+	// 전체 페이지 갯수 계산
+	let nTotalPageC; 					
+	if (Math.floor( nTotalCount % nRecords ) > 0) {
+        nTotalPageC = Math.floor( nTotalCount / nRecords ) + 1;
+    }
+	else {
+        nTotalPageC = Math.floor( nTotalCount / nRecords );
+    }
+	
+    // 실제 페이지 갯수는 MAX 10개로 조정
+	let nPageScaleC  = 10;
+	let nTermBtn     = 5;		// 버튼사이
+    let nTerm        = 6;   	// 큰버튼과 숫자사이
+    let nTernLastNum = 6; 	    // 마지막숫자버튼과 뒤로버튼사이
+    
+	let nLeft     = 3;
+	let nTop      = 0;
+    let nWidth    = 40;
+    let nNumWidth = 40;
+    let nHeight   = 40;
+    
+    let objBtnPage;
+    let sPageView = this.pageview;
+      
+    if (this.gfnIsNull(sPageView)) 	 sPageView = "all";
+    if (this.gfnIsNull(nRecords)) 	 nRecords = 50;
+    if (this.gfnIsNull(nPage)) 		 nPage = 1;
+    if (this.gfnIsNull(nPageScaleC)) nPageScaleC = 10;
+    if( nPageScaleC > 10 ) nPageScaleC = 10;
+    
+    // DIV 초기화
+    if (this.isValidObject("divPage")) {
+		let obj = this.removeChild("divPage");
+		obj.destroy();
+		obj = null;
+    }    
+    this.scrollbartype = "none";
+	
+	// 현재페이지
+    let uint = Math.floor( ( nexacro.toNumber( nPage ) - 1 ) / nexacro.toNumber( nPageScaleC ) );
+        uint = ( uint * nPageScaleC ) + 1;
+		
+   // 다음페이지
+    let nextUnit = nexacro.toNumber( uint + nPageScaleC );
+	if( nextUnit > nTotalPageC) nextUnit = nTotalPageC + 1;
+	
+	// div생성
+    let oPanPaging = new Panel();
+	oPanPaging.init("panPage", 20, 160, 600, 50, null, 0);
+    this.addChild(oPanPaging.name, oPanPaging);
+    oPanPaging.border = "1px solid blue";
+    oPanPaging.type = "horizontal";
+    oPanPaging.horizontalgap = 16;
+	oPanPaging.show();
+	
+    // 컨트롤버튼생성
+    if (sPageView == "all" || sPageView == "number")
+    {
+		/************************************************************************
+		 * 첫페이지(<<) 버튼생성
+		 ************************************************************************/
+		let objBtnFirst = new Button("btnFirst", nLeft, nTop, nWidth, nHeight, null, null);   
+		this.addChild(objBtnFirst.name, objBtnFirst);
+		objBtnFirst.cssclass = "btn_WF_PageP";
+		objBtnFirst.page = 1;
+		objBtnFirst.addEventHandler("onclick", this.fnMovePage, this);
+		objBtnFirst.enable = true;
+		
+		// 현재페이지가 '1'이면 비활성화
+		if( nPage == 1 ) objBtnFirst.enable = false;
+		objBtnFirst.show();
+
+		nLeft = nLeft + nWidth + nTermBtn;	//left값 계산
+        oPanPaging.addItem("PageItem_"+objBtnFirst.name, objBtnFirst.name);
+
+		/************************************************************************
+		 * 앞으로(<) 버튼생성
+		 ************************************************************************/
+		let objBtnBefore = new Button("btnBefore", nLeft, nTop, nWidth, nHeight, null, null);   
+		this.addChild(objBtnBefore.name, objBtnBefore);
+		objBtnBefore.cssclass = "btn_WF_PageL";
+		objBtnBefore.page = nexacro.toNumber(nPage) - 1;
+		objBtnBefore.addEventHandler("onclick", this.fnMovePage, this);	
+		objBtnBefore.enable = true;
+		// 현재페이지가 '1'이면 비활성화
+		if( nPage == 1) objBtnBefore.enable = false;
+		nLeft = nLeft + nWidth + nTerm;	//left값 계산
+		objBtnBefore.show();
+        oPanPaging.addItem("PageItem_"+objBtnBefore.name, objBtnBefore.name);
+		
+		/************************************************************************
+		 *페이징[1 2 3 4 5 6 7 8 9 10] 버튼생성
+		 ************************************************************************/
+		let oFocusBtn = null;
+		for(let i=uint; i<nextUnit; i++ )
+		{
+			if(i > nTotalPageC ) break; //페이지갯수 만큼만 생성
+			
+			objBtnPage = new Button("btnPage"+i,  nLeft, nTop, nNumWidth, nHeight, null, null);   
+			this.addChild(objBtnPage.name, objBtnPage);
+			objBtnPage.cssclass = "btn_WF_PgNum";
+			objBtnPage.text = i;
+			objBtnPage.page = i;
+			objBtnPage.addEventHandler("onclick", this.fnMovePage, this);
+			
+			//누름표시
+			if (i == nPage){
+				objBtnPage.cssclass = "btn_WF_PgNumS";
+				oFocusBtn = objBtnPage;
+			}
+			objBtnPage.show();
+
+			objBtnPage.fittocontents = "width";
+		//	objBtnPage.textAlign = "center";
+			objBtnPage.minwidth = nWidth;			
+			
+			
+			nLeft = nLeft + nNumWidth + nTermBtn; //left값 계산
+            oPanPaging.addItem("PageItem_"+objBtnPage.name, objBtnPage.name);
+		}    
+		nLeft = nLeft + nTernLastNum;//left값 계산
+		
+		/************************************************************************
+		 * 다음(>) 버튼생성
+		 ************************************************************************/
+		let objBtnNext = new Button("btnNext", nLeft, nTop, nWidth, nHeight, null, null);   
+		this.addChild(objBtnNext.name, objBtnNext);
+		objBtnNext.cssclass = "btn_WF_PageR";
+		objBtnNext.addEventHandler("onclick", this.fnMovePage, this);
+		objBtnNext.enable = true;
+		objBtnNext.page = nexacro.toNumber(nPage) +1;
+		
+		//현재페이지가 전체페이지갯수만큼이면 비활성화
+		if( nPage >= nTotalPageC) objBtnNext.enable = false;
+		objBtnNext.show();
+		nLeft = nLeft + nWidth + nTermBtn; //left값 계산
+        oPanPaging.addItem("PageItem_"+objBtnNext.name, objBtnNext.name);
+		
+		/************************************************************************
+		 * 마지막페이지(>>) 버튼생성
+		 ************************************************************************/	
+		let objBtnEnd = new Button("btnEnd", nLeft, nTop, nWidth, nHeight, null, null);   
+		this.addChild(objBtnEnd.name, objBtnEnd);
+		objBtnEnd.cssclass = "btn_WF_PageN";
+		objBtnEnd.addEventHandler("onclick", this.fnMovePage, this);
+		objBtnEnd.page = nTotalPageC;
+		//현재페이지가 전체페이지갯수만큼이면 비활성화
+		if( nPage == nTotalPageC) objBtnEnd.enable = false;
+		objBtnEnd.show();
+		nLeft = nLeft + nWidth ;	//left값 계산
+        oPanPaging.addItem("PageItem_"+objBtnEnd.name, objBtnEnd.name);
+	}
+		
+	//생성된 컴포넌트 갯수에 따른 div의 Width 조절
+	oPanPaging.width = nLeft + 6;
+	
+	//가운데로
+	this.fvPageLeft = ((800 - nLeft) / 2);
+
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,996 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="pas_mmscs02_m01" width="1200" height="946" titletext="민원실 조회" onload="pas_mmscs02_m01_onload">
+    <Layouts>
+      <Layout height="946" width="1200" screenid="ScreenDeskTopP">
+        <ImageViewer id="title1" taborder="0" text="민원실 조회" left="0" top="64" width="160" height="50" cssclass="font34B" initvalueid="ivTitleAccessibilityOn"/>
+        <Div id="divSearch" taborder="1" left="0" top="title1:28" height="120" cssclass="div_SA" right="0" text="" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="label00" taborder="0" text="교육청" left="435" top="45" width="50" height="30" cssclass="sta_SA_label" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboLctnScCd" taborder="1" text="전체" left="495" top="35" height="50" value="" index="0" initvalueid="ivCmbNormal" innerdataset="dsLctnScCd" datacolumn="unyCdValueNm" codecolumn="unyCdValue" width="210" onitemchanged="divSearch_cboLctnScCd_onitemchanged" useItemHeight="" displayrowcount="10"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Combo id="cboLctnScCd" left="30" top="123" right="30" cssclass="cbo_WF_M" height="100" taborder="1" useItemHeight="72"/>
+              <Static id="label00" left="30" top="56" width="85" height="50" cssclass="sta_SA_label_M" taborder="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTotal" taborder="2" left="0" top="divSearch:15" height="30" url="comm::comp_pageSummary2.xfdl" initvalueid="ivDivAccessibilityOff" right="0"/>
+        <Div id="divGrid" taborder="3" left="0" top="divTotal:15" height="512" cssclass="div_grid" formscrollbartype="none none" right="0" initvalueid="ivDivAccessibilityOn" accessibilitylabel="민원실조회목록" text="">
+          <Layouts>
+            <Layout/>
+            <Layout name="Layout0"/>
+          </Layouts>
+        </Div>
+        <Div id="divPaging" taborder="4" left="0" top="divGrid:60" height="30" right="0" url="comm::comp_paginator2.xfdl" initvalueid="ivDivAccessibilityOn" accessibilitylabel="페이징그룹박스" text=""/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="640" height="1715" mobileorientation="portrait" type="default">
+        <ImageViewer id="title1" cssclass="font48B_C" left="170" top="53" height="80" right="170"/>
+        <Div id="divSearch" cssclass="div_SA_M" top="title1:51" left="0" height="293" right="0"/>
+        <Div id="divTotal" top="699" left="659" height="30" right="-659" visible="false" enable="false"/>
+        <Div id="divGrid" top="divSearch:90" left="20" height="710" right="20" cssclass="div_grid_M" text="" divmargin="2"/>
+        <Div id="divPaging" formscrolltype="none" top="divGrid:70" left="0" height="120" right="0" formscrollbartype="none none"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="ogdpInstCd" type="string" size="256"/>
+          <Column id="roadNmZip" type="string" size="256"/>
+          <Column id="roadNmAddr" type="string" size="256"/>
+          <Column id="hmpgAddr" type="string" size="256"/>
+          <Column id="pbsrcTelno" type="string" size="256"/>
+          <Column id="pbsrcFxno" type="string" size="256"/>
+          <Column id="pbsrcRdnZip" type="string" size="256"/>
+          <Column id="pbsrcRoadNmAddr" type="string" size="256"/>
+          <Column id="rgtrId" type="string" size="256"/>
+          <Column id="regDt" type="string" size="256"/>
+          <Column id="mdfrId" type="string" size="256"/>
+          <Column id="mdfcnDt" type="string" size="256"/>
+          <Column id="orgCd" type="string" size="256"/>
+          <Column id="cddcOrgCd" type="string" size="256"/>
+          <Column id="kornOrgNm" type="string" size="256"/>
+          <Column id="lctnScCd" type="string" size="256"/>
+          <Column id="unyCdValueAbrvNm" type="string" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsList=dsList dsPageInfo=dsPageInfo</Col>
+            <Col id="svctp">R</Col>
+            <Col id="url">/pas_mms_cs02_001.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="message">조회</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">selectTemp</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsListTemp=dsList dsPageInfo=dsPageInfo</Col>
+            <Col id="svctp">R</Col>
+            <Col id="url">/pas_mms_cs02_001.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="message">조회</Col>
+            <Col id="asynctp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex">1</Col>
+            <Col id="pageSize">10</Col>
+            <Col id="totalCount">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="lctnScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsLctnScCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value="CDDC_SC_CD"/>
+          <ConstColumn id="FilterExpr" type="STRING" size="30" value="unyCdValue!='A00' &amp;&amp; unyCdValue!='V10'"/>
+          <ConstColumn id="UnyCdGrpId" type="STRING" size="30" value=""/>
+          <ConstColumn id="BfrClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd1Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd2Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd3Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd4Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd5Value" type="STRING" size="30" value=""/>
+          <Column id="pgeId" type="STRING" size="256"/>
+          <Column id="clfCdValue" type="STRING" size="30"/>
+          <Column id="clfCdValueNm" type="STRING" size="120"/>
+          <Column id="clfCdUseYn" type="STRING" size="150"/>
+          <Column id="unyCdValue" type="STRING" size="10"/>
+          <Column id="unyCdValueNm" type="STRING" size="30"/>
+          <Column id="userDfnCd1Value" type="STRING" size="100"/>
+          <Column id="userDfnCd2Value" type="STRING" size="100"/>
+          <Column id="userDfnCd3Value" type="STRING" size="100"/>
+          <Column id="userDfnCd4Value" type="STRING" size="100"/>
+          <Column id="userDfnCd5Value" type="STRING" size="100"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListTemp" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="ogdpInstCd" type="string" size="256"/>
+          <Column id="roadNmZip" type="STRING" size="256"/>
+          <Column id="roadNmAddr" type="STRING" size="256"/>
+          <Column id="hmpgAddr" type="STRING" size="256"/>
+          <Column id="pbsrcTelno" type="string" size="256"/>
+          <Column id="pbsrcFxno" type="string" size="256"/>
+          <Column id="pbsrcRdnZip" type="string" size="256"/>
+          <Column id="pbsrcRoadNmAddr" type="string" size="256"/>
+          <Column id="rgtrId" type="string" size="256"/>
+          <Column id="regDt" type="string" size="256"/>
+          <Column id="mdfrId" type="string" size="256"/>
+          <Column id="mdfcnDt" type="string" size="256"/>
+          <Column id="orgCd" type="string" size="256"/>
+          <Column id="cddcOrgCd" type="string" size="256"/>
+          <Column id="kornOrgNm" type="string" size="256"/>
+          <Column id="lctnScCd" type="string" size="256"/>
+          <Column id="unyCdValueAbrvNm" type="string" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*   대국민 - 민원실 목록조회
+*  @MenuPath    pa_pas_mms_cs
+*  @FileName 	pas_mmscs02_m01.xfdl
+*  @Creator 	최민진
+*  @CreateDate 	2022.8.18
+*  @Desction    민원실 목록조회
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.8.18     	최민진				최초 생성 
+*******************************************************************************
+*/
+
+include "lib::cm_script.xjs";
+
+//0501 CF 일괄등록
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.DivInfo = {};     // Q & A 항목 정보 
+this.fvTitleHeight = this.smfIsMobile()?104:79; // 디폴트 높이
+this.fvContentsHeight = this.smfIsMobile()?292:150; // 디폴트 높이
+this.fvContentsWidth = this.smfIsMobile()?400:747; // 디폴트 높이
+
+this.fv_prefixIdTitleDiv = "divTitle";
+this.fv_prefixIdAreaStatic = "staArea";
+this.fv_prefixIdTitleButton = "btnTitle";
+this.fv_prefixIdOpenButton = "btnOpen";
+this.fv_prefixIdHomeButton = "btnHome";
+this.fv_prefixIdContentsDiv = "divContents";
+this.fv_prefixIdContentsAddr = "staAddr";
+this.fv_prefixIdContentsHmpgAddr = "staHmpgAddr";
+this.fv_prefixIdContentsTelno = "staTelno";
+this.fv_prefixIdContentsFxno = "staFxno";
+this.fv_mofile = "";
+if(this.smfIsMobile()){
+	this.fv_mofile = "_M";
+}
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.pas_mmscs02_m01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+
+	// 공통코드의 코드구분
+	this.smfCodeList("code", [this.dsLctnScCd])
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;		
+			this.dsLctnScCd.insertRow(0);
+			this.dsLctnScCd.setColumn(0,"unyCdValue", "");
+			this.dsLctnScCd.setColumn(0,"unyCdValueNm", "전체");
+			
+			this.divSearch.form.cboLctnScCd.set_index(0);
+			// 페이지를 조회한다.
+			this.fnSearch(obj, e);
+		})		
+		.run()
+	;	
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnSearch = function(obj, e)
+{
+	this.fnDeleteDiv();
+	this.dsSearch.setColumn(0,"cddcScCd" , this.divSearch.form.cboLctnScCd.value);
+	
+	var sServiceId = "select";
+	if(this.smfIsMobile()){
+		sServiceId = "selectTemp";
+	}
+
+ 	// 서비스 객체 생성
+	this.smfSearchService(sServiceId)
+		// 페이징처리
+		.paginator(this.dsList, this.divPaging, this.divTotal, this.dsPageInfo, this.fnSearch, e)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(this.smfIsMobile()){
+				this.dsList.appendData(this.dsListTemp);
+				// 총 검색결과와 현재 검색 결과 수가 일치할 경우 [더보기]버튼 숨김 (TODO)
+				if(this.dsPageInfo.getColumn(0, "totalCount")==this.dsList.getRowCount()){
+					this.divPaging.set_visible(false);
+				}else{
+					this.divPaging.set_visible(true);
+				}
+			}
+			var objTargetDivForm =  this.divGrid.form;
+			for(var i=0;i<this.dsList.rowcount;i++){
+				this.fnAppendDiv(objTargetDivForm,this.dsList, i);
+			}
+			this.smfResetScroll(this.divGrid.form);
+			if(callbackParams.errors) return;
+		});	
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * 하나의 게시글을 추가한다.
+ * @param : {object}   scope  대상Form
+ * @param : {object}   objDs  추가할 데이터셋
+ * @param : {Number}   nRow   추가할 데이터셋의 row
+ */
+this.fnAppendDiv = function(scope,objDs,nRow)
+{
+	// 추가될 index를 구한다.
+	// (기본적으로는 부모 Div에 있는 _count 유저프로퍼티 사용. 없으면 0으로 초기화)
+	// todo 버튼 번호 다시 변경 
+	var nIdx = 0;
+	if(this.smfIsNull(scope.parent._count))
+	{  // 세팅이 안되어 있으면 0으로 세팅
+		nIdx = 0;
+		scope.parent._count = 0;
+	}
+	else
+	{
+		nIdx = scope.parent._count;
+	}
+	
+	// 타이틀 Div 만들기
+	var objTitleDiv = this.fnAddTitleDiv(scope,nIdx,objDs,nRow);
+	// 상세 Div만들기
+	var objContentsDiv = this.fnAddContentsDiv(scope,nIdx,objDs,nRow);
+
+	// 카운트 갯수를 증가시킨다.
+	scope.parent._count++;
+}
+
+/**
+ * TitleDiv를 추가한다.
+ * @param : {object}   scope  대상Form
+ * @param : {Number}   nIdx   추가할 div Index
+ * @param : {object}   objDs  추가할 데이터셋
+ * @param : {Number}   nRow   추가할 데이터셋의 row
+ */
+this.fnAddTitleDiv = function (scope,nIdx,objDs,nRow)
+{
+	var sDivId = this.fv_prefixIdTitleDiv + nIdx;
+	var sKornOrgNm = objDs.getColumn(nRow,"kornOrgNm");
+	var sUnyCdValueAbrvNm = objDs.getColumn(nRow,"unyCdValueAbrvNm");
+	
+	//===================================================================
+	// Div 생성
+	//===================================================================
+	var nHeight = this.fvTitleHeight;
+	var sBeforeContentsId = "divContents"+(nIdx-1);
+	var sChildId = "divContents"+nIdx;
+	var sDivCssClass = "div_grid_row"+this.fv_mofile;
+	var sDivArrow = "btn_WF_iconClose"; // 버튼 
+	
+	var objDiv = scope[sDivId];
+	
+	if(!objDiv)
+	{
+		objDiv = new Div();
+		if( nIdx==0 )
+		{	// 최초의 오브젝트는 위의 Div의 Top을 0으로 한다
+			objDiv.init(sDivId, 0, 0, null, nHeight, 0, null);	
+		}else
+		{   // 최초 Div이외의 것은 바로위의 오브젝트 바로아래에 생성한다. 
+			objDiv.init(sDivId, 0, sBeforeContentsId +":"+ 0, null, nHeight, 0, null);
+			//objDiv.init(sDivId, 0, (nIdx*nHeight), null, nHeight, 0, null);
+		}
+
+		// 만들어진 Div를 부모에 추가
+		// Add Object to Parent Form  
+		scope.addChild(sDivId, objDiv); 
+		
+		// Div의 속성을 세팅
+		objDiv.set_cssclass(sDivCssClass);
+		objDiv.set_initvalueid("ivDivAccessibilityOff");
+		objDiv.childId = sChildId;
+		objDiv.dirArrow = sDivArrow;
+		
+		// Div를 보이게 설정(addChild()하면 반드시 show()를 해주어야 실제로 화면에 보임)  
+		objDiv.show(); 
+	}
+	
+	// 지역명 버튼 넣기
+	var areaButton = new Static();
+	if(this.smfIsMobile()){
+		areaButton.init("area"+nIdx, 18, 31, 90, 40, null, 0);		
+	} else {
+		areaButton.init("area"+nIdx, 30, 24, 70, 30, null, 0);		
+	}
+	areaButton.set_cssclass("sta_WF_roundBox_blue"+this.fv_mofile);
+	areaButton.set_initvalueid("ivStcAccessibilityOn");
+	areaButton.set_text(sUnyCdValueAbrvNm);
+	objDiv.form.addChild("area"+nIdx, areaButton); 
+	areaButton.show();
+	
+	//===================================================================
+	// 타이틀문장(Static) 생성
+	//===================================================================
+	var sStaticId = this.fv_prefixIdTitleButton+nIdx;
+	var objStatic = objDiv.form[sStaticId];
+	if(!objStatic)
+	{
+		objStatic = new Button();
+		if(this.smfIsMobile()){
+			objStatic.init(sStaticId, 132, 27, 270, 48, null, 0);		
+		} else {
+			objStatic.init(sStaticId, 120, 24, 180, 30, null, 0);		
+		}
+		
+		// 만들어진 Static을 Div에 추가
+		objDiv.form.addChild(sStaticId, objStatic); 
+		
+		// Static의 속성 설정
+		objStatic.set_initvalueid("ivBtnAccessibilityButton");
+		objStatic.set_verticalAlign("middle");	
+		if(this.smfIsMobile()){
+			objStatic.set_cssclass("btn_font28M");
+		} else {
+			objStatic.set_cssclass("btn_font16M");
+		}
+		
+		objStatic.dirArrow = sDivArrow;
+		objStatic.childId = sChildId;
+		
+		// Static에 클릭이벤트 추가
+		objStatic.addEventHandler("onclick",function(obj,e){
+										this.fnReDraw(scope,obj,e,nIdx);
+									}
+									,this);
+		objStatic.show();
+	}
+	objStatic.set_text(sKornOrgNm);
+	objDiv.set_visible(true);
+	
+	// 홈 버튼 추가 
+	this.fnCreateBtnHome(objDiv.form,sChildId,nIdx);
+	
+	// 질문Div에 오측 화살표버튼을 추가한다.
+	this.fnCreateBtnOpen(objDiv.form,sChildId,nIdx);
+};
+
+/**
+ * Contents Div를 추가한다.
+ * @param : {object}   scope  대상Form
+ * @param : {Number}   nIdx   추가할 div Index
+ * @param : {object}   objDs  추가할 데이터셋
+ * @param : {Number}   nRow   추가할 데이터셋의 row
+ */
+this.fnAddContentsDiv = function (scope,nIdx,objDs,nRow)
+{
+	var sDivId = this.fv_prefixIdContentsDiv + nIdx;
+	var sPbsrcAddr = objDs.getColumn(nRow,"roadNmAddr");
+	var sPbsrcHmpgAddr = objDs.getColumn(nRow,"hmpgAddr");
+	var sPbsrcTelno = objDs.getColumn(nRow,"pbsrcTelno");
+	var sPbsrcFxno = objDs.getColumn(nRow,"pbsrcFxno");
+
+	//===================================================================
+	// Div 생성
+	//===================================================================
+	var nHeight = this.fvContentsHeight;
+	var sBeforeContentsId = this.fv_prefixIdTitleDiv + nIdx;
+	var sChildId = this.fv_prefixIdContentsDiv+nIdx;
+	var sDivCssClass = "div_grid_row_detail"+this.fv_mofile;	
+	var sDivArrow = "btn_WF_iconOpen"+this.fv_mofile;
+
+	// Create Object  
+	var objDiv = scope[sDivId];
+	if(!objDiv)
+	{
+		objDiv = new Div();
+		//if(this.smfIsMobile()){
+		//	objDiv.init(sDivId, 0, sBeforeContentsId +":"+ 0, null, nHeight, 0, null);
+		//} else {
+			objDiv.init(sDivId, 0, sBeforeContentsId +":"+ 0, null, nHeight, 0, null);
+		//}
+		
+
+		// 만들어진 Div를 부모에 추가
+		// Add Object to Parent Form  
+		scope.addChild(sDivId, objDiv); 
+		
+		// Div의 속성을 세팅
+		objDiv.set_cssclass(sDivCssClass);
+		objDiv.set_initvalueid("ivDivAccessibilityOff");
+		objDiv.childId = sChildId;
+		objDiv.dirArrow = sDivArrow;
+		
+		// Div를 보이게 설정(addChild()하면 반드시 show()를 해주어야 실제로 화면에 보임)  
+		objDiv.show(); 
+	}
+	
+	//===================================================================
+	// Contents문장(Static) 생성
+	//===================================================================
+	var sStaticCssClass = "font16R";
+	if(this.smfIsMobile()){
+		sStaticCssClass = "font28R";
+	}
+	
+	// PC
+	if(!this.smfIsMobile()){
+		// 1-1. 팩스번호 라벨 설정 
+		var sBtnFaxno = "labelFaxno"+nIdx;
+		var objButton = new Button();
+		
+		objButton.init(sBtnFaxno, 30, 7, 121, 30, null, null);
+		
+		objButton.set_cssclass("btn_WF_labelFax"+this.fv_mofile);
+		objButton.set_initvalueid("ivBtnAccessibilityOff");
+		objButton.set_text("팩스번호");
+		objDiv.form.addChild(sBtnFaxno, objButton); 
+		objButton.show();
+		
+		// 1-2. 팩스번호 입력
+		var sStaticFxno = this.fv_prefixIdContentsFxno+nIdx;
+		var objStaticFxno = objDiv.form[sStaticFxno];
+		
+		if(!objStaticFxno)
+		{
+			objStaticFxno = new Static();  
+			
+			objStaticFxno.init(sStaticFxno, 171, 7, this.fvContentsWidth, 30, null, 0);
+		
+			objDiv.form.addChild(sStaticFxno, objStaticFxno); 
+		
+			// Static의 속성 설정
+			objStaticFxno.set_initvalueid("ivStcAccessibilityOn");
+			objStaticFxno.set_wordWrap("char");
+			objStaticFxno.dirArrow = sDivArrow;	
+			objStaticFxno.childId = "";
+			
+			objStaticFxno.show();
+		}
+		objStaticFxno.set_cssclass(sStaticCssClass);	
+		objStaticFxno.set_text(sPbsrcFxno);
+	
+		// 2-1. 홈페이지 라벨 설정 
+		var sBtnHmpgAddr = "labelHmpgAddr"+nIdx;
+		var objButton = new Button();
+		
+		objButton.init(sBtnHmpgAddr, 30, 51, 121, 30, null, null);
+		
+		objButton.set_cssclass("btn_WF_labelHome"+this.fv_mofile);
+		objButton.set_initvalueid("ivBtnAccessibilityOff");
+		objButton.set_text("홈페이지");
+		objDiv.form.addChild(sBtnHmpgAddr, objButton); 
+		objButton.show();
+		
+		// 2-2. 홈페이지 입력
+		var sStaticHmpgAddr = this.fv_prefixIdContentsHmpgAddr+nIdx;
+		var objStaticHmpgAddr = objDiv.form[sStaticHmpgAddr];
+		
+		if(!objStaticHmpgAddr)
+		{
+			objStaticHmpgAddr = new Static();  
+			
+			objStaticHmpgAddr.init(sStaticHmpgAddr, 171, 51, this.fvContentsWidth, 30, null, 0);
+			
+			objDiv.form.addChild(sStaticHmpgAddr, objStaticHmpgAddr); 
+		
+			// Static의 속성 설정
+			objStaticHmpgAddr.set_initvalueid("ivStcAccessibilityOn");
+			objStaticHmpgAddr.set_wordWrap("char");
+			objStaticHmpgAddr.dirArrow = sDivArrow;	
+			objStaticHmpgAddr.childId = "";
+			
+			objStaticHmpgAddr.show();
+		}
+		objStaticHmpgAddr.set_cssclass(sStaticCssClass);	
+		objStaticHmpgAddr.set_text(sPbsrcHmpgAddr);
+		objStaticHmpgAddr.set_cursor("pointer");
+		
+		
+		// 클릭시 새창으로 홈페이지 호출
+		objStaticHmpgAddr.addEventHandler("onclick",function(obj,e){ 
+			if(!this.smfIsNull(sPbsrcHmpgAddr))
+			{
+				system.execBrowser(sPbsrcHmpgAddr);
+			}
+		},this);
+		
+		// 3-1. 주소 라벨 설정 
+		var sBtnAddr = "labelAddr"+nIdx;
+		var objButton = new Button();
+		
+		objButton.init(sBtnAddr, 30, 95, 121, 30, null, null);
+		
+		objButton.set_cssclass("btn_WF_labelMap"+this.fv_mofile);
+		objButton.set_initvalueid("ivBtnAccessibilityOff");
+		objButton.set_text("주소");
+		objDiv.form.addChild(sBtnAddr, objButton);
+		objButton.show();
+		
+		// 3-2. 주소 입력
+		var sStaticAddr = this.fv_prefixIdContentsAddr+nIdx;
+		var objStaticAddr = objDiv.form[sStaticAddr];
+		
+		if(!objStaticAddr)
+		{
+			objStaticAddr = new Static();  
+			
+			objStaticAddr.init(sStaticAddr, 171, 95, this.fvContentsWidth, 30, null, 0);
+					
+			objDiv.form.addChild(sStaticAddr, objStaticAddr); 
+			
+			// Static의 속성 설정
+			objStaticAddr.set_initvalueid("ivStcAccessibilityOn");
+			objStaticAddr.dirArrow = sDivArrow;	
+			objStaticAddr.childId = "";
+			
+			objStaticAddr.show();
+		}
+		objStaticAddr.set_cssclass(sStaticCssClass);	
+		objStaticAddr.set_text(sPbsrcAddr);
+	
+// 		// 4-1. 팩스번호 라벨 설정 
+// 		var sBtnFaxno = "labelFaxno"+nIdx;
+// 		var objButton = new Button();
+// 		if(this.smfIsMobile()){
+// 			objButton.init(sBtnFaxno, 18, 210, 77, 50, null, null);
+// 		} else {
+// 			objButton.init(sBtnFaxno, 30, 139, 121, 30, null, null);
+// 		}
+// 		objButton.set_cssclass("btn_WF_labelFax"+this.fv_mofile);
+// 		objButton.set_initvalueid("ivBtnAccessibilityOff");
+// 		objButton.set_text("팩스번호");
+// 		objDiv.form.addChild(sBtnFaxno, objButton); 
+// 		objButton.show();
+// 		
+// 		// 4-2. 팩스번호 입력
+// 		var sStaticFxno = this.fv_prefixIdContentsFxno+nIdx;
+// 		var objStaticFxno = objDiv.form[sStaticFxno];
+// 		
+// 		if(!objStaticFxno)
+// 		{
+// 			objStaticFxno = new Static();  
+// 			if(this.smfIsMobile()){
+// 				objStaticFxno.init(sStaticFxno, 125, 210, null, 50, 20, 0);
+// 			} else {
+// 				objStaticFxno.init(sStaticFxno, 171, 139, this.fvContentsWidth, 30, null, 0);
+// 			}
+// 			
+// 			objDiv.form.addChild(sStaticFxno, objStaticFxno); 
+// 			
+// 			// Static의 속성 설정
+// 			objStaticFxno.set_initvalueid("ivStcAccessibilityOn");
+// 			objStaticFxno.set_wordWrap("char");
+// 			objStaticFxno.dirArrow = sDivArrow;	
+// 			objStaticFxno.childId = "";
+// 			
+// 			objStaticFxno.show();
+// 		}
+// 		objStaticFxno.set_cssclass(sStaticCssClass);	
+// 		objStaticFxno.set_text(sPbsrcFxno);
+	
+		// 답변(Answer)은 처음에는 안보이게 처리(높이를 0, visible=false)
+		objDiv.setOffsetHeight(0);
+		objDiv.set_visible(false);
+		
+	}else{	//mobile
+	
+		// 1-1. 전화번호 라벨 설정 
+		var sBtnTelno = "labelTelno"+nIdx;
+		var objButton = new Button();
+		
+		objButton.init(sBtnAddr, 18, 0, 77, 50, null, null);
+		
+		objButton.set_cssclass("btn_WF_labelCall"+this.fv_mofile);
+		objButton.set_initvalueid("ivBtnAccessibilityOff");
+		objButton.set_text("전화번호");
+		objDiv.form.addChild(sBtnTelno, objButton); 
+		objButton.show();
+		
+		// 1-2. 전화번호 입력
+		var sStaticTelno = this.fv_prefixIdContentsTelno+nIdx;
+		var objStaticTelno = objDiv.form[sStaticTelno];
+		
+		if(!objStaticTelno)
+		{
+			objStaticTelno = new Static();  
+			
+			objStaticTelno.init(sStaticTelno, 125, 0, null, 50, 20, 0);
+		
+			objDiv.form.addChild(sStaticTelno, objStaticTelno); 
+		
+			// Static의 속성 설정
+			objStaticTelno.set_initvalueid("ivStcAccessibilityOn");
+			objStaticTelno.set_wordWrap("char");
+			objStaticTelno.dirArrow = sDivArrow;	
+			objStaticTelno.childId = "";
+		
+			objStaticTelno.show();
+		}
+		objStaticTelno.set_cssclass(sStaticCssClass);	
+		objStaticTelno.set_text(sPbsrcTelno);
+	
+		// 2-1. 팩스번호 라벨 설정 
+		var sBtnFaxno = "labelFaxno"+nIdx;
+		var objButton = new Button();
+		
+		objButton.init(sBtnFaxno, 18, 70, 77, 50, null, null);
+		
+		objButton.set_cssclass("btn_WF_labelFax"+this.fv_mofile);
+		objButton.set_initvalueid("ivBtnAccessibilityOff");
+		objButton.set_text("팩스번호");
+		objDiv.form.addChild(sBtnFaxno, objButton); 
+		objButton.show();
+		
+		// 2-2. 팩스번호 입력
+		var sStaticFxno = this.fv_prefixIdContentsFxno+nIdx;
+		var objStaticFxno = objDiv.form[sStaticFxno];
+		
+		if(!objStaticFxno)
+		{
+			objStaticFxno = new Static();  
+			
+			objStaticFxno.init(sStaticFxno, 125, 70, null, 50, 20, 0);
+					
+			objDiv.form.addChild(sStaticFxno, objStaticFxno); 
+		
+			// Static의 속성 설정
+			objStaticFxno.set_initvalueid("ivStcAccessibilityOn");
+			objStaticFxno.set_wordWrap("char");
+			objStaticFxno.dirArrow = sDivArrow;	
+			objStaticFxno.childId = "";
+		
+			objStaticFxno.show();
+		}
+		objStaticFxno.set_cssclass(sStaticCssClass);	
+		objStaticFxno.set_text(sPbsrcFxno);
+		
+		// 3-1. 홈페이지 라벨 설정 
+		var sBtnHmpgAddr = "labelHmpgAddr"+nIdx;
+		var objButton = new Button();
+		
+		objButton.init(sBtnHmpgAddr, 18, 140, 77, 50, null, null);
+		
+		objButton.set_cssclass("btn_WF_labelHome"+this.fv_mofile);
+		objButton.set_initvalueid("ivBtnAccessibilityOff");
+		objButton.set_text("홈페이지");
+		objDiv.form.addChild(sBtnHmpgAddr, objButton); 
+		objButton.show();
+		
+		// 3-2. 홈페이지 입력
+		var sStaticHmpgAddr = this.fv_prefixIdContentsHmpgAddr+nIdx;
+		var objStaticHmpgAddr = objDiv.form[sStaticHmpgAddr];
+		
+		if(!objStaticHmpgAddr)
+		{
+			objStaticHmpgAddr = new Static();  
+			
+			objStaticHmpgAddr.init(sStaticHmpgAddr, 125, 140, null, 50, 20, 0);
+					
+			objDiv.form.addChild(sStaticHmpgAddr, objStaticHmpgAddr); 
+			
+			// Static의 속성 설정
+			objStaticHmpgAddr.set_initvalueid("ivStcAccessibilityOn");
+			objStaticHmpgAddr.set_wordWrap("char");
+			objStaticHmpgAddr.dirArrow = sDivArrow;	
+			objStaticHmpgAddr.childId = "";
+		
+			objStaticHmpgAddr.show();
+		}
+		objStaticHmpgAddr.set_cssclass(sStaticCssClass);	
+		objStaticHmpgAddr.set_text(sPbsrcHmpgAddr);
+	
+		// 4-1. 주소 라벨 설정 
+		var sBtnAddr = "labelAddr"+nIdx;
+		var objButton = new Button();
+		
+		objButton.init(sBtnAddr, 18, 210, 77, 50, null, null);
+		
+		objButton.set_cssclass("btn_WF_labelMap"+this.fv_mofile);
+		objButton.set_initvalueid("ivBtnAccessibilityOff");
+		objButton.set_text("주소");
+		objDiv.form.addChild(sBtnAddr, objButton); 
+		objButton.show();
+		
+		// 4-2. 주소 입력
+		var sStaticAddr = this.fv_prefixIdContentsAddr+nIdx;
+		var objStaticAddr = objDiv.form[sStaticAddr];
+		
+		if(!objStaticAddr)
+		{
+			objStaticAddr = new Static();  
+			
+			objStaticAddr.init(sStaticAddr, 125, 210, null, 50, 20, 0);
+						
+			objDiv.form.addChild(sStaticAddr, objStaticAddr);  
+			
+			// Static의 속성 설정
+			objStaticAddr.set_initvalueid("ivStcAccessibilityOn");
+			objStaticAddr.dirArrow = sDivArrow;	
+			objStaticAddr.childId = "";
+			objStaticAddr.show();
+		}
+		objStaticAddr.set_cssclass(sStaticCssClass);	
+		objStaticAddr.set_text(sPbsrcAddr);
+	
+		// 답변(Answer)은 처음에는 안보이게 처리(높이를 0, visible=false)
+		objDiv.setOffsetHeight(0);
+		objDiv.set_visible(false);
+	}
+	
+	
+	
+}
+
+/**
+ * 홈 버튼 생성 (pc: 전화번호, mobile: 홈 버튼)
+ * @param : scope ( Div.form)
+ * @param : divInfo 
+ */
+this.fnCreateBtnHome = function(scope,sChildId,nIdx)
+{
+	if(!this.smfIsMobile()){
+		//전화 번호 라벨 생성
+		var sBtnTelno = "labelTelno"+nIdx;
+		var objLabel = new Button();
+		
+		objLabel.init(sBtnTelno, null, 24, 31, 30, 260, null);
+		
+		objLabel.set_cssclass("btn_WF_labelCall"+this.fv_mofile);
+		objLabel.set_initvalueid("ivBtnAccessibilityOff");
+		objLabel.set_text("전화번호");
+		scope.addChild(sBtnTelno, objLabel); 
+		objLabel.show();
+	
+		//전화번호 입력
+		var sBtnId = "staTelno"+nIdx;
+		var objButton = new Static();
+		
+		objButton.init(sBtnId, null, 24, 127, 30, 122, 0);
+	
+		objButton.set_cssclass("font16R");
+		objButton.set_initvalueid("ivStcAccessibilityOn");
+		//objButton.set_accessibilitylabel("홈페이지이동");
+		scope.addChild(sBtnId, objButton); 
+	
+// 		objButton.addEventHandler("onclick",function(obj,e){
+// 			nexacro.open("cmmGridFilter", this.dsList.getColumn(nIdx,"pbsrcHmpgAddr")); // todo 화면 잘 뜨는지 테스트 
+// 		},this);
+	
+		objButton.show();
+		objButton.set_text(this.dsList.getColumn(nIdx,"pbsrcTelno"));
+		
+	}else{
+		var sBtnId = "btnHome"+nIdx;
+		var objButton = new Button();
+		
+		objButton.init(sBtnId, null, 36, 30, 30, 152, 0);
+	
+		objButton.set_cssclass("btn_WF_iconHome");
+		objButton.set_initvalueid("ivBtnAccessibilityLink");
+		objButton.set_accessibilitylabel("홈페이지이동");
+		scope.addChild(sBtnId, objButton); 
+	
+		var sUrl = this.dsList.getColumn(nIdx,"hmpgAddr");
+		trace("sUrl: " + sUrl);
+	
+		objButton.addEventHandler("onclick",function(obj,e){
+			//nexacro.open("cmmGridFilter", this.dsList.getColumn(nIdx,"hmpgAddr")); // todo 화면 잘 뜨는지 테스트 
+			if(!this.smfIsNull(sUrl))
+			{
+				system.execBrowser(sUrl);
+			}
+			
+		},this);
+	
+		objButton.show();
+	}
+	
+};
+
+/**
+ * open 버튼 생성
+ * @param : scope ( Div.form)
+ * @param : divInfo 
+ */
+this.fnCreateBtnOpen = function(scope,sChildId,nIdx)
+{
+	var sBtnId = this.fv_prefixIdOpenButton+nIdx;
+	var sDivArrow = "btn_WF_iconOpen"+this.fv_mofile;
+	
+	// 버튼을 생성
+	var objButton = scope[sBtnId];
+	if(!objButton)
+	{
+		objButton = new Button(); 
+		objButton.init(sBtnId, null, 0, 80, null, 0, 0);
+		
+		// 만들어진 Button을 Div에 추가
+		scope.addChild(sBtnId, objButton);
+		
+		// 버튼의 속성을 설정
+		objButton.set_initvalueid("ivBtnAccessibilityButton");	
+		objButton.childId = sChildId;
+		objButton.dirArrow = sDivArrow;
+		
+		// Button에 클릭이벤트 추가
+		var sStaticId = this.fv_prefixIdTitleButton+nIdx;
+		objButton.addEventHandler("onclick",function(obj,e){
+			this.fnReDraw(scope.parent.parent, scope[sStaticId], e, nIdx);
+		},this);
+		
+		// Button을 보이게 설정(addChild()하면 반드시 show()를 해주어야 실제로 화면에 보임)  
+		objButton.show();  
+	}
+	objButton.set_cssclass("btn_WF_iconOpen"+this.fv_mofile);
+	objButton.set_accessibilitylabel("정보열기");
+};
+
+/**
+ * 생성 컴포넌트 재 설정 및 reDraw 함
+ * @param : obj - Static
+ * @param : e   - Static eventInfo
+ */
+this.fnReDraw = function(scope,obj,e, nIdx)
+{
+	// 상태값 추가 
+	var openFlag = true;
+	if(obj.parent.parent.form[this.fv_prefixIdOpenButton+nIdx].cssclass == "btn_WF_iconClose"){
+		openFlag = false;
+	}
+	// class 초기화 
+	for(var i=0;i < scope.components.length;i++)
+	{	
+		if(scope.components[i] instanceof nexacro.Div )
+		{
+			// titleDiv 이면
+			if(scope.components[i].id.substr(0,this.fv_prefixIdTitleDiv.length) == this.fv_prefixIdTitleDiv)
+			{
+				scope.components[i].set_cssclass("div_grid_row"+this.fv_mofile);
+				scope.components[i].form[this.fv_prefixIdOpenButton+(scope.components[i].id.substr(this.fv_prefixIdTitleDiv.length, scope.components[i].id.length))].set_cssclass("btn_WF_iconOpen"+this.fv_mofile);
+				if(this.smfIsMobile()){
+					scope.components[i].form[this.fv_prefixIdTitleButton+(scope.components[i].id.substr(this.fv_prefixIdTitleDiv.length, scope.components[i].id.length))].set_cssclass("btn_font28M");
+				} else {
+					scope.components[i].form[this.fv_prefixIdTitleButton+(scope.components[i].id.substr(this.fv_prefixIdTitleDiv.length, scope.components[i].id.length))].set_cssclass("btn_font16M");
+				}
+				
+				
+			}
+			// contentsDiv 이면
+			if(scope.components[i].id.substr(0,this.fv_prefixIdContentsDiv.length) == this.fv_prefixIdContentsDiv)
+			{
+				scope.components[i].setOffsetHeight(0);
+				scope.components[i].set_visible(false);
+				if(!this.smfIsNull(scope.components[i+1])){
+					scope.components[i+1].setOffsetHeight(this.fvTitleHeight);
+				}
+			}
+		}
+	}
+
+	// 민원실 정보를 서랍형으로 오픈 
+	if(!this.smfIsNull(obj.childId) && openFlag){
+		var objTitleDiv = obj.parent.parent;
+		var objTitleNm = objTitleDiv.form[this.fv_prefixIdTitleButton+nIdx];
+		var objTitleButton = objTitleDiv.form[this.fv_prefixIdOpenButton+nIdx];
+		var objContentsDiv = scope[objTitleDiv.childId];
+		objTitleDiv.set_cssclass("div_grid_row"+this.fv_mofile+"_S");
+		objContentsDiv.setOffsetHeight(this.fvContentsHeight);
+		objTitleButton.set_cssclass("btn_WF_iconClose");
+		objTitleButton.set_accessibilitylabel("정보닫기");
+		objContentsDiv.set_visible(true);
+		if(this.smfIsMobile()){
+			objTitleNm.set_cssclass("btn_font28M_blue");
+		}
+	}
+	this.smfResetScroll(scope);
+};
+
+// div 삭제 
+this.fnDeleteDiv = function()
+{
+	var objComps = this.divGrid.form.components;
+	var nCount = objComps.length
+	for(var i=nCount-1;i>=0;i--)
+	{
+		var objComp = objComps[i];
+		var objDelete = this.divGrid.removeChild(objComp.id);
+		if(objDelete)
+		{
+			trace(i + " - success : " + objDelete.id);
+			objDelete.destroy();
+		}
+		else
+		{
+			trace(i + " - false : " + objComp.id);
+		}
+	}
+	
+	this.divGrid._count = 0;
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.divSearch_cboLctnScCd_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.fnSearch(obj, e);
+};
+
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSearch(obj, e);
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.cboLctnScCd" propid="value" datasetid="dsSearch" columnid="lctnScCd"/>
+    </Bind>
+  </Form>
+</FDL>

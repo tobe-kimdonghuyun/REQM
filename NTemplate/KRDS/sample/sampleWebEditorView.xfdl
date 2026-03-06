@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleWebEditorView" width="1050" height="736" titletext="웹에디터상세보기" onload="form_onload">
+    <Layouts>
+      <Layout height="736" mobileorientation="landscape" width="1050">
+        <Div id="divContent" taborder="1" left="0" top="0" right="0" bottom="120" text="">
+          <Layouts>
+            <Layout>
+              <WebBrowser id="webCn" taborder="1" left="0" top="0" onloadcompleted="divContent_webCn_onloadcompleted" border="0px none" right="0" bottom="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnGoback" taborder="1" text="돌아가기" top="divContent:40" height="48" right="0" width="120" onclick="btnGoback_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleWebEditorView.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/12/22
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/12/22			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+this.fvObjWin;
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+ */
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	
+	// HTML Viewer를 생성
+	this.gfnCreateHtmlViewer(this.divContent.form.webCn);
+};
+
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+/**
+ * @description webBrowser내 웹페이지 load 완료 시 발생 이벤트
+ */
+this.divContent_webCn_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+	var objArg = this.gfnGetArgument();
+	
+	var sHtml = "";
+	
+	if (!this.gfnIsNull(objArg) && !this.gfnIsNull(objArg["cn"])) {
+		sHtml = objArg.cn;
+	}
+
+	// 웹브라우저 객체에 HTML을 보여준다
+	this.gfnSetHtmlView(this.divContent.form.webCn, sHtml);
+};
+
+this.btnGoback_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.gfnSetUrl("sample::sampleWebEditor.xfdl");
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsData">
+        <ColumnInfo>
+          <Column id="sj" type="STRING" size="256"/>
+          <Column id="wrter" type="STRING" size="256"/>
+          <Column id="cn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="sj">제목입니다.</Col>
+            <Col id="wrter">홍길동</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="notice5" width="538" height="653" titletext="채용포털 팝업템플릿01" onload="notice5_onload">
+    <Layouts>
+      <Layout height="653" screenid="ScreenDeskTopP" width="538">
+        <Static id="title" taborder="0" text="여러분의 의견을 들려주세요!" left="48" top="40" height="130" cssclass="font48B" initvalueid="ivStcAccessibilityOn" font="normal 700 28px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;" width="305"/>
+        <ImageViewer id="img00" taborder="1" left="356" top="50" width="130" height="116" cssclass="display" image="url('imagerc::common/img_popup_3.png')" initvalueid="ivTitleAccessibilityOff" accessibilitylabel="대국민서버점검 안내 이미지" stretch="fit"/>
+        <Static id="sta00" taborder="2" left="34" top="210" width="470" height="270" cssclass="sta_Notice_bg" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="divText" taborder="3" text="**에디트영역**" left="60" top="220" height="250" width="418" initvalueid="ivDivAccessibilityOn" url="comm::comp_webEditor.xfdl"/>
+        <Div id="divFileDownload" taborder="4" left="34" top="490" height="70" initvalueid="ivDivAccessibilityOff" url="comm::comp_fileDownload.xfdl" right="34" text="" visible="true"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    ORE
+*  @FileName 	oreNoticeTemplate01.xfdl
+*  @Creator 	김정재
+*  @CreateDate 	2023.04
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.8.09     	okimjj 	        	bdm의 notice5 복사/수정해 제작
+*******************************************************************************
+*/
+
+this.notice5_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.title.set_text(this.parent.params.eventTitlNm);		//팝업타이틀
+	/*this.btnLink.set_text(this.parent.params.lnkNm);			//팝업 버튼 명*/
+	//this.img00.set_accessibilitylabel(this.parent.params.rplcText);	//팝업 이미지 대체 텍스트
+	
+	this.divText.form.fnInit(this, this.fnWebEditorCallback, this.fnWebEditorSetHtmlCallback);
+	//this.divText.autoHeight = "Y";
+	this.divText._html = this.parent.params.popupCn; //팝업 내용
+	
+	// 첨부파일 셋팅 
+	if (!this.smfIsNull(this.parent.params.fileRefrnId)) {
+		this.divFileDownload.form.set_visible(true);
+		this.fnGetFileInfo(this.parent.params.fileRefrnId);
+		this.divFileDownload.form.resetScroll();
+	} else {
+		this.divFileDownload.form.set_visible(false);
+	}
+};
+
+// 첨부파일 function
+this.fnGetFileInfo = function(fileRefrnId){
+	// 업로드 초기화
+	this.transaction("fn_filesearch"
+		,"baseUrl::/cm_cmc_file_upload_001.do"
+		,""
+		,"dsOutFileinfo=atchFileinfo" 
+		,"fileRefrnId='"+ fileRefrnId +"'"
+		,""//this.btnUpload_FileSearch_callback
+		,false // 동기
+	);
+	
+		for (var i = 0; i < this.dsOutFileinfo.rowcount; i++) {
+	
+		var responseCustomValue = " ";
+		var sDownloadUrl       = " ";   // 
+		var sPrivInfoFiltYn    = " ";   // 항목 관리안함
+		var sFileInfSaveYn     = "Y";  // 업무에 맞게 개발자가 세팅(Y/N)
+		var sHandlerCode       = "PA.ORE.OEW";  //this.smfUploadInfoFileSn(jsonWebFile.customValue[i],0);
+		var sFileSn            = this.dsOutFileinfo.getColumn(i,"fileRefrnId"   );
+		var sFileSeq           = this.dsOutFileinfo.getColumn(i,"fileId"        );
+		var sFileSize          = this.dsOutFileinfo.getColumn(i,"atchFileMg"    );
+		var sBackendFilename   = this.dsOutFileinfo.getColumn(i,"atchFileGuid"  );
+		var sForntendFilename  = this.dsOutFileinfo.getColumn(i,"atchFileNm"    );
+		var sFileEncryptYn     = this.dsOutFileinfo.getColumn(i,"fileEncryptYn" );
+		var sFileSaveStg       = this.dsOutFileinfo.getColumn(i,"fileSaveStg"   );
+		var sDownloadUrl       = this.dsOutFileinfo.getColumn(i,"fileCoursNm"   );		
+		this.divFileDownload.form.fnAddUploadedFile(sHandlerCode, sFileSn, sFileSize, sBackendFilename, sForntendFilename, sFileSeq, sDownloadUrl
+														  ,sFileEncryptYn,sPrivInfoFiltYn,sFileSaveStg,sFileInfSaveYn );	
+	}
+};
+
+
+// this.btnLink_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {	
+// 	var params = {/*fileRefrnId : this.pv_params.fileRefrnId,*/
+// 			 ntcMteId : this.parent.params.ntcMteId,
+// 			 cddcCd : this.parent.params.cddcCd,
+// 			 appoExamScCd : this.parent.params.appoExamScCd
+// 			 };
+// 			 
+// 	if(this.opener)
+// 	{
+// 		this.close("");
+// 	}
+// 	
+// 	this.smfSetWorkPage("pa_ore_oew_bd::ore_oewbd00_m01.xfdl", params);
+// };
+
+
+/*
+*	웹에디터가 onload된 이후 호출되는 callback
+*   obj : 웹에디터 Div오브젝트
+*/
+this.fnWebEditorCallback = function(obj)
+{
+	// 일반적으로는 데이터를 세팅
+	obj.form.fnSetHtml(obj._html);
+};
+
+
+/*
+*	웹에디터가 text를 변경 할 경우 호출하는 callback
+*   obj : 웹에디터 Div오브젝트
+*/
+this.fnWebEditorSetHtmlCallback = function(obj,contentHeight)
+{
+	trace("***  웹에디터에 Text를 세팅했습니다.["+obj.id+"] contentHeight[=" + contentHeight + "]");
+	
+	// 일반적으로는 WebEditor Div를 resetScroll해줌.
+	//  (Web Editor의 높이가 변경이 되어 있음(autoHeight="Y"인 경우))
+	//this.smfResetScroll(this.divDetail.form.divWebEditor);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsOutFileinfo">
+        <ColumnInfo>
+          <Column id="fileRefrnId" type="STRING" size="256" description="파일SEQ ID"/>
+          <Column id="fileId" type="STRING" size="256" description="파일 아이디"/>
+          <Column id="suc" type="STRING" size="256"/>
+          <Column id="atchFileNm" type="STRING" size="256" description="파일명"/>
+          <Column id="atchFileGuid" type="STRING" size="256" description="파일 GUID"/>
+          <Column id="atchFileMg" type="STRING" size="256"/>
+          <Column id="fileExtsnNm" type="STRING" size="256" description="파일확장자"/>
+          <Column id="minTypeNm" type="STRING" size="256" description="파일의 mime type"/>
+          <Column id="fileCoursNm" type="STRING" size="256" description="서버파일저장위치"/>
+          <Column id="fileObjKey" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

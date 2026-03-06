@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comp_readQr" width="780" height="650" titletext="QR Code" onload="comp_readQr_onload">
+    <Layouts>
+      <Layout height="650" width="780" screenid="ScreenDeskTop">
+        <WebBrowser id="webQrCode" taborder="0" left="10" top="10" border="1px solid gray" bottom="155" right="10" onloadcompleted="webQrCode_onloadcompleted" onusernotify="webQrCode_onusernotify"/>
+        <Button id="btnClose" taborder="1" text="닫기" height="30" width="50" left="44.71%" fittocontents="width" cssclass="btn_WF_Crud" bottom="55" onclick="btnClose_onclick"/>
+        <TextArea id="txtQrData" taborder="2" bottom="90" wordWrap="char" left="11" height="61" right="9"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile" width="640" height="840" mobileorientation="portrait" type="default"/>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    common
+*  @FileName 	comp_readQr.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.7.4
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.7.4     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+// test데이터
+this.fnTestData = 'NEISQR:{masterNo:"1234",detailInfo:[{detailNo:"1001",detailName:"상품1",detailQty:"12",detailUnit:"개",orderDate:"20220630"},{detailNo:"1002",detailName:"상품2",detailQty:"34",detailUnit:"개",orderDate:"20220630"}]}';
+this.fv_checkText = "NEISQR:";
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ 
+this.comp_readQr_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var sUrlPath = window.location.protocol + "//" + window.location.host;
+	var sUrl =  sUrlPath + "/html/QR/reader/nexacro_jsQr.html";
+	
+	// url클리어
+	//this.webQrCode.set_url("");
+	
+	// Url세팅
+	this.webQrCode.set_url(sUrl);	
+};
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+this.webQrCode_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+	
+};
+
+this.webQrCode_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	var sUserData = e.userdata;
+	var sCheckText = this.fv_checkText;
+	
+	trace("webQrCode_onusernotify : [" + sUserData + "]");
+	
+	// 대상QR인지 체크
+	if(   (!this.smfIsNull(this.fv_checkText))
+	   && (sUserData.substr(0,this.fv_checkText.length) != this.fv_checkText)	
+	  )
+	{		
+		return;
+	}
+
+	this.txtQrData.set_value(e.userdata);
+	
+};
+
+
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfSendResponseToOpener({
+		"qrData": this.txtQrData.value
+	});
+	
+	this.close(true);
+};
+]]></Script>
+  </Form>
+</FDL>

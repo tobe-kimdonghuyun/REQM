@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleLoginNPki" width="1020" height="660" titletext="공동인증서 샘플" onload="sampleLoginNPki_onload">
+    <Layouts>
+      <Layout height="660" mobileorientation="landscape" width="1020">
+        <Static id="sta00" taborder="0" text="공동인증서를 통한 로그인 샘플" left="29" top="28" width="611" height="60"/>
+        <Static id="sta00_00" taborder="1" left="78" top="95" height="115" cssclass="sta_Login_PartyCert" text="" width="276" initvalueid="ivStcAccessibilityOn"/>
+        <Button id="btn00" taborder="2" text="공동인증서 로그인" left="42" top="277" width="348" height="60" cssclass="btn_Login_PartyCert" initvalueid="ivBtnAccessibilityButton" onclick="btn00_onclick"/>
+        <Static id="sta01" taborder="3" text="실행결과 :" left="43" top="357" width="120" height="30"/>
+        <TextArea id="txt00" taborder="4" left="37" top="397" width="453" height="230"/>
+        <Static id="sta01_00" taborder="5" text="식별번호 :" left="53" top="207" width="120" height="30"/>
+        <Edit id="edt00" taborder="6" left="113" top="212" width="140" height="20" value="123456-1234567" text="123456-1234567"/>
+        <CheckBox id="chkRrno" taborder="7" text="식별번호 미사용" left="50" top="235" width="330" height="30"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleLoginNPki.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.12.16
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.12.16     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.sampleLoginNPki_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+	trace("===>this.fnPopupCallback : popup callback");
+	var sLog = "";
+	
+	if(e.result)
+	{
+		var sData = JSON.parse(e.data);
+		
+		sLog += "처리결과 :"+ sData.vidResult + "\n";
+		sLog += "data : ["+sData.subjectDn+"]";
+		
+		this.txt00.set_value(sLog);
+	}
+	else
+	{
+		var sData = e.data;
+		var arrData = sData.split(":");
+		
+		if(arrData[0].trim()=="800000")
+		{  // 유저가 팝업을 강제 종료한 경우
+			sLog += "처리결과 : [에러(유저강제종료)]\n";
+			sLog += "data : ["+sData+"]";
+			
+			this.txt00.set_value(sLog);			
+		}
+		else
+		{
+			sLog += "처리결과 : [에러]\n";
+			sLog += "data : ["+sData+"]";
+			
+			this.txt00.set_value(sLog);			
+		}
+		
+	}
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ // 로그인 처리
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 테스트를 위해 실행결과를 지운다.
+	this.txt00.set_value("");
+	
+	var sConnectBaseUrl = window.location.protocol + "//" + window.location.host;
+
+	var sInitUrl  = sConnectBaseUrl + "/cmc_fcm_es01_003.do";
+	var sLoginUrl = sConnectBaseUrl + "/cmc_fcm_es01_004.do";
+	
+	var sUseRrNo = "Y";  // 신원확인(주민번호) 사용여부 (default - "Y":사용)
+	// 식별번호를 사용안하는 경우는 별도의 서비스 호출(학원민원 등)
+	if(this.chkRrno.value)
+	{
+		sLoginUrl = sConnectBaseUrl + "/cmc_fcm_es01_005.do";
+		sUseRrNo = "N";  // 신원확인(주민번호) 미사용
+	}
+
+	var userId = this.edt00.value;
+	
+	var objLoginInfo = {
+							initUrl  : sInitUrl    // init시 사용하는 서비스명(앞에 "/"을 붙일 것)
+						,   loginUrl : sLoginUrl   // login시 사용하는 서비스명(앞에 "/"을 붙일 것)
+						,	useRrno  : sUseRrNo    // 신원확인정보(주민번호)사용여부 (default: "Y")   
+						,	userId : userId
+	                   };   // 생략가능
+
+	var objParam = {objForm:this, popupcallback :this.fnPopupCallback, loginInfo:objLoginInfo};
+	this.smfExecNpkiAuth(objParam);
+};
+]]></Script>
+  </Form>
+</FDL>

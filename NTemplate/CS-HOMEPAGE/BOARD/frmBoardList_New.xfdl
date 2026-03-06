@@ -1,0 +1,1580 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="noticeList" classname="WorkFrame" left="0" top="0" width="1300" height="1400" scrollbars="none" onload="noticeList_onload" ontimer="noticeList_ontimer" scrolltype="vertical" scrollbarsize="0">
+    <Layouts>
+      <Layout>
+        <Div id="divCondition" taborder="0" text="Div00" left="0" top="0" width="945" height="50" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <Combo id="cmbSearchField" taborder="0" text="제목" left="0" top="0" width="220" height="50" cssclass="cmb_WF_product" innerdataset="gds_SearchField" codecolumn="code" datacolumn="codeNmKO" index="1" value="200" itemheight="40" initvalueid="iv_Combo0">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">0</Col>
+                      <Col id="datacolumn">제목+내용</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">1</Col>
+                      <Col id="datacolumn">제목</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">2</Col>
+                      <Col id="datacolumn">내용</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Edit id="edtKeyword" taborder="1" left="230" top="0" width="605" height="50" cssclass="edt_WF_tipSearch" displaynulltext="검색시에 띄어쓰기를 하면 다중검색이 가능합니다." onkeyup="divCondition_edtKeyword_onkeyup" onkillfocus="divCondition_edtKeyword_onkillfocus" accessibilitydescription="검색어 입력"/>
+              <Radio id="rdoSearchgubun" taborder="2" left="674" top="0" width="180" height="50" innerdataset="gds_SearchGubun" codecolumn="code" datacolumn="code_nm" direction="vertical" cssclass="rdo_WF_search" index="0" text="제목+내용" value="0" initvalueid="iv_Radio0" accessibilitylabel="조회조건">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">0</Col>
+                      <Col id="datacolumn">AND</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">1</Col>
+                      <Col id="datacolumn">OR</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Button id="btnSearch" taborder="3" text="검색" left="845" top="0" width="100" height="50" cssclass="btn_WF_reply" onclick="btnSearch_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static03_00" taborder="1" left="12.00" top="62" width="520" height="25" cssclass="sta_WF_search" font="bold 16px/normal &quot;NotoSansKR&quot;" onclick="Static03_00_onclick" cursor="pointer" accessibilityaction="링크"/>
+        <Combo id="cboListType" taborder="2" text="타이틀+상세" left="831" top="51" width="126" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" index="0" value="0" cssclass="cmb_WF_view" onitemchanged="cboListType_onitemchanged" visible="true" itemheight="30" initvalueid="iv_Combo0">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">0</Col>
+                <Col id="datacolumn">타이틀+상세</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">1</Col>
+                <Col id="datacolumn">타이틀</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Grid id="grdImportantList" left="0" top="105" autoenter="select" autofittype="col" cssclass="grd_WF_list" oncellclick="viewList_grdNoticeList_oncellclick" binddataset="ds_ImportantList" taborder="3" height="255" width="945" visible="false" selecttype="cell">
+          <Formats>
+            <Format id="notice">
+              <Columns>
+                <Column size="685"/>
+                <Column size="30"/>
+                <Column size="55"/>
+                <Column size="80"/>
+                <Column size="36"/>
+                <Column size="60"/>
+              </Columns>
+              <Rows>
+                <Row size="80"/>
+                <Row size="5"/>
+              </Rows>
+              <Band id="body" accessibilityenable="false">
+                <Cell text="bind:SUBJECT" cssclass="grd_WF_serverTitlebg" wordWrap="char" displaytype="decoratetext"/>
+                <Cell col="1" cssclass="grd_WF_numBg" text="No." textAlign="right" padding="0px"/>
+                <Cell col="2" cssclass="grd_WF_numBg" text="bind:BL_SEQ" padding="0px"/>
+                <Cell col="3" text="expr:INSERT_DATE.replaceAll(&quot;/&quot;,&quot;-&quot;)" cssclass="grd_WF_numBg" displaytype="date" calendardateformat="yyyy-MM-dd" padding="0px"/>
+                <Cell col="4" cssclass="grd_WF_clickBg"/>
+                <Cell col="5" text="bind:user_cnt" cssclass="grd_WF_numBg" padding="0px"/>
+                <Cell row="1" colspan="6" cssclass="grd_WF_lineBg"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <View id="viewList" taborder="4" text="View01" left="0" top="85" width="945" height="1215" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <Grid id="grdNoticeList" left="0" top="0" right="0" bottom="0" autoenter="select" autofittype="col" cssclass="grd_WF_list" oncellclick="viewList_grdNoticeList_oncellclick" binddataset="ds_NoticeList" nodatatext="검색된 데이터가 없습니다." selecttype="cell" accessibilitylabel="조회 목록">
+                <Formats>
+                  <Format id="tip">
+                    <Columns>
+                      <Column size="86"/>
+                      <Column size="80"/>
+                      <Column size="95"/>
+                      <Column size="36"/>
+                      <Column size="80"/>
+                      <Column size="36"/>
+                      <Column size="80"/>
+                      <Column size="36"/>
+                      <Column size="479"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="20"/>
+                      <Row size="40"/>
+                      <Row size="96"/>
+                      <Row size="50"/>
+                      <Row size="20"/>
+                    </Rows>
+                    <Band id="body" accessibilityenable="false">
+                      <Cell accessibilityenable="false"/>
+                      <Cell col="1" accessibilityenable="false"/>
+                      <Cell col="2" colspan="7" autosizerow="none" accessibilityenable="false"/>
+                      <Cell row="1" cssclass="expr:comp.parent.parent.parent.fn_statusCss(STATUS_CODE)" wordWrap="none" autosizerow="none" displaytype="normal" imagestretch="fixaspectratio" accessibilitylabel="expr:comp.parent.parent.parent.fn_statusAccessibility(STATUS_CODE)"/>
+                      <Cell row="1" col="1" colspan="8" cssclass="grd_WF_title0" displaytype="decoratetext" autosizerow="none" text="expr:comp.parent.parent.parent.gfn_makeEllipse(SUBJECT, comp)" tooltiptext="expr:SUBJECT.replaceAll(&quot;&lt;fc v='#fb6d3a'&gt;&quot;,&quot;&quot;).replaceAll(&quot;&lt;/fc&gt;&quot;,&quot;&quot;)" accessibilitylabel="expr:&quot;제목: &quot;+SUBJECT" accessibilitydescription="링크"/>
+                      <Cell row="2" colspan="9" text="bind:CONTENTS" cssclass="grd_WF_content" displaytype="decoratetext" accessibilitylabel="expr:&quot;내용: &quot;+CONTENTS"/>
+                      <Cell row="3" text="No." cssclass="grd_WF_numberTip" autosizerow="none" textAlign="right" accessibilityenable="false"/>
+                      <Cell row="3" col="1" text="bind:BL_SEQ" cssclass="grd_WF_numberTip" autosizerow="none" displaytype="number" accessibilitylabel="expr:&quot;글번호: &quot;+BL_SEQ"/>
+                      <Cell row="3" col="2" text="expr:INSERT_DATE.replaceAll(&quot;/&quot;,&quot;-&quot;)" cssclass="grd_WF_num" autosizerow="limitmin" accessibilitylabel="expr:&quot;등록일: &quot;+INSERT_DATE.replaceAll(&quot;/&quot;,&quot;-&quot;)"/>
+                      <Cell row="3" col="3" autosizerow="none" text="URL('theme://images/grd_WF_click.png')" displaytype="imagecontrol" padding="10px 0px 0px 0px" accessibilityenable="false"/>
+                      <Cell row="3" col="4" text="bind:user_cnt" cssclass="grd_WF_num" accessibilitylabel="expr:&quot;조회수 :&quot;+user_cnt"/>
+                      <Cell row="3" col="5" displaytype="imagecontrol" text="URL('theme://images/btn_WF_link_S.png')" autosizerow="limitmin" padding="10px 0px 0px 0px" cursor="pointer" accessibilityenable="false"/>
+                      <Cell row="3" col="6" text="링크복사" cssclass="grd_WF_num" autosizerow="limitmin" cursor="pointer" accessibilitydescription="팝업"/>
+                      <Cell row="3" col="7" text="expr:comp.parent.parent.parent.gfnIsNull(FILENAME)?&quot;&quot;:&quot;URL('theme://images/sta_WF_viewAttach_S.png')&quot;" displaytype="imagecontrol" autosizerow="limitmin" padding="10px 0px 0px 0px" accessibilityenable="false"/>
+                      <Cell row="3" col="8" text="expr:FILENAME+(FILE_CNT&gt;1?' ('+FILE_CNT+')':'')" cssclass="grd_WF_num" autosizerow="limitmin" accessibilitylabel="expr:FILE_CNT&gt;0?comp.parent.parent.parent.fn_fileNameAccessibility(FILENAME):''" accessibilityenable="expr:FILE_CNT&gt;0?'true':'false'"/>
+                      <Cell row="4" colspan="9" cssclass="grd_WF_line" autosizerow="none" accessibilityenable="false"/>
+                    </Band>
+                  </Format>
+                  <Format id="notice">
+                    <Columns>
+                      <Column size="685"/>
+                      <Column size="30"/>
+                      <Column size="55"/>
+                      <Column size="80"/>
+                      <Column size="36"/>
+                      <Column size="60"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="80"/>
+                      <Row size="5"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell text="bind:SUBJECT" cssclass="grd_WF_serverTitle" wordWrap="char" displaytype="decoratetext" accessibilitylabel="expr:&quot;제목: &quot;+SUBJECT" accessibilitydescription="링크"/>
+                      <Cell col="1" cssclass="grd_WF_num" text="No." textAlign="right" padding="0px" accessibilityenable="false"/>
+                      <Cell col="2" cssclass="grd_WF_num" text="bind:BL_SEQ" padding="0px" accessibilitylabel="expr:&quot;글번호: &quot;+BL_SEQ"/>
+                      <Cell col="3" text="bind:INSERT_DATE" cssclass="grd_WF_num" displaytype="date" calendardateformat="yyyy-MM-dd" padding="0px" accessibilitylabel="expr:&quot;등록일: &quot;+INSERT_DATE.replaceAll(&quot;/&quot;,&quot;-&quot;)"/>
+                      <Cell col="4" cssclass="grd_WF_click" accessibilityenable="false"/>
+                      <Cell col="5" text="bind:user_cnt" cssclass="grd_WF_num" padding="0px" accessibilitylabel="expr:&quot;조회수: &quot;+user_cnt"/>
+                      <Cell row="1" colspan="6" cssclass="grd_WF_line" accessibilityenable="false"/>
+                    </Band>
+                  </Format>
+                  <Format id="title">
+                    <Columns>
+                      <Column size="86"/>
+                      <Column size="25"/>
+                      <Column size="80"/>
+                      <Column size="86"/>
+                      <Column size="36"/>
+                      <Column size="80"/>
+                      <Column size="36"/>
+                      <Column size="80"/>
+                      <Column size="36"/>
+                      <Column size="487"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="20"/>
+                      <Row size="40"/>
+                      <Row size="50"/>
+                      <Row size="20"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell accessibilityenable="false"/>
+                      <Cell col="1" accessibilityenable="false"/>
+                      <Cell col="2" accessibilityenable="false"/>
+                      <Cell col="3" colspan="7" autosizerow="none" accessibilityenable="false"/>
+                      <Cell row="1" cssclass="expr:comp.parent.parent.parent.fn_statusCss(STATUS_CODE)" accessibilitylabel="expr:comp.parent.parent.parent.fn_statusAccessibility(STATUS_CODE)"/>
+                      <Cell row="1" col="1" colspan="9" text="expr:comp.parent.parent.parent.gfn_makeEllipse(SUBJECT, comp)" cssclass="grd_WF_title0" wordWrap="none" autosizerow="none" tooltiptext="expr:SUBJECT.replaceAll(&quot;&lt;fc v='#fb6d3a'&gt;&quot;,&quot;&quot;).replaceAll(&quot;&lt;/fc&gt;&quot;,&quot;&quot;)" displaytype="decoratetext" accessibilitylabel="expr:&quot;제목: &quot;+SUBJECT" accessibilitydescription="링크"/>
+                      <Cell row="2" accessibilityenable="false"/>
+                      <Cell row="2" col="1" text="No." cssclass="grd_WF_numberTip" autosizerow="none" accessibilityenable="false"/>
+                      <Cell row="2" col="2" text="bind:BL_SEQ" cssclass="grd_WF_numberTip" autosizerow="none" displaytype="number" accessibilitylabel="expr:&quot;글번호: &quot;+BL_SEQ"/>
+                      <Cell row="2" col="3" text="expr:INSERT_DATE.replaceAll(&quot;/&quot;,&quot;-&quot;)" cssclass="grd_WF_num" autosizerow="limitmin" accessibilitylabel="expr:&quot;등록일: &quot;+INSERT_DATE.replaceAll(&quot;/&quot;,&quot;-&quot;)"/>
+                      <Cell row="2" col="4" autosizerow="none" text="URL('theme://images/grd_WF_click.png')" displaytype="imagecontrol" padding="10px 0px 0px 0px" accessibilityenable="false"/>
+                      <Cell row="2" col="5" text="bind:user_cnt" cssclass="grd_WF_num" accessibilitylabel="expr:&quot;조회수: &quot;+user_cnt"/>
+                      <Cell row="2" col="6" displaytype="imagecontrol" text="URL('theme://images/btn_WF_link_S.png')" autosizerow="limitmin" padding="10px 0px 0px 0px" cursor="pointer" accessibilityenable="false"/>
+                      <Cell row="2" col="7" text="링크복사" cssclass="grd_WF_num" autosizerow="limitmin" cursor="pointer" accessibilitydescription="팝업"/>
+                      <Cell row="2" col="8" text="expr:comp.parent.parent.parent.gfnIsNull(FILENAME)?&quot;&quot;:&quot;URL('theme://images/sta_WF_viewAttach_S.png')&quot;" displaytype="imagecontrol" autosizerow="limitmin" padding="10px 0px 0px 0px" accessibilityenable="false"/>
+                      <Cell row="2" col="9" text="expr:FILENAME+(FILE_CNT&gt;1?' ('+FILE_CNT+')':'')" cssclass="grd_WF_num" autosizerow="limitmin" accessibilitylabel="expr:FILE_CNT&gt;0?comp.parent.parent.parent.fn_fileNameAccessibility(FILENAME):''" accessibilityenable="expr:FILE_CNT&gt;0?'true':'false'"/>
+                      <Cell row="3" cssclass="grd_WF_line" accessibilityenable="false"/>
+                      <Cell row="3" col="1" colspan="9" cssclass="grd_WF_line" autosizerow="none" accessibilityenable="false"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+          <Objects/>
+          <ModelInfo modelserviceid="MODEL" serviceid="" modelid="grid002" filepath="SAMPLE.xmodel">
+            <Fields>
+              <Field id="Title" description="" displaytype="normal" edittype="none" fieldwidth="80" cssclass="grd_WF_serverTitle" summprop="none"/>
+              <Field id="Date" description="" displaytype="normal" edittype="none" fieldwidth="80" cssclass="grd_WF_num" summprop="none"/>
+            </Fields>
+            <Components>
+              <Component id="grdList" fields="Title,Date"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="ListGridViewTemplate.xviewgen">
+            <Attribute id="headbandsize" value="-1"/>
+            <Attribute id="bodybandsize" value="80"/>
+            <Attribute id="summbandsize" value="-1"/>
+          </ViewTemplateInfo>
+        </View>
+        <Div id="divPageExpr" taborder="5" url="COMMFORM::frmPageCtrl.xfdl" left="0" visible="true" top="viewList:40" height="40" background="transparent" width="945" text="" accessibilityenable="false"/>
+        <View id="viewPaging" taborder="6" text="View01" left="0" top="viewList:40" width="945" height="40" visible="false" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <Button id="btnPageHome" left="229" top="4" width="32" height="32" text=" " cssclass="btn_WF_pageHome" onclick="viewPaging_btnPageHome_onclick"/>
+              <Button id="btnPagePre" left="264" top="4" width="32" height="32" text=" " cssclass="btn_WF_pagePre" onclick="viewPaging_btnPagePre_onclick"/>
+              <Button id="btnPageNum1" left="299" top="4" width="32" height="32" text="1" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick"/>
+              <Button id="btnPageNum2" left="334" top="4" width="32" height="32" text="2" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick"/>
+              <Button id="btnPageNum3" left="369" top="4" width="32" height="32" text="3" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick"/>
+              <Button id="btnPageNum4" left="404" top="4" width="32" height="32" text="4" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick"/>
+              <Button id="btnPageNum5" left="439" top="4" width="32" height="32" text="5" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick"/>
+              <Button id="btnPageNum6" left="474" top="4" width="32" height="32" text="6" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick"/>
+              <Button id="btnPageNum7" left="509" top="4" width="32" height="32" text="7" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick"/>
+              <Button id="btnPageNum8" left="544" top="4" width="32" height="32" text="8" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick"/>
+              <Button id="btnPageNum9" left="579" top="4" width="32" height="32" text="9" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick"/>
+              <Button id="btnPageNum10" left="614" top="4" width="32" height="32" text="10" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick"/>
+              <Button id="btnPageNext" left="649" top="4" width="32" height="32" text=" " cssclass="btn_WF_pageNext" onclick="viewPaging_btnPageNext_onclick"/>
+              <Button id="btnPageEnd" left="684" top="4" width="32" height="32" text=" " cssclass="btn_WF_pageEnd" onclick="viewPaging_btnPageEnd_onclick"/>
+            </Layout>
+          </Layouts>
+          <ModelInfo modelserviceid="MODEL" serviceid="" modelid="paging" filepath="COMMON.xmodel">
+            <Fields>
+              <Field id="PageHome" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PagePre" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum1" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum2" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum3" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum4" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum5" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum6" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum7" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum8" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum9" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum10" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNext" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageEnd" description="" fieldwidth="32px" fieldheight="32px"/>
+            </Fields>
+            <Components>
+              <Component id="btnPageHome" fields="PageHome"/>
+              <Component id="btnPagePre" fields="PagePre"/>
+              <Component id="btnPageNum1" fields="PageNum1"/>
+              <Component id="btnPageNum2" fields="PageNum2"/>
+              <Component id="btnPageNum3" fields="PageNum3"/>
+              <Component id="btnPageNum4" fields="PageNum4"/>
+              <Component id="btnPageNum5" fields="PageNum5"/>
+              <Component id="btnPageNum6" fields="PageNum6"/>
+              <Component id="btnPageNum7" fields="PageNum7"/>
+              <Component id="btnPageNum8" fields="PageNum8"/>
+              <Component id="btnPageNum9" fields="PageNum9"/>
+              <Component id="btnPageNum10" fields="PageNum10"/>
+              <Component id="btnPageNext" fields="PageNext"/>
+              <Component id="btnPageEnd" fields="PageEnd"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="PagingViewTemplate.xviewgen">
+            <Attribute id="direction" value="horizontal"/>
+            <Attribute id="halign" value="center"/>
+            <Attribute id="valign" value="middle"/>
+          </ViewTemplateInfo>
+        </View>
+        <Div id="divRight" taborder="7" left="985" top="0" width="315" height="1037" url="FRAME::RightFrame.xfdl" accessibilityenable="false"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_NoticeList" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false" onload="ds_hotlist_onload">
+        <ColumnInfo>
+          <Column id="rowNum" type="INT" size="20"/>
+          <Column id="BL_SEQ" type="BIGDECIMAL" size="19"/>
+          <Column id="user_cnt" type="INT" size="11"/>
+          <Column id="boardid" type="STRING" size="255"/>
+          <Column id="SUBJECT" type="STRING" size="255"/>
+          <Column id="INSERT_DATE" type="STRING" size="255"/>
+          <Column id="CONTENTS" type="STRING" size="255"/>
+          <Column id="CONTENTS_TEXT" type="STRING" size="256"/>
+          <Column id="goods_gbn" type="STRING" size="255"/>
+          <Column id="SUBJECT_COLOR" type="STRING" size="255"/>
+          <Column id="BOLD_FLAG" type="STRING" size="255"/>
+          <Column id="HOT_FLAG" type="STRING" size="255"/>
+          <Column id="IMPORTANT_FLAG" type="STRING" size="255"/>
+          <Column id="NOTICE_FLAG" type="STRING" size="255"/>
+          <Column id="BookMark_cnt" type="STRING" size="11"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="FILENAME" type="STRING" size="256"/>
+          <Column id="FILE_CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_totalCnt" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="totalCnt" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_SearchParam" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="loginAcc" type="STRING" size="256"/>
+          <Column id="dispGubun" type="STRING" size="256"/>
+          <Column id="PCategory2" type="STRING" size="256"/>
+          <Column id="display_cnt" type="STRING" size="256"/>
+          <Column id="page" type="STRING" size="256"/>
+          <Column id="searchfield" type="STRING" size="256"/>
+          <Column id="searchgubun" type="STRING" size="256"/>
+          <Column id="keyword" type="STRING" size="256"/>
+          <Column id="search_resort" type="STRING" size="256"/>
+          <Column id="keywordall" type="STRING" size="256"/>
+          <Column id="BusinessSection" type="STRING" size="256"/>
+          <Column id="statusType" type="STRING" size="256"/>
+          <Column id="User_id" type="STRING" size="256"/>
+          <Column id="bookMark" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="dispGubun"/>
+            <Col id="BusinessSection">000</Col>
+            <Col id="searchgubun">OR</Col>
+            <Col id="searchfield">200</Col>
+            <Col id="search_resort">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_update">
+        <ColumnInfo>
+          <Column id="SQL_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_bookMark"/>
+      <Dataset id="ds_ImportantList" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false" onload="ds_hotlist_onload">
+        <ColumnInfo>
+          <Column id="rowNum" type="INT" size="20"/>
+          <Column id="BL_SEQ" type="BIGDECIMAL" size="19"/>
+          <Column id="user_cnt" type="INT" size="11"/>
+          <Column id="boardid" type="STRING" size="255"/>
+          <Column id="SUBJECT" type="STRING" size="255"/>
+          <Column id="INSERT_DATE" type="STRING" size="255"/>
+          <Column id="CONTENTS" type="STRING" size="255"/>
+          <Column id="goods_gbn" type="STRING" size="255"/>
+          <Column id="SUBJECT_COLOR" type="STRING" size="255"/>
+          <Column id="BOLD_FLAG" type="STRING" size="255"/>
+          <Column id="HOT_FLAG" type="STRING" size="255"/>
+          <Column id="IMPORTANT_FLAG" type="STRING" size="255"/>
+          <Column id="NOTICE_FLAG" type="STRING" size="255"/>
+          <Column id="BookMark_cnt" type="STRING" size="11"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="FILENAME" type="STRING" size="256"/>
+          <Column id="FILE_CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item2" compid="tabQnaExpr.tabpage1.cmbProcCate" propid="value" datasetid="ds_SearchParam" columnid="BusinessSection"/>
+      <BindItem id="item3" compid="tabQnaExpr.tabpage1.cmbSearchField" propid="value" datasetid="ds_SearchParam" columnid="searchfield"/>
+      <BindItem id="item4" compid="tabQnaExpr.tabpage1.edtKeyword" propid="value" datasetid="ds_SearchParam" columnid="keyword"/>
+      <BindItem id="item5" compid="tabQnaExpr.tabpage1.Combo02" propid="value" datasetid="ds_SearchParam" columnid="searchgubun"/>
+      <BindItem id="item6" compid="tabQnaExpr.tabpage1.chkBoxResearch" propid="value" datasetid="ds_SearchParam" columnid="search_resort"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/**
+*  게시판 리스트(Notice, Tip 등)
+*
+*  @MenuPath 
+*  @FileName 		BOARD::frmBoardList.xfdl 
+*  @Creator 		김광호
+*  @CreateDate 		2022.01.01
+*  @LastModifier  
+*  @LastModifyDate  
+*  @Version 		1.0
+*  @Outline 		게시판 리스트(Notice, Tip 등)
+*  @Desction 
+************** 소스 수정 이력 *************************************************
+*    date          Modifier            Description
+*******************************************************************************
+*  2022.01.01      김광호	           최초 생성 
+*******************************************************************************
+*/
+
+// 그리드 제어
+this.grd1 = null;
+this.grd2 = null;
+this.rowNum = 0;  
+
+this.keywordall = "";
+   
+this.divDetailSize = "";
+this.divReqSize = "";
+this.txtReqRemarkSize = "";
+this.iWebHeight = 200;
+this.nDivRightHeight = 0;
+this.iWebSizeCnt=0;
+
+this.nGrdSize = 0;
+
+this.fvImportantCnt = 3;	//상단에 보여줄 중요 공지사항 개수
+
+this.fvBookCD = 0;
+  
+this.noticeList_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 페이징 초기화
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Page = 1;    
+	nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo = 0;
+	
+	// History에 기억된 keyword나 page가 있으면 셋팅
+	if (!this.gfnIsNull(nexacro.getApplication().gv_mainFrame.param.keyword))
+	{
+		this.divCondition.form.edtKeyword.set_value(nexacro.getApplication().gv_mainFrame.param.keyword);
+	}
+	if (!this.gfnIsNull(nexacro.getApplication().gv_mainFrame.param.page))
+	{
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Page = nexacro.getApplication().gv_mainFrame.param.page;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo = nexacro.floor(nexacro.getApplication().gv_mainFrame.QA_Cond_Page/10);
+	}
+
+	// 통합검색에서 들어왔을 경우 return;
+	if (!this.gfnIsNull(nexacro.getApplication().gv_mainFrame.SearchEngineFlag))
+	{
+		this.divCondition.set_visible(false);
+		this.viewList.set_top(40);
+		this.divRight.set_top(40);
+		
+		if (nexacro.getApplication().gv_mainFrame.SearchEngineFlag == "Tip")
+		{
+			this.cboListType.set_visible(true);
+		}
+	
+		// 페이징 교체
+		this.divPageExpr.set_visible(false);
+		this.viewPaging.set_visible(true);
+		//this.fn_searchEngineCall();
+		nexacro.getApplication().gv_searchEngine.fn_search(nexacro.getApplication().gv_mainFrame.QA_Cond_Page);
+		return;
+	}
+
+	var sData = {};
+	sData = nexacro.getApplication().gv_mainFrame.gfnGetHistoryData();
+	// 히스토리 sData에서 불러오기
+	if (!this.gfnIsNull(sData))
+	{
+		if (!this.gfnIsNull(sData.cmbSearchField)){	this.divCondition.form.cmbSearchField.set_value(sData.cmbSearchField); }
+		if (!this.gfnIsNull(sData.rdoSearchgubun)){	this.divCondition.form.rdoSearchgubun.set_value(sData.rdoSearchgubun); }
+	}
+
+	// 그리드 포멧 변경
+	switch(nexacro.getApplication().gv_mainFrame.PCategory2) {
+	case "Notice":
+		this.viewList.form.grdNoticeList.setFormat("tip");
+		break;
+	case "Sketch":	
+		this.viewList.form.grdNoticeList.setFormat("tip");
+		this.Static03_00.set_text("★ 넥사크로 스케치 홈페이지 이동 (https://sketch.nexacro.com)");
+		break;		
+	case "Tutorial":
+		this.viewList.form.grdNoticeList.setFormat("tip");
+		this.Static03_00.set_text("★ 넥사크로 통합빌드 서비스 홈페이지 이동 (https://studio.nexacro.com)");
+		break;
+	case "Tip_N":
+	case "Tip_17":
+	case "Tip_14":
+	case "Tip_XP":
+	case "Tip_MP":
+		this.viewList.form.grdNoticeList.setFormat("tip");
+		break;
+	case "Education_information":
+		this.viewList.form.grdNoticeList.setFormat("notice");
+		break;
+	case "Education_material":
+		this.viewList.form.grdNoticeList.setFormat("notice");
+		break;
+	default:
+	}
+	
+	this.nDivRightHeight = this.divRight.getOffsetHeight();
+	// 메인 사이즈 초기화
+	this.divPageExpr.set_visible(false);
+	
+	var PCategoryGubun = "";
+	// PCategoryGubun 셋팅
+	switch(nexacro.getApplication().gv_mainFrame.PCategory2) {
+	case "Notice":
+		
+		break;
+	case "Tip_N":
+		PCategoryGubun = "009";
+		break;
+	case "Tip_17":
+		PCategoryGubun = "008";
+		break;
+	case "Tip_14":
+		PCategoryGubun = "006";
+		break;
+	case "Tip_XP":
+		PCategoryGubun = "002";
+		break;
+	case "Tip_MP":
+		PCategoryGubun = "001";
+		break;
+	default:
+	}
+	
+	nexacro.getApplication().gv_mainFrame.BoardCategoryID = PCategoryGubun;
+		
+ 	this.ds_SearchParam.clearData();
+ 	this.ds_SearchParam.addRow();
+ 	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition,"display_cnt",nexacro.getApplication().gv_mainFrame.Board_Cond_DisplayCnt);
+ 	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition,"page",nexacro.getApplication().gv_mainFrame.Board_Cond_Page);
+ 	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition,"searchfield",nexacro.getApplication().gv_mainFrame.Board_Cond_Searchfield);
+ 	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition,"searchgubun",nexacro.getApplication().gv_mainFrame.Board_Cond_Searchgubun);
+ 	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition,"BusinessSection",nexacro.getApplication().gv_mainFrame.Board_Cond_BusinessSection);
+ 	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition,"search_resort",nexacro.getApplication().gv_mainFrame.Board_Cond_Resort);
+ 	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition,"keyword",nexacro.getApplication().gv_mainFrame.Board_Cond_Keyword);
+ 	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition,"keywordall",nexacro.getApplication().gv_mainFrame.Board_Cond_Keyword);
+ 	
+ 	// 페이지 제어 초기화
+ 	this.divPageExpr.form.fn_PageInit(this.ds_NoticeList, "", this, "fn_CallTrans()", "fn_SetInitSize()");
+ 	nexacro.getApplication().changeflg = false;
+ 	nexacro.getApplication().oldRowNum = "";
+ 	// "등록자, 번호" 항목은 제외
+  	nexacro.getApplication().gds_SearchField.filter("");
+  	nexacro.getApplication().gds_SearchField.filter("currow < 3 || currow > 4");
+
+	this.fvBookCD = nexacro.getApplication().gv_BookmarkTipCd;
+	var objTab = nexacro.getApplication().gv_mainFrame.divMain.form.divBookmark.form.tabProduct;
+	if(!this.gfnIsNull(nexacro.getApplication().gv_BookmarkTipCd))
+	{
+		var sBookCD = this.fvBookCD;
+		objTab.set_tabindex(sBookCD);
+		nexacro.getApplication().gv_BookmarkTipCd=0;
+	}
+	else
+	{
+		objTab.set_tabindex(sBookCD);
+		nexacro.getApplication().gv_BookmarkTipCd=0;
+	}
+	// 데이터 취득
+ 	this.fn_CallTrans();
+}
+
+// 사이즈 초기화
+this.fn_SetInitSize = function()
+{
+	// 각 컴퍼넌트의 초기값 설정
+	var nRowSize = 41;
+	this.nGrdSize = 0;
+	var sCategory = nexacro.getApplication().gv_mainFrame.PCategory2;
+	var	nSize = 246;
+	var nHeight = this.viewList.form.grdNoticeList.getCellRect(0, 2).height;
+	var i;
+	var nRow = nexacro.getApplication().gv_mainFrame.dsScreenUrl.findRow("subCatgy", nexacro.getApplication().gv_mainFrame.param.menu);
+	var sLayout = nexacro.getApplication().gv_mainFrame.dsScreenUrl.getColumn(nRow, "Layout");
+	
+	if(sLayout == "SEARCH")
+	{
+		this.nDivRightHeight = 1037;
+		nSize = 138;
+	}
+
+	if (this.viewList.form.grdNoticeList.formatid == "tip")
+	{
+		//
+		for(i=0; i<this.viewList.form.grdNoticeList.rowcount; i++)
+		{
+			this.nGrdSize = this.nGrdSize + this.viewList.form.grdNoticeList.getCellRect(i, 4).height + 131;   
+		}
+	}
+	else
+	{
+		this.nGrdSize = this.viewList.form.grdNoticeList.getRealRowFullSize();
+		this.viewList.form.grdNoticeList.set_autosizingtype("none");
+	}	
+	if(sCategory == "Notice") // 공지사항인 경우
+	{
+		this.nGrdSize = this.viewList.form.grdNoticeList.getRealRowFullSize(); //하단 그리드의 RealRowFullSize를 가져온 후
+		this.viewList.set_height(this.nGrdSize);//viewList의 높이를 하단 그리드의 사이즈와 똑같이 맞춤
+		this.divPageExpr.set_top(this.viewList.getOffsetBottom()+40);
+		this.viewPaging.set_top(this.viewList.getOffsetBottom()+40);
+		this.nGrdSize = this.viewList.getOffsetBottom();//viewList의 OffsetBottom 크기를 가져옴
+		if (this.ds_ImportantList.rowcount < 3)
+		{
+			this.nGrdSize = this.nGrdSize + this.ds_ImportantList.rowcount * 40;
+		}
+	}
+	else 
+	{
+		this.nGrdSize = this.viewList.form.grdNoticeList.getRealRowFullSize();
+		this.viewList.set_height(this.nGrdSize);
+		this.divPageExpr.set_top(this.viewList.getOffsetBottom()+40);
+		this.viewPaging.set_top(this.viewList.getOffsetBottom()+40);
+	}
+	if(this.nGrdSize < this.nDivRightHeight)
+	{
+		this.divRight.set_height(this.nDivRightHeight);
+		nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, this.nDivRightHeight + nSize);
+		if(sLayout == "SEARCH") 
+		{
+			if(this.ds_NoticeList.rowcount <= 0)
+			{
+				this.viewList.set_height(this.nDivRightHeight);
+				this.viewList.form.grdNoticeList.set_height(this.nDivRightHeight);
+			}
+		}
+	}
+	else
+	{
+		if(sCategory == "Notice")
+		{
+			nSize = 324;
+		}
+		else if(sLayout ==  "BOOKMARK")
+		{
+			nSize = 367;
+		}
+		else if(sLayout == "SEARCH")
+		{
+			if (nexacro.getApplication().gv_mainFrame.SearchEngineFlag == "Tip")
+			{
+				nSize = 216;
+			}
+			else
+			{
+				nSize = 324;
+			}
+		}
+		else
+		{
+			nSize = 399;
+		}
+		this.divRight.set_height(this.viewList.getOffsetBottom());
+		nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, this.nGrdSize + nSize);
+	}
+}    
+
+// 조회
+this.fn_CallTrans = function() {
+	// 검색어
+	if (!this.gfnIsNull(this.divCondition.form.edtKeyword.value))
+	{
+		this.ds_SearchParam.setColumn(0, "keyword", this.divCondition.form.edtKeyword.value.trim());
+	}
+	else
+	{
+		this.ds_SearchParam.setColumn(0, "keyword", "");
+	}
+	this.keywordall = this.ds_SearchParam.getColumn(0, "keyword");
+	
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Keyword = this.ds_SearchParam.getColumn(0, "keyword");
+	
+	// 번호일때 숫자 체크
+	if (this.divCondition.form.cmbSearchField.value == 600)
+	{
+		var chkNo = /^\d+$/.test(this.keywordall);
+		if (this.gfnIsNull(this.keywordall) || chkNo == false)	// 검색조건(번호) & 번호가 아닐때
+		{
+			alert("번호를 입력해주세요.");
+			return;
+		}
+	}
+
+	// 검색조건
+	this.ds_SearchParam.setColumn(0, "keywordall", this.keywordall);
+	this.ds_SearchParam.setColumn(0, "display_cnt", this.divPageExpr.form.unitSelRowNo);
+	this.ds_SearchParam.setColumn(0, "page", this.divPageExpr.form.startPageNo + 1);
+	this.ds_SearchParam.setColumn(0, "User_id", nexacro.getApplication().gds_UserInfo.getColumn(nexacro.getApplication().gds_UserInfo.rowposition,"User_id"));    
+	this.ds_SearchParam.setColumn(0, "searchfield", this.divCondition.form.cmbSearchField.value);
+	this.ds_SearchParam.setColumn(0, "searchgubun", this.divCondition.form.rdoSearchgubun.value);
+
+	nexacro.getApplication().com_SetParam(this.ds_SearchParam);
+	
+	// filter된 상태로 삭제후 값이 들어가면 rowcount가 0이되는 에러가 있음
+	// 상기에 대한 회피책으로 우선 filter를 되돌리고 나서 처리
+ 	this.ds_NoticeList.filter("");
+ 	this.ds_NoticeList.deleteAll();
+
+	// 인수 설정     
+	var strBoardId="A06";
+	var PCategoryGubun="%";
+
+	// strBoardId 셋팅
+	switch(nexacro.getApplication().gv_mainFrame.PCategory2) {
+	case "Notice":
+		strBoardId="A06";
+		break;
+	case "Sketch":
+		strBoardId="SK";
+		break;
+	case "Tutorial":
+		strBoardId="ST";
+		break;			
+	case "Tip_N":
+	case "Tip_17":
+	case "Tip_14":
+	case "Tip_XP":
+	case "Tip_MP":
+		strBoardId="A05";
+		break;
+	case "Education_information":
+		strBoardId="A14";
+		break;
+	case "Education_material":
+		strBoardId="A09";
+		break;	
+	default:
+	}
+	
+	// PCategoryGubun 셋팅
+	switch(nexacro.getApplication().gv_mainFrame.PCategory2) {
+	case "Notice":
+		
+		break;
+	case "Tip_N":
+		PCategoryGubun = "009";
+		break;
+	case "Tip_17":
+		PCategoryGubun = "008";
+		break;
+	case "Tip_14":
+		PCategoryGubun = "006";
+		break;
+	case "Tip_XP":
+		PCategoryGubun = "002";
+		break;
+	case "Tip_MP":
+		PCategoryGubun = "001";
+		break;
+	default:
+	}
+	
+	// 나의메뉴 > 북마크 일경우
+	var nRow = nexacro.getApplication().gv_mainFrame.dsScreenUrl.findRow("subCatgy", nexacro.getApplication().gv_mainFrame.param.menu);
+	var sLayout = nexacro.getApplication().gv_mainFrame.dsScreenUrl.getColumn(nRow, "Layout");
+	if (sLayout == "BOOKMARK")
+	{
+		this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition,"bookMark", "OK");
+		nexacro.getApplication().gds_SearchParam.setColumn(0,"bookMark", "OK");
+		strBoardId="A05";
+		var nTabIndex = nexacro.getApplication().gv_mainFrame.divMain.form.divBookmark.form.tabProduct.tabindex
+		// PCategoryGubun 셋팅
+		this.divCondition.set_visible(false);
+		this.viewList.set_top(50);
+		this.cboListType.set_visible(true);
+		
+		switch(nTabIndex) {
+		case 0:
+			PCategoryGubun = "%";	// 전체
+			nexacro.getApplication().gds_SearchParam.setColumn(0, "PCategory2", "Nexacro N,nexacro platform17,nexacro platform14,XPLATFORM,MiPlatform");
+			break;
+		case 1:
+			PCategoryGubun = "009";	// N
+			nexacro.getApplication().gds_SearchParam.setColumn(0, "PCategory2", "Nexacro N");
+			break;
+		case 2:
+			PCategoryGubun = "008";	// 17
+			nexacro.getApplication().gds_SearchParam.setColumn(0, "PCategory2", "nexacro platform17");
+			break;
+		case 3:
+			PCategoryGubun = "006";	// 14
+			nexacro.getApplication().gds_SearchParam.setColumn(0, "PCategory2", "nexacro platform14");
+			break;
+		case 4:
+			PCategoryGubun = "002";	// XP
+			nexacro.getApplication().gds_SearchParam.setColumn(0, "PCategory2", "XPLATFORM");
+			break;
+		case 5:
+			PCategoryGubun = "001";	// MP
+			nexacro.getApplication().gds_SearchParam.setColumn(0, "PCategory2", "MiPlatform");
+			break;
+		default:
+		}
+		
+		this.ds_SearchParam.setColumn(0, "dispGubun", "All");
+		nexacro.getApplication().gds_SearchParam.setColumn(0, "dispGubun", "All");
+	}
+	
+	var strArgs = "RTYPE=XML DB='CS' sessionChk=false BoardID=" + strBoardId + " BoardID2=" + strBoardId +"Q" + " PCategoryGubun=" + PCategoryGubun +" nationCd=" +  nexacro.getApplication().gv_NationCd + "' JSESSIONID='"+nexacro.getApplication().JSESSIONID+"'";
+	if(strBoardId == "A37")
+	{
+		var strUrl = "SVC_JSP::Next_JSP/Board/SearchBoard2.jsp?";
+	}
+	else
+	{
+		var strUrl = "SVC_JSP::Next_JSP/Board/SearchBoard_new2.jsp?";
+	}
+	var strDsInput = "input1=gds_SearchParam";
+	var strDsOutput = "ds_totalCnt=output1 ds_NoticeList=output2";  
+	this.com_TransSend("noticeList",strUrl,strDsInput,strDsOutput,strArgs,"fn_NoticeListCallBack");
+}
+
+// 조회 후 콜백
+this.fn_NoticeListCallBack = function (svcid,errCode,errMsg)
+{
+	this.ds_ImportantList.filter("");
+	if (svcid == "noticeList") 
+	{
+ 		// 데이터가 있을경우
+ 		if (this.ds_NoticeList.rowcount > 0) 
+		{
+			// 키워드강조하기
+			if (!this.gfnIsNull(this.keywordall))
+			{
+				var sKeyWord = this.keywordall.replaceAll(" ", "|");
+				var objRegExp = new RegExp('('+sKeyWord+')', 'gi');
+				
+				var sSubject;
+				var sContents;
+				
+				this.viewList.form.grdNoticeList.set_enableredraw(false);
+				this.ds_NoticeList.set_enableevent(false);
+				
+				// 키워드강조하기
+				if (!this.gfnIsNull(sKeyWord))
+				{
+					if (this.divCondition.form.cmbSearchField.value == 200)		// 제목만
+					{
+						for (var i = 0; i < this.ds_NoticeList.rowcount; i++)
+						{
+							sSubject = this.ds_NoticeList.getColumn(i, "SUBJECT");
+							sSubject = sSubject.toString().replace(objRegExp, "<fc v='#ff0000'>"+"$&"+"</fc>");
+							this.ds_NoticeList.setColumn(i, "SUBJECT", sSubject);
+						}
+					}
+					else if (this.divCondition.form.cmbSearchField.value == 300)	// 내용만
+					{
+						for (var i = 0; i < this.ds_NoticeList.rowcount; i++)
+						{
+							sContents = this.ds_NoticeList.getColumn(i, "CONTENTS");
+							sContents = sContents.toString().replace(objRegExp, "<fc v='#ff0000'>"+"$&"+"</fc>");
+							this.ds_NoticeList.setColumn(i, "CONTENTS", sContents);
+						}
+					}
+					else 																// 제목+내용
+					{
+						for (var i = 0; i < this.ds_NoticeList.rowcount; i++)
+						{
+							sSubject = this.ds_NoticeList.getColumn(i, "SUBJECT");
+							sContents = this.ds_NoticeList.getColumn(i, "CONTENTS");
+
+							sSubject = sSubject.toString().replace(objRegExp, "<fc v='#ff0000'>"+"$&"+"</fc>");
+							sContents = sContents.toString().replace(objRegExp, "<fc v='#ff0000'>"+"$&"+"</fc>");
+							
+							
+							this.ds_NoticeList.setColumn(i, "SUBJECT", sSubject);
+							this.ds_NoticeList.setColumn(i, "CONTENTS", sContents);
+						}
+					}
+				}
+				this.ds_NoticeList.set_enableevent(true);
+				this.viewList.form.grdNoticeList.set_enableredraw(true);
+			}
+		
+			// 공지사항일 경우 중요항목 3개를 상위에 뿌려준다.
+			if (nexacro.getApplication().gv_mainFrame.PCategory2 == "Notice")
+			{
+				this.grdImportantList.set_formatid("notice");
+				
+				this.ds_ImportantList.copyData(this.ds_NoticeList);
+				this.ds_ImportantList.filter("IMPORTANT_FLAG=='1'");
+				
+				for(var i=this.ds_ImportantList.rowcount-1; i>this.fvImportantCnt-1; i--){
+					this.ds_ImportantList.deleteRow(i);
+				}
+				var nCnt = this.ds_ImportantList.rowcount;
+				
+				this.grdImportantList.set_height(nCnt*85);
+				this.grdImportantList.set_visible(true);
+				
+				// from 나D
+				this.divPageExpr.form.fn_SetHistoryData();
+				
+				this.viewList.set_top(this.grdImportantList.getOffsetBottom());
+			}
+			
+			
+			this.divPageExpr.form.serverRowCount = this.ds_NoticeList.getRowCount();
+			// 검색되는 총건수
+			var nRow = nexacro.getApplication().gv_mainFrame.dsScreenUrl.findRow("subCatgy", nexacro.getApplication().gv_mainFrame.param.menu);
+			if(nexacro.getApplication().gv_mainFrame.dsScreenUrl.getColumn(nRow, "Layout") == "BOOKMARK"){   //북마크일 경우
+				this.ds_totalCnt.setColumn(0,"totalCnt",this.ds_NoticeList.rowcount);
+			}
+			this.divPageExpr.form.totalCount = this.ds_totalCnt.getColumn(0, "totalCnt");
+			
+			var iLastRow = this.divPageExpr.form.startPageNo * this.divPageExpr.form.unitSelRowNo;
+
+			// 페이지 처리  
+			this.divPageExpr.form.fn_SetPageNo();    
+			this.divPageExpr.form.fn_indexBtnSet(nexacro.toNumber(nexacro.getApplication().gv_mainFrame.QA_Cond_Page));
+			this.divPageExpr.set_visible(true);
+ 		} else {   
+			var strMsg = "msg_nation1"
+			if(nexacro.getApplication().gv_NationCd == "002") 
+			{
+				strMsg = "msg_nation2"
+			} else if(nexacro.getApplication().gv_NationCd == "003") 
+			{
+				strMsg = "msg_nation3";
+			}
+			if (nexacro.getApplication().gv_mainFrame.PCategory2 == "Notice")
+			{
+				this.grdImportantList.set_formatid("notice");
+				
+				this.ds_ImportantList.filter("IMPORTANT_FLAG=='1'");
+				
+				for(var i=this.ds_ImportantList.rowcount-1; i>this.fvImportantCnt-1; i--)
+				{
+					this.ds_ImportantList.deleteRow(i);
+				}
+				var nCnt = this.ds_ImportantList.rowcount;
+				
+				this.grdImportantList.set_height(nCnt*85);
+				this.grdImportantList.set_visible(true);
+				
+				this.viewList.set_top(this.grdImportantList.getOffsetBottom());
+			}
+			this.viewList.form.grdNoticeList.set_nodatatext(nexacro.getApplication().gds_MessageCd.lookup("msg_code_id","MSG_000029",strMsg));
+			this.divPageExpr.set_visible(false);
+			this.viewList.set_height(this.nDivRightHeight-300);
+			this.set_height(this.nDivRightHeight);//      		
+			this.parent.set_height(this.nDivRightHeight);//
+			var nSize = 246;
+			this.divRight.set_height(this.nDivRightHeight);
+			nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, this.nDivRightHeight + nSize);
+			
+ 		}
+		this.resetScroll();
+		
+		// 저장된 스크롤 위치가 있으면 이동
+		nexacro.getApplication().gv_mainFrame.vscrollbar.set_pos(nexacro.getApplication().gv_mainFrame.SCROLL_POS);
+		nexacro.getApplication().gv_mainFrame.SCROLL_POS = 0;
+	}              
+}
+
+// 조회 버튼 이벤트
+this.btnSearch_onclick = function(obj:Button,  e:nexacro.ClickEventInfo)
+{
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Page = 1;    
+	nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo = 0;
+			
+	// 검색 데이터 저장
+	this.fn_saveHistoryData();
+			
+	// 페이지 제어 초기화
+	this.fn_Query();   
+}
+
+// 새로고침을 대비해 검색 데이터 저장
+this.fn_saveHistoryData = function()
+{
+	nexacro.getApplication().gv_mainFrame.param.keyword = this.divCondition.form.edtKeyword.value;
+	// 히스토리 sData에 저장
+	var sData = {
+	cmbSearchField:this.divCondition.form.cmbSearchField.value
+	,rdoSearchgubun:this.divCondition.form.rdoSearchgubun.value
+	};
+	nexacro.getApplication().gv_mainFrame.gfnSetHistoryData(sData);
+};
+
+// 페이징 검색 데이터 저장
+this.fn_savePagingData = function()
+{
+	nexacro.getApplication().gv_mainFrame.param.keyword = this.divCondition.form.edtKeyword.value;
+	// 히스토리 sData에 저장
+	var sData = {
+	cmbSearchField:this.divCondition.form.cmbSearchField.value
+	,rdoSearchgubun:this.divCondition.form.rdoSearchgubun.value
+	};
+	return sData;
+};
+
+// 페이징 초기화 후 조회
+this.fn_Query = function ()
+{
+	this.divPageExpr.form.fn_PageInit(this.ds_NoticeList, "", this, "fn_CallTrans()", "fn_SetInitSize()");
+	this.fn_CallTrans();
+}
+
+// 그리드 셀클릭
+this.viewList_grdNoticeList_oncellclick = function(obj:Grid, e:nexacro.GridClickEventInfo)
+{       
+	var nRow = nexacro.getApplication().gv_mainFrame.dsScreenUrl.findRow("subCatgy", nexacro.getApplication().gv_mainFrame.param.menu);
+	var sLayout = nexacro.getApplication().gv_mainFrame.dsScreenUrl.getColumn(nRow, "Layout");
+	//trace("obj.formatid:"+obj.formatid);
+	if(sLayout == "BOOKMARK")
+	{
+		nexacro.getApplication().gv_BookmarkTipCd = nexacro.getApplication().gv_mainFrame.divMain.form.divBookmark.form.tabProduct.tabindex;
+	}
+
+	if (obj.formatid == "tip" && (e.cell == 11 || e.cell == 12))
+	{
+		var sMenu = nexacro.getApplication().gv_mainFrame.PCategory2.substr(0, 3)+"_View" +nexacro.getApplication().gv_mainFrame.PCategory2.substr(3);
+		prompt("클립 보드에 복사하세요 : Ctrl 키 + C", nexacro.getApplication().gv_DomainInfo+"?menu="+sMenu+"&postid="+this.ds_NoticeList.getColumn(e.row, "BL_SEQ"));
+	}
+	else if (obj.formatid == "title" && (e.cell == 10 || e.cell == 11))
+	{
+		var sMenu = nexacro.getApplication().gv_mainFrame.PCategory2.substr(0, 3)+"_View" +nexacro.getApplication().gv_mainFrame.PCategory2.substr(3);
+		prompt("클립 보드에 복사하세요 : Ctrl 키 + C", nexacro.getApplication().gv_DomainInfo+"?menu="+sMenu+"&postid="+this.ds_NoticeList.getColumn(e.row, "BL_SEQ"));
+	}
+	else if((obj.formatid == "tip" && e.cell == 4)||(obj.formatid == "notice" && e.cell == 0)||(obj.formatid == "title" && e.cell == 4))
+	{       
+		nexacro.getApplication().gv_mainFrame.Board_Cond_Resetflag = false;
+		var dsDataCur = eval("this."+obj.binddataset);
+		this.rowNum = dsDataCur.getColumn(e.row, "rowNum");
+		var strAn = dsDataCur.getColumn(e.row, "BL_SEQ");
+		var strBoardid = dsDataCur.getColumn(e.row, "boardid");
+		var strGoodsgbn = dsDataCur.getColumn(e.row,"goods_gbn");
+
+		var ProductGubun="MiPlatform";
+		if(strGoodsgbn  == "001")
+		{
+			ProductGubun = "MiPlatform";		
+		} else if(strGoodsgbn == "002")
+		{
+			ProductGubun = "XPLATFORM";		
+		} else if(strGoodsgbn == "003")
+		{   
+			ProductGubun = "X-UP(difingo)";		
+		} else if(strGoodsgbn == "004")   
+		{
+			ProductGubun = "X-PUP";		
+		} else if(strGoodsgbn == "005")
+		{ 
+			ProductGubun = "X-PUSH";		
+		} else if(strGoodsgbn == "006")
+		{
+			ProductGubun = "nexacro platform";		
+		} else if(strGoodsgbn == "008")
+		{
+			ProductGubun = "nexacro platform17";		
+		}  
+		
+		nexacro.getApplication().gv_mainFrame.strTempFilder1 = strAn;  
+		nexacro.getApplication().gv_mainFrame.BoardCategoryID = strGoodsgbn;       
+	   
+		nexacro.getApplication().gv_mainFrame.Board_Cond_DisplayCnt  = this.divPageExpr.unitSelRowNo;
+		nexacro.getApplication().gv_mainFrame.Board_Cond_Page        = (this.divPageExpr.startPageNo+1); 
+		nexacro.getApplication().gv_mainFrame.Board_Cond_Searchfield = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition,"searchfield");
+		nexacro.getApplication().gv_mainFrame.Board_Cond_Searchgubun = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition,"searchgubun");
+		nexacro.getApplication().gv_mainFrame.Board_Cond_BusinessSection = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition,"BusinessSection");
+		nexacro.getApplication().gv_mainFrame.Board_Cond_Resort = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition,"search_resort");	
+		nexacro.getApplication().gv_mainFrame.Board_Cond_Keyword = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition,"keyword");	  
+		nexacro.getApplication().gv_mainFrame.Board_Cond_KeywordAll = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition,"keywordall");	  
+
+		// sMenu 셋팅
+		var sMenu = "Notice_View";
+		switch(nexacro.getApplication().gv_mainFrame.PCategory2) {
+		case "Sketch":
+			sMenu = "Sketch_View";
+			break;		
+		case "Tutorial":
+			sMenu = "Tutorial_View";
+			break;
+		case "Notice":
+			sMenu = "Notice_View";
+			break;
+		case "Tip_N":
+			sMenu = "Tip_View_N";
+			break;
+		case "Tip_17":
+			sMenu = "Tip_View_17";
+			break;
+		case "Tip_14":
+			sMenu = "Tip_View_14";
+			break;
+		case "Tip_XP":
+			sMenu = "Tip_View_XP";
+			break;
+		case "Tip_MP":
+			sMenu = "Tip_View_MP";
+			break;
+		case "Education_information":
+			sMenu = "Education_information_View";
+			break;
+		case "Education_material":
+			sMenu = "Education_material_View";
+			break;
+		case "Bookmark_Tip":
+			sMenu = "Bookmark_Tip_View";
+			nexacro.getApplication().gv_mainFrame.Bookmark_Tab_Index = nexacro.getApplication().gv_mainFrame.divMain.form.divBookmark.form.tabProduct.tabindex;
+			break;
+		case "SearchEngine":
+			sMenu = "SearchEngine_Board_View";
+			break;
+		default:
+		}
+		
+		// 현재 스크롤 위치 저장
+		nexacro.getApplication().gv_mainFrame.SCROLL_POS = nexacro.getApplication().gv_mainFrame.vscrollbar.pos;
+		
+		nexacro.getApplication().gv_mainFrame.param = {
+			'menu': sMenu,
+			'keyword': nexacro.getApplication().gv_mainFrame.QA_Cond_Keyword,
+			'page': nexacro.getApplication().gv_mainFrame.QA_Cond_Page,
+			'postId': strAn
+			};
+		nexacro.getApplication().gv_mainFrame.gfnGoMain();
+	}
+}   
+
+// 검색 에디트 이벤트
+this.divCondition_edtKeyword_onkeyup = function(obj:Edit, e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13)  
+	{    
+		// 검색 데이터 저장
+		this.fn_saveHistoryData();
+		
+		nexacro.getApplication().gv_mainFrame.Board_Cond_Resetflag = true;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Page = 1;    
+		nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo = 0;
+
+		this.fn_Query();
+		nexacro.getApplication().gv_mainFrame.fn_SearchKey_onkeyup(obj, e);
+	}
+	else
+	{
+		nexacro.getApplication().gv_mainFrame.Top_Edit_flag = false;
+		nexacro.getApplication().gv_mainFrame.fn_SearchKey_onkeyup(obj, e);
+	}
+}
+
+// expr : 그리드의 내용을 2줄까지 제한  ->  autosizerow로 변경해서 사용안하므로 확인후 삭제
+this.fnGrdContentLimit = function(sStr)
+{
+	sStr = nexacro.replaceAll(sStr, "&nbsp;", "");
+	sStr = nexacro.replaceAll(sStr, "<br>", "\n\n");
+	sStr = nexacro.replaceAll(sStr, "<BR>", "\n\n");
+	//<fc v='#ff0000'>
+	sStr = nexacro.replaceAll(sStr, "<fc v='#ff0000'>", "##DECORATE##");
+	sStr = nexacro.replaceAll(sStr, "</fc>", "$$DECORATE$$");
+	sStr = sStr.replace(/(<([^>]+)>)/ig,"");
+	sStr = nexacro.replaceAll(sStr, "##DECORATE##", "<fc v='#ff0000'>");
+	sStr = nexacro.replaceAll(sStr, "$$DECORATE$$", "</fc>");
+	sStr = sStr.replaceAll("\n\n", "\n");
+ 	sStr = sStr.split("\n");
+	
+	var s0 = "";
+	var s1 = "";
+	if (sStr[0])
+	{
+		s0 = sStr[0];
+	}
+	if (sStr[1])
+	{
+		s1 = "\n"+sStr[1];
+	}
+
+	return s0+s1;//+s2;
+};
+
+// html태그 제거	->   CONTENTS_TEXT를 내려주면서 사용하지 않음
+this.fn_deleteTag = function(sStr)
+{
+	sStr = nexacro.replaceAll(sStr, "&nbsp;", "");
+	
+	sStr = nexacro.replaceAll(sStr, "<br>", "\n\n");
+	sStr = nexacro.replaceAll(sStr, "<BR>", "\n\n");
+	sStr = sStr.replace(/(<([^>]+)>)/ig,"");
+	if (sStr.indexOf("\n") == 0)
+	{
+		sStr = nexacro.replace("\n", "");
+	}
+	
+	return sStr;
+};
+
+// 제목 글자수제한을 위한 함수 ===================================================
+this.fnGridSubjectLimit = function(sStr)
+{
+	return this.fn_subString( sStr, 0, 80 );
+};
+
+
+// 문자열의 길이를 구하는 함수
+this.fn_strlen = function(str)
+{
+	var len = 0;
+	for(var i=0;i<str.length;i++) {
+		len += (str.charCodeAt(i) > 128) ? 2 : 1;
+	}
+	return len;
+};
+
+// 문자열에서 시작위치와 길이를 주면 substring 하여 리턴한다.
+this.fn_subString = function(str,start,size)
+{
+	var lim = 0;
+	var pos = 0;
+	var beg = 0;
+	var minus = 0;
+	var len = this.fn_strlen(str);
+
+	// 시작위치까지 skip하는 로직
+	for(var i=0;pos<start;i++) {
+		pos += (str.charCodeAt(i) > 128) ? 2 : 1;
+	}
+
+	beg = i;
+
+	// 시작위치에서 길이만큼 잘라내는 로직
+	for (var i=beg; i<len; i++) {
+		lim += (str.charCodeAt(i) > 128) ? 2 : 1;
+
+		if (lim > size) {
+			return str.substring(beg,i)+"..."; 
+		}
+	}
+	return str;
+};
+
+
+
+/************************************************************************
+ * 통합검색 관련
+ ************************************************************************/
+this.fn_searchEngineCall = function ()
+{
+	this.ds_NoticeList.clearData();
+	var dsSE = "";
+	switch(nexacro.getApplication().gv_mainFrame.SearchEngineFlag) {
+	case "Tip":
+		dsSE = nexacro.getApplication().gv_searchEngine.ds_bbs_tip;
+		this.viewList.form.grdNoticeList.set_formatid("tip");
+		break;
+	case "Education_Notice":
+		dsSE = nexacro.getApplication().gv_searchEngine.ds_bbs_edu_notice;
+		this.viewList.form.grdNoticeList.set_formatid("notice");
+		break;
+	case "Education_material":
+		dsSE = nexacro.getApplication().gv_searchEngine.ds_bbs_edu_resource;
+		this.viewList.form.grdNoticeList.set_formatid("notice");
+		break;
+	case "Notice":
+		dsSE = nexacro.getApplication().gv_searchEngine.ds_bbs_notice;
+		this.viewList.form.grdNoticeList.set_formatid("notice");
+		break;
+	default:
+	}
+	
+	this.ds_NoticeList.copyData(dsSE);
+	
+	if (this.ds_NoticeList.rowcount == 0)
+	{
+		this.viewPaging.set_visible(false);
+		this.fn_SetInitSize();
+		return;
+	}
+	else
+	{
+		this.viewPaging.set_visible(true);
+	}
+	
+	// 키워드강조하기
+	this.keywordall = nexacro.getApplication().gv_searchEngine.fvKeyword;
+	if (!this.gfnIsNull(this.keywordall))
+	{
+		var sKeyWord = this.keywordall.replaceAll(" ", "|");
+		var objRegExp = new RegExp('('+sKeyWord+')', 'gi');
+		
+		var sSubject;
+		var sContents;
+		
+		this.viewList.form.grdNoticeList.set_enableredraw(false);
+		this.ds_NoticeList.set_enableevent(false);
+		
+		// 키워드강조하기
+		if (!this.gfnIsNull(sKeyWord))
+		{
+			if (nexacro.getApplication().gv_searchEngine.divSearch.form.rdoField.value == "title")		// 제목만
+			{
+				for (var i = 0; i < this.ds_NoticeList.rowcount; i++)
+				{
+					sSubject = this.ds_NoticeList.getColumn(i, "SUBJECT");
+					sSubject = sSubject.toString().replace(objRegExp, "<fc v='#ff0000'>"+"$&"+"</fc>");
+					this.ds_NoticeList.setColumn(i, "SUBJECT", sSubject);
+				}
+			}
+			else 																// 제목+내용
+			{
+				for (var i = 0; i < this.ds_NoticeList.rowcount; i++)
+				{
+					sSubject = this.ds_NoticeList.getColumn(i, "SUBJECT");
+					sContents = this.ds_NoticeList.getColumn(i, "CONTENTS");
+					
+					sSubject = sSubject.toString().replace(objRegExp, "<fc v='#ff0000'>"+"$&"+"</fc>");
+					sContents = sContents.toString().replace(objRegExp, "<fc v='#ff0000'>"+"$&"+"</fc>");
+					
+					this.ds_NoticeList.setColumn(i, "SUBJECT", sSubject);
+					this.ds_NoticeList.setColumn(i, "CONTENTS", sContents);
+				}
+			}
+		}
+		this.ds_NoticeList.set_enableevent(true);
+		this.viewList.form.grdNoticeList.set_enableredraw(true);
+	}
+	
+	// 히스토리 저장
+	this.fn_SetHistoryData();
+	
+	this.fn_SetInitSize();
+	
+	// 저장된 스크롤 위치가 있으면 이동
+	nexacro.getApplication().gv_mainFrame.vscrollbar.set_pos(nexacro.getApplication().gv_mainFrame.SCROLL_POS);
+	nexacro.getApplication().gv_mainFrame.SCROLL_POS = 0;
+};
+
+/************************************************************************
+ * ↓↓↓↓↓↓ 여기부터 페이징 ↓↓↓↓↓↓
+ ************************************************************************/
+
+// 통합검색용 페이징 버튼이벤트
+this.viewPaging_btnPageNum_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	nexacro.getApplication().gv_searchEngine.fn_search(obj.text);
+	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+	this.fn_SetHistoryData();
+};
+
+// 통합검색용 페이징 이전버튼
+this.viewPaging_btnPagePre_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	nexacro.getApplication().gv_searchEngine.fn_search(parseInt(nexacro.getApplication().gv_searchEngine.fvPageNum)-1);
+	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+	this.fn_SetHistoryData();
+};
+
+// 통합검색용 페이징 다음버튼
+this.viewPaging_btnPageNext_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	nexacro.getApplication().gv_searchEngine.fn_search(parseInt(nexacro.getApplication().gv_searchEngine.fvPageNum)+1);
+	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+	this.fn_SetHistoryData();
+};
+
+// 통합검색용 페이징 이전10개 버튼
+this.viewPaging_btnPageHome_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nstartPageNum = 1;
+	if (nexacro.getApplication().gv_searchEngine.fvPageNum > 10)
+	{
+		nstartPageNum = nexacro.floor(nexacro.getApplication().gv_searchEngine.fvPageNum/10)*10+1;
+	}
+	nexacro.getApplication().gv_searchEngine.fn_search(nstartPageNum-10);
+	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+	this.fn_SetHistoryData();
+};
+
+// 통합검색용 페이징 다음10개 버튼
+this.viewPaging_btnPageEnd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nstartPageNum = 1;
+	if (nexacro.getApplication().gv_searchEngine.fvPageNum > 10)
+	{
+		nstartPageNum = nexacro.floor(nexacro.getApplication().gv_searchEngine.fvPageNum/10)*10+1;
+	}
+	nexacro.getApplication().gv_searchEngine.fn_search(nstartPageNum+10);
+	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+	this.fn_SetHistoryData();
+};
+
+// 페이징 번호 초기화
+this.fn_pageNumInit = function(pageNum, total)
+{
+	var sBtnNum = pageNum%10;
+	if (sBtnNum == 0)
+	{
+		sBtnNum = 10;
+	}
+
+	var nLastCnt = 0;// = total%10;
+	if (total%10 != 0)
+	{
+		nLastCnt = nexacro.floor(total/10)%10 + 1;
+	}
+	else
+	{
+		nLastCnt = nexacro.floor(total/10)%10;
+	}
+	var nstartPageNum = 1;
+	if (pageNum > 10)
+	{
+		nstartPageNum = nexacro.floor((pageNum-1)/10)*10+1;
+	}
+	if (nLastCnt == 0)
+	{
+		nLastCnt = 10;
+	}
+	// 각 숫자 셋팅
+	var i;
+	for (i = 0; i < 10; i++)
+	{
+		eval("this.viewPaging.form.btnPageNum"+(i+1)+".set_text("+(nstartPageNum+i)+");");
+		if (nexacro.floor(total/10) < nstartPageNum+10 && nLastCnt <= i)
+		{
+			eval("this.viewPaging.form.btnPageNum"+(i+1)+".set_visible(false);");
+		}
+		else
+		{
+			eval("this.viewPaging.form.btnPageNum"+(i+1)+".set_visible(true);");
+		}
+	}
+	
+	// cssclass 셋팅
+	this.viewPaging.form.btnPageHome.set_enable(true);
+	this.viewPaging.form.btnPagePre.set_enable(true);
+	this.viewPaging.form.btnPageNum1.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum2.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum3.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum4.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum5.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum6.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum7.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum8.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum9.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum10.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNext.set_enable(true);
+	this.viewPaging.form.btnPageEnd.set_enable(true);
+	
+	if (pageNum <= 10)
+	{
+		this.viewPaging.form.btnPageHome.set_enable(false);
+	}
+	if (pageNum == 1)
+	{
+		this.viewPaging.form.btnPagePre.set_enable(false);
+	}
+	eval("this.viewPaging.form.btnPageNum"+sBtnNum+".set_cssclass('btn_WF_pageNum_S');");
+	
+	if (pageNum == nexacro.ceil(total/10))
+	{
+		this.viewPaging.form.btnPageNext.set_enable(false);
+	}
+	if (nexacro.floor(total/10) < nstartPageNum+10)
+	{
+		this.viewPaging.form.btnPageEnd.set_enable(false);
+	}
+};
+
+// 페이징용 히스토리 셋팅
+this.fn_SetHistoryData = function()
+{
+	var sData = {};
+	
+	var sHash = "menu=" + nexacro.getApplication().gv_mainFrame.param.menu + "&page=" + nexacro.getApplication().gv_mainFrame.QA_Cond_Page;
+	var sKeyword = nexacro.getApplication().gv_mainFrame.param.keyword;
+	if(!this.gfnIsNull(sKeyword)) sHash += "&keyword="+sKeyword;
+	var sUrl = ".?"+sHash;
+	sData = nexacro.getApplication().gv_searchEngine.fn_savePagingData();
+	MyHistory.setLocationHash(sHash, sData, sUrl);
+};
+/************************************************************************
+ * ↑↑↑↑↑↑ 여기까지 페이징 ↑↑↑↑↑↑↑↑
+ ************************************************************************/
+
+
+// 검색 에디트에서 포커스 나갈때 자동완성 없애기
+this.divCondition_edtKeyword_onkillfocus = function(obj:nexacro.Edit,e:nexacro.KillFocusEventInfo)
+{
+	nexacro.getApplication().gv_mainFrame.showAutoCompleteResult(false);
+};
+
+// cboListType 변경 이벤트    제목 <-> 제목+내용   토글
+this.cboListType_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if (e.postindex == 0)
+	{
+		this.viewList.form.grdNoticeList.set_formatid("tip");
+		nexacro.getApplication().gv_mainFrame.QA_Cond_ListType = 0;
+		this.fn_SetInitSize();
+	}
+	else
+	{
+		this.viewList.form.grdNoticeList.set_formatid("title");
+		nexacro.getApplication().gv_mainFrame.QA_Cond_ListType = 1;
+		this.fn_SetInitSize();
+	}
+};
+
+// expr : 그리드 처리현황 표시
+this.fn_statusCss = function(sStatus,qc_no)
+{
+	if (sStatus.substr(0,1) == "P")
+	{
+		if (this.tobe_yn && !this.gfnIsNull(qc_no))
+		{
+			return "grd_WF_status2";
+		}
+		else
+		{
+			return "grd_WF_status1";
+		}
+	}
+	else if (sStatus.substr(0,1) == "W" || sStatus.substr(0,1) == "A")
+	{
+		if (this.tobe_yn && !this.gfnIsNull(qc_no))
+		{
+			return "grd_WF_status4";
+		}
+		else
+		{
+			return "grd_WF_status3";
+		}
+	}
+	else if (sStatus.substr(0,1) == "C")
+	{
+		if (this.tobe_yn && !this.gfnIsNull(qc_no))
+		{
+			return "grd_WF_status6";
+		}
+		else
+		{
+			return "grd_WF_status5";
+		}
+	}
+	else
+	{
+		return "";
+	}
+}
+
+
+// expr : 그리드 처리현황 표시
+this.fn_statusAccessibility = function(sStatus)
+{
+	if (sStatus.substr(0,1) == "P")
+	{
+		return "진행상태: 처리중";
+	}
+	else if (sStatus.substr(0,1) == "W" || sStatus.substr(0,1) == "A")
+	{
+		return "진행상태: 접수";
+	}
+	else if (sStatus.substr(0,1) == "C")
+	{
+		return "진행상태: 답변완료";
+	}
+	else
+	{
+		return "";
+	}
+}
+
+//expr : 그리드 파일명 표시
+this.fn_fileNameAccessibility = function(sFileName)
+{
+	return "파일명: " + sFileName;
+}
+
+this.Static03_00_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	switch(nexacro.getApplication().gv_mainFrame.PCategory2) {
+	case "Sketch":	
+		system.execBrowser("https://sketch.nexacro.com/");
+		break;		
+	case "Tutorial":	
+	    system.execBrowser("https://studio.nexacro.com/");
+		break;
+	}	
+};
+]]></Script>
+  </Form>
+</FDL>

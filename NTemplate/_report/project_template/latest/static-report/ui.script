@@ -1,0 +1,1230 @@
+(function ()
+{
+
+    function readCssVar(name, el = document.documentElement)
+    {
+        if (!el) return "";
+        return getComputedStyle(el).getPropertyValue(name).trim();
+    }
+
+    function getStatusColors()
+    {
+        return {
+            failed: readCssVar("--status-failed-base"),
+            broken: readCssVar("--status-broken-base"),
+            skipped: readCssVar("--status-skipped-base"),
+            passed: readCssVar("--status-passed-base"),
+        };
+    }
+
+    const STATUS_COLORS = getStatusColors();
+    const $ = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+
+    /*data- updater*/
+    const INLINE_TAG = 'overridden:inline';
+
+    function parseTagsString(s)
+    {
+        if (!s) return [];
+        try
+        {
+            const arr = JSON.parse(s);
+            if (Array.isArray(arr)) return arr.map(x => String(x)).filter(Boolean);
+        }
+        catch { /* 문자열로 처리 */ }
+        return String(s).split(/[, ]+/).map(t => t.trim()).filter(Boolean);
+    }
+
+    function stringifyTags(arr)
+    {
+        return (arr && arr.length) ? arr.join(',') : '';
+    }
+
+    // === 배지 헬퍼 (공통 사양) ===
+    function makeTagBadge(tag)
+    {
+        const t = String(tag);
+        const el = document.createElement('span');
+        el.className = 'tag-badge';         // 버튼 아님! ui.css의 tag-badge만 사용
+        el.setAttribute('data-tag', t);
+        const m = t.match(/^([a-z0-9_-]+):/i);
+        if (m) el.dataset.prefix = m[1].toLowerCase();
+        el.textContent = t;
+        return el;
+    }
+
+    // === 단일 배지 보장(리스트/디테일 공통) ===
+    function ensureSingleBadge(container, present)
+    {
+        if (!container) return;
+        const el = container.querySelector(`[data-tag="${INLINE_TAG}"]`);
+        if (present)
+        {
+            if (!el) container.appendChild(makeTagBadge(INLINE_TAG));
+        }
+        else
+        {
+            if (el) el.remove();
+        }
+    }
+    function getDetailTagsContainer()
+    {
+        return document.getElementById('detail-body')?.querySelector('.detail-tags')
+            || document.getElementById('detail-tags')
+            || null;
+    }
+
+    // 2) (교체) 디테일 영역 렌더러: 중복 없이, 공통 배지 규격으로 렌더
+    function renderDetailTagChips(item)
+    {
+        const wrap = getDetailTagsContainer();
+        if (!wrap) return;
+
+        const src = Array.isArray(item?.tags) ? item.tags : parseTagsString(item?.tags || '');
+        const tags = new Set(src.map(s => String(s).trim()).filter(Boolean));
+
+        wrap.innerHTML = '';
+        for (const t of tags) wrap.appendChild(makeTagBadge(t)); // tag-badge + data-tag
+    }
+
+
+    function syncInlineTag(rowEl, present)
+    {
+        const cur = parseTagsString(rowEl.getAttribute('data-tags') || '');
+        const set = new Set(cur);
+        present ? set.add(INLINE_TAG) : set.delete(INLINE_TAG);
+
+        const nextArr = Array.from(set);
+        const nextStr = stringifyTags(nextArr);
+        if (rowEl.getAttribute('data-tags') !== nextStr)
+        {
+            rowEl.setAttribute('data-tags', nextStr);
+        }
+
+
+        // 리스트/디테일 두 곳 배지도 “한 개만” 존재하도록 (컨테이너 헬퍼 사용)
+        ensureSingleBadge(rowEl.querySelector('.tags'), present);
+        ensureSingleBadge(getDetailTagsContainer(), present);
+
+    }
+    function renderListTagChips()
+    {
+        document.querySelectorAll('#items-host .item-row').forEach(row =>
+        {
+            const holder = row.querySelector('.tags');
+            if (!holder) return;
+
+            const tags = new Set(parseTagsString(row.getAttribute('data-tags') || ''));
+            holder.innerHTML = '';
+            for (const t of tags) holder.appendChild(makeTagBadge(t));
+        });
+    }
+
+    function onReady(fn)
+    {
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn, { once: true });
+        else fn();
+    }
+    const isIndex = () => !!document.getElementById('projects');
+
+    // ---- Metrics helpers ----
+    function normalizeMetrics(m)
+    {
+        // tolerate various shapes
+        if (!m || typeof m !== 'object') return { totals: { items: 0, files: 0 }, byStatus: {}, bySeverity: {}, byResult: {} };
+        const x = (m.metrics && (m.metrics.byStatus || m.metrics.byResult || m.metrics.totals)) ? m.metrics : m;
+        const byStatus = x.byStatus || x.status || {};
+        const byResult = x.byResult || x.result || {};
+        const totals = x.totals || { items: 0, files: 0 };
+        return { totals, byStatus, byResult };
+    }
+    function computeFromRows()
+    {
+        const rows = $$('.item-row');
+        const byStatus = {}, byResult = {};
+        rows.forEach(r =>
+        {
+            const st = r.dataset.status || 'unknown';
+            const sv = r.dataset.result || 'unknown';
+            byStatus[st] = (byStatus[st] || 0) + 1;
+            byResult[sv] = (byResult[sv] || 0) + 1;
+        });
+        return { totals: { items: rows.length, files: 0 }, byStatus, byResult };
+    }
+
+    // ---- Index: render bar charts on cards ----
+    async function initIndex()
+    {
+        if (!isIndex()) return;
+
+        // 각 카드의 막대 위에 값/퍼센트 라벨을 그려주는 간단한 플러그인
+        const valueLabels = {
+            id: 'valueLabels',
+            afterDatasetsDraw(chart, args, opts)
+            {
+                const { ctx, chartArea } = chart;
+                if (!chartArea) return;
+                const meta = chart.getDatasetMeta(0);
+                const ds = chart.data.datasets[0];
+                const values = (ds?.data || []).map(v => Number(v || 0));
+                const total = values.reduce((a, b) => a + b, 0);
+                if (!total) return;
+
+                ctx.save();
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                ctx.fillStyle = (opts && opts.color) || '#e5e7eb';
+                ctx.font = (opts && opts.font) || '600 10px system-ui, sans-serif';
+
+                meta.data.forEach((barEl, i) =>
+                {
+                    const v = values[i]; if (!v) return;
+                    const p = barEl.getProps(['x', 'y', 'base'], true);
+                    const pct = Math.round((v / total) * 100);
+                    // 막대가 너무 낮으면 라벨 생략
+                    if (Math.abs(p.base - p.y) < 8) return;
+
+                    const tx = p.x;
+                    const ty = Math.min(p.y, p.base) - 4; // 막대 위 4px
+                    const text = `${v} (${pct}%)`;
+
+                    // 라벨 배경 (선택)
+                    const padX = 4, padY = 2;
+                    const w = ctx.measureText(text).width + padX * 2;
+                    const h = 12 + padY * 2;
+                    ctx.fillStyle = 'rgba(2,6,23,.65)';
+                    ctx.fillRect(tx - w / 2, ty - h, w, h);
+                    ctx.fillStyle = '#e5e7eb';
+                    ctx.fillText(text, tx, ty - 2);
+                });
+                ctx.restore();
+            }
+        };
+
+        // 프로젝트 카드들
+        const cards = document.querySelectorAll('[data-pid]');
+
+        for (const card of cards)
+        {
+            const pid = card.getAttribute('data-pid');
+            if (!pid) continue;
+
+            try
+            {
+                // 1) 카드가 가진 파일 목록(data-files) 추출
+                const filesAttr = card.getAttribute('data-files'); // JSON.stringify([...]) 권장
+                if (!filesAttr) continue;
+
+                let files = [];
+                try
+                {
+                    files = JSON.parse(filesAttr);
+                }
+                catch
+                {
+                    // 구버전 호환: 콤마로 구분된 문자열이면 split
+                    files = String(filesAttr).split(',').map(s => s.trim()).filter(Boolean);
+                }
+                if (!Array.isArray(files) || files.length === 0) continue;
+
+                // 2) 서버에 현재 상태 합산 질의 (원본 JSON의 meta.overrideStatus 우선 적용)
+                const resp = await fetch('../../override/resolveTotals', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ projectId: pid, files })
+                });
+                if (!resp.ok) continue;
+                const data = await resp.json();
+
+                const totals = data?.totals || {};
+                const counts = {
+                    failed: Number(totals.failed || 0),
+                    broken: Number(totals.broken || 0),
+                    skipped: Number(totals.skipped || 0),
+                    passed: Number(totals.passed || 0),
+                };
+
+                // 3) 상단 배지 갱신
+                const id = encodeURIComponent(pid);
+                const bi = document.getElementById('b-items-' + id); if (bi) bi.textContent = String(data?.totalItems ?? 0);
+                const bf = document.getElementById('b-files-' + id); if (bf) bf.textContent = String(data?.totalFiles ?? files.length);
+
+                // 4) 막대 차트 렌더링
+                const ORDER = ['failed', 'broken', 'skipped', 'passed']; // 고정 순서
+                const labels = ORDER;
+                const values = ORDER.map(k => counts[k]);
+                const total = values.reduce((a, b) => a + b, 0);
+
+                const colors = labels.map(l => STATUS_COLORS[l] || '#7dd3fc');
+                const cvs = document.getElementById('bar-' + id);
+
+                if (cvs && window.Chart && total > 0)
+                {
+                    new window.Chart(cvs, {
+                        type: 'bar',
+                        data: {
+                            labels,
+                            datasets: [{
+                                label: 'by status',
+                                data: values,
+                                backgroundColor: colors,
+                                borderWidth: 0,
+                                borderRadius: 6,
+                                barPercentage: 0.62,
+                                categoryPercentage: 0.62,
+                            }]
+                        },
+                        options: {
+                            responsive: false,        // 카드에 고정 캔버스 사용
+                            maintainAspectRatio: false,
+                            layout: { padding: { top: 8, right: 8, bottom: 4, left: 4 } },
+                            plugins: {
+                                legend: { display: true, labels: { color: '#cbd5e1', boxWidth: 10, boxHeight: 10 } },
+                                tooltip: {
+                                    callbacks: {
+                                        label: (ctx) =>
+                                        {
+                                            const v = Number(ctx.parsed.y || 0);
+                                            const pct = total ? (v / total * 100) : 0;
+                                            const name = String(ctx.label || '');
+                                            return `${name}: ${v} (${pct.toFixed(1)}%)`;
+                                        }
+                                    }
+                                },
+                                title: { display: false }
+                            },
+                            scales: {
+                                x: {
+                                    ticks: { color: '#94a3b8' },
+                                    grid: { color: 'rgba(148,163,184,.15)' }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    suggestedMax: Math.max(...values, 1) * 1.25,
+                                    ticks: { color: '#94a3b8', precision: 0 },
+                                    grid: { color: 'rgba(148,163,184,.15)' }
+                                }
+                            }
+                        },
+                        plugins: [
+                            { ...valueLabels, options: { color: '#e5e7eb', font: '600 10px system-ui, sans-serif' } }
+                        ]
+                    });
+                }
+            }
+            catch { /* 카드별 실패는 무시하고 다음 카드로 진행 */ }
+        }
+    }
+
+    // ---- Project: donut + list + filters ----
+    function active(group) { return $$('[data-group="' + group + '"].active').map(b => b.dataset.key); }
+    function applyFilters()
+    {
+        const st = active('status'), sv = active('result'), tg = active('tag');
+        $$('.item-row').forEach(r =>
+        {
+            const okStatus = st.length ? st.includes(r.dataset.status || '') : true;
+            const okSev = sv.length ? sv.includes(r.dataset.result || '') : true;
+            const rowTags = (r.dataset.tags || '').split(',').filter(Boolean);
+            const okTag = tg.length ? tg.some(x => rowTags.includes(x)) : true;
+            r.classList.toggle('hidden', !(okStatus && okSev && okTag));
+        });
+        document.dispatchEvent(new CustomEvent('nr:rowsChanged'));
+    }
+    function buildFilterChips()
+    {
+        const statuses = new Set(), severities = new Set(), tags = new Set();
+        $$('.item-row').forEach(row =>
+        {
+            const ds = row.dataset;
+            if (ds.status) statuses.add(ds.status);
+            if (ds.result) severities.add(ds.result);
+            (ds.tags || '').split(',').filter(Boolean).forEach(t => tags.add(t.trim()));
+        });
+        const filters = $('#filters'); if (!filters) return;
+        const mkWrap = (id, label) =>
+        {
+            const wrap = document.createElement('div'); wrap.className = 'filters';
+            wrap.innerHTML = '<span class="label">' + label + '</span><div id="' + id + '" class="filters"></div>'; return wrap;
+        };
+        const s = mkWrap('status-filters', 'Status'), v = mkWrap('result-filters', 'Result'), t = mkWrap('tag-filters', 'Tags');
+        filters.innerHTML = ''; filters.appendChild(s); filters.appendChild(v); filters.appendChild(t);
+        const mkChip = (group, key) => { const b = document.createElement('button'); b.className = 'chip'; b.dataset.group = group; b.dataset.key = key; b.textContent = key; b.onclick = () => { b.classList.toggle('active'); applyFilters(); }; return b; };
+        statuses.forEach(x => $('#status-filters').appendChild(mkChip('status', x)));
+        severities.forEach(x => $('#result-filters').appendChild(mkChip('result', x)));
+        tags.forEach(x => $('#tag-filters').appendChild(mkChip('tag', x)));
+    }
+
+    function attachSorting()
+    {
+        const sortBtn = document.querySelector('[data-action="sort"]');
+        if (!sortBtn) return;
+
+        // 상태 가중치 (failed > broken > skipped > passed)
+        const STATUS_ORDER = ['failed', 'broken', 'skipped', 'passed'];
+        const weight = s =>
+        {
+            const i = STATUS_ORDER.indexOf(String(s || 'unknown'));
+            return i < 0 ? 99 : i;
+        };
+
+        sortBtn.addEventListener('click', () =>
+        {
+            const host = document.getElementById('items-host');
+            if (!host) return;
+
+            // 1) 파일 헤더 목록
+            const headers = Array.from(host.querySelectorAll('.item-file-title.section-title'));
+
+            headers.forEach(header =>
+            {
+                // 2) 이 헤더부터 다음 헤더 전까지의 .item-row 수집
+                const rows = [];
+                for (let n = header.nextElementSibling; n && !n.classList.contains('item-file-title'); n = n.nextElementSibling)
+                {
+                    if (n.classList.contains('item-row')) rows.push(n);
+                }
+
+                // 3) 정렬: status 우선 → ruleId(알파벳)
+                rows.sort((a, b) =>
+                {
+                    const wa = weight(a.dataset.status), wb = weight(b.dataset.status);
+                    if (wa !== wb) return wa - wb;
+                    return String(a.dataset.rule || '').localeCompare(String(b.dataset.rule || ''));
+                });
+
+
+                // 4) 이 섹션(헤더 바로 뒤)에 정렬된 행 다시 삽입
+                const frag = document.createDocumentFragment();
+                rows.forEach(r => frag.appendChild(r));
+                header.parentNode.insertBefore(frag, header.nextSibling);
+            });
+
+            // 5) 배지 재계산 알림 (파일별 개수/가시 행 업데이트)
+            document.dispatchEvent(new CustomEvent('nr:rowsChanged'));
+        });
+    }
+    function attachReset()
+    {
+        const resetBtn = $('[data-action="reset"]');
+        if (!resetBtn) return;
+        resetBtn.addEventListener('click', () =>
+        {
+            $$('.chip.active').forEach(b => b.classList.remove('active'));
+            $$('.item-row.hidden').forEach(r => r.classList.remove('hidden'));
+            document.dispatchEvent(new CustomEvent('nr:rowsChanged'));
+        });
+
+    }
+    async function apiUpdateOverride(body)
+    {
+        try
+        {
+            const resp = await fetch('../../override/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            return resp.ok;
+        }
+        catch { return false; }
+    }
+
+
+
+    function getProjectData()
+    {
+        try { return JSON.parse(document.getElementById('project-data')?.textContent || '{}'); }
+        catch { return {}; }
+    }
+
+    // ---- 유틸: JSON → HTML (collapsible tree)
+    function jsonToHtmlTree(obj, depth = 0)
+    {
+        const wrap = document.createElement('div');
+        wrap.className = 'json-tree';
+        if (obj === null || typeof obj !== 'object')
+        {
+            const span = document.createElement('span');
+            span.className = 'jt-primitive';
+            span.textContent = String(obj);
+            wrap.appendChild(span);
+            return wrap;
+        }
+        const ul = document.createElement('ul');
+        Object.entries(obj).forEach(([k, v]) =>
+        {
+            const li = document.createElement('li');
+            const key = document.createElement('span');
+            key.className = 'jt-key';
+            key.textContent = k + ': ';
+            li.appendChild(key);
+            if (v && typeof v === 'object')
+            {
+                const det = document.createElement('details');
+                if (depth < 1) det.open = true;
+                const sum = document.createElement('summary');
+                sum.textContent = Array.isArray(v) ? `[${v.length}]` : '{ }';
+                det.appendChild(sum);
+                det.appendChild(jsonToHtmlTree(v, depth + 1));
+                li.appendChild(det);
+            }
+            else
+            {
+                const val = document.createElement('span');
+                val.className = 'jt-primitive';
+                val.textContent = String(v);
+                li.appendChild(val);
+            }
+            ul.appendChild(li);
+        });
+        wrap.appendChild(ul);
+        return wrap;
+    }
+
+    // ---- 유틸: 섹션 카드 + 테이블 생성
+    function createSectionCard(title)
+    {
+        const card = document.createElement('div');
+        card.className = 'summary-card';
+        card.innerHTML = `<div class="section-head">${title}</div>`;
+        return card;
+    }
+    function createKVTable(rows)
+    {
+        const tbl = document.createElement('table');
+        tbl.className = 'summary-table summary-table--compact';
+        tbl.innerHTML = `<thead><tr><th>Key</th><th>Value</th></tr></thead><tbody></tbody>`;
+        const tbody = tbl.querySelector('tbody');
+        rows.forEach(([k, v]) =>
+        {
+            const tr = document.createElement('tr');
+            const th = document.createElement('th'); th.textContent = String(k);
+            const td = document.createElement('td');
+            if (v && v.__link)
+            {
+                const a = document.createElement('a');
+                a.href = v.href;
+                a.target = v.target || '_blank';
+                a.textContent = v.href;       // ✅ label이 아닌 "URL 문자열"을 그대로 노출
+                td.appendChild(a);
+            }
+            else
+            {
+                td.textContent = String(v);
+            }
+            tr.appendChild(th); tr.appendChild(td);
+            tbody.appendChild(tr);
+        });
+        return tbl;
+    }
+
+    function renderProjectSummary()
+    {
+        const kvHost = document.getElementById('summary-kv');
+        const secHost = document.getElementById('summary-sections');
+        if (!kvHost || !secHost) return;
+
+        const pdata = getProjectData();
+
+        // ===== (1) 상단 KV (간격 넓게, overview 스타일)
+        const basePairs = [
+            ['Id', pdata.id],
+            ['Name', pdata.name],
+            ['Category', pdata.category],
+        ].filter(([_, v]) => v !== undefined && v !== null && v !== '');
+
+        kvHost.innerHTML = '';
+        basePairs.forEach(([k, v]) =>
+        {
+            const box = document.createElement('div');
+            box.className = 'box';
+            const sKey = document.createElement('span'); sKey.textContent = String(k);
+            const strong = document.createElement('b'); strong.textContent = String(v);
+            box.appendChild(sKey);
+            box.appendChild(document.createTextNode(': '));
+            box.appendChild(strong);
+            kvHost.appendChild(box);
+        });
+
+        // 외부 훅(선택)
+        if (window.ReportHooks && typeof window.ReportHooks.summaryKv === 'function')
+        {
+            window.ReportHooks.summaryKv(pdata, kvHost);
+        }
+
+        // ===== (2) 하단 섹션 카드들
+        secHost.innerHTML = '';
+
+        // 2-1) labels (테이블)
+        const labels = Object.assign({}, pdata.extra?.labels || {}, pdata.labels || {});
+        if (Object.keys(labels).length)
+        {
+            const card = createSectionCard('labels');
+            const rows = Object.entries(labels).map(([k, v]) => [k, String(v)]);
+            rows.sort((a, b) => String(a[0]).localeCompare(String(b[0])));
+            card.appendChild(createKVTable(rows));
+            secHost.appendChild(card);
+        }
+
+        // 2-2) links (테이블, value=URL 텍스트)
+        const rawLinks = []
+            .concat(Array.isArray(pdata.links) ? pdata.links : [])
+            .concat(Array.isArray(pdata.extra?.links) ? pdata.extra.links : []);
+        const seen = new Set(), links = [];
+        rawLinks.forEach(l =>
+        {
+            if (!l || !l.href) return;
+            const label = String(l.label || l.href);
+            const href = String(l.href);
+            const key = label + '|' + href;
+            if (seen.has(key)) return;
+            seen.add(key);
+            links.push({ label, href, target: l.target || '_blank' });
+        });
+        if (links.length)
+        {
+            const card = createSectionCard('links');
+            const rows = links.map(l => [
+                l.label || '',                 // Key 셀: 라벨(없으면 빈칸)
+                { __link: true, href: l.href, target: l.target } // Value 셀: URL 텍스트 a태그
+            ]);
+            card.appendChild(createKVTable(rows));
+            secHost.appendChild(card);
+        }
+
+        // 2-3) extra (JSON → HTML 트리)
+        const extraOnly = Object.assign({}, pdata.extra || {});
+        delete extraOnly.labels; delete extraOnly.links;
+        if (extraOnly && Object.keys(extraOnly).length)
+        {
+            const card = createSectionCard('extra');
+            card.appendChild(jsonToHtmlTree(extraOnly));
+            secHost.appendChild(card);
+        }
+
+        // 외부 훅(선택)
+        if (window.ReportHooks && typeof window.ReportHooks.summaryTable === 'function')
+        {
+            // 섹션 루트 전체를 넘겨, 원하는 섹션에 후처리 가능
+            window.ReportHooks.summaryTable(pdata, secHost);
+        }
+    }
+
+
+
+    function attachRowSelection()
+    {
+
+        function safeParseJSON(s)
+        {
+            if (!s) return null;
+            try { return JSON.parse(s); }
+            catch { return null; }
+        }
+        function basenameFromUrlOrPath(s)
+        {
+            if (!s) return "";
+            const str = String(s).trim();
+
+            // ───────────────────────────────
+            // 1) URL (http / https / file)
+            // ───────────────────────────────
+            const URL_SCHEME_RE = new RegExp("^[a-zA-Z][a-zA-Z0-9+.-]*:\/\/");
+            if (URL_SCHEME_RE.test(str))
+            {
+                try
+                {
+                    const u = new URL(str);
+
+                    // query/hash 제거된 pathname
+                    let p = u.pathname || "";
+
+                    // 끝이 "/"면 제거
+                    if (p.endsWith("/")) p = p.slice(0, -1);
+
+                    let last = p.split("/").pop() || u.hostname || "";
+
+                    // decode 예외 대비
+                    try { last = decodeURIComponent(last); }
+                    catch { }
+
+                    return last;
+                }
+                catch
+                {
+                    // URL 파싱 실패 → path 처리로 폴백
+                }
+            }
+
+            // ───────────────────────────────
+            // 2) URL 아님 → 파일 경로 처리
+            // ───────────────────────────────
+
+            // query/hash 제거
+            const noQuery = str.split(/[?#]/, 1)[0];
+
+            // 끝의 / 또는  제거
+            const trimmed = noQuery.replace(/[\/]+$/, "");
+
+            // Windows + POSIX 호환 basename
+            const m = trimmed.match(/[^\/]+$/);
+            return m ? m[0] : trimmed;
+        }
+
+
+        function getProjectIdFromURL()
+        {
+            try
+            {
+                const parts = location.pathname.split('/');
+                return decodeURIComponent(parts[parts.length - 2] || '');
+            }
+            catch { return ''; }
+        }
+
+        function renderOverviewSections(rootEl, item)
+        {
+            // 기존 섹션 제거
+            const old = rootEl.querySelector('#overview-sections-root');
+            if (old) old.remove();
+
+            // 루트 컨테이너
+            const root = document.createElement('div');
+            root.id = 'overview-sections-root';
+
+            // ➊ information 타이틀 (Project Summary와 같은 클래스 사용)
+            const head = document.createElement('div');
+            head.className = 'info-head';
+            head.textContent = 'information';
+            root.appendChild(head);
+
+            // ➋ Summary와 동일한 감싸는 컨테이너(폭/여백 규칙 동일)
+            const info = document.createElement('div');
+            info.id = 'overview-summary-info';
+            info.className = 'summary-info';               // ← Summary와 동일 클래스
+            root.appendChild(info);
+
+            // ➌ 실제 카드(테이블/JSON)가 들어갈 영역
+            const sects = document.createElement('div');
+            sects.id = 'overview-summary-sections';
+            sects.className = 'summary-sections';          // ← Summary와 동일 클래스
+            info.appendChild(sects);
+
+            // ========== labels (item.labels) ==========
+            const labels = (item && item.labels && typeof item.labels === 'object')
+                ? item.labels
+                : {};
+            if (Object.keys(labels).length)
+            {
+                const card = createSectionCard('labels');    // ← Summary와 동일한 카드 컴포넌트
+                const rows = Object.entries(labels)
+                    .map(([k, v]) => [k, String(v)])
+                    .sort((a, b) => String(a[0]).localeCompare(String(b[0])));
+                card.appendChild(createKVTable(rows));       // ← Summary와 동일한 테이블 컴포넌트
+                sects.appendChild(card);
+            }
+
+            // ========== links (item.links) ==========
+            const linksArr = Array.isArray(item?.links) ? item.links : [];
+            if (linksArr.length)
+            {
+                const card = createSectionCard('links');
+                const rows = linksArr.map(l => [
+                    String(l.label || ''),
+                    { __link: true, href: String(l.href || ''), target: l.target || '_blank' } // 값 칸은 URL a태그
+                ]);
+                card.appendChild(createKVTable(rows));
+                sects.appendChild(card);
+            }
+
+            // ========== extra (item.extra -> JSON 트리) ==========
+            const extraOnly = (item && item.extra && typeof item.extra === 'object') ? { ...item.extra } : null;
+            if (extraOnly)
+            {
+                // 혹시 item.extra 안에 labels/links가 중복으로 있다면 트리에서는 제거
+                delete extraOnly.labels; delete extraOnly.links;
+                if (Object.keys(extraOnly).length)
+                {
+                    const card = createSectionCard('extra');
+                    card.appendChild(jsonToHtmlTree(extraOnly));  // ← Summary와 동일한 JSON→HTML 컴포넌트
+                    sects.appendChild(card);
+                }
+            }
+
+            // 장착
+            rootEl.appendChild(root);
+        }
+        const detail = $('#detail-body');
+        const actionsExtra = document.getElementById('detail-actions-extra');
+        const extraSlot = $('#detail-extra');
+
+
+        $$('#items-host .item-row').forEach(row =>
+        {
+            row.addEventListener('click', () =>
+            {
+                $$('#items-host .item-row.selected').forEach(r => r.classList.remove('selected'));
+                row.classList.add('selected');
+
+                const o = row.dataset;
+
+                // 링크 확보
+                let fileLink = o.link;
+                if (!fileLink || fileLink === 'undefined' || fileLink === 'null')
+                {
+                    const f = o.file || '';
+                    fileLink = f ? ('../../fs?' + new URLSearchParams({ path: f }).toString()) : '#';
+                }
+                let originLink = o.origin;
+                if (!originLink || originLink === 'undefined' || originLink === 'null')
+                {
+                    originLink = '#';
+                }
+
+                // 표시용 파일명
+                const jsonName = o.jsonname || basenameFromUrlOrPath(o.file || '');
+                const originName = o.originname || (originLink && originLink !== '#' ? basenameFromUrlOrPath(originLink) : '');
+
+                const item = {
+                    rule: o.rule || '',
+                    status: o.status || '',
+                    originalStatus: o.origstatus || o.status || '',
+                    result: o.result || '',
+                    file: jsonName,
+                    originTarget: originName,
+                    itemId: o.itemid || '',
+                    tags: (o.tags || '').split(',').filter(Boolean),
+                    link: fileLink,
+                    origin: originLink,
+                    // ItemModel 메타
+                    labels: safeParseJSON(o.ilabels) || null,
+                    links: (function parseLinks()
+                    {
+                        const arr = safeParseJSON(o.ilinks) || [];
+                        // 통일: [{label, href, target}]
+                        if (Array.isArray(arr)) return arr.map(l => ({ label: l.label || '', href: String(l.href || ''), target: l.target || '_blank' }));
+                        if (typeof arr === 'object') return Object.entries(arr).map(([label, href]) => ({ label, href: String(href || ''), target: '_blank' }));
+                        return [];
+                    })(),
+                    extra: (function onlyExtra()
+                    {
+                        const x = safeParseJSON(o.iextra) || null;
+                        return x && typeof x === 'object' ? x : null;
+                    })()
+                };
+
+                // ===== Overview 상단 KV (간격 넓게, row 뱃지 스타일 동일) =====
+                if (detail)
+                {
+                    detail.innerHTML = `
+          <div class="kv">
+            <div>Rule: <b>${item.rule}</b></div>
+            <div>Status: <span class="st badge ${item.status}">${item.status}</span></div>
+            <div>Result: <span class="sev badge ${item.result}">${item.result}</span></div>
+            <div>File: <span>${item.file || '-'}</span></div>
+            <div>Origin target: <span>${item.originTarget || '-'}</span></div>
+            <div>Item: <span>${item.itemId}</span></div>
+            <div>Tags: <span id="detail-tags" class="detail-tags"></span></div>
+          </div>
+          <div class="filters" style="margin-top:10px">
+            <a class="chip${item.link === '#' ? ' disabled' : ''}"   href="${item.link}"   target="_blank">Open source</a>
+            <!--<a class="chip${item.origin === '#' ? ' disabled' : ''}" href="${item.origin}" target="_blank">Open origin target</a>
+            <button class="chip" id="toggle-skip"></button>-->
+          </div>
+        `;
+                    // 하단 섹션( labels / links / Information )
+                    renderOverviewSections(detail, item);
+                }
+
+                (actionsExtra) && (actionsExtra.innerHTML = '');
+                (extraSlot) && (extraSlot.innerHTML = '');
+
+                // Skip/Restore 토글칩
+                const btn = $('#toggle-skip');
+                const pid = getProjectIdFromURL();
+                const paint = (st) => { if (btn) btn.textContent = (st === 'skipped') ? 'Restore' : 'Skip'; };
+                paint(item.status);
+
+                btn?.addEventListener('click', async (e) =>
+                {
+                    e.stopPropagation();
+                    const next = (row.dataset.status === 'skipped') ? (row.dataset.origstatus || 'failed') : 'skipped';
+                    const ok = await apiUpdateOverride({
+                        projectId: pid,
+                        file: o.file || '',
+                        ruleId: o.rule || '',
+                        itemId: o.itemid || '',
+                        status: next
+                    });
+                    if (ok)
+                    {
+
+                        row.dataset.status = next;
+                        const sb = row.querySelector('.st');
+                        if (sb) { sb.textContent = next; sb.className = 'st badge ' + next; }
+
+                        const stNode = detail?.querySelector('.kv .st.badge');
+                        if (stNode) { stNode.textContent = next; stNode.className = 'st badge ' + next; }
+
+
+                        syncInlineTag(row, next === 'skipped');
+
+
+                        paint(next);
+
+
+                        document.dispatchEvent(new CustomEvent('nr:rowsChanged'));
+                    }
+                    else
+                    {
+                        alert('Failed to update status');
+                    }
+                });
+                renderDetailTagChips(item);
+
+                if (window.ReportHooks && typeof window.ReportHooks.detail === 'function')
+                {
+                    window.ReportHooks.detail(item, detail, { projectId: pid, link: item.link, origin: item.origin, tags: item.tags });
+                }
+            });
+        });
+    }
+    function initDonut()
+    {
+        const dataEl = document.getElementById('metrics-data');
+        const cvs = document.getElementById('donut');
+        if (!cvs) return;
+
+        // 원하는 크기를 명시적으로 제안(Chart.js가 내부적으로 계산함)
+        cvs.style.width = '420px';
+        cvs.style.height = '300px';
+
+        if (!(window).Chart) return;
+
+        // metrics-data 우선 사용 (rules 기반)
+        let metrics = {};
+        try { metrics = JSON.parse(dataEl?.textContent || '{}'); }
+        catch { metrics = {}; }
+
+        let rules = metrics.rules;
+        const statusOrder = metrics.statusOrder || ['failed', 'broken', 'skipped', 'passed'];
+
+        // fallback: DOM에서 ruleId & status 기반 계산
+        if (!rules || !Object.keys(rules).length)
+        {
+            const tmp = {};
+            document.querySelectorAll('.item-row').forEach(row =>
+            {
+                const rid = row.getAttribute('data-rule') || 'unknown';
+                const st = row.getAttribute('data-status') || 'unknown';
+                if (!tmp[rid]) tmp[rid] = { byStatus: {}, total: 0 };
+                tmp[rid].byStatus[st] = (tmp[rid].byStatus[st] || 0) + 1;
+                tmp[rid].total++;
+            });
+            rules = tmp;
+        }
+
+        if (!rules || !Object.keys(rules).length) return;
+
+        const labels = Object.keys(rules);
+
+        const colors = {
+            failed: '#ef4444',
+            broken: '#f97316',
+            skipped: '#9ca3af',
+            passed: '#22c55e'
+        };
+
+        const datasets = statusOrder.map(st =>
+        ({
+            label: st,
+            data: labels.map(ruleId => Number((rules[ruleId].byStatus || {})[st] || 0)),
+            backgroundColor: colors[st] || '#64748b',
+            stack: 'status'
+        }));
+
+        const totalItems = labels.reduce((acc, rid) => acc + (rules[rid].total || 0), 0);
+        if (!totalItems) return;
+
+        // 차트 생성 (ruleId x status stacked bar)
+        window.nrCharts = window.nrCharts || {};
+        window.nrCharts.rulesBar = new window.Chart(cvs, {
+            type: 'bar',
+            data: {
+                labels,
+                datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: { padding: { top: 8, right: 8, bottom: 8, left: 8 } },
+                scales: {
+                    x: {
+                        stacked: true,
+                        ticks: { color: '#cbd5e1', maxRotation: 60, minRotation: 0 }
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                        ticks: { color: '#cbd5e1' }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#cbd5e1' }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label(ctx)
+                            {
+                                const v = Number(ctx.parsed.y || 0);
+                                const ruleId = String(ctx.label || '');
+                                const st = String(ctx.dataset.label || '');
+                                return `${ruleId} / ${st}: ${v}`;
+                            }
+                        }
+                    },
+                    title: { display: false }
+                }
+            }
+        });
+
+        // 상단 서머리 숫자 갱신 (있을 경우)
+        const mi = document.getElementById('m-items');
+        const mf = document.getElementById('m-files');
+        if (mi) mi.textContent = String(totalItems);
+        if (mf) mf.textContent = String(document.querySelectorAll('.files-table tbody tr').length || 0);
+    }
+
+
+
+    function setupFileSections()
+    {
+
+        function __nrRecalcTotals()
+        {
+            const total = { failed: 0, broken: 0, skipped: 0, passed: 0 };
+            document.querySelectorAll('.items-list .item-row').forEach(row =>
+            {
+                const s = row.getAttribute('data-status') || '';
+                if (s && (s in total)) total[s]++;
+            });
+            // Update top counters if present
+            document.querySelectorAll('[data-nr-count]').forEach(el =>
+            {
+                const k = el.getAttribute('data-nr-count'); if (k && (k in total)) el.textContent = String(total[k]);
+            });
+            // Update donut if present
+            if ((window).nrCharts && (window).nrCharts.donut)
+            {
+                const chart = (window).nrCharts.donut;
+                const labels = chart.data.labels;
+                const order = labels && labels.length ? labels : ['failed', 'broken', 'skipped', 'passed'];
+                chart.data.datasets[0].data = order.map(k => total[k] || 0);
+                chart.update();
+            }
+        }
+
+        function recomputeVisibleCounts()
+        {
+            document.querySelectorAll('.items-list .item-file-title.section-title').forEach(header =>
+            {
+                let visible = 0, total = 0;
+                for (let n = header.nextElementSibling; n && !n.classList.contains('item-file-title'); n = n.nextElementSibling)
+                {
+                    if (n.classList.contains('item-row'))
+                    {
+                        total++;
+                        const isVisible = !(n.classList.contains('hidden') || n.classList.contains('row-collapsed'));
+                        if (isVisible) visible++;
+                    }
+                }
+                const badge = header.querySelector('.count-badge');
+                if (badge)
+                {
+                    // 보기 편한 표기로 선택 (total만, 또는 visible/total)
+                    // badge.textContent = `${visible}/${total}`;
+                    badge.textContent = String(total);
+                    badge.setAttribute('data-visible', String(visible));
+                    badge.setAttribute('data-count', String(total));
+                }
+            });
+        }
+        function toggleSection(header, collapse)
+        {
+            header.classList.toggle('collapsed', !!collapse);
+            for (let n = header.nextElementSibling; n && !n.classList.contains('item-file-title'); n = n.nextElementSibling)
+            {
+                if (n.classList.contains('item-row'))
+                {
+                    n.classList.toggle('row-collapsed', !!collapse);
+                }
+            }
+            document.dispatchEvent(new CustomEvent('nr:rowsChanged'));
+        }
+        const headers = document.querySelectorAll('.items-list .item-file-title.section-title');
+
+        // 프로젝트 id (localStorage 키에 사용)
+        let pid = '';
+        try
+        {
+            const parts = location.pathname.split('/');
+            pid = decodeURIComponent(parts[parts.length - 2] || '');
+        }
+        catch { }
+
+        headers.forEach(header =>
+        {
+            // 1) 개수 계산 (다음 헤더 전까지 .item-row 카운트)
+            let total = 0;
+            for (let n = header.nextElementSibling; n && !n.classList.contains('item-file-title'); n = n.nextElementSibling)
+            {
+                if (n.classList.contains('item-row')) total++;
+            }
+            const badge = header.querySelector('.count-badge');
+            if (badge)
+            {
+                badge.textContent = String(total);
+                badge.setAttribute('data-count', String(total));
+            }
+
+            // 2) 접기/펼치기 상태 복원
+            const fileKey = header.getAttribute('data-file') || '';
+            const k = `nr:collapsed:${pid}:${fileKey}`;
+            const stored = localStorage.getItem(k);
+            if (stored === '1')
+            {
+                // collapsed 로드
+                toggleSection(header, /*collapse*/true);
+                header.querySelector('.collapse-btn')?.setAttribute('aria-expanded', 'false');
+            }
+
+            // 3) 토글 버튼 + 헤더 전체 클릭 시 접기/펼치기
+            const doToggle = (e) =>
+            {
+                e.preventDefault();
+                const btn = header.querySelector('.collapse-btn');
+                const isExpanded = btn?.getAttribute('aria-expanded') !== 'false';
+                const willCollapse = !!isExpanded;
+                toggleSection(header, willCollapse);
+                btn?.setAttribute('aria-expanded', willCollapse ? 'false' : 'true');
+                // 상태 저장
+                localStorage.setItem(k, willCollapse ? '1' : '0');
+            };
+            header.addEventListener('click', (e) =>
+            {
+                // 행 선택과 충돌 방지하려면 버튼만 토글로 제한하려면 아래 if 해제
+                // if (!(e.target && e.target.closest('.collapse-btn'))) return;
+                doToggle(e);
+            });
+            header.querySelector('.collapse-btn')?.addEventListener('click', doToggle);
+        });
+
+
+        document.addEventListener('nr:rowsChanged', function ()
+        {
+            recomputeVisibleCounts();
+            __nrRecalcTotals();
+        });
+        recomputeVisibleCounts(); __nrRecalcTotals();
+    }
+
+    async function hydrateRuntimeOverrides()
+    {
+        try
+        {
+            // 1) projectId 읽기: <script id="project-data">에서 추출
+            const pdataEl = document.getElementById('project-data');
+            if (!pdataEl) return;
+            const pdata = JSON.parse(pdataEl.textContent || '{}');
+            const pid = String(pdata?.id || '');
+            if (!pid) return;
+
+            // 2) 현재 페이지의 모든 행 키 수집
+            const rows = Array.from(document.querySelectorAll('.items-list .item-row'));
+            const items = [];
+            for (const r of rows)
+            {
+                const file = r.getAttribute('data-file') || '';
+                const ruleId = r.getAttribute('data-rule') || '';
+                const itemId = r.getAttribute('data-itemid') || '';
+                if (!file || !ruleId) continue;
+                items.push({ file, ruleId, ...(itemId ? { itemId } : {}) });
+            }
+            if (items.length === 0) return;
+
+            // 3) 서버에 일괄 조회
+            const resp = await fetch('../../override/resolve', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ projectId: pid, items })
+            });
+            if (!resp.ok) return;
+            const data = await resp.json();
+            const list = Array.isArray(data?.results) ? data.results : [];
+
+            const keyOf = (x) => `${x.file}::${x.ruleId}::${x.itemId || ''}`;
+            const map = new Map(list.map(x => [keyOf(x), {
+                status: x.status || '',
+                override: typeof x.override === 'boolean' ? x.override : Boolean(x.status)
+            }]));
+
+            // 4) DOM 반영
+            for (const r of rows)
+            {
+
+                const k = keyOf({
+                    file: r.getAttribute('data-file') || '',
+                    ruleId: r.getAttribute('data-rule') || '',
+                    itemId: r.getAttribute('data-itemid') || '',
+                });
+                const info = map.get(k);
+                if (!info) continue;
+
+                // 상태
+                if (info.status)
+                {
+                    r.setAttribute('data-status', info.status);
+                    const sb = r.querySelector('.st');
+                    if (sb) { sb.textContent = info.status; sb.className = 'st badge ' + info.status; }
+                }
+
+
+                syncInlineTag(r, !!info.override);
+
+            }
+
+            // 5) 카운트/차트 갱신
+            document.dispatchEvent(new CustomEvent('nr:rowsChanged'));
+        }
+        catch (e)
+        {
+            console.warn('[hydrateRuntimeOverrides] failed', e);
+        }
+    }
+
+    function initProject()
+    {
+        if (isIndex()) return;
+        renderProjectSummary();
+        buildFilterChips();
+        applyFilters();
+        attachSorting();
+        attachReset();
+        attachRowSelection();
+        initDonut();
+        setupFileSections();
+        renderListTagChips();
+    }
+
+    onReady(() =>
+    {
+        initIndex();
+        initProject();
+        hydrateRuntimeOverrides();
+    });
+})();

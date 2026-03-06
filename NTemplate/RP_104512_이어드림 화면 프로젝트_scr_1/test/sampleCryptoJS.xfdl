@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="test" width="1280" height="720" titletext="암복호화(cryptojs)">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Static id="sta00" taborder="3" left="61" top="93" width="388" height="349" border="1px solid #5e5e5e"/>
+        <Button id="btnCrypto" taborder="0" text="암호화 ∇" left="97" top="160" width="287" height="44" onclick="btnCrypto_onclick"/>
+        <Edit id="edt1" taborder="1" left="88" top="107" width="332" height="33"/>
+        <TextArea id="txt00" taborder="2" left="83" top="230" width="335" height="185" wordWrap="char"/>
+        <Static id="sta01" taborder="4" text="암호화" left="234" top="63" width="78" height="34" font="normal 700 14pt/normal &quot;Arial&quot;"/>
+        <Static id="sta00_00" taborder="5" left="641" top="93" width="388" height="349" border="1px solid #5e5e5e"/>
+        <Button id="btnCrypto00" taborder="6" text="복호화 ∇" left="677" top="160" width="287" height="44" onclick="btnCrypto00_onclick"/>
+        <Edit id="edt2" taborder="7" left="668" top="107" width="332" height="33"/>
+        <TextArea id="txt00_00" taborder="8" left="663" top="230" width="335" height="185"/>
+        <Static id="sta01_00" taborder="9" text="복호화" left="814" top="63" width="78" height="34" font="normal 700 14pt/normal &quot;Arial&quot;"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "lib::cm_script.xjs" 
+this.callValue = "";
+
+
+
+//암호화
+this.btnCrypto_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var encrypted = this.smfEncrypted(this.edt1.value);
+	this.txt00.set_value(encrypted);
+	this.edt2.set_value(encrypted);
+	//alert("암호화 :"+encrypted);
+};
+//복호화
+this.btnCrypto00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var decrypted = this.smfDecrypted(this.edt2.value);
+	this.txt00_00.set_value(decrypted);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="ds00">
+        <ColumnInfo>
+          <Column id="pass" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmBoardList_Imp" width="945" height="85" titletext="Format : Notice" onload="frmBoardList_Imp_onload">
+    <Layouts>
+      <Layout height="85" horizontalgap="0" mobileorientation="landscape" spacing="0px" tabletemplate="1* / 1*" verticalgap="0" width="945">
+        <Static id="staTitle" taborder="0" left="0" top="20" height="40" cssclass="sta_WF_ConTitle" width="640" usedecorate="true" wordWrap="char" fittocontents="height" text="" onclick="staTitle_onclick" accessibilityenable="false" accessibilitydescription="링크"/>
+        <Button id="btnTitle" taborder="1" left="0" top="20" width="640" onclick="staTitle_onclick" cssclass="btn_WF_Focus" bottom="25"/>
+        <Static id="staNo" taborder="2" top="20" height="40" width="80" cssclass="sta_WF_ConNumber" right="215" accessibilitylabel="글번호"/>
+        <Static id="staDate" taborder="3" top="20" height="40" width="95" cssclass="sta_WF_ConNumber" right="100" accessibilitylabel="등록일"/>
+        <Static id="staView" taborder="4" top="20" height="40" width="80" cssclass="sta_WF_ConView" right="0" accessibilitylabel="조회수"/>
+        <Static id="Static03" taborder="5" left="0" right="0" cssclass="sta_WF_ConLine" top="staTitle:25" height="1" accessibilityenable="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.BoardForm = this.parent.parent.parent.parent;
+
+this.frmBoardList_Imp_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var sParentId = this.parent.id;
+	var objDs  = this.BoardForm.ds_NoticeList;
+	this.fn_InitFormData(objDs, nexacro.toNumber(sParentId.replaceAll("divImpList","")));	
+};
+
+
+this.fn_InitFormData = function(ds, nIdx)
+{
+	//this.staTitle.text = this.gfn_makeEllipse(ds.getColumn(nIdx, "SUBJECT"), this.staTitle);
+	this.staTitle.text = ds.getColumn(nIdx, "SUBJECT");
+	this.staTitle.tooltiptext = ds.getColumn(nIdx, "SUBJECT").replaceAll("<fc v='#fb6d3a'>","").replaceAll("<fc v='#ff0000'>","").replaceAll("</fc>","");
+	this.btnTitle.accessibilitylabel = "링크 제목 " + this.staTitle.tooltiptext;
+
+	this.staNo.text = "No." + ds.getColumn(nIdx, "BL_SEQ");
+	
+	var nDate = ds.getColumn(nIdx, "INSERT_DATE");
+	this.staDate.text = nDate.replaceAll("/", "-");
+	
+	this.staView.text = ds.getColumn(nIdx, "user_cnt");
+	this.resetScroll();
+	
+	//fittocontents로 div 높이 조절됐기 때문에 부모 높이도 조절
+	this.parent.set_height(this.Static03.getOffsetBottom());
+	this.BoardForm.divImpList.form.resetScroll();
+	
+	var lastDiv = this.BoardForm.divImpList.form.components[this.BoardForm.divImpList.form.components.length-1];
+	this.BoardForm.divImpList.set_height(lastDiv.getOffsetBottom());
+	this.BoardForm.viewList.set_height(this.BoardForm.viewList.form.divNoticeList.getOffsetBottom());
+	this.BoardForm.resetScroll();	
+};
+
+
+this.staTitle_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	var nIdx = nexacro.toNumber(this.parent.id[this.parent.id.length - 1]);
+	var PCategoryGubun = nexacro.getApplication().gv_mainFrame.PCategory2;
+	this.BoardForm.fn_BoardstaTitle_onclick(nIdx, PCategoryGubun);
+};
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

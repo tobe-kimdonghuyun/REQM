@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmTemp01" width="1200" height="7108" onload="framePolicy01_onload" titletext="개인정보처리방침">
+    <Layouts>
+      <Layout height="7108" width="1200" screenid="ScreenDeskTop">
+        <ImageViewer id="imgTitle" taborder="0" text="개인정보처리방침" left="0" top="60" height="54" cssclass="img_WF_SubTit01" width="261" initvalueid="ivTitleAccessibilityOn"/>
+        <Div id="divPolicy" taborder="1" text="div00" left="0" top="154" height="7015" right="0" initvalueid="ivDivAccessibilityOn" async="false"/>
+        <Static id="Static99_00_00_00_00" taborder="2" left="0" top="0" height="60" cssclass="sta_GD_Size" text="60" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="Static99_00_00_00_00_00" taborder="3" left="0" top="114" height="40" cssclass="sta_GD_Size" text="40" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="sta00" taborder="4" text="화면 Resize로 height 변동시 &#13;&#10;policy06_01화면의 div(ID: div01) &#13;&#10;height도 같이 변동될 수 있게 처리해주세요" left="1270" top="140" width="418" height="150" visible="false" background="RGBA(250,173,179,0.45)" font="normal 700 15pt/normal &quot;맑은 고딕&quot;"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="640" height="1024" mobileorientation="portrait" type="default">
+        <ImageViewer id="imgTitle" cssclass="img_WF_Txt48BC" left="142" top="73" height="80" taborder="0" right="142" minwidth="356" maxwidth=""/>
+        <Static id="Static99_00_00_00_00_00" left="0" top="135" height="90" right="0" text="90" taborder="3"/>
+        <Static id="Static99_00_00_00_00" left="0" top="0" height="90" right="0" text="90" taborder="2"/>
+        <Div id="divPolicy" left="0" top="250" right="0" bottom="0" taborder="1" formscrollbarsize="1"/>
+        <Static id="sta00" left="710" top="70" width="318" height="150"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	framePolicy01.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.10.12
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.10.12     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ this.framePolicy01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitForm(this);
+	
+	// 서브시스템에 따라 다른 화면으로 이동
+	var sSubSys = this.smfGetSubSystemGb();
+	
+	var sUrl = "frame::commom/framePolicy_New_01.xfdl";
+	if(  (sSubSys=="ORE")   // 온라인채용
+	  || (sSubSys=="HRD")   // 온라인채용(계약직)
+	  )
+	{
+		sUrl = "frame::commom/framePolicy_New_02.xfdl";
+	}
+	else if(sSubSys=="PAR")  // 유치원
+	{
+		sUrl = "frame::commom/framePolicy_New_03.xfdl";
+	}
+	else if(sSubSys=="EWS")  // 학교행정
+	{
+		sUrl = "frame::commom/framePolicy_New_04.xfdl";
+	}
+	else if(sSubSys=="SQA" 		// 검정고시
+		 || sSubSys=="HES" 		// 학원민원
+		 || sSubSys=="BDM") 	// 비영리법인민원 
+	{
+		sUrl = "frame::commom/framePolicy_New_05.xfdl";
+	}else
+	{
+		sUrl = "frame::commom/framePolicy_New_01.xfdl";
+	}
+	
+	this.divPolicy.set_url(sUrl);
+	
+	// 화면을 맨 위로 이동
+	this.getOwnerFrame().form.divAll.form.scrollTo(0,0);
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd <= -1) return;
+	
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+]]></Script>
+  </Form>
+</FDL>

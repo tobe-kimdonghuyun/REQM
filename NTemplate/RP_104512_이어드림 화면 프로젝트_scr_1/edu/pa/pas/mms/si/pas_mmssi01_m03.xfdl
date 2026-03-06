@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="NP11M1" width="1200" height="350" titletext="검정고시">
+    <Layouts>
+      <Layout height="350" width="1200" screenid="ScreenDeskTopP">
+        <ImageViewer id="img01" taborder="0" left="0" top="0" width="530" height="350" cssclass="Roundbox20" image="url('imagerc::pas_mmssi00/sub_serviceReport3_N.gif')" initvalueid="ivImgAccessibilityOn" accessibilitylabel="검정고시 소개"/>
+        <Div id="divGroup3" taborder="1" text="div00" left="600" top="0" height="350" width="600" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="subTitle1" taborder="0" text="검정고시" left="10" top="0" width="160" height="62" cssclass="font40B" initvalueid="ivTitleAccessibilityOn"/>
+              <Static id="sta00" taborder="1" text="검정고시 지원서 접수, 합격자 발표, 대입전형 자료&#13;신청 등 온라인으로 &#13;&#10;처리하여 방문 접수에 따른 &#13;불편 사항 해소, 사회적 비용 절감을 통한 &#13;&#10;교육행정 서비스 품질 향상을 목표로 하고 있습니다." left="10" top="82" width="533" height="94" cssclass="sta_WF_HangTxt_blue" initvalueid="ivStcAccessibilityOn" onclick="divGroup3_sta00_onclick"/>
+              <Button id="btnServiceLink" taborder="2" text="서비스 바로가기" left="10" top="290" width="240" height="60" cssclass="btn_WF_serviceLink_blue" initvalueid="ivBtnAccessibilityLink" onclick="btnServiceLink_onclick" accessibilitydescription="새창열림"/>
+            </Layout>
+            <Layout name="Layout0">
+              <ImageViewer id="subTitle1" cssclass="font42B" left="0" top="0" width="160" height="62"/>
+              <Static id="sta00" cssclass="sta_WF_HangTxt_blue_M" left="0" top="subTitle1:17" height="169" text="검정고시 지원서 접수, 합격자 발표, 대입전형 자료&#13;신청 등 온라인으로 처리하여 방문접수에 따른 &#13;불편사항 해소, 사회적 비용 절감을 통한&#13;교육행정서비스 품질 향상을 목표로 하고 있습니다." right="0" fittocontents="height"/>
+              <Button id="btnServiceLink" cssclass="btn_WF_serviceLink_blue_M" left="0" height="120" right="0" top="sta00:43" text="서비스 바로가기"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="640" height="1150" mobileorientation="portrait" type="default">
+        <ImageViewer id="img01" left="20" top="0" height="600" image="url('imagerc::pas_mmssi00_M/sub_serviceReport3_M_N.gif')" cssclass="Roundbox16" right="20" imagealign="right middle"/>
+        <Div id="divGroup3" left="20" top="img01:41" height="507" right="20"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.btnServiceLink_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var pageUrl = null;
+	var param = {};
+
+	if(this.smfContainsStr(window.location.host, "local")){		//로컬인 경우
+		param.server = "local";
+	}else if (this.smfContainsStr(window.location.host, "dev")){	//개발인 경우
+		param.server = "dev";
+	}else if (this.smfContainsStr(window.location.host, "tst")){	//시험인 경우
+		param.server = "test";
+	}else if (!this.smfContainsStr(window.location.host, "local") && 
+			  !this.smfContainsStr(window.location.host, "dev") &&
+			  !this.smfContainsStr(window.location.host, "tst")){	//운영인 경우
+		param.server = "prod";
+	}
+
+	param.subSys = "SQA";
+	var type = "link";
+	
+	this.smfSetServiceLink(pageUrl,type,param);
+};
+
+this.divGroup3_sta00_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	
+};
+]]></Script>
+  </Form>
+</FDL>

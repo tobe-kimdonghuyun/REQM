@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sample11" width="973" height="763" titletext="헤딩" onload="form_onload">
+    <Layouts>
+      <Layout height="763" width="973">
+        <Div id="div_0" taborder="0" text="Div00" left="36" top="8" width="910" height="129" background="azure" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="진입 시&#13;&#10; 안읽음" left="21" top="22" width="137" height="52"/>
+              <Div id="divTopBtn" taborder="1" text="여기도 안 읽음" left="88" top="14" width="721" height="87" border="1px solid red" accessibilityenable="false"/>
+              <Button id="Button00" taborder="2" text="Button00" left="838" top="17" width="55" height="48" onclick="div_0_Button00_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btn_1" taborder="1" text="첫번째" left="5" top="286" width="105" height="34" onclick="Button_onclick"/>
+        <Button id="btn_2" taborder="2" text="두번째" left="5" top="324" width="105" height="34" onclick="Button_onclick"/>
+        <Button id="btn_3" taborder="3" text="세번째" left="5" top="362" width="105" height="34" onclick="Button_onclick"/>
+        <Div id="Div00" taborder="4" text="본문영역 안읽음" left="50" top="164" width="923" height="536" border="1px solid black" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <Div id="div_1" taborder="0" text="Div01" left="12" top="12" width="931" height="498" background="pink" accessibilitydescription="첫번째">
+                <Layouts>
+                  <Layout>
+                    <Static id="Static00" taborder="0" text="111" left="41" top="22" width="157" height="52"/>
+                    <Button id="Button00" taborder="1" text="Button00" left="221" top="12" width="145" height="68"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="div_2" taborder="1" text="Div02" left="13" top="517" width="933" height="463" background="antiquewhite" accessibilitydescription="두번째">
+                <Layouts>
+                  <Layout>
+                    <Static id="Static00" taborder="0" text="222" left="41" top="22" width="157" height="52"/>
+                    <Button id="Button00" taborder="1" text="Button00" left="221" top="12" width="145" height="68"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="div_3" taborder="2" text="Div02" left="13" top="986" width="933" height="463" background="chocolate" accessibilitydescription="세번째">
+                <Layouts>
+                  <Layout>
+                    <Static id="Static00" taborder="0" text="333" left="41" top="22" width="157" height="52"/>
+                    <Button id="Button00" taborder="1" text="Button00" left="221" top="12" width="145" height="68"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="div_4" taborder="3" text="Div00" left="18" top="1459" width="910" height="129" background="azure" accessibilitydescription="네번째">
+                <Layouts>
+                  <Layout>
+                    <Static id="Static00" taborder="0" text="444" left="41" top="22" width="157" height="52"/>
+                    <Button id="Button00" taborder="1" text="Button00" left="221" top="12" width="145" height="68"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00" taborder="5" text="Static00" left="950" top="56" width="64" height="94" background="#c1c1c100"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsMenu">
+        <ColumnInfo>
+          <Column id="MENUID" type="STRING" size="256"/>
+          <Column id="MENUNM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="MENUID">1</Col>
+            <Col id="MENUNM">메뉴1</Col>
+          </Row>
+          <Row>
+            <Col id="MENUID">2</Col>
+            <Col id="MENUNM">메뉴2</Col>
+          </Row>
+          <Row>
+            <Col id="MENUID">3</Col>
+            <Col id="MENUNM">메뉴3</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.fvFirstGap 		= 0;
+this.fvBtnGap 			= 10;
+this.fvBtnHeight 		= 50;
+this.fvTopBtnPrefix 	= "TOP_";
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var objDiv = new Div();
+	objDiv.init("popDiv1", 0, 0, null, null, 0, 0);
+	this.addChild(objDiv.name, objDiv);
+
+	//objDiv.set_background("rgba(0, 0, 0, 0.5)");
+	objDiv.set_background("#ffffff");
+
+	objDiv.set_url("Etc::sample04_pop.xfdl");
+
+	objDiv.show();
+	
+	
+	
+// 	this.popDiv.move(0, 0, null, null, 0, 0);
+// 
+// 	this.popDiv.bringToFront();
+// 	
+ 	this.fnSetTopMenu();
+};
+
+
+this.fnClose = function()
+{
+	this.popDiv1.set_visible(false);	
+	this.div_0.setFocus();
+
+
+//	this.popDiv.set_visible(false);
+}
+
+this.fnSetTopMenu = function ()
+{
+	for (var i = 0; i < this.dsMenu.getRowCount(); i++) 
+	{
+		var sMenuId = this.dsMenu.getColumn(i, "MENUID");
+		var sMenuName = this.dsMenu.getColumn(i, "MENUNM");
+		
+		this.fnCreateTopMenu(sMenuId, sMenuName, i);
+	}
+};
+
+/**
+ * @description Top menu creation
+ */
+this.fnCreateTopMenu = function (sTopId, sName, index)
+{
+	// Creating page button
+	var objBtn = new Button();
+	objBtn.init(this.fvTopBtnPrefix + sTopId, this.fnGetLeft(sTopId), 0, 130, this.fvBtnHeight, null, null);
+	this.div_0.form.divTopBtn.form.addChild(objBtn.name, objBtn);
+
+	objBtn.set_text(sName);
+	objBtn.menuid = sTopId;
+	objBtn.show();
+	
+	// 버튼 width 셋팅
+	objBtn.set_fittocontents("width");
+	var nWidth = objBtn.getOffsetWidth();
+	objBtn.set_fittocontents("none");
+	objBtn.set_width(nWidth + 20);
+	
+//	objBtn.setEventHandler("onclick", this.btnTopMenu_onclick, this);
+	
+};
+
+this.fnGetLeft = function (sTopId)
+{
+	var nCurRow = this.dsMenu.findRow("MENUID", sTopId);
+	if (nCurRow == 0) return this.fvFirstGap;
+
+	var objPrevTab = this.fnFindObj(this.fvTopBtnPrefix + this.dsMenu.getColumn(nCurRow - 1, "MENUID"));
+	return objPrevTab.getOffsetRight() + this.fvBtnGap;
+};
+
+this.fnFindObj = function (sId)
+{
+	return this.div_0.form.divTopBtn.form.components[sId];
+};
+
+this.Button_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sID = obj.name.split("_")[1];
+	
+	switch(sID) 
+	{
+		case "1" :
+			this.Div00.form.vscrollbar.set_pos(0);
+			break;
+		case "2" :
+			this.Div00.form.vscrollbar.set_pos(500);
+			break;
+		case "3" :
+			this.Div00.form.vscrollbar.set_pos(1000);
+			break;
+	}
+	
+};
+
+
+this.div_0_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fn_openPopup("test","Etc::sample04_pop1.xfdl","","","");
+};
+
+this.fn_openPopup = function(sPopupId, sUrl, oArg, sOption, sPopupCallback)
+{
+	var popid = parseInt(Math.random()*10000);
+	if(sPopupId == null || sPopupId == "" ) sPopupId = "p_"+popid;
+	if(oArg == null || oArg == "" )     oArg = {};	
+	
+	//----------------------------------------------------------------
+	// 팝업 Default 설정 값
+	//----------------------------------------------------------------
+	var popupType = "modal";		
+	var nLeft   = -1;
+	var nTop    = -1;
+	var nWidth  = 0;
+	var nHeight = 0;
+	
+	var bShowTitle  = false;
+	var bAutoSize   = true;
+	var bResizable  = false;
+	var sAlign = "center middle";
+	var sModalSize = "";	// "", full, center 
+	var sTitleText  = "";
+	var sPopupEvent = "";
+	
+	for(var key in sOption)
+	{	
+		switch (key) 
+		{
+			case "top":				
+				nTop = parseInt(sOption[key]);
+				break;
+			case "left":
+				nLeft = parseInt(sOption[key]);
+				break;
+			case "width":
+				nWidth = parseInt(sOption[key]);
+				break;
+			case "height":
+				nHeight = parseInt(sOption[key]);
+				break;
+			case "title":
+			    if( sOption[key] == "false" ) bShowTitle = false;
+				break;		
+			case "titletext":
+				sTitleText = sOption[key];
+				break;			
+			case "popupType":
+				popupType = sOption[key];
+				break;
+			case "autosize":
+				bAutoSize = sOption[key];
+				break;
+			case "popupEvent":			// 팝업 이벤트 호출
+				sPopupEvent = sOption[key];
+				break;
+		}			
+	}	
+
+	popupType = popupType.toLowerCase();
+	
+	if (nWidth > 0 || nHeight > 0) 
+	{
+		bAutoSize = false;
+	}
+	
+	if(nTop > 0 || nLeft > 0 || nWidth > 0 || nHeight > 0)
+	{
+		sAlign = null;
+	}
+
+	if(bShowTitle == true) nHeight += 50;	
+	
+	if (nLeft == -1 && nTop == -1) 	
+	{
+		if ( nWidth == -1 && nHeight == -1) 	//l,t,w,h 모두 기입하지 않으면 full
+		{
+			sModalSize = "full";
+		}
+		else 
+		{
+			sModalSize = "center";
+		}
+	}
+
+	var newChild = new ChildFrame(sPopupId, nLeft, nTop, nWidth, nHeight, null, null, sUrl);
+	
+	newChild._modaltype = sModalSize;
+	newChild.set_showtitlebar(bShowTitle);   // <---- 타이틀바/statusbar는 접근성 미지원임, 타이틀용으로 화면단에서 제작필수
+	newChild.set_autosize(bAutoSize);
+	newChild.set_resizable(bResizable);
+	newChild.set_titletext(sTitleText);
+	newChild.set_showstatusbar(false);   // <---- 타이틀바/statusbar는 접근성 미지원임, 타이틀용으로 화면단에서 제작필수
+	
+	if(sAlign != null) newChild.set_openalign(sAlign);
+			
+	//newChild.set_titlebarheight(50);
+
+	newChild.showModal(sPopupId, this.getOwnerFrame(), oArg, this, function(svcid, variant) {
+		if(sPopupCallback)	
+		{
+			var p_variant = this.gfn_isNull(this._variant) ? variant : this._variant;
+			this._variant = "";
+			
+			if(typeof sPopupCallback == "function" )
+			{
+				sPopupCallback.call(this, sPopupId, p_variant);
+			}
+			else if(typeof sPopupCallback == "string")
+			{
+				if(!this.gfn_isFunction(this[sPopupCallback]))return;
+				this[sPopupCallback].call(this, sPopupId, p_variant);
+			}
+		}
+	});
+};
+]]></Script>
+  </Form>
+</FDL>

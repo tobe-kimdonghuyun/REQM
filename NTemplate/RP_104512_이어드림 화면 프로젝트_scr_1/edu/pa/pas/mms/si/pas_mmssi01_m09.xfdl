@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="NP11M1" width="1200" height="350" titletext="대입전형자료(학교생활기록부)" onload="fnOnload">
+    <Layouts>
+      <Layout height="350" width="1200" screenid="ScreenDeskTopP">
+        <ImageViewer id="img01" taborder="0" left="0" top="0" width="530" height="350" cssclass="Roundbox20" image="url('imagerc::pas_mmssi00/sub_serviceReport10_N.gif')" initvalueid="ivImgAccessibilityOn" accessibilitylabel="대입전형자료(학교생활기록부) 소개"/>
+        <Div id="divGroup3" taborder="1" text="div00" left="600" top="0" height="350" width="600" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="subTitle1" taborder="0" text="대입전형자료(학교생활기록부)" left="10" top="0" width="480" height="62" cssclass="font40B" initvalueid="ivTitleAccessibilityOn"/>
+              <Static id="sta00" taborder="1" text="고등학교 졸업생이 대입전형자료(학교생활기록부)를 온라인으로 직접 생성신청하여 대학에 제공하는 서비스입니다." left="10" top="82" width="533" height="54" cssclass="sta_WF_HangTxt_blue" initvalueid="ivStcAccessibilityOn"/>
+              <Button id="btnServiceLink" taborder="5" text="서비스 바로가기" left="10" top="290" width="240" height="60" cssclass="btn_WF_serviceLink_blue" initvalueid="ivBtnAccessibilityLink" onclick="btnServiceLink_onclick" accessibilitydescription="새창열림"/>
+              <Static id="staCoaGudnCn02" taborder="3" text=": 2004학년도 졸업자('05.2.졸업) ~ 2020학년도 졸업자('21.2.졸업)" left="10" top="166" width="503" height="20" cssclass="sta_WF_HangTxt_black01" initvalueid="ivStcAccessibilityOn" padding="0px 0px 0px 32px"/>
+              <Static id="sta00_00" taborder="4" text="대입 서류 제출에 대한 수험생의 불편을 해소하고 대입전형의 공정성과 신뢰성을 강화합니다." left="10" top="staCoaGudnCn02:5" width="533" height="54" cssclass="sta_WF_HangTxt_blue" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staCoaGudnCn01" taborder="2" text="※ 2026학년도 대입 신청 대상자" left="10" top="sta00:5" width="503" height="20" cssclass="sta_WF_HangTxt_black01" initvalueid="ivStcAccessibilityOn" padding="0px 0px 0px 16px"/>
+            </Layout>
+            <Layout name="Layout0">
+              <ImageViewer id="subTitle1" cssclass="font42B" left="0" top="0" width="520" height="62" taborder="0"/>
+              <Static id="sta00" cssclass="sta_WF_HangTxt_blue_M" left="0" top="subTitle1:10" height="126" right="0" fittocontents="height" taborder="1"/>
+              <Button id="btnServiceLink" cssclass="btn_WF_serviceLink_blue_M" left="0" height="120" right="0" top="402" text="서비스 바로가기" taborder="5"/>
+              <Static id="sta00_00" left="0" top="293" height="94" cssclass="sta_WF_HangTxt_blue_M" right="0" taborder="4"/>
+              <Static id="staCoaGudnCn02" left="10" top="248" width="583" height="40" cssclass="sta_WF_HangTxt_black_M02" padding="0px" visible="false" taborder="3"/>
+              <Static id="staCoaGudnCn01" left="10" top="203" width="583" height="80" cssclass="sta_WF_HangTxt_black_M02" padding="0px" text="※ 2026학년도 대입 신청 대상자 : 2004학년도 졸업자('05.2.졸업) ~ 2020학년도 졸업자('21.2.졸업)" taborder="2"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="640" height="1150" mobileorientation="portrait" type="default">
+        <ImageViewer id="img01" left="20" top="0" height="600" image="url('imagerc::pas_mmssi00_M/sub_serviceReport10_M_N.gif')" cssclass="Roundbox16" right="20" imagealign="right middle" taborder="0"/>
+        <Div id="divGroup3" left="20" top="img01:41" height="527" right="20" taborder="1"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.btnServiceLink_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var pageUrl = null;
+	var param = {};
+
+	if(this.smfContainsStr(window.location.host, "local")){		//로컬인 경우
+		param.server = "local";
+	}else if (this.smfContainsStr(window.location.host, "dev")){	//개발인 경우
+		param.server = "dev";
+	}else if (this.smfContainsStr(window.location.host, "tst")){	//시험인 경우
+		param.server = "test";
+	}else if (!this.smfContainsStr(window.location.host, "local") && 
+			  !this.smfContainsStr(window.location.host, "dev") &&
+			  !this.smfContainsStr(window.location.host, "tst")){	//운영인 경우
+		param.server = "prod";
+	}
+
+	param.subSys = "UDA";
+	var type = "link";
+	
+	this.smfSetServiceLink(pageUrl,type,param);
+};
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+
+/**
+ * @description 화면 onload시 처리
+ */
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// Div 초기화
+	this.smfInitForm(obj);
+
+	this.smfSearchService('selectCoaCtr')
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if(this.dsCoaCtr.getRowCount() > 0){
+				var vsCoaAyr = this.dsCoaCtr.getColumn(0, "coaAyr");
+				var vsAplcnBgngAyr = this.dsCoaCtr.getColumn(0, "aplcnBgngAyr");
+				var vsAplcnEndAyr = this.dsCoaCtr.getColumn(0, "aplcnEndAyr");
+				
+				var vsAplcnBgngAyrByGrdtn = this.smfStr(parseInt(vsAplcnBgngAyr) + 1).substr(2, 2);
+				var vsAplcnEndAyrByGrdtn = this.smfStr(parseInt(vsAplcnEndAyr) + 1).substr(2, 2);
+				
+				var vsCoaGudnCn01 = "※ "+vsCoaAyr+"학년도 대입 신청 대상자";
+				var vsCoaGudnCn02 = ": "+vsAplcnEndAyr+"학년도 졸업자('"+vsAplcnEndAyrByGrdtn+".2.졸업) ~ "+vsAplcnBgngAyr+"학년도 졸업자('"+vsAplcnBgngAyrByGrdtn+".2.졸업)";
+				
+				if(this.smfIsMobile()){
+					this.divGroup3.form.staCoaGudnCn01.set_text(vsCoaGudnCn01 + " " + vsCoaGudnCn02);
+				} else {
+					this.divGroup3.form.staCoaGudnCn01.set_text(vsCoaGudnCn01);
+					this.divGroup3.form.staCoaGudnCn02.set_text(vsCoaGudnCn02);
+				}
+			}
+			
+		});
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg) {
+	if(errcd <= -1) return;
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectCoaCtr</Col>
+            <Col id="url">/pas_uum_uc00_001.do</Col>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsCoaCtr</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" oncolumnchanged="dsSearch_oncolumnchanged" useclientlayout="false">
+        <ColumnInfo>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="coaRcritScNm" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCoaCtr" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="coaAyr" type="STRING" size="4"/>
+          <Column id="coaRcritScCd" type="STRING" size="1"/>
+          <Column id="rcritNm" type="STRING" size="1"/>
+          <Column id="coaSvcAplyBgngYmd" type="STRING" size="8"/>
+          <Column id="coaSvcAplyEndYmd" type="STRING" size="8"/>
+          <Column id="rcritScByBgngYmd" type="STRING" size="1"/>
+          <Column id="rcritScByEndYmd" type="STRING" size="8"/>
+          <Column id="rcritScByBgngYmdNsche" type="STRING" size="8"/>
+          <Column id="rcritScByEndYmdNsche" type="STRING" size="8"/>
+          <Column id="rcritScByBgngYmdSche" type="STRING" size="8"/>
+          <Column id="rcritScByEndYmdSche" type="STRING" size="8"/>
+          <Column id="aplcnBgngAyr" type="STRING" size="256"/>
+          <Column id="aplcnEndAyr" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

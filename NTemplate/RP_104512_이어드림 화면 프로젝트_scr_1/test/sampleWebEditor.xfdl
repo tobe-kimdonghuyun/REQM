@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleWebEditor" width="1250" height="645" titletext="New Form" onload="sampleWebEditor_onload">
+    <Layouts>
+      <Layout height="645" width="1250">
+        <Static id="sta00" taborder="0" text="웹에디터 사용 샘플" left="1" top="3" width="439" height="40"/>
+        <Div id="divWebEditor" taborder="1" text="div00" left="137" top="120" width="553" height="420" url="comm::comp_webEditor.xfdl" autoHeight="Y" mode="viewer"/>
+        <Button id="btnSetHtml" taborder="2" text="SetHtml" left="10" top="82" width="93" height="38" onclick="btnSetHtml_onclick"/>
+        <Button id="btnClearHtml" taborder="3" text="clearHtml" left="10" top="132" width="93" height="38" onclick="btnClearHtml_onclick"/>
+        <Button id="btnGetHtml" taborder="4" text="GetHtml" left="10" top="182" width="93" height="38" onclick="btnGetHtml_onclick" enable="false"/>
+        <Static id="sta01" taborder="5" text="* userproperty(&quot;mode&quot;)에 &quot;editor&quot;를 세팅하면 editor모드를 사용가능(default:&quot;viewer&quot;)" left="151" top="60" width="529" height="33"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleWebEditor.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.8.2
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.8.2     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.sampleWebEditor_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 웹에디터를 초기화한다.
+	this.divWebEditor.form.fnInit(this,this.fnWebEditorOnloadedCallback,this.fnWebEditorSetHtmlCallback);	
+	
+	if(this.divWebEditor.mode =="editor")
+	{
+		this.btnGetHtml.set_enable(true);
+	}
+
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/*
+*	웹에디터가 onload된 이후 호출되는 callback
+*   obj : 웹에디터 Div오브젝트
+*/
+this.fnWebEditorOnloadedCallback = function(obj)
+{
+	trace("***  웹에디터가 로드됐습니다.["+obj.id+"]");
+	
+	// 일반적으로는 데이터를 세팅
+	//this.divWebEditor.form.fnSetHtml("TEST");
+};
+
+/*
+*	웹에디터가 text를 변경 할 경우 호출하는 callback
+*   obj : 웹에디터 Div오브젝트
+*/
+this.fnWebEditorSetHtmlCallback = function(obj,contentHeight)
+{
+	trace("***  웹에디터에 Text를 세팅했습니다.["+obj.id+"] contentHeight[=" + contentHeight + "]");
+	
+	// 일반적으로는 WebEditor Div를 resetScroll해줌.
+	//  (Web Editor의 높이가 변경이 되어 있음(autoHeight="Y"인 경우))
+	//this.smfResetScroll(this.divWebEditor.form);
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/*
+*	[SetHtml]버튼처리
+*/
+this.btnSetHtml_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sHtml = '<strong>강조문자</strong><br>언제나 데이터<br>';
+	var sHtml1 = ""
+	for(var i=0;i<10;i++ ) sHtml1+=sHtml;	
+	
+	this.divWebEditor.form.fnSetHtml(sHtml1);	
+};
+
+/*
+*	[ClearHtml]버튼처리
+*/
+this.btnClearHtml_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 웹에디터의 값을 초기화한다.(fnSetHtml("")을 사용해도 됨)
+	this.divWebEditor.form.fnClearHtml();	
+};
+
+this.btnGetHtml_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sHtml = this.divWebEditor.form.fnGetHtml();
+	
+	trace(sHtml);
+};
+]]></Script>
+  </Form>
+</FDL>

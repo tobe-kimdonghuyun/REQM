@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Base" width="1280" height="720" titletext="기본메인창" onload="Base_onload" onkeydown="Base_onkeydown">
+    <Layouts>
+      <Layout width="1280" height="720" screenid="Desktop_screen">
+        <Button id="btnFirstFocus" taborder="0" text="처음" left="0" top="0" width="10" height="10" background="red" visible="true"/>
+        <Div id="divSkip" taborder="1" left="180" top="0" width="900" height="43" background="#10397c" onsetfocus="divSkip_onsetfocus" onkillfocus="divSkip_onkillfocus" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <Button id="btnGoBody" taborder="0" text="본문 바로가기" left="8" top="8" width="90" height="25" accessibilityenable="true" onclick="divSkip_btnGoBody_onclick"/>
+              <Button id="btnGoHelp" taborder="1" text="웹접근성안내 바로가기" left="106" top="8" width="158" height="25" accessibilityenable="true" onclick="divSkip_btnGoHelp_onclick"/>
+              <Static id="sta_text" taborder="2" text="※ 키보드사용자께서는 컨트롤 + 스페이스키 를 입력하신 후 본 사이트를 이용하시기 바랍니다." left="272" top="8" width="608" height="25" color="white" accessibilityrole="none"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTop" taborder="2" left="10" top="0" height="80" border="1px solid" right="35" accessibilityrole="heading" accessibilitylabel="상단 메인메뉴" url="Frame::Top.xfdl" text=""/>
+        <Div id="divContents" taborder="3" left="10" top="90" height="546" accessibilitylabel="본문" accessibilityrole="heading" border="1px solid" right="35" url="Etc::accessibilityGuide.xfdl"/>
+        <Div id="divFooter" taborder="4" left="10" top="646" height="62" accessibilityrole="heading" border="1px solid" url="Frame::Footer.xfdl" right="35" accessibilitylabel="사이트 하단 정보"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Base_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	nexacroBase = this;
+	nexacroTop = this.divTop ;
+	nexacroMain = this.divContents ;
+	nexacroBtms = this.divFooter ;
+
+	this.divSkip.set_height(0);
+};
+
+
+this.divSkip_onkillfocus = function(obj:nexacro.Div,e:nexacro.KillFocusEventInfo)
+{
+	this.divSkip.set_height(0);
+};
+
+this.divSkip_onsetfocus = function(obj:nexacro.Div,e:nexacro.SetFocusEventInfo)
+{
+	this.divSkip.set_height(43);
+	
+	this.divSkip.bringToFront();
+};
+
+this.divSkip_btnGoBody_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divContents.setFocus();
+};
+
+
+// //접근성 단축키시 페이지 스크롤 위치 조절
+// this.fn_setFormVScroll = function(keyCode)
+// {
+// 	if (keyCode == 52){
+// 		this.divContents.form.vscrollbar.set_pos(this.divContents.form.vscrollbar.pos + 20);
+// 	}else if (keyCode == 51 ){
+// 		if( this.divContents.form.vscrollbar.pos < 20 )
+// 			this.divContents.form.vscrollbar.set_pos(0);
+// 		else
+// 			this.divContents.form.vscrollbar.set_pos(this.divContents.form.vscrollbar.pos - 20);
+// 	}
+// };
+this.Base_onkeydown = function(obj:nexacro.Form,e:nexacro.KeyEventInfo)
+{
+// 	if (e.ctrlkey){
+// 		//접근성 모드 전환 단축키 처리
+// 		if (e.keycode == 32)	//Ctrl+Space
+// 		{
+// 			if (nexacro.getEnvironment().enableaccessibility != true)
+// 			{
+// 				nexacro.getEnvironment().set_enableaccessibility(true);
+// 				// 접근성 모드를 키면 화면을 메인 화면을 재 로딩 한다.
+// 				nexacroApp.mainframe.childframe.set_formurl("");
+// 				nexacroApp.mainframe.childframe.set_formurl("Frame::Base.xfdl");
+// 			}
+// 		}
+// 	}
+// 	else if (e.altkey)
+// 	{
+// 		//화면 스크롤 단축키 처리
+// 		if (e.keycode == 51 || e.keycode == 52)	// Alt+3 / Alt+4
+// 		{	
+// 			 this.fn_setFormVScroll(e.keycode);
+// 		}
+// 	}
+};
+this.fn_setFirstFocus = function()
+{
+// 	if( nexacro.getEnvironment().enableaccessibility ) {
+// 		this.btnFirstFocus.set_text("스크린리더의 가상커서를 해제하신 후 이용하시기 바랍니다.");
+// 	}
+//	this.btnFirstFocus.setFocus();
+};
+
+this.divSkip_btnGoHelp_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+//	alert("웹접근성안내팝업");
+};
+]]></Script>
+  </Form>
+</FDL>

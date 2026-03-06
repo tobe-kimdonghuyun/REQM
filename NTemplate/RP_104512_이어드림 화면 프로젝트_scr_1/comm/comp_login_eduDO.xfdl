@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comp_login_eduDO" width="1160" height="850" titletext="교육디지털원패스로그인모듈" cssclass="frm_Pop_bgTrsprt" onload="comp_login_eduDO_onload">
+    <Layouts>
+      <Layout height="850" width="1160">
+        <WebBrowser id="webMain" taborder="0" left="0" top="0" right="0" bottom="0" onloadcompleted="webMain_onloadcompleted" onusernotify="webMain_onusernotify"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	comp_login_npki.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.12.16
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.12.16     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_params = {};  // 부모로 부터 받은 파라미터
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.comp_login_eduDO_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitPopup(this);
+	
+	this.fv_params = this.smfGetPopupParams();	
+	// Url을 세팅한다.
+	var sBaseUrl= window.location.protocol + "//" + window.location.host;
+	var sUrl= sBaseUrl + "/thirdparty/oauth/eDigitalonepass_nexacro.html"
+	//var sUrl= sBaseUrl + "/html/oauth/test2.html"
+	this.webMain.set_url(sUrl);
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+// 공동인증을 호출한다.
+this.fnExecLogin = function(objParam)
+{
+	
+	//this.fv_params = objParam;
+	
+	var sSubSys = this.fnGetSubSystemGb();
+	var sRunMode = nexacro.getEnvironmentVariable("ev_runMode");
+	
+	if(window.location.host.indexOf("mom.")>-1)
+	{
+		sSubSys += "_MOM";
+	}
+	
+	var sExpr = "((runMode=='"+sRunMode+"')&&(subSys=='"+sSubSys+"'))"
+	var nFindRow = this.dsEduDoUrl.findRowExpr(sExpr);
+	if(nFindRow<0)
+	{
+		trace("해당하는 조건의 로그인 접속정보가 없습니다.조건식("+sExpr+")");
+		return;
+	}
+	
+	var sSiteid      = this.dsEduDoUrl.getColumn(nFindRow,"siteId"     );
+	var sSecurityKey = this.dsEduDoUrl.getColumn(nFindRow,"securityKey");
+	var sBaseUrl     = this.dsEduDoUrl.getColumn(nFindRow,"baseUrl"    );
+	
+	var sUrl = sBaseUrl + "/" + sSiteid + "/login.do";
+	
+	this.fv_params.siteId      = sSiteid;
+	this.fv_params.securityKey = sSecurityKey;
+	this.fv_params.url         = sUrl;
+	// 금융인증서를 띄운다.
+	this.webMain.callMethod("fnExecLogin",this.fv_params);
+	
+}
+
+this.fnGetSubSystemGb = function()
+{
+	var sSubSys = this.smfGetSubSystemGb();
+	
+	if (  (sSubSys=="AFS") // 방과후학교 운영지원
+	   || (sSubSys=="ECC") // 초등돌봄교실 운영지원
+	   || (sSubSys=="SML") // 급식 위생관리지원
+	   || (sSubSys=="PHE") // 체육 학교운동부 및 스포츠클럽 관리
+	   || (sSubSys=="IBM") // 교과용도서 주문정보조회
+	   || (sSubSys=="SEM") // 학교환경관리 위생점검등록
+	   || (sSubSys=="SPR") // 교육복지 인터넷 통신비 정산
+	   )
+	{
+		sSubSys = "AFS";   // 업무지원의 대표서브시스템명
+	}
+	return sSubSys;
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.webMain_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+	this.fnExecLogin({});
+};
+
+this.webMain_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	trace("webMain_onusernotify : e.userdata=[" + e.userdata + "]");
+	switch(e.userdata)
+	{
+		case "result" :
+			var sData = this.webMain.callMethod("getNexacroData");
+			var bResult = true;
+		
+			this.smfSendResponseToOpener({result:bResult,data:sData});
+
+			if(this.opener)
+			{
+				this.close(true);
+			}
+			break;
+		case "cert_stop" :
+			var sData = this.webMain.callMethod("getNexacroData");
+			var bResult = false;
+		
+			this.smfSendResponseToOpener({result:bResult,data:sData});
+			
+			if(this.opener)
+			{
+				this.close(false);
+			}
+			break;
+	}
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsEduDoUrl">
+        <ColumnInfo>
+          <Column id="runMode" type="STRING" size="256" description="실행모드(1:로컬,2:개발,3:운영,4검증)"/>
+          <Column id="subSys" type="STRING" size="256" description="서브시스템구분값(예, EWS)"/>
+          <Column id="siteId" type="STRING" size="256"/>
+          <Column id="securityKey" type="STRING" size="256" description="사이트에 등록된 securityKey"/>
+          <Column id="baseUrl" type="STRING" size="256" description="접속하는 디지털원패스URL"/>
+          <Column id="desc" type="STRING" size="256" description="설명"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="runMode">1</Col>
+            <Col id="subSys">EDS</Col>
+            <Col id="siteId">EDU_EDS_LOCAL</Col>
+            <Col id="securityKey">oWd53kxgw7IvigfX2MZm9S29K07zHzp44zcX3jJR38Y=</Col>
+            <Col id="baseUrl">http://edupass.dev.neisplus.kr</Col>
+            <Col id="desc">대국민 - 교육설문 - 로컬</Col>
+          </Row>
+          <Row>
+            <Col id="runMode">2</Col>
+            <Col id="subSys">EDS</Col>
+            <Col id="siteId">NEIS_EDS_DEV</Col>
+            <Col id="securityKey">oWd53kxgw7IvigfX2MZm9S29K07zHzp44zcX3jJR38Y=</Col>
+            <Col id="baseUrl">http://edupass.dev.neisplus.kr</Col>
+            <Col id="desc">대국민 - 교육설문 - 개발</Col>
+          </Row>
+          <Row>
+            <Col id="runMode">2</Col>
+            <Col id="subSys">EDS_MOM</Col>
+            <Col id="siteId">NEIS_EDS_MOM_DEV</Col>
+            <Col id="securityKey">oWd53kxgw7IvigfX2MZm9S29K07zHzp44zcX3jJR38Y=</Col>
+            <Col id="baseUrl">http://edupass.dev.neisplus.kr</Col>
+            <Col id="desc">대국민 - 교육설문 - 개발</Col>
+          </Row>
+          <Row>
+            <Col id="runMode">3</Col>
+            <Col id="subSys">EDS</Col>
+            <Col id="siteId">NEIS_EDS_PROD</Col>
+            <Col id="securityKey">oWd53kxgw7IvigfX2MZm9S29K07zHzp44zcX3jJR38Y=</Col>
+            <Col id="baseUrl">https://edupass.neisplus.kr</Col>
+            <Col id="desc">대국민 - 교육설문 - 운영</Col>
+          </Row>
+          <Row>
+            <Col id="runMode">3</Col>
+            <Col id="subSys">EDS_MOM</Col>
+            <Col id="siteId">NEIS_EDS_MOM_PROD</Col>
+            <Col id="securityKey">oWd53kxgw7IvigfX2MZm9S29K07zHzp44zcX3jJR38Y=</Col>
+            <Col id="baseUrl">https://edupass.neisplus.kr</Col>
+            <Col id="desc">대국민 - 교육설문 - 운영</Col>
+          </Row>
+          <Row>
+            <Col id="runMode">1</Col>
+            <Col id="subSys">AFS</Col>
+            <Col id="siteId">EDU_EDS_LOCAL</Col>
+            <Col id="baseUrl">http://edupass.dev.neisplus.kr</Col>
+            <Col id="securityKey">oWd53kxgw7IvigfX2MZm9S29K07zHzp44zcX3jJR38Y=</Col>
+            <Col id="desc">대국민 - 업무지원 - 로컬</Col>
+          </Row>
+          <Row>
+            <Col id="runMode">2</Col>
+            <Col id="subSys">AFS</Col>
+            <Col id="siteId">NEIS_AFS_DEV</Col>
+            <Col id="securityKey">oWd53kxgw7IvigfX2MZm9S29K07zHzp44zcX3jJR38Y=</Col>
+            <Col id="baseUrl">http://edupass.dev.neisplus.kr</Col>
+            <Col id="desc">대국민 - 업무지원 - 개발</Col>
+          </Row>
+          <Row>
+            <Col id="runMode">3</Col>
+            <Col id="subSys">AFS</Col>
+            <Col id="siteId">NEIS_AFS_PROD</Col>
+            <Col id="securityKey">oWd53kxgw7IvigfX2MZm9S29K07zHzp44zcX3jJR38Y=</Col>
+            <Col id="baseUrl">https://edupass.neisplus.kr</Col>
+            <Col id="desc">대국민 - 업무지원 - 운영</Col>
+          </Row>
+          <Row>
+            <Col id="runMode">1</Col>
+            <Col id="subSys">EWS</Col>
+            <Col id="siteId">EDU_EDS_LOCAL</Col>
+            <Col id="baseUrl">http://edupass.dev.neisplus.kr</Col>
+            <Col id="securityKey">oWd53kxgw7IvigfX2MZm9S29K07zHzp44zcX3jJR38Y=</Col>
+            <Col id="desc">대국민 - 교육복지원클릭 - 로컬</Col>
+          </Row>
+          <Row>
+            <Col id="runMode">2</Col>
+            <Col id="subSys">EWS</Col>
+            <Col id="siteId">NEIS_EWS_DEV</Col>
+            <Col id="securityKey">oWd53kxgw7IvigfX2MZm9S29K07zHzp44zcX3jJR38Y=</Col>
+            <Col id="baseUrl">http://edupass.dev.neisplus.kr</Col>
+            <Col id="desc">대국민 - 교육복지원클릭 - 개발</Col>
+          </Row>
+          <Row>
+            <Col id="runMode">3</Col>
+            <Col id="subSys">EWS</Col>
+            <Col id="siteId">NEIS_EWS_PROD</Col>
+            <Col id="securityKey">oWd53kxgw7IvigfX2MZm9S29K07zHzp44zcX3jJR38Y=</Col>
+            <Col id="baseUrl">http://edupass.neisplus.kr</Col>
+            <Col id="desc">대국민 - 교육복지원클릭 - 운영</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

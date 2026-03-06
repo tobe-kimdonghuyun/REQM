@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BootstrapPreset version="1.1">
+  <Bootstrap id="index" version="1.0"><![CDATA[<!-- DOCTYPE : DOCTYPE declaration -->
+#{DOCTYPE}
+<html lang="ko"> <!-- LANGUAGE : locale setting (value of location property in Environment) -->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=1, initial-scale=1, width=device-width, target-densitydpi=device-dpi">
+    <!-- 추가 CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/nuxi_ext.css">
+	<!-- META_CHECKVERSION : Add if value of checkversion property in Envrionment is true -->
+    #{META_CHECKVERSION}
+    
+    <!-- FAVICON : favion setting (value of icon property in Environment. add to value of icon property in Environment) -->
+    #{FAVICON}
+    
+    <!-- USERFONT_STYLE : userfont style setting (value of userfontid property in Environment. crate contents contained in xfont file specified userfontid property in Environment) -->
+    #{USERFONT_STYLE}
+    
+    <!-- FRAMEWORK_LIBRARY : framework lodaing path (list of scripts files in the Framework.json file) -->
+    #{FRAMEWORK_LIBRARY}
+    
+    <!-- COMPONENTS_LIBRARY : commonent lodaing path (list of script file in json file specified in the TypeDefinition module) -->
+    #{COMPONENTS_LIBRARY}
+    <!-- ENVIRONMENT_LIBRARY : application environment path (path of Environment.xml.js) -->
+    #{ENVIRONMENT_LIBRARY}
+    
+    <script type="text/javascript">
+        util = {}
+        util.getParam = function(sname){
+            var params = location.search.substr(location.search.indexOf("?")+1);
+            var sval="";
+            params=params.split("&");
+            for(var i=0; i<params.length; i++){
+                temp = params[i].split("=");
+                if(temp[0]==sname){sval=temp[1];}
+            }
+            return sval;
+        }
+    </script>
+    
+    <title></title>
+</head>
+<body style="margin:0;border:none;-ms-touch-action:none;" onload="oninitframework()">
+    <div tabIndex="-1" aria-hidden="true"></div><!-- 웹접근성 '문서끝' 현상-->
+    <script>
+        function oninitframework()
+        {
+            var urlParams = {};
+            (function () {
+                var match,
+                pl     = /\+/g,
+                search = /([^&=]+)=?([^&]*)/g,
+                decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+                query  = window.location.search.substring(1);
+                while (match = search.exec(query)) { urlParams[decode(match[1])] = decode(match[2]); }
+                })();
+            
+            <!-- history -->
+            nexacro.urlParams = urlParams;
+                
+            nexacro._launch_screenid = urlParams.screenid;      
+            <!-- SCREEN_INFORMATION : create screen information defined in Environment > ScreenDefinition -->
+            var screeninfo = [
+                #{SCREEN_INFORMATION}
+            ];
+
+            nexacro._initHTMLSysEvent(window, document);
+            nexacro._initEnvironment(screeninfo);
+            
+            
+            <!-- device별 셋팅-->
+            var deviceInfo = {};
+            deviceInfo = ( function() {
+                //deviceInfo.screenid = "ScreenDeskTopP";
+                //deviceInfo.screenType = "desktop";
+                deviceInfo.isMobile = "N";
+                
+				var nTouchPt = navigator.maxTouchPoints;
+                var userAgent = navigator.userAgent.toLowerCase();
+				var isMobile = /android|iphone|ipad|mobile|nokia|blackbeerry|lgtelecom|natebrowser|sonyericsson|ipod|mobi|sm|samsung/i.test(userAgent);  // linux||macintosh|mac 조건 제거
+                                
+               if(isMobile)
+               {
+					//deviceInfo.screenid = "mobileP";
+                    //deviceInfo.screenType = "mobile_medium";
+                    deviceInfo.isMobile = "Y";
+                    
+                    <!-- Pad 구분 --> 
+					if( /pad|macintosh/i.test(userAgent) )
+                    {
+                        deviceInfo.screenid = "tabletP";
+                        deviceInfo.screenType = "mobile_large";
+						deviceInfo.screentype = "mobile_large";
+                        //nexacro._curscreenid = deviceInfo.screenid;
+                    }
+
+                    //if( /linux|android/i.test(userAgent)  &&  !/mobile/i.test(userAgent) )
+                    //{
+                    //  deviceInfo.screenid = "tabletP";
+                    //  deviceInfo.screenType = "mobile_large";
+                    //}
+                }
+
+                return deviceInfo;
+            })();
+			
+            //nexacro._curscreenid = deviceInfo.screenid;
+            //nexacro._curscreentype = deviceInfo.screenType;
+            nexacro.setInitialVariable("environment", "ev_isMobile", deviceInfo.isMobile);          
+
+
+            if(util.getParam("vpnrequest")){
+                nexacro.setInitialVariable("environment", "ev_vpnrequest", util.getParam("vpnrequest"));
+            }
+            if(util.getParam("eduDgtlOpsUserScCd")){
+                nexacro.setInitialVariable("application", "gv_eduDgtlOpsUserScCd", util.getParam("eduDgtlOpsUserScCd"));
+            }
+            //if(util.getParam("subsys")){
+            //  nexacro.setInitialVariable("environment", "ev_subSystemGb", util.getParam("subsys"));
+            //}
+            if(util.getParam("menuType")){
+                nexacro.setInitialVariable("environment", "ev_menuType", util.getParam("menuType"));
+            }
+            
+            <!-- create internal iframe -->
+            <!-- USERFONT_INFORMATION : userfontid property is specified in the Environment -->
+            nexacro._prepareManagerFrame(onloadframework#{USERFONT_INFORMATION});
+        }
+        function onloadframework()
+        {
+            <!-- application loading -->
+            nexacro._loadADL();
+        }
+        function onfinalframework()
+        {
+            <!-- application exit -->
+        }
+    </script>
+</body>
+</html>
+]]></Bootstrap>
+  <Bootstrap id="launch" version="1.0"><![CDATA[<!-- DOCTYPE : DOCTYPE declaration -->
+#{DOCTYPE}
+<html lang="ko"> <!-- LANGUAGE : locale setting (value of location property in Environment) -->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=1, initial-scale=0.1, width=device-width, target-densitydpi=device-dpi">
+    <!-- META_CHECKVERSION : Add if value of checkversion property in Envrionment is true -->
+    #{META_CHECKVERSION}
+    
+    <!-- FAVICON : favion setting (value of icon property in Environment. add to value of icon property in Environment) -->
+    #{FAVICON}
+    
+    <!-- USERFONT_STYLE : userfont style setting (value of userfontid property in Environment. crate contents contained in xfont file specified userfontid property in Environment) -->
+    #{USERFONT_STYLE}
+    
+    <!-- FRAMEWORK_LIBRARY : framework lodaing path (list of scripts files in the Framework.json file) -->
+    #{FRAMEWORK_LIBRARY}
+    
+    <!-- COMPONENTS_LIBRARY : commonent lodaing path (list of script file in json file specified in the TypeDefinition module) -->
+    #{COMPONENTS_LIBRARY}
+    
+    <!-- ENVIRONMENT_LIBRARY : application environment path (path of Environment.xml.js) -->
+    #{ENVIRONMENT_LIBRARY}
+    <script type="text/javascript">
+        util = {}
+        util.getParam = function(sname){
+            var params = location.search.substr(location.search.indexOf("?")+1);
+            var sval="";
+            params=params.split("&");
+            for(var i=0; i<params.length; i++){
+                temp = params[i].split("=");
+                if(temp[0]==sname){sval=temp[1];}
+            }
+            return sval;
+        }
+    </script>   
+    <title></title>
+</head>
+
+<body style="margin:0;border:none;-ms-touch-action:none;" onload="oninitframework()">
+    <div tabIndex="-1" aria-hidden="true"></div>
+    <script>
+    function oninitframework()
+    {
+        <!-- parameter information -->
+        var urlParams = {};
+        (function () {
+            var match,
+            pl     = /\+/g,
+            search = /([^&=]+)=?([^&]*)/g,
+            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+            query  = window.location.search.substring(1);
+            while (match = search.exec(query)) { urlParams[decode(match[1])] = decode(match[2]); }
+            })();
+            
+        nexacro._launch_screenid = urlParams.screenid;
+        <!-- SCREEN_INFORMATION : create screen information defined in Environment > ScreenDefinition -->
+        var screeninfo = [
+#{SCREEN_INFORMATION}
+        ];
+        
+        nexacro._initHTMLSysEvent(window, document);
+        nexacro._initEnvironment(screeninfo);
+        
+        if(util.getParam("vpnrequest")){
+            nexacro.setInitialVariable("environment", "ev_vpnrequest", util.getParam("vpnrequest"));
+        }
+
+        if(util.getParam("eduDgtlOpsUserScCd")){
+            nexacro.setInitialVariable("application", "gv_eduDgtlOpsUserScCd", util.getParam("eduDgtlOpsUserScCd"));
+        }       
+        
+        if(util.getParam("subsys")){
+            nexacro.setInitialVariable("environment", "ev_subSystemGb", util.getParam("subsys"));
+        }               
+
+        if(util.getParam("screenid")){
+            var isMobile = util.getParam("screenid").indexOf("mobile") > -1?"Y":"N"; 
+            nexacro.setInitialVariable("environment", "ev_isMobile", isMobile);
+        }
+
+        if(util.getParam("menuType")){
+            nexacro.setInitialVariable("environment", "ev_menuType", util.getParam("menuType"));
+        }
+        
+        <!-- create internal iframe -->
+        <!-- USERFONT_INFORMATION : userfontid property is specified in the Environment -->
+        nexacro._prepareManagerFrame(onloadframework#{USERFONT_INFORMATION});
+    }
+    function onloadframework()
+    {
+        <!-- application loading -->
+        nexacro._loadADL();
+    }
+    function onfinalframework()
+    {
+        <!-- application exit -->
+    }
+    </script>
+</body>
+</html>  
+  ]]></Bootstrap>
+  <Bootstrap id="popup" version="1.0"><![CDATA[<!-- DOCTYPE : DOCTYPE declaration -->
+#{DOCTYPE}
+<html lang="ko"> <!-- LANGUAGE : locale setting (value of location property in Environment) -->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=1, initial-scale=0.1, width=device-width, target-densitydpi=device-dpi">
+    <!-- META_CHECKVERSION : Add if value of checkversion property in Envrionment is true -->
+    #{META_CHECKVERSION}
+    <script>
+        window._popup = true;
+    </script>
+    
+    <!-- FAVICON : favion setting (value of icon property in Environment. add to value of icon property in Environment) -->
+    #{FAVICON}
+    
+    <!-- USERFONT_STYLE : userfont style setting (value of userfontid property in Environment. crate contents contained in xfont file specified userfontid property in Environment) -->
+    #{USERFONT_STYLE}
+    
+    <!-- FRAMEWORK_LIBRARY : framework lodaing path (list of scripts files in the Framework.json file) -->
+    #{FRAMEWORK_LIBRARY}
+    
+    <!-- COMPONENTS_LIBRARY : commonent lodaing path (list of script file in json file specified in the TypeDefinition module) -->
+    #{COMPONENTS_LIBRARY}
+    
+    <!-- ENVIRONMENT_LIBRARY : application environment path (path of Environment.xml.js) -->
+    #{ENVIRONMENT_LIBRARY}
+    
+    <title></title>
+</head>
+<body style="margin:0; border:none; -ms-touch-action:none;">
+    <div tabIndex="-1" aria-hidden="true"></div>
+    <script>
+    <!-- parameter information -->
+    var urlParams = {};
+    (function () {
+        var match,
+        pl = /\+/g,
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query = window.location.search.substring(1);
+        while (match = search.exec(query)) { urlParams[decode(match[1])] = decode(match[2]); }
+        })();
+
+    <!-- create internal iframe -->
+    <!-- USERFONT_INFORMATION : userfontid property is specified in the Environment -->
+    nexacro._preparePopupFrame(window, document, urlParams#{USERFONT_INFORMATION});
+    </script>
+</body>
+</html>
+  ]]></Bootstrap>
+  <Bootstrap id="quickview" version="1.0"><![CDATA[<!-- DOCTYPE : DOCTYPE declaration -->
+#{DOCTYPE}
+<html lang="ko"> <!-- LANGUAGE : locale setting (value of location property in Environment) -->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=1, initial-scale=0.1, width=device-width, target-densitydpi=device-dpi">
+    <!-- 추가 CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/nuxi_ext.css">
+	<!-- META_CHECKVERSION : Add if value of checkversion property in Envrionment is true -->
+    #{META_CHECKVERSION}
+    
+    <!-- FAVICON : favion setting (value of icon property in Environment. add to value of icon property in Environment) -->
+    #{FAVICON}
+
+    <!-- USERFONT_STYLE : userfont style setting (value of userfontid property in Environment. crate contents contained in xfont file specified userfontid property in Environment) -->
+    #{USERFONT_STYLE}
+    
+    <!-- FRAMEWORK_LIBRARY : framework lodaing path (list of scripts files in the Framework.json file) -->
+    #{FRAMEWORK_LIBRARY}
+    
+    <!-- COMPONENTS_LIBRARY : commonent lodaing path (list of script file in json file specified in the TypeDefinition module) -->
+    #{COMPONENTS_LIBRARY}
+    
+    <!-- ENVIRONMENT_LIBRARY : application environment path (path of Environment.xml.js) -->
+    #{ENVIRONMENT_LIBRARY}
+
+    <script type="text/javascript">
+        util = {}
+        util.getParam = function(sname){
+            var params=location.search.substr(location.search.indexOf("?")+1);
+            var sval="";
+            params=params.split("&");
+            for(var i=0; i<params.length; i++){
+                temp = params[i].split("=");
+                if(temp[0]==sname){sval=temp[1];}
+            }
+            return sval;
+        }
+    </script>
+    <title></title>
+</head>
+
+<body style="margin:0;border:none;-ms-touch-action:none;" onload="oninitframework()">
+    <script>
+    function oninitframework()
+    {
+        <!-- parameter information -->
+        var urlParams = {};
+        (function () {
+            var match,
+            pl     = /\+/g,
+            search = /([^&=]+)=?([^&]*)/g,
+            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+            query  = window.location.search.substring(1);
+            while (match = search.exec(query)) { urlParams[decode(match[1])] = decode(match[2]); }
+            })();
+
+        nexacro._launch_screenid = urlParams.screenid;
+        nexacro._quickview_formurl = urlParams.formname;
+
+        <!-- SCREEN_INFORMATION : create screen information defined in Environment > ScreenDefinition -->
+        var screeninfo = [
+#{SCREEN_INFORMATION}
+        ];
+
+        nexacro._initHTMLSysEvent(window, document);
+        nexacro._initEnvironment(screeninfo);
+        
+        if(util.getParam("screenid")){
+            var isMobile = util.getParam("screenid").indexOf("mobile") > -1?"Y":"N"; 
+            nexacro.setInitialVariable("environment", "ev_isMobile", isMobile);
+        }       
+        <!-- create internal iframe -->
+        <!-- USERFONT_INFORMATION : userfontid property is specified in the Environment -->
+        nexacro._prepareManagerFrame(onloadframework#{USERFONT_INFORMATION});
+    }
+    function onloadframework()
+    {
+        <!-- application loading -->
+        nexacro._loadADL();
+    }
+    function onfinalframework()
+    {
+        <!-- application exit -->
+    }
+    </script>
+    <div tabIndex="-1" aria-hidden="true"></div>
+</body>
+</html>
+  ]]></Bootstrap>
+  <Bootstrap id="run" version="1.0"><![CDATA[<!-- DOCTYPE : DOCTYPE declaration -->
+#{DOCTYPE}
+<html lang="ko"> <!-- LANGUAGE : locale setting (value of location property in Environment) -->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=1, initial-scale=0.1, width=device-width, target-densitydpi=device-dpi">
+    <!-- META_CHECKVERSION : Add if value of checkversion property in Envrionment is true -->
+    #{META_CHECKVERSION}
+
+    <!-- FAVICON : favion setting (value of icon property in Environment. add to value of icon property in Environment) -->
+    #{FAVICON}
+
+    <!-- USERFONT_STYLE : userfont style setting (value of userfontid property in Environment. crate contents contained in xfont file specified userfontid property in Environment) -->
+    #{USERFONT_STYLE}
+
+    <!-- FRAMEWORK_LIBRARY : framework lodaing path (list of scripts files in the Framework.json file) -->
+    #{FRAMEWORK_LIBRARY}
+
+    <!-- COMPONENTS_LIBRARY : commonent lodaing path (list of script file in json file specified in the TypeDefinition module) -->
+    #{COMPONENTS_LIBRARY}
+
+    <!-- ENVIRONMENT_LIBRARY : application environment path (path of Environment.xml.js) -->
+    #{ENVIRONMENT_LIBRARY}
+
+    <!-- MOBILE_LIBRARY : mobile component loading path -->
+    #{MOBILE_LIBRARY}
+
+    <title></title>
+</head>
+<body style="margin:0;border:none;-ms-touch-action:none;" onload="oninitframework()">
+    <div tabIndex="-1" aria-hidden="true"></div>
+    <script>
+    function oninitframework()
+    {
+        <!-- SCREEN_INFORMATION : create screen information defined in Environment > ScreenDefinition -->
+        var screeninfo = [
+#{SCREEN_INFORMATION}
+        ];
+
+    nexacro._initHTMLSysEvent(window, document);
+    nexacro._initEnvironment(screeninfo);
+    <!-- create internal iframe -->
+    <!-- USERFONT_INFORMATION : userfontid property is specified in the Environment -->
+    nexacro._prepareManagerFrame(onloadframework#{USERFONT_INFORMATION});
+    }
+    function onloadframework()
+    {
+    <!-- application loading -->
+    <!-- PROJECT_URL : application project url to load -->
+    nexacro._loadADL(#{PROJECT_URL});
+    }
+    function onfinalframework()
+    {
+        <!-- application exit -->
+    }
+    </script>
+</body>
+</html>
+  ]]></Bootstrap>
+</BootstrapPreset>

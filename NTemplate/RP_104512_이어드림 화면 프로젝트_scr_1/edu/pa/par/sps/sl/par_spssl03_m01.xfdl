@@ -1,0 +1,716 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="par_spssl03_m01" width="1200" height="749" titletext="주간식단" onload="par_spssl03_m01_onload" onsize="par_spssl03_m01_onsize">
+    <Layouts>
+      <Layout height="749" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="주간식단" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="230" initvalueid="ivTitleAccessibilityOn" onclick="divTitle_imgTitle_onclick"/>
+            </Layout>
+            <Layout name="Layout0">
+              <ImageViewer id="imgTitle" font="24" left="0" top="0" width="255" height="65"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <ImageViewer id="img00_00" taborder="1" text="조회기준일" left="0" top="214" width="92" height="30" cssclass="img_WF_SubTit04" initvalueid="ivTitleAccessibilityOn"/>
+        <Calendar id="calSchDate" taborder="2" left="94" top="214" width="140" height="30" dateformat="yyyy.MM.dd." initvalueid="ivCalNormal" editformat="yyyy.MM.dd." onchanged="calSchDate_onchanged" accessibilityrole="edit" accessibilitylabel="조회기준일자"/>
+        <Button id="btnPrint" taborder="3" text="인쇄" top="214" height="30" width="66" cssclass="btn_WF_Printer" visible="true" right="0" initvalueid="ivBtnAccessibilityButton" onclick="btnPrint_onclick"/>
+        <Div id="divGrid" taborder="4" left="0" top="264" width="1200" height="319" cssclass="div_WF_GridBox_M">
+          <Layouts>
+            <Layout>
+              <Grid id="grd01" taborder="0" left="0" top="0" autofittype="none" cssclass="grd_WF_WeekList" binddataset="dsDietList" height="319" selecttype="cell" initvalueid="ivGrdAccessibilityOn" oncellclick="divGrid_grd01_oncellclick" accessibilitylabel="주간식단목록" autosizingtype="row" extendsizetype="row" right="0">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="240"/>
+                      <Column size="240"/>
+                      <Column size="240"/>
+                      <Column size="240"/>
+                      <Column size="240"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="30"/>
+                      <Row size="250"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="월요일"/>
+                      <Cell col="1" text="화요일"/>
+                      <Cell col="2" text="수요일"/>
+                      <Cell col="3" text="목요일"/>
+                      <Cell col="4" text="금요일"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:day1" cssclass="cell_WF_day" textAlign="left" autosizerow="limitmin"/>
+                      <Cell col="1" text="bind:day2" cssclass="cell_WF_day" textAlign="left" autosizerow="limitmin"/>
+                      <Cell col="2" text="bind:day3" cssclass="cell_WF_day" textAlign="left" autosizerow="limitmin"/>
+                      <Cell col="3" text="bind:day4" cssclass="cell_WF_day" textAlign="left" autosizerow="limitmin"/>
+                      <Cell col="4" text="bind:day5" cssclass="cell_WF_day" textAlign="left" autosizerow="limitmin"/>
+                      <Cell row="1" text="bind:diet1" textAlign="left" displaytype="decoratetext" expr="comp.parent.parent.parent.fnDiteText(diet1)" autosizerow="limitmin"/>
+                      <Cell row="1" col="1" text="bind:diet2" textAlign="left" displaytype="decoratetext" expr="comp.parent.parent.parent.fnDiteText(diet2)" autosizerow="limitmin"/>
+                      <Cell row="1" col="2" text="bind:diet3" textAlign="left" displaytype="decoratetext" expr="comp.parent.parent.parent.fnDiteText(diet3)" autosizerow="limitmin"/>
+                      <Cell row="1" col="3" text="bind:diet4" textAlign="left" displaytype="decoratetext" expr="comp.parent.parent.parent.fnDiteText(diet4)" autosizerow="limitmin"/>
+                      <Cell row="1" col="4" text="bind:diet5" textAlign="left" displaytype="decoratetext" expr="comp.parent.parent.parent.fnDiteText(diet5)" autosizerow="limitmin"/>
+                    </Band>
+                  </Format>
+                  <Format id="default_00">
+                    <Columns>
+                      <Column size="602"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="50"/>
+                      <Row size="300"/>
+                      <Row size="50"/>
+                      <Row size="300"/>
+                      <Row size="50"/>
+                      <Row size="300"/>
+                      <Row size="50"/>
+                      <Row size="300"/>
+                      <Row size="50"/>
+                      <Row size="300"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell text="bind:date1Dis" cssclass="cell_WF_day" textAlign="left" autosizerow="limitmin" background="#eef0f5" autosizecol="default"/>
+                      <Cell row="1" text="bind:diet1" textAlign="left" displaytype="decoratetext" expr="comp.parent.parent.parent.fnDiteText(diet1)" autosizerow="limitmin" padding="0px 0px 0px 20px"/>
+                      <Cell row="2" text="bind:date2Dis" cssclass="cell_WF_day" textAlign="left" verticalAlign="middle" background="#eef0f5" autosizerow="limitmin" autosizecol="default"/>
+                      <Cell row="3" text="bind:diet2" expr="comp.parent.parent.parent.fnDiteText(diet2)" displaytype="decoratetext" autosizerow="limitmin" textAlign="left" padding="20px 0px 0px 30px"/>
+                      <Cell row="4" text="bind:date3Dis" cssclass="cell_WF_day" textAlign="left" verticalAlign="middle" background="#eef0f5" autosizerow="limitmin" autosizecol="default"/>
+                      <Cell row="5" displaytype="decoratetext" expr="comp.parent.parent.parent.fnDiteText(diet3)" text="bind:diet3" padding="0px 0px 0px 20px" textAlign="left" autosizerow="limitmin"/>
+                      <Cell row="6" text="bind:date4Dis" textAlign="left" verticalAlign="middle" cssclass="cell_WF_day" background="#eef0f5" autosizerow="limitmin" autosizecol="default"/>
+                      <Cell row="7" text="bind:diet4" expr="comp.parent.parent.parent.fnDiteText(diet4)" padding="0px 0px 0px 20px" textAlign="left" autosizerow="limitmin" displaytype="decoratetext"/>
+                      <Cell row="8" text="bind:date5Dis" textAlign="left" verticalAlign="middle" cssclass="cell_WF_day" background="#eef0f5" autosizerow="limitmin" autosizecol="default"/>
+                      <Cell row="9" expr="comp.parent.parent.parent.fnDiteText(diet5)" text="bind:diet5" padding="0px 0px 0px 20px" textAlign="left" autosizerow="limitmin" displaytype="decoratetext"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+            <Layout name="Layout0">
+              <Grid id="grd01" left="0" top="0" formatid="default_00" taborder="0" bottom="0" maxheight="" right="0" scrollbartype="none" autosizingtype="row" autofittype="col"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div00_00" taborder="5" left="0" height="136" cssclass="div_WF_InfoBOX" top="divGrid:30" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="sta02_00" taborder="2" text="※ 학부모서비스의 ‘유아건강-알레르기관리’메뉴에서 유아의 알레르기를 등록하면, 해당 알레르기가 포함된 요리의 알레르기 코드가 붉은색으로 표시됩니다." left="30" top="6" width="1100" height="38" cssclass="sta_WF_Blue14" initvalueid="ivStcAccessibilityOn" wordWrap="char"/>
+              <Static id="sta00_00_01_01_00" taborder="0" left="29" top="sta02_00:5" height="23" cssclass="sta_WF_InfoTit" text="알레르기정보" wordWrap="char" width="800" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staAgySc" taborder="1" left="55" top="sta00_00_01_01_00:6" height="40" wordWrap="char" cssclass="sta_WF_Black14" initvalueid="ivStcAccessibilityOn" width="1000" accessibilitylabel="알레르기정보"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="sta00_00_01_01_00" left="30" top="sta02_00:6" width="210" height="44" wordWrap="none" taborder="0"/>
+              <Static id="staAgySc" left="30" top="sta00_00_01_01_00:20" height="56" fittocontents="height" right="30" taborder="1"/>
+              <Static id="sta02_00" cssclass="sta_WF_Text24Blue" right="30" left="30" top="6" height="128" fittocontents="height"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static99_00_00_00_00" taborder="6" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01" taborder="7" left="0" top="114" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_01" taborder="8" left="0" top="244" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="divPrint" taborder="9" left="1220" top="194" width="1000" height="370" cssclass="div_WF_GridBox_M" visible="false" background="#ffffff">
+          <Layouts>
+            <Layout>
+              <Grid id="grd01" taborder="0" left="0" top="42" autofittype="none" cssclass="grd_WF_WeekList" binddataset="dsDietList" height="309" selecttype="cell" initvalueid="ivGrdAccessibilityOn" oncellclick="divGrid_grd01_oncellclick" extendsizetype="row" autosizingtype="row" right="0">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="200"/>
+                      <Column size="200"/>
+                      <Column size="200"/>
+                      <Column size="200"/>
+                      <Column size="200"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="30"/>
+                      <Row size="250"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="월요일"/>
+                      <Cell col="1" text="화요일"/>
+                      <Cell col="2" text="수요일"/>
+                      <Cell col="3" text="목요일"/>
+                      <Cell col="4" text="금요일"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:day1" cssclass="cell_WF_day" textAlign="left"/>
+                      <Cell col="1" text="bind:day2" cssclass="cell_WF_day" textAlign="left"/>
+                      <Cell col="2" text="bind:day3" cssclass="cell_WF_day" textAlign="left"/>
+                      <Cell col="3" text="bind:day4" cssclass="cell_WF_day" textAlign="left"/>
+                      <Cell col="4" text="bind:day5" cssclass="cell_WF_day" textAlign="left"/>
+                      <Cell row="1" text="bind:diet1" textAlign="left" displaytype="decoratetext" expr="comp.parent.parent.parent.fnDiteText(diet1)" wordWrap="char" autosizerow="limitmin"/>
+                      <Cell row="1" col="1" text="bind:diet2" textAlign="left" displaytype="decoratetext" expr="comp.parent.parent.parent.fnDiteText(diet2)" wordWrap="char" autosizerow="limitmin"/>
+                      <Cell row="1" col="2" text="bind:diet3" textAlign="left" displaytype="decoratetext" expr="comp.parent.parent.parent.fnDiteText(diet3)" wordWrap="char" autosizerow="limitmin"/>
+                      <Cell row="1" col="3" text="bind:diet4" textAlign="left" displaytype="decoratetext" expr="comp.parent.parent.parent.fnDiteText(diet4)" wordWrap="char" autosizerow="limitmin"/>
+                      <Cell row="1" col="4" text="bind:diet5" textAlign="left" displaytype="decoratetext" expr="comp.parent.parent.parent.fnDiteText(diet5)" wordWrap="char" autosizerow="limitmin"/>
+                    </Band>
+                  </Format>
+                  <Format id="default_00">
+                    <Columns>
+                      <Column size="300"/>
+                      <Column size="300"/>
+                      <Column size="300"/>
+                      <Column size="300"/>
+                      <Column size="300"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="60" band="head"/>
+                      <Row size="50"/>
+                      <Row size="300"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="월요일"/>
+                      <Cell col="1" text="화요일"/>
+                      <Cell col="2" text="수요일"/>
+                      <Cell col="3" text="목요일"/>
+                      <Cell col="4" text="금요일"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:day1" cssclass="cell_WF_day" textAlign="left"/>
+                      <Cell col="1" text="bind:day2" cssclass="cell_WF_day" textAlign="left"/>
+                      <Cell col="2" text="bind:day3" cssclass="cell_WF_day" textAlign="left"/>
+                      <Cell col="3" text="bind:day4" cssclass="cell_WF_day" textAlign="left"/>
+                      <Cell col="4" text="bind:day5" cssclass="cell_WF_day" textAlign="left"/>
+                      <Cell row="1" text="bind:diet1" textAlign="left" displaytype="decoratetext" expr="comp.parent.parent.parent.fnDiteText(diet1)"/>
+                      <Cell row="1" col="1" textAlign="left" displaytype="decoratetext" text="bind:diet2" expr="comp.parent.parent.parent.fnDiteText(diet2)"/>
+                      <Cell row="1" col="2" textAlign="left" displaytype="decoratetext" text="bind:diet3" expr="comp.parent.parent.parent.fnDiteText(diet3)"/>
+                      <Cell row="1" col="3" textAlign="left" displaytype="decoratetext" text="bind:diet4" expr="comp.parent.parent.parent.fnDiteText(diet4)"/>
+                      <Cell row="1" col="4" textAlign="left" displaytype="decoratetext" text="bind:diet5" expr="comp.parent.parent.parent.fnDiteText(diet5)"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Edit id="edt00" taborder="1" left="3" top="2" width="183" height="35" readonly="true" cssclass="edi_WF_Input"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Grid id="grd01" left="0" top="0" width="1400" height="319" formatid="default_00" taborder="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta02" taborder="10" text="※ 아래에 해당하는 경우, 식단이 조회되지 않을 수 있습니다. 해당 유치원으로 문의하시기 바랍니다.&#13;&#10;   1) 나이스에서 ‘식단공개확정’을 아직 하지 않은 유치원&#13;&#10;   2) 나이스로 급식 업무를 수행하지 않는 유치원" left="0" top="134" width="824" height="58" cssclass="sta_WF_Blue14" initvalueid="ivStcAccessibilityOn" wordWrap="char"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="640" height="2477" mobileorientation="portrait" type="default" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tabledirection="horizontal">
+        <Div id="divTitle" left="20" top="70" height="70" right="20" taborder="0"/>
+        <ImageViewer id="img00_00" left="20" top="378" height="60" width="152" taborder="1"/>
+        <Calendar id="calSchDate" left="182" top="378" width="250" height="60" taborder="2"/>
+        <Div id="divGrid" left="20" top="calSchDate:20" right="20" taborder="3" height="1699"/>
+        <Div id="div00_00" left="20" top="divGrid:20" height="280" right="20" taborder="4" text=""/>
+        <Button id="btnPrint" top="20" width="68" height="30" right="2" taborder="5" visible="false"/>
+        <Static id="Static99_00_00_00_00" height="70" left="20" top="0" right="20" taborder="6"/>
+        <Static id="Static99_00_00_00_00_01" left="20" top="120" height="30" right="20" text="30" taborder="7"/>
+        <Static id="Static99_00_00_00_00_00_01" left="20" top="438" height="20" right="20" taborder="8"/>
+        <Static id="sta02" cssclass="sta_WF_Text24Blue" left="20" top="150" height="168" right="20"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*   대국민 - 공지사항 목록조회
+*  @MenuPath    TEMPLATE
+*  @FileName 	Temp01.xfdl
+*  @Creator 	홍길동
+*  @CreateDate 	2022.5.12
+*  @Desction    검정고시p72+(공지목록)+(타이틀,그리드)
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.5.12     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::par_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+
+this.par_spssl03_m01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+		// Form의 default 초기처리를 한다.
+	this.smfInitForm(this);
+	//현재 년도 입력
+	var today = new Date();
+	this.calSchDate.set_value(today);
+
+	
+	//검색조건 설정
+	var objParForm = this.getOwnerFrame().form.divTop.form.divDispArea.form.divPARLink.form;
+	this.dsSearch.copyRow(0, objParForm.dsStuIduzEduYn, 0, "shlCd=shlCd,instCd=shlCd,ayr=ayr,cddcScCd=cddcScCd,userId=schpaDtcNo,stuDtcNo=stuDtcNo,stuInvlNo=stuInvlNo");
+	this.dsSearch.setColumn(0, "mlsvInqScCd", 2);	// 2 : 주간
+	this.dsSearch.setColumn(0, "mmealScCd", 2); //2 : 중식
+	this.dsSearch.setColumn(0, "wlkMntlyScCd", "wlkOgdp"); //wlkOgdp : 주간
+	
+	//소재정보, 개인번호 체크
+	var validate = this.parfValidate(this.dsSearch);	
+	if(!validate) return false;
+	
+	this.fnSelectStuAgy();
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnSelectStuAgy = function(obj, e)
+{
+
+ 	// 서비스 객체 생성
+	this.smfSearchService("selectStuAgy")
+		.run()// 실행
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		});
+};
+
+
+this.fnSearch = function(obj, e)
+{
+ 	// 서비스 객체 생성
+	this.smfSearchService("selectDietList")
+		.run()// 실행
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		});	
+};
+
+this.fnSearchAgyScList = function()
+{
+ 	// 서비스 객체 생성
+	this.smfSearchService("selectAgyScList")
+		.run()// 실행
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		});	
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd <= -1) return;
+	
+	if(svcid == "selectStuAgy"){
+		this.fnSearch();
+	}else if(svcid == "selectDietList"){
+		var eRows = this.dsDietList.extractRows("diet6 != '' && diet6 != null");
+		
+		if(this.smfIsMobile()){
+			if(eRows.length > 0){//토요일 식단이 있는 경우
+				var nRow = this.divGrid.form.grd01.appendContentsRow("body");
+				this.divGrid.form.grd01.setFormatRowProperty(nRow, "size", 50);
+				this.divGrid.form.grd01.setCellProperty("body", nRow, "text", "bind:date6Dis");
+				this.divGrid.form.grd01.setCellProperty("body", nRow, "textAlign", "left");
+				this.divGrid.form.grd01.setCellProperty("body", nRow, "verticalAlign", "middle");
+				this.divGrid.form.grd01.setCellProperty("body", nRow, "cssclass", "cell_WF_day");
+				this.divGrid.form.grd01.setCellProperty("body", nRow, "background", "#eef0f5");
+				this.divGrid.form.grd01.setCellProperty("body", nRow, "autosizerow", "limitmin");
+				
+				nRow = this.divGrid.form.grd01.appendContentsRow("body");
+				this.divGrid.form.grd01.setCellProperty("body", nRow, "expr", "comp.parent.parent.parent.fnDiteText(diet6)");
+				this.divGrid.form.grd01.setCellProperty("body", nRow, "text", "bind:diet6");
+				this.divGrid.form.grd01.setCellProperty("body", nRow, "padding", "0px 0px 0px 20px");
+				this.divGrid.form.grd01.setCellProperty("body", nRow, "textAlign", "left");
+				this.divGrid.form.grd01.setCellProperty("body", nRow, "autosizerow", "limitmin");				
+				this.divGrid.form.grd01.setCellProperty("body", nRow, "displaytype", "decoratetext");
+			}else{//토요일 식단이 없는 경우
+				this.divGrid.form.grd01.deleteContentsRow("body", 11);
+				this.divGrid.form.grd01.deleteContentsRow("body", 10);
+			}
+		}else{
+			if(eRows.length > 0){//토요일 식단이 있는 경우
+				var nCol = this.divGrid.form.grd01.appendContentsCol("body");
+			
+				this.divGrid.form.grd01.setCellProperty("head", nCol, "text", "토요일");
+				this.divGrid.form.grd01.setCellProperty("head", nCol, "color", "#2b71bf");
+				
+				this.divGrid.form.grd01.setCellProperty("body", nCol, "color", "#2b71bf");
+				this.divGrid.form.grd01.setCellProperty("body", nCol, "text", "bind:day6");
+				this.divGrid.form.grd01.setCellProperty("body", nCol, "cssclass", "cell_WF_day");
+				this.divGrid.form.grd01.setCellProperty("body", nCol, "textAlign", "left");
+				this.divGrid.form.grd01.setCellProperty("body", nCol, "autosizerow", "limitmin");
+				
+				
+				this.divGrid.form.grd01.setCellProperty("body", nCol+6, "cursor", "pointer");
+				this.divGrid.form.grd01.setCellProperty("body", nCol+6, "text", "bind:diet6");
+				this.divGrid.form.grd01.setCellProperty("body", nCol+6, "displaytype", "decoratetext");
+				this.divGrid.form.grd01.setCellProperty("body", nCol+6, "textAlign", "left");
+				this.divGrid.form.grd01.setCellProperty("body", nCol+6, "expr", "comp.parent.parent.parent.fnDiteText(diet6)");
+				this.divGrid.form.grd01.setCellProperty("body", nCol+6, "autosizerow", "limitmin");
+				
+				this.divGrid.form.grd01.setFormatColProperty(0,"size",1200/6);
+				this.divGrid.form.grd01.setFormatColProperty(1,"size",1200/6);
+				this.divGrid.form.grd01.setFormatColProperty(2,"size",1200/6);
+				this.divGrid.form.grd01.setFormatColProperty(3,"size",1200/6);
+				this.divGrid.form.grd01.setFormatColProperty(4,"size",1200/6);
+				this.divGrid.form.grd01.setFormatColProperty(5,"size",1200/6);
+				
+				//프린트용 Grid 작업
+				var pCol = this.divPrint.form.grd01.appendContentsCol("body");
+			
+				this.divPrint.form.grd01.setCellProperty("head", pCol, "text", "토요일");
+				this.divPrint.form.grd01.setCellProperty("head", pCol, "color", "#2b71bf");
+				
+				this.divPrint.form.grd01.setCellProperty("body", pCol, "color", "#2b71bf");
+				this.divPrint.form.grd01.setCellProperty("body", pCol, "text", "bind:day6");
+				this.divPrint.form.grd01.setCellProperty("body", pCol, "cssclass", "cell_WF_day");
+				this.divPrint.form.grd01.setCellProperty("body", pCol, "textAlign", "left");
+				this.divPrint.form.grd01.setCellProperty("body", pCol, "autosizerow", "limitmin");
+				
+				
+				this.divPrint.form.grd01.setCellProperty("body", pCol+6, "cursor", "pointer");
+				this.divPrint.form.grd01.setCellProperty("body", pCol+6, "text", "bind:diet6");
+				this.divPrint.form.grd01.setCellProperty("body", pCol+6, "displaytype", "decoratetext");
+				this.divPrint.form.grd01.setCellProperty("body", pCol+6, "textAlign", "left");
+				this.divPrint.form.grd01.setCellProperty("body", pCol+6, "expr", "comp.parent.parent.parent.fnDiteText(diet6)");
+				this.divPrint.form.grd01.setCellProperty("body", pCol+6, "autosizerow", "limitmin");
+				
+				this.divPrint.form.grd01.setFormatColProperty(0,"size",1000/6);
+				this.divPrint.form.grd01.setFormatColProperty(1,"size",1000/6);
+				this.divPrint.form.grd01.setFormatColProperty(2,"size",1000/6);
+				this.divPrint.form.grd01.setFormatColProperty(3,"size",1000/6);
+				this.divPrint.form.grd01.setFormatColProperty(4,"size",1000/6);
+				this.divPrint.form.grd01.setFormatColProperty(5,"size",1000/6);
+			}else{//토요일 식단이 없는 경우
+				dCol = this.divGrid.form.grd01.deleteContentsCol("body",5);
+				this.divGrid.form.grd01.setFormatColProperty(0,"size",1200/5);
+				this.divGrid.form.grd01.setFormatColProperty(1,"size",1200/5);
+				this.divGrid.form.grd01.setFormatColProperty(2,"size",1200/5);
+				this.divGrid.form.grd01.setFormatColProperty(3,"size",1200/5);
+				this.divGrid.form.grd01.setFormatColProperty(4,"size",1200/5);
+				
+				//프린트용 Grid 작업
+				this.divPrint.form.grd01.deleteContentsCol("body",5);
+				this.divPrint.form.grd01.setFormatColProperty(0,"size",1000/5);
+				this.divPrint.form.grd01.setFormatColProperty(1,"size",1000/5);
+				this.divPrint.form.grd01.setFormatColProperty(2,"size",1000/5);
+				this.divPrint.form.grd01.setFormatColProperty(3,"size",1000/5);
+				this.divPrint.form.grd01.setFormatColProperty(4,"size",1000/5);
+			}
+			
+			this.divGrid.form.grd01.setBandProperty( "body", "autofittype", "row" );
+			this.divGrid.form.resetScroll();
+			//프린트용 Grid 작업
+			this.divPrint.form.grd01.setBandProperty( "body", "autofittype", "row" );
+			this.divPrint.form.resetScroll();
+		}
+		
+		if(this.dsDietList.getRowCount() == 0){
+			var grdH = 300;
+			this.divGrid.form.grd01.setOffsetHeight(grdH);
+			this.divGrid.setOffsetHeight(grdH);
+			//프린트용 Grid 작업
+			this.divPrint.form.grd01.setOffsetHeight(grdH);
+			this.divPrint.setOffsetHeight(grdH);
+			
+			this.smfResetScroll(this);
+		}else{				
+			var grdH = this._smfappendHeight(this.divGrid.form.grd01);
+			this.divGrid.form.grd01.setOffsetHeight(grdH);
+			this.divGrid.setOffsetHeight(grdH);
+			
+			//프린트용 Grid 작업
+			this.divPrint.form.edt00.set_value(this.calSchDate.text);
+			grdH = this._smfappendHeight(this.divPrint.form.grd01);			
+			this.divPrint.form.grd01.setOffsetHeight(grdH+20);
+			this.divPrint.setOffsetHeight(grdH+100);
+			
+			this.smfResetScroll(this);			
+		}
+		
+		this.fnSearchAgyScList();
+	}else if(svcid == "selectAgyScList"){//알레르기 정보
+		var agyScText = "";
+		for(i = 0; i < this.dsAgySc.getRowCount(); i++){
+			if(i != 0) agyScText += ", ";			
+			agyScText += this.dsAgySc.getColumn(i, "agy");
+		}
+		this.div00_00.form.staAgySc.set_text(agyScText);
+		this.smfResetScroll(this.div00_00.form.staAgySc);
+	}
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.calSchDate_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	this.fnSearch();	
+};
+
+//날짜 선택시 호출되는 함수
+this.changeCal = function(){
+	this.fnSearch();
+};
+this.btnPrint_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	bSucc = system.print(this.divPrint);
+};
+
+this.divGrid_grd01_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var dsObj 	 = obj.getBindDataset();
+	var cellText = obj.getCellProperty("body", e.cell, "text");
+	var dietText = "";
+	var day 	 = "";
+	var mlsvYmd  = "";
+	
+	if(this.smfIsMobile() && cellText.indexOf("Dis") > -1){
+		return false;
+	}else if(!this.smfIsMobile() && cellText.substr(5, 3) == "day"){//날자 cell을 선택하면 날자의 식단에서 
+		dietText = dsObj.getColumn(e.row, "diet" + cellText.substr(8, 1));
+		mlsvYmd = obj.getCellValue( e.row, e.cell );
+		return false;
+	}else{//식단 cell을 선택하면 식단에서 
+		dietText = obj.getCellValue( e.row, e.cell );
+		mlsvYmd = dsObj.getColumn(e.row, "date" + cellText.substr(9, 1));
+	}
+
+	if(this.smfIsNull(dietText)) return false;
+	
+	//상세조회 날자설정
+// 	if(day < 10){
+// 		day = "0" + day;
+// 	}	
+// 	var mlsvYmd = this.calSchDate.value.substr(0, 6) + day;
+	
+	// 팝업을 동작에 필요한 파라메터 지정
+	var popupParams = {
+		callback : this.fnPopupCallback, // 콜백함수 지정
+		sender : obj, // sender 지정
+		// 팝업 전달 파라메터 지정
+		params : {  
+			// 처리타입 지정
+			procType 	: "search",
+			mlsvYmd		: mlsvYmd,
+			dataset 	: this.dsSearch
+		},
+	};
+	
+	if(this.smfIsMobile()){
+		var srcInfo = this.smfCurScreenInfo();
+		var srcInfoW = 640;
+		var srcInfoH = srcInfo[1];
+
+		if(srcInfoH > 1105) srcInfoH = 1105;
+		this.smfDialog("_auto", "pa_par_sps_sl::par_spssl03_p00.xfdl", popupParams, "", "", srcInfoW, srcInfoH);
+	}else{
+		this.smfDialog("_auto", "pa_par_sps_sl::par_spssl03_p00.xfdl",popupParams);
+	}
+};
+
+//팝업 콜백
+this.fnPopupCallback = function(context, responseParams, sender){
+}
+
+//자녀 알레르기를 식단에 표시
+this.fnDiteText = function(diteText){
+	returnText = "";	
+	diteText   = this.smfReplace(diteText, "<br />", "<br/>")
+	diteTmp01  = diteText.split("<br/>");
+	
+	for(i = 0; i < diteTmp01.length; i++){
+
+		diteTmp02 = diteTmp01[i].split(",");
+		if(i != 0) returnText += "<br/>";
+		
+ 		for(j = 0; j < diteTmp02.length; j++){
+			agyScCd 	= this.smfRight(diteTmp02[j], 2);
+			agyScCdTmp  = this.smfRight(diteTmp02[j], 2);
+
+			for(k = 0; k < this.dsStuAgyList.getRowCount(); k++){
+				if(this.dsStuAgyList.getColumn(k, "stuAgyRegYn") == "N") continue;
+				
+				agyScCd = this.dsStuAgyList.getColumn(k, "agyScCd");
+
+				if(agyScCdTmp == agyScCd){	
+					agyScCd = "<fc v='#e52058'>" + agyScCd +"</fc>";
+					break;
+				}else{
+					agyScCd = agyScCdTmp;
+				}
+			}
+			
+			if(j != 0) returnText += ",";
+			returnText += this.smfRtrim(diteTmp02[j], agyScCdTmp);
+			returnText += agyScCd;
+		}		
+	}
+
+	return returnText;
+}
+
+this.par_spssl03_m01_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	this.fnSetResize();
+};
+
+//컨텐츠 리사이징
+this.fnSetResize = function(){
+	this.div00_00.form.resetScroll();
+	this.div00_00.setOffsetHeight(parseInt(this.div00_00.form.staAgySc.getOffsetBottom(),10)+40);
+	this.smfResetScroll(this.div00_00);
+	
+	this.resetScroll();
+}]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256"/>
+          <Column id="outDatasets" type="STRING" size="256"/>
+          <Column id="asynctp" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectDietList</Col>
+            <Col id="url">/par_sps_sl03_001.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsDietList=dsDietList</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectAgyScList</Col>
+            <Col id="url">/par_sps_sl03_003.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsAgySc=dsAgySc</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectStuAgy</Col>
+            <Col id="url">/par_sps_ih01_001.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsStuAgyList=dsAgyList</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="false">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="10" description="학교코드"/>
+          <Column id="instCd" type="STRING" size="10" description="기관코드(학교코드)"/>
+          <Column id="ayr" type="STRING" size="4" description="학년도"/>
+          <Column id="mlsvInqScCd" type="STRING" size="1" description="급식조회구분코드(1 월간 2 주간 3 일간)"/>
+          <Column id="mlsvYmd" type="STRING" size="6" description="급식년월일"/>
+          <Column id="mmealScCd" type="STRING" size="1" description="식사구분코드(1 조식 2 중식 3 석식, 파라미터가 널일 경우 기본값 중식(2) 설정)"/>
+          <Column id="wlkMntlyScCd" type="STRING" size="256"/>
+          <Column id="cddcScCd" type="STRING" size="3"/>
+          <Column id="userId" type="STRING" size="256"/>
+          <Column id="stuDtcNo" type="STRING" size="256"/>
+          <Column id="stuInvlNo" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="wlkMntlyScCd">wlkOgdp</Col>
+            <Col id="userId"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDietList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="day1" type="STRING" size="256"/>
+          <Column id="diet1" type="STRING" size="256"/>
+          <Column id="date1" type="STRING" size="256"/>
+          <Column id="date1Dis" type="STRING" size="256"/>
+          <Column id="day2" type="STRING" size="256"/>
+          <Column id="diet2" type="STRING" size="256"/>
+          <Column id="date2" type="STRING" size="256"/>
+          <Column id="date2Dis" type="STRING" size="256"/>
+          <Column id="day3" type="STRING" size="256"/>
+          <Column id="diet3" type="STRING" size="256"/>
+          <Column id="date3" type="STRING" size="256"/>
+          <Column id="date3Dis" type="STRING" size="256"/>
+          <Column id="day4" type="STRING" size="256"/>
+          <Column id="diet4" type="STRING" size="256"/>
+          <Column id="date4" type="STRING" size="256"/>
+          <Column id="date4Dis" type="STRING" size="256"/>
+          <Column id="day5" type="STRING" size="256"/>
+          <Column id="diet5" type="STRING" size="256"/>
+          <Column id="date5" type="STRING" size="256"/>
+          <Column id="date5Dis" type="STRING" size="256"/>
+          <Column id="day6" type="STRING" size="256"/>
+          <Column id="diet6" type="STRING" size="256"/>
+          <Column id="date6" type="STRING" size="256"/>
+          <Column id="date6Dis" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsAgySc" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="agy" type="STRING" size="256"/>
+          <Column id="agyScCd" type="STRING" size="256"/>
+          <Column id="agyScCdNm" type="STRING" size="256"/>
+          <Column id="cdSorNo" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsStuAgyList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="agyScCd" type="string" size="32"/>
+          <Column id="agyScCdNm" type="string" size="32"/>
+          <Column id="cdSorNo" type="int" size="4"/>
+          <Column id="stuAgyRegYn" type="string" size="32"/>
+          <Column id="chk" type="int" size="1"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="agyScCd">1</Col>
+            <Col id="agyScCdNm">1</Col>
+            <Col id="cdSorNo">1</Col>
+            <Col id="stuAgyRegYn">1</Col>
+            <Col id="chk">1</Col>
+          </Row>
+          <Row>
+            <Col id="chk">2</Col>
+            <Col id="stuAgyRegYn">2</Col>
+            <Col id="cdSorNo">2</Col>
+            <Col id="agyScCdNm">2</Col>
+            <Col id="agyScCd">2</Col>
+          </Row>
+          <Row>
+            <Col id="agyScCd">3</Col>
+            <Col id="agyScCdNm">3</Col>
+            <Col id="cdSorNo">3</Col>
+            <Col id="stuAgyRegYn">3</Col>
+            <Col id="chk">3</Col>
+          </Row>
+          <Row>
+            <Col id="agyScCd">4</Col>
+            <Col id="agyScCdNm">4</Col>
+            <Col id="cdSorNo">4</Col>
+            <Col id="stuAgyRegYn">4</Col>
+          </Row>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="calSchDate" propid="value" datasetid="dsSearch" columnid="mlsvYmd"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,1080 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameMainP" width="1160" height="1190" scrollbartype="auto auto" onsize="frameMain_onsize" left="0" top="0" titletext="나이스 대국민포탈" onload="frameMain_onload">
+    <Layouts>
+      <Layout height="260" mobileorientation="portrait" width="1160" screenid="ScreenDeskTopP">
+        <Div id="divTop" taborder="0" left="0" top="0" async="false" tabstop="true" accessibilityrole="heading" formscrollbartype="none none" height="100" formscrolltype="none" right="17" text="" accessibilitylabel="상단 메인메뉴" url="frame::frameTopP.xfdl"/>
+        <Div id="divAll" taborder="1" left="0" top="0" formscrollbartype="auto auto" text="" tabstop="true" accessibilitylabel="전체영역" formscrolltype="both" right="0" onvscroll="divAll_onvscroll" initvalueid="ivDivAccessibilityOff" bottom="0" maxwidth="" onhscroll="divAll_onhscroll">
+          <Layouts>
+            <Layout>
+              <Div id="divHead" taborder="0" left="0" top="0" async="false" tabstop="true" right="0" accessibilitylabel="화면영역_Head" formscrollbartype="none none" height="0" url="frame::pas/frameHead.xfdl" text="" formscrolltype="none" accessibilityrole="heading" maxwidth=""/>
+              <Div id="divWork" taborder="1" left="0" top="divHead:0" tabstop="true" accessibilitylabel="화면영역" formscrollbartype="none none" height="754" text="" formscrolltype="none" divmargin="0" async="false" accessibilityrole="heading" maxwidth="" right="-1">
+                <Layouts>
+                  <Layout/>
+                  <Layout name="Layout0"/>
+                </Layouts>
+              </Div>
+              <Div id="divGrade" taborder="2" left="0" async="false" tabstop="true" right="0" accessibilitylabel="화면영역_grade" formscrollbartype="none none" top="divWork:0" height="0" url="frame::commom/frameGrade.xfdl" visible="false" accessibilityrole="heading"/>
+              <Div id="divBottom" taborder="3" left="0" async="false" tabstop="true" right="0" accessibilitylabel="Bottom영역" accessibilityrole="heading" formscrollbartype="none none" top="divGrade:0" height="0" text="" url="frame::pas/frameBottom.xfdl" maxwidth=""/>
+            </Layout>
+            <Layout name="Layout0">
+              <Div id="divWork" left="0" top="divHead:0" right="0" height="654" taborder="0"/>
+              <Div id="divGrade" taborder="1"/>
+              <Div id="divBottom" left="0" right="0" top="divGrade:0" taborder="2" height="200" text=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="640" height="1024" mobileorientation="portrait" type="default" scrollbartype="autoindicator autoindicator">
+        <Div id="divAll" left="0" top="100" formscrolltype="vertical" right="0" bottom="0" formscrollbartype="autoindicator autoindicator"/>
+        <Div id="divTop" right="0" left="0" top="0" height="100"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  대국민포탈
+*  @MenuPath    frame > frameMainP
+*  @FileName 	frameMainP.xfdl 
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022.07.12
+*  @Desction    base가 되는 화면
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.07.12     		cwi		 	  			최초 생성 
+*******************************************************************************
+*/
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_workPageParams = {};	//화면전환시 넘길 parameter
+this.fv_isMobile = false;		//모바일로 접속여부
+this.fv_device;					//device 종류
+this.fv_prevPos;			//마우스로 위아래 스크롤시 위치값
+
+this.fv_workPageWidth = 1280;
+this.fv_minwidth;
+
+
+//각 Frame을 변수로 보관
+this.fvFrameTop = this.divTop;
+this.fvFrameWork = this.divAll.form.divWork;
+this.fvFrameGrade = this.divAll.form.divGrade;
+this.fvFrameBottom = this.divAll.form.divBottom;
+this.mainUrl = "pa_pas_mms_pc::pas_mmspc00_m01.xfdl";
+
+this.fvUseHistory = true;   // 뒤로가기 기능 사용여부(true:사용, false:미사용)
+
+// History
+this.param = {
+		"menu"    : "",
+		"keyword" : "",
+		"page"	  : 1,
+		"postId"  : "", 
+		"params"  : {},
+		"headArea" : "",
+		"menuText" : ""
+	};
+
+// [BEGIN] 디지털정부 UI/UX 가이드 적용관련
+this.APPLY_GOV_MODE = ["1","2"];	// 적용 실행 모드(임시)
+this.APPLY_GOV_GUIDE = false;
+this.USE_LOGGER = false;
+// [ END ] 디지털정부 UI/UX 가이드 적용관련
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frameMain_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 뒤로가기 기능을 위한 초기설정
+	this.fnSetHistoryInit();
+	
+	// 폼을 초기화
+	//this.smfInitForm(obj);
+	//nexacro.setPrivateProfile("chkToday","");
+	
+	//this.divSkip.set_left(0);
+	//this.divSkip.set_height(0);
+	
+	// 최소사이즈
+	this.fv_minwidth = this.fv_workPageWidth - nexacro.toNumber(this._getHScrollBarSize());	//1263
+
+	this.fv_isMobile = nexacro.getEnvironmentVariable("ev_isMobile") == "Y"?true:false;
+	this.fv_device = "pc";
+
+	//접속 기기 확인
+	if (system.navigatorname.indexOf("nexacro")  < 0) 	
+	{
+		var arrPhone = ['samsug-', 'sch-', 'shw-', 'sph-','sgh-','lg-', 'canu', 'iphone','nokia'
+				, 'blackberry', 'lgtelecom', 'natebrowser', 'sonyericsson', 'mobile', 'android', 'ipad'];
+		for(i = 0 ; i < arrPhone.length; i++ )
+		{
+			if(navigator.userAgent.toLowerCase().indexOf(arrPhone[i]) > -1)
+			{
+				this.fv_isMobile = true;
+				this.fv_device = "mobile";
+			}
+		}
+
+		//tablet 여부 확인
+		if( this.smfIsMobile() )	//모바일이면 tablet 체크 시작
+		{
+			if(navigator.userAgent.toLowerCase().indexOf('ipad') > -1 || 
+				(navigator.userAgent.toLowerCase().indexOf('android') > -1 && navigator.userAgent.toLowerCase().indexOf('mobile') == -1))
+			{
+				this.fv_isMobile = false;
+				this.fv_device = "tablet";
+			}
+			//갤럭시 탭 위한 리다이렉트. mobile이라는 단어가 안들어오면 지워도 됨.
+			var galaxyTabModel =  new Array('shw-');
+			for(i =0; i < galaxyTabModel.length; i++)
+			{
+				if(navigator.userAgent.toLowerCase().indexOf(galaxyTabModel[i]) > -1)
+				{
+					this.fv_isMobile = false;
+					this.fv_device = "tablet";
+				}
+			}
+		}
+	}
+	
+	// [BEGIN] 디지털정부 UI/UX 가이드 적용
+	
+	// 로컬 모드에서만 로그 출력
+	var nRunMode = nexacro.getEnvironmentVariable("ev_runMode");		// 실행 구분 : [1] 로컬, [2] 개발
+	this.USE_LOGGER = (nRunMode == 1 && system.navigatorname.indexOf("nexacro") < 0) ? true : false;
+	
+	// 실행구분에 따른 적용여부 설정 - 운영 정식 반영전 적용 방지
+	// 운영반영 시 this.APPLY_GOV_MODE 에 실행구분값 추가 또는 this.APPLY_GOV_GUIDE = true 설정
+	this.APPLY_GOV_GUIDE = true;	// this.APPLY_GOV_MODE.includes(nRunMode);
+	
+	// Footer 전환
+	if(this.APPLY_GOV_GUIDE){
+	
+		// [BEGIN] Style 추가
+		this.logger("[BEGIN] 디지털정부 UI/UX 적용 관련 CSS 확인");
+		// Nexacro 설정 불가 Style 설정 CSS 적용 확인 및 추가(CSS 파일 배포 또는 로드 오류 대비)
+		var docStyleSheets = document.styleSheets;	// 신규 StyleSheet 생성 여부
+		var hasNxuiExt = false;	// 확장 StyleSheet 링크 여부
+		var onNxuiExt = null;	// 확장 StyleSheet
+		var doCreateStyle = false;//hasNxuiExt ? false : true;					// 확장 CSS 추가 설정 여부
+		for(var sKey in docStyleSheets){
+			var appStyle = docStyleSheets[sKey];
+			var appStyleHref = appStyle.href;
+			if(appStyleHref == null){
+				continue;
+			}else{
+				doCreateStyle = (appStyleHref.indexOf("css/nuxi_ext") > -1) ? false : true;	// 신규 StyleSheet 생성 여부(확장 StyleSheet 링크 확인)
+				onNxuiExt = doCreateStyle ? null : appStyle;								// 확장 StyleSheet
+				break;
+			}
+		}
+
+		this.logger("└ StyleSheet CSS 생성(적용) 확인 :: doCreateStyle = " + doCreateStyle);
+		
+		if(doCreateStyle){
+			this.logger("└ 신규 StyleSheet 생성");
+			// 신규추가
+			var style = document.createElement("style");
+			style.rel = "stylesheet";
+			style.type = "text/css";
+			var addStyleStr = ".btn_BF_Gov_policy.indv > div.nexacontentsbox {left: 6px !important;}";
+			addStyleStr += ".gov-dspFlex > .Form > .nexacontainer {display: flex !important;}";
+			style.innerHTML = addStyleStr;
+			document.getElementsByTagName("head")[0].appendChild(style);
+		}else{
+			// 확장 StyleSheet CSS 내용 확인 및 추가
+			var onNxuiExtRulsLeng = onNxuiExt.cssRules.length;
+			var isBlankNxuiExt = onNxuiExtRulsLeng > 0 ? false : true;	// 확장 StyleSheet CSS 내용 확인
+			if(isBlankNxuiExt){
+				this.logger("└ 빈 확장 StyleSheet > CSS 추가");
+				onNxuiExt.insertRule(".btn_BF_Gov_policy.indv > div.nexacontentsbox {left: 6px !important;}", onNxuiExt.cssRules.length);
+				onNxuiExt.insertRule(".gov-dspFlex > .Form > .nexacontainer {display: flex !important;}", onNxuiExt.cssRules.length);
+			}
+		}
+		this.logger("[ END ] 디지털정부 UI/UX 적용 관련 CSS 확인");
+		// [ END ] Style 추가
+	
+		this.logger("[BEGIN] 디지털 정부 UI/UX 가이드 적용 - Footer(frame::pas/frameBottomGov) 전환");
+		this.divAll.form.divBottom.set_height(474);
+		this.divAll.form.divBottom.set_url("frame::pas/frameBottomGov.xfdl");
+		this.logger("[ END ] 디지털 정부 UI/UX 가이드 적용");
+	}
+	// [ END ] 디지털정부 UI/UX 가이드 적용
+
+	if( !this.smfIsMobile() ) {
+		// divWork의 width를 HScrollBarSize사이즈 만큼 빼야 하단에 스크롤이 보이지 않음
+		this.divAll.form.divWork.setOffsetWidth(this.width - nexacro.toNumber(this._getHScrollBarSize()) );
+		this.divAll.form.divBottom.set_minwidth(this.fv_minwidth);
+		
+		// Top 영역에 스크롤을 생성
+		this.divTop.set_formscrollbartype("auto auto");
+		this.divTop.set_formscrolltype("horizontal");
+		this.divTop.set_formscrollbarsize(0);
+		this.divTop.form.resetScroll();
+	}
+	
+	//History - 히스토리 초기화
+	if (nexacro._Browser!="Runtime")  MyHistory.init(this.onChangeHistory, this);
+	//최초접속시 페이지 이동 처리 함수 호출
+	this.initPage();
+
+
+	/* - @RHS
+	//EnvironmentVariable[ev_menuType] 값 체크
+	var sUdsVpnRequest = nexacro.getEnvironmentVariable("ev_vpnrequest");
+	var extReqMenu = nexacro.getEnvironmentVariable("ev_menuType");
+	if(extReqMenu) {
+		if (extReqMenu.split("___")[0]) {
+			//nexacro.getApplication().mainframe.VFrameSet.frameMain.set_formurl();
+		}
+	}else if(sUdsVpnRequest=="Y") {
+		this.smfSetWorkPage("pa_pas_uum_cm::pas_uumcm00_m00.xfdl", {}, true);
+		this.setOffsetWidth(this.getOffsetWidth()+1);
+		this.setOffsetWidth(this.getOffsetWidth()-1);
+	}else {
+		if(!this.smfIsHistory(this))
+		{
+			this.fnFormInit();
+		}
+		else
+		{
+			var hash = MyHistory.getLocationHash();		
+			if ( hash )
+			{
+				// 데이터가 필수가 아니면 체크할 일이 없겠네요
+				var data = MyHistory.getData(hash);
+				if ( data )
+				{
+					if(hash==this.mainUrl)
+					{
+						this.fnFormInit();
+					}
+					else
+					{
+						this.smfChangeDiv("W");
+						this.onChangeHistory(hash, data);
+					}
+				}
+			}
+		}
+	}
+	*/
+
+	//@KBR
+	if( this.width > 1920)
+	{
+		// 2025.03.26 - 최초 중앙정렬 처리를 위해 주석처리
+		//this.setOffsetWidth(1920);
+		return;
+	}
+
+	//this.resetScroll();
+};
+
+this.fnFormInit = function()
+{	
+	//최초 메인 화면 설정.
+	this.fnSetMain();
+
+	//@KBR divTop을 divAll보다 위로 올리기
+	var elem = this.divTop.getElement();
+	if(elem)
+	{ //겹쳐진 컴포넌트의 z-index 조절
+		elem.setElementZIndex(1);
+	}
+	
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/ 
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+//서브시스템에 따라 메인화면을 세팅한다.
+this.fnSetMain = function()
+{
+	var sSubSystemGb = "PAS";
+	this.smfSetWorkPage(this.mainUrl, {}, true);	
+	//this.smfSetWorkPage("frame::"+ sSubSystemGb.toLowerCase() +"/frameSubMain.xfdl");
+};
+
+//웹접근성- MainFrame의 titletext를 변경
+this.fnChangeFrameTitle = function(menuText, srcName)
+{
+	if (this.smfIsNull(menuText)) return;
+
+	var sMenuText = nexacro.getApplication().gv_appTtiletext +"|"+ menuText;
+	if (menuText == "MAIN") sMenuText = nexacro.getApplication().gv_appTtiletext;
+	/*
+	if (!this.smfIsNull(srcName)) {
+		var objApp = nexacro.getApplication();
+		sMenuText = objApp.mainframe.titletext;
+		 sMenuText = sMenuText+ " | "+menuText;
+	}else {
+		sMenuText += "|"+ menuText;
+	}
+	*/
+
+	nexacro.getApplication().mainframe.set_titletext(sMenuText);
+};
+
+/**
+* 메뉴변경
+* @param 필수 {String} menuUrl – 체크할 값
+* @param option {Object} params - 새로열릴 페이지 parameter
+* @param : {String} btnText - 메뉴Text
+* @return N/A
+*/
+this.fnSetWorkpage = function(menuUrl, params, bTemp, menuText, hisTime)
+{
+	if(this.isNil(menuUrl)) return;
+	
+	// 뒤로가기 세팅을 한다.
+	//this.fnSetHistoryHash(menuUrl,params,bTemp, menuText);
+
+	//History
+	var sUrl = "";
+	var sHash = "";
+	var sData = params;
+	var objDate = new Date();
+
+	if (menuUrl == this.mainUrl) {
+		this.param.menu = menuUrl;
+		//History 에 저장될 hash값 만들기
+		sHash = "menu="+ this.param.menu;
+		sUrl = "./";
+	}else {
+		this.param.menu = menuUrl;
+		//sHash = "menu="+ this.param.menu;
+		if(!this.smfIsNull(hisTime)) sHash = "menu="+ this.param.menu +"&v="+ hisTime;
+		else 						 sHash = "menu="+ this.param.menu +"&v="+ objDate.getTime();
+
+		sUrl = ".?" + sHash;
+	}
+
+	this.param.params = params;
+	this.param.headArea = bTemp;
+
+	//History Hash  생성
+	if (nexacro._Browser!="Runtime")  MyHistory.setLocationHash(sHash, sData, sUrl);
+	//trace("▶▶ getData(sHash) "+ MyHistory.getData(sHash) , sHash);
+
+
+	this.fv_workPageParams = {};
+	if(!this.smfIsNull(params)) this.fv_workPageParams = params;
+
+	this.divAll.form.vscrollbar.set_pos(0);
+	if ( !this.smfIsMobile() )	this.divAll.form.hscrollbar.set_pos(0);
+	if (this.divAll.form.divWork.url==menuUrl)
+	{
+		this.divAll.form.divWork.reload();
+	}else	
+	{
+		this.divAll.form.divWork.set_url(menuUrl);
+	}
+	//this.divAll.setFocus();
+	trace("★ fnSetWorkpage() 오픈화면 : "+ menuUrl +"   menuText : "+  menuText );
+
+
+	if ( this.divAll.form.divWork.url == this.mainUrl ){
+		menuText = "MAIN";
+		this.divAll.form.divHead.set_visible(false);
+		this.divAll.form.divBottom.setOffsetTop("divGrade:0");
+	
+		if ( this.smfIsMobile() ) 
+			this.divAll.form.divBottom.setOffsetTop("divGrade:50");
+		
+		if ( !this.smfIsMobile() ) {
+			// divWork의 width를 HScrollBarSize사이즈 보다 작으면 하단에 스크롤이 생성되게 width 설정
+			if (this.divAll.form.divWork.getOffsetWidth() < this.fv_minwidth)
+				this.divAll.form.divWork.setOffsetWidth(this.fv_minwidth);
+		}
+
+	}else {
+		this.divAll.form.divHead.set_visible(true);	
+		
+		this.divAll.form.divBottom.setOffsetTop("divGrade:100");
+		if ( this.smfIsMobile() ) 
+			this.divAll.form.divBottom.setOffsetTop("divGrade:70");
+
+		if ( !this.smfIsMobile() ) {
+			if ( this.width  < this.fv_minwidth) {
+				var nWidthPix = this.divAll.form.divHead.getOffsetWidth();
+				this.divAll.form.divWork.setOffsetWidth(nWidthPix);
+				this.divAll.form.divWork.set_minwidth();
+			}
+		}
+	}
+	
+	//전체 높이 >  기본높이(984) - top영역 높이 - bottom 영역 높이
+	var nHeight = this.divAll.form.divWork.form.nHeight;
+	var nMainframeHeight = nexacro.getApplication().mainframe.height;
+
+	//업무화면의 높이 세팅
+	if(this.isNil(nHeight) )
+	{
+		// 가장 아래에 있는 bottom값에 보전값 지정
+		var nMaxHeight = this._smfGetMaxBottomPos(this.divAll.form.divWork.form);
+		this.divAll.form.divWork.setOffsetHeight(nMaxHeight + this.fv_DIV_MARGIN);
+	}else
+	{
+		if(nHeight < nMainframeHeight )
+		//if(nHeight < (950 - this.divAll.form.divFrameTop.getOffsetHeight() - this.divAll.form.divFrameBottom.getOffsetHeight()))
+		{
+			var nFormHeight = nMainframeHeight;
+			this.divAll.form.divWork.setOffsetHeight(nFormHeight);	//defalut 높이 설정
+		}else
+		{
+			this.divAll.form.divWork.setOffsetHeight(nHeight);
+		}
+	}
+
+	// divHead의 값 및 높이를 세팅한다.
+	if(!bTemp)
+	{
+		this.divAll.form.divHead.form.fnSetMenu(menuUrl,params);
+		if (this.smfIsMobile()) {
+			this.divAll.form.divHead.setOffsetHeight(70);
+			this.divAll.form.divHead.form.divMenuIndicator2.set_visible(true);	
+		}else {
+			if ( this.divAll.form.divHead.getOffsetHeight() != 130 )
+			{
+				this.divAll.form.divHead.setOffsetHeight(130);			
+			}
+			this.divAll.form.divHead.form.divMenuIndicator.set_visible(true);
+		}
+
+		//if (params.menuId =="7000") {
+		//	this.set_width(this.width-1 ); // divAll.form.divWork.setOffsetWidth(this.width-1);
+		//}
+	}else
+	{
+		this.divAll.form.divHead.setOffsetHeight(0);
+		this.divAll.form.divHead.form.divMenuIndicator.set_visible(false);
+		this.divAll.form.divHead.form.divMenuIndicator2.set_visible(false);
+	}
+	
+	//전체 영역 높이는  top영역 높이 +  bottom 영역 높이 + 업무영역높이
+	//this.divAll.setOffsetHeight( this.divAll.form.divTop.getOffsetHeight()+this.divAll.form.divWork.getOffsetHeight()+this.divAll.form.divBottom.getOffsetHeight()); 
+	//this.divAll.setOffsetHeight( this.divAll.form.divHead.getOffsetHeight()+this.divAll.form.divWork.getOffsetHeight()+this.divAll.form.divGrade.getOffsetHeight()+this.divAll.form.divBottom.getOffsetHeight()); 
+	this.divAll.form.divWork.form.resetScroll();	//업무영역 resetScroll
+	this.divAll.form.resetScroll(); //전체 영역 resetScroll
+	this.resetScroll();	//form  영역 resetScroll
+
+	// [BEGIN] 범정부 UIUX 적용 관련
+	if(this.APPLY_GOV_GUIDE){
+		// TODO
+	}else{
+		if ( this.smfIsMobile() )
+		{
+			this.divAll.form.divBottom.setOffsetHeight(580);		
+		}else
+		{
+			this.divAll.form.divBottom.setOffsetHeight(280);
+		}
+	}
+	// [ END ] 범정부 UIUX 적용 관련
+
+	//웹접근성- MainFrame의 titletext를 변경
+	this.fnChangeFrameTitle(menuText);
+	
+
+	//if ( this.isNil(this.divAll.form.divBottom.url) )
+	//	this.divAll.form.divBottom.set_url("frame::pas/frameBottom.xfdl");
+};
+
+
+//*****************************************
+//  history처리 - Start
+//*****************************************
+/*
+* History
+* @description 	: 최초 접속시 페이지 이동 처리 함수
+* @param     	: N/A
+* @return       : N/A
+*/
+this.initPage = function() {
+	if (nexacro._Browser!="Runtime") {
+		var urlParams = nexacro.urlParams;
+		//링크타고 들어올 경우
+		if (urlParams && (this.smfIsNull(urlParams.postId)==false || this.smfIsNull(urlParams.menu)==false)) 
+		{
+			// EnvironmentVariable[ev_menuType]값 체크
+			var sUdsVpnRequest = nexacro.getEnvironmentVariable("ev_vpnrequest");
+			var extReqMenu = nexacro.getEnvironmentVariable("ev_menuType");
+			if (extReqMenu) {
+				if (extReqMenu.split("___")[0]) {
+					//nexacro.getApplication().mainframe.VFrameSet.frameMain.set_formurl();
+				}
+			}else if(sUdsVpnRequest=="Y") {
+				//nexacro.getApplication().mainframe.VFrameset.frameMain.form.divAll.divWork.set_url("test::uds_cmmcm00_m00.xfdl");
+				this.smfSetWorkPage("pa_pas_uum_cm::pas_uumcm00_m00.xfdl", {}, true);
+				//this.smfSetWorkPage("test::uds_cmmcm00_m00.xfdl", {}, true);
+			}else {
+				this.fnFormInit();
+			}
+		}
+
+		// 새로고침 시
+		else {
+			var sHash = MyHistory.getLocationHash();
+			
+			// History 기록이 있을 경우
+			if (!this.smfIsNull(sHash)) {
+				var sData = {};
+				sData = MyHistory.getData(sHash);
+
+				this.onChangeHistory(sHash, sData);
+			}
+			// History 기록이 없을 경우
+			else {
+				// EnvironmentVariable[ev_menuType]값 체크
+				var sUdsVpnRequest = nexacro.getEnvironmentVariable("ev_vpnrequest");
+				var extReqMenu = nexacro.getEnvironmentVariable("ev_menuType");
+				if (extReqMenu) {
+					if (extReqMenu.split("___")[0]) {
+						//nexacro.getApplication().mainframe.VFrameSet.frameMain.set_formurl();
+					}				
+				}else if(sUdsVpnRequest=="Y") {
+					//nexacro.getApplication().mainframe.VFrameset.frameMain.form.divAll.divWork.set_url("test::uds_cmmcm00_m00.xfdl");
+					this.smfSetWorkPage("pa_pas_uum_cm::pas_uumcm00_m00.xfdl", {}, true);
+					//this.smfSetWorkPage("test::uds_cmmcm00_m00.xfdl", {}, true);
+				}else {
+					this.fnFormInit();
+				}			
+			}
+		}
+	}
+};
+
+/*
+* @description 	: 브라우저 뒤로이동, 앞으로이동 호출 함수
+* @param  sHash	: 브라우저에 기록된 현재 Hash 정보
+* @param  sData	: 브라우저에 기록된 현재 Data 정보
+* @return       : N/A
+*/
+this.onChangeHistory = function(sHash, sData) {
+	// 열려있는 팝업 닫기
+	if (nexacro.getPopupFrames().length>0) {
+		var objFrames = nexacro.getPopupFrames();
+		for (var i=0; i<objFrames.length; i++) {
+			objFrames[i].form.close();
+		}
+		return;
+	}
+
+	//메뉴 창 열려있으면 닫기
+	if (this.getOwnerFrame().form["commSitemap"]) {
+		//this.getOwnerFrame().form.divTop.form.divSkip.set_visible(true);
+		var objDiv = this.getOwnerFrame().form.removeChild("commSitemap");
+		objDiv.destory();
+		objDiv = null;	
+	}
+
+
+	var urlParams = {};
+	
+	//Hash 값으로 파라미터 정보 가져오기
+	(function() {
+		var match,
+		    pl = /\+/g,
+			search = /([^&=]+)=?([^&]*)/g,
+			decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+			query = sHash;
+			while (match = search.exec(query)) { urlParams[decode(match[1])] = decode(match[2]); }
+		})();
+
+	//페이지 이동을 위한 파라미터 오브젝트에 값 추가
+	// urlParams.v : 시간, urlParams.menu : 메뉴URL
+	this.param.menu = urlParams.menu;
+	this.param.params = urlParams.params;
+	this.param.headArea = urlParams.headArea;
+	this.param.menuText = urlParams.menuText;
+	
+	this.param.keyword = urlParams.keyword;
+	this.param.postId = urlParams.postId;
+	this.param.page = urlParams.page;
+
+
+	//trace("♣ onChangeHistory()    ▶ urlParams.params >> "+urlParams.params , sData, sHash);
+
+	//Hash 값을 params 에 셋팅하여 전달한다
+	var oData = MyHistory.getData(sHash);
+	this.param.params = oData;
+	//trace(" 공지사항일 경우 pafrBbsId >> "+ oData.pafrBbsId);
+	
+
+	//menu 값이 없으면 메인화면으로 ...
+	
+	if (this.param.menu == this.mainUrl) {
+		// 메뉴모드에서 메인모드로 변경
+		if (this._smfIsTopDivMode("B")) {
+			this.fnFormInit();
+		}else {
+			this.smfChangeDiv("B");
+		}
+	}else {
+		if (!this.smfIsMobile()) {
+			// 메인모드에서 메뉴모드로 변경
+			this.smfChangeDiv("W");
+		}
+		this.smfSetWorkPage(this.param.menu, this.param.params, this.param.headArea, '', urlParams.v);
+	}
+};
+
+this.fnSetHistoryInit = function()
+{
+	return;
+	
+	if(!this.fvUseHistory)	return;
+
+	if("undefined"!=typeof MyHistory)
+	{
+		// History 기능 사용을 위해 초기화 (application 실행 시 한번만 호출)
+		// 첫번째 인자는 뒤로가기, 앞으로가기가 실행됬을때 호출될 함수
+		// 두번째 인자는 함수내에서 this 로 사용할 scope
+		MyHistory.init(this.onChangeHistory, this);
+		
+		// 새로고침을 위한 처리 ( application 실행 시 한번만 체크)
+		// 새로고침되더라도 hash 값을 그대로 남아있기에
+		// hash id 에 해당하는 처리를 하도록 한다.
+		// 2023.07.13  브라우저 reflash한 경우 에러발생방지
+// 		var hash = MyHistory.getLocationHash();		
+// 		if ( hash )
+// 		{
+// 			// 데이터가 필수가 아니면 체크할 일이 없겠네요
+// 			var data = MyHistory.getData(hash);
+// 			if ( data )
+// 			{
+// 				this.onChangeHistory(hash, data);
+// 			}
+// 		}	
+	}
+}
+
+this.fnSetHistoryHash = function(MenuUrl, params,bShowHead, sMenuText)
+{
+	return;
+	
+	if(!this.fvUseHistory)	return;
+	
+	if("undefined"!=typeof MyHistory)
+	{
+		var sHash ="";
+		var sData ="";
+		
+        // TopFrame을 세팅하기 위한 정보		
+		var sSubSysGb          = this.smfGetSubSystemGb();   
+		var sSubSysDetailGb    = this.smfGetSubSystemDetailGb();
+		var sTopFrameType      = this.divTop.form.fvHistoryInfo_type;   // "expand" / "collapse"
+		var sTopFrameObjOption =  this.divTop.form.fvHistoryInfo_objOption;  // 온라인채용에서 사용하는 정보
+		
+		sHash = MenuUrl;
+		var objParam = {
+		                 // 화면을 열기 위한 정보 
+							"params"             : params
+						,   "bShowHead"          : bShowHead	
+						,   "sMenuText"          : sMenuText	
+						,   "bShowToolbar"       : false	
+						,   "bShowGrade"         : false
+						// TopFrame을 재구성하기 위한 정보
+						,   "subSysGb"           : sSubSysGb	
+						,   "subSysDetailGb"     : sSubSysDetailGb	
+						,   "topFrameType"       : sTopFrameType	
+						,   "topFrameObjOption"  : sTopFrameObjOption	
+					   };
+		sData = JSON.stringify(objParam) ;
+		MyHistory.setLocationHash(sHash, sData);
+		
+		// params의 데이터셋 오브젝트를 saveXML로 변경
+		function replacer(key,value)
+		{
+			if(value instanceof nexacro.NormalDataset)
+			{
+				return value.saveXML();
+			}
+			return value;
+		}		
+	}
+}
+
+// 브라우저의 뒤로가기, 앞으로가기 실행시 호출됨
+// this.onChangeHistory_X = function(hash, data)
+// {
+// 	return;
+// 	
+// 	if(!this.fvUseHistory)	return;
+// 	
+// 	if ( hash == "" )
+// 	{
+// 		trace("=====hash없음");
+// 		// 맨앞으로 간 것으로 판단하여 이전 화면으로 이동한다.
+// 		history.go(-1);
+// 	}	
+// 	else
+// 	{
+// 		var MenuUrl = hash;
+// 		var params = {};
+// 		var bShowHead    = false;
+// 		var sMenuText    = "";
+// 		//var bShowToolbar = false;
+// 		//var bShowGrade   = false;
+// 		
+// 		// hash id 를 확인하여 필요한 처리를 진행한다.
+// 		var objData = JSON.parse(data);
+// 		if(objData) 
+// 		{
+// 			
+// 			// 화면으로 이동한다.
+// 			params       = objData.params || {};
+// 			bShowHead    = objData.bShowHead;
+// 			sMenuText    = objData.sMenuText || "";
+// 			//bShowToolbar = objData.bShowToolbar;
+// 			//bShowGrade   = objData.bShowGrade;
+// 		}
+// 		
+// 		if(MenuUrl==this.mainUrl)
+// 		{
+// 			this.smfChangeDiv("B");
+// 		}
+// 		else
+// 		{
+// 			this.smfChangeDiv("W");
+// 			this.smfSetServiceLink(MenuUrl, "open",params, sMenuText)
+// 		}
+// 	}
+// }
+
+//*****************************************
+//  history처리 - End
+//*****************************************
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 사이즈 변경시 위치변경
+*/
+this.frameMain_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+//	if( e.cx > 1920)
+//	{
+//		this.setOffsetWidth(1920);
+//		return;
+//	}
+
+	var objParentFrame = this.getOwnerFrame();
+	var arrPopFrame = nexacro.getPopupFrames();
+	var changHeight = 200;
+
+	// 검색화면이 팝업일경우
+	if (arrPopFrame["_PotalSearch"]) {
+		arrPopFrame["_PotalSearch"].setFocus();
+		
+		if(this.smfIsMobile() )
+			arrPopFrame["_PotalSearch"].move(0, 0,null,420,0);
+		else 
+			arrPopFrame["_PotalSearch"].move(0, 0,null,200,0);
+	
+		arrPopFrame["_PotalSearch"].form.fnMiddleAlign();
+	}
+
+	// divAll center 정렬
+	if(this.smfIsMobile() )	//모바일일 경우
+	{
+		this.divAll.set_left(0);
+		this.divAll.set_right(0);
+		this.divTop.set_left(0);
+		
+		// 팝업(공지) 위치 변경
+		if (this.isValidObject("commNoticeAll")) {
+			this["commNoticeAll"].setFocus();
+			this["commNoticeAll"].form.resetScroll();
+		}
+		
+		
+		// 일반팝업 가로세로회전시 위치 변경
+		var srcInfo = this.smfCurScreenInfo();
+		var srcWidth = parseInt(srcInfo[0],10);
+		var srcHeight = parseInt(srcInfo[1],10);
+
+		for (var k=0; k<arrPopFrame.length; k++) {
+			var objPop = arrPopFrame[k];
+			
+
+			var nPopTop = 0;
+			//@orgFormHeight : 해당 팝업 form onload시 지정한 높이
+			//@orgPopHeight : 팝업 호출 시 지정한 높이
+			//팝업 호출 시 지정한 사이즈를 우선으로 함. 사이즈를 지정하지 않았다면 form 크기에 맞춤.
+			var nPopHeight = 0;
+			if(this.smfIsNull(objPop.orgPopHeight)){
+				nPopHeight = parseInt(objPop.orgFormHeight) + objPop.titlebarheight; //폼사이즈 + Titlebar 높이
+			}else{
+				nPopHeight = parseInt(objPop.orgPopHeight); //입력한 팝업 사이즈
+			}			
+			var nPopWidth =  this.smfIsNull(objPop.orgPopWidth)? parseInt(objPop.orgFormWidth):parseInt(objPop.orgPopWidth);
+			var nPopLeft = ( srcWidth - nPopWidth ) / 2;	//left는 중앙으로 위치
+			
+			
+			// Left,Top 이 없으면 처음오픈시 값으로 셋팅
+			if ( !this.smfIsNull(objPop.orgPopTop) && !this.smfIsNull(objPop.orgPopLeft) ) {
+				if (!this.smfIsNull(objPop.orgPopTop))	nPopTop = objPop.orgPopTop;
+				//if (!this.smfIsNull(objPop.orgPopLeft))	nPopLeft = objPop.orgPopLeft;
+				var nTpos = parseInt(nPopTop) + nPopHeight;
+	
+			
+				//가로전환시 화면높이가 더 크면
+				if (srcHeight <= nTpos) {
+					nPopTop = 15;
+					objPop.setOffsetHeight(srcHeight-30);
+				}else{
+					objPop.setOffsetHeight(nPopHeight);
+				}
+			}else {
+				var nTpos = parseInt(objPop.getOffsetTop()) + nPopHeight;
+				
+				//가로전환시 화면높이가 더 크면
+				// - 모바일Combo 에서도 적용됨
+				if (srcHeight <= nTpos) {
+					nPopTop = 15;
+					objPop.setOffsetHeight(srcHeight-30);
+				}else{
+					objPop.setOffsetHeight(nPopHeight);
+					nPopTop = parseInt((srcHeight - nPopHeight) / 2);
+				}
+			}
+			
+			objPop.setOffsetLeft(nPopLeft);
+			objPop.setOffsetTop(nPopTop);				
+			
+			objPop.form.resetScroll();
+		}
+
+		this.divAll.form.divWork.form.resetScroll();
+		this.divAll.form.resetScroll();
+		this.resetScroll();
+	}else
+	{
+		var nAllWidth = this.width - this._getHScrollBarSize();  // 전체 form의 사이즈
+		var nMaxWidth = 1200;
+		var nLeft,nWidth;
+
+		if(nAllWidth >= nMaxWidth)	//1280 사용
+		{
+			nLeft = parseInt((nAllWidth - nMaxWidth) / 2);
+			if(nLeft < 0) nLeft = 40;
+			
+			nWidth = nMaxWidth;
+		}else
+		{
+			nLeft = 40;
+			nWidth = nAllWidth;
+		}
+
+		if ( this.divAll.form.divWork.url == this.mainUrl ){		
+			this.divAll.form.divWork.setOffsetLeft(0);
+			this.divAll.form.divWork.setOffsetWidth(e.cx - this._getHScrollBarSize());
+
+			// divWork의 width를 HScrollBarSize사이즈 만큼 빼야 하단에 스크롤이 보이지 않음
+			if (this.divAll.form.divWork.getOffsetWidth() < this.fv_minwidth)
+				this.divAll.form.divWork.set_minwidth(this.fv_minwidth);
+	
+		}else
+		{
+			// 가운데 정렬
+			this.divAll.form.divHead.setOffsetLeft(nLeft);
+			this.divAll.form.divWork.setOffsetLeft(nLeft);
+			this.divAll.form.divHead.setOffsetWidth(nWidth);
+			this.divAll.form.divWork.setOffsetWidth(nWidth);
+			
+			this.divAll.form.divGrade.setOffsetLeft(nLeft);
+			this.divAll.form.divGrade.setOffsetWidth(nWidth);
+		}		
+//trace("@@ frameMain_onsize()  " + this.width +"======> nLeft="+nLeft+",nWidth="+nWidth + " e.cx : " + e.cx);
+
+		this.__smfResetScroll(this.divAll.form.divWork.form);
+
+		this.divAll.form.divHead.form.resetScroll();
+		this.divAll.form.divWork.form.resetScroll();
+		this.divAll.form.divGrade.form.resetScroll();
+		this.divAll.form.resetScroll();
+		this.divTop.form.resetScroll();
+		this.resetScroll();
+	}
+};
+
+/**
+ @divAll VScroll  = 0 이면,SiteMap(이용문의) 상단 우측 에 보여질것
+  divAll Top = 0 && divAll VScroll > 0 이면,SiteMap(이용문의) 삭제
+*/
+this.divAll_onvscroll = function(obj:nexacro.Div,e:nexacro.ScrollEventInfo)
+{
+	if ( nexacro.getEnvironmentVariable("ev_isMobile") == "Y" )	return;
+	if ( this.divAll.form.divWork.url != this.mainUrl )	return;
+
+	var nPos = e.pos;
+	if (nPos > this.divTop.height ) {
+		this.divTop.form.fnTopMode("W");  // 흰배경
+		
+		// divAll의 Top변경
+		this.divAll.setOffsetTop(this.divTop.getOffsetHeight());
+		// divTop의 right 변경
+		this.divTop.set_right(0);  // this._getHScrollBarSize()
+	}else 
+	{
+		this.divTop.form.fnTopMode("B");  // 투명배경
+		
+		// divAll의 Top변경
+		this.divAll.setOffsetTop(0);
+		// divTop의 right 변경
+		this.divTop.set_right(this.divAll.form._getHScrollBarSize());  
+	}
+		
+	this.fv_prevPos = nPos;
+
+};
+
+//가로 스크롤 이동시 divTop 가로스크롤 이동시킨다
+this.divAll_onhscroll = function(obj:nexacro.Div,e:nexacro.ScrollEventInfo)
+{
+	this.divTop.form.fnTopMenuOnhscroll(e.pos);
+
+	/*
+	//상단 동적 메뉴(공지사항,원격지원서비스) 제어
+	var nPos = parseInt(this.getOwnerFrame().form.divAll.getVScrollPos(),0);
+	if (nPos > this.divTop.height ) {
+	
+	if (this.getOwnerFrame().form.divTop.form.divTopB.minwidth > this.getOwnerFrame().form.divTop.getOffsetWidth() &&
+	    parseInt(this.getOwnerFrame().form.divAll.form.getHScrollPos(),0) > parseInt(this.getOwnerFrame().form.divTop.form.getHScrollPos(),10) )
+	{
+			this.getOwnerFrame().form.divTop.form.fnTopMode("W");	
+	}
+	*/
+};
+
+/**
+ * @description 웹접근성 안내 페이지 클릭
+*/
+this.divSkip_btnAccessbilty_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+		var procType = "search";
+
+	// 팝업을 동작에 필요한 파라메터 지정
+	var popupParams = {
+		callback: this.fnPopupCallback, // 콜백함수 지정
+		sender: obj, // sender 지정
+		
+		// 팝업 전달 파라메터 지정
+		params: {
+			// 처리타입 지정
+			procType: procType,
+		},
+	};
+	// 모달팝업 실행
+	this.smfDialog("_auto", "comm::accessibilityGuide.xfdl", popupParams);	
+};
+
+/**
+ * @description skip에서 포커스가 빠졌을때
+*/
+this.divSkip_onkillfocus = function(obj:nexacro.Div,e:nexacro.KillFocusEventInfo)
+{
+
+	this.divSkip.set_height(0);
+
+	var elem = this.divSkip.getElement();
+	if(elem)
+	{ //겹쳐진 컴포넌트의 z-index 조절
+		elem.setElementZIndex("");
+	}
+};
+/**
+ * @description skip에서 포커스가 들어올때
+*/
+this.divSkip_onsetfocus = function(obj:nexacro.Div,e:nexacro.SetFocusEventInfo)
+{
+	this.divSkip.set_height(70);
+	this.divSkip.bringToFront();
+	
+	var elem = this.divSkip.getElement();
+	if(elem)
+	{ //겹쳐진 컴포넌트의 z-index 조절
+		elem.setElementZIndex(1);
+	}	
+};
+
+// 본문 바로가기
+this.divSkip_btnGoBody_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 팝업공지 close
+	this.fnCommNoticeClose();
+
+	var divWork = this.divAll.form.divWork;
+	var comp = divWork.form.components;
+	for(var i=0; i<comp.length; i++)
+	{
+		//접근성 enable true인 첫번째 컴포넌트
+		if(comp[i].accessibilityenable==true)
+		{
+			comp[i].setFocus();
+			break;
+		}
+	}
+};
+
+// 팝업공지 close
+this.fnCommNoticeClose = function() {
+
+	if (this.divAll.form.divWork.url == this.mainUrl) {		
+		if (this.isValidObject("commNoticeAll")) {		
+			var objDiv = this.removeChild("commNoticeAll");
+			objDiv.destroy();
+			objDiv = null;
+		}	
+	}
+};
+
+/**
+ * 디지털정부 UI/UX 적용 관련
+ * 로그 출력
+ */
+this.logger = function(){
+	if(this.USE_LOGGER){
+		var baseLog = this._orgurl.replace(".xfdl","") + " > ";
+		trace(baseLog, ...arguments);
+	}
+}]]></Script>
+  </Form>
+</FDL>

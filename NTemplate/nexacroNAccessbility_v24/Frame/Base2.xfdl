@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Base2" width="1280" height="720" titletext="기본메인창" onload="Base_onload">
+    <Layouts>
+      <Layout width="1280" height="720" screenid="Desktop_screen">
+        <Div id="popDiv" taborder="0" text="Div00" left="0" top="0" width="10" height="10" accessibilitylabel="메인공지팝업" background="#ffffff"/>
+        <Div id="divTop" taborder="1" left="10" top="10" height="80" border="1px solid" right="35" accessibilitylabel="상단 메인메뉴" url="Frame::Top2.xfdl" text="" accessibilityenable="true"/>
+        <Div id="divContents" taborder="2" left="10" top="90" height="546" accessibilitylabel="본문" border="1px solid" right="35" url="Frame::Main.xfdl" accessibilityenable="true"/>
+        <Div id="divFooter" taborder="3" left="10" top="646" height="62" border="1px solid" url="Frame::Footer.xfdl" right="35" accessibilitylabel="사이트 하단 정보"/>
+        <Div id="divMenu" taborder="4" text="Div00" left="1020" top="50" width="220" height="200" url="Frame::Menu.xfdl" visible="false"/>
+      </Layout>
+      <Layout height="678" mobileorientation="Landscape" name="Layout0" type="default" width="480" screenid="Mobile_screen">
+        <Div id="divTop" left="0" top="0" height="80" right="0"/>
+        <Div id="divContents" top="80" left="0" right="0" bottom="62"/>
+        <Div id="divFooter" left="0" right="0" height="62" bottom="0"/>
+        <Div id="divMenu" left="490" top="0" width="480" height="768"/>
+        <Div id="popDiv" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Base_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	nexacroBase = this;
+	nexacroTop = this.divTop ;
+	nexacroMain = this.divContents ;
+	nexacroBtms = this.divFooter ;
+//1
+// 	var objDiv = new Div();
+// 	objDiv.init("popDiv1", 0, 0, null, null, 0, 0);
+// 	this.addChild(objDiv.name, objDiv);
+// 
+// 	//objDiv.set_background("rgba(0, 0, 0, 0.5)");
+// 	objDiv.set_background("#ffffff");
+// 
+// 	objDiv.set_url("Etc::sample04_pop.xfdl");
+// 
+// 	objDiv.show();
+
+//2  
+	if (system.navigatorname == "nexacro")
+	{
+		return;
+	}
+
+	if (nexacro._isMobile())
+	{
+		this.popDiv.set_visible(false);
+		this.divMenu.move(0, 0, null, null, 0, 0);
+	}
+// 	else
+// 	{
+// 		this.popDiv.move(0,0,null,null,0,0);
+// 		
+// 		this.popDiv.set_url("Etc::sample04_pop.xfdl");
+// 		
+// 		var elem = this.popDiv.getElement();
+// 		if(elem)
+// 		{
+// 			elem.setElementZIndex(1);
+// 		}	
+// 	}
+
+	this.popDiv.set_visible(false);
+};
+
+
+this.fnClose = function()
+{
+//1
+// 	this.popDiv1.set_visible(false);	
+// 	this.divTop.setFocus();
+
+//2
+	this.popDiv.set_visible(false);	
+	var elem = this.popDiv.getElement();
+	if(elem)
+	{
+		elem.setElementZIndex("");
+	}	
+trace("팝업 visible 여부 -> " + this.popDiv.visible	);
+	this.divTop.setFocus();
+}
+
+this.fnMenuClick = function(bStatus, sUrl)
+{
+	if (bStatus)
+	{
+		this.divMenu.set_visible(true);
+		this.divMenu.form.getFirstAccessibilityComponent(true).setFocus();
+	//	this.divMenu.form.getFirstComponent(true).setFocus();
+	//	this.divMenu.setFocus();
+
+	}
+	else
+	{
+		this.divMenu.set_visible(false);
+		
+		if (this.gfnIsNull(sUrl))
+		{
+		//	nexacroTop.form.btnMenu.setFocus();		
+		}
+		else
+		{
+			nexacroMain.set_url(sUrl);
+			nexacroTop.form.btnLinkCompany.setFocus();		
+		}
+	}
+}]]></Script>
+  </Form>
+</FDL>

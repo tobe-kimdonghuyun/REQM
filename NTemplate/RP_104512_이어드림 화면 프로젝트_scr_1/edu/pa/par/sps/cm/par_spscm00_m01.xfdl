@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="par_spscm00_m01" width="950" height="520" titletext="유아 조회" onload="par_spscm00_m01_onload">
+    <Layouts>
+      <Layout height="520" mobileorientation="landscape" width="950" screenid="ScreenDeskTop">
+        <Static id="sta02" taborder="5" text="※ 유치원에서 학적을 구성하기 전에는 유아가 조회되지 않을 수 있습니다. 해당 유치원으로 문의하시기 바랍니다.&#13;&#10; * (참고) 유치원 학적구성은 3월8일까지 진행될 예정입니다.&#13;&#10;※ 학적변경 시 유치원 자녀 새등록이 필요합니다." left="20" top="6" width="824" height="60" cssclass="sta_WF_Blue14" initvalueid="ivStcAccessibilityOn" wordWrap="char"/>
+        <Div id="divClaiInfo" taborder="0" left="20" height="110" top="65" text="" cssclass="div_WF_Search" right="20" initvalueid="ivDivAccessibilityOn" accessibilitylabel="검색영역">
+          <Layouts>
+            <Layout>
+              <Static id="Static45" taborder="0" left="9" width="82" height="42" cssclass="sta_WF_Essential01" text="*유아 명" top="14" onclick="Static45_onclick" initvalueid="ivStcEssential"/>
+              <Edit id="edtStuFlnm" taborder="1" left="88" top="20" height="30" text="한서진" width="280" cssclass="essential" initvalueid="ivEdtEssential" accessibilitylabel="유아명" onchanged="divClaiInfo_edtClaiNm_onchanged" maxlength="80" imemode="hangul"/>
+              <Static id="Static45_00" taborder="2" left="368" width="88" height="42" cssclass="sta_WF_Essential01" text="*생년월일" top="14" onclick="Static45_onclick" initvalueid="ivStcEssential"/>
+              <Calendar id="calClaiBrdt" taborder="3" left="456" top="20" width="150" height="30" dateformat="yyyy.MM.dd." cssclass="essential" editformat="yyyy.MM.dd." accessibilitylabel="신청자생년월일" initvalueid="ivCalEssential"/>
+              <Static id="Static10" taborder="6" left="19" width="72" height="42" cssclass="sta_WF_Searchtxt01" text="유치원" top="55" initvalueid="ivStcAccessibilityOn"/>
+              <Button id="btnKndgrSch" taborder="7" text="유치원 찾기" left="88" top="61" width="95" height="30" cssclass="btn_WF_Crud" initvalueid="ivBtnAccessibilityLink" onclick="fnKndgrSchPopup" accessibilitydescription="새창열림"/>
+              <Edit id="edtKndgr" taborder="8" left="189" top="61" height="30" text="만천유치원" accessibilitylabel="신청자주소" initvalueid="ivEdtReadOnly" readonly="true" width="417" cssclass="essential"/>
+              <Edit id="edtShlCd" taborder="9" left="612" top="61" width="95" height="30" cssclass="essential" initvalueid="ivEdtEssential" visible="false" text="A000003686"/>
+              <Button id="btnSearch" taborder="10" text="조회" top="60" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="divSearch_btnSearch_onclick" initvalueid="ivBtnAccessibilityButton"/>
+              <Static id="Static46" taborder="4" left="599" width="82" height="42" cssclass="sta_WF_Essential01" text="*학급 명" top="15" onclick="Static45_onclick" initvalueid="ivStcEssential"/>
+              <Edit id="edtClsNm" taborder="5" left="681" top="19" height="30" text="평화반" width="159" cssclass="essential" initvalueid="ivEdtEssential" accessibilitylabel="유아명" onchanged="divClaiInfo_edtClaiNm_onchanged" maxlength="10" imemode="hangul"/>
+            </Layout>
+            <Layout name="mobile">
+              <Static id="Static10" left="0" top="279" width="136" height="42" cssclass="sta_WF_Searchtxt01"/>
+              <Button id="btnKndgrSch" left="145" top="270" width="260" height="60"/>
+              <Edit id="edtKndgr" left="145" top="350" height="60" right="20"/>
+              <Static id="Static45_00" left="0" top="119" width="136" height="42" cssclass="sta_WF_Searchtxt01"/>
+              <Calendar id="calClaiBrdt" left="145" top="110" width="260" height="60" popuptype="system"/>
+              <Edit id="edtStuFlnm" left="145" top="30" height="60" right="20"/>
+              <Button id="btnSearch" width="164" height="60" right="20" bottom="30"/>
+              <Edit id="edtShlCd" left="145" top="430" height="60" right="20"/>
+              <Static id="Static45" cssclass="sta_WF_Searchtxt01" left="0" top="39" width="136" height="42"/>
+              <Edit id="edtClsNm" left="145" top="190" height="60" right="20"/>
+              <Static id="Static46" cssclass="sta_WF_Searchtxt01" left="0" top="199" width="136" height="42"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <ImageViewer id="imgTitle2" taborder="1" text="유아 목록" left="20" top="divClaiInfo:12" height="30" cssclass="img_WF_SubTit04" width="82" initvalueid="ivTitleAccessibilityOn"/>
+        <Div id="div00" taborder="2" left="20" top="imgTitle2:9" height="239" initvalueid="ivDivAccessibilityOff" right="20">
+          <Layouts>
+            <Layout>
+              <Grid id="grdStuList" taborder="0" left="0" top="0" binddataset="dsResult" cssclass="grid_ds" initvalueid="ivGrdAccessibilityOn" oncelldblclick="grdStuList_onCellDbClick" oncellclick="grdStuList_onCellDbClick" formatid="default" autofittype="col" accessibilitylabel="유아목록" selecttype="cell" right="0" bottom="0">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="129"/>
+                      <Column size="282"/>
+                      <Column size="100"/>
+                      <Column size="131"/>
+                      <Column size="81"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="유아성명"/>
+                      <Cell col="1" text="유치원"/>
+                      <Cell col="2" text="학년도"/>
+                      <Cell col="3" text="학급명"/>
+                      <Cell col="4" text="반번호" cssclass="LineNo"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:stuFlnm" textAlign="center"/>
+                      <Cell col="1" text="bind:kornOrgNm" textAlign="center"/>
+                      <Cell col="2" text="bind:ayr" textAlign="center"/>
+                      <Cell col="3" text="bind:eduCrseClsNm" textAlign="center"/>
+                      <Cell col="4" text="bind:eduCrseCno" cssclass="LineNo" textAlign="center"/>
+                    </Band>
+                  </Format>
+                  <Format id="mobile">
+                    <Columns>
+                      <Column size="140"/>
+                      <Column size="271"/>
+                      <Column size="106"/>
+                      <Column size="221"/>
+                      <Column size="103"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="60" band="head"/>
+                      <Row size="70"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="유아성명"/>
+                      <Cell col="1" text="유치원"/>
+                      <Cell col="2" text="학년도"/>
+                      <Cell col="3" text="학급명"/>
+                      <Cell col="4" text="반번호"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:stuFlnm" textAlign="center"/>
+                      <Cell col="1" text="bind:kornOrgNm" textAlign="center"/>
+                      <Cell col="2" text="bind:ayr" textAlign="center"/>
+                      <Cell col="3" text="bind:eduCrseClsNm" textAlign="center"/>
+                      <Cell col="4" text="bind:eduCrseCno" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+            <Layout name="mobile">
+              <Grid id="grdStuList" formatid="mobile" bottom="1" left="0" top="0" width="1159"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static99_00_00_00_00" taborder="3" left="20" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20"/>
+        <Button id="btnClose" taborder="4" text="닫기" onclick="btn_close_onclick" cssclass="btn_pop_normal" left="47.93%" top="div00:20" height="30" escapebutton="true" hotkey="ALT+C" width="48" initvalueid="ivBtnAccessibilityButton"/>
+      </Layout>
+      <Layout height="1368" mobileorientation="Landscape" name="mobile" type="default" width="640" screenid="mobile,tablet">
+        <Div id="divClaiInfo" left="20" top="sta02:30" height="630" right="20"/>
+        <Div id="div00" left="20" top="imgTitle2:10" height="418" right="20" formscrollbarsize="1"/>
+        <ImageViewer id="imgTitle2" left="20" top="divClaiInfo:50" width="132" height="60"/>
+        <Button id="btnClose" top="div00:60" left="20" height="80" right="20"/>
+        <Static id="sta02" cssclass="sta_WF_Text24Blue" left="20" top="20" height="120" right="20" text="※ 유치원에서 학적을 구성하기 전에는 유아가 조회되지 않을 수 있습니다. 해당 유치원으로 문의하시기 바랍니다.&#13;&#10; * (참고) 유치원 학적구성은 3월8일까지 진행될 예정입니다.&#13;&#10;※ 학적변경 시 유치원 자녀 새등록이 필요합니다."/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    유아 조회
+*  @FileName 	par_spscm00_m01.xfdl
+*  @Creator 	안배식
+*  @CreateDate 	2023.02.10
+*  @Desction    유치원 학부모서비스 - 유치원 조회
+************** 소스 수정 이력 ***********************************************
+*  date				Modifier				Description
+*******************************************************************************
+*  2023.02.10		안배식					최초 생성
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::cm_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+var cddcScCd;
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리
+ */
+this.par_spscm00_m01_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼을 초기화
+	this.smfInitPopup(obj);
+};
+
+/************************************************************************************************
+ * TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd <= -1) return;
+};
+
+
+
+/**
+ * @description 엔터키실행
+ */
+this.fnKeyUp = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode=='13'){
+		this.divSearch_btnSearch_onclick();
+	}
+};
+
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.divClaiInfo.form.edtStuFlnm.text == '') {
+		this.smfAlert('검색하실 유아의 이름을 입력하세요.');
+		this.divClaiInfo.form.edtStuFlnm.setFocus();
+		return false;
+	}
+
+	if (this.smfIsNull(this.divClaiInfo.form.calClaiBrdt.value)) {
+		this.smfAlert('생년월일을 입력하세요.');
+		this.divClaiInfo.form.calClaiBrdt.setFocus();
+		return false;
+	}
+	
+	if (this.divClaiInfo.form.edtClsNm.text == '') {
+		this.smfAlert('검색하실 유아의 학급명을 입력하세요.');
+		this.divClaiInfo.form.edtClsNm.setFocus();
+		return false;
+	}
+	
+	if (this.smfIsNull(this.divClaiInfo.form.edtShlCd.value)) {
+		this.smfAlert('검색하실 유치원을 입력하세요.');
+		this.divClaiInfo.form.edtShlCd.setFocus();
+		return false;
+	}
+
+	this.dsSearch.setColumn(0, "shlCd", this.divClaiInfo.form.edtShlCd.value);
+	this.dsSearch.setColumn(0, "stuFlnm", this.divClaiInfo.form.edtStuFlnm.text);
+	this.dsSearch.setColumn(0, "brdt", this.divClaiInfo.form.calClaiBrdt.value);
+	this.dsSearch.setColumn(0, "clsNm", this.divClaiInfo.form.edtClsNm.text);
+	this.dsSearch.setColumn(0, "cddcScCd", this.cddcScCd);
+
+	this.smfSearchService("selectStuList")
+		.run() // 실행
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if(this.dsResult.getRowCount() > 0){
+				this.div00.form.grdStuList.setFocus();
+			}
+		});
+};
+
+this.fnPopupCallback = function(e, sender){
+	this.divClaiInfo.form.edtKndgr.set_value(e.kornOrgNm);
+	this.divClaiInfo.form.edtShlCd.set_value(e.orgCd);
+	this.cddcScCd = e.cddcScCd;
+}
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	if(errcd <= -1) return;	
+};
+
+this.fnKndgrSchPopup = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var procType = "none";
+	var sType = "2";
+
+	// 팝업을 동작에 필요한 파라메터 지정
+	var popupParams = {
+		callback : this.fnPopupCallback, // 콜백함수 지정
+		sender : obj, // sender 지정
+		// 팝업 전달 파라메터 지정
+		params : {
+			// 처리타입 지정
+			procType	: procType,
+			// 파라메터 전달
+			sType 		: sType
+		},
+	};
+	
+	this.smfDialog("_auto", "pa_par_sps_cm::par_spscm00_m00.xfdl", popupParams);
+};
+
+this.grdStuList_onCellDbClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.smfSendResponseToOpener({
+		"shlCd": this.dsResult.getColumn(e.row, "shlCd"),
+		"kornOrgNm": this.dsResult.getColumn(e.row, "kornOrgNm"),
+		"stuDtcNo": this.dsResult.getColumn(e.row, "stuDtcNo"),
+		"stuInvlNo": this.dsResult.getColumn(e.row, "stuInvlNo"),
+		"stuFlnm": this.dsResult.getColumn(e.row, "stuFlnm"),
+		"ayr": this.dsResult.getColumn(e.row, "ayr"),
+		"clsCd": this.dsResult.getColumn(e.row, "clsCd"),
+		"clsNm": this.dsResult.getColumn(e.row, "clsNm"),
+		"clsScCd": this.dsResult.getColumn(e.row, "clsScCd"),
+		"clsScNm": this.dsResult.getColumn(e.row, "clsScNm"),
+		"eduCrseClsNm": this.dsResult.getColumn(e.row, "eduCrseClsNm"),
+		"eduCrseCno": this.dsResult.getColumn(e.row, "eduCrseCno")
+	});	
+	
+	this.close(true);
+};
+this.btn_close_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(true);
+};
+
+this.sta02_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item4" compid="divClaiInfo.form.edtClaiAddrDetail" propid="accessibilitylabel" datasetid="dsMain" columnid="ClaiAddr"/>
+      <BindItem id="item5" compid="divClaiInfo.form.edtClaiAddrDetail" propid="value" datasetid="dsMain" columnid="claiDtlAddr"/>
+      <BindItem id="item0" compid="divClaiInfo.form.edtStuFlnm" propid="value" datasetid="dsMain" columnid="claiFlnm"/>
+      <BindItem id="item1" compid="divClaiInfo.form.calClaiBrdt" propid="value" datasetid="dsMain" columnid="claiBrdt"/>
+      <BindItem id="item2" compid="divClaiInfo.form.edtKndgr" propid="accessibilitylabel" datasetid="dsMain" columnid="ClaiAddr"/>
+      <BindItem id="item3" compid="divClaiInfo.form.edtClaiTelNo" propid="accessibilitylabel" datasetid="dsMain" columnid="ClaiTelno"/>
+      <BindItem id="item6" compid="divClaiInfo.form.edtClaiMblTelNo" propid="accessibilitylabel" datasetid="dsMain" columnid="ClaiMblTelno"/>
+      <BindItem id="item7" compid="divClaiInfo.form.edtClaiEmailId" propid="value" datasetid="dsMain" columnid="claiEmlAddr"/>
+      <BindItem id="item8" compid="divClaiInfo.form.edtKndgr" propid="value" datasetid="dsMain" columnid="claiAddr"/>
+      <BindItem id="item9" compid="divClaiInfo.form.edtClaiTelNo" propid="value" datasetid="dsMain" columnid="claiTelno"/>
+      <BindItem id="item10" compid="divClaiInfo.form.edtClaiMblTelNo" propid="value" datasetid="dsMain" columnid="claiMblTelno"/>
+      <BindItem id="item11" compid="divClaiInfo.form.edtClsNm" propid="value" datasetid="dsMain" columnid="claiFlnm"/>
+    </Bind>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectStuList</Col>
+            <Col id="url">/par_sps_cm00_002.do</Col>
+            <Col id="outDatasets">dsResult</Col>
+            <Col id="inDatasets">dsSearch</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="kornOrgNm" type="STRING" size="256"/>
+          <Column id="stuDtcNo" type="STRING" size="256"/>
+          <Column id="stuInvlNo" type="STRING" size="256"/>
+          <Column id="stuFlnm" type="STRING" size="256"/>
+          <Column id="ayr" type="STRING" size="256"/>
+          <Column id="clsScCd" type="STRING" size="256"/>
+          <Column id="clsScNm" type="STRING" size="256"/>
+          <Column id="clsCd" type="STRING" size="256"/>
+          <Column id="eduCrseClsNm" type="STRING" size="256"/>
+          <Column id="eduCrseCno" type="STRING" size="256"/>
+          <Column id="_chk" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset enableevent="true" id="dsSearch" loadfiltermode="keep" loadkeymode="keep" updatecontrol="true" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" size="256" type="STRING"/>
+          <Column id="stuFlnm" size="256" type="STRING"/>
+          <Column id="brdt" type="STRING" size="256"/>
+          <Column id="clsNm" size="256" type="STRING"/>
+          <Column id="cddcScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="stuFlnm">신박</Col>
+            <Col id="shlCd">A000003686</Col>
+            <Col id="brdt">20170630</Col>
+            <Col id="clsNm">평화반</Col>
+            <Col id="cddcScCd">K10</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

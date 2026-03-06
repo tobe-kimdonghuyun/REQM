@@ -1,0 +1,497 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sqa_ueudr00_m00" width="1200" height="720" titletext="대학기본정보관리" onbeforeclose="sqa_ueudr00_m00_onbeforeclose" onload="sqa_ueudr00_m00_onload">
+    <Layouts>
+      <Layout height="720" width="1200" screenid="ScreenDeskTop">
+        <Div id="divSearch" taborder="0" left="0" top="0" height="70" cssclass="div_WF_Search" right="0" initvalueid="ivDivAccessibilityOn" accessibilitylabel="조회영역" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCoaAyr" taborder="0" text="대입학년도" left="0" top="20" width="108" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtCoaAyr" taborder="1" left="staCoaAyr:0" width="101" height="30" top="20" initvalueid="ivEdtReadOnly" readonly="true"/>
+              <Static id="staCoaRcritScNm" taborder="2" text="모집구분" left="edtCoaAyr:0" top="20" width="96" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtCoaRcritScNm" taborder="3" left="staCoaRcritScNm:0" width="135" height="30" top="20" initvalueid="ivEdtReadOnly" readonly="true"/>
+              <Button id="btnSearch" taborder="4" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" initvalueid="ivBtnAccessibilityButton" onclick="divSearch_btnSearch_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <ImageViewer id="imgTitle" taborder="1" text="세부모집시기 관리" left="0" top="90" width="170" height="30" cssclass="img_WF_SubTit04" initvalueid="ivTitleAccessibilityOn"/>
+        <Static id="staPrd" taborder="2" text="" left="imgTitle:-160" top="132" width="460" height="28" cssclass="sta_WF_Black14" fittocontents="width"/>
+        <Div id="divInfo" taborder="3" left="0" right="0" initvalueid="ivDivAccessibilityOff" cssclass="div_WF_InfoBOX" height="158" top="562">
+          <Layouts>
+            <Layout>
+              <Static id="sta00_00_01_01_00" taborder="0" left="30" top="22" height="23" cssclass="sta_WF_InfoTit" text="이용 전 확인해주세요." wordWrap="char" initvalueid="ivStcAccessibilityOn" width="200"/>
+              <Static id="sta00_00_01_01" taborder="1" left="30" top="50" height="24" cssclass="sta_WF_Red14" text="※ 삭제는, 삭제 버튼 클릭 후, 화면 상단의 [저장]을 하셔야 실제 삭제가 됩니다." wordWrap="char" right="400" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staInfo" taborder="2" left="30" top="111" height="54" cssclass="sta_WF_Red14" text="※ 세부모집시기를 `사용안함`으로 설정하였습니다.&#13;&#10;   세부모집시기를 사용하시려면 `세부모집시기 사용` 버튼을 클릭하여 주십시오." wordWrap="char" right="400" initvalueid="ivStcAccessibilityOn" verticalAlign="top"/>
+              <Static id="sta00_00_01_01_01" taborder="3" left="30" top="71" height="41" cssclass="sta_WF_Red14" text="※ 코드값은 한 자릿수까지만 입력 가능하며, 저장 후에는 변경할 수 없습니다.&#13;&#10;※ 대상학생자료올리기 후에는 ‘세부모집시기명‘ 변경 및 삭제가 불가능 합니다." wordWrap="char" right="349" initvalueid="ivStcAccessibilityOn" onclick="divInfo_sta00_00_01_01_01_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdList" taborder="4" left="0" top="170" height="370" binddataset="dsDetaRcritPrd" autofittype="col" right="0" selecttype="cell" autoenter="select" initvalueid="ivGrdAccessibilityOn" onheadclick="grdList_onheadclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="46"/>
+                <Column size="100"/>
+                <Column size="200"/>
+                <Column size="93"/>
+                <Column size="93"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="_chk" displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="코드"/>
+                <Cell col="2" text="세부모집시기명"/>
+                <Cell col="3" text="시작일"/>
+                <Cell col="4" text="종료일" cssclass="LineNo"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:_chk" edittype="expr:useYn == &quot;Y&quot; ? &quot;none&quot; : &quot;checkbox&quot;" displaytype="expr:useYn == &quot;Y&quot; ? &quot;none&quot; : &quot;checkboxcontrol&quot;"/>
+                <Cell col="1" text="bind:detaRcritScValue" textAlign="center" edittype="expr:(dataset.getRowType(currow) != 2 || useYn == 'Y') ? 'none' : 'text'" editmaxlength="1" displaytype="normal" editinputtype="english,number"/>
+                <Cell col="2" text="bind:detaRcritScNm" textAlign="center" edittype="expr:useYn == &quot;Y&quot; ? &quot;none&quot; : &quot;text&quot;"/>
+                <Cell col="3" text="bind:detaRcritScBgngYmd" edittype="date" displaytype="date" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd" textAlign="center"/>
+                <Cell col="4" text="bind:detaRcritScEndYmd" cssclass="LineNo" edittype="date" displaytype="date" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd" textAlign="center"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnUnUse" taborder="5" text="사용안함" top="130" height="30" width="86" cssclass="btn_WF_Custom" right="157" onclick="btnUnUse_onclick"/>
+        <Button id="btnAdd" taborder="6" text="추가" top="130" height="30" width="74" cssclass="btn_WF_Write" visible="true" right="78" initvalueid="ivBtnAccessibilityButton" onclick="btnAdd_onclick"/>
+        <Button id="btnDelete" taborder="7" text="삭제" top="130" height="30" width="74" cssclass="btn_WF_Action" initvalueid="ivBtnAccessibilityButton" right="0" onclick="btnDelete_onclick"/>
+        <Button id="btnUse" taborder="8" text="세부모집시기 사용" top="130" height="30" width="140" cssclass="btn_WF_Custom" right="0" onclick="btnUse_onclick"/>
+        <Button id="btnSave" taborder="9" text="저장" top="90" width="74" cssclass="btn_WF_Crud" right="0" initvalueid="ivBtnAccessibilityButton" height="30" onclick="btnSave_onclick"/>
+        <Static id="Static99_00_00_00_00_01_00" taborder="10" left="0" top="70" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00" taborder="11" left="0" top="160" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00" taborder="12" left="0" top="542" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_00" taborder="13" left="0" top="120" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff" onclick="Static99_00_00_00_00_01_00_00_00_00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    대학기본정보관리
+*  @FileName 	sqa_ueudr00_m00.xfdl
+*  @Creator 	bsw
+*  @CreateDate 	2022.09.05
+*  @Desction    대입전형-대학기본정보관리
+************** 소스 수정 이력 ***********************************************
+*  date				Modifier				Description
+*******************************************************************************
+*  2023.02.01		bsw					최초 생성
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::cm_script.xjs"
+include "lib::sqa_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+var fvAllDel = false;   //전체삭제여부
+var fvUseYn = null;		//세부모집사용여부
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리
+ */
+this.sqa_ueudr00_m00_onload = function(obj,e) {
+
+	// Div 초기화
+	this.smfInitDiv(obj);
+
+//  	// Grid Checkbox 활성화/활성화 제어
+//  	this.smfUpdateRednerGridCheckbox(this.grdList, 0, this.fnRenderGridCheckbox);
+// 
+//  	// 조회 입력창에서 'Ctrl' + 'Enter' 키 입력시 조회수행 이벤트 설정
+//  	this.smfBindEnterKeyToSearch(this.divSearch, this.divSearch.form.btnSearch);
+// 
+//  	// 데이터 입력 창에서 'Ctrl' + 'Enter' 키 입력시 저장수행 이벤트 설정
+//  	this.smfBindEnterKeyToSearch(this.dsList, this.btnSave);
+
+	//초기화
+	this.fnInit(obj);
+
+	// 서버단에 설정한 유효성 검증 목록을 획득하여 설정
+	this.fnSearchValidation();	
+};
+
+/**
+ * @description 화면 폼 닫기전 이벤트
+ */
+this.sqa_ueudr00_m00_onbeforeclose = function (){
+	// 변경내역이 발생한 경우 종료전 confirm수행
+	return this.smfCloseFormConfirm([this.dsDetaRcritPrd]);
+}
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg) {
+	if(errcd <= -1) return;
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+
+************************************************************************************************/
+/**
+ * @description 유효성 검증 목록 조회
+*/
+this.fnSearchValidation = function() {
+	this.smfValidateService("validateMain", {
+			url: "/sqa_ueu_dr00_001.do",
+		})
+		.mappingRulesetToForm(this.divSearch, "search")					//조회Valid
+		.mappingRulesetToDataset(this.dsDetaRcritPrdValid, "save")		//저장Valid
+		.run()
+		.callback(function(callbackParams) {
+			if(callbackParams.errors) return;
+			this.fnSearch();
+		});
+};
+
+/**
+ * @description 조회
+*/
+this.fnSearch = function() {
+	this.smfSearchService("listUvstBsc")
+		.validateForm(this.divSearch) // 폼 유효성검사
+		.run() // 실행
+		.callback(function(callbackParams) {
+			if(callbackParams.errors) return;	
+
+			var detaRcritScNm = this.dsDetaRcritPrd.getColumn(0, "detaRcritScNm")
+			
+			if (detaRcritScNm == "세부모집시기사용안함") {
+				this.btnUse.set_visible(true);
+				this.btnUnUse.set_visible(false);
+				this.btnAdd.set_visible(false);
+				this.btnDelete.set_visible(false);
+				this.divInfo.form.staInfo.set_visible(true);
+				this.fvUseYn = "Y";
+				this.dsDetaRcritPrd.deleteRow(0);
+			}
+			
+			if(this.dsDetaRcritPrd.getCaseCount("useYn == 'Y'") > 0){
+				this.btnUnUse.set_enable(false);
+			}
+			
+			var prdText = this.divSearch.form.edtCoaRcritScNm.text + "모집기간 : ";
+			var bgngYmd = this.dsUvstRcritPrd.getColumn(0, "bgngYmd");
+			var endYmd = this.dsUvstRcritPrd.getColumn(0, "endYmd");
+			var addBgngYmd = this.smfIsNull(this.dsUvstRcritPrd.getColumn(0, "addBgngYmd")) ? "" : this.dsUvstRcritPrd.getColumn(0, "addBgngYmd");
+			var addEndYmd = this.smfIsNull(this.dsUvstRcritPrd.getColumn(0, "addEndYmd")) ? "" : this.dsUvstRcritPrd.getColumn(0, "addEndYmd");
+						
+			if (bgngYmd.length == 8 && endYmd.length == 8) {
+				prdText = prdText + bgngYmd.dateFormat("yyyy.MM.dd") + " ~ " + endYmd.dateFormat("yyyy.MM.dd");
+			}
+			
+			if (addBgngYmd.length == 8 && addEndYmd.length == 8) {
+				prdText = prdText + addBgngYmd.dateFormat("yyyy.MM.dd") + " ~ " + addEndYmd.dateFormat("yyyy.MM.dd");
+			}		
+			
+			this.staPrd.set_text(prdText);
+		});
+}
+
+/**
+ * @description 저장
+*/
+this.fnSave = function() {    
+	this.grdList.updateToDataset();					//입력된데이터 데이터셋반영(임시)	
+	this.smfSaveService("saveUvstRcritPrd")
+		.messagePrefix("저장")
+		.showConfirm(true)  
+		.validateGrid(this.grdList, this.dsDetaRcritPrdValid, {"_chkOption" : "ignore"}) //데이터 검증
+		.validateDuplicate({						  // 중복검사
+			grid: this.grdList,
+			columnNames: ["detaRcritScValue"], // 중복검사할 컬럼명
+			columnText: "코드",
+		})
+		.run() // 실행
+		.callback(function(callbackParams) {
+			if(callbackParams.errors) return;	
+			this.smfAlert("저장되었습니다.");
+			this.fnSearch();
+			this.fvAllDel = false;
+		});	
+}
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * @description 초기화
+*/
+ this.fnInit = function(obj) {
+ 
+	//세션정보 세팅
+	this.dsSearch.setColumn(0, "coaAyr", this.sqav_coaAyr);
+	this.dsSearch.setColumn(0, "coaRcritScCd", this.sqav_coaRcritScCd);
+	this.dsSearch.setColumn(0, "coaRcritScNm", this.sqav_coaRcritScNm);
+	this.dsSearch.setColumn(0, "uvstOrgCd", this.sqav_uvstOrgCd);
+	
+	this.btnUse.set_visible(false);
+	this.divInfo.form.staInfo.set_text("※ 세부모집시기를 `사용안함`으로 설정하였습니다.\n"
+									 + "     세부모집시기를 사용하시려면 `세부모집시기 사용` 버튼을 클릭하여 주십시오.");
+	this.divInfo.form.staInfo.set_visible(false);	
+};
+
+/**
+ * @description 다음 세무보집구분값 가져오기
+*/
+this.fnGetNextChar  = function(dsObj) {
+	var sCheckVal = "ABCDEFGHIJK";
+
+	var objArray = new Array("A","B","C","D","E","F","G","H","I","J");
+
+	var nCnt = dsObj.getRowCount();
+
+    if(nCnt == 10) return "K"; 
+
+     for(var i = 0; i < 10; i++){
+		var nCnt = this.dsDetaRcritPrd.getCaseCount("detaRcritScValue == '" + objArray[i] + "'");
+		if(nCnt == 0) return objArray[i];
+     }
+}
+/**
+ * 그리드 체크박스 enable 처리
+ * @param : ds - 데이터셋
+ * @param : nRow - rowposition
+ */
+this.fnRenderGridCheckbox = function(ds, nRow){
+	return true;
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 그리드 헤더 클릭
+*/
+this.grdList_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+    var columnName = obj.getCellProperty("body",e.cell,"text");
+	if ("bind:_chk" == columnName){
+		var chkYn = obj.getCellText(-1, e.cell) == "1" ? "0" : "1";
+		obj.setCellProperty("head", 0, "expr", chkYn);
+		for(var i=0; i<this.dsDetaRcritPrd.getRowCount();i++){
+			if(this.dsDetaRcritPrd.getColumn(i, 'useYn') != 'Y'){
+				this.dsDetaRcritPrd.setColumn(i, '_chk', chkYn);
+			}
+		}
+		//this.smfToggleChkHeader(obj, e, this.fnRenderGridCheckbox);
+	}else{
+		// 정렬
+		this.smfCheckAndSort(obj, e);
+	}
+};
+
+/**
+ * @description 조회
+*/
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSearch();
+};
+
+/**
+ * @description 초기화
+*/
+this.btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	if(this.fvUseYn == "Y") {
+		if (this.dsDetaRcritPrd.rowcount == 0) {
+			this.dsDetaRcritPrd.clearData();
+			this.dsDetaRcritPrd.addRow();
+		}
+		
+		this.dsDetaRcritPrd.setColumn(0, "coaAyr", this.dsSearch.getColumn(0, "coaAyr"));
+		this.dsDetaRcritPrd.setColumn(0, "coaRcritScCd", this.dsSearch.getColumn(0, "coaRcritScCd"));
+		this.dsDetaRcritPrd.setColumn(0, "uvstOrgCd", this.dsSearch.getColumn(0, "uvstOrgCd"));
+		this.dsDetaRcritPrd.setColumn(0, "detaRcritScValue", "A");
+		this.dsDetaRcritPrd.setColumn(0, "detaRcritScNm",  "세부모집시기사용안함");
+		
+		var detaRcritScBgngYmd = this.dsDetaRcritPrd.getColumn(0,"detaRcritScBgngYmd");
+		var detaRcritScEndYmd = this.dsDetaRcritPrd.getColumn(0,"detaRcritScEndYmd");
+		if (this.smfIsNull(detaRcritScBgngYmd)) detaRcritScBgngYmd = this.dsUvstRcritPrd.getColumn(0,"bgngYmd");
+		if (this.smfIsNull(detaRcritScEndYmd)) detaRcritScBgngYmd = this.dsUvstRcritPrd.getColumn(0,"endYmd");
+
+		this.dsDetaRcritPrd.setColumn(0,"detaRcritScBgngYmd", detaRcritScBgngYmd);
+		this.dsDetaRcritPrd.setColumn(0,"detaRcritScEndYmd", detaRcritScEndYmd);		
+	} else if(this.fvUseYn == "N") {
+		if (!this.fvAllDel) {
+			if(this.dsDetaRcritPrd.getRowCount() < 1) {
+				this.smfAlert("세부모집시기를 추가하거나, 사용안함을 선택해주세요.");
+				return;
+			}
+		}
+	}
+	
+	this.fnSave();
+};
+
+/**
+ * @description 세부모집시기 미사용
+*/
+this.btnUnUse_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfConfirm("세부모집시기를 사용하지 않으시겠습니까?", function(confirmParams){		
+		if(confirmParams.confirmResult) {
+			this.btnUse.set_visible(true);
+			this.btnUnUse.set_visible(false);
+			this.btnAdd.set_visible(false);
+			this.btnDelete.set_visible(false);		
+			this.fvUseYn = "Y";
+		}
+	});
+};
+
+/**
+ * @description 세부모집시기사용 
+*/
+this.btnUse_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfConfirm("세부모집시기를 사용하시겠습니까?", function(confirmParams){
+		if(confirmParams.confirmResult) {
+			this.btnUse.set_visible(false);
+			this.btnUnUse.set_visible(true);
+			this.btnAdd.set_visible(true);
+			this.btnDelete.set_visible(true);	
+			this.fvUseYn = "N";
+		}
+	});
+};
+
+/**
+ * @description 로우 추가
+*/
+this.btnAdd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	/*
+	var detaRcritScValue = this.fnGetNextChar(this.dsDetaRcritPrd);
+	
+	if(detaRcritScValue == "K"){
+	    utlf_alert("세부모집시기는 10개 까지만 추가가 가능합니다.");
+	    return;
+	}
+	*/
+	
+	this.dsDetaRcritPrd.addRow();
+	this.dsDetaRcritPrd.setColumn(this.dsDetaRcritPrd.rowposition, "uvstOrgCd", this.dsSearch.getColumn(0, "uvstOrgCd"));
+	this.dsDetaRcritPrd.setColumn(this.dsDetaRcritPrd.rowposition, "coaAyr", this.dsSearch.getColumn(0, "coaAyr"));
+	this.dsDetaRcritPrd.setColumn(this.dsDetaRcritPrd.rowposition, "coaRcritScCd", this.dsSearch.getColumn(0, "coaRcritScCd"));	
+	//this.dsDetaRcritPrd.setColumn(this.dsDetaRcritPrd.rowposition, "detaRcritScValue", detaRcritScValue);
+	this.dsDetaRcritPrd.setColumn(this.dsDetaRcritPrd.rowposition, "detaRcritScBgngYmd", this.smfToday());
+	this.dsDetaRcritPrd.setColumn(this.dsDetaRcritPrd.rowposition, "detaRcritScEndYmd", this.smfToday());		
+};
+
+/**
+ * @description 로우 삭제
+*/
+this.btnDelete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	if(this.dsDetaRcritPrd.getCaseCount("_chk == '1'") < 1){
+		this.smfAlert("삭제할 대상이 없습니다.")
+       return false;
+    }
+
+    var rowcount = this.dsDetaRcritPrd.rowcount
+
+    for(var i = (rowcount-1); i > -1 ; i--){
+		var _chk = this.dsDetaRcritPrd.getColumn(i, "_chk");
+		if(_chk == "1"){
+			this.dsDetaRcritPrd.deleteRow(i);
+		}
+	}
+
+	if (this.dsDetaRcritPrd.rowcount == 0) this.fvAllDel = true;	
+};
+
+this.beginYmdChk = function(){
+
+	var detaRcritScBgngYmd = this.dsDetaRcritPrd.getColumn(0,"detaRcritScBgngYmd");
+	var detaRcritScEndYmd = this.dsDetaRcritPrd.getColumn(0,"detaRcritScEndYmd");
+}
+this.divInfo_sta00_00_01_01_01_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listUvstBsc</Col>
+            <Col id="url">/sqa_ueu_dr00_002.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsDetaRcritPrd=dsDetaRcritPrd dsUvstRcritPrd=dsUvstRcritPrd</Col>
+          </Row>
+          <Row>
+            <Col id="url">/sqa_ueu_dr00_003.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsDetaRcritPrd=dsDetaRcritPrd:A</Col>
+            <Col id="id">saveUvstRcritPrd</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" oncolumnchanged="dsSearch_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="coaRcritScNm" type="STRING" size="256"/>
+          <Column id="uvstOrgCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDetaRcritPrd" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" size="1" type="STRING"/>
+          <Column id="uvstOrgCd" size="256" type="STRING"/>
+          <Column id="detaRcritScValue" size="256" type="STRING"/>
+          <Column id="detaRcritScNm" size="256" type="STRING"/>
+          <Column id="detaRcritScBgngYmd" size="256" type="STRING"/>
+          <Column id="detaRcritScEndYmd" size="256" type="STRING"/>
+          <Column id="coaAyr" size="256" type="STRING"/>
+          <Column id="coaRcritScCd" size="256" type="STRING"/>
+          <Column id="useYn" size="256" type="STRING"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDetaRcritPrdValid" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" size="1" type="STRING"/>
+          <Column id="uvstOrgCd" size="256" type="STRING"/>
+          <Column id="detaRcritScValue" size="256" type="STRING"/>
+          <Column id="detaRcritScNm" size="256" type="STRING"/>
+          <Column id="detaRcritScBgngYmd" size="256" type="STRING"/>
+          <Column id="detaRcritScEndYmd" size="256" type="STRING"/>
+          <Column id="coaAyr" size="256" type="STRING"/>
+          <Column id="coaRcritScCd" size="256" type="STRING"/>
+          <Column id="useYn" size="256" type="STRING"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsUvstRcritPrd" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="coaRcritPrd" size="450" type="STRING"/>
+          <Column id="prdYn" size="6" type="STRING"/>
+          <Column id="bgngYmd" type="STRING" size="256"/>
+          <Column id="endYmd" type="STRING" size="256"/>
+          <Column id="addBgngYmd" type="STRING" size="256"/>
+          <Column id="addEndYmd" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="divSearch.form.edtCoaAyr" propid="value" datasetid="dsSearch" columnid="coaAyr"/>
+      <BindItem id="item0" compid="divSearch.form.edtCoaRcritScNm" propid="value" datasetid="dsSearch" columnid="coaRcritScNm"/>
+    </Bind>
+  </Form>
+</FDL>

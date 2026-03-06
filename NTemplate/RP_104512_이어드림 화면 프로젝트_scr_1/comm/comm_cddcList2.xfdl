@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comm_selectCddc" width="1200" height="790" titletext="시도교육청선택" onload="comm_selectCddc_onload" cssclass="frm_Pop_bgTrsprt">
+    <Layouts>
+      <Layout height="790" width="1200" screenid="ScreenDeskTop">
+        <Div id="divBg" taborder="0" text="div00" left="0" top="41" width="1200" height="740" cssclass="div_WF_EduSlctPop" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="staSelectTitle00" taborder="0" text="중등교원" left="67" top="97" width="392" height="70" cssclass="sta_WF_Txt46" initvalueid="ivStcAccessibilityOn" usedecorate="true" visible="true" textDecoration="underline"/>
+              <Static id="staSelectTitle" taborder="1" text="&lt;fc v='#038667'&gt;&lt;b v='true'&gt;원하시는 교육청&lt;/b&gt;&lt;/fc&gt;을 선택해주세요." left="67" top="167" width="642" height="70" cssclass="sta_WF_Txt46" initvalueid="ivStcAccessibilityOn" usedecorate="true" visible="true"/>
+              <Static id="staSelectedCddcName" taborder="2" text="지도에서 교육청을&#13;&#10;선택해주세요" left="67" top="308" width="622" height="153" cssclass="sta_WF_Txt60R" initvalueid="ivStcAccessibilityOn" usedecorate="true" visible="true" fittocontents="height"/>
+              <Combo id="cbo00" taborder="3" top="40" height="50" cssclass="Pas" innerdataset="gdsCddcList" codecolumn="cddcCd" datacolumn="cddcNm" value="1" index="0" initvalueid="ivCmbNormal" text="경상북도 교육청" width="210" right="70" onitemchanged="divBg_cbo00_onitemchanged"/>
+              <Div id="divKorMap" taborder="4" top="121" width="470" height="551" url="comm::comp_korMap.xfdl" mapScale="1.2" clickMode="toggle" async="false" left="730" initvalueid="ivDivAccessibilityOff"/>
+              <Button id="btnClose" taborder="5" text="바로가기" left="70" top="staSelectedCddcName:48" width="297" height="70" onclick="btnClose_onclick" cssclass="btn_WF_MapGo" initvalueid="ivBtnAccessibilityLink" enable="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnCancel" taborder="1" top="0" width="30" height="30" cssclass="btn_Pop_close_W" initvalueid="ivBtnAccessibilityButton" left="1170" onclick="btnCancel_onclick" accessibilitylabel="닫기"/>
+        <Static id="staSelectedCddcName" taborder="2" text="현재 선택하신 교육청은&#13;&#10;&lt;fc v='#038667'&gt;&lt;u v='true'&gt;&lt;b v='true'&gt;경상북도교육청&lt;/b&gt;&lt;/u&gt;&lt;/fc&gt; 입니다." left="1270" top="494" width="622" height="153" cssclass="sta_WF_Txt60R" initvalueid="ivStcAccessibilityOff" usedecorate="true" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    TEMPLATE
+*  @FileName 	comm_cddcList.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.5.25
+*  @Desction    검정고시p72+(공지목록)+(타이틀,그리드)
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.5.25     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = nexacro.getApplication();
+this.fvSubSysGb = "";
+this.pv_params;
+this.fvMainColor = "#2b72de";
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+  
+this.comm_selectCddc_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// Form의 default 초기처리를 한다.
+	if(this.opener)
+	{
+		this.smfInitPopup(this);
+		this.pv_params = this.smfGetPopupParams();
+	}
+	else
+	{
+		this.smfInitForm(this);
+		this.pv_params = this.smfGetFormParams();
+	}
+	
+	var sSubSystemGb = this.smfGetSubSystemGb();
+	this.fvSubSysGb = sSubSystemGb;
+	
+	// 서브시스템명 
+	var subSysNm = this.pv_params.subSysNm;
+	this.divBg.form.staSelectTitle00.set_text(subSysNm);
+
+	// 시스템에 따라 메인컬러를 정한다.
+	this.fnGetMainColor(sSubSystemGb);
+
+	// 타이틀문장을 세팅한다.(시스템에 따라 색깔이 틀림)
+	this.fnSetTitleText("",sSubSystemGb);
+
+	this.resetScroll();
+	
+	// 지도를 세팅한다.
+	this.divBg.form.divKorMap.selTextFillColor = this.fvMainColor;
+	this.divBg.form.divKorMap.set_url("comm::comp_korMap.xfdl");
+	// Map에 callback함수를 선택한다.
+	this.divBg.form.divKorMap.form.fnSetInit(this,this.fnMapSelecetCallback);
+	
+	//@KBR (지도 text배경색 변경)
+	this.divBg.form.divKorMap.form.fnChangeFillColor(this.fvMainColor);
+	
+
+	if(this.opener)
+	{
+		nexacro.getApplication().mainframe.VFrameSet.frameMain.form._fvPopup = this.getOwnerFrame();
+		this.divBg.form.divKorMap.form.graMap.redraw();
+	}	
+	
+	//this.resetScroll();
+	//this.divBg.form.divKorMap.form.graMap.redraw();
+
+
+	//@KBR 콤보 인덱스 변경
+	this.divBg.form.cbo00.set_index(-1);
+};
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnMapSelecetCallback = function (sSelCode,sSelName)
+{
+	var sText = "";
+	if(this.smfIsNull(sSelName))
+	{
+		sText = "지도에서 교육청을\n선택해주세요";
+		//this.divBg.form.btnClose.set_enable(false);
+		this.divBg.form.btnClose.set_accessibilitylabel("");
+	}
+	else
+	{
+		sText = "현재 선택하신 교육청은\n<fc v='"+this.fvMainColor+"'><u v='true'><b v='true'>"+sSelName+"</b></u></fc> \n입니다.";
+		//this.divBg.form.btnClose.set_enable(true);
+		this.divBg.form.btnClose.set_accessibilitylabel(sSelName);
+	}
+	this.divBg.form.staSelectedCddcName.set_text(sText);
+	this.divBg.form.resetScroll();
+
+	// combo의 값을 변경한다.
+	this.divBg.form.cbo00.set_value(sSelCode);
+}
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnOnsizeProc = function(e:nexacro.SizeEventInfo)
+{
+	var nFrameWidth  = e.cx;
+	var nFrameHeight = e.cy;
+	var nPopupTitleHeight = 0;//45;
+	trace("====>fnOnsizeProc : nFrameWidth="+nFrameWidth+",nFrameHeight="+nFrameHeight+",nPopupTitleHeight="+nPopupTitleHeight);
+	
+	// ChildFrame의 넓이 높이를 조정
+	this.parent.set_width (nFrameWidth                   );  
+	this.parent.set_height(nFrameHeight-nPopupTitleHeight);
+}
+ 
+// 지정된 버튼이 선택한 모드로 변경한다.
+this.fnChangeSelectMode = function(objDiv, objBtn)
+{
+	// 버튼의 값이 없는 경우
+	if(this.smfIsNull(objBtn._value))
+	{
+		return;
+	}
+	
+	var objComps = objDiv.form.components;
+	
+	for(var i=0;i<objComps.length;i++)
+	{
+		objComp = objComps[i];
+		if((objComp instanceof nexacro.Button)&&(!this.smfIsNull(objComp._value)))
+		{
+			if(objBtn.id==objComp.id)
+			{
+				objComp.set_cssclass(objComp._selCssclass);
+			}
+			else
+			{
+				objComp.set_cssclass(objComp._deSelCssclass);
+			}
+		}
+	}
+	
+}
+
+// 지정된 버튼이 선택한 모드로 변경한다.
+this.fnGetSelectedButton = function(objDiv)
+{
+	var objSelectedBtn=null;
+	
+	if(objDiv.visible)
+	{
+		var objComps = objDiv.form.components;
+		for(var i=0;i<objComps.length;i++)
+		{
+			objComp = objComps[i];
+			if((objComp instanceof nexacro.Button)&&(!this.smfIsNull(objComp._value)))
+			{
+				if((objComp.cssclass=="btn_WF_MapTapS01")||(objComp.cssclass=="btn_WF_MapTapS02")||(objComp.cssclass=="btn_WF_MapTapS03"))
+				{
+					objSelectedBtn  = objComp;
+					break;
+				}
+			}
+		}
+	}
+	return objSelectedBtn;
+}
+
+// 상단 Title을 세팅한다.
+this.fnSetTitleText = function(sServiceName)
+{
+	var sTitleText="";
+	if(this.smfIsNull(sServiceName))
+	{
+		sTitleText = "<fc v='"+this.fvMainColor+"'><b v='true'>원하시는 교육청</b></fc> 을 선택해주세요.";
+	}
+	else
+	{
+		sTitleText = "<fc v='"+this.fvMainColor+"'><b v='true'>"+sServiceName+"분야</b></fc> 서비스와 교육청을 선택해주세요.";
+	}
+	
+	this.divBg.form.staSelectTitle.set_text(sTitleText);
+	
+}
+
+// 시스템별 메인 컬러를 구한다.
+this.fnGetMainColor = function(sSubSystemGb)
+{
+	switch(sSubSystemGb)
+	{
+		case "ORE" :  // 온라인 채용(교원채용)
+		case "HRD" :  // 온라인 채용(계약제교원인력풀)
+			this.fvMainColor = "#038667";
+			break;
+	}
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+// [닫기]버튼을 선택시 이벤트 처리
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objSelVal={ selVal1:this.pv_params.sysCd
+	              , selVal2:this.pv_params.subSysNm
+				  , selVal3:""};
+	
+	// 상단 선택값을 구한다.
+	var sSelVal2 = "";
+	
+	var sSelectedCddcCode = this.divBg.form.divKorMap.form.fnGetSelectCode();
+	var sSelectedCddcName = this.divBg.form.divKorMap.form.fnGetSelectName();
+	objSelVal.selVal3 = sSelectedCddcCode;
+	
+	// 교육청이 선택됐는지 체크한다.
+	if(this.smfIsNull(sSelectedCddcCode))
+	{
+		this.smfAlert("시도교육청을선택하여주시기 바랍니다.");
+		return;
+	}
+	
+	var sSubSystemGb = this.smfGetSubSystemGb();
+	if(  (sSubSystemGb=="AFS")   // 업무지원(외부강사)
+		  || (sSubSystemGb=="ECC")   // 업무지원(돌봄인력서비스)
+		  )
+	{
+		this.smfSetCddcCode(sSelectedCddcCode);
+	
+		var params = {};
+		var sUrl = "frame::afs/frameSelectTarget.xfdl";
+		var bShowHead = false;
+		this.smfSetWorkPage(sUrl,params,bShowHead);
+	}
+	else if( (sSubSystemGb=="IBM")   // 업무지원(교과용도서)
+		  || (sSubSystemGb=="SEM")   // 업무지원(학교환경관리)
+		  || (sSubSystemGb=="PHE")   // 업무지원(체육)
+		  || (sSubSystemGb=="SML")   // 업무지원(급식)
+		  || (sSubSystemGb=="SPR")   // 업무지원(교육복지)
+		  )
+	{
+		this.smfSetCddcCode(sSelectedCddcCode);
+		
+		var params = {};
+		var sUrl = "frame::frameLogin.xfdl";
+		var bShowHead = false;
+		this.smfSetWorkPage(sUrl,params,bShowHead);
+	}
+	else
+	{
+		if(  (sSubSystemGb=="ORE")   // 온라인 채용(교원채용)
+		  || (sSubSystemGb=="HRD")   // 온라인 채용(계약제교원인력풀)
+			  )
+		{
+			this.smfSetCddcCode(sSelectedCddcCode);
+		}
+	
+		this.smfSendResponseToOpener({
+			  "selVal1" : objSelVal.selVal1
+			, "selVal2" : objSelVal.selVal2
+			, "selVal3" : objSelVal.selVal3
+			, "selVal4" : sSelectedCddcName
+		});	
+		nexacro.getApplication().mainframe.VFrameSet.frameMain.form._fvPopup = null;
+		
+		this.close(true);
+	}
+};
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objMap =this.divBg.form.divKorMap.form.graMap;
+	
+	var objGraphGroup = objMap.getObjectByID("graGroupMap");
+	objGraphGroup.scale(0.5,0.5);
+	objMap.redraw();
+};
+
+this.divBg_cbo00_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	var sCddcCd = e.postvalue;
+	var sSelName = e.posttext;
+	if(!this.smfIsNull(sCddcCd))
+	{
+		this.divBg.form.divKorMap.form.fnSetCddcCode(sCddcCd);
+	}
+
+	var sText = "";
+	if(this.smfIsNull(sSelName))
+	{
+		sText = "지도에서 교육청을\n선택해주세요";
+		//this.divBg.form.btnClose.set_enable(false);
+		this.divBg.form.btnClose.set_accessibilitylabel("");
+	}
+	else
+	{
+		sText = "현재 선택하신 교육청은\n<fc v='"+this.fvMainColor+"'><u v='true'><b v='true'>"+sSelName+"</b></u></fc> \n입니다.";
+		//this.divBg.form.btnClose.set_enable(true);
+		this.divBg.form.btnClose.set_accessibilitylabel(sSelName);
+	}
+	this.divBg.form.staSelectedCddcName.set_text(sText);
+	this.divBg.form.resetScroll();	
+};
+
+this.btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 
+	if(this.opener)
+	{
+		this.close("");
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

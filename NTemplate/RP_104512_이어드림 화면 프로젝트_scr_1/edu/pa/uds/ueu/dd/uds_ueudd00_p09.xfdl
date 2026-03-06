@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="uds_ueudd00_p09" width="740" height="305" titletext="전형자료경로설정" onload="fnOnload">
+    <Layouts>
+      <Layout height="305" width="740" screenid="ScreenDeskTop">
+        <ImageViewer id="imgTitle" taborder="0" text="전형자료경로설정" left="20" top="20" height="30" cssclass="img_WF_SubTit04" width="160" initvalueid="ivTitleAccessibilityOn"/>
+        <Div id="divMain" taborder="1" left="20" height="175" top="60" text="" cssclass="div_WF_Detail" right="20" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="sta44" taborder="0" left="0" height="42" cssclass="sta_WF_Input02Top" top="0" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta45" taborder="1" left="0" width="120" height="42" cssclass="sta_WF_Input01Top" text="전형자료경로" top="0" onclick="Static45_onclick" initvalueid="ivStcEssential"/>
+              <Edit id="edtCoaDataPath" taborder="2" height="30" text="C:\대입업무\대입전형자료 온라인수신(학교생활기록부)\" left="125" width="485" top="6" readonly="true" onchanged="Div01_Edit00_onchanged" initvalueid="ivEdtEssential"/>
+              <Button id="btnCoaDataPath" taborder="3" text="경로선택" top="6" height="30" width="80" fittocontents="width" cssclass="btn_WF_Crnd" left="615" onclick="divMain_btnCoaDataPath_onclick" initvalueid="ivBtnAccessibilityButton"/>
+              <Static id="sta44_00" taborder="4" left="0" height="134" cssclass="sta_WF_Input02" top="41" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <TextArea id="txtCoaDataDtlPath" taborder="5" left="5" top="47" height="122" enable="true" scrolltype="both" onchanged="divCoaPrgeInfo_TextArea00_onchanged" readonly="true" width="690" initvalueid="ivTxtReadOnly"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnCancel" taborder="2" text="취소" height="30" width="50" left="42.7%" fittocontents="width" cssclass="btn_WF_Custom" initvalueid="ivBtnAccessibilityButton" bottom="20" onclick="btnCancel_onclick"/>
+        <Button id="btnApply" taborder="3" text="적용" height="30" fittocontents="width" initvalueid="ivBtnAccessibilityButton" bottom="20" onclick="btnApply_onclick" left="btnCancel:8" width="50"/>
+        <Static id="staPopupTitleAss" taborder="4" left="20" top="20" width="20" height="20" initvalueid="ivStcAccessibilityOn"/>
+        <Static id="Static99_00_00_00_00" taborder="5" left="0" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_00_00" taborder="6" left="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff" height="20" bottom="0"/>
+        <Static id="Static99_00_00_00_00_00_01" taborder="7" left="0" top="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" initvalueid="ivStcAccessibilityOff" width="20" bottom="20"/>
+        <Static id="Static99_00_00_00_00_00_01_00" taborder="8" top="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" initvalueid="ivStcAccessibilityOff" width="20" bottom="20" right="0"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile" width="640" height="1833" mobileorientation="portrait" type="default" titletext="[M]팝업-학교행정/방과후학교-시간표조회p464(서치+그리드)">
+        <Static id="Static99_00_00_00_00" left="20" top="0" height="70" right="20" text="70"/>
+        <Static id="Static99_00_00_00_00_00_01" left="1010" top="5" width="20" bottom="35"/>
+        <Static id="Static99_00_00_00_00_00_01_00" top="25" width="20" right="-480" bottom="15"/>
+        <Static id="Static99_00_00_00_00_00_00_00" left="750" height="20" right="-750" bottom="-5"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearch" oncolumnchanged="dsSearch_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="coaRcritScNm" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+ *	전형자료수신경로설정
+ *	@MenuPath	대입전형-전형자료온라인수신-전형자료수신경로설정
+ *	@FileName 	uds_ueudd00_m09.xfdl
+ *	@Creator 	김동업
+ *	@CreateDate	2022.08.22  
+ *	@Desction	
+ ************** 소스 수정 이력 ***********************************************
+ *	date			Modifier			Description
+ *******************************************************************************
+ *	2022.08.22		김동업				최초 생성
+ *******************************************************************************
+ */
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::uds_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+
+/**
+ * @description 화면 onload시 처리
+ */
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitPopup(obj);
+	
+	// 초기화
+	this.fnInit(obj); 
+	
+	// 조회
+	this.fnSearch();
+};
+
+/**
+ * @description 폼 닫기전 이벤트
+ */
+this.fnOnbeforeclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	// 변경내역이 발생한 경우 종료전 confirm수행
+	return this.smfCloseFormConfirm([this.dsMain]);
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg) {
+	if(errcd <= -1) return;
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * @description 조회
+*/
+this.fnSearch = function()
+{
+	// this.fnListCoaPrge();
+	// this.fnListEvlUnitCd();
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/**
+ * @description 초기화 FUNCTION
+ */
+this.fnInit = function(obj){
+	this.dsSearch.setColumn(0, "coaAyr", this.udsv_coaAyr);
+	this.dsSearch.setColumn(0, "coaRcritScCd", this.udsv_coaRcritScCd);
+	this.dsSearch.setColumn(0, "coaRcritScNm", this.udsv_coaRcritScNm);
+	
+	var coaDataPath = nexacro.getPrivateProfile(this.udsv_coaDataPathValue);
+	if(this.smfIsNull(coaDataPath)) return false;
+	
+	this.divMain.form.edtCoaDataPath.set_value(coaDataPath);
+	this.divMain.form.txtCoaDataDtlPath.set_value(this.udsfGetCoaDataDtlPath(coaDataPath));
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+/**
+ * @description 경로선택
+ */
+this.divMain_btnCoaDataPath_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objExtCommon = this.smfCreateExtCommonAPI();
+	
+	var coaDataPath = nexacro.getPrivateProfile(this.udsv_coaDataPathValue);
+	if(this.smfIsNull(coaDataPath)){
+		coaDataPath = objExtCommon._ext_getSystemDir("CSIDL_PERSONAL"); 
+	}
+	coaDataPath = objExtCommon._ext_selectFolderPath(coaDataPath);
+	
+	objExtCommon = null;
+	
+	if(!this.smfIsNull(coaDataPath)){
+		this.divMain.form.edtCoaDataPath.set_value(coaDataPath);
+		this.divMain.form.txtCoaDataDtlPath.set_value(this.udsfGetCoaDataDtlPath(coaDataPath));
+		
+		this.udsfSetCoaDataPath(coaDataPath);
+	}
+};
+
+/**
+ * @description 취소
+ */
+this.btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(true);
+};
+
+/**
+ * @description 적용
+ */
+this.btnApply_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.udsfSetCoaDataPath(this.divMain.form.edtCoaDataPath.text);
+	
+	this.smfSendResponseToOpener({
+		"row" : {"coaDataPath" : this.divMain.form.edtCoaDataPath.text}
+	});
+	
+	this.close(true);
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="pas_mmssi00_m00" width="1200" height="3290" titletext="홍보자료" onload="pas_mmssi00_m00_onload">
+    <Layouts>
+      <Layout height="3290" width="1200" screenid="ScreenDeskTopP">
+        <ImageViewer id="img02" taborder="0" text="홍보자료" left="0" top="54" width="207" height="80" cssclass="font50B" initvalueid="ivTitleAccessibilityOn" accessibilityrole="static" visible="false"/>
+        <Static id="sta02" taborder="1" text="대한민국 교육의 내일을 &#13;&#10;연결하다" left="0" top="66" width="469" height="110" cssclass="font42B" initvalueid="ivStcAccessibilityOn"/>
+        <Static id="sta03" taborder="2" text="나이스 (교육행정정보시스템 , National &#13;Education Information System)" left="479" top="70" width="718" height="30" cssclass="font22B,color2b72" initvalueid="ivStcAccessibilityOn" wordSpacing="-3px"/>
+        <Static id="sta04" taborder="3" text="교육부와 17개 시도교육청, 교육지원청, 유·초중등학교 및 특수학교가 모든 교육행정 정보를 &#13;&#10;전자적으로 연계 처리하며, 국민 편의증진을 위해 행정안전부, 대법원 등 유관기관의 행정정보를 &#13;&#10;이용하는 종합 교육행정정보시스템입니다." left="479" top="105" width="718" height="90" cssclass="font18R" initvalueid="ivStcAccessibilityOn" onclick="sta04_onclick"/>
+        <Static id="sta00" taborder="4" left="0" top="224" height="3" right="0" border="1px solid #d9d9d9,0px solid #d9d9d9,0px solid #d9d9d9" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="divContents" taborder="5" left="0" top="237" height="3390" width="1200" url="pa_pas_mms_si::pas_mmssi00_m03.xfdl" initvalueid="ivDivAccessibilityOff" background="#ffffff" text=""/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="640" height="6053" mobileorientation="portrait" type="default">
+        <ImageViewer id="img02" cssclass="font48B_C" left="170" top="54" height="80" right="170" taborder="0" text="서비스 홍보" visible="true"/>
+        <Static id="sta02" left="20" top="160" height="70" cssclass="font44B" text="대한민국 교육의 내일을 연결하다" taborder="1" right="20" textAlign="center"/>
+        <Static id="sta03" left="20" top="259" height="103" cssclass="font32B,color3772" text="나이스 (교육행정정보시스템 : National Education Information System)" right="20" fittocontents="height" font="normal 700 32px/1.2 &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;" taborder="2"/>
+        <Static id="sta04" left="20" top="sta03:10" height="230" cssclass="font28R" text="교육부와 17개 시도교육청, 교육지원청, 유·초중등학교 및 특수학교가 모든 교육행정 정보를 전자적으로 연계 처리하며, 국민 편의증진을 위해 행정안전부, 대법원 등 유관기관의 행정정보를 이용하는 종합 교육행정정보시스템입니다." right="20" taborder="3" fittocontents="height"/>
+        <Static id="sta00" left="750" top="213" height="3" right="-750" visible="false" taborder="5"/>
+        <Div id="divContents" left="0" top="sta04:15" height="4556" text="div00" formscrolltype="none" right="0" url="pa_pas_mms_si::pas_mmssi00_m03.xfdl" taborder="4"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*   대국민 - 나이스개요
+*  @MenuPath    pa_pas_mms_si
+*  @FileName 	pas_mmssi00_m00.xfdl
+*  @Creator 	 
+*  @CreateDate 	2022.5.12
+*  @Desction    공지사항 목록조회
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.5.12     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+include "lib::cm_script.xjs";
+
+this.pas_mmssi00_m00_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	//0501 CF 일괄등록
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.divTab_btnTabCtrl_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sPostfix ="";
+	if(this.smfIsMobile()){
+		sPostfix = "_M";
+	}
+
+ 	var sContUrl = "pa_pas_mms_si::pas_mmssi00_m01.xfdl";
+	var tabNo = String(obj.id).substr(String(obj.id).length-1);	
+	if (tabNo=="2")	sContUrl = "pa_pas_mms_si::pas_mmssi00_m02.xfdl";
+	if (tabNo=="3")	sContUrl = "pa_pas_mms_si::pas_mmssi00_m03.xfdl";
+
+	this.divContents.set_url(sContUrl);
+	this.divTab.form.btnTab1.set_cssclass("btn_WF_tab"+sPostfix);
+	this.divTab.form.btnTab2.set_cssclass("btn_WF_tab"+sPostfix);
+	this.divTab.form.btnTab3.set_cssclass("btn_WF_tab"+sPostfix);
+	
+	this.divTab.form["btnTab"+tabNo].set_cssclass("btn_WF_tab"+sPostfix+"_S");
+};
+
+
+
+this.sta04_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	
+};
+]]></Script>
+  </Form>
+</FDL>

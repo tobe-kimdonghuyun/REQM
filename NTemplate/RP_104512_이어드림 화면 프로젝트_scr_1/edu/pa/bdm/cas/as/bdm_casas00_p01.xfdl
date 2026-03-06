@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="bdm_casas00_p01" width="640" height="499" titletext="보완사항상세조회" onload="form_onload">
+    <Layouts>
+      <Layout height="499" width="640" screenid="ScreenDeskTop">
+        <Static id="staPopupTitleAss" taborder="0" left="20" top="20" width="20" height="20" initvalueid="ivStcAccessibilityOn"/>
+        <ImageViewer id="img00_00_01_00_00" taborder="1" text="보완내역 상세조회" left="20" top="20" width="150" height="30" cssclass="img_WF_SubTit04" initvalueid="ivTitleAccessibilityOn"/>
+        <Grid id="grd00" taborder="2" left="20" top="60" height="369" right="20" binddataset="dsMain" autofittype="col" autosizingtype="row" initvalueid="ivGrdAccessibilityOn" selecttype="cell">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="200"/>
+                <Column size="90"/>
+                <Column size="90"/>
+                <Column size="90"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="순번"/>
+                <Cell col="1" text="보완사항"/>
+                <Cell col="2" text="보완근거공문번호"/>
+                <Cell col="3" text="등록일자"/>
+                <Cell col="4" text="보완완료요청일자" cssclass="LineNo"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1" textAlign="center"/>
+                <Cell col="1" text="bind:cvlcptSpmMteCn" wordWrap="char"/>
+                <Cell col="2" text="bind:spmBasOdNo"/>
+                <Cell col="3" text="bind:dmndYmd" displaytype="date" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd"/>
+                <Cell col="4" text="bind:spmCmptnDmndYmd" calendardateformat="yyyy.MM.dd" displaytype="date" calendareditformat="yyyy.MM.dd" cssclass="LineNo"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnClose" taborder="3" text="닫기" height="30" left="295" initvalueid="ivBtnAccessibilityButton" cssclass="btn_WF_Custom" top="grd00:20" onclick="btnClose_onclick" width="50"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01" taborder="4" left="20" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00" taborder="5" left="20" top="50" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01_00_00" taborder="6" left="20" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff" top="429"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01_00" taborder="7" left="20" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff" bottom="0"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01_00_00_00" taborder="8" left="0" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" width="20" bottom="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00_01_00_00_00_00" taborder="9" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" width="20" bottom="0" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="description" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsMain=dsMain</Col>
+            <Col id="asynctp"/>
+            <Col id="url">/bdm_cas_as00_004.do</Col>
+            <Col id="id">listCvlcptSpm</Col>
+            <Col id="description">보완내역상세조회</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="corpSbmsnNo" type="STRING" size="256" description="법인제출번호"/>
+          <Column id="cvlcptSpmMteSn" type="STRING" size="256"/>
+          <Column id="spmSn" type="STRING" size="256" description="보완일렬번호"/>
+          <Column id="dmndYmd" type="STRING" size="256" description="요청일자"/>
+          <Column id="spmCmptnDmndYmd" type="STRING" size="256" description="보완완료요청일자"/>
+          <Column id="cvlcptSpmMteCn" type="STRING" size="4000" description="보완내용"/>
+          <Column id="sbmsnYmd" type="STRING" size="256" description="제출일자"/>
+          <Column id="spmBasOdNo" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256" description="등록자ID"/>
+          <Column id="rgtrDt" type="STRING" size="256" description="등록일시"/>
+          <Column id="mdfrId" type="STRING" size="256" description="수정자ID"/>
+          <Column id="mmdfcnDt" type="STRING" size="256" description="수정일시"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="corpSbmsnNo" type="STRING" size="256"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    대국민 비영리법인 민원현황조회 보완사항상세조회
+*  @FileName 	bdm_casas00_p01.xfdl
+*  @Creator 	서광명
+*  @CreateDate 	2022.6.29
+*  @Desction    
+*
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.6.29     	서광명 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::bdm_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitPopup(obj);
+	
+	this.pv_params = this.smfGetPopupParams();
+	
+	// 세션에서 시도코드 받아서 검색 파라미터 세팅
+	this.dsSearch.setColumn(0,"cddcCd", this.bdmv_cddcCd);
+	
+	this.dsSearch.setColumn(0,"corpSbmsnNo", this.pv_params.corpSbmsnNo);
+	this.fnSearch();
+	
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnSearch = function(obj, e)
+{
+	this.smfSearchService("listCvlcptSpm")
+	.run()
+	.callback(function(callbackParams){
+		if(callbackParams.errors) return;
+		
+	})
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 닫기버튼 클릭시
+*/
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(false);
+};]]></Script>
+  </Form>
+</FDL>

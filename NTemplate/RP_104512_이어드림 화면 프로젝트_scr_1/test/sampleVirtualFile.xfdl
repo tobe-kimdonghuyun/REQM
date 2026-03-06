@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleVirtualFile" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="btn00" taborder="0" text="파일Read" left="51" top="150" width="126" height="42" onclick="btn00_onclick"/>
+        <ImageViewer id="img00" taborder="1" text="img00" left="210" top="150" width="455" height="285" stretch="fit"/>
+        <Static id="sta00" taborder="2" text="VirtualFile 사용 샘플" left="16" top="12" width="744" height="60"/>
+        <Button id="btn01" taborder="3" text="파일Write" left="51" top="460" width="126" height="42" onclick="btn01_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <VirtualFile id="VirtualFile00" onerror="VirtualFile00_onerror" onsuccess="VirtualFile00_onsuccess"/>
+      <VirtualFile id="VirtualFile01" onerror="VirtualFile01_onerror" onsuccess="VirtualFile01_onsuccess"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  VirtualFile 기능 샘플
+*  @MenuPath    Sample
+*  @FileName 	sampleVirtualFile.xfdl
+*  @Creator 	홍길동
+*  @CreateDate 	2022.6.9
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.6.9     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+// [파일read]
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.VirtualFile00.open("%MYDOCUMENT%Test.png", VirtualFile.openRead | VirtualFile.openRead | VirtualFile.openBinary );
+	//var issucced = this.VirtualFile00.getFileList( "%MYDOCUMENT%", "\\.hwp$", VirtualFile.findFileOnly );
+	//trace(" issucced : " + issucced );
+};
+
+// [파일write]
+this.btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.VirtualFile01.open("%MYDOCUMENT%sample.txt", VirtualFile.openWrite );
+};
+
+this.VirtualFile00_onerror = function(obj:nexacro.VirtualFile,e:nexacro.VirtualFileErrorEventInfo)
+{
+	alert(e.errormsg);
+};
+
+this.VirtualFile00_onsuccess = function(obj:nexacro.VirtualFile,e:nexacro.VirtualFileEventInfo)
+{
+	trace(" e.reason : " + e.reason );
+	if ( e.reason == 1)  // open
+	{
+		obj.read();
+	}
+	else if (e.reason == 2 )  // close
+	{	
+		trace( "파일read처리가 완료됐습니다.");
+	}
+	else if (e.reason == 3 )  // read
+	{	
+		trace( e.filesize );
+		trace(e.binarydata);
+		this.img00.set_image(e.binarydata);
+		obj.close();
+	}
+};
+
+this.VirtualFile01_onerror = function(obj:nexacro.VirtualFile,e:nexacro.VirtualFileErrorEventInfo)
+{
+	alert(e.errormsg);
+};
+
+this.VirtualFile01_onsuccess = function(obj:nexacro.VirtualFile,e:nexacro.VirtualFileEventInfo)
+{
+	trace(" e.reason : " + e.reason );
+	if ( e.reason == 1)  // open
+	{
+		obj.write("ab\r\nab","utf-8" );
+	}
+	else if (e.reason == 2 )  // close
+	{	
+		trace( "파일write처리가 완료됐습니다.");
+	}
+	else if (e.reason ==  6 )   // write
+	{
+		obj.close();
+	}
+};
+
+]]></Script>
+  </Form>
+</FDL>

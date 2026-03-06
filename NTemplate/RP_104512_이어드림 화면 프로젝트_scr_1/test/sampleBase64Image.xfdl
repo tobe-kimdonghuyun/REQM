@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleBase64Image" width="1280" height="955" titletext="이미지에서 Base64데이터를 추출">
+    <Layouts>
+      <Layout height="955" mobileorientation="landscape" width="1280">
+        <Static id="sta00" taborder="0" text="이미지에서 Base64데이터를 추출" left="26" top="16" width="511" height="32"/>
+        <Button id="btnSelectFile" taborder="1" text="단계1) 파일선택" left="34" top="62" width="176" height="39" onclick="btnSelectFile_onclick"/>
+        <Button id="btngetBase64Data" taborder="2" text="단계2) 이미지에서 &#13;&#10;base64 Encodding된&#13;&#10;데이터추출" left="35" top="430" width="175" height="61" onclick="btngetBase64Data_onclick"/>
+        <ImageViewer id="img00" taborder="3" left="36" top="107" width="494" height="307"/>
+        <TextArea id="txt00" taborder="4" left="35" top="501" width="497" height="320"/>
+        <FileUpload id="ful00" taborder="5" left="1327" top="36" width="46" height="34" onitemchanged="ful00_onitemchanged" visible="false"/>
+        <Button id="btnSend" taborder="6" text="단계3) Transaction" left="570" top="436" width="175" height="49" onclick="btnSend_onclick"/>
+        <TextArea id="txt00_00" taborder="7" left="570" top="501" width="497" height="320"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleBase64Image.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.11.9
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.11.9     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.sampleBase64Image_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.btnSelectFile_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.ful00.filefindbuttons[0].click();
+};
+
+this.ful00_onitemchanged = function(obj:nexacro.FileUpload,e:nexacro.FileUploadItemChangeEventInfo)
+{
+	trace("=======");
+	
+	var file = obj.filelist[0]._handle;
+	
+	var URL = window.URL || window.webkitURL;
+	var sFileUrl = URL.createObjectURL(file);
+	this.img00.set_image(sFileUrl);
+	
+};
+
+
+this.btngetBase64Data_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objImg = this.img00._image._img_elem.handle;
+	
+	// canvas에 이미지를 옮긴다.
+	const canvas = document.createElement('canvas');
+	const ctx = canvas.getContext('2d');
+	
+	canvas.width = objImg.width;
+	canvas.height = objImg.height;
+	
+	ctx.drawImage(objImg,0,0);
+	
+	
+	// base64데이터를 추출한다.
+	var base64 = canvas.toDataURL('image/*');
+	
+	// base64데이터만 추출("data:image/png,base64,"를 삭제한 순수한 base64부분)
+	var strOnlyBase64 = base64.replace(/^data:image\/[a-z]+;base64,/,"");
+
+	this.txt00.set_value(base64);
+	
+	//this.dsSearch.setColumn(0,"",this.txt00.value);
+};
+
+
+
+this.btnSend_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfSearchService("select")
+	.run()
+	.callback(function(callbackParams){
+		if(callbackParams.errors) return;
+	});
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsResult=dsResult</Col>
+            <Col id="url">hrd_oew_rm02_m00.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="base64" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResult">
+        <ColumnInfo>
+          <Column id="resultBase64" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="txt00_00" propid="value" datasetid="dsResult" columnid="resultBase64"/>
+      <BindItem id="item1" compid="txt00" propid="value" datasetid="dsSearch" columnid="base64"/>
+    </Bind>
+  </Form>
+</FDL>

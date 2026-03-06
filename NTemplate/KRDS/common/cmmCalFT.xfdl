@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="cmmCalFT" width="360" height="48" titletext="기간달력" onload="form_onload" ontimer="cmmCalFT_ontimer">
+    <Layouts>
+      <Layout height="48" mobileorientation="landscape" width="360">
+        <Calendar id="calFrom" taborder="0" left="0" top="0" width="47.22222222222222%" dateformat="yyyy-MM-dd" bottom="0" popuptype="none" oneditclick="cal_oneditclick" ondropdown="cal_ondropdown"/>
+        <Static id="staTerm" taborder="1" text="~" left="calFrom:4" top="0" width="17" bottom="0" cssclass="sta_WF_Center"/>
+        <Calendar id="calTo" taborder="2" left="staTerm:0" top="0" dateformat="yyyy-MM-dd" bottom="0" right="0" popuptype="none" oneditclick="cal_oneditclick" ondropdown="cal_ondropdown"/>
+        <PopupDiv id="pdivCal" text="pdiv00" visible="false" left="3" top="115" height="524" width="776" onpopup="pdivCal_onpopup">
+          <Layouts>
+            <Layout>
+              <Static id="staBg" taborder="0" left="0" top="0" cssclass="sta_WF_GBg01" right="0" bottom="0" text=""/>
+              <Calendar id="calFromM" taborder="1" left="0" top="5" width="384" dateformat="yyyy-MM-dd" type="monthonly" bottom="80"/>
+              <Calendar id="calToM" taborder="2" left="calFromM:5" top="5" dateformat="yyyy-MM-dd" type="monthonly" width="384" bottom="80"/>
+              <Button id="btnCancle" taborder="4" text="취소" width="90" height="48" bottom="5" cssclass="btn_WF_Crud" onclick="pdivCal_btnCancle_onclick" right="40"/>
+              <Button id="btnOk" taborder="3" text="확인" width="90" height="48" bottom="5" onclick="pdivCal_btnOk_onclick" right="btnCancle:8"/>
+              <Static id="staMsg" taborder="5" text="sta00" left="0" top="194" height="60" right="0" background="#ffffff" border="1px solid red" textAlign="center" cssclass="sta_WF_GTxt02" visible="false"/>
+            </Layout>
+          </Layouts>
+        </PopupDiv>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	cmmCalFT.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/12/03
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/12/03			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+this.getFromDate = function ()
+{
+	return this.calFrom.value;
+};
+
+this.getToDate = function ()
+{
+	return this.calTo.value;
+};
+
+this.setFromDate = function (v)
+{
+	this.calFrom.set_value(v);
+};
+
+this.setToDate = function (v)
+{
+	this.calTo.set_value(v);
+};
+
+this.setRequired = function(bValue)
+{
+	if (bValue) {
+		this.calTo.set_cssclass("essential");
+		this.calFrom.set_cssclass("");
+	}else {
+		this.calTo.set_cssclass("");
+		this.calFrom.set_cssclass("");
+	}
+};
+
+this.setReadOnly = function(bValue)
+{
+	this.calTo.set_readonly(bValue);
+	this.calFrom.set_readonly(bValue);
+};
+
+this.fnOpenPopupdiv = function ()
+{
+	this.pdivCal.trackPopupByComponent(this.calFrom, 0, this.calFrom.getOffsetHeight());
+};
+
+this.fnShowMessage = function (sMsgId, arrArg)
+{
+	var sMsgTxt = this.gfnGetMessage(sMsgId, arrArg);
+	
+	this.pdivCal.form.staMsg.set_text(sMsgTxt);
+	this.pdivCal.form.staMsg.set_visible(true);
+	this.setTimer(999, 3000);
+};
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.cal_oneditclick = function(obj:nexacro.Calendar,e:nexacro.EditClickEventInfo)
+{
+	this.calTo.uOrgValue = this.calTo.value;
+	this.calFrom.uOrgValue = this.calFrom.value;
+	this.fnOpenPopupdiv();
+};
+
+this.cal_ondropdown = function(obj:nexacro.Calendar,e:nexacro.EventInfo)
+{
+	this.calTo.uOrgValue = this.calTo.value;
+	this.calFrom.uOrgValue = this.calFrom.value;
+	this.fnOpenPopupdiv();
+};
+
+this.pdivCal_onpopup = function(obj:nexacro.PopupDiv,e:nexacro.EventInfo)
+{
+	var sFrom = this.calFrom.value;
+	var sTo   = this.calTo.value;
+	if(this.gfnIsNull(sFrom)) sFrom = this.gfnGetDate();
+	if(this.gfnIsNull(sTo)) sTo = this.gfnGetDate();
+	
+	this.pdivCal.form.calFromM.set_value(sFrom);
+	this.pdivCal.form.calToM.set_value(sTo);
+};
+
+this.pdivCal_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sFrom = this.pdivCal.form.calFromM.value;
+	var sTo = this.pdivCal.form.calToM.value;
+	
+	if( this.gfnIsNull(sFrom)){
+		this.fnShowMessage("msg.err.validator.required", ["시작"]);
+		return;
+	}
+	if( this.gfnIsNull(sTo)){
+		this.fnShowMessage("msg.err.validator.required", ["종료"]);
+		return;
+	}
+	if( this.gfnGetDiffDate(sFrom, sTo) < 0){
+		this.fnShowMessage("msg.err.validator.date.great");
+		return;
+	}
+	
+	this.calFrom.set_value(sFrom);
+	this.calTo.set_value(sTo);
+	this.pdivCal.closePopup();
+};
+
+this.pdivCal_btnCancle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.calFrom.set_value(this.calFrom.uOrgValue);
+	this.calTo.set_value(this.calTo.uOrgValue);
+	
+	this.pdivCal.closePopup();
+};
+
+this.cmmCalFT_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if( e.timerid == 999){
+		this.pdivCal.form.staMsg.set_text("");
+		this.pdivCal.form.staMsg.set_visible(false);
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmWork" width="1300" titletext="etc" scrolltype="none" height="1620" onload="frmWork_onload">
+    <Layouts>
+      <Layout height="1620" width="1300">
+        <Static id="stcSechCmnt" taborder="0" left="0" top="32" height="60" cssclass="sta_WF_viewDetail" wordWrap="char" usedecorate="true" onclick="stcSechCmnt_onclick" text="&lt;fc v='#d62100'&gt;• 유지보수 미계약 고객(사)의 경우 패치 이후 발생하는 문제와 관련한 일체의 책임을 지지 않습니다&lt;/fc&gt;&#13;&#10;&lt;fc v='#d62100'&gt;• 유지보수 미계약 고객(사)의 경우 관련 영업대표를 통해 유지보수를 체결해 주시기 바랍니다.&lt;/fc&gt;" right="0"/>
+        <Button id="stcSechCmnt00" taborder="1" left="0" top="90" width="281" height="34" cssclass="btn_WF_viewDetail" onclick="stcSechCmnt00_onclick" cursor="pointer" visible="false" accessibilitydescription="새창열림"/>
+        <Combo id="cmbYear" taborder="2" text="타이틀+상세" top="102" width="76" height="30" innerdataset="ds_year" codecolumn="CODE" datacolumn="DATA" index="0" value="0" cssclass="cmb_WF_view" right="0" onitemchanged="cmbYear_onitemchanged" accessibilitylabel="년도" initvalueid="iv_Combo0"/>
+        <FileDownload id="FileDownload00" taborder="3" text="FileDownload00" left="1310" top="107" width="100" height="100" visible="false"/>
+        <Div id="divList" taborder="4" left="0" top="146" height="1025" right="0" accessibilityenable="false">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  제품 다운로드(etc Tab)
+*
+*  @MenuPath 
+*  @FileName 		PRODUCT::frmProdDownload_T03.xfdl 
+*  @Creator 		김광호
+*  @CreateDate 		2022.01.01
+*  @LastModifier  
+*  @LastModifyDate  
+*  @Version 		1.0
+*  @Outline 		제품 다운로드(etc Tab)
+*  @Desction 
+************** 소스 수정 이력 *************************************************
+*    date          Modifier            Description
+*******************************************************************************
+*  2022.01.01      김광호	           최초 생성 
+*******************************************************************************
+*/
+
+this.frmWork_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//text셋팅
+	this.fn_stcSechCmntText(this.stcSechCmnt00);
+};
+
+this.fn_refreshDS = function()
+{
+	this.ds_list.copyData(this.parent.parent.parent.ds_list, true);
+	this.ds_list_detail.copyData(this.parent.parent.parent.ds_list_detail, true);
+	
+	// 년도 콤보 셋팅
+	if(this.gfnIsNull(this.ds_year.getColumn("DATA",0))){
+		var nRow = 0;
+		for(var i=0; i<this.ds_list.getRowCountNF();i++){
+			var nYmd = this.ds_list.getColumnNF(i,"ymd");
+			var nYear = nYmd.substr(0,4);
+			if(this.ds_year.findRow("DATA",nYear)==-1){
+				this.ds_year.addRow();
+				this.ds_year.setColumn(nRow, "DATA", nYear);
+				this.ds_year.setColumn(nRow, "CODE", nYear+"0000");
+				nRow++;
+			}
+		};
+		this.cmbYear.set_index(0);
+	};
+	
+	
+	this.fn_yearChange();
+};
+
+this.fn_yearChange = function()
+{
+	var fStr = this.cmbYear.text+"0000";
+	this.ds_list.filter("");
+	
+	this.ds_list_detail.filter("");
+
+	this.ds_list.filter("ymd>'"+fStr+"'&&ymd<'"+(parseInt(fStr)+10000)+"'");
+	this.ds_list_detail.filter("ymd>'"+fStr+"'&&ymd<'"+(parseInt(fStr)+10000)+"'");
+
+	var mRowCount = this.ds_list_detail.getRowCount();
+	for(var j = 0; j<mRowCount; j++){
+		var mDL_Remark = this.ds_list_detail.getColumn(j,"DL_REMARK");
+		mDL_Remark = this.fn_deleteTag(mDL_Remark);
+		this.ds_list_detail.setColumn(j,"DL_REMARK",mDL_Remark);
+	}
+	
+	this.fn_createList();
+}
+
+this.cmbYear_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.fn_yearChange();
+};
+
+// html태그 제거
+this.fn_deleteTag = function(sStr)
+{
+	sStr = nexacro.replaceAll(sStr, "&nbsp;", "");
+	
+	sStr = nexacro.replaceAll(sStr, "<br>", "\n\n");
+	sStr = sStr.replace(/(<([^>]+)>)/ig,"");
+	if (sStr.indexOf("\n") == 0)
+	{
+		sStr = nexacro.replace("/\n/g", "");
+	}
+	sStr = sStr.split("\n",1);
+	return sStr;
+};
+
+//제품 요구사양 텍스트 
+this.fn_stcSechCmntText_BACKUP = function(){
+
+	var sProd = "";
+	if(nexacro.getApplication().gv_mainFrame.PCategory2 == "Download_N"){
+		sProd = "• NexacroN 시스템 요구사양 보기";
+	}else if(nexacro.getApplication().gv_mainFrame.PCategory2 == "Download_17"){
+		sProd = "• Nexacro17 시스템 요구사양 보기";
+	}else if(nexacro.getApplication().gv_mainFrame.PCategory2 == "Download_14"){
+		sProd = "• Nexacro14 시스템 요구사양 보기";
+	}
+
+	return sProd;
+};
+
+
+//제품 요구사양 텍스트 
+this.fn_stcSechCmntText = function(obj) {
+	
+	var sProd = "";
+	if(nexacro.getApplication().gv_mainFrame.PCategory2 == "Download_N"){
+		sProd = "• Nexacro N 시스템 요구사양 보기";
+	}else if(nexacro.getApplication().gv_mainFrame.PCategory2 == "Download_17"){	
+		sProd = "• nexacro 17 시스템 요구사양 보기";
+	}else if(nexacro.getApplication().gv_mainFrame.PCategory2 == "Download_14"){	
+		sProd = "• nexacro 14 시스템 요구사양 보기";
+	}
+	
+	obj.set_text(sProd);
+
+	if (!this.gfnIsNull(obj.text)) 
+	{
+		obj.visible = true;	
+	}
+};
+
+//제품 요구사양 클릭 이벤트
+this.stcSechCmnt00_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	if(nexacro.getApplication().gv_mainFrame.PCategory2 == "Download_N")
+      	{
+			//Nexacro N
+       		window.open("http://docs.tobesoft.com/system_requirements#25c77955d187f710");
+       	}
+       	else if(nexacro.getApplication().gv_mainFrame.PCategory2 == "Download_17")
+       	{
+       		//nexacro17
+       		window.open("http://docs.tobesoft.com/system_requirements#9248a28530c3a1f8");
+       	}
+       	else if(nexacro.getApplication().gv_mainFrame.PCategory2 == "Download_14")
+       	{
+       		//nexacro14
+       		window.open("http://docs.tobesoft.com/system_requirements#d293a3a4fa7d8d5b");
+		}	
+};
+
+
+
+this.fn_createList = function()
+{
+	var nRowCnt = this.ds_list_detail.rowcount;
+	
+	var nLeft 	= 0;
+	var nTop 	= 0;
+	var nHeight = 141;
+	var nRight 	= 0;
+	var sDivId 	= "divList";
+	var sUrl 	= "PRODUCT::frmProdDownload_T02_row.xfdl";
+	
+	var nLen = this.divList.form.components.length;
+	for (var i = nLen - 1; i >= 0; i--) {
+		var objDel = this.divList.removeChild(this.divList.form.components[i].name);
+		objDel.destroy();
+		objDel = null;		
+	}
+	
+	if (nRowCnt > 0) {
+		this.divList.accessibilityenable = false;
+		this.divList.text = "";
+		
+		
+		for (var i = 0; i < nRowCnt; i++) {
+			var newDiv = new Div();
+			newDiv.init(sDivId + i, nLeft, nTop, null, nHeight, nRight);
+			this.divList.addChild(newDiv.id, newDiv);
+			newDiv.set_url(sUrl);
+			newDiv.set_accessibilityenable(false);
+			newDiv.show();
+			
+			nTop = nTop + nHeight;
+		}
+		
+		var lastDiv = this.divList.form.components[sDivId + (nRowCnt-1)];
+		
+		var nHeight = lastDiv.getOffsetBottom();
+		this.divList.set_height(nHeight);
+
+		if (nHeight < 520)
+		{
+			this.parent.parent.set_height(520 + 250);
+			nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, 520 + 250 + 200);
+		}
+		else
+		{
+			this.parent.parent.set_height(nHeight + 250);
+			nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, nHeight + 250 + 200);
+		}		
+	}
+};
+
+// 다운로드
+this.grdList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+
+		var objFrame = new ChildFrame();
+		var objParentFrame = this.getOwnerFrame();
+
+		var nLeft = nexacro.getApplication().gv_mainFrame.getOffsetWidth()/2 - 400;
+		var nTop = nexacro.getApplication().gv_mainFrame.getOffsetHeight()/2 - 400;
+		objFrame.set_titlebarheight(40);
+		objFrame.init( "modalContent", nLeft, nTop, 800, 800 );
+		objFrame.set_formurl( "PRODUCT::frmProdDetailPop.xfdl" );
+		var vRtn = objFrame.showModal( objParentFrame, {content:this.ds_list_detail.getColumn(this.ds_list_detail.rowposition, "CONTENTS")}, this, this.fn_callback );
+
+
+};
+
+//상세보기  클릭
+this.staDetail_onclick = function(nRow)
+{
+		var objFrame = new ChildFrame();
+		var objParentFrame = this.getOwnerFrame();
+
+		var nLeft = nexacro.getApplication().gv_mainFrame.getOffsetWidth()/2 - 400;
+		var nTop = nexacro.getApplication().gv_mainFrame.getOffsetHeight()/2 - 400;
+		//objFrame.set_titlebarheight(40);
+		objFrame.set_showtitlebar(false);
+		objFrame.init( "modalContent", nLeft, nTop, 800, 800 );
+		objFrame.set_formurl( "PRODUCT::frmProdDetailPop.xfdl" );
+		var vRtn = objFrame.showModal( objParentFrame, {content:this.ds_list_detail.getColumn(nRow, "CONTENTS")}, this, this.fn_callback );
+
+};
+
+this.btnDownload_onclick = function(nRow)
+{
+	var gdsUserInfo = nexacro.getApplication().gds_UserInfo;
+	var user_id = gdsUserInfo.getColumn(0, "User_id");
+	var regex = /[^0-9]/g;				// 숫자가 아닌 문자열을 선택하는 정규식
+	var dnStr = nexacro.getEnvironment().services["SVC_JSP"].url+"Next_JSP/FileDownload/fileDownload2.jsp";
+	var basePath = this.ds_list_detail.getColumn(nRow, "base_path");
+	basePath = basePath.replaceAll("\\", "/");
+	dnStr = dnStr + "?path=" + basePath;
+	dnStr = dnStr + "&file=" + this.ds_list_detail.getColumn(nRow, "file_name");
+	dnStr = dnStr + "&realFileNm=" + this.ds_list_detail.getColumn(nRow, "file_name");
+	dnStr = dnStr + "&uid=" + user_id;
+
+	this.FileDownload00.set_downloadurl(dnStr);
+	this.FileDownload00.download();
+};]]></Script>
+    <Objects>
+      <Dataset id="Dataset00">
+        <ColumnInfo>
+          <Column id="Column3" type="STRING" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+          <Column id="Column5" type="STRING" size="256"/>
+          <Column id="Column6" type="STRING" size="256"/>
+          <Column id="Column7" type="STRING" size="256"/>
+          <Column id="Column8" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column3">Nexacro 17.1 ios 연동모듈 (ExtComPlugin)</Col>
+            <Col id="Column4">넥사크로에서 지원하지 않는 확장 Runtime API</Col>
+            <Col id="Column6"/>
+            <Col id="Column8">2021-12-16</Col>
+            <Col id="Column5">ExtComPlugin.zip</Col>
+            <Col id="Column7"/>
+          </Row>
+          <Row>
+            <Col id="Column3">Nexacro 17.1 ios 연동모듈 (QRBarcode)</Col>
+            <Col id="Column4">후면/전면 카메라를 이용한 QR / Barcode 인식 및 QR 생성 모듈</Col>
+            <Col id="Column6"/>
+            <Col id="Column8">2021-6-23</Col>
+            <Col id="Column5">QRBarcode.zip</Col>
+            <Col id="Column7"/>
+          </Row>
+          <Row>
+            <Col id="Column3">Nexacro 17.1 ios 연동모듈 (SNSLogin)</Col>
+            <Col id="Column4">Naver,Kakao,Line,Facebook,Google 로그인 연동 후 로그인 한 User의 정보를 반환 받는 모듈</Col>
+            <Col id="Column6"/>
+            <Col id="Column8">2021-5-31</Col>
+            <Col id="Column5">SNSLogin.zip</Col>
+            <Col id="Column7"/>
+          </Row>
+          <Row>
+            <Col id="Column3">TPLSvc_Setup.exe (1.1.0.29)</Col>
+            <Col id="Column4">TPLSvc 의 경우, 최신 버젼 유지를 권장합니다.</Col>
+            <Col id="Column6"/>
+            <Col id="Column8">2021-5-26</Col>
+            <Col id="Column5">TPLSvc_Setup_20211026_1.zip</Col>
+            <Col id="Column7"/>
+          </Row>
+          <Row>
+            <Col id="Column3">TPLSvc_Setup.exe (1.1.0.28)</Col>
+            <Col id="Column4">TPLSvc 의 경우, 최신 버젼 유지를 권장합니다.</Col>
+            <Col id="Column6"/>
+            <Col id="Column8">2021-4-27</Col>
+            <Col id="Column5">TPLSvc_Setup_20210824_1.zip</Col>
+            <Col id="Column7"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_list">
+        <ColumnInfo>
+          <Column id="idx" type="STRING" size="256"/>
+          <Column id="ymd" type="STRING" size="256"/>
+          <Column id="goods" type="STRING" size="256"/>
+          <Column id="version" type="STRING" size="256"/>
+          <Column id="note_kr" type="STRING" size="256"/>
+          <Column id="use_yn" type="STRING" size="256"/>
+          <Column id="remark" type="STRING" size="256"/>
+          <Column id="gubun" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_list_detail" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="ymd" type="STRING" size="256"/>
+          <Column id="idx" type="STRING" size="256"/>
+          <Column id="goods_gbn" type="STRING" size="256"/>
+          <Column id="DOWNLOAD_KIND" type="STRING" size="256"/>
+          <Column id="DOWNLOAD_KIND_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_CODE" type="STRING" size="256"/>
+          <Column id="PRODUCT_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_KIND" type="STRING" size="256"/>
+          <Column id="PRODUCT_KIND_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_VERSION" type="STRING" size="256"/>
+          <Column id="CONTENTS" type="STRING" size="256"/>
+          <Column id="DL_REMARK" type="STRING" size="256"/>
+          <Column id="USE_FLAG" type="STRING" size="256"/>
+          <Column id="FM_SEQ" type="STRING" size="256"/>
+          <Column id="FILE_TYPE" type="STRING" size="256"/>
+          <Column id="file_name" type="STRING" size="256"/>
+          <Column id="PRODUCT_GUBUN_NAME" type="STRING" size="256"/>
+          <Column id="remark" type="STRING" size="256"/>
+          <Column id="SAVE_FILE_NAME" type="STRING" size="256"/>
+          <Column id="base_path" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_year">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="DATA" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

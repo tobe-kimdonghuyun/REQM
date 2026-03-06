@@ -1,0 +1,945 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="par_spssl05_m00" width="1200" height="783" titletext="교외체험학습" onload="fnOnload" nHeight="754" onsize="par_spssl05_m00_onsize">
+    <Layouts>
+      <Layout height="783" width="1200" screenid="ScreenDeskTop" stepcount="0">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="교외체험학습" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="197" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+            <Layout name="Layout0">
+              <ImageViewer id="imgTitle" left="20" top="0" height="65" width="240"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSearch" taborder="1" left="0" top="144" height="70" cssclass="div_WF_Search" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="학년도" left="0" top="20" width="71" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboSearchAyr" taborder="1" left="71" width="105" height="30" innerdataset="dsAyr" codecolumn="ayr" datacolumn="ayrNm" index="0" text="2022년도" readonly="false" top="20" value="2022" initvalueid="ivCmbReadOnly" accessibilitylabel="학년도"/>
+              <Calendar id="calSearchBngnYmd" taborder="3" left="301" top="20" width="150" height="30" dateformat="yyyy.MM.dd." editformat="yyyy.MM.dd." onchanged="fnCheckSearchDays" initvalueid="ivCalNormal" accessibilitylabel="시작일자"/>
+              <Static id="Static00_00_00" taborder="4" text="~" left="451" top="20" width="15" height="30" cssclass="sta_WF_AC" initvalueid="ivStcAccessibilityOff"/>
+              <Calendar id="calSearchEndYmd" taborder="5" left="466" top="20" width="150" height="30" dateformat="yyyy.MM.dd." editformat="yyyy.MM.dd." onchanged="fnCheckSearchDays" initvalueid="ivCalNormal" accessibilitylabel="종료일자"/>
+              <Button id="btnSearch" taborder="6" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" initvalueid="ivBtnAccessibilityOn" onclick="btnSearch_onclick"/>
+              <Combo id="cboSearchKid" taborder="2" left="201" width="95" height="30" index="0" text="신청일자" readonly="false" top="20" initvalueid="ivCmbReadOnly" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" value="1" accessibilitylabel="조회조건">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">1</Col>
+                      <Col id="datacolumn">신청일자</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">2</Col>
+                      <Col id="datacolumn">학습기간</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="Static00" top="31" left="0" width="101" height="42" taborder="0"/>
+              <Combo id="cboSearchAyr" height="60" left="20" top="83" right="20" taborder="1"/>
+              <Calendar id="calSearchBngnYmd" height="60" left="20" top="230" width="253" taborder="3"/>
+              <Static id="Static00_00_00" left="calSearchBngnYmd:0" top="230" width="50" height="60" taborder="4"/>
+              <Calendar id="calSearchEndYmd" height="60" left="Static00_00_00:0" top="230" taborder="5" width="257"/>
+              <Button id="btnSearch" width="164" right="20" top="310" taborder="6" height="60"/>
+              <Combo id="cboSearchKid" left="20" top="160" width="253" height="60" taborder="2"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staCntTxt" taborder="2" text="교외체험학습 신청일수(누계)는「0」일(현장신청포함)이며, 출석인정일수(누계)는「0」일입니다." left="0" top="233" width="672" height="26" cssclass="sta_WF_Total" initvalueid="ivStcAccessibilityOn" enable="true" visible="true" onclick="staCntTxt_onclick"/>
+        <Div id="divPageSummary" taborder="3" left="864" top="233" width="181" height="30" url="comm::comp_pageSummary2.xfdl" visible="false" text="" initvalueid="ivDivAccessibilityOff"/>
+        <Button id="btnWrite" taborder="4" text="등록" top="233" height="30" cssclass="btn_WF_Crud" onclick="btnWrite_onclick" initvalueid="ivBtnAccessibilityButton" right="191" width="50"/>
+        <Button id="btnDelete" taborder="5" text="삭제" top="233" height="30" width="50" cssclass="btn_WF_Crud" onclick="btnDelete_onclick" initvalueid="ivBtnAccessibilityButton" left="btnWrite:10"/>
+        <Div id="div01" taborder="7" left="0" top="divPageSummary:10" height="439" right="0">
+          <Layouts>
+            <Layout>
+              <Grid id="grdExperLrnList" taborder="0" left="0" top="0" height="439" binddataset="dsExperLrnList" autofittype="col" oncellclick="grdExperLrnList_oncellclick" onheadclick="grdExperLrnList_onheadclick" initvalueid="ivGrdAccessibilityOn" right="0" selecttype="cell" accessibilitylabel="교외체험학습 목록" nodatatext="조회된 데이터가 없습니다." minheight="439" maxheight="" onkeydown="div01_grdExperLrnList_onkeydown">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48"/>
+                      <Column size="50"/>
+                      <Column size="100"/>
+                      <Column size="165"/>
+                      <Column size="207"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="65"/>
+                      <Column size="100"/>
+                      <Column size="90"/>
+                      <Column size="95"/>
+                      <Column size="82"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="번호"/>
+                      <Cell col="2" text="신청일자" cssclass="LineNo"/>
+                      <Cell col="3" text="학습형태"/>
+                      <Cell col="4" text="교외체험학습기간"/>
+                      <Cell col="5" text="신청일수"/>
+                      <Cell col="6" text="신청자"/>
+                      <Cell col="7" text="관계"/>
+                      <Cell col="8" text="유아성명"/>
+                      <Cell col="9" text="신청서"/>
+                      <Cell col="10" text="결과보고서"/>
+                      <Cell col="11" text="신청취소"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:_chk" textAlign="center"/>
+                      <Cell col="1" text="bind:rowNum" textAlign="center"/>
+                      <Cell col="2" displaytype="mask" edittype="none" text="bind:regDt" maskedittype="string" maskeditformat="@@@@.@@.@@." textAlign="center" calendardateformat="yyyy-MM-dd"/>
+                      <Cell col="3" displaytype="normal" edittype="none" text="bind:experLrnStleNm" textAlign="center"/>
+                      <Cell col="4" textAlign="center" text="expr:comp.parent.parent.parent.fnDateFormat(experBgngYmd) + &quot; ~ &quot; + comp.parent.parent.parent.fnDateFormat(experEndYmd)"/>
+                      <Cell col="5" textAlign="center" text="bind:abeDdCnt"/>
+                      <Cell col="6" textAlign="center" text="bind:apsNm"/>
+                      <Cell col="7" textAlign="center" text="bind:apsRelNm"/>
+                      <Cell col="8" textAlign="center" text="bind:stuFlnm"/>
+                      <Cell col="9" textAlign="center" expr="!(!aplyAtrzStsNm || aplyAtrzStsNm === '') ? aplyAtrzStsNm : experLrnStsNm"/>
+                      <Cell col="10" textAlign="center" displaytype="expr:(aplyAtrzStsCd == '4' &amp;&amp; (!atrzStsCd || atrzStsCd === '')) &amp;&amp; !(experLrnRltStsCd == '2' &amp;&amp; (!lrnCn || lrnCn === '')) ? 'buttoncontrol' : 'normal' " edittype="expr:(aplyAtrzStsCd == '4' &amp;&amp; (!atrzStsCd || atrzStsCd === '')) &amp;&amp; !(experLrnRltStsCd == '2' &amp;&amp; (!lrnCn || lrnCn === '')) ? 'button' : 'none' " cssclass="cell_WF_PointBtn01" expr="(aplyAtrzStsCd == '4' &amp;&amp; (!atrzStsCd || atrzStsCd === '')) &amp;&amp; !(experLrnRltStsCd == '2' &amp;&amp; (!lrnCn || lrnCn === '')) ? '제출하기' : (aplyAtrzStsCd == '4' &amp;&amp; !(!atrzStsCd || atrzStsCd === '')) ? atrzStsNm : experLrnRltStsNm"/>
+                      <Cell col="11" textAlign="center" displaytype="expr:experLrnStsCd == '2' &amp;&amp; (!aplyAtrzStsCd || aplyAtrzStsCd === '') ? 'buttoncontrol' : 'normal'" edittype="expr:experLrnStsCd == '2' &amp;&amp; (!aplyAtrzStsCd || aplyAtrzStsCd === '') ? 'button' : 'none'" text="expr:experLrnStsCd == '2' &amp;&amp; (!aplyAtrzStsCd || aplyAtrzStsCd === '') ? '취소' : ''"/>
+                    </Band>
+                  </Format>
+                  <Format id="default_00">
+                    <Columns>
+                      <Column size="60"/>
+                      <Column size="60"/>
+                      <Column size="168"/>
+                      <Column size="205"/>
+                      <Column size="350"/>
+                      <Column size="111"/>
+                      <Column size="113"/>
+                      <Column size="86"/>
+                      <Column size="135"/>
+                      <Column size="107"/>
+                      <Column size="153"/>
+                      <Column size="159"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="60" band="head"/>
+                      <Row size="70"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="No"/>
+                      <Cell col="2" text="신청일자" cssclass="LineNo"/>
+                      <Cell col="3" text="학습형태"/>
+                      <Cell col="4" text="교외체험학습기간"/>
+                      <Cell col="5" text="신청일수"/>
+                      <Cell col="6" text="신청자"/>
+                      <Cell col="7" text="관계"/>
+                      <Cell col="8" text="유아성명"/>
+                      <Cell col="9" text="신청서"/>
+                      <Cell col="10" text="결과보고서"/>
+                      <Cell col="11" text="신청취소"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:_chk" textAlign="center"/>
+                      <Cell col="1" text="bind:rowNum" textAlign="center"/>
+                      <Cell col="2" displaytype="mask" edittype="none" text="bind:regDt" maskedittype="string" maskeditformat="@@@@.@@.@@." textAlign="center" calendardateformat="yyyy-MM-dd"/>
+                      <Cell col="3" displaytype="normal" edittype="none" text="bind:experLrnStleNm" textAlign="center"/>
+                      <Cell col="4" textAlign="center" text="expr:comp.parent.parent.parent.fnDateFormat(experBgngYmd) + &quot; ~ &quot; + comp.parent.parent.parent.fnDateFormat(experEndYmd)"/>
+                      <Cell col="5" textAlign="center" text="bind:abeDdCnt"/>
+                      <Cell col="6" textAlign="center" text="bind:apsNm"/>
+                      <Cell col="7" textAlign="center" text="bind:apsRelNm"/>
+                      <Cell col="8" textAlign="center" text="bind:stuFlnm"/>
+                      <Cell col="9" textAlign="center" text="bind:experLrnStsNm" expr="!(!aplyAtrzStsNm || aplyAtrzStsNm === '') ? aplyAtrzStsNm : experLrnStsNm"/>
+                      <Cell col="10" textAlign="center" displaytype="expr:(aplyAtrzStsCd == '4' &amp;&amp; (!atrzStsCd || atrzStsCd === '')) &amp;&amp; !(experLrnRltStsCd == '2' &amp;&amp; (!lrnCn || lrnCn === '')) ? 'buttoncontrol' : 'normal' " edittype="expr:(aplyAtrzStsCd == '4' &amp;&amp; (!atrzStsCd || atrzStsCd === '')) &amp;&amp; !(experLrnRltStsCd == '2' &amp;&amp; (!lrnCn || lrnCn === '')) ? 'button' : 'none' " cssclass="cell_WF_PointBtn01" text="expr:experLrnStsCd == '2' &amp;&amp; experLrnRltStsCd != 2 ? '제출하기' : experLrnRltStsNm" expr="(aplyAtrzStsCd == '4' &amp;&amp; (!atrzStsCd || atrzStsCd === '')) &amp;&amp; !(experLrnRltStsCd == '2' &amp;&amp; (!lrnCn || lrnCn === '')) ? '제출하기' : (aplyAtrzStsCd == '4' &amp;&amp; !(!atrzStsCd || atrzStsCd === '')) ? atrzStsNm : experLrnRltStsNm"/>
+                      <Cell col="11" textAlign="center" displaytype="expr:experLrnStsCd == '2' &amp;&amp; (!aplyAtrzStsCd || aplyAtrzStsCd === '') ? 'buttoncontrol' : 'normal'" edittype="expr:experLrnStsCd == '2' &amp;&amp; (!aplyAtrzStsCd || aplyAtrzStsCd === '') ? 'button' : 'none'" text="expr:experLrnStsCd == '2' &amp;&amp; (!aplyAtrzStsCd || aplyAtrzStsCd === '') ? '취소' : ''"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+            <Layout name="Layout0">
+              <Grid id="grdExperLrnList" left="0" top="0" width="1680" height="763" autofittype="none" formatid="default_00"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divPaginator" taborder="8" left="0" top="div01:21" height="30" right="0" url="comm::comp_paginator.xfdl" text="" initvalueid="ivDivAccessibilityOn"/>
+        <Static id="Static99" taborder="10" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Button id="btnGoUrl" taborder="6" text="학비인정일수 보기" top="233" height="30" cssclass="btn_WF_Crud" initvalueid="ivBtnAccessibilityButton" width="121" left="btnDelete:10" onclick="btnGoUrl_onclick"/>
+        <Button id="btnDownLoad" taborder="9" text="결과보고서 양식 다운로드" top="div01:20" height="30" cssclass="btn_WF_FileDown" initvalueid="ivBtnAccessibilityButton" right="0" width="192" onclick="fnReportView"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="640" height="1910" mobileorientation="portrait" type="default">
+        <Div id="divPaginator" left="0" top="div01:154" right="0" taborder="7" height="160"/>
+        <Button id="btnWrite" top="749" height="60" left="20" taborder="6" fittocontents="none" right="73.59%"/>
+        <Button id="btnDelete" top="staCntTxt:20" height="60" left="btnWrite:14.977000000000004" taborder="5" fittocontents="none" text="삭제" right="47.34%"/>
+        <Static id="staCntTxt" left="20" top="615" height="114" taborder="2" verticalAlign="top" right="20"/>
+        <Div id="divSearch" top="175" left="20" height="410" right="20" taborder="1"/>
+        <Div id="divTitle" height="65" left="0" top="70" right="0" taborder="0"/>
+        <Div id="div01" cssclass="div_WF_GridBox_M" left="20" top="btnDelete:20" height="764" right="20" formscrollbarsize="1" taborder="4"/>
+        <Div id="divPageSummary" left="20" top="staCntTxt:37" height="30" right="428" taborder="3"/>
+        <Static id="Static99" taborder="8"/>
+        <Button id="btnGoUrl" top="749" height="60" left="btnDelete:16.976" right="24"/>
+        <Button id="btnDownLoad" top="div01:30" width="320" height="60" right="20" text="결과보고서 양식 다운로드"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    대국민 > 학부모서비스(유) > 교회체험학습
+*  @MenuPath    문형선
+*  @FileName 	par_spssl05_m00.xfdl
+*  @Creator 	
+*  @CreateDate 	2022.07.07
+*  @Desction    교외체험학습 목록
+*
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.07.07     	문형선 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::par_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ 
+ //첨부파일 관련 변수 선언
+var vFile;					//VirtualFile
+var FileDialog0;			//FileDialog
+var HttpObject0;			//HttpObject
+
+var httpobject_isrunning 	= false; 		//파일다운로드 진행여부
+var fv_shlNm = "";
+var fv_nowAyr = 0;
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// Form의 default 초기처리를 한다.
+	this.smfInitForm(this);
+
+	//검색영역 초기화처리를 한다.
+	this.fnSearchInit();
+	
+	// Grid Checkbox 활성화/활성화 제어
+	this.smfUpdateRednerGridCheckbox(this.div01.form.grdExperLrnList, 0, this.fnRenderGridCheckbox); 
+};
+
+this.fnSearchInit = function()
+{
+	//자녀정보에서 조회한 학년도학적 이력의 학년도 설정
+	var objParForm = this.getOwnerFrame().form.divTop.form.divDispArea.form.divPARLink.form;
+	this.dsAyr.copyData(objParForm.dsStuAyrList);
+	
+	//검색영역 초기화처리를 한다.
+	//검색조건 설정
+	this.dsSearch.copyRow(0, objParForm.dsStuIduzEduYn, 0);
+	fv_nowAyr = objParForm.dsStuIduzEduYn.getColumn(0, "ayr");
+	
+	//1. 조회학년도 : 나이스 교무에 설정된 오늘날짜에 해당하는 학년도
+	if(this.dsAyr.getCaseCountNF("ayr == '" + objParForm.dsStuIduzEduYn.getColumn(0, "ayr") + "'") > 0){
+		this.divSearch.form.cboSearchAyr.set_value(objParForm.dsStuIduzEduYn.getColumn(0, "ayr"));
+	}else{
+		this.divSearch.form.cboSearchAyr.set_index(0);
+	}
+	
+	fv_shlNm = objParForm.dsStuIduzEduYn.getColumn(0, "shlNm");
+	
+	//소재정보, 개인번호 체크
+	var validate = this.parfValidate(this.dsSearch);	
+	if(!validate) return false;
+	
+	this.fnSearch();
+}
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ /**
+ * @description 조회버튼 onclick
+ */
+this.fnSearch = function(obj, e)
+{
+	this.dsSearch.setColumn(0, "sType", "L"); // L : 목록조회
+	
+	var sServiceId = "selectExperLrnList";
+	if(this.smfIsMobile()){
+		sServiceId = "selectExperLrnListTemp";
+	}
+	
+ 	// 서비스 객체 생성
+	this.smfSearchService(sServiceId)
+//		.confirmIfModifiedGrid(this.grdExperLrnList)						// 데이터가 변경되었으면 확인메시지
+		.validateForm(this.divSearch) 										// 폼 유효성검사	
+		.paginator(this.div01.form.grdExperLrnList, this.divPaginator, this.divPageSummary, this.dsPageInfo, obj, e)	// 페이징처리
+		.run() 																// 실행
+		.callback(function(callbackParams){									// 콜백
+			if(callbackParams.errors) return;
+			
+			if(this.smfIsMobile()){
+				this.smfDataAppend(this, this.div01.form.grdExperLrnList, this.dsExperLrnListTemp);
+				// 총 검색결과와 현재 검색 결과 수가 일치할 경우 [더보기]버튼 숨김 (TODO)
+				if(this.dsPageInfo.getColumn(0, "totalCount")==this.dsExperLrnList.getRowCount()){
+					this.divPaginator.set_enable(false);
+				}else{
+					this.divPaginator.set_enable(true);
+				}
+				
+				this.smfResetScroll(this.div01.form);
+			}
+			
+			if(this.dsExperLrnDayCntList.getRowCount() > 0){
+				if(this.smfIsNull(this.dsExperLrnDayCntList.getColumn(0,"experLrnAllDay"))){
+					experLrnAllDay = 0;
+				}else{
+					experLrnAllDay = this.dsExperLrnDayCntList.getColumn(0,"experLrnAllDay");
+				}
+				
+				if(this.smfIsNull(this.dsExperLrnDayCntList.getColumn(0,"atendRcogDay"))){
+					atendRcogDay = 0;
+				}else{
+					atendRcogDay = this.dsExperLrnDayCntList.getColumn(0,"atendRcogDay");
+				}
+				
+				this.staCntTxt.set_text("교외체험학습 신청일수(누계)는「"+experLrnAllDay+"」일(현장신청포함)이며, 출석인정일수(누계)는「"+atendRcogDay+"」일입니다.");
+			}else{
+				this.staCntTxt.set_text("교외체험학습 신청일수(누계)는「0」일(현장신청포함)이며, 출석인정일수(누계)는「0」일입니다.");
+			}
+			
+// 			if(this.smfIsMobile()){
+// 				// 총 검색결과와 현재 검색 결과 수가 일치할 경우 [더보기]버튼 숨김 
+// 				var pageIndex 	= this.dsPageInfo.getColumn(0, "pageIndex");
+// 				var pageSize 	= this.dsPageInfo.getColumn(0, "pageSize");
+// 				var totalCount 	= this.dsPageInfo.getColumn(0, "totalCount");
+// 
+// 				if(totalCount <= pageIndex * pageSize){	
+// 					this.divPaginator.set_enable(false);
+// 				}else{
+// 					this.divPaginator.set_enable(true);
+// 				}
+// 			}
+		}) 
+	;
+};
+
+/**
+ * @description 체험학습 신청취소 
+ */
+this.fnExecuteExperLrnAplyRtrcn = function(message)
+{
+	this.dsSearch.setColumn(0, "sType", "U"); // U : 수정(experLrnSttusCd	- 3 : 취소)
+
+	// 서비스 객체 생성
+	this.smfSaveService("updateExperLrnAplyRtrcn")
+		.messagePrefix(message)
+//        .confirm("oooooo")
+//		.confirmIfModifiedGrid(this.grdExperLrnList)						// 데이터가 변경되었으면 확인메시지
+		.validateForm(this.divSearch) 										// 폼 유효성검사
+		.run() 																// 실행
+		.callback(function(callbackParams){									// 콜백
+			if(callbackParams.errors) return;
+			
+			this.fnSearch();
+		}) 
+	;
+}
+
+ /**
+ * @description 삭제버튼 onclick
+ */
+this.btnDelete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	this.dsSearch.setColumn(0, "sType", "D"); // 2 : 삭제
+
+	// 서비스 객체 생성
+	this.smfDeleteService("deleteExperLrnList")
+		.validateGridDelete(this.div01.form.grdExperLrnList, this.dsExperLrnListValid)
+		.run() 																// 실행
+		.callback(function(callbackParams){									// 콜백
+			// 삭제하였습니다 알림 후 재조회
+			//this.smfAlert(this.smfAfterServiceMessage(), this.fnSearch);
+			this.smfAlert(this.smfAfterServiceMessage());
+			
+			this.fnSearch();
+		}) 
+	;
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	if(errcd <= -1) return;
+// 		
+// 	if(svcid == "selectExperLrnList"){
+// 		if(this.dsExperLrnDayCntList.getRowCount() > 0){
+// 			if(this.smfIsNull(this.dsExperLrnDayCntList.getColumn(0,"experLrnAllDay"))){
+// 				experLrnAllDay = 0;
+// 			}else{
+// 				experLrnAllDay = this.dsExperLrnDayCntList.getColumn(0,"experLrnAllDay")
+// 			}
+// 			atendRcogDay = this.dsExperLrnDayCntList.getColumn(0,"atendRcogDay");
+// 			this.staCntTxt.set_text("교외체헉학습 신청일수(누계)는「"+experLrnAllDay+"」일(현장신청포함)이며, 출석인정일수(누계)는「"+atendRcogDay+"」일입니다.");
+// 		}else{
+// 			this.staCntTxt.set_text("교외체헉학습 신청일수(누계)는「0」일(현장신청포함)이며, 출석인정일수(누계)는「0」일입니다.");
+// 		}
+// 		
+// 		if(this.smfIsMobile()){
+// 			// 총 검색결과와 현재 검색 결과 수가 일치할 경우 [더보기]버튼 숨김 
+// 			var pageIndex 	= this.dsPageInfo.getColumn(0, "pageIndex");
+// 			var pageSize 	= this.dsPageInfo.getColumn(0, "pageSize");
+// 			var totalCount 	= this.dsPageInfo.getColumn(0, "totalCount");
+// 
+// 			if(totalCount <= pageIndex * pageSize){	
+// 				this.divPaginator.set_enable(false);
+// 			}else{
+// 				this.divPaginator.set_enable(true);
+// 			}
+// 		}
+// 	}else if(svcid == "updateExperLrnAplyRtrcn"){
+// 		this.fnSearch();
+// 	}else if(svcid == "deleteExperLrnList"){
+// 		this.fnSearch();
+// 	}	
+};
+
+/**
+ * 등록신청 팝업 콜백
+ */
+this.fnPopupCallback = function(context, responseParams, sender){
+}
+
+this.fnReportCallback = function(context, responseParams, sender){
+	
+}
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+//날짜 포멧 설정
+this.fnDateFormat = function(date)
+{	
+	return date.dateFormat("yyyy.MM.dd.");
+}
+
+// 그리드 헤더 클릭
+this.grdExperLrnList_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+    var columnName = obj.getCellProperty("body",e.cell,"text");
+	if ("bind:_chk" == columnName){
+		this.smfToggleChkHeader(obj, e, this.fnRenderGridCheckbox);
+	}else{
+		// 정렬
+		this.smfCheckAndSort(obj, e);
+	}
+};
+
+
+// 그리드 체크박스 enable 처리
+this.fnRenderGridCheckbox = function(ds, nRow){
+	var atrzStsCd = this.dsExperLrnList.getColumn(nRow, "atrzStsCd");
+	var aplyAtrzStsCd = this.dsExperLrnList.getColumn(nRow, "aplyAtrzStsCd");
+	
+	// 신청서, 보고서 결재상태가 1:상신(진행) or 4:완결 이면 삭제 불가능
+	if((atrzStsCd == "1" || atrzStsCd == "4") || (aplyAtrzStsCd == "1" || aplyAtrzStsCd == "4")){
+		return false;
+	}else{
+		return true;
+	}
+};
+
+
+//그리드 Cell 클릭
+this.grdExperLrnList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.fnDetailView(obj,e);
+};
+
+this.div01_grdExperLrnList_onkeydown = function(obj:nexacro.Grid,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13){
+		this.fnDetailView(obj,e);
+	}
+};
+
+this.fnDetailView = function(obj,e)
+{
+	var experLrnStsCd = this.dsExperLrnList.getColumn(e.row, "experLrnStsCd");
+	var experLrnRltStsCd = this.dsExperLrnList.getColumn(e.row, "experLrnRltStsCd");
+
+	if((e.cell == 10 && experLrnStsCd == "3" && experLrnRltStsCd != "2")
+		|| (e.cell == 11 && (experLrnStsCd == "3" || experLrnStsCd == "5"))){
+		return false;
+	}
+	
+	if(e.cell == 10 && experLrnStsCd == "5" && experLrnRltStsCd != "2"){ //결과제출
+		this.fnExecuteExperLrnResult(this.dsExperLrnList.getColumn(e.row, "experLrnNo"));
+	}else if(e.cell == 11 && experLrnStsCd == "2" && this.smfIsNull(this.dsExperLrnList.getColumn(e.row, "aplyAtrzStsCd"))){//체험학습신청취소
+		//취소할 교외체험학습 정보를 Temp Dataset에 복사한다.
+		this.dsExperLrnListCancel.clearData();
+		var nRow = this.dsExperLrnListCancel.addRow();
+		this.dsExperLrnListCancel.copyRow(nRow, this.dsExperLrnList, e.row);
+		this.dsExperLrnListCancel.setColumn(nRow, "shlCd", this.dsSearch.getColumn(0, "shlCd"));
+		this.dsExperLrnListCancel.setColumn(nRow, "experLrnStsCd", "3"); //체험학습상태코드(3 : 취소)
+		this.fnExecuteExperLrnAplyRtrcn("취소");
+	}else{
+	
+		if(e.cell == 0 || (e.cell == 10 && experLrnStsCd == "5" && experLrnRltStsCd != "2") || (e.cell == 11 && experLrnStsCd == "2")){
+			return false;
+		}else{
+			var procType = "none";
+			var sType = "R";
+			
+			// 팝업을 동작에 필요한 파라메터 지정
+			var popupParams = {
+				callback : this.fnPopupCallback, // 콜백함수 지정
+				sender : obj, // sender 지정
+				// 팝업 전달 파라메터 지정
+				params : {
+					// 처리타입 지정
+					procType 	: procType,
+					// 파라메터 전달
+					dataset 	: this.dsSearch,
+					experLrnNo 	: this.dsExperLrnList.getColumn(e.row, "experLrnNo"),
+					sType 		: sType
+				},
+			};
+			
+			var srcInfo = this.smfCurScreenInfo();
+			var srcInfoW = 0;
+			var srcInfoH = srcInfo[1];
+				
+			if(this.smfIsMobile()){	
+				srcInfoW = srcInfo[0];
+			}else{
+				srcInfoW = 940;				
+			}
+			var aplyAtrzStsCd = this.dsExperLrnList.getColumn(e.row, "aplyAtrzStsCd");
+			var aplyAtrzStsNm = this.dsExperLrnList.getColumn(e.row, "aplyAtrzStsNm");
+			trace("aplyAtrzStsCd:" + aplyAtrzStsCd + ", aplyAtrzStsNm : " + aplyAtrzStsNm);
+			trace(this.dsExperLrnList.saveXML());
+			if(("2" == this.dsExperLrnList.getColumn(e.row, "experLrnStsCd") && "4" == this.dsExperLrnList.getColumn(e.row, "aplyAtrzStsCd")) || !this.smfIsNull(this.dsExperLrnList.getColumn(e.row, "experLrnRltStsCd"))){					
+				this.smfDialog("_auto", "pa_par_sps_sl::par_spssl05_p01.xfdl", popupParams, "", "", srcInfoW, srcInfoH);
+			}else{
+				this.smfDialog("_auto", "pa_par_sps_sl::par_spssl05_p00.xfdl", popupParams, "", "", srcInfoW, srcInfoH);
+			}
+		}
+	}
+};
+
+//결과제출
+this.fnExecuteExperLrnResult = function(experLrnNo){
+	var procType = "none";
+	var sType = "R";
+	// 팝업을 동작에 필요한 파라메터 지정
+	var popupParams = {
+		callback : this.fnPopupCallback, // 콜백함수 지정
+		sender : obj, // sender 지정
+		// 팝업 전달 파라메터 지정
+		params : {
+			// 처리타입 지정
+			procType 	: procType,
+			// 파라메터 전달
+			dataset 	: this.dsSearch,
+			experLrnNo 	: experLrnNo,
+			sType 		: sType
+		},
+	};
+	
+	var srcInfo = this.smfCurScreenInfo();
+	var srcInfoW = 0;
+	var srcInfoH = srcInfo[1];
+		
+	if(this.smfIsMobile()){
+		srcInfoW = srcInfo[0];
+	}else{
+		srcInfoW = 940;		
+	}
+	
+	this.smfDialog("_auto", "pa_par_sps_sl::par_spssl05_p01.xfdl", popupParams, "", "", srcInfoW, srcInfoH);
+}
+
+/**
+ * @description 조회버튼 onclick
+ */
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+ 	//소재정보, 개인번호 체크
+	var validate = this.parfValidate(this.dsSearch);	
+	if(!validate) return false;
+	
+	if(this.smfIsMobile()){
+		this.dsExperLrnListTemp.clearData();
+	}
+	
+	if(this.smfIsNull(this.divSearch.form.calSearchBngnYmd.value) && !this.smfIsNull(this.divSearch.form.calSearchEndYmd.value)){
+		this.smfAlert("시작일자를 지정하세요!", function(){
+			this.divSearch.form.calSearchBngnYmd.setFocus();
+			//this.divSearch.form.calSearchBngnYmd.set_value("1");
+		});
+		return false;
+	}else if(!this.smfIsNull(this.divSearch.form.calSearchBngnYmd.value) && this.smfIsNull(this.divSearch.form.calSearchEndYmd.value)){
+		this.smfAlert("종료일자를 지정하세요!", function(){
+			this.divSearch.form.calSearchEndYmd.setFocus();
+			//this.divSearch.form.calSearchEndYmd.set_value("1");
+		});
+		return false;
+	}
+	
+	
+	this.dsSearch.getColumnInfo()
+	this.fnSearch(obj, e);
+};
+
+//[등록] 버튼 onclick
+this.btnWrite_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var procType = "none";
+	var sType 	 = "";
+	
+	if(obj == this.btnWrite){ // 등록버튼클릭
+		procType = "none";
+		sType 	 = "C";
+	}
+	
+	// 팝업을 동작에 필요한 파라메터 지정
+	var popupParams = {
+		callback : this.fnPopupCallback, // 콜백함수 지정
+		sender : obj, // sender 지정
+		// 팝업 전달 파라메터 지정
+		params : {
+			// 처리타입 지정
+			procType : procType,
+			// 파라메터 전달
+			dataset: this.dsSearch,
+			sType : sType,
+			nowAyr : fv_nowAyr
+		},
+	};
+	
+	var srcInfo = this.smfCurScreenInfo();
+	var srcInfoW = 0;
+	var srcInfoH = srcInfo[1];
+		
+	if(this.smfIsMobile()){		
+		srcInfoW = srcInfo[0];
+	}else{
+		srcInfoW = 940;
+	}
+	
+	this.smfDialog("_auto", "pa_par_sps_sl::par_spssl05_p00.xfdl", popupParams, "", "", srcInfoW, srcInfoH);
+}
+
+
+this.fnCheckSearchDays = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	var sStartDate = this.divSearch.form.calSearchBngnYmd.value;
+	var sEndDate = this.divSearch.form.calSearchEndYmd.value;
+	if( this.smfIsNull(sStartDate) || this.smfIsNull(sEndDate) ) return;
+	
+	var days = this.smfDiffDate(sStartDate, sEndDate);
+	
+	if(days < 0){
+		// 메시지를 이용한 처리
+		this.smfAlert("종료일자가 시작일자보다 빠릅니다.", function(){
+			obj.set_value(e.prevalue);
+		});
+	}
+};
+
+//두날짜 사이의 일자구하기
+this.fnExperDaysSet = function(experBgngYmd, experEndYmd)
+{
+	return this.smfDiffDate(experBgngYmd, experEndYmd) + 1;
+};
+
+this.btnGoUrl_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+ 	var sUrl = 'pa_par_sps_ms::par_spsms00_m00.xfdl';
+ 	var params = {};
+ 				 
+ 	this.smfSetWorkPage(sUrl, params);  //자주묻는질문 세번째 탭으로 이동
+};
+
+this.btnDownLoad_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var fileUrl  = "/doc/edu/pa/par/";		
+	var fileName = "Sample.hwp";
+	//파일불러오기	
+	var strServerUrl = fileUrl + fileName;
+	
+	var objComp = new FileDownload();
+	objComp.download(strServerUrl);	
+};
+
+this.fnReportView = function()
+{
+	var sSecurityYN     = "N";   // 위변조방지 삽입
+	var sReportName  = "/edu/pa/par/sps/sl/sample.ozr";
+
+	// 리포트를 생성하기 위한 옵션을 설정한다.
+	var oOzOption = {
+					    reports : [	
+									{	
+										// 기본데이터
+										  displayname : "교외체험할동 결과보고서"  // [필수] 멀티리포트시 Tree에 보여줄 이름
+										, reportname  : sReportName  // [필수] 리포트명  "/jsonsample.ozr"
+										
+										// json연동형
+										//  - jsonDs/jsonDsName은 갯수가 같아야 됨
+										//, jsonDs     : [this.dsActCft, this.dsActCftList, this.dsRltList]   // [선택] json으로 변환할 데이터셋
+										//, jsonDsName : ["ActCft", "ActCftList", "RltList"]                  // [선택] json으로 변환할 데이터의이름(ozr파일에서 지정된 값과 일치)
+										, jsonParam  : ["viewerType=HTML5 Canvas Viewer 1"
+									               ,"shlNm=" + fv_shlNm +"장 귀하"]  // [선택] json이외에추가할 데이터(KEY=VALUE형태의 스트링(배열))
+										
+										// 추가/보안옵션
+										, security     : sSecurityYN       // [선택] 위변조방지 삽입   ("Y"(default):표시,"N":비표시)
+									}
+							      ]
+	                };
+					
+	//리포트를 그린다.
+	this.smfReportView(this, "popup", oOzOption, this.fnReportCallback);  // 팝업으로 표시(아직기능구현안됨)
+};
+
+this.par_spssl05_m00_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	this.smfResetScroll();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectExperLrnList</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsExperLrnList=dsExperLrnList dsPageInfo=dsPageInfo dsExperLrnDayCntList=dsExperLrnDayCntList</Col>
+            <Col id="url">par_sps_sl05_001.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">selectExperLrnListTemp</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsExperLrnListTemp=dsExperLrnList dsPageInfo=dsPageInfo dsExperLrnDayCntList=dsExperLrnDayCntList</Col>
+            <Col id="url">par_sps_sl05_001.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">updateExperLrnAplyRtrcn</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsExperLrnList=dsExperLrnListCancel</Col>
+            <Col id="outDatasets"/>
+            <Col id="url">par_sps_sl05_002.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">deleteExperLrnList</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsExperLrnList=dsExperLrnList:U</Col>
+            <Col id="outDatasets"/>
+            <Col id="url">par_sps_sl05_003.do</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="10"/>
+          <Column id="ayr" type="STRING" size="4"/>
+          <Column id="stuInvlNo" type="STRING" size="10"/>
+          <Column id="inqBngnYmd" type="STRING" size="8"/>
+          <Column id="inqEndYmd" type="STRING" size="8"/>
+          <Column id="experLrnNo" type="STRING" size="15" sumtext="체험학습번호"/>
+          <Column id="sType" type="STRING" size="1"/>
+          <Column id="cddcScCd" type="STRING" size="3"/>
+          <Column id="schpaDtcNo" type="STRING" size="256"/>
+          <Column id="searchKid" type="STRING" size="1"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="searchKid">1</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsAyr">
+        <ColumnInfo>
+          <Column id="ayr" type="STRING" size="4"/>
+          <Column id="ayrNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsExperLrnList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="int" size="1"/>
+          <Column id="experLrnNo" type="STRING" size="15" sumtext="체험학습번호"/>
+          <Column id="experLrnStleCd" type="STRING" size="1" sumtext="체험학습형태코드"/>
+          <Column id="experLrnStleNm" type="STRING" size="50" sumtext="체험학습형태명"/>
+          <Column id="experBgngYmd" type="STRING" size="8" sumtext="체험시작일자"/>
+          <Column id="experEndYmd" type="STRING" size="8" sumtext="체험종료일자"/>
+          <Column id="experDay" type="STRING" size="2" sumtext="체험일수"/>
+          <Column id="apsId" type="STRING" size="32" sumtext="신청자ID"/>
+          <Column id="apsNm" type="STRING" size="32" sumtext="신청자이름"/>
+          <Column id="apsRelNm" type="STRING" size="50" sumtext="신청자관계명"/>
+          <Column id="stuInvlNo" type="STRING" size="10" sumtext="학생개인번호"/>
+          <Column id="stuFlnm" type="STRING" size="100" sumtext="유아성명"/>
+          <Column id="experLrnStsCd" type="STRING" size="1" sumtext="체험학습상태코드(1:임시저장, 2:제출, 3:취소, 4:미승인, 5:승인)"/>
+          <Column id="experLrnStsNm" type="STRING" size="1" sumtext="체험학습상태명"/>
+          <Column id="experLrnRltStsCd" type="STRING" size="30" sumtext="체험학습결과상태코드(1:임시저장, 2:제출)"/>
+          <Column id="experLrnRltStsNm" type="STRING" size="8" sumtext="체험학습결과상태명"/>
+          <Column id="rgtrId" type="STRING" size="30" sumtext="등록자ID"/>
+          <Column id="regDt" type="STRING" size="8" sumtext="등록일자"/>
+          <Column id="userId" type="STRING" size="3" sumtext="수정자ID"/>
+          <Column id="mdfcnDt" type="STRING" size="256" sumtext="수정일자"/>
+          <Column id="experLrnAllDay" type="STRING" size="5"/>
+          <Column id="shlCd" type="STRING" size="10"/>
+          <Column id="ayr" type="STRING" size="4"/>
+          <Column id="abeDdCnt" type="STRING" size="256"/>
+          <Column id="aplyAtrzStsCd" type="STRING" size="1" sumtext="신청서 결재상태코드"/>
+          <Column id="atrzStsCd" type="STRING" size="1" sumtext="보고서 결재상태코드"/>
+          <Column id="rowNum" type="STRING" size="256"/>
+          <Column id="aplyAtrzStsNm" type="STRING" size="30"/>
+          <Column id="atrzStsNm" type="STRING" size="30"/>
+          <Column id="lrnCn" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex">1</Col>
+            <Col id="pageSize">10</Col>
+            <Col id="totalCount">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsExperLrnListValid" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="int" size="1"/>
+          <Column id="experLrnNo" type="STRING" size="15" sumtext="체험학습번호"/>
+          <Column id="experLrnStleCd" type="STRING" size="1" sumtext="체험학습형태코드"/>
+          <Column id="experLrnStleNm" type="STRING" size="50" sumtext="체험학습형태명"/>
+          <Column id="experBgngYmd" type="STRING" size="8" sumtext="체험시작일자"/>
+          <Column id="experEndYmd" type="STRING" size="8" sumtext="체험종료일자"/>
+          <Column id="experDay" type="STRING" size="2" sumtext="체험일수"/>
+          <Column id="apsId" type="STRING" size="32" sumtext="신청자ID"/>
+          <Column id="apsNm" type="STRING" size="32" sumtext="신청자이름"/>
+          <Column id="apsRelNm" type="STRING" size="50" sumtext="신청자관계명"/>
+          <Column id="stuInvlNo" type="STRING" size="10" sumtext="학생개인번호"/>
+          <Column id="stuFlnm" type="STRING" size="100" sumtext="유아성명"/>
+          <Column id="experLrnStsCd" type="STRING" size="1" sumtext="체험학습상태코드(1:임시저장, 2:제출, 3:취소, 4:미승인, 5:승인)"/>
+          <Column id="experLrnStsNm" type="STRING" size="1" sumtext="체험학습상태명"/>
+          <Column id="experLrnRltStsCd" type="STRING" size="30" sumtext="체험학습결과상태코드(1:임시저장, 2:제출)"/>
+          <Column id="experLrnRltStsNm" type="STRING" size="8" sumtext="체험학습결과상태명"/>
+          <Column id="rgtrId" type="STRING" size="30" sumtext="등록자ID"/>
+          <Column id="regDt" type="STRING" size="8" sumtext="등록일자"/>
+          <Column id="mdfrId" type="STRING" size="3" sumtext="수정자ID"/>
+          <Column id="mdfcnDt" type="STRING" size="256" sumtext="수정일자"/>
+          <Column id="experLrnAllDay" type="STRING" size="5"/>
+          <Column id="shlCd" type="STRING" size="10"/>
+          <Column id="abeDdCnt" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsExperLrnListCancel" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="int" size="1"/>
+          <Column id="experLrnNo" type="STRING" size="15" sumtext="체험학습번호"/>
+          <Column id="experLrnStleCd" type="STRING" size="1" sumtext="체험학습형태코드"/>
+          <Column id="experLrnStleNm" type="STRING" size="50" sumtext="체험학습형태명"/>
+          <Column id="experBgngYmd" type="STRING" size="8" sumtext="체험시작일자"/>
+          <Column id="experEndYmd" type="STRING" size="8" sumtext="체험종료일자"/>
+          <Column id="experDay" type="STRING" size="2" sumtext="체험일수"/>
+          <Column id="apsId" type="STRING" size="32" sumtext="신청자ID"/>
+          <Column id="apsNm" type="STRING" size="32" sumtext="신청자이름"/>
+          <Column id="apsRelNm" type="STRING" size="50" sumtext="신청자관계명"/>
+          <Column id="stuInvlNo" type="STRING" size="10" sumtext="학생개인번호"/>
+          <Column id="stuFlnm" type="STRING" size="100" sumtext="유아성명"/>
+          <Column id="experLrnStsCd" type="STRING" size="1" sumtext="체험학습상태코드(1:임시저장, 2:제출, 3:취소, 4:미승인, 5:승인)"/>
+          <Column id="experLrnStsNm" type="STRING" size="1" sumtext="체험학습상태명"/>
+          <Column id="experLrnRltStsCd" type="STRING" size="30" sumtext="체험학습결과상태코드(1:임시저장, 2:제출)"/>
+          <Column id="experLrnRltStsNm" type="STRING" size="8" sumtext="체험학습결과상태명"/>
+          <Column id="rgtrId" type="STRING" size="30" sumtext="등록자ID"/>
+          <Column id="regDt" type="STRING" size="8" sumtext="등록일자"/>
+          <Column id="userId" type="STRING" size="3" sumtext="수정자ID"/>
+          <Column id="mdfcnDt" type="STRING" size="256" sumtext="수정일자"/>
+          <Column id="experLrnAllDay" type="STRING" size="5"/>
+          <Column id="shlCd" type="STRING" size="10"/>
+          <Column id="ayr" type="STRING" size="4"/>
+          <Column id="abeDdCnt" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsExperLrnDayCntList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="string" size="32"/>
+          <Column id="ayr" type="string" size="32"/>
+          <Column id="stuInvlNo" type="string" size="32"/>
+          <Column id="experLrnAllDay" type="int" size="4"/>
+          <Column id="atendRcogDay" type="int" size="4"/>
+          <Column id="stuFlnm" type="string" size="32"/>
+          <Column id="apsNm" type="string" size="32"/>
+          <Column id="chk" type="int" size="1"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsExperLrnListTemp" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="int" size="1"/>
+          <Column id="experLrnNo" type="STRING" size="15" sumtext="체험학습번호"/>
+          <Column id="experLrnStleCd" type="STRING" size="1" sumtext="체험학습형태코드"/>
+          <Column id="experLrnStleNm" type="STRING" size="50" sumtext="체험학습형태명"/>
+          <Column id="experBgngYmd" type="STRING" size="8" sumtext="체험시작일자"/>
+          <Column id="experEndYmd" type="STRING" size="8" sumtext="체험종료일자"/>
+          <Column id="experDay" type="STRING" size="2" sumtext="체험일수"/>
+          <Column id="apsId" type="STRING" size="32" sumtext="신청자ID"/>
+          <Column id="apsNm" type="STRING" size="32" sumtext="신청자이름"/>
+          <Column id="apsRelNm" type="STRING" size="50" sumtext="신청자관계명"/>
+          <Column id="stuInvlNo" type="STRING" size="10" sumtext="학생개인번호"/>
+          <Column id="stuFlnm" type="STRING" size="100" sumtext="유아성명"/>
+          <Column id="experLrnStsCd" type="STRING" size="1" sumtext="체험학습상태코드(1:임시저장, 2:제출, 3:취소, 4:미승인, 5:승인)"/>
+          <Column id="experLrnStsNm" type="STRING" size="1" sumtext="체험학습상태명"/>
+          <Column id="experLrnRltStsCd" type="STRING" size="30" sumtext="체험학습결과상태코드(1:임시저장, 2:제출)"/>
+          <Column id="experLrnRltStsNm" type="STRING" size="8" sumtext="체험학습결과상태명"/>
+          <Column id="rgtrId" type="STRING" size="30" sumtext="등록자ID"/>
+          <Column id="regDt" type="STRING" size="8" sumtext="등록일자"/>
+          <Column id="userId" type="STRING" size="3" sumtext="수정자ID"/>
+          <Column id="mdfcnDt" type="STRING" size="256" sumtext="수정일자"/>
+          <Column id="experLrnAllDay" type="STRING" size="5"/>
+          <Column id="shlCd" type="STRING" size="10"/>
+          <Column id="ayr" type="STRING" size="4"/>
+          <Column id="abeDdCnt" type="STRING" size="256"/>
+          <Column id="aplyAtrzStsCd" type="STRING" size="1" sumtext="신청서 결재상태코드"/>
+          <Column id="atrzStsCd" type="STRING" size="1" sumtext="보고서 결재상태코드"/>
+          <Column id="rowNum" type="STRING" size="256"/>
+          <Column id="aplyAtrzStsNm" type="STRING" size="30"/>
+          <Column id="atrzStsNm" type="STRING" size="30"/>
+          <Column id="lrnCn" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds00"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item2" compid="divSearch.form.calSearchEndYmd" propid="value" datasetid="dsSearch" columnid="inqEndYmd"/>
+      <BindItem id="item0" compid="divSearch.form.calSearchBngnYmd" propid="value" datasetid="dsSearch" columnid="inqBngnYmd"/>
+      <BindItem id="item3" compid="divSearch.form.cboSearchKid" propid="value" datasetid="dsSearch" columnid="searchKid"/>
+      <BindItem id="item4" compid="divSearch.form.cboSearchAyr" propid="value" datasetid="dsSearch" columnid="ayr"/>
+    </Bind>
+  </Form>
+</FDL>

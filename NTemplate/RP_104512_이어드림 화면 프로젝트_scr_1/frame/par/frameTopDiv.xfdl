@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameTopDiv" width="290" height="43" titletext="New Form" onload="frameTopDiv_onload">
+    <Layouts>
+      <Layout height="43" mobileorientation="landscape" width="290" screenid="ScreenDeskTop">
+        <Combo id="cboStuList" taborder="0" text="" left="46" top="7" width="158" height="30" innerdataset="dsStuList" codecolumn="stuDtcNo" datacolumn="stuFlnm" index="-1" value="" onitemchanged="cboStuList_onitemchanged" borderRadius="30px"/>
+        <Button id="btn00" taborder="1" left="218" top="7" width="30" height="30" cssclass="btn_TF_Home01"/>
+        <Button id="btn01" taborder="2" left="253" top="7" width="30" height="30" cssclass="btn_TF_alarm"/>
+      </Layout>
+      <Layout height="60" mobileorientation="landscape" width="320" screenid="mobile,tablet" name="default0">
+        <Combo id="cboStuList" taborder="0" text="" left="0" top="0" width="208" height="52" innerdataset="dsStuList" codecolumn="stuDtcNo" datacolumn="stuFlnm" index="-1" value="" borderRadius="30px"/>
+        <Button id="btn00" taborder="1" left="215" top="2" width="48" height="48" cssclass="btn_Top_home01_M"/>
+        <Button id="btn01" taborder="2" left="266" top="2" width="48" height="48" cssclass="btn_Top_alarm_M"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 유치원 학부모서비스
+*  @MenuPath    샘플
+*  @FileName 	frameTopDiv.xfdl
+*  @Creator 	문형선
+*  @CreateDate 	2022.11.9
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.11.9     	문형선 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_onLoad = false;
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frameTopDiv_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	if(this.smfGetSubSystemGb()=="PAR")
+	{
+		this.cboStuList.set_index(0);
+		//this.fnSelectStuIduzEduYn();
+		this.fv_onLoad = true;
+	}
+}; 
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	if(errcd <= -1) return;
+	
+	if(svcid == "selectStuIduzEduYn"){		
+		
+		if(errcd == 0 && errmsg != "SUCCESS"){
+			this.smfAlert(errmsg);
+		}else{
+
+			if(this.smfIsNull(this.dsStuIduzEduYn.getColumn(0, "stuInvlNo"))){
+				this.smfAlert("유아의 학적정보가 존재하지 않아\n학부모서비스를 정상 이용하실 수 없습니다.");
+				//return false;
+			}else if(this.smfIsNull(this.dsStuIduzEduYn.getColumn(0, "ayr"))){
+				this.smfAlert("유치원의 학년도/학기 정보가 설정되지 않아\n학부모서비스를 정상 이용하실 수 없습니다.");
+				this.dsStuIduzEduYn.setColumn(0, "ayr", this.smfSubStr(this.dsStuIduzEduYn.getColumn(0, "toDay"), 0, 4));
+			}
+			
+			this.dsStuIduzEduYn.setColumn(0, "schpaDtcNo", "PAR_TEST_ID"); //학부모고유번호 설정
+			
+			//TOP Frame을 찾아서 메뉴처리
+			var objMenuForm = this.getOwnerFrame().form.divTop.form;
+
+			//개별화여부에 따라 메뉴 필터
+			if(this.dsStuIduzEduYn.getColumn(0, "iduzEduYn") == "N"){
+				objMenuForm.divMenu.form.dsMenu_par.filter("menuId != '1002'"); //학기별개별화교육
+				objMenuForm.dsMenu.copyData(objMenuForm.divMenu.form["dsMenu_par"], true);
+				
+				this.getOwnerFrame().form.divAll.form.divHead.form.fnSetFilter("menuId != '1002'");
+			}else{
+				objMenuForm.divMenu.form.dsMenu_par.filter("");
+				objMenuForm.dsMenu.copyData(objMenuForm.divMenu.form["dsMenu_par"], false);
+				
+				this.getOwnerFrame().form.divAll.form.divHead.form.fnSetFilter("");
+			}
+
+			//서브화면에 대한 설정
+			var objWorkForm = this.getOwnerFrame().form.divAll.form.divWork.form;
+
+			if(objWorkForm.name == "frameSubMain"){//서브화면이 유치원 학부모서비스 메인인 경우
+				objWorkForm.fnFormInit();
+			}else if(objWorkForm.name.substring(0,7) == "par_sps"){//서브화면이 학부모서비스인 경우
+				objWorkForm.reload();
+			}
+			
+			//objWorkForm.fnSelectAaFx();
+			
+			//알림정보 서비스 호출
+			this.fnSelectNotiYn();
+		}
+	}else if(svcid == "selectNotiYn"){
+		if(this.dsPageInfo.getColumn(0, "totalCount") > 0){
+			var procType = "none";
+			
+			// 팝업을 동작에 필요한 파라메터 지정
+			var popupParams = {
+				callback : this.fnPopupCallback, // 콜백함수 지정
+				sender : obj, // sender 지정
+				// 팝업 전달 파라메터 지정
+				params : {
+					// 처리타입 지정
+					procType : procType,
+					// 파라메터 전달
+					dataset: this.dsSearch
+				},
+			};
+			
+			if(this.smfIsMobile()){
+				var srcInfo = this.smfCurScreenInfo();
+				var srcInfoW = srcInfo[0];
+				var srcInfoH = srcInfo[1];
+				this.smfDialog("_auto", "pa_par_sps_sl::par_spssl05_p02.xfdl", popupParams, "", "", srcInfoW, srcInfoH);
+			}else{
+				this.smfDialog("_auto", "pa_par_sps_sl::par_spssl05_p02.xfdl", popupParams);
+			}
+		}
+	}
+}
+
+this.fnPopupCallback = function(context, responseParams, sender){
+}
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * 개별화교육여부 및 유아정보 조회서비스
+ * @param : N/A
+ * @param : N/A
+ */
+this.fnSelectStuIduzEduYn = function()
+{
+	//조회 전 조건 설정
+	this.dsSearch.clearData();
+	this.dsSearch.addRow();
+	this.dsSearch.copyRow(0, this.dsStuList, this.cboStuList.index, "shlCd=shlCd,stuDtcNo=stuDtcNo");
+
+ 	// 서비스 객체 생성
+	this.smfSearchService("selectStuIduzEduYn")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;			
+	});
+};
+
+///알림정보 서비스
+this.fnSelectNotiYn = function()
+{
+	//조회 전 조건 설정
+	this.dsSearch.clearData();
+	this.dsSearch.addRow();
+	this.dsSearch.copyRow(0, this.dsStuIduzEduYn, 0, "shlCd=shlCd,stuInvlNo=stuInvlNo,stuDtcNo=stuDtcNo");
+
+	// 서비스 객체 생성
+	this.smfSearchService("selectNotiYn")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+	});
+};
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.cboStuList_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.fnSelectStuIduzEduYn();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectStuIduzEduYn</Col>
+            <Col id="url">/par_sps_ci01_002.do</Col>
+            <Col id="outDatasets">dsStuIduzEduYn dsStuAyrList</Col>
+            <Col id="inDatasets">dsSearch</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectNotiYn</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsPageInfo=dsPageInfo</Col>
+            <Col id="url">/par_sps_sl05_006.do</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsStuList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="shlNm" type="STRING" size="256"/>
+          <Column id="stuInvlNo" type="STRING" size="256"/>
+          <Column id="stuDtcNo" type="STRING" size="256"/>
+          <Column id="stuFlnm" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="shlCd">K100002510</Col>
+            <Col id="stuInvlNo">2022000001</Col>
+            <Col id="stuDtcNo">K10S20230000387807</Col>
+            <Col id="stuFlnm">김대한</Col>
+            <Col id="shlNm">춘당초등학교병설유치원</Col>
+          </Row>
+          <Row>
+            <Col id="shlCd">K100002514</Col>
+            <Col id="stuInvlNo">2022000008</Col>
+            <Col id="stuDtcNo">K10S20230000400339</Col>
+            <Col id="stuFlnm">가가가</Col>
+            <Col id="shlNm">성모유치원</Col>
+          </Row>
+          <Row>
+            <Col id="shlCd">K100002320</Col>
+            <Col id="shlNm">협신초등학교병설유치원</Col>
+            <Col id="stuInvlNo">2018000068</Col>
+            <Col id="stuDtcNo">K10202200000006888</Col>
+            <Col id="stuFlnm">진지나</Col>
+          </Row>
+          <Row>
+            <Col id="shlCd">K100002320</Col>
+            <Col id="shlNm">협신초등학교병설유치원</Col>
+            <Col id="stuInvlNo">P003755373</Col>
+            <Col id="stuDtcNo">K10202200000006664</Col>
+            <Col id="stuFlnm">아이유</Col>
+          </Row>
+          <Row>
+            <Col id="shlCd">A000003686</Col>
+            <Col id="shlNm">강릉원주대학교부설유치원</Col>
+            <Col id="stuInvlNo">2022000012</Col>
+            <Col id="stuFlnm">김채가(강릉원주대학교부설유치원)</Col>
+            <Col id="stuDtcNo">A00S20230000414241</Col>
+          </Row>
+          <Row>
+            <Col id="shlCd">K100003859</Col>
+            <Col id="stuFlnm">양혜가(해오름유치원)</Col>
+            <Col id="stuInvlNo">2022000068</Col>
+            <Col id="stuDtcNo">K10S20230000405819</Col>
+            <Col id="shlNm">해오름유치원</Col>
+          </Row>
+          <Row>
+            <Col id="shlCd">K100000806</Col>
+            <Col id="stuInvlNo">2022000080</Col>
+            <Col id="stuDtcNo">K10S20230000404903</Col>
+            <Col id="stuFlnm">김가가(무지개유치원)</Col>
+            <Col id="shlNm">무지개유치원</Col>
+          </Row>
+          <Row>
+            <Col id="stuDtcNo">K10S20230000429656</Col>
+            <Col id="stuFlnm">테스트</Col>
+            <Col id="stuInvlNo">2022000006</Col>
+            <Col id="shlCd">K100002303</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsStuIduzEduYn" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" description="유치원명"/>
+          <Column id="ayr" type="STRING" size="256" description="학년도"/>
+          <Column id="sem" type="STRING" size="256" description="학기"/>
+          <Column id="semBgngYmd" type="STRING" size="256" description="학기 시작일자"/>
+          <Column id="semEndYmd" type="STRING" size="256" description="학기 종료일자"/>
+          <Column id="stuInvlNo" type="STRING" size="256" description="학생번호"/>
+          <Column id="stuDtcNo" type="STRING" size="18" description="학생고유번호"/>
+          <Column id="stuFlnm" type="STRING" size="256" description="학생이름"/>
+          <Column id="clsScCd" type="STRING" size="256" description="학급구분코드"/>
+          <Column id="clsScNm" type="STRING" size="256"/>
+          <Column id="clsNm" type="STRING" size="256" description="반명"/>
+          <Column id="stuClsNo" type="STRING" size="256" description="반번호"/>
+          <Column id="acclaNm" type="STRING" size="256" description="담임명"/>
+          <Column id="iduzEduYn" type="STRING" size="256" description="개별화교육 수강여부"/>
+          <Column id="yearAge" type="STRING" size="256" description="만나이"/>
+          <Column id="stuRoadAddr" type="STRING" size="256" description="유아도로명주소"/>
+          <Column id="cddcScCd" type="STRING" size="3" description="시도코드"/>
+          <Column id="toDay" type="STRING" size="256" description="오늘일자"/>
+          <Column id="dayOfWeek" type="STRING" size="256" description="오늘요일"/>
+          <Column id="schpaDtcNo" type="STRING" size="256" description="학부모고유번호"/>
+          <Column id="startYmd" type="STRING" size="256" description="학년도 시작일자"/>
+          <Column id="endYmd" type="STRING" size="256" description="학년도 종료일자"/>
+          <Column id="sprtYr" type="STRING" size="4" description="지원연도"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="false">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="10" sumtext="" description="학교코드"/>
+          <Column id="stuInvlNo" type="STRING" size="10" sumtext="" description="학생개인번호"/>
+          <Column id="stuDtcNo" type="STRING" size="18" description="학생고유번호"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsStuAyrList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="stuInvlNo" type="STRING" size="256"/>
+          <Column id="ayr" type="STRING" size="256"/>
+          <Column id="ayrNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex">1</Col>
+            <Col id="pageSize">1</Col>
+            <Col id="totalCount">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

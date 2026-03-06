@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="testVideoPlayer" width="1280" height="720" titletext="New Form" onload="testVideoPlayer_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280" screenid="ScreenDeskTop,mobile">
+        <Button id="btnPlay" taborder="1" text="Play" left="566" top="34" width="128" height="39" onclick="btnPlay_onclick"/>
+        <Div id="divVplayer" taborder="1" text="div00" left="88" top="34" width="254" height="261" initvalueid="iv_DivVideoPlayerOn">
+          <Layouts>
+            <Layout>
+              <VideoPlayer id="VideoPlayer" taborder="0" left="63" top="42" width="120" height="188"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divVPlayer" taborder="2" text="div00" left="88" top="324" width="254" height="261" initvalueid="iv_DivVideoPlayerOn">
+          <Layouts>
+            <Layout>
+              <VideoPlayer id="VideoPlayer" taborder="0" left="63" top="42" width="120" height="188" showcontrolbar="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnPause" taborder="3" text="Pause" left="566" top="84" width="128" height="39" onclick="btnPause_onclick"/>
+        <Button id="btnStop" taborder="4" text="Stop" left="566" top="134" width="128" height="39" onclick="btnStop_onclick"/>
+        <Button id="btn00" taborder="5" text="btn00" left="566" top="185" width="128" height="40" onclick="btn00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    비디오 플레이어 기능 샘플 (mp4 등 미디어 플레이어 테스트 준비 중)
+*  @FileName 	sampleVideoPlayer.xfdl
+*  @Creator 	투비소프트
+*  @CreateDate 	2022.06.22
+*  @Desction    비디오 플레이어 기능 샘플
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.06.22     	투비소프트 	               최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ 
+this.mediaUrl = "";
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.testVideoPlayer_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.divVplayer.form.VideoPlayer00.set_url(this.mediaUrl);	
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+/**
+ * 플레이어 재생(play)
+ * fnCreateDiv 호출
+ * @param : scope
+ */
+this.btnPlay_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divVplayer.form.VideoPlayer00.play();
+};
+
+/**
+ * 플레이어 멈춤(pause)
+ * fnCreateDiv 호출
+ * @param : scope
+ */
+this.btnPause_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divVplayer.form.VideoPlayer00.pause();	
+};
+
+/**
+ * 플레이어 중단(Stop)
+ * fnCreateDiv 호출
+ * @param : scope
+ */
+this.btnStop_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divVplayer.form.VideoPlayer00.stop();		
+};
+
+
+/**
+ * 플레이어 중단(Stop)
+ * fnCreateDiv 호출
+ * @param : scope
+ */
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace( this.divVplayer.form.VideoPlayer.videosize[0] );
+	trace( this.divVplayer.form.VideoPlayer.videosize[1] );
+	//var nWidth = this.VideoPlayer00.videosize[0];
+	//var nHeight = this.VideoPlayer00.videosize[1]; 
+};]]></Script>
+  </Form>
+</FDL>

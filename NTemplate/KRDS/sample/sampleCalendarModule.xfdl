@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleCalendarModule" width="888" height="1250" titletext="캘린더" onload="form_onload">
+    <Layouts>
+      <Layout height="1250" width="888" screenid="Desktop_screen,mobile_small">
+        <TextArea id="txaGuide" taborder="8" left="0" top="0" height="600" right="0" value="- 캘린더 사용 방법&#10; - component 목록에서 PeriodCalendar(기간달력), MonthCalendar(월달력), WeekCalendar(주차달력)을 선택하여 화면에 배치 후 사용한다.&#10;- User Property에 'invervalBtn' 속성 값을 true로 주면 1개월/3개월/1년 날짜를 To 기준으로 From 날짜를 세팅할 수 있다.&#10;&#10;- 호출 할 수 있는 함수&#10; 공통함수 &#10; - setRequired(); // 필수설정&#10; - setReadOnly();//리드온리설정&#10;&#10; 각 component 별 함수&#10; - setDate(); // value세팅 , 주차달력/월달력 only&#10; - getDate(); //선택된 value가져오기 주차달력/월달력 only&#10; - getWeek(); //주차달력 only&#10; - setFromDate();//기간달력의 from date세팅 기간달력 only&#10; - getFromDate();//기간달력의 from date가져오기 기간달력 only&#10; - setToDate();//기간달력의 to date세팅 기간달력 only&#10; - getToDate();//기간달력의 to dater가져오기 기간달력 only&#10; - set1MonthAgo(); // 기간달력의 To 날짜 기준으로 1개월 전의 날짜를 From에 세팅한다.&#10; - set3MonthAgo(); // 기간달력의 To 날짜 기준으로 3개월 전의 날짜를 From에 세팅한다.&#10; - set1YearAgo(); // 기간달력의 To 날짜 기준으로 1년 전의 날짜를 From에 세팅한다." onchanged="txaGuide_onchanged" scrolltype="horizontal"/>
+        <Static id="Static01" taborder="0" text="주차달력" left="0" width="169" height="23" cssclass="sta_WF_Label" top="txaGuide:40"/>
+        <WeekCalendar id="WeekCalendar00" taborder="9" left="0" top="Static01:8" width="150" height="48"/>
+        <Button id="btnGetWCalDate" taborder="1" text="get date" left="WeekCalendar00:8" top="Static01:8" width="120" height="48" onclick="btnGetWCalDate_onclick"/>
+        <Button id="btnGetWCalWeek" taborder="2" text="get week" left="btnGetWCalDate:8" top="Static01:8" width="120" height="48" onclick="btnGetWCalWeek_onclick"/>
+        <Button id="btnSetWCalDate" taborder="3" text="set date" left="btnGetWCalWeek:8" top="Static01:8" width="120" height="48" onclick="btnSetWCalDate_onclick"/>
+        <Static id="Static01_00" taborder="4" text="월달력" left="0" width="169" height="23" cssclass="sta_WF_Label" top="WeekCalendar00:30"/>
+        <MonthCalendar id="MonthCalendar00" taborder="10" left="0" top="Static01_00:8" width="150" height="48"/>
+        <Button id="btnGetMCalM" taborder="5" text="get month" left="MonthCalendar00:8" top="Static01_00:8" width="120" height="48" onclick="btnGetMCalM_onclick"/>
+        <Button id="btnSetMCalM" taborder="6" text="set month" left="btnGetMCalM:8" top="Static01_00:8" width="120" height="48" onclick="btnSetMCalM_onclick"/>
+        <Static id="Static01_00_00" taborder="7" text="기간달력" left="0" width="169" height="23" cssclass="sta_WF_Label" top="MonthCalendar00:40"/>
+        <PeriodCalendar id="PeriodCalendar00" left="0" top="Static01_00_00:8" width="320" height="48"/>
+        <Button id="btnGetFTCalFDate" taborder="8" text="get from date" left="PeriodCalendar00:8" top="Static01_00_00:8" width="140" height="48" onclick="btnGetFTCalFDate_onclick"/>
+        <Button id="btnSetFTCalFDate" taborder="9" text="set from date" left="btnGetFTCalFDate:8" top="Static01_00_00:8" width="140" height="48" onclick="btnSetFTCalFDate_onclick"/>
+        <Button id="btnGetFTCalTDate" taborder="10" text="get to date" left="PeriodCalendar00:8" top="btnGetFTCalFDate:8" width="140" height="48" onclick="btnGetFTCalTDate_onclick"/>
+        <Button id="btnSetFTCalTDate" taborder="11" text="set to date" left="btnGetFTCalTDate:8" top="btnSetFTCalFDate:8" width="140" height="48" onclick="btnSetFTCalTDate_onclick"/>
+        <Static id="Static01_00_00_00" taborder="16" text="기간달력(일정 간격 버튼)" left="0" width="210" height="23" cssclass="sta_WF_Label" top="btnGetFTCalTDate:221"/>
+        <PeriodCalendar id="PeriodCalendarInterval" left="0" top="Static01_00_00_00:0" width="320" height="28" invervalBtn="true"/>
+        <Static id="sta00" taborder="21" text="스크립트 호출 방법" left="328" top="btnGetFTCalTDate:23" width="195" height="23"/>
+        <Button id="btnSet1MonthAgo" taborder="17" text="set1MonthAgo()" left="326" top="sta00:8" width="160" height="48" onclick="btnSet1MonthAgo_onclick"/>
+        <Button id="btnSet3MonthAgo" taborder="19" text="set3MonthAgo()" left="btnSet1MonthAgo:8" top="1100" width="160" height="48" onclick="btnSet3MonthAgo_onclick"/>
+        <Button id="btnSet1YearAgo" taborder="20" text="set1YearAgo()" left="326" top="btnSet1MonthAgo:8" width="160" height="48" onclick="btnSet1YearAgo_onclick"/>
+        <Static id="sta00_00" taborder="21" text="User Property invervalBtn=true" left="Static01_00_00_00:94" top="1257" width="280" height="37"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleCalendarModule.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/12/07
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/12/07			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	
+	this.PeriodCalendarInterval.setFromDate("20240614");
+	this.PeriodCalendarInterval.setToDate("20240614");
+	this.PeriodCalendarInterval.set1MonthAgo();
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.btnGetWCalDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	alert(this.WeekCalendar00.getDate());
+};
+
+
+this.btnGetWCalWeek_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	alert(this.WeekCalendar00.getWeek());
+};
+
+this.btnSetWCalDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.WeekCalendar00.setDate("20201207");
+};
+
+this.btnGetMCalM_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	alert(this.MonthCalendar00.getDate());
+};
+
+this.btnSetMCalM_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.MonthCalendar00.setDate("20201207");
+};
+
+this.btnGetFTCalFDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	alert(this.PeriodCalendar00.getFromDate());
+};
+
+this.btnSetFTCalFDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.PeriodCalendar00.setFromDate("20201207");
+};
+
+this.btnGetFTCalTDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	alert(this.PeriodCalendar00.getToDate());
+};
+
+this.btnSetFTCalTDate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.PeriodCalendar00.setToDate("20201231");
+};
+
+this.btnGetFTCalFDate00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.div00.form.PeriodCalendarInterval.invervalBtn = null;
+	
+};
+
+this.btnSet1MonthAgo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.PeriodCalendar00.set1MonthAgo();
+};
+
+this.btnSet3MonthAgo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.PeriodCalendar00.set3MonthAgo();
+};
+
+this.btnSet1YearAgo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.PeriodCalendar00.set1YearAgo();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="ds00">
+        <ColumnInfo>
+          <Column id="from" type="STRING" size="256"/>
+          <Column id="to" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

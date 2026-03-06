@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sample_callService" width="1280" height="720" titletext="tts 샘플" onload="fnOnload" border="1px solid" onbeforeclose="sample_gridSave_onbeforeclose">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Static id="staMain" taborder="0" text="사용자관리" left="10" cssclass="sta_Ctitle" top="-664" right="90" height="40"/>
+        <Div id="divSearch" taborder="1" left="5" top="61" width="1265" height="259">
+          <Layouts>
+            <Layout>
+              <Static id="sta_01" taborder="2" left="129" top="6" cssclass="sta_WF_tablebg" width="265" height="34"/>
+              <Static id="sta_02" taborder="0" text="음성으로변환할텍스트" left="0" top="6" cssclass="sta_WF_tablelabel" width="130" height="34"/>
+              <Static id="sta_04" taborder="3" left="522" top="6" cssclass="sta_WF_tablebg" width="225" height="34"/>
+              <Edit id="edtText" taborder="1" text="-선택-" left="140" top="6" height="34" leftbase="" topbase="" bottombase="" rightbase="" widthbase="" heightbase="" innerdataset="@ds_dep" codecolumn="code" datacolumn="data" scrollbarbarminsize="20" value="" index="-1" scrollbarbaroutsize="20" scrollbarsize="10" scrollbartrackbarsize="25" itemheight="20" width="425"/>
+              <Static id="sta_16" taborder="4" left="875" top="6" cssclass="sta_WF_tablebg" width="225" height="34"/>
+              <Static id="sta_02_00" taborder="5" text="응답값확인" left="0" top="76" cssclass="sta_WF_tablelabel" width="130" height="34" onclick="Common_onclick"/>
+              <Edit id="edtResult" taborder="6" text="-선택-" left="140" top="76" height="34" leftbase="" topbase="" bottombase="" rightbase="" widthbase="" heightbase="" innerdataset="@ds_dep" codecolumn="code" datacolumn="data" scrollbarbarminsize="20" value="" index="-1" scrollbarbaroutsize="20" scrollbarsize="10" scrollbartrackbarsize="25" itemheight="20" width="243" onclick="Common_onclick"/>
+              <Edit id="edtUrl" taborder="7" text="-선택-" left="140" top="125" height="34" leftbase="" topbase="" bottombase="" rightbase="" widthbase="" heightbase="" innerdataset="@ds_dep" codecolumn="code" datacolumn="data" scrollbarbarminsize="20" value="" index="-1" scrollbarbaroutsize="20" scrollbarsize="10" scrollbartrackbarsize="25" itemheight="20" width="243" onclick="Common_onclick"/>
+              <VideoPlayer id="VideoPlayer00" taborder="8" left="245" top="257" width="200" height="200"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnExecute" taborder="2" text="처리(저장)" top="133" height="34" width="96" onclick="btnExecute_onclick" left="470"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="inDatasets">dsMain=dsMain:U</Col>
+            <Col id="outDatasets">dsResult=dsResult</Col>
+            <Col id="asynctp"/>
+            <Col id="url">cmc_fcm_vt00_000.do</Col>
+            <Col id="id">execute</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="keys" type="STRING" size="30" value="columnText:&quot;성명&quot;name"/>
+          <Column id="text" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="result" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    서버통신 샘플
+*  @FileName 	sample_callService
+*  @Creator 	문호상
+*  @CreateDate 	2022.01.02
+*  @Desction    서버통신 예제
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.01.02     	문호상 	               최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼을 초기화
+	this.smfInitForm(obj);
+};
+
+/************************************************************************************************
+* TRANSACTION 서비스 호출 처리
+************************************************************************************************/
+
+/**
+ * @description 처리(저장)
+*/
+this.btnExecute_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 아래 주석처리된 메소드는 
+	// 필요에 따라 주석 해제하여 사용하면 된다
+
+
+	// 일괄처리, 수행, 처리를 이용하려면 
+	// smfExecuteService를 사용한다	
+	
+	// 서비스 객체 생성 	
+	this.smfExecuteService("execute")
+		// 메시지 prefix 지정
+		//         기본적으로 serviceId의 prefix에 따라 결정된다(여기서는 "save")
+		//         "validate": "검증", 
+		//         "check": "조건확인", 
+		//         "insert": "등록", 
+		//         "select": "조회", 
+		//         "list": "조회", 
+		//         "update": "수정", 
+		//         "delete": "삭제", 
+		//         "save": "저장", 
+		//         "execute": "실행", 
+		//         "preview": "미리보기", 
+		//         "print": "출력", 
+		//         "code": "코드조회"		
+		// 메시지 prefix 지정
+		//.messagePrefix("사용자 일괄 등록처리")
+		// 사용자에게 confirm메시지를 표시할지 여부
+		//         호출하지 않으면 함수에 따라 기본설정이 적용된다
+		//         기본 false ->  smfSearchService, smfPrintService, smfDynService
+		//         기본 true -> smfSaveService, smfExecuteService, smfDeleteService
+		// .showConfirm(true)
+		
+		
+		// (권장) 폼 유효성검사
+		// .validateForm(this.divSearch)
+
+		// (권장) 그리드 유효성검사
+		//         dsMainValid의 row는 2개가 있는데
+		//         첫번째는 Dataset.ROWTYPE_INSERT에 해당하는 유효성검사 룰셋을 담당한다
+		//         두번째는 Dataset.ROWTYPE_UPDATE에 해당하는 유효성검사 룰셋을 담당한다
+		//         컬럼값에 = 은 INSERT와 동일한 룰셋을 사용한다는 의미이다
+		// .validateGrid(this.grdMain, this.dsMainValid)
+
+		// 데이터 변경 필수
+		//.requireModifredData(this.dsMain)
+		 
+		// 서버통신 직전 호출된다. next를 호출하면 서버통신을 진행한다
+		//.beforeService(function(next){
+		//	this.smfAlert('처리완료'); 
+			// next();
+		//})
+
+		// (필수) 실행
+		.run() 
+
+		// (필수) 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			// 저장이 완료되었습니다.
+			this.smfAlert('CM002');
+		})
+	;
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd <= -1) return;
+	
+};
+
+ /************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtText" propid="value" datasetid="dsMain" columnid="text"/>
+      <BindItem id="item1" compid="divSearch.form.edtResult" propid="value" datasetid="dsResult" columnid="result"/>
+      <BindItem id="item2" compid="divSearch.form.edtUrl" propid="value" datasetid="dsResult" columnid="url"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="cmmConfirm" width="560" height="340" titletext="확인창" onload="form_onload">
+    <Layouts>
+      <Layout height="340" mobileorientation="landscape" width="560">
+        <ImageViewer id="imgLink" taborder="0" left="40" top="48" width="26" height="26" image="url('theme::NexaKRDS/images/img_WF_Valid.png')" text="" accessibilitylabel="확인" stretch="fit" cssclass="img_WF_Trans"/>
+        <Static id="Static00" taborder="1" text="확인창" left="74" top="42" height="36" cssclass="sta_WF_H4" right="136"/>
+        <TextArea id="txtMsgContent" taborder="2" left="40" top="Static00:16" right="40" readonly="true" bottom="100" cssclass="txt_POP_Text"/>
+        <Button id="btnOk" taborder="3" text="확인" top="260" fittocontents="width" height="48" width="90" onclick="btnOk_onclick" cssclass="btn_WF_Crud" right="236"/>
+        <Button id="btnCancel" taborder="4" text="취소" top="260" fittocontents="width" height="48" width="90" onclick="btnCancel_onclick" right="138"/>
+        <Button id="btnExtend" taborder="5" text="취소" top="260" fittocontents="width" height="48" width="90" onclick="btnExtend_onclick" visible="false" right="40"/>
+        <Panel id="Panel00" taborder="6" left="40" top="260" height="48" horizontalgap="8" right="40" flexmainaxisalign="end">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="btnOk"/>
+            <PanelItem id="PanelItem01" componentid="btnCancel"/>
+            <PanelItem id="PanelItem02" componentid="btnExtend"/>
+          </Contents>
+        </Panel>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	cmmConfirm.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/11/25
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/11/25			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/********************************************************************************
+ * Form 변수선언 영역
+ ********************************************************************************/
+this.fvArrButton;
+this.fvArrRtn;
+this.fvOptSize;
+
+/********************************************************************************
+ * Form Event 영역
+ ********************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	
+	this.fvOptSize = this.getOwnerFrame().pOptSize;
+	
+	var sContents = this.getOwnerFrame().paramContents;
+	
+	this.fnMsgSetting(sContents);
+	
+	this.fvArrButton = this.getOwnerFrame().paramButton;
+	this.fvArrRtn    = this.getOwnerFrame().paramRtn;
+	
+	// 버튼 명칭 사용 시
+	if (!this.gfnIsNull(this.fvArrButton)) 
+	{
+		// 확장 버튼 사용 안할 경우 안보임 처리
+		if (this.fvArrButton.length == 3) this.btnExtend.set_visible(true);
+		
+		for (var i=0; i<this.fvArrButton.length; i++) 
+		{
+			if (i==0) this.btnOk.set_text(" " + this.fvArrButton[i] + " ");
+			if (i==1) this.btnCancel.set_text(" " + this.fvArrButton[i] + " ");
+			if (i==2) this.btnExtend.set_text(" " + this.fvArrButton[i] + " ");
+		}
+		this.resetScroll();
+		
+		var nSize = 0;
+		if (this.fvArrButton.length < 3) 
+		{
+			nSize = this.btnOk.getOffsetWidth() + this.btnCancel.getOffsetWidth() + 5;
+		} else {
+			nSize = this.btnOk.getOffsetWidth() + this.btnCancel.getOffsetWidth() + this.btnExtend.getOffsetWidth() + 10;
+		}
+		
+		this.btnOk.move((this.width - nSize)/2, this.btnOk.top);
+		this.resetScroll();
+	} else  
+	{
+		var nSize = this.btnOk.getOffsetWidth() + this.btnCancel.getOffsetWidth() + 5;
+		this.btnOk.move((this.width - nSize)/2, this.btnOk.top);
+		this.resetScroll();	
+	}
+	
+	this.btnOk.setFocus();
+};
+
+/********************************************************************************
+ * 사용자 Function 영역
+ ********************************************************************************/ 
+/**
+* @description 메세지설정
+*/
+this.fnMsgSetting = function (sMsgContent)
+{
+ 	this.txtMsgContent.set_value(sMsgContent);
+};
+ 
+/********************************************************************************
+ * Component Event 영역
+ ********************************************************************************/ 
+/**
+* @description 확인 버튼
+*/
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 버튼 명칭 사용 시
+	if (!this.gfnIsNull(this.fvArrButton)) 
+	{
+		this.close(this.fvArrRtn[0]);
+	}
+	else {
+		this.close(true);
+	}
+};
+
+/**
+* @description 취소 버튼
+*/
+this.btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 버튼 명칭 사용 시
+	if (!this.gfnIsNull(this.fvArrButton)) 
+	{
+		this.close(this.fvArrRtn[1]);
+	} else 
+	{
+		this.close(false);
+	}
+};
+
+/**
+* @description 확장 버튼
+*/
+this.btnExtend_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 버튼 명칭 사용 시
+	this.close(this.fvArrRtn[2]);
+};
+]]></Script>
+  </Form>
+</FDL>

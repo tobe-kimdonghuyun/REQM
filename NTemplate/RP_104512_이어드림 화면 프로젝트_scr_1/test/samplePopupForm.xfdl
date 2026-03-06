@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="samplePopupForm" width="520" height="390" titletext="그리드 합계" onload="form_onload">
+    <Layouts>
+      <Layout height="390" mobileorientation="landscape" width="520">
+        <Static id="Static00" taborder="0" text="param1" left="20" top="35" width="88" height="28" font="bold 10pt &quot;맑은 고딕&quot;"/>
+        <Grid id="grdGrid" taborder="1" left="17" top="80" height="251" binddataset="dsSample" right="15" autofittype="col" oncelldblclick="Grid00_oncelldblclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="63"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0" suppress="0"/>
+                <Cell col="1" text="bind:Column1" suppress="0"/>
+                <Cell col="2" text="bind:Column2"/>
+                <Cell col="3" text="bind:Column3"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnSelect" taborder="2" text="선택" top="352" width="91" height="28" right="110" onclick="btnSelect_onclick"/>
+        <Button id="btn00_00" taborder="3" text="닫기" top="352" height="28" right="15" width="91" onclick="btn00_00_onclick"/>
+        <Edit id="edtParam1" taborder="4" left="100" top="40" width="140" height="20"/>
+        <Edit id="edtParam2" taborder="5" left="350" top="40" width="140" height="20"/>
+        <Static id="Static00_00" taborder="6" text="param2" left="270" top="35" width="88" height="28" font="bold 10pt &quot;맑은 고딕&quot;"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsSample">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSize">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">가</Col>
+            <Col id="Column1">band 속성값이 "body"인 Row 의 높이가 자동조절됩니다.</Col>
+            <Col id="Column2">red</Col>
+            <Col id="Column3">1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나</Col>
+            <Col id="Column1">band 속성값이 "body"인 Row 의 높이가 자동조절됩니다.
+Row 중 가장 높이가 큰 Row에 맞게 모든 Row의 높이가 설정됩니다.
+</Col>
+            <Col id="Column2">yellow</Col>
+            <Col id="Column3">2</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다</Col>
+            <Col id="Column1">band 속성값이 "body"인 Row 의 높이가 자동조절됩니다.
+Row 중 가장 높이가 큰 Row에 맞게 모든 Row의 높이가 설정됩니다.
+band 속성값이 "head", "summary" 인 Row 의 높이는 자동조절하지 않고, 디자인 시 설정한 크기로 유지합니다.
+</Col>
+            <Col id="Column2">blue</Col>
+            <Col id="Column3">3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다라</Col>
+            <Col id="Column1">band 속성값이 "body"인 Row 의 높이가 자동조절됩니다.
+Row 중 가장 높이가 큰 Row에 맞게 모든 Row의 높이가 설정됩니다.
+band 속성값이 "head", "summary" 인 Row 의 높이는 자동조절하지 않고, 디자인 시 설정한 크기로 유지합니다.
+
+band 속성값이 "body"인 Column 의 너비가 자동조절됩니다.
+각 Column 별로 가장 너비가 큰 Cell 에 맞게 Column의 너비가 따로 설정됩니다.
+band 속성값이 "left", "right" 인 Column 의 너비는 자동조절하지 않고, 디자인 시 설정한 크기로 유지합니다.</Col>
+            <Col id="Column2">navy</Col>
+            <Col id="Column3">4</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  컨설팅 표준화 작업
+*  @MenuPath    샘플 > popup form
+*  @FileName 	samplePopupForm.xfdl 
+*  @Creator 	consulting
+*  @CreateDate 	2022.01.04
+*  @Desction    popup 화면 샘플
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.01.04     	consulting 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::cm_script.xjs" 
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.pv_params;	// 파라메터 세팅
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 팝업 폼 초기화
+	this.smfInitPopup(obj); 
+	// 파라메터 세팅
+	this.pv_params = this.smfGetPopupParams();
+	
+	// 전달받은 파라메터 설정
+	this.dsSample.copyData(this.pv_params.dataset);
+	this.edtParam1.set_value(this.pv_params.param1);
+	this.edtParam2.set_value(this.pv_params.param2);
+	
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+//검색된 결과를 선택할때
+this.fnChoice = function(){
+	// 응답을 
+	this.smfSendResponseToOpener({
+		"row": this.smfRowToObject(this.dsSample)
+	});
+	
+	this.close(true);
+};
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 닫기버튼 클릭시
+*/
+this.btn00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 닫기 버튼을 이용한 팝업종료의 파라메터는 false를 전달
+	this.close(false);
+};
+
+
+/**
+ * @description 선택버튼 클릭시
+*/
+this.btnSelect_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnChoice();
+};
+
+/**
+ * @description 그리드 더블클릭
+*/
+this.Grid00_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.fnChoice();
+};
+]]></Script>
+  </Form>
+</FDL>

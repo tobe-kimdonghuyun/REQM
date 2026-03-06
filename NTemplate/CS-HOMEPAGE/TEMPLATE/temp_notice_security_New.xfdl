@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmWork" width="1920" titletext="보안취약점" scrolltype="none" height="1820" cssclass="frm_WF_bgW" onload="frmWork_onload">
+    <Layouts>
+      <Layout height="1820" width="1920">
+        <Div id="divHistory" taborder="1" left="310" top="0" width="1300" height="148" text="" formscrolltype="none">
+          <Layouts>
+            <Layout>
+              <Button id="Button00" taborder="0" left="0" top="39" width="30" height="50" cssclass="btn_WF_history"/>
+              <Static id="Static00_00" taborder="2" left="Button00:30" top="40" width="13" height="50" cssclass="sta_WF_historyPart"/>
+              <Static id="Static00" taborder="1" left="Static00_00:0" top="37" width="138" height="50" cssclass="sta_WF_history" text="Notice" fittocontents="width"/>
+              <Static id="Static00_00_00" taborder="3" left="Static00:0" top="40" width="13" height="50" cssclass="sta_WF_historyPart"/>
+              <Button id="Button00_00" taborder="4" text="보안취약점" left="Static00_00_00:20" top="32" width="270" height="60" cssclass="btn_WF_hisMenu" fittocontents="width"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divResult" taborder="0" left="310" top="divHistory:0" width="1300" text="" formscrolltype="none" bottom="0">
+          <Layouts>
+            <Layout>
+              <Grid id="Grid00" taborder="0" left="0" top="0" height="640" right="0" binddataset="Dataset01" autofittype="col" autosizingtype="row" extendsizetype="row" scrollbartype="none none" scrolltype="none">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="1301"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="50"/>
+                      <Row size="40"/>
+                      <Row size="40"/>
+                      <Row size="40"/>
+                      <Row size="40"/>
+                      <Row size="40"/>
+                      <Row size="40"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell text="bind:Title" cssclass="grd_WF_secuTitle" autosizerow="none"/>
+                      <Cell row="1" text="bind:Sub" displaytype="decoratetext" autosizerow="limitmin" wordWrap="char" cssclass="grd_WF_secuSub"/>
+                      <Cell row="2" text="•  해소방안" autosizerow="none" cssclass="grd_WF_secuSTitle"/>
+                      <Cell row="3" text="bind:Detail" displaytype="decoratetext" autosizerow="limitmin" wordWrap="char" cssclass="grd_WF_secuSub"/>
+                      <Cell row="4" text="•  대상버전" autosizerow="none" cssclass="grd_WF_secuSTitle"/>
+                      <Cell row="5" text="bind:Target" displaytype="decoratetext" autosizerow="limitmin" wordWrap="char" cssclass="grd_WF_secuSub"/>
+                      <Cell row="6" text="•  패치버전" autosizerow="none" cssclass="grd_WF_secuSTitle"/>
+                      <Cell row="7" text="bind:Patch" displaytype="decoratetext" autosizerow="limitmin" wordWrap="char" cssclass="grd_WF_secuSub"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+        <PopupDiv id="PopupDiv00" left="555" top="100" width="230" height="100" cssclass="pop_TF_mypage">
+          <Layouts>
+            <Layout>
+              <Grid id="Grid01" taborder="0" left="20" top="10" binddataset="Dataset01_00" autofittype="col" right="20" bottom="10" cssclass="grd_WF_hisMenu">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="118"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell text="bind:Column0"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </PopupDiv>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.frmWork_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	 this.Dataset00.set_rowposition(-1); 
+};
+]]></Script>
+    <Objects>
+      <Dataset id="Dataset01">
+        <ColumnInfo>
+          <Column id="Title" type="STRING" size="256"/>
+          <Column id="Sub" type="STRING" size="256"/>
+          <Column id="Detail" type="STRING" size="256"/>
+          <Column id="Target" type="STRING" size="256"/>
+          <Column id="Patch" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Title">KVE-2019-0094</Col>
+            <Col id="Sub">MIPLATFORM의 Installer ActiveX에 존재하는 원격 명령어 실행 취약점&amp;#10;XPLATFORM의 XPLauncher ActiveX에 존재하는 원격 명령어 실행 취약점&amp;#10;NEXACRO PLATFORM의 XPLauncher ActiveX에 존재하는 원격 명령어 실행 취약점</Col>
+            <Col id="Detail">XPLauncher ActiveX의 XLauncher.key 값에 “;”을 넣을 수 없도록 함으로써 원격실행이 되지 않도록 조치함&amp;#10;WScript.Shell 객체명을 유추하기 힘든(난수,템프명,시간분초조합 등) 조합으로 대체하여 스크립트에 입력되어도 동작이 안되도록 함&amp;#10;Run은 강제적으로 모두 제거하는 로직추가</Col>
+            <Col id="Target">MIPLATFORM(320/320U/330/330U) 2019. 02. 26.1 이전버전&amp;#10;XPLATFORM(9.1/9.2.0/9.2.1/9.2.2) 2019. 02. 26.1 이전버전&amp;#10;NEXACRO PLATFORM(14/17) 2019. 02. 26.1 이전버전</Col>
+            <Col id="Patch">MIPLATFORM 2019. 02. 26.1&amp;#10;XPLATFORM 2019. 02. 26.1&amp;#10;NEXACRO PLATFORM 2019. 02. 26.1</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="Dataset01_00">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">공지사항</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">보안취약점</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

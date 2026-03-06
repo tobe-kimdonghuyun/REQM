@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="quickMenu" width="170" height="490" titletext="quickMenu" onload="form_onload" scrollbartype="auto auto" scrollindicatorsize="10">
+    <Layouts>
+      <Layout height="490" mobileorientation="landscape" width="170" screenid="ScreenDeskTop,tablet">
+        <Static id="sta00" taborder="0" text="Quick Menu" left="27" top="0" width="88" height="27" cssclass="sta_WF_Quick" initvalueid="ivStcAccessibilityOn"/>
+        <Div id="div00_00" taborder="1" text="div00" left="1" top="35" cssclass="div_WF_Quickin" width="129" boxShadow="10px 10px 30px 0px RGBA(0,0,0,0.05)" initvalueid="ivDivAccessibilityOff" height="310">
+          <Layouts>
+            <Layout>
+              <Button id="btn00_00_00" taborder="0" text="대입전형자료제출" left="6" top="30" width="116" height="109" cssclass="btn_WF_Quick02" initvalueid="ivBtnAccessibilityLink" _linkNo="300" onclick="btnLink_onclick "/>
+              <Static id="sta00" taborder="1" left="29" top="143" width="70" height="2" cssclass="sta_WF_GuideLineLG" initvalueid="ivStcAccessibilityOff"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div00_01" taborder="2" text="div00" left="430" top="35" cssclass="div_WF_Quickin" width="129" boxShadow="10px 10px 30px 0px RGBA(0,0,0,0.05)" initvalueid="ivDivAccessibilityOff" visible="false" height="420">
+          <Layouts>
+            <Layout>
+              <Button id="btn00" taborder="0" text="원서작성요령" left="20" top="30" width="88" height="109" cssclass="btn_WF_Quick01" initvalueid="ivBtnAccessibilityLink" onclick="btnLink_onclick " _linkNo="100"/>
+              <Button id="btn00_00" taborder="1" text="수험표출력" left="20" top="149" width="88" height="109" cssclass="btn_WF_Quick02" initvalueid="ivBtnAccessibilityLink" _linkNo="200" onclick="btnLink_onclick "/>
+              <Button id="btn00_00_00" taborder="2" text="대입전형자료제출" left="6" top="268" width="116" height="109" cssclass="btn_WF_Quick02" initvalueid="ivBtnAccessibilityLink" _linkNo="300" onclick="btnLink_onclick "/>
+              <Static id="sta00" taborder="3" left="29" top="143" width="70" height="2" cssclass="sta_WF_GuideLineLG" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta00_00" taborder="4" left="29" top="262" width="70" height="2" cssclass="sta_WF_GuideLineLG" initvalueid="ivStcAccessibilityOff"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile" width="640" height="1024" mobileorientation="portrait" type="default"/>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  교육디지털 원패스
+*  @MenuPath    frame > frameMain
+*  @FileName 	frameMain.xfdl 
+*  @Creator 	kmp
+*  @CreateDate 	2021.12.27
+*  @Desction    base가 되는 화면
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2021.12.27     		kmp		 	  			최초 생성 
+*******************************************************************************
+*/
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::sm_script.xjs";
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_workPageParams = {};	//화면전환시 넘길 parameter
+this.fv_isMobile;	//모바일로 접속여부
+this.fv_device;		//device 종류
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ 
+/**
+ * 화면 onload시 처리내역
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{	
+	var objForm = nexacro.getApplication().mainframe.VFrameSet.frameMain.form;
+	objForm.fnResizeQuickMenu();	
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/ 
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * 하단의 링크에 의한 ㄷ이동처리를 한다 
+ * @param : objDs - 정보를 가진 데이터셋 오브젝트
+ */ 
+this.fnRedirectFuncLink = function(obj)
+{	
+	var url;
+	
+	switch(obj._linkNo)
+	{
+		case "100" :    // 원서작성요령
+			url ="pa_sqa_noi_bi::sqa_noibi05_m00.xfdl";
+			break;
+	
+		case "200" :    /// 수험표출력
+
+			url = "pa_sqa_cmm_cm::sqa_cmmcm04_m00";
+			var params = {
+					cddcCd : this.smfGetCddcCode(),
+					menuId : "6000"
+					};
+			break;
+			
+		case "300" :    /// 대입전형자료제출
+			url = "pa_sqa_uep_sc::sqa_uepsc03_m00";
+			break;
+	}
+	
+		
+		this.smfSetWorkPage(url, params);  
+	
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 사이즈 변경시 위치변경
+*/
+this.frameMain_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+
+
+};
+
+
+this.btnLink_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnRedirectFuncLink(obj);
+};
+
+
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

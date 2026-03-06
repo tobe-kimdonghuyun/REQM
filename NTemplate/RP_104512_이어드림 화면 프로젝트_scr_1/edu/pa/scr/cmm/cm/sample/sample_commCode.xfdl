@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sample_commCode" width="1340" height="745" titletext="공통코드조회 샘플" onload="form_onload">
+    <Layouts>
+      <Layout height="745" width="1340">
+        <Static id="sta02" taborder="1" text="공통코드조회" left="20" top="17" width="221" height="33"/>
+        <Combo id="cboCddcCd" taborder="0" left="244" width="236" height="30" innerdataset="dsUseRelmScCd" codecolumn="unyCdValue" datacolumn="unyCdValueNm" value="1" text="NEIS 업무시스템" top="79" initvalueid="ivCmbNormal" accessibilitylabel="은행명 선택"/>
+        <Static id="staTelno" taborder="2" left="60" width="175" height="42" cssclass="sta_WF_Input01" text="영역" top="73" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn"/>
+        <Combo id="cboClssCd" taborder="3" left="242" width="236" height="30" innerdataset="dsOnlCvlcptAprvCd" codecolumn="unyCdValue" datacolumn="unyCdValueNm" value="1" text="NEIS 업무시스템" top="128" initvalueid="ivCmbNormal" accessibilitylabel="은행명 선택"/>
+        <Static id="staTelno00_01" taborder="4" left="60" width="175" height="42" cssclass="sta_WF_Input01" text="처리상태" top="123" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn"/>
+        <Button id="btnSearch" taborder="5" text="조회" top="21" width="74" height="30" cssclass="btn_WF_Search03" initvalueid="ivBtnAccessibilityButton" left="250" onclick="btnSearch_onclick"/>
+        <Static id="sta00_00" taborder="6" top="0" width="20" background="antiquewhite" left="0" bottom="0" text="20" textAlign="center" visible="false"/>
+        <Button id="btnShwoDs" taborder="7" text="dsSearch" left="340" top="21" width="80" height="31" onclick="btnShwoDs_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템
+*  @MenuPath    공통
+*  @FileName 	sample_commCode.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    공통코드조회 샘플
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";	//SCR공통라이브러리(필수)
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = nexacro.getApplication();
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.scrInitForm(obj);	//화면초기화 공통함수(필수)
+};
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+// 트랜잭션 서비스 콜백(필수)
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	//trace("svcid==="+svcid + "::::errcd==="+errcd + "::::errmsg==="+errmsg);
+	//if(errcd == -1) return;
+};
+
+// 팝업 콜백
+this.fnPopupCallback = function(e, sender)
+{
+	//trace("fnPopupCallback >>>>");
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 공통코드의 코드구분
+	this.smfCodeList("code", [this.dsUseRelmScCd, this.dsOnlCvlcptAprvCd])
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			//trace(this.dsUseRelmScCd.saveXML());
+			//trace(this.dsOnlCvlcptAprvCd.saveXML());
+		});	
+
+};
+
+this.btnShwoDs_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//데이타셋 내용 보기
+	trace(this.dsSearch.saveXML());
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsUseRelmScCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="FirstCode" type="STRING" size="30" value="SEL" datapath=""/>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value="USE_RELM_SC_CD"/>
+          <ConstColumn id="FilterExpr" type="STRING" size="30" value=""/>
+          <ConstColumn id="UnyCdGrpId" type="STRING" size="30" value=""/>
+          <ConstColumn id="BfrClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd1Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd2Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd3Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd4Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd5Value" type="STRING" size="30" value=""/>
+          <Column id="clfCdValue" type="string" size="256"/>
+          <Column id="unyCdValue" type="string" size="256"/>
+          <Column id="unyCdValueNm" type="string" size="256"/>
+          <Column id="unyCdValueAbrvNm" type="string" size="256"/>
+          <Column id="unyCdValueSn" type="bigdecimal" size="256"/>
+          <Column id="unyCdUseYn" type="string" size="256"/>
+          <Column id="unyCdScCd" type="string" size="256"/>
+          <Column id="upClfCdValue" type="string" size="256"/>
+          <Column id="upUnyCdValue" type="string" size="256"/>
+          <Column id="bfrUnyCdValue" type="string" size="256"/>
+          <Column id="bfrUnyCdValueNm" type="string" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="onlCvlcptAprvCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsOnlCvlcptAprvCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="FirstCode" type="STRING" size="30" value="ALL" datapath=""/>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value="ONL_CVLCPT_APRV_CD"/>
+          <ConstColumn id="FilterExpr" type="STRING" size="30" value=""/>
+          <ConstColumn id="UnyCdGrpId" type="STRING" size="30" value=""/>
+          <ConstColumn id="BfrClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd1Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd2Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd3Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd4Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd5Value" type="STRING" size="30" value=""/>
+          <Column id="unyCdValue" type="STRING" size="10"/>
+          <Column id="unyCdValueNm" type="STRING" size="30"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="cboCddcCd" propid="value" datasetid="dsSearch" columnid="cddcCd"/>
+      <BindItem id="item6" compid="cboClssCd" propid="value" datasetid="dsSearch" columnid="onlCvlcptAprvCd"/>
+    </Bind>
+  </Form>
+</FDL>

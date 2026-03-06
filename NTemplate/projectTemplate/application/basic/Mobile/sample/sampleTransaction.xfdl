@@ -1,0 +1,594 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleTransaction" width="480" height="900" titletext="트랜잭션 샘플" onload="form_onload">
+    <Layouts>
+      <Layout height="900" mobileorientation="landscape" width="480">
+        <Grid id="grdList" taborder="0" left="30" top="412" binddataset="dsList" bottom="0" autofittype="col" right="30" autoenter="select">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="50" band="head"/>
+                <Row size="54"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="아이디"/>
+                <Cell col="1" text="성명"/>
+                <Cell col="2" text="부서"/>
+                <Cell col="3" text="비고"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:ID" displaytype="expr:dataset.getRowType(currow)=='2'?'editcontrol':'normal'" edittype="expr:dataset.getRowType(currow)=='2'?'text':'none'" editautoselect="true"/>
+                <Cell col="1" text="bind:NAME" edittype="text" displaytype="editcontrol" editautoselect="true"/>
+                <Cell col="2" text="bind:DEPARTMENT" edittype="text" displaytype="editcontrol" editautoselect="true"/>
+                <Cell col="3" text="bind:DESCRIPTION" edittype="text" displaytype="editcontrol" editautoselect="true"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static03_00" taborder="7" left="0" top="330" height="12" cssclass="sta_WF_Boundary" right="0"/>
+        <Static id="staTitle" taborder="1" text="사용자 정보 조회" left="30" top="Static03_00:30" height="40" cssclass="sta_WF_SubTitle" right="30"/>
+        <Static id="staSearchTitle00" taborder="3" text="아이디" left="30" top="30" width="160" height="40" cssclass="sta_WF_Label" fittocontents="width"/>
+        <Edit height="50" text="투비" id="edt00" left="30" top="70" taborder="2" right="30"/>
+        <Static id="staSearchTitle00_00" taborder="4" text="성명" left="30" top="130" width="160" height="40" cssclass="sta_WF_Label" fittocontents="width"/>
+        <Edit height="50" text="투비" id="edt00_00" left="30" top="170" taborder="5" right="30"/>
+        <Button id="btnSearch" taborder="6" text="조회" left="30" top="edt00_00:20" height="60" cssclass="btn_WF_Full" right="30" onclick="btnSearch_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="srchCond1" type="STRING" size="256"/>
+          <Column id="srchCond2" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" cancolumnchange="dsList_cancolumnchange">
+        <ColumnInfo>
+          <Column id="ID" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+          <Column id="DEPARTMENT" type="STRING" size="256"/>
+          <Column id="DESCRIPTION" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSample">
+        <ColumnInfo>
+          <Column id="DESCRIPTION" type="string" size="32"/>
+          <Column id="DEPARTMENT" type="string" size="32"/>
+          <Column id="ID" type="string" size="32"/>
+          <Column id="NAME" type="string" size="32"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DESCRIPTION">4</Col>
+            <Col id="DEPARTMENT">3</Col>
+            <Col id="ID">여기부터 작성</Col>
+            <Col id="NAME">2</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">1234</Col>
+            <Col id="DEPARTMENT">1234</Col>
+            <Col id="ID">test0101</Col>
+            <Col id="NAME">1234</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">231</Col>
+            <Col id="DEPARTMENT">test511</Col>
+            <Col id="ID">1</Col>
+            <Col id="NAME">111233342224</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test2</Col>
+            <Col id="DEPARTMENT">test2111</Col>
+            <Col id="ID">6</Col>
+            <Col id="NAME">test2</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test3</Col>
+            <Col id="DEPARTMENT">test3</Col>
+            <Col id="ID">7</Col>
+            <Col id="NAME">test3</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test4</Col>
+            <Col id="DEPARTMENT">test4</Col>
+            <Col id="ID">8</Col>
+            <Col id="NAME">test4</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test5</Col>
+            <Col id="DEPARTMENT">test5</Col>
+            <Col id="ID">9</Col>
+            <Col id="NAME">test5</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">111</Col>
+            <Col id="DEPARTMENT">11</Col>
+            <Col id="ID">10</Col>
+            <Col id="NAME">111</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test1</Col>
+            <Col id="DEPARTMENT">test1</Col>
+            <Col id="ID">11</Col>
+            <Col id="NAME">test1</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test2</Col>
+            <Col id="DEPARTMENT">test2</Col>
+            <Col id="ID">12</Col>
+            <Col id="NAME">test2</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test3</Col>
+            <Col id="DEPARTMENT">test3</Col>
+            <Col id="ID">13</Col>
+            <Col id="NAME">test3</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test4</Col>
+            <Col id="DEPARTMENT">test4</Col>
+            <Col id="ID">14</Col>
+            <Col id="NAME">11111</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">111</Col>
+            <Col id="DEPARTMENT">test5</Col>
+            <Col id="ID">15</Col>
+            <Col id="NAME">test5</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">111</Col>
+            <Col id="DEPARTMENT">11</Col>
+            <Col id="ID">16</Col>
+            <Col id="NAME">111</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test1</Col>
+            <Col id="DEPARTMENT">test1</Col>
+            <Col id="ID">17</Col>
+            <Col id="NAME">test1</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test2</Col>
+            <Col id="DEPARTMENT">test2</Col>
+            <Col id="ID">18</Col>
+            <Col id="NAME">test2</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test3</Col>
+            <Col id="DEPARTMENT">test3</Col>
+            <Col id="ID">19</Col>
+            <Col id="NAME">test3</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test4</Col>
+            <Col id="DEPARTMENT">test4</Col>
+            <Col id="ID">20</Col>
+            <Col id="NAME">test4</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">111</Col>
+            <Col id="DEPARTMENT">11</Col>
+            <Col id="ID">21</Col>
+            <Col id="NAME">111</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test1</Col>
+            <Col id="DEPARTMENT">test1</Col>
+            <Col id="ID">22</Col>
+            <Col id="NAME">test1</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test2</Col>
+            <Col id="DEPARTMENT">test2</Col>
+            <Col id="ID">23</Col>
+            <Col id="NAME">test2</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test3</Col>
+            <Col id="DEPARTMENT">test3</Col>
+            <Col id="ID">24</Col>
+            <Col id="NAME">test3</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test4</Col>
+            <Col id="DEPARTMENT">test4</Col>
+            <Col id="ID">25</Col>
+            <Col id="NAME">test4</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test5</Col>
+            <Col id="DEPARTMENT">test5</Col>
+            <Col id="ID">26</Col>
+            <Col id="NAME">test5</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">111</Col>
+            <Col id="DEPARTMENT">11</Col>
+            <Col id="ID">27</Col>
+            <Col id="NAME">111</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test1</Col>
+            <Col id="DEPARTMENT">test1</Col>
+            <Col id="ID">28</Col>
+            <Col id="NAME">test1</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test2</Col>
+            <Col id="DEPARTMENT">test2</Col>
+            <Col id="ID">29</Col>
+            <Col id="NAME">test2</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test3</Col>
+            <Col id="DEPARTMENT">test3</Col>
+            <Col id="ID">30</Col>
+            <Col id="NAME">test3</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test4</Col>
+            <Col id="DEPARTMENT">test4</Col>
+            <Col id="ID">31</Col>
+            <Col id="NAME">test4</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test5</Col>
+            <Col id="DEPARTMENT">test5</Col>
+            <Col id="ID">32</Col>
+            <Col id="NAME">test5</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">111</Col>
+            <Col id="DEPARTMENT">11</Col>
+            <Col id="ID">33</Col>
+            <Col id="NAME">111</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test1</Col>
+            <Col id="DEPARTMENT">test1</Col>
+            <Col id="ID">34</Col>
+            <Col id="NAME">test1</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test2</Col>
+            <Col id="DEPARTMENT">test2</Col>
+            <Col id="ID">35</Col>
+            <Col id="NAME">test2</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test3</Col>
+            <Col id="DEPARTMENT">test3</Col>
+            <Col id="ID">36</Col>
+            <Col id="NAME">test3</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test4</Col>
+            <Col id="DEPARTMENT">test4</Col>
+            <Col id="ID">37</Col>
+            <Col id="NAME">test4</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test1</Col>
+            <Col id="DEPARTMENT">test1</Col>
+            <Col id="ID">39</Col>
+            <Col id="NAME">test1</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test2</Col>
+            <Col id="DEPARTMENT">test2</Col>
+            <Col id="ID">40</Col>
+            <Col id="NAME">test2</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test3</Col>
+            <Col id="DEPARTMENT">test3</Col>
+            <Col id="ID">41</Col>
+            <Col id="NAME">test3</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">1111</Col>
+            <Col id="DEPARTMENT">test4</Col>
+            <Col id="ID">42</Col>
+            <Col id="NAME">test4</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test5</Col>
+            <Col id="DEPARTMENT">test5</Col>
+            <Col id="ID">43</Col>
+            <Col id="NAME">test5</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">111</Col>
+            <Col id="DEPARTMENT">11</Col>
+            <Col id="ID">44</Col>
+            <Col id="NAME">111</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test1</Col>
+            <Col id="DEPARTMENT">test1</Col>
+            <Col id="ID">45</Col>
+            <Col id="NAME">test1</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test2</Col>
+            <Col id="DEPARTMENT">test2</Col>
+            <Col id="ID">46</Col>
+            <Col id="NAME">test2</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test3</Col>
+            <Col id="DEPARTMENT">test3</Col>
+            <Col id="ID">47</Col>
+            <Col id="NAME">test3</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test4</Col>
+            <Col id="DEPARTMENT">test4</Col>
+            <Col id="ID">48</Col>
+            <Col id="NAME">test4</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test5</Col>
+            <Col id="DEPARTMENT">test5</Col>
+            <Col id="ID">49</Col>
+            <Col id="NAME">test5</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">111</Col>
+            <Col id="DEPARTMENT">11</Col>
+            <Col id="ID">50</Col>
+            <Col id="NAME">111</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test1</Col>
+            <Col id="DEPARTMENT">test1</Col>
+            <Col id="ID">51</Col>
+            <Col id="NAME">test1</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test2</Col>
+            <Col id="DEPARTMENT">test2</Col>
+            <Col id="ID">52</Col>
+            <Col id="NAME">test2</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test3</Col>
+            <Col id="DEPARTMENT">test3</Col>
+            <Col id="ID">53</Col>
+            <Col id="NAME">test3</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test4</Col>
+            <Col id="DEPARTMENT">test4</Col>
+            <Col id="ID">54</Col>
+            <Col id="NAME">test4</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test5</Col>
+            <Col id="DEPARTMENT">test5</Col>
+            <Col id="ID">55</Col>
+            <Col id="NAME">test5</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">111</Col>
+            <Col id="DEPARTMENT">11</Col>
+            <Col id="ID">56</Col>
+            <Col id="NAME">111</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test1</Col>
+            <Col id="DEPARTMENT">test1</Col>
+            <Col id="ID">57</Col>
+            <Col id="NAME">test1</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test2</Col>
+            <Col id="DEPARTMENT">test2</Col>
+            <Col id="ID">58</Col>
+            <Col id="NAME">test2</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test3</Col>
+            <Col id="DEPARTMENT">test3</Col>
+            <Col id="ID">59</Col>
+            <Col id="NAME">test3</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test4</Col>
+            <Col id="DEPARTMENT">test4</Col>
+            <Col id="ID">60</Col>
+            <Col id="NAME">test4</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">test4</Col>
+            <Col id="DEPARTMENT">test4</Col>
+            <Col id="ID">61</Col>
+            <Col id="NAME">test4</Col>
+          </Row>
+          <Row>
+            <Col id="ID">63</Col>
+            <Col id="NAME">1</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">789</Col>
+            <Col id="DEPARTMENT">456</Col>
+            <Col id="ID">64</Col>
+            <Col id="NAME">123</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">1234</Col>
+            <Col id="DEPARTMENT">1234</Col>
+            <Col id="ID">1234</Col>
+            <Col id="NAME">1234</Col>
+          </Row>
+          <Row>
+            <Col id="DESCRIPTION">123123124123213</Col>
+            <Col id="DEPARTMENT">3123124</Col>
+            <Col id="ID">1234123</Col>
+            <Col id="NAME">12312314</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/*
+*  Mobile 프로젝트
+*  @FileName 	sampleTransaction.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2023/10/30
+*  @Desction   
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2023/10/30			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoadM(obj); //필수함수
+	
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+//추가
+this.cfnAdd = function ()
+{
+	this.dsList.addRow();
+	
+	this.grdList.setCellPos(0);
+	this.grdList.showEditor(true);
+};
+
+//삭제
+this.cfnDel = function ()
+{
+	var nRow = this.dsList.rowposition;
+	if( nRow<0 ) return;
+	
+	this.dsList.deleteRow(nRow);
+};
+
+//저장
+this.cfnSave = function ()
+{
+	// 변경된 정보없으면 리턴
+	if (this.gfnDsIsUpdated(this.dsList) == false) {
+		// 저장할 데이터가 없습니다.
+		this.gfnAlert("msg.save.nochange");
+		return;
+	}
+	
+	this.gfnAlert("confirm.save", [""], "save", "fnMsgCallback");
+};
+
+//조회
+this.cfnSearch = function ()
+{
+	this.fnSearch();
+};
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+//조회
+this.fnSearch = function ()
+{
+	var strSvcId 	= "searchSampleList";
+	var strSvcUrl 	= "samplefile/searchSampleList.xml";
+	var inData 		= "";
+	var outData 	= "dsList=outDs";
+	var strArg 		= "";
+	this.gfnTransaction(strSvcId, strSvcUrl, inData, outData, strArg);	
+};
+
+//저장
+this.fnSave = function ()
+{	return;
+	var strSvcId 	= "saveSampleList";
+	var strSvcUrl 	= "saveSampleList.do";
+	var inData 		= "inDs=dsList:U";
+	var outData 	= "";
+	var strArg 		= "";
+	this.gfnTransaction(strSvcId, strSvcUrl, inData, outData, strArg);
+};
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+//transaction
+this.fnCallback = function (svcId, nErrCd, sErrMsg)
+{
+	switch(svcId) {
+		case "searchSampleList":
+			break;
+		case "saveSampleList":
+			this.fnSearch();
+			break;
+		default:break;
+	}
+};
+
+//message
+this.fnMsgCallback = function (sMsgId, sRtn)
+{
+	if(sMsgId=="save"){
+		if(sRtn){
+			this.fnSave();
+		}else{
+			return;
+		}
+	}else if( sMsgId=="validId"){
+		this.dsList.setColumn(this.dsList.rowposition, "ID", "");
+		this.grdList.setCellPos(0);
+		this.grdList.showEditor(true);
+	}
+};
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+//조회버튼클릭
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.cfnSearch();
+};
+
+//ID중복체크
+this.dsList_cancolumnchange = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if( e.columnid=="ID"){
+		if(this.gfnIsNull(e.newvalue)) return;
+		
+		var nRow = this.dsList.findRow("ID", e.newvalue);
+		if( nRow > -1){
+			this.gfnAlert("msg.exist", ["입력하신 아이디"],"validId","fnMsgCallback");
+			return;
+		}
+	}
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="edt00" propid="value" datasetid="dsSearch" columnid="srchCond1"/>
+      <BindItem id="item1" compid="edt00_00" propid="value" datasetid="dsSearch" columnid="srchCond2"/>
+    </Bind>
+  </Form>
+</FDL>

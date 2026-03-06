@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleAnimation" width="1280" height="720" titletext="애니메이션" onload="sampleAnimation_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Button id="btn00" taborder="1" left="74" top="66" width="123" height="50"/>
+        <Button id="btn01" taborder="2" left="74" top="146" width="123" height="50"/>
+        <Button id="btn02" taborder="0" text="btn02" left="51" top="19" width="0" height="0" visible="true"/>
+        <Button id="btn03" taborder="3" text="애니메이션 실행" left="303" top="16" width="136" height="30" onclick="btn03_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*   대국민 -  [애니메이션]기능 샘플
+*  @MenuPath    
+*  @FileName 	sampleAnimation.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022.7.11
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.7.11     	TOBESOFT 	        최초 생성 
+*******************************************************************************
+*/
+
+this.sampleAnimation_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.fnAnimation();
+};
+
+this.fnAnimation = function()
+{
+	if ( this["AniItem00"] ) 
+	{
+		// Remove Object form Parent
+		var objAniItem = objAni.removeTarget("AniItem00");
+		var objAni = this.removeChild("Animation00");
+		 
+		// Destroy Object
+		objAniItem.destroy();
+		objAni.destroy();
+		objAniItem = null;
+		objAni = null;		
+	}
+	 // Create Object  
+	objAni = new nexacro.Animation("Animation00", this);  
+
+	// Add Object to Parent Form  
+	this.addChild( "Animation00", objAni );
+
+	// Set Object 
+	objAni.set_duration( 1000 );
+	objAni.set_easing( "linear" );
+	objAni.setEventHandler("onbegin",function(obj,e){
+		this.btn00.set_background("red");
+	}, this);
+
+	objAni.setEventHandler("oncomplete",function(obj,e){
+		this.btn00.set_background("yellow");
+		this.btn00.setOffsetLeft(74);		
+	}, this);
+
+
+	// Add Item to Object
+	objAni.addTarget( "AniItem00", this.btn00, "left:600" );
+
+	// Play Object
+	objAni.play();
+	
+	 // Create Object  
+	objAni01 = new nexacro.Animation("Animation01", this);  
+
+	// Add Object to Parent Form  
+	this.addChild( "Animation01", objAni01 );
+
+	// Set Object 
+	objAni01.set_duration( 1000 );
+	objAni01.set_easing( "linear" );
+	objAni01.setEventHandler("onbegin",function(obj,e){
+		this.btn01.set_background("red");
+	}, this);
+
+	objAni01.setEventHandler("oncomplete",function(obj,e){
+		this.btn01.set_background("yellow");
+		this.btn01.setOffsetWidth(123);
+	}, this);
+
+
+	// Add Item to Object
+	objAni01.addTarget( "Animation01", this.btn01, "width:600" );
+
+	// Play Object
+	objAni01.play();		
+}
+this.btn03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnAnimation();
+};
+]]></Script>
+  </Form>
+</FDL>

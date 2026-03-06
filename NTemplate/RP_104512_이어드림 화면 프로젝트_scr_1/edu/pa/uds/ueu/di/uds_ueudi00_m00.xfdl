@@ -1,0 +1,738 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="uds_ueudi00_m00" width="1200" height="830" titletext="코드조회" onload="fnOnload">
+    <Layouts>
+      <Layout height="830" width="1200" screenid="ScreenDeskTop">
+        <Static id="Static99_00_00_00_00" taborder="2" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="divTitle" taborder="0" left="0" top="Static99_00_00_00_00:0" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="코드조회" left="0" top="0" width="170" initvalueid="ivTitleAccessibilityOn" cssclass="img_WF_SubTit01" bottom="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static99_00_00_00_00_01" taborder="3" left="0" top="divTitle:0" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Tab id="tabMain" taborder="1" left="0" showextrabutton="false" top="Static99_00_00_00_00_01:0" tabjustify="false" multiline="true" right="0" onchanged="tabMain_onchanged" initvalueid="ivTabAccessibilityOn" accessibilitylabel="학과코드/편제코드/과목코드" height="676">
+          <Tabpages>
+            <Tabpage id="tabPage1" text="학과코드" accessibilitylabel="학과코드 탭 페이지">
+              <Layouts>
+                <Layout>
+                  <Div id="divSearch" taborder="0" left="0" top="20" height="70" cssclass="div_WF_Search" text="" right="0" initvalueid="ivDivAccessibilityOn" accessibilitylabel="조회영역">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staCoaAyr" taborder="0" text="대입학년도" left="0" top="20" width="108" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+                        <Edit id="edtCoaAyr" taborder="1" left="staCoaAyr:0" top="20" width="80" height="30" text="2024" enable="true" readonly="true" accessibilitylabel="대입학년도" initvalueid="ivEdtReadOnly"/>
+                        <Static id="staCoaRcritScNm" taborder="2" text="모집구분" left="edtCoaAyr:0" top="20" width="96" cssclass="sta_WF_Searchtxt01" height="30" initvalueid="ivStcAccessibilityOn"/>
+                        <Edit id="edtCoaRcritScNm" taborder="3" left="staCoaRcritScNm:0" top="20" width="135" height="30" text="정시" enable="true" readonly="true" accessibilitylabel="모집구분" initvalueid="ivEdtReadOnly"/>
+                        <Static id="staCdNm" taborder="4" text="학과명" left="edtCoaRcritScNm:0" top="20" width="83" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+                        <Edit id="edtCdNm" taborder="5" left="staCdNm:0" top="20" width="160" height="30" imemode="hangul" maxlength="10" accessibilitylabel="학과명" initvalueid="ivEdtNormal"/>
+                        <Button id="btnSearch" taborder="6" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="btnSearch_onclick" accessibilitylabel="조회" initvalueid="ivBtnAccessibilityButton"/>
+                      </Layout>
+                    </Layouts>
+                  </Div>
+                  <Div id="divPageSummary" taborder="1" left="7" top="110" width="331" height="30" url="comm::comp_pageSummary.xfdl" visible="true" text="" initvalueid="ivDivAccessibilityOff"/>
+                  <Button id="btnExcel" taborder="2" text="액셀내려받기" top="110" width="135" height="30" cssclass="btn_WF_Excel03" right="0" onclick="btnExcel_onclick" accessibilitylabel="액셀내려받기" initvalueid="ivBtnAccessibilityButton"/>
+                  <Div id="divPaginator" taborder="4" left="0" url="comm::comp_paginator.xfdl" visible="true" pageViewSize="100" dsPage="dsPage" text="" height="30" initvalueid="ivDivAccessibilityOff" bottom="0" right="0"/>
+                  <Static id="Static99_00_00_00_00_00_00_00" taborder="8" left="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff" height="20" bottom="divPaginator:0"/>
+                  <Static id="Static99_00_00_00_00_00_01_00" taborder="7" left="0" top="divPageSummary:0" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+                  <Grid id="grdMain" taborder="3" left="0" top="Static99_00_00_00_00_00_01_00:0" autofittype="col" right="0" onheadclick="grdMain_onheadclick" binddataset="dsDddepCd" nodatatext="조회된 데이터가 없습니다" initvalueid="ivGrdAccessibilityOn" selecttype="cell" accessibilitylabel="학과코드 조회" bottom="Static99_00_00_00_00_00_00_00:0">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="144"/>
+                          <Column size="292"/>
+                          <Column size="56"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="36" band="head"/>
+                          <Row size="40"/>
+                        </Rows>
+                        <Band id="head" accessibilitylabel="제목영역">
+                          <Cell text="학과코드"/>
+                          <Cell col="1" text="학과명"/>
+                          <Cell col="2" text="사용여부" cssclass="LineNo"/>
+                        </Band>
+                        <Band id="body" accessibilitylabel="내용영역">
+                          <Cell text="bind:cd" textAlign="center"/>
+                          <Cell col="1" text="bind:nm"/>
+                          <Cell col="2" text="bind:useYn" textAlign="center" cssclass="LineNo"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <Static id="sta99_00_00_00_00_00_00_02" taborder="5" left="0" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+                  <Static id="Static99_00_00_00_00_00_01" taborder="6" left="0" top="90" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+            <Tabpage id="tabPage2" text="편제코드" accessibilitylabel="편제코드 탭 페이지">
+              <Layouts>
+                <Layout>
+                  <Div id="divSearch" taborder="0" left="0" top="20" height="70" cssclass="div_WF_Search" text="" right="0" initvalueid="ivDivAccessibilityOn" accessibilitylabel="조회영역">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staCoaAyr" taborder="0" text="대입학년도" left="0" width="108" height="30" cssclass="sta_WF_Searchtxt01" top="20" initvalueid="ivStcAccessibilityOn"/>
+                        <Edit id="edtCoaAyr" taborder="1" left="staCoaAyr:0" top="20" width="80" height="30" text="2024" enable="true" readonly="true" accessibilitylabel="대입학년도" initvalueid="ivEdtReadOnly"/>
+                        <Static id="staCoaRcritScNm" taborder="2" text="모집구분" left="edtCoaAyr:0" top="20" width="96" cssclass="sta_WF_Searchtxt01" height="30" initvalueid="ivStcAccessibilityOn"/>
+                        <Edit id="edtCoaRcritScNm" taborder="3" left="staCoaRcritScNm:0" top="20" width="135" height="30" text="정시" enable="true" readonly="true" accessibilitylabel="모집구분" initvalueid="ivEdtReadOnly"/>
+                        <Static id="staCdNm" taborder="4" text="편제명" left="edtCoaRcritScNm:0" top="20" width="83" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+                        <Edit id="edtCdNm" taborder="5" left="staCdNm:0" top="20" width="160" height="30" imemode="hangul" accessibilitylabel="편제명" initvalueid="ivEdtNormal" maxlength="10"/>
+                        <Button id="btnSearch" taborder="6" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="btnSearch_onclick" initvalueid="ivBtnAccessibilityButton"/>
+                      </Layout>
+                    </Layouts>
+                  </Div>
+                  <Div id="divPageSummary" taborder="1" left="7" top="110" width="331" height="30" url="comm::comp_pageSummary.xfdl" visible="true" initvalueid="ivDivAccessibilityOff"/>
+                  <Button id="btnExcel" taborder="2" text="액셀내려받기" top="110" width="135" height="30" cssclass="btn_WF_Excel03" onclick="btnExcel_onclick" right="0" initvalueid="ivBtnAccessibilityButton"/>
+                  <Div id="divPaginator" taborder="4" left="0" url="comm::comp_paginator.xfdl" visible="true" pageViewSize="100" dsPage="dsPage" height="30" right="0" initvalueid="ivDivAccessibilityOff" bottom="0"/>
+                  <Static id="Static99_00_00_00_00_00_00_00" taborder="8" left="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff" height="20" bottom="divPaginator:0"/>
+                  <Static id="Static99_00_00_00_00_00_01_00" taborder="7" left="0" top="140" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+                  <Grid id="grdMain" taborder="3" left="0" top="Static99_00_00_00_00_00_01_00:0" autofittype="col" right="0" binddataset="dsOrgaCd" onheadclick="grdMain_onheadclick" extendsizetype="none" initvalueid="ivGrdAccessibilityOn" accessibilitylabel="편제코드 조회" bottom="Static99_00_00_00_00_00_00_00:0">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="50"/>
+                          <Column size="100"/>
+                          <Column size="260"/>
+                          <Column size="120"/>
+                          <Column size="100"/>
+                          <Column size="80"/>
+                          <Column size="100"/>
+                          <Column size="50"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="36" band="head"/>
+                          <Row size="40"/>
+                        </Rows>
+                        <Band id="head" accessibilitylabel="제목영역">
+                          <Cell text="차수" autosizecol="default"/>
+                          <Cell col="1" text="편제코드"/>
+                          <Cell col="2" text="편제명"/>
+                          <Cell col="3" text="편제약어"/>
+                          <Cell col="4" text="적용학교구분"/>
+                          <Cell col="5" text="교과코드"/>
+                          <Cell col="6" text="교과명"/>
+                          <Cell col="7" text="사용여부" cssclass="LineNo"/>
+                        </Band>
+                        <Band id="body" accessibilitylabel="내용영역">
+                          <Cell text="bind:eduCrseDgrNm" autosizecol="default" textAlign="center"/>
+                          <Cell col="1" text="bind:orgaCd"/>
+                          <Cell col="2" text="bind:orgaDtlNm"/>
+                          <Cell col="3" text="bind:orgaAbrvNm"/>
+                          <Cell col="4" text="bind:aplcnTrgtShlScNm"/>
+                          <Cell col="5" text="bind:eduActDetaScCd" textAlign="center"/>
+                          <Cell col="6" text="bind:eduActDetaScNm"/>
+                          <Cell col="7" text="bind:useYn" textAlign="center" cssclass="LineNo"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <Static id="sta99_00_00_00_00_00_00_02" taborder="5" left="0" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+                  <Static id="Static99_00_00_00_00_00_01" taborder="6" left="0" top="90" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+            <Tabpage id="tabPage3" text="과목코드" accessibilitylabel="과목코드 탭 페이지">
+              <Layouts>
+                <Layout>
+                  <Div id="divSearch" taborder="0" left="0" top="20" height="70" cssclass="div_WF_Search" text="" right="0" initvalueid="ivDivAccessibilityOn" accessibilitylabel="조회영역">
+                    <Layouts>
+                      <Layout>
+                        <Static id="staCoaAyr" taborder="0" text="대입학년도" left="0" top="20" width="108" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+                        <Edit id="edtCoaAyr" taborder="1" left="staCoaAyr:0" top="20" width="80" height="30" text="2024" enable="true" readonly="true" initvalueid="ivEdtReadOnly" accessibilitylabel="대입학년도"/>
+                        <Static id="staCoaRcritScNm" taborder="2" text="모집구분" left="edtCoaAyr:0" top="20" width="96" cssclass="sta_WF_Searchtxt01" height="30" initvalueid="ivStcAccessibilityOn"/>
+                        <Edit id="edtCoaRcritScNm" taborder="3" left="staCoaRcritScNm:0" top="20" width="135" height="30" text="정시" enable="true" readonly="true" initvalueid="ivEdtReadOnly" accessibilitylabel="모집구분"/>
+                        <Static id="staCdNm" taborder="4" text="과목명" left="edtCoaRcritScNm:0" top="20" width="83" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+                        <Edit id="edtCdNm" taborder="5" left="staCdNm:0" top="20" width="160" height="30" imemode="hangul" maxlength="10" initvalueid="ivEdtNormal" accessibilitylabel="과목명"/>
+                        <Button id="btnSearch" taborder="6" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="btnSearch_onclick" initvalueid="ivBtnAccessibilityButton"/>
+                      </Layout>
+                    </Layouts>
+                  </Div>
+                  <Div id="divPageSummary" taborder="1" left="7" top="110" height="30" url="comm::comp_pageSummary.xfdl" visible="true" width="331" initvalueid="ivDivAccessibilityOff"/>
+                  <Button id="btnExcel" taborder="2" text="액셀내려받기" top="110" width="135" height="30" cssclass="btn_WF_Excel03" right="0" onclick="btnExcel_onclick" enable="false" initvalueid="ivBtnAccessibilityButton"/>
+                  <Div id="divPaginator" taborder="4" left="0" url="comm::comp_paginator.xfdl" pageViewSize="100" dsPage="dsPage" right="0" initvalueid="ivDivAccessibilityOff" visible="true" bottom="0" height="30"/>
+                  <Static id="Static99_00_00_00_00_00_00_00" taborder="8" left="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff" bottom="divPaginator:0"/>
+                  <Static id="Static99_00_00_00_00_00_01_00" taborder="7" left="0" top="140" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+                  <Grid id="grdMain" taborder="3" left="0" top="Static99_00_00_00_00_00_01_00:0" autofittype="col" right="0" onheadclick="grdMain_onheadclick" binddataset="dsSbjtCd" initvalueid="ivGrdAccessibilityOn" accessibilitylabel="과제코드 조회" bottom="Static99_00_00_00_00_00_00_00:0">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="144"/>
+                          <Column size="292"/>
+                          <Column size="56"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="36" band="head"/>
+                          <Row size="40"/>
+                        </Rows>
+                        <Band id="head" accessibilitylabel="제목영역">
+                          <Cell text="과목코드"/>
+                          <Cell col="1" text="과목명"/>
+                          <Cell col="2" text="사용여부" cssclass="LineNo"/>
+                        </Band>
+                        <Band id="body" accessibilitylabel="내용영역">
+                          <Cell text="bind:cd" textAlign="center"/>
+                          <Cell col="1" text="bind:nm"/>
+                          <Cell col="2" text="bind:useYn" textAlign="center" cssclass="LineNo"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <Static id="sta99_00_00_00_00_00_00_02" taborder="5" left="0" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+                  <Static id="Static99_00_00_00_00_00_01" taborder="6" left="0" top="90" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+          </Tabpages>
+        </Tab>
+        <Grid id="grdMainExcelDddepCd" taborder="4" left="1210" top="0" autofittype="col" right="-1210" onheadclick="grdMain_onheadclick" binddataset="dsDddepCdExcel" nodatatext="조회된 데이터가 없습니다" initvalueid="ivGrdAccessibilityOn" visible="false" height="100" selecttype="cell">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="144"/>
+                <Column size="292"/>
+                <Column size="56"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head" accessibilitylabel="제목영역">
+                <Cell text="학과코드"/>
+                <Cell col="1" text="학과명"/>
+                <Cell col="2" text="사용여부" cssclass="LineNo"/>
+              </Band>
+              <Band id="body" accessibilitylabel="내용영역">
+                <Cell text="bind:cd" textAlign="center"/>
+                <Cell col="1" text="bind:nm"/>
+                <Cell col="2" text="bind:useYn" textAlign="center" cssclass="LineNo"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grdMainExcelOrgaCd" taborder="5" left="1210" top="105" autofittype="col" right="-1210" binddataset="dsOrgaCdExcel" onheadclick="grdMain_onheadclick" extendsizetype="none" initvalueid="ivGrdAccessibilityOn" visible="false" height="100" selecttype="cell">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="50"/>
+                <Column size="100"/>
+                <Column size="260"/>
+                <Column size="120"/>
+                <Column size="100"/>
+                <Column size="80"/>
+                <Column size="100"/>
+                <Column size="50"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head" accessibilitylabel="제목영역">
+                <Cell text="차수" autosizecol="default"/>
+                <Cell col="1" text="편제코드"/>
+                <Cell col="2" text="편제명"/>
+                <Cell col="3" text="편제약어"/>
+                <Cell col="4" text="적용학교구분"/>
+                <Cell col="5" text="교과코드"/>
+                <Cell col="6" text="교과명"/>
+                <Cell col="7" text="사용여부" cssclass="LineNo"/>
+              </Band>
+              <Band id="body" accessibilitylabel="내용영역">
+                <Cell text="bind:eduCrseDgrNm" autosizecol="default" textAlign="center"/>
+                <Cell col="1" text="bind:orgaCd"/>
+                <Cell col="2" text="bind:orgaDtlNm"/>
+                <Cell col="3" text="bind:orgaAbrvNm"/>
+                <Cell col="4" text="bind:aplcnTrgtShlScNm"/>
+                <Cell col="5" text="bind:eduActDetaScCd" textAlign="center"/>
+                <Cell col="6" text="bind:eduActDetaScNm"/>
+                <Cell col="7" text="bind:useYn" textAlign="center" cssclass="LineNo"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grdMainExcelSbjtCd" taborder="6" left="1210" top="211" autofittype="col" right="-1210" onheadclick="grdMain_onheadclick" binddataset="dsSbjtCdExcel" initvalueid="ivGrdAccessibilityOn" height="100" visible="false" selecttype="cell">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="144"/>
+                <Column size="292"/>
+                <Column size="56"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head" accessibilitylabel="제목영역">
+                <Cell text="과목코드"/>
+                <Cell col="1" text="과목명"/>
+                <Cell col="2" text="사용여부" cssclass="LineNo"/>
+              </Band>
+              <Band id="body" accessibilitylabel="내용영역">
+                <Cell text="bind:cd" textAlign="center"/>
+                <Cell col="1" text="bind:nm"/>
+                <Cell col="2" text="bind:useYn" textAlign="center" cssclass="LineNo"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    코드조회
+*  @FileName 	ues_ueudi00_m00
+*  @Creator 	최재영
+*  @CreateDate 	2022.05.31  
+*  @Desction    대입전형-대학-코드조회
+************** 소스 수정 이력 ***********************************************
+*  date				Modifier				Description
+*******************************************************************************
+*  2022.05.31		최재영					최초 생성
+*  2022.12.15		김정민					개발
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::uds_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리
+ */
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	this.fnClear(1200);
+	
+	// 대입서비스체크
+	this.udsfCoaSvcChck(function(){
+		this.fnInit(obj); // 초기화
+	});
+};
+
+/************************************************************************************************
+ * TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * @description 조회 버튼 클릭
+ */
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var tabPage = this.tabMain.tabpages[this.tabMain.tabindex].form;
+	var clfCd = this.decode(this.tabMain.tabindex, 0, "dddepCd", 1, "orgaCd", 2, "sbjtCd");
+	this.dsSearch.setColumn(0, "clfCd", clfCd);
+	
+	var serviceId = "";
+	if(clfCd == "dddepCd"){
+		serviceId = "listDddepCd";
+	} else if(clfCd == "orgaCd"){
+		serviceId = "listOrgaCd";
+	} else if(clfCd == "sbjtCd"){
+		serviceId = "listSbjtCd";
+	}
+	
+	// 서비스 객체 생성
+	this.smfSearchService(serviceId)
+		.paginator(tabPage.grdMain, tabPage.divPaginator, tabPage.divPageSummary, this.dsPageInfo, obj, e) // 페이징처리
+		.confirmIfModifiedGrid(tabPage.grdMain) // 데이터가 변경되었으면 확인메시지
+		.validateForm(tabPage.divSearch) // 폼 유효성검사
+		.run() // 실행
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			this.smfResetScroll(this);
+			tabPage.divPaginator.set_visible(true);
+		}) // 콜백
+	;
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd <= -1) return;
+	
+	if(svcid == "listDddepCd"){
+		if(this.dsDddepCd.getRowCount() > 0){
+			this.tabMain.tabpages[this.tabMain.tabindex].form.btnExcel.set_enable(true);
+		}else{
+			this.tabMain.tabpages[this.tabMain.tabindex].form.btnExcel.set_enable(false);
+		}
+	}else if(svcid == 'listOrgaCd'){
+		if(this.dsOrgaCd.getRowCount() > 0){
+			this.tabMain.tabpages[this.tabMain.tabindex].form.btnExcel.set_enable(true);
+		}else{
+			this.tabMain.tabpages[this.tabMain.tabindex].form.btnExcel.set_enable(false);
+		}
+	}else if(svcid == 'listSbjtCd'){
+		if(this.dsSbjtCd.getRowCount() > 0){
+			this.tabMain.tabpages[this.tabMain.tabindex].form.btnExcel.set_enable(true);
+		}else{
+			this.tabMain.tabpages[this.tabMain.tabindex].form.btnExcel.set_enable(false);
+		}
+	}else if(svcid == 'listDddepCdExcel' || svcid == 'listOrgaCdExcel' || svcid == 'listSbjtCdExcel'){
+			var grdMainExcel = this.decode(this.tabMain.tabindex, 0, this.grdMainExcelDddepCd, 1, this.grdMainExcelOrgaCd, 2, this.grdMainExcelSbjtCd);
+			
+			var objOption = {	objGrid : grdMainExcel
+							,	sheetname : "Sheet1"
+							,   filename : this.tabMain.tabpages[this.tabMain.tabindex].text
+							};
+	
+			this.smfExcelExport(objOption);
+	}
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * 그리드 체크박스 enable 처리
+ * @param : ds - 데이터셋
+ * @param : nRow - rowposition
+ */
+this.fnRenderGridCheckbox = function(ds, nRow){
+	return true;
+};
+
+/**
+ * @description 초기화 FUNCTION
+ */
+this.fnInit = function(obj){
+	for(var i=0; i<this.tabMain.tabpages.length; i++){
+		this.tabMain.tabpages[i].form.divSearch.form.edtCoaAyr.set_value(this.udsv_coaAyr);
+		this.tabMain.tabpages[i].form.divSearch.form.edtCoaRcritScNm.set_value(this.udsv_coaRcritScNm);
+		
+		// 조회 입력창에서 'Ctrl' + 'Enter' 키 입력시 조회수행 이벤트 설정
+		this.smfBindEnterKeyToSearch(this.tabMain.tabpages[i].form.divSearch, this.tabMain.tabpages[i].form.divSearch.form.btnSearch);
+	}
+	
+	//엑셀버튼 비활성화
+	for(var i = 0; i < this.tabMain.tabpages.length; i++){
+		this.tabMain.tabpages[i].form.btnExcel.set_enable(false);
+	}
+	
+	this.dsSearch.setColumn(0, "coaAyr", this.udsv_coaAyr);
+	this.dsSearch.setColumn(0, "coaRcritScCd", this.udsv_coaRcritScCd);
+	this.dsSearch.setColumn(0, "coaRcritScNm", this.udsv_coaRcritScNm);
+	this.dsSearch.setColumn(0, "clfCd", this.decode(this.tabMain.tabindex, 0, "dddepCd", 1, "orgaCd", 2, "sbjtCd"));
+	this.dsSearch.setColumn(0, "dddepNm", "");
+	this.dsSearch.setColumn(0, "orgaNm", "");
+	this.dsSearch.setColumn(0, "sbjtNm", "");
+}
+
+/**
+* @description 페이지 네이션 클리어 FUNCTION
+*/
+this.fnClear = function(){
+	this.dsPageInfo.setColumn(0, "totalCount", "0");
+	for(var i = 0; i < this.tabMain.tabpages.length; i++){
+		if(!this.smfIsNull(this.getOwnerFrame().form.fv_workPageWidth)) this.tabMain.tabpages[i].form.divPaginator.form.setOffsetWidth(this.getOwnerFrame().form.fv_workPageWidth);
+		this.tabMain.tabpages[i].form.divPaginator.form.fnInit(
+			  this.tabMain.tabpages[i].form.grdMain
+			, this.dsPageInfo
+			, this.tabMain.tabpages[i].form.divPageSummary
+			, this.tabMain.tabpages[i].form.btnSearch
+			, this.tabMain.tabpages[i].form);
+	}
+	
+	this.dsDddepCdExcel.clearData();
+	this.dsOrgaCdExcel.clearData();
+	this.dsSbjtCdExcel.clearData();
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 그리드 헤더 클릭
+ */
+this.grdMain_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var columnName = obj.getCellProperty("body",e.cell,"text");
+	if ("bind:_chk" == columnName){
+		this.smfToggleChkHeader(obj, e, this.fnRenderGridCheckbox);
+	}else{
+		// 정렬
+		this.smfCheckAndSort(obj, e);
+	}
+};
+
+/**
+ * @description 조회조건 변경
+ */
+this.dsSearch_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	// 조회결과를 제거한다
+	var clfCd = this.decode(this.tabMain.tabindex, 0, "dddepCd", 1, "orgaCd", 2, "sbjtCd");
+	if(clfCd == "dddepCd"){
+		this.smfClearDataByService("listDddepCd");
+	} else if(clfCd == "orgaCd"){
+		this.smfClearDataByService("listOrgaCd");
+	} else if(clfCd == "sbjtCd"){
+		this.smfClearDataByService("listSbjtCd");
+	}
+};
+
+/**
+ * @description 탭 변경
+ */
+this.tabMain_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	this.fnClear();
+	
+	this.dsSearch.setColumn(0, "clfCd", this.decode(this.tabMain.tabindex, 0, "dddepCd", 1, "orgaCd", 2, "sbjtCd"));
+	this.dsSearch.setColumn(0, "dddepNm", "");
+	this.dsSearch.setColumn(0, "orgaNm", "");
+	this.dsSearch.setColumn(0, "sbjtNm", "");
+	
+	//엑셀버튼 비활성화
+	for(var i = 0; i < this.tabMain.tabpages.length; i++){
+		this.tabMain.tabpages[i].form.btnExcel.set_enable(false);
+	}
+};
+
+/**
+ * @description 엑셀다운로드
+ */
+this.btnExcel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var tabPage = this.tabMain.tabpages[this.tabMain.tabindex].form;
+	var clfCd = this.decode(this.tabMain.tabindex, 0, "dddepCd", 1, "orgaCd", 2, "sbjtCd");
+	
+	var serviceId = "";
+	if(clfCd == "dddepCd"){
+		serviceId = "listDddepCdExcel";
+	} else if(clfCd == "orgaCd"){
+		serviceId = "listOrgaCdExcel";
+	} else if(clfCd == "sbjtCd"){
+		serviceId = "listSbjtCdExcel";
+	}
+	
+	this.smfSearchService(serviceId)
+		.validateForm(tabPage.divSearch)
+		.run() // 실행
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		}) // 콜백
+	;
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listDddepCd</Col>
+            <Col id="url">/uds_ueu_di00_001.do</Col>
+            <Col id="inDatasets">dsSearch dsPageInfo</Col>
+            <Col id="outDatasets">dsDddepCd=dsMain dsPageInfo</Col>
+          </Row>
+          <Row>
+            <Col id="id">listOrgaCd</Col>
+            <Col id="url">/uds_ueu_di00_001.do</Col>
+            <Col id="inDatasets">dsSearch dsPageInfo</Col>
+            <Col id="outDatasets">dsOrgaCd=dsMain dsPageInfo</Col>
+          </Row>
+          <Row>
+            <Col id="inDatasets">dsSearch dsPageInfo</Col>
+            <Col id="outDatasets">dsSbjtCd=dsMain dsPageInfo</Col>
+            <Col id="asynctp"/>
+            <Col id="url">/uds_ueu_di00_001.do</Col>
+            <Col id="id">listSbjtCd</Col>
+          </Row>
+          <Row>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsDddepCdExcel=dsMain</Col>
+            <Col id="asynctp"/>
+            <Col id="url">/uds_ueu_di00_001.do</Col>
+            <Col id="id">listDddepCdExcel</Col>
+          </Row>
+          <Row>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsOrgaCdExcel=dsMain</Col>
+            <Col id="asynctp"/>
+            <Col id="url">/uds_ueu_di00_001.do</Col>
+            <Col id="id">listOrgaCdExcel</Col>
+          </Row>
+          <Row>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsSbjtCdExcel=dsMain</Col>
+            <Col id="asynctp"/>
+            <Col id="url">/uds_ueu_di00_001.do</Col>
+            <Col id="id">listSbjtCdExcel</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" oncolumnchanged="dsSearch_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="coaAyr" type="STRING" size="255"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="coaRcritScNm" type="STRING" size="256"/>
+          <Column id="clfCd" type="STRING" size="256"/>
+          <Column id="dddepNm" type="STRING" size="256"/>
+          <Column id="orgaNm" type="STRING" size="256"/>
+          <Column id="sbjtNm" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="initPageIndex" type="INT" size="30" value="1"/>
+          <ConstColumn id="initPageSize" type="INT" size="30" value="4"/>
+          <ConstColumn id="initIsUsePageInfo" type="STRING" size="30" value="Y"/>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDddepCd" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="cd" type="STRING" size="256"/>
+          <Column id="nm" type="STRING" size="256"/>
+          <Column id="rmkCn" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="eduCrseDgrCd" type="STRING" size="255"/>
+          <Column id="eduCrseDgrNm" type="STRING" size="255"/>
+          <Column id="orgaCd" type="STRING" size="255"/>
+          <Column id="orgaDtlNm" type="STRING" size="255"/>
+          <Column id="orgaNm" type="STRING" size="255"/>
+          <Column id="orgaAbrvNm" type="STRING" size="255"/>
+          <Column id="aplcnTrgtShlScCd" type="STRING" size="255"/>
+          <Column id="aplcnTrgtShlScNm" type="STRING" size="255"/>
+          <Column id="eduActDetaScCd" type="STRING" size="255"/>
+          <Column id="eduActDetaScNm" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDddepCdExcel" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="cd" type="STRING" size="256"/>
+          <Column id="nm" type="STRING" size="256"/>
+          <Column id="rmkCn" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="eduCrseDgrCd" type="STRING" size="255"/>
+          <Column id="eduCrseDgrNm" type="STRING" size="255"/>
+          <Column id="orgaCd" type="STRING" size="255"/>
+          <Column id="orgaDtlNm" type="STRING" size="255"/>
+          <Column id="orgaNm" type="STRING" size="255"/>
+          <Column id="orgaAbrvNm" type="STRING" size="255"/>
+          <Column id="aplcnTrgtShlScCd" type="STRING" size="255"/>
+          <Column id="aplcnTrgtShlScNm" type="STRING" size="255"/>
+          <Column id="eduActDetaScCd" type="STRING" size="255"/>
+          <Column id="eduActDetaScNm" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsOrgaCd" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="cd" type="STRING" size="256"/>
+          <Column id="nm" type="STRING" size="256"/>
+          <Column id="rmkCn" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="eduCrseDgrCd" type="STRING" size="255"/>
+          <Column id="eduCrseDgrNm" type="STRING" size="255"/>
+          <Column id="orgaCd" type="STRING" size="255"/>
+          <Column id="orgaDtlNm" type="STRING" size="255"/>
+          <Column id="orgaNm" type="STRING" size="255"/>
+          <Column id="orgaAbrvNm" type="STRING" size="255"/>
+          <Column id="aplcnTrgtShlScCd" type="STRING" size="255"/>
+          <Column id="aplcnTrgtShlScNm" type="STRING" size="255"/>
+          <Column id="eduActDetaScCd" type="STRING" size="255"/>
+          <Column id="eduActDetaScNm" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSbjtCd" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="cd" type="STRING" size="256"/>
+          <Column id="nm" type="STRING" size="256"/>
+          <Column id="rmkCn" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="eduCrseDgrCd" type="STRING" size="255"/>
+          <Column id="eduCrseDgrNm" type="STRING" size="255"/>
+          <Column id="orgaCd" type="STRING" size="255"/>
+          <Column id="orgaDtlNm" type="STRING" size="255"/>
+          <Column id="orgaNm" type="STRING" size="255"/>
+          <Column id="orgaAbrvNm" type="STRING" size="255"/>
+          <Column id="aplcnTrgtShlScCd" type="STRING" size="255"/>
+          <Column id="aplcnTrgtShlScNm" type="STRING" size="255"/>
+          <Column id="eduActDetaScCd" type="STRING" size="255"/>
+          <Column id="eduActDetaScNm" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsOrgaCdExcel" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="cd" type="STRING" size="256"/>
+          <Column id="nm" type="STRING" size="256"/>
+          <Column id="rmkCn" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="eduCrseDgrCd" type="STRING" size="255"/>
+          <Column id="eduCrseDgrNm" type="STRING" size="255"/>
+          <Column id="orgaCd" type="STRING" size="255"/>
+          <Column id="orgaDtlNm" type="STRING" size="255"/>
+          <Column id="orgaNm" type="STRING" size="255"/>
+          <Column id="orgaAbrvNm" type="STRING" size="255"/>
+          <Column id="aplcnTrgtShlScCd" type="STRING" size="255"/>
+          <Column id="aplcnTrgtShlScNm" type="STRING" size="255"/>
+          <Column id="eduActDetaScCd" type="STRING" size="255"/>
+          <Column id="eduActDetaScNm" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSbjtCdExcel" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="cd" type="STRING" size="256"/>
+          <Column id="nm" type="STRING" size="256"/>
+          <Column id="rmkCn" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="eduCrseDgrCd" type="STRING" size="255"/>
+          <Column id="eduCrseDgrNm" type="STRING" size="255"/>
+          <Column id="orgaCd" type="STRING" size="255"/>
+          <Column id="orgaDtlNm" type="STRING" size="255"/>
+          <Column id="orgaNm" type="STRING" size="255"/>
+          <Column id="orgaAbrvNm" type="STRING" size="255"/>
+          <Column id="aplcnTrgtShlScCd" type="STRING" size="255"/>
+          <Column id="aplcnTrgtShlScNm" type="STRING" size="255"/>
+          <Column id="eduActDetaScCd" type="STRING" size="255"/>
+          <Column id="eduActDetaScNm" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="tabMain.tabPage3.form.divSearch.form.edtCdNm" propid="value" datasetid="dsSearch" columnid="sbjtNm"/>
+      <BindItem id="item1" compid="tabMain.tabPage1.form.divSearch.form.edtCdNm" propid="value" datasetid="dsSearch" columnid="dddepNm"/>
+      <BindItem id="item2" compid="tabMain.tabPage2.form.divSearch.form.edtCdNm" propid="value" datasetid="dsSearch" columnid="orgaNm"/>
+      <BindItem id="item3" compid="tabMain.tabPage1.form.divSearch.form.edtCoaAyr" propid="value" datasetid="dsSearch" columnid="coaAyr"/>
+      <BindItem id="item4" compid="tabMain.tabPage3.form.divSearch.form.edtCoaRcritScNm" propid="value" datasetid="dsSearch" columnid="coaRcritScNm"/>
+      <BindItem id="item5" compid="tabMain.tabPage1.form.divSearch.form.edtCoaRcritScNm" propid="value" datasetid="dsSearch" columnid="coaRcritScNm"/>
+      <BindItem id="item6" compid="tabMain.tabPage2.form.divSearch.form.edtCoaAyr" propid="value" datasetid="dsSearch" columnid="coaAyr"/>
+      <BindItem id="item7" compid="tabMain.tabPage2.form.divSearch.form.edtCoaRcritScNm" propid="value" datasetid="dsSearch" columnid="coaRcritScNm"/>
+      <BindItem id="item8" compid="tabMain.tabPage3.form.divSearch.form.edtCoaAyr" propid="value" datasetid="dsSearch" columnid="coaAyr"/>
+    </Bind>
+  </Form>
+</FDL>

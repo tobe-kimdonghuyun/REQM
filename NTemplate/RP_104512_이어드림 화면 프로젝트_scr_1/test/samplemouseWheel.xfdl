@@ -1,0 +1,515 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="samplemouseWheel" width="1280" height="1200" titletext="마우스휠이벤트" onload="samplemouseWheel_onload" onmousewheel="samplemouseWheel_onmousewheel" ontimer="samplemouseWheel_ontimer" scrollbartype="none none" scrolltype="none" onbeforeclose="samplemouseWheel_onbeforeclose">
+    <Layouts>
+      <Layout height="1200" width="1280" screenid="ScreenDeskTopP">
+        <Div id="div00" taborder="0" text="div00" left="0" top="0" height="348" right="0" url="templateP::Main_sub0.xfdl" formscrollbartype="none none" formscrolltype="none"/>
+        <Div id="div00_00" taborder="1" text="div00" left="0" top="div00:0" height="348" right="10" url="templateP::Main_sub1.xfdl" formscrollbartype="none none" formscrolltype="none"/>
+        <Div id="div00_00_00" taborder="2" text="div00" left="0" top="div00_00:0" height="104" right="0" url="templateP::Main_sub2.xfdl" formscrollbartype="none none" formscrolltype="none"/>
+        <Div id="div00_00_00_00" taborder="3" text="div00" left="0" top="div00_00_00:0" height="104" right="0" url="templateP::Main_sub3.xfdl" formscrollbartype="none none" formscrolltype="none"/>
+        <Div id="div00_00_00_00_00" taborder="4" text="div00" left="0" top="div00_00_00_00:0" height="104" right="0" url="templateP::Main_sub4.xfdl" formscrollbartype="none none" formscrolltype="none"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile" width="640" height="1144" mobileorientation="portrait" type="default"/>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="appoExamScCd" type="string" size="256"/>
+          <Column id="sn" type="STRING" size="256"/>
+          <Column id="ntcMteTitlNm" type="string" size="256"/>
+          <Column id="ntcMteCn" type="bigdecimal" size="256"/>
+          <Column id="inqCnt" type="string" size="256"/>
+          <Column id="maiNtcMteYn" type="string" size="256"/>
+          <Column id="pttTopFixYn" type="string" size="256"/>
+          <Column id="regDt" type="string" size="256"/>
+          <Column id="mdfcnDt" type="string" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex">1</Col>
+            <Col id="pageSize">10</Col>
+            <Col id="totalCount">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="searchType" type="STRING" size="256"/>
+          <Column id="searchKeyword" type="STRING" size="256"/>
+          <Column id="appoExamScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="searchType">TITL</Col>
+            <Col id="appoExamScCd">B</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearchTypeCd">
+        <ColumnInfo>
+          <Column id="cd" type="STRING" size="256"/>
+          <Column id="text" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cd">ALL</Col>
+            <Col id="text">제목+내용</Col>
+          </Row>
+          <Row>
+            <Col id="cd">TITL</Col>
+            <Col id="text">제목</Col>
+          </Row>
+          <Row>
+            <Col id="cd">CN</Col>
+            <Col id="text">내용</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResultTemp" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="appoExamScCd" type="string" size="256"/>
+          <Column id="sn" type="STRING" size="256"/>
+          <Column id="ntcMteTitlNm" type="string" size="256"/>
+          <Column id="ntcMteCn" type="bigdecimal" size="256"/>
+          <Column id="inqCnt" type="string" size="256"/>
+          <Column id="maiNtcMteYn" type="string" size="256"/>
+          <Column id="pttTopFixYn" type="string" size="256"/>
+          <Column id="regDt" type="string" size="256"/>
+          <Column id="mdfcnDt" type="string" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsResult=dsResult dsPageInfo=dsPageInfo</Col>
+            <Col id="url">hrd_oew_rm02_m00.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">selectTemp</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsResultTemp=dsResult dsPageInfo=dsPageInfo</Col>
+            <Col id="url">hrd_oew_rm02_m00.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  sample::samplemouseWeel.xfdl
+*  @MenuPath    sample
+*  @FileName 	samplemouseWheel.xfdl
+*  @Creator 	
+*  @CreateDate 	2022.7.15
+*  @Desction    마우스 휠 처리 이벤트
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.7.12    	 	        최초 
+*******************************************************************************
+*/
+
+this.topInfo = [];
+this.DownAmount = -120;
+this.UpAmount = 120;
+this.nStep = 0;
+this.Aniduration = 600;
+this.easing = "linear";
+
+this.samplemouseWheel_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//transaction 조회 대체 이벤트
+	this.setTimer(0,500);
+};
+
+this.samplemouseWheel_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if(e.timerid == 0)
+	{
+		this.smfResetScroll(this.div00.form);
+		this.smfResetScroll(this.div00_00.form);
+		this.smfResetScroll(this.div00_00_00.form);	
+		this.smfResetScroll(this.div00_00_00_00.form);
+		this.smfResetScroll(this.div00_00_00_00_00.form);		
+		this.smfResetScroll(this);	
+		this.killTimer(0);
+		//앙카 설정
+		this.topInfo[0] = this.div00;
+		this.topInfo[1] = this.div00_00;
+		this.topInfo[2] = this.div00_00_00;
+		this.topInfo[3] = this.div00_00_00_00;
+		this.topInfo[4] = this.div00_00_00_00_00;				
+		return;
+	}	
+};
+
+//마우스 휠 위 또는 아래 이벤트 발생처리
+//메인 화면에서 처리
+//frameMainP에서 이벤트 처리 하지 않음
+this.samplemouseWheel_onmousewheel = function(obj:nexacro.Form,e:nexacro.MouseWheelEventInfo)
+{
+	trace(" samplemouseWheel_onmousewheel : ");
+	this.fnCreatePageSelector();
+
+	if ( e.amount == this.DownAmount )
+	{
+		this.nStep = this.nStep + 1;
+		if ( this.nStep == this.topInfo.length )
+		{
+			this.nStep = this.nStep - 1;
+		}
+		//trace(" this.nStep UP : " + this.nStep);
+		this.fnAnimationDiv("UP");
+		
+	}else if ( e.amount == this.UpAmount )
+	{
+		if ( this.nStep == -1 ) return;
+		this.nStep = this.nStep - 1;
+		if ( this.nStep < 0 )
+		{
+			this.nStep = 0;
+		}
+		//trace(" this.nStep DOWN : " + this.nStep);
+		this.fnAnimationDiv("DOWN");
+	}	
+	
+	if ( this.nStep > 0 ) 	
+	{
+		this.getOwnerFrame().form.divTop.form.fnTopMode("W");
+	}else
+	{
+		this.getOwnerFrame().form.divTop.form.fnTopMode("B");		
+	}
+};
+
+//메인 서브 페이지 이동 상태 표시
+this.fnCreatePageSelector = function()
+{
+	var nRightFix  = 150;
+	if ( nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageSelector"] ) return false;
+	var nWidth     = 28;
+	var nHeight    = 28 * this.topInfo.length;
+	this.fv_nRight = 150;
+	this.fvPageTop = (nexacro.getApplication().mainframe.VFrameSet.frameMain.form.divAll.getOffsetHeight() - nHeight )/ 2;
+	
+	var pageSelector = new Div();	
+	pageSelector.init("pageSelector",null,this.fvPageTop,nWidth,nHeight,nRightFix);	
+	nexacro.getApplication().mainframe.VFrameSet.frameMain.form.addChild(pageSelector.name, pageSelector);
+	//pageSelector.set_background("blue");
+	pageSelector.show();
+
+	this.firstTop = 10;
+	var nHeight = 24;	
+	var nWidth = 16;
+	this.fv_nRight = 0;
+	this.fvLeftMargin = 7;
+	for(var i=0;i<this.topInfo.length; i++)
+	{
+		//trace(" this.firstTop : " + this.firstTop);
+		var objBtn = new Button();
+		objBtn.init("page"+i,this.fvLeftMargin,this.firstTop,nWidth,nHeight);
+		this.fvLastLeft += nWidth;
+		this.firstTop += nHeight;
+		
+		nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageSelector"].form.addChild(objBtn.name, objBtn);
+		objBtn.set_cssclass("btn_main_sub_step");
+		objBtn.menuid = "page"+i;
+		//objBtn.set_cssclass("TF_menu");
+
+		objBtn.setEventHandler("onclick", this.linkPageonclick, this);
+		objBtn.setEventHandler("onmouseenter", this.btn_onmouseenter, this);
+		objBtn.setEventHandler("onmouseleave", this.btn_onmouseleave, this);		
+		objBtn.set_visible(true);
+		objBtn.show();
+	}
+	return true;
+};
+
+//페이지 이동 버튼 마우스 진입 이벤트
+this.btn_onmouseenter = function(obj,e)
+{
+	if ( nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageToolTip"] )
+	{
+		var objToolTip = nexacro.getApplication().mainframe.VFrameSet.frameMain.form.removeChild("pageToolTip");
+		if (objToolTip) objToolTip.destroy();
+		objToolTip = null;
+	}
+	var objpPageSelector = nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageSelector"];
+	
+	var nWidth = 28;
+	var nHeight = 28;
+	this.fv_nRight = 150;
+	var nTop = objpPageSelector.getOffsetTop() + ( nexacro.toNumber(obj.name.substr(4,1)) * 28 );
+	
+	//trace(obj.parent.getOffsetTop());
+	var pageToolTip = new Div();	
+	
+	pageToolTip.init("pageToolTip",null,nTop,nWidth,nHeight,180);	
+	nexacro.getApplication().mainframe.VFrameSet.frameMain.form.addChild(pageToolTip.name, pageToolTip);
+	pageToolTip.set_background("violet");
+	pageToolTip.show();	
+};
+
+//페이지 이동 버튼 마우스 아웃 이벤트
+this.btn_onmouseleave = function(obj,e)
+{
+	if ( nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageToolTip"] )
+	{
+		var objToolTip = nexacro.getApplication().mainframe.VFrameSet.frameMain.form.removeChild("pageToolTip");
+		if (objToolTip) objToolTip.destroy();
+		objToolTip = null;
+	}
+};
+
+//메인 서브 페이지 스크롤 움직여서 이동함.(top)
+this.linkPageonclick = function(obj,e)
+{
+	if ( nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageToolTip"] )
+	{
+		var objToolTip = nexacro.getApplication().mainframe.VFrameSet.frameMain.form.removeChild("pageToolTip");
+		if (objToolTip) objToolTip.destroy();
+		objToolTip = null;
+	}
+	var nexacroFrame = nexacro.getApplication().mainframe.VFrameSet.frameMain.form;	
+	var VscrollPos = nexacroFrame.divAll.form.vscrollbar.pos;
+
+	var objpPageSelector = nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageSelector"];
+	
+	var pageIndx  =  obj.name.substr(4,1);
+	this.fnAnimationDivDirect(pageIndx);
+};
+
+//페이지 선택
+this.fnSetPageSelector = function(pIdx)
+{
+	var pageSelector = nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageSelector"].form;
+	for(var i=0;i<pageSelector.components.length;i++)
+	{
+		pageSelector.components[i].set_cssclass("btn_main_sub_step");
+	}
+	nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageSelector"].form["page"+pIdx].set_cssclass("btn_main_sub_step_S");
+	
+	if ( this.nStep == 0 )
+	{
+		var objpageSelector = nexacro.getApplication().mainframe.VFrameSet.frameMain.form.removeChild("pageSelector");
+		objpageSelector.destroy();
+		objpageSelector = null;
+		return;
+	}	
+};
+
+//스크롤 이동
+this.fnAnimationDiv = function(pDirect)
+{	
+	if ( nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageToolTip"] )
+	{
+		var objToolTip = nexacro.getApplication().mainframe.VFrameSet.frameMain.form.removeChild("pageToolTip");
+		if (objToolTip) objToolTip.destroy();
+		objToolTip = null;
+	}
+	trace("this.fnAnimationDiv pDirect : " + pDirect );
+	//trace(" this.nStep : " + this.nStep );
+	//trace(" this.nStep : " + this.nStep +  " getOffsetWidth : " + this.topInfo[this.nStep].getOffsetWidth() );	
+	var nexacroFrame = nexacro.getApplication().mainframe.VFrameSet.frameMain.form;	
+	if ( pDirect == "UP" )
+	{
+		var VmiddleH = 0;
+		
+		if ( this["Animation"] ) 
+		{
+			// Remove Object form Parent
+			var objAniItem = this["Animation"].removeTarget("AniItem");
+			//var objAniItemSub = this["Animation"].removeTarget("AniItemSub");			
+			
+			var objAni = this.removeChild("Animation");
+			
+			// Destroy Object
+			if (objAniItem ) objAniItem.destroy();
+			//if (objAniItemSub ) objAniItemSub.destroy();
+			if (objAni ) objAni.destroy();
+			objAniItem = null;
+			//objAniItemSub = null;
+			objAni = null;		
+		}
+		 // Create Object  
+		objAni = new nexacro.Animation("Animation", this);  
+
+		// Add Object to Parent Form  
+		this.addChild( "Animation", objAni );
+
+		// Set Object 
+		objAni.set_duration( this.Aniduration );
+		objAni.set_easing(this.easing);
+		objAni.setEventHandler("onbegin",function(obj,e){
+		}, this);
+
+		objAni.setEventHandler("oncomplete",function(obj,e){
+			//VmiddleH = VmiddleH + nexacro.getApplication().mainframe.VFrameSet.frameMain.form.divAll.form.vscrollbar.pos;
+			//nexacro.getApplication().mainframe.VFrameSet.frameMain.form.divAll.form["pageSelector"].setOffsetTop(VmiddleH);
+			this.fnSetPageSelector(this.nStep);
+		}, this);
+		
+		if ( this.nStep > this.topInfo.length -1 ) 
+		{
+			return;
+		}
+		
+		if ( this.topInfo[this.nStep] )
+		{
+			//trace(" nexacro.getApplication().mainframe.getOffsetHeight() : " + nexacro.getApplication().mainframe.getOffsetHeight());
+			VmiddleH = this.topInfo[this.nStep].getOffsetTop() + (this.topInfo[this.nStep].getOffsetHeight() - nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageSelector"].getOffsetHeight() ) / 2;
+			//VmiddleH = ( nexacro.getApplication().mainframe.getOffsetHeight() - nexacro.getApplication().mainframe.VFrameSet.frameMain.form.divAll.form["pageSelector"].getOffsetHeight() ) / 2 + nexacro.getApplication().mainframe.VFrameSet.frameMain.form.divAll.form.vscrollbar.pos ;
+		}
+		//trace(" VmiddleH : " + VmiddleH );
+		// Add Item to Object
+		trace(" this.topInfo[this.nStep].getOffsetTop() : " +  this.topInfo[this.nStep].getOffsetTop() );
+		trace(" nexacroFrame.divAll.form.vscrollbar.pos : " + nexacroFrame.divAll.form.vscrollbar.pos );
+		trace(" nexacroFrame.divAll.form.vscrollbar.pos : " + nexacroFrame.divAll.form.vscrollbar.max );		
+		objAni.addTarget( "AniItem",nexacroFrame.divAll.form.vscrollbar, "pos:" + this.topInfo[this.nStep].getOffsetTop() );
+		//objAni.addTarget( "AniItemSub",nexacro.getApplication().mainframe.VFrameSet.frameMain.form.divAll.form["pageSelector"], "top:" + VmiddleH );
+		// Play Object
+		objAni.play();		
+	}else if(pDirect == "DOWN")
+	{
+		if ( this["Animation"] ) 
+		{
+			// Remove Object form Parent
+			var objAniItem = this["Animation"].removeTarget("AniItem");
+			var objAniItemSub = this["Animation"].removeTarget("AniItemSub");			
+			
+			var objAni = this.removeChild("Animation");
+			
+			
+			 
+			// Destroy Object
+			if ( objAniItem ) objAniItem.destroy();
+			if ( objAniItemSub )objAniItemSub.destroy();
+			if ( objAni )objAni.destroy();
+			objAniItem = null;
+			objAniItemSub = null;			
+			objAni = null;				
+		}
+		 // Create Object  
+		objAni = new nexacro.Animation("Animation", this);  
+
+		// Add Object to Parent Form  
+		this.addChild( "Animation", objAni );
+
+		// Set Object 
+		objAni.set_duration(this.Aniduration);
+		objAni.set_easing(this.easing);
+		objAni.setEventHandler("onbegin",function(obj,e){
+		}, this);
+
+		objAni.setEventHandler("oncomplete",function(obj,e){	
+			this.fnSetPageSelector(this.nStep);		
+		}, this);
+		
+		if ( this.nStep < 0 )
+		{
+			return;		
+		}	
+		var VmiddleH =  0;
+		if ( this.topInfo[this.nStep] )
+		{
+			VmiddleH =  this.topInfo[this.nStep].getOffsetTop() + (this.topInfo[this.nStep].getOffsetHeight() - nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageSelector"].getOffsetHeight() ) / 2;			
+		}
+		//trace(" VmiddleH : " + VmiddleH );
+		// Add Item to Object
+		objAni.addTarget( "AniItem",nexacroFrame.divAll.form.vscrollbar, "pos:" + this.topInfo[this.nStep].getOffsetTop() );		
+		//objAni.addTarget( "AniItemSub",nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageSelector"], "top:" +VmiddleH );
+
+		// Play Object
+		objAni.play();		
+	}
+};
+//스크롤 이동
+this.fnAnimationDivDirect = function(pStep)
+{
+	if ( nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageToolTip"] )
+	{
+		var objToolTip = nexacro.getApplication().mainframe.VFrameSet.frameMain.form.removeChild("pageToolTip");
+		if (objToolTip) objToolTip.destroy();
+		objToolTip = null;
+	}
+	this.fnCreatePageSelector();
+	var nexacroFrame = nexacro.getApplication().mainframe.VFrameSet.frameMain.form;	
+
+	if ( this["Animation"] ) 
+	{
+		// Remove Object form Parent
+		var objAniItem = this["Animation"].removeTarget("AniItem");
+		var objAniItemSub = this["Animation"].removeTarget("AniItemSub");			
+		
+		var objAni = this.removeChild("Animation");
+		
+		
+		 
+		// Destroy Object
+		if (objAniItem) objAniItem.destroy();
+		if (objAniItemSub) objAniItemSub.destroy();
+		if (objAni )objAni.destroy();
+		objAniItem = null;
+		objAniItemSub = null;		
+		objAni = null;		
+	}
+	 // Create Object  
+	objAni = new nexacro.Animation("Animation", this);  
+
+	// Add Object to Parent Form  
+	this.addChild( "Animation", objAni );
+
+	// Set Object 
+	objAni.set_duration( this.Aniduration );
+	objAni.set_easing(this.easing);
+	objAni.setEventHandler("onbegin",function(obj,e){
+	}, this);
+
+	objAni.setEventHandler("oncomplete",function(obj,e){
+			this.fnSetPageSelector(this.nStep);	
+	}, this);
+	//trace(" pStep : " + pStep);
+	this.nStep = nexacro.toNumber(pStep);
+	var VmiddleH =  this.topInfo[this.nStep].getOffsetTop() + (this.topInfo[this.nStep].getOffsetHeight() - nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageSelector"].getOffsetHeight() ) / 2;
+	//trace(" VmiddleH : " + VmiddleH );	
+	// Add Item to Object
+	objAni.addTarget( "AniItem",nexacroFrame.divAll.form.vscrollbar, "pos:" + this.topInfo[pStep].getOffsetTop() );
+	//objAni.addTarget( "AniItemSub",nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageSelector"], "top:" + VmiddleH );
+	// Play Object
+	objAni.play();
+
+};
+
+//화면 닫기 전 divAll 공통 요소 삭제
+this.samplemouseWheel_onbeforeclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	//trace("this.samplemouseWheel_onbeforeclose");
+	if ( nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageSelector"] )
+	{
+		//nexacro.getApplication().mainframe.VFrameSet.frameMain.form["pageSelector"].destroy();
+		var pageSelector = nexacro.getApplication().mainframe.VFrameSet.frameMain.form.divAll.form.removeChild("pageSelector");
+		if(pageSelector) pageSelector.destroy();
+		pageSelector = null;
+	}
+};]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="samplePortalMain" width="1920" height="720" titletext="대국민포탈 메인 리사이징 테스트" onload="samplePortalResize" onsize="samplePortalResize_onsize" background="blue">
+    <Layouts>
+      <Layout height="720" width="1920">
+        <Div id="div00" taborder="0" text="Main1" left="164" top="81" width="1280" height="196" background="red"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    대국민포탈메인사이즈 테스트
+*  @FileName 	samplePortalResize
+*  @Creator 	투비소프트
+*  @CreateDate 	2022.07.21
+*  @Desction    대국민포탈메인사이즈 테스트
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.07.21     	TOBESOFT 	               최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+
+this.samplePortalResize = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.fnMiddleAlign();
+};
+
+this.fnMiddleAlign = function()
+{
+	var nAllWidth = this.width;  // 전체 form의 사이즈
+	var nMaxWidth = 1280;
+	var nLeft,nWidth;
+	
+	if(nAllWidth >= nMaxWidth)	//1280 사용
+	{
+		nLeft = parseInt((nAllWidth - nMaxWidth) / 2);
+		if(nLeft < 0) nLeft = 0;
+		
+		nWidth = nMaxWidth;
+	}
+	else
+	{
+		nLeft = 0;
+		nWidth = nAllWidth;
+	}
+	
+	this.div00.setOffsetLeft(nLeft);
+	this.div00.setOffsetWidth(nWidth);	
+}
+
+this.samplePortalResize_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	this.fnMiddleAlign();		
+};]]></Script>
+  </Form>
+</FDL>

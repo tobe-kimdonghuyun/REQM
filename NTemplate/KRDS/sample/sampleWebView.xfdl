@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleWebView" width="1050" height="736" titletext="웹뷰 샘플" onload="form_onload">
+    <Layouts>
+      <Layout height="736" mobileorientation="landscape" width="1050">
+        <WebView id="wbvSample" taborder="0" left="0" top="38" width="62.48%" bottom="0" onloadcompleted="wbvSample_onloadcompleted" onusernotify="wbvSample_onusernotify"/>
+        <Static id="staTitle00" taborder="0" text="웹뷰" left="0" top="0" height="43" cssclass="sta_WF_ParaH3_pc" right="826"/>
+        <Static id="staTitle" taborder="1" text="html에서 넘겨받은 내용" left="wbvSample:20" top="0" height="43" cssclass="sta_WF_ParaH3_pc" right="0"/>
+        <Button id="btnCallHtml" taborder="2" text="HTML로 데이터셋 전송" width="209" fittocontents="width" right="0" onclick="btnCallHtml_onclick" bottom="639" height="48"/>
+        <TextArea id="txaRtn" taborder="3" left="wbvSample:20" top="staTitle:70" right="0" bottom="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleWebView.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2021/04/07
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2021/04/07			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+//https://developer.microsoft.com/ko-kr/microsoft-edge/webview2/
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	
+	
+	var sUrl = nexacro.getEnvironment().services['svcUrl'].url + "sampleHtml/webBrowserSample.html";
+	this.wbvSample.set_url(sUrl);
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.wbvSample_onloadcompleted = function(obj:nexacro.WebView,e:nexacro.WebLoadCompEventInfo)
+{
+	trace("wbvSample_onloadcompleted");
+};
+
+this.wbvSample_onusernotify = function(obj:nexacro.WebView,e:nexacro.WebUserNotifyEventInfo)
+{
+	trace("wbvSample_onusernotify" + e.userdata);
+	if(e.userdata.indexOf("toValue:")>-1){
+		var sValue = this.txaRtn.value;
+		if(this.gfnIsNull(sValue)) sValue = "";
+		
+		var sRtnValue = e.userdata.replace("toValue:","");
+		if(this.gfnIsNull(sRtnValue)) return;
+		
+		this.txaRtn.set_value(sValue + e.userdata.replace("toValue:","")+"\n");
+	}
+};
+
+this.btnCallHtml_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// XML 형태는 안넘어감 ? 버그인가 2021.04.07
+	var sData = this.ds00.saveSSV();
+	//sample.fromNexacro.value = nStr
+	var rtn = this.wbvSample.callScript("fnFromNexacro('"+sData.toString()+"')");
+	trace("btnCallHtml_onclick" + rtn);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="ds00">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">1</Col>
+            <Col id="Column1">메뉴1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">2</Col>
+            <Col id="Column1">메뉴2</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">3</Col>
+            <Col id="Column1">메뉴3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">4</Col>
+            <Col id="Column1">메뉴4</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">5</Col>
+            <Col id="Column1">메뉴5</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

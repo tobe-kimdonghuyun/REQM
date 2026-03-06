@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleWebEditor" width="888" height="700" titletext="웹에디터" onload="form_onload">
+    <Layouts>
+      <Layout height="700" width="888">
+        <Static id="Static01_00" taborder="0" text="웹에디터" left="0" width="259" height="43" cssclass="sta_WF_ParaH3_pc" top="0"/>
+        <Button id="btnShowView" taborder="1" text="상세보기" top="0" height="48" onclick="btnShowView_onclick" right="285" width="100"/>
+        <Button id="btnSetData" taborder="2" text="Nexa-&gt;Editor" top="0" height="48" onclick="btnSetData_onclick" right="142" width="135"/>
+        <WebBrowser id="webBrowser" left="0" top="53" taborder="2" onloadcompleted="webBrowser_onloadcompleted" right="20" bottom="150" onusernotify="webBrowser_onusernotify" enable="true"/>
+        <Button id="btnGetData" taborder="3" text="Editor-&gt;Nexa" top="0" height="48" onclick="btnGetData_onclick" width="134" right="0"/>
+        <Button id="btn00" taborder="4" text="업로드 있는 에디터 연결" width="162" height="48" right="0" bottom="95" onclick="btn00_onclick"/>
+        <TextArea id="txtValue" taborder="5" left="0" wordWrap="char" right="0" top="webBrowser:60" height="90"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleWebEditor.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/12/22
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/12/22			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+this.fvObjWin;
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+ */
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	
+	// 웹브라우저 객체에 Web Editor 생성
+	this.gfnCreateWebEditor(this.webBrowser);
+};
+
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+/**
+ * @description webBrowser내 웹페이지 load 완료 시 발생 이벤트
+*/
+this.webBrowser_onloadcompleted = function(obj:WebBrowser, e:nexacro.WebLoadCompEventInfo)
+{
+	this.fvObjWin = this.webBrowser;
+	//this.fvObjWin.callMethod("init");
+};
+
+/**
+ * @description webBrowser 페이지에서 nexacro로 값 전달 시 발생 이벤트
+*/
+this.webBrowser_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	if (e.userdata) 
+	{
+		// 자동 발생이 아닌 개발자가 호출 여부 체크 : $bForce$
+		if (e.userdata.indexOf("$CKEDITOR$") > -1) 
+		{
+			var sRtn = e.userdata.replace("$CKEDITOR$", "");
+			if( sRtn == "LODING" ) 
+			{
+				// 로딩 후 처리
+			}
+		}else{
+			if (e.userdata=="instanceReady"){
+				obj.callMethod("init", obj.getOffsetHeight()-40);
+			}
+		}
+	}
+};
+
+/**
+ * @description WebBrowser값을 ckEditor로 전달
+ */
+this.btnSetData_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sTxtValue = this.txtValue.value;
+	
+	this.fvObjWin.callMethod("setData", sTxtValue);
+};
+
+/**
+ * @description ckEditor값을 WebBrowser로 전달
+ */
+this.btnGetData_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sRtn = this.fvObjWin.callMethod("getData");
+
+	this.txtValue.set_value(sRtn);
+};
+
+/**
+ * @description 상세보기 화면 이동
+ */
+this.btnShowView_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.gfnSetUrl("sample::sampleWebEditorView.xfdl", {sj:"웹에디터", wrter:"admin", cn:this.fvObjWin.callMethod("getData")});
+};
+
+/**
+ * @description 업로드있는 에디터 연결(임시)
+ */
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sUrl = nexacro.getEnvironment().services['svcUrl'].url + "thirdParty/ckeditor/html/ckeditor3.html";
+
+	this.webBrowser.set_url(sUrl);
+};
+]]></Script>
+  </Form>
+</FDL>

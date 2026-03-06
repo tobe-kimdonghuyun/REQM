@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="GridPage" width="1200" height="30" titletext="Grid Top Total Number" scrolltype="none">
+    <Layouts>
+      <Layout height="30" width="1200" screenid="ScreenDeskTopP">
+        <Combo id="cboPageSize" taborder="0" left="210" width="140" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" value="100" index="3" text="100개씩보기" top="0" visible="false">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">10</Col>
+                <Col id="datacolumn">10개씩보기</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">15</Col>
+                <Col id="datacolumn">15개씩보기</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">20</Col>
+                <Col id="datacolumn">20개씩보기</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">100</Col>
+                <Col id="datacolumn">100개씩보기</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Button id="btnSearch" taborder="1" text="확인" top="0" height="30" width="50" left="362" fittocontents="width" onclick="btnSearch_onclick" visible="false"/>
+        <Static id="staTotalCount" taborder="2" text="총 520건" top="0" height="30" cssclass="font16M,color5959" width="180" left="0"/>
+      </Layout>
+      <Layout name="mobile" width="640" height="40" mobileorientation="portrait" type="default" screenid="mobileP">
+        <Combo id="cboPageSize" left="438" top="67" width="140" height="30"/>
+        <Button id="btnSearch" left="590" top="67" width="50" height="30"/>
+        <Static id="staTotalCount" top="0" width="180" height="40" cssclass="font24R,color5959" left="20"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fv_grid = null;
+this.fv_buttonOrSearchFunction = null;
+this.fv_mainForm = null;
+this.fv_dsPageInfo = null;
+
+
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 화면 초기화
+	// 업무화면이 아니므로 주석
+	// this.smfInitDiv(obj);	
+
+	this.fnInitValues();
+};
+
+
+this.fnGetInitPageSize = function(){
+	return this.cboPageSize.value;
+};
+
+
+this.fnInitValues = function(){
+	if(this.smfIsMobile())
+	{
+		this.cboPageSize.set_value("10");
+	}
+	this.fnDisplayTotalText(0);
+	this.btnSearch.set_visible(false);
+};
+
+/**
+ *
+*/
+this.fnInit = function(grid, dsPageInfo, divPageSummary, buttonOrSearchFunction, mainForm) {	
+	this.fnInitValues();
+	
+	this.set_visible(true);
+	this.fv_grid = grid;
+	this.fv_dsPageInfo = dsPageInfo;
+	
+	this.fv_rowCnt = this.smfStr(this.fv_dsPageInfo.getColumn(0, "totalCount"));
+	if(this.isNil(this.fv_rowCnt)){
+		this.fnDisplayTotalText(0);
+	}else{
+		this.fnDisplayTotalText(this.fv_rowCnt);
+	}
+	this.fv_buttonOrSearchFunction = buttonOrSearchFunction;
+	this.fv_mainForm = mainForm;
+	this.btnSearch.set_visible(true);
+	this.resetScroll();
+};
+
+this.fnDisplayTotalText = function(nTotalCnt)
+{
+	var sTotalText = "총 " + nTotalCnt + "건";
+	this.staTotalCount.set_text(sTotalText);
+}
+
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(! this.fv_buttonOrSearchFunction) return;
+
+	if(isFunction(this.fv_buttonOrSearchFunction)){
+		var searchFunction = this.fv_buttonOrSearchFunction;
+		var senderObj = null;
+		searchFunction.call(this.fv_mainForm, senderObj);
+	}else{
+		var button = this.fv_buttonOrSearchFunction;
+		var onclickHandler = button.getEventHandler('onclick', 0);
+		if(onclickHandler == null || onclickHandler == undefined) return;
+
+		this.fv_dsPageInfo.setConstColumn("initPageSize", this.cboPageSize.value);
+		
+		this.fv_dsPageInfo.setColumn(0, "pageIndex", 1);
+		this.fv_dsPageInfo.setColumn(0, "pageSize", this.cboPageSize.value);
+		onclickHandler.call(this.fv_mainForm, button);
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

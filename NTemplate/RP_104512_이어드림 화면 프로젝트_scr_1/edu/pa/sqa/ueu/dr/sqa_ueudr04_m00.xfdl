@@ -1,0 +1,842 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sqa_ueudr04_m00" width="1200" height="830" titletext="시도별재송부학생자료요청" onload="sqa_ueudr04_m00_onload" onbeforeclose="sqa_ueudr04_m00_onbeforeclose">
+    <Layouts>
+      <Layout height="830" width="1200" screenid="ScreenDeskTop">
+        <Div id="divSearch" taborder="0" left="0" top="0" height="70" initvalueid="ivDivAccessibilityOn" right="0" cssclass="div_WF_Search" accessibilitylabel="조회영역">
+          <Layouts>
+            <Layout>
+              <Static id="staCoaAyr" taborder="0" text="대입학년도" left="0" top="20" width="108" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtCoaAyr" taborder="1" left="staCoaAyr:0" top="20" width="100" height="30" initvalueid="ivEdtReadOnly" accessibilitylabel="조회조건" readonly="true" onchanged="divSearch_edtCoaAyr_onchanged"/>
+              <Static id="staCoaRcritScNm" taborder="2" text="모집구분" left="edtCoaAyr:0" top="20" width="96" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtCoaRcritScNm" taborder="3" left="staCoaRcritScNm:0" top="20" width="135" height="30" initvalueid="ivEdtReadOnly" accessibilitylabel="조회조건" readonly="true"/>
+              <Static id="staDetaRcrit" taborder="4" text="세부모집시기" left="edtCoaRcritScNm:0" top="20" width="120" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboDetaRcrit" taborder="5" left="staDetaRcrit:0" width="200" height="30" innerdataset="dsDetaRcritPrd" codecolumn="detaRcritScValue" datacolumn="detaRcritScNm" index="-1" top="20" initvalueid="ivCmbNormal" accessibilitylabel="조회조건"/>
+              <Static id="staCddcOrgCd" taborder="6" text="시도교육청" left="cboDetaRcrit:0" top="20" width="108" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn" onclick="divSearch_staCddcOrgCd_onclick"/>
+              <Combo id="cboCddcScCd" taborder="7" left="staCddcOrgCd:0" width="200" height="30" innerdataset="dsCddcScCd" codecolumn="unyCdValue" datacolumn="unyCdValueNm" index="-1" top="20" initvalueid="ivCmbNormal" accessibilitylabel="조회조건"/>
+              <Button id="btnSearch" taborder="8" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="divSearch_btnSearch_onclick" initvalueid="ivBtnAccessibilityButton"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="staDetaRcrit" left="0" top="326" width="101" height="42" text="기간명" taborder="4"/>
+              <Combo id="cboDetaRcrit" left="20" top="378" height="60" right="20" taborder="5"/>
+              <Static id="staCddcOrgCd" left="0" top="469" width="77" height="42" taborder="6"/>
+              <Combo id="cboCddcScCd" left="20" top="521" height="60" right="20" taborder="7"/>
+              <Button id="btnSearch" width="164" right="20" height="60" bottom="40" taborder="8"/>
+              <Static id="staCoaRcritScNm" left="0" top="183" width="101" height="42" taborder="2"/>
+              <Combo id="cboSearchType" left="20" top="235" height="60" right="20" text="" taborder="3"/>
+              <Edit id="edtCoaAyr" left="20" top="92" height="60" right="20" taborder="1"/>
+              <Static id="staCoaAyr" left="0" top="40" width="149" height="42" taborder="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div03" taborder="1" left="0" height="83" top="89" text="" cssclass="div_WF_Detail" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="Static44" taborder="0" left="151" height="82" cssclass="sta_WF_Input02Top" top="0" right="0"/>
+              <Static id="staRreqRsnCn" taborder="1" left="1" width="150" height="82" cssclass="sta_WF_Input01Top, sta_WF_Red14" text="*재요청사유" top="0" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn"/>
+              <TextArea id="txtRreqRsnCn" taborder="2" left="156" top="6" height="70" right="5" maxlength="100" cssclass="essential"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divInfo" taborder="2" left="0" right="0" initvalueid="ivDivAccessibilityOff" cssclass="div_WF_InfoBOX" text="" bottom="0" height="160">
+          <Layouts>
+            <Layout>
+              <Static id="sta00_00_01_01_00" taborder="0" left="30" top="28" height="23" cssclass="sta_WF_InfoTit" text="이용 전 확인해주세요." wordWrap="char" initvalueid="ivStcAccessibilityOn" right="40"/>
+              <Static id="sta01" taborder="1" left="30" top="65" height="24" cssclass="sta_WF_Red14" text="※ [전송중]인 경우, 재조회를 하여 진행상태를 확인하시기 바랍니다." wordWrap="char" right="400" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta02" taborder="14" left="29" top="95" height="24" cssclass="sta_WF_Blue14" text="" wordWrap="char" right="111" initvalueid="ivStcAccessibilityOn"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <ImageViewer id="img00_00_01_00" taborder="3" text="시도별재송부학생자료요청" left="0" top="192" width="230" height="30" cssclass="img_WF_SubTit04" initvalueid="ivTitleAccessibilityOn"/>
+        <Static id="staPrd" taborder="4" left="img00_00_01_00:10" top="192" height="30" cssclass="sta_WF_Black14" text="" initvalueid="ivStcAccessibilityOn" width="300" textAlign="left" wordWrap="char"/>
+        <Static id="staChcCnt" taborder="5" text="" top="192" width="150" height="30" cssclass="sta_WF_Total" initvalueid="ivStcAccessibilityOn" onclick="staChcCnt_onclick" textAlign="right" left="staPrd:273"/>
+        <Button id="btnRtrcn" taborder="6" text="요청취소" top="193" width="84" height="30" cssclass="btn_WF_Crud" right="136" initvalueid="ivBtnAccessibilityButton" onclick="btnRtrcn_onclick" visible="true" enable="false"/>
+        <Button id="btnRreq" taborder="7" text="전형자료 재요청" top="193" width="128" height="30" cssclass="btn_WF_Crud" right="0" initvalueid="ivBtnAccessibilityButton" onclick="btnRreq_onclick" visible="true" enable="false"/>
+        <Grid id="grdList" taborder="8" left="0" top="233" right="0" binddataset="dsRreqApst" autofittype="col" selecttype="cell" initvalueid="ivGrdAccessibilityOn" oncellclick="grdList_oncellclick" onheadclick="grdList_onheadclick" bottom="divInfo:20">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="60"/>
+                <Column size="150"/>
+                <Column size="130"/>
+                <Column size="100"/>
+                <Column size="300"/>
+                <Column size="250"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24" band="head"/>
+                <Row size="40"/>
+                <Row size="40" band="summ"/>
+              </Rows>
+              <Band id="head">
+                <Cell rowspan="2" displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" rowspan="2" text="시도교육청"/>
+                <Cell col="2" rowspan="2" text="합격년도"/>
+                <Cell col="3" rowspan="2" text="합격회차"/>
+                <Cell col="4" rowspan="2" text="재요청 대상자"/>
+                <Cell col="5" rowspan="2" text="비고"/>
+                <Cell col="6" text="요청취소" cssclass="LineNo"/>
+                <Cell row="1" col="6" displaytype="checkboxcontrol" edittype="checkbox" cssclass="LineNo"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="expr:rreqApstStsCd == &quot;Y&quot; ? &quot;checkboxcontrol&quot; : &quot;none&quot;" edittype="expr:rreqApstStsCd == &quot;Y&quot; ? &quot;checkbox&quot; : &quot;none&quot;" text="bind:_chk" textAlign="center"/>
+                <Cell col="1" text="bind:cddcOrgCdNm" textAlign="center"/>
+                <Cell col="2" text="bind:passYr" textAlign="center"/>
+                <Cell col="3" text="bind:passTme" textAlign="center"/>
+                <Cell col="4" text="expr:comp.parent.fnTrgt(displayRrno, rreqApstStsCd)" textAlign="center"/>
+                <Cell col="5" text="expr:comp.parent.fnRmkCn(rreqApstStsCd, dmndExcl)" textAlign="center"/>
+                <Cell col="6" cssclass="LineNo" displaytype="expr:rtrcnCeckYn == &quot;Y&quot; ? &quot;checkboxcontrol&quot; : &quot;none&quot;" edittype="expr:rtrcnCeckYn == &quot;Y&quot; ? &quot;checkbox&quot; : &quot;none&quot;" text="bind:rtrcnYn" textAlign="center"/>
+              </Band>
+              <Band id="summary">
+                <Cell colspan="7" displaytype="text" background="#fdfbe5" border="1px solid #c8c1c2" color="#333333" textAlign="center"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divTitle" taborder="9" left="0" top="66" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Static id="Static99_00_00_00_00_01_00_00_00" taborder="10" left="0" top="-353" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_00" taborder="11" left="0" top="172" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00" taborder="12" left="0" top="223" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_00_00" taborder="13" left="0" top="70" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_01" taborder="14" left="0" top="650" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    시도별재송부학생자료요청
+*  @FileName 	sqa_ueudr04_m00.xfdl
+*  @Creator 	bsw
+*  @CreateDate 	2022.09.05
+*  @Desction    대입전형-대학-시도별재송부학생자료요청
+************** 소스 수정 이력 ***********************************************
+*  date				Modifier				Description
+*******************************************************************************
+*  2022.09.05		bsw					최초 생성
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::cm_script.xjs"
+include "lib::sqa_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fvSendSize = 400;	   //임시로 400건으로 함.
+this.dmndRtrcnTime = 20;   //요청취소 시간 간격 : 20분
+this.fvCeckCnt = 0;		   //선택건수
+this.fvRtrcnYn = null;     //취소여부
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose, ontimer)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리
+ */
+this.sqa_ueudr04_m00_onload = function(obj,e) {
+
+	// Div 초기화
+	this.smfInitDiv(obj);
+
+//  	// Grid Checkbox 활성화/활성화 제어
+//  	this.smfUpdateRednerGridCheckbox(this.grdList, 0, this.fnRenderGridCheckbox);
+//
+//  	// 조회 입력창에서 'Ctrl' + 'Enter' 키 입력시 조회수행 이벤트 설정
+//  	this.smfBindEnterKeyToSearch(this.divSearch, this.divSearch.form.btnSearch);
+//
+//  	// 데이터 입력 창에서 'Ctrl' + 'Enter' 키 입력시 저장수행 이벤트 설정
+//  	this.smfBindEnterKeyToSearch(this.dsList, this.btnSave);
+
+	//초기화
+	this.fnInit(obj);
+
+	// 서버단에 설정한 유효성 검증 목록을 획득하여 설정
+	this.fnSearchValidation();
+	
+	//공통코드 조회
+	this.fnSerachCmmCd();
+	
+	// 검정고시대입 공통조회
+	this.fnOnloadSearch(obj, ["dsDetaRcritPrd"]);
+		
+};
+
+/**
+ * @description 폼 닫기전 이벤트
+ */
+this.sqa_ueudr04_m00_onbeforeclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+// 	// 변경내역이 발생한 경우 종료전 confirm수행
+// 	return this.smfCloseFormConfirm([this.dsRreqApst]);
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg) {
+	if(errcd <= -1) return;
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+
+************************************************************************************************/
+/**
+ * @description 유효성 검증 목록 조회
+*/
+this.fnSearchValidation = function() {
+	this.smfValidateService("validateMain", {
+			url: "/sqa_ueu_dr04_001.do",
+		})
+		.mappingRulesetToForm(this.divSearch, "search")					//조회Valid
+		.run()
+		.callback(function(callbackParams) {
+			if(callbackParams.errors) return;
+		});
+};
+
+/**
+ * @description 모집기간 조회
+*/
+this.fnSearchPrd = function() {
+
+	this.smfSearchService("listUvstRcritPrd")
+		.run() // 실행
+		.callback(function(callbackParams) {
+			if(callbackParams.errors) return;
+			
+			if(this.dsUvstRcritPrd.getColumn(0,"prdYn") == "Y") {
+				this.btnRreq.set_enable(true);
+			} else {
+				this.staPrd.set_text(this.divSearch.form.edtCoaRcritScNm.text + " 모집기간 : 모집기간이 아닙니다.");
+				this.btnRreq.set_enable(false);
+			}
+		});
+};
+
+/**
+ * @description 공통코드 조회
+*/
+ this.fnSerachCmmCd = function() {		
+	this.smfCodeList("code", [this.dsCddcScCd])
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			this.dsCddcScCd.setColumn(0, 'unyCdValueNm', '- 선택 -' );
+			this.divSearch.form.cboCddcScCd.set_index(0);
+		})
+		.run()
+	;
+};
+
+/**
+ * @description 재요청자 조회
+*/
+this.fnSearchRreq = function() {	
+	this.dsRreqApst.clearData();			//요청지원자 초기화
+	this.grdList.setCellProperty("summary", 0, "text", "" );
+	this.fvCeckCnt = this.dsRreqApst.getCaseCount("_chk == '1'");	
+	this.staChcCnt.set_text("선택건수 : " + this.fvCeckCnt);	
+
+	this.smfSearchService("listRreqApst")
+		.validateForm(this.divSearch) // 폼 유효성검사
+		.run() // 실행
+		.callback(function(callbackParams) {
+			if(callbackParams.errors) return;			
+			
+			var tot = 0			
+			for(var i = 0 ; i < this.dsRreqApst.rowcount ; i++ ) {
+				if(this.dsRreqApst.getColumn(i, "rreqApstStsCd") == "Y") {
+					tot += 1;
+				}
+			}
+			
+			this.grdList.setCellProperty("summary", 0, "text", "재요청 대상 건수 : " + tot + "건" );
+			
+			//요청취소버튼활성화
+			if(this.dsRreqApst.getCaseCount("rtrcnCeckYn == 'Y'") > 0) {
+				this.btnRtrcn.set_enable(true);
+			}
+		});
+};
+
+/**
+ * @description 전형자료요청
+*/
+this.fnExecuteParts = function(callback) {			
+
+	var svcNm = "";
+	
+	if(this.fvRtrcnYn == "Y"){
+		svcNm = "executeRreqRtrcn";			//요청취소		
+	} else {
+		svcNm = "executeRreq";				//자료요청
+	}
+	
+	this.smfExecuteService(svcNm)
+ 	    .showConfirm(false)
+		.beforeService(function(next){
+ 			next();
+ 		})
+ 		.run() // 실행
+ 		.callback(function(callbackParams) {
+			if(this.smfIsFunc(callback)) callback.call(this, callbackParams); 	
+ 			if(callbackParams.errors) return; 				
+ 		});
+};
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * @description 초기화
+*/
+this.fnInit = function(obj) { 
+	//세션정보 세팅
+	this.dsSearch.setColumn(0, "coaAyr", this.sqav_coaAyr);
+	this.dsSearch.setColumn(0, "coaRcritScCd", this.sqav_coaRcritScCd);
+	this.dsSearch.setColumn(0, "coaRcritScNm", this.sqav_coaRcritScNm);
+	this.dsSearch.setColumn(0, "uvstOrgCd", this.sqav_uvstOrgCd);
+	this.dsSearch.setColumn(0, "dmndRtrcnTime", this.dmndRtrcnTime);
+};
+
+/**
+* @description 검정고시 대입전형 공통조회 콜백
+*/
+this.fnOnloadSearchCallback = function() {
+	//세부모집시기의 조건 - 사용중인 것만 나오도록
+	var today = this.smfToday();
+	this.dsDetaRcritPrd.set_filterstr(today + " >= detaRcritScBgngYmd  && " + today + " <= detaRcritScEndYmd");
+	this.dsSearch.setColumn(0, 'detaRcritScValue', this.dsDetaRcritPrd.getColumn(0, 'detaRcritScValue'));
+	this.dsDetaRcritPrd.setColumn(this.dsDetaRcritPrd.insertRow(0), "detaRcritScNm", "선택");
+	this.divSearch.form.cboDetaRcrit.set_index(0);
+	this.divInfo.form.sta02.set_text("※ 자료요청 후, " + this.dmndRtrcnTime + "분 경과 뒤에도 [진행중]인 경우, 요청취소 체크박스가 활성화되며 요청취소 후 다시 자료요청할 수 있습니다.");	
+	this.fnSearchPrd();	
+};
+
+/**
+* @description 대상 상태(전송중 및 전송완료)
+* @param displayRrno  주민등록번호"-"포함
+* @param rreqApstStsCd   재요청지원자상태코드	
+*/
+this.fnTrgt = function(displayRrno, rreqApstStsCd)
+{
+	var rtn = "";
+
+	if(rreqApstStsCd == "I") {
+		rtn = " [전송중...] " + displayRrno;
+	} else if(rreqApstStsCd == "Y") {
+		rtn = " " + displayRrno;
+	} else {
+		rtn = " [대상아님] " + displayRrno;
+	}
+	return rtn;
+};
+
+/**
+* @description 비고 항목의 표현 정의
+* @param rreqApstStsCd   재요청지원자상태코드	
+* @param dmndExcl   요청제외자수
+*/
+this.fnRmkCn = function(rreqApstStsCd, dmndExcl)
+{
+	var rtn = "";
+	if(rreqApstStsCd == "Y")	{
+		if(dmndExcl > 0) {
+			rtn = "요청제외자입니다.";
+		} else {
+			rtn = "";
+		}
+	} else if(rreqApstStsCd == "I") {
+		if(dmndExcl > 0) {
+			rtn = "진행중입니다.[요청제외자]";
+		} else {
+			rtn = "진행중입니다.";
+		}
+	} else if(rreqApstStsCd == "N") {
+		rtn = "재요청 대상학생이 아닙니다.";
+	} else {
+		rtn = "요청목록에 존재하지 않습니다.";
+	}
+	return rtn;
+};
+
+/**
+* @description 전형자료요청 validation
+*/
+this.fnExecuteDmndValid = function() {
+
+	if(this.div03.form.txtRreqRsnCn.text == "") {
+		this.smfAlert("재요청 사유를 입력하여 주십시오.");
+		return false; 
+	};
+		
+	if(this.dsRreqApst.getRowCount() == 0 ) {
+		this.smfAlert("자료를 재요청할 지원자가 없습니다.");
+		return false; 
+	};
+	
+	if(this.fvCeckCnt == 0 ) {
+		this.smfAlert("자료를 재요청할 지원자를 먼저 선택하여 주십시오.");
+		return false;
+	}
+	
+	this.dsRreq.clearData();	//재요청대상ds초기화
+	for(var i = 0 ; i < this.dsRreqApst.rowcount; i++) {
+		if(this.dsRreqApst.getColumn(i, "_chk") == "1") {
+			this.dsRreq.copyRow(this.dsRreq.addRow(), this.dsRreqApst, i)	//재요청대상복사
+		}
+	}
+	
+	return true;
+}
+
+/**
+* @description 전형자료취소요청 validation
+*/
+this.fnExecuteRtrcnValid = function() {
+
+	if(this.dsRreqApst.getCaseCount("rtrcnYn =='1'") == 0 ) {
+		this.smfAlert("자료요청취소 대상을 선택하세요");
+		return;
+	}	
+	
+	this.dsRtrcn.clearData();	//재요청취소ds초기화
+	for(var i = 0 ; i < this.dsRreqApst.rowcount; i++) {
+		if(this.dsRreqApst.getColumn(i, "rtrcnYn") == "1") {
+			this.dsRtrcn.copyRow(this.dsRtrcn.addRow(), this.dsRreqApst, i); 	//재요청취소복사
+		}
+	}
+	
+	return true;
+}
+
+/**
+* @description 요청대상건수체크
+*/
+this.fnCeckCnt = function(idx) {
+	this.fvCeckCnt = this.dsRreqApst.getCaseCount("_chk == '1'");	
+	this.staChcCnt.set_text("선택건수 : " + this.fvCeckCnt);	
+	return true;
+};
+
+/**
+* @description 전형자료재요청/요청취소 호출
+* @param yn	취소여부
+*/
+this.fnExecute = function(yn) {	
+	var dsFrom = null;			//선택한 대상ds
+	var dsParts = null;			//저장ds
+	var msg = "";				//메시지
+	this.fvRtrcnYn = yn;		//취소여부
+	
+	if(this.fvRtrcnYn == "Y") {	//자료취소
+		dsFrom = this.dsRtrcn;
+		dsParts = this.dsRtrcnParts;
+		msg = "요청 취소가 완료되었습니다.";
+	} else {					//자료재요청
+		dsFrom = this.dsRreq;	
+		dsParts = this.dsRreqParts;
+		msg = "자료가 요청되었습니다.";
+	}
+	
+	//전형자료재요청/요청취소 호출
+	this.fnExecuteRreq(dsFrom, dsParts, this.fvSendSize,
+		function() {
+			this.smfAlert(msg, "", function(){
+				this.fnSearchRreq();
+			}); 
+		}	
+	).run();
+};
+
+/**
+ * @description 전형자료재요청/요청취소 (by건)
+ * @param : dsFrom		- 원본데이터
+ * @param : dsTo		- 송신데이터 ( nMax 수량을 가짐 )
+ * @param : nMax		- 최대 데이터 수량
+ * @return : Object { run }
+ */
+this.fnExecuteRreq = function(dsFrom, dsTo, nMax, completeCallback){
+	var _that = this;
+	var nStepIdx = 0;
+	var nTotalCnt = dsFrom.getRowCount();
+		
+	//스텝 만들기 [{nIdxStart, nIdxEnd}...]
+	var aStep = Array(Math.ceil(nTotalCnt / nMax)).fill().map(function(a, i) {
+		var end = (i + 1) * nMax;		
+		return {
+			nIdxStart : i * nMax,
+			nIdxEnd : end < nTotalCnt ? end : nTotalCnt
+		}
+	});
+	
+	//전형자료재요청/요청취소 이전 스텝(건수)별로 데이터셋 복사
+	function copyDataByStep() {
+		var step = aStep[nStepIdx++];
+		if(_that.smfIsNull(step)){
+			if(_that.smfIsFunc(completeCallback)) completeCallback.call(_that);
+			return false;
+		}
+		
+		//초기화(업로드데이터)
+		dsTo.clearData();
+		for(var i = step.nIdxStart; i < step.nIdxEnd; i++){			
+			dsTo.copyRow(dsTo.addRow(), dsFrom, i);			
+		}		
+		return true;
+	}
+	
+	//전형자료재요청/요청취소 callback
+	function next(callbackParams) {
+		if(callbackParams.errors) return;
+				
+		this.setWaitCursor(true);
+		if(copyDataByStep()){
+			_that.fnExecuteParts.call(_that, next);
+		}
+		this.setWaitCursor(false);
+	}
+	
+	//전형자료재요청/요청취소 호출
+	function run(){
+		if(copyDataByStep()) _that.fnExecuteParts.call(_that, next);
+	}
+	
+	return {
+		run
+	}
+};
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ /**
+ * @description 그리드 헤더 클릭
+*/
+this.grdList_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo) {
+
+ 	var columnName = obj.getCellProperty("body",e.cell,"text");
+ 
+ 	if ("bind:_chk" == columnName){
+ 		var chkYn = obj.getCellText(-1, e.cell)=="1"?"0":"1";
+ 		obj.setCellProperty("head", 0, "expr", chkYn);
+		this.fvCeckCnt = 0;
+ 		for(var i = 0 ; i < this.dsRreqApst.rowcount ; i++) {
+ 			var param	= this.dsRreqApst.getColumn(i, "rreqApstStsCd");
+ 			var displaytype = param == "Y" ? "checkbox" : "none";
+ 			if(displaytype != "checkbox") continue;
+			
+			if(chkYn == "1") {	//선택
+				this.fvCeckCnt += 1;
+				this.dsRreqApst.setColumn(i, "_chk", chkYn);						
+			} else {	//전체해제
+				if(this.dsRreqApst.getColumn(i, "_chk") == "1") {
+					//this.fvCeckCnt -= 1;
+					this.dsRreqApst.setColumn(i, "_chk", "0");					
+					//if(this.fvCeckCnt == 0 ) {
+					//	break;
+					//}					
+				}				
+			}		
+		}
+		this.staChcCnt.set_text("선택건수 : " + this.fvCeckCnt);	
+	}
+	
+	//요청취소 일괄선택
+	if (e.cell == "7") {
+		var chkYn = obj.getCellText(-1, e.cell)=="1"?"0":"1";
+		obj.setCellProperty("head", 7, "expr", chkYn);		
+
+		for(var i = 0 ; i < this.dsRreqApst.rowcount ; i++) {
+			var rtrcnCeckYn = this.dsRreqApst.getColumn(i, "rtrcnCeckYn");
+			if (rtrcnCeckYn == "Y") this.dsRreqApst.setColumn(i, "rtrcnYn", chkYn);
+		}
+	}
+};
+
+ /**
+* @description 조회
+*/
+this.divSearch_btnSearch_onclick = function(obj,e) {
+
+	var cddcScCd	= this.divSearch.form.cboCddcScCd.value;
+	if(this.smfIsNull(cddcScCd)){
+		this.smfAlert("시도교육청을 선택해 주시기 바랍니다.");
+		this.divSearch.form.cboCddcScCd.setFocus();
+		return;
+	}
+	this.fnSearchRreq();
+};
+
+/**
+* @description 체크
+*/
+this.grdList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	//건수체크
+	if (e.cell == 0 && this.fnCeckCnt(e.row)) return;
+};
+
+/**
+* @description 요청취소
+*/
+this.btnRtrcn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(!this.fnExecuteRtrcnValid()) return;	
+	this.fnExecute("Y");
+};
+
+/**
+* @description 재요청
+*/
+this.btnRreq_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(!this.fnExecuteDmndValid()) return;	
+	this.fnExecute("N");
+};]]></Script>
+    <Objects>
+      <Dataset id="dsService">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256"/>
+          <Column id="outDatasets" type="STRING" size="256"/>
+          <Column id="asynctp" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listUvstRcritPrd</Col>
+            <Col id="url">/sqa_cmm_cm99_002.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsUvstRcritPrd=dsUvstRcritPrd</Col>
+          </Row>
+          <Row>
+            <Col id="id">listRreqApst</Col>
+            <Col id="url">/sqa_ueu_dr04_002.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsRreqApst=dsRreqApst</Col>
+          </Row>
+          <Row>
+            <Col id="url">/sqa_ueu_dr04_003.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsRreqParts=dsRreqParts:A</Col>
+            <Col id="id">executeRreq</Col>
+          </Row>
+          <Row>
+            <Col id="id">executeRreqRtrcn</Col>
+            <Col id="url">/sqa_ueu_dr04_004.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsRtrcnParts=dsRtrcnParts:A</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCddcScCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="FirstCode" type="STRING" size="30" value="ALL" datapath=""/>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value="CDDC_SC_CD"/>
+          <ConstColumn id="FilterExpr" type="STRING" size="30" value="unyCdValue != 'A00' &amp;&amp; unyCdValue != 'V10'"/>
+          <ConstColumn id="UnyCdGrpId" type="STRING" size="30" value=""/>
+          <ConstColumn id="BfrClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd1Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd2Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd3Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd4Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd5Value" type="STRING" size="30" value=""/>
+          <Column id="pgeId" type="STRING" size="256"/>
+          <Column id="clfCdValue" type="STRING" size="30"/>
+          <Column id="clfCdValueNm" type="STRING" size="120"/>
+          <Column id="clfCdUseYn" type="STRING" size="150"/>
+          <Column id="unyCdValue" type="STRING" size="10"/>
+          <Column id="unyCdValueNm" type="STRING" size="30"/>
+          <Column id="userDfnCd1Value" type="STRING" size="100"/>
+          <Column id="userDfnCd2Value" type="STRING" size="100"/>
+          <Column id="userDfnCd3Value" type="STRING" size="100"/>
+          <Column id="userDfnCd4Value" type="STRING" size="100"/>
+          <Column id="userDfnCd5Value" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDetaRcritPrd" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" size="1" type="STRING"/>
+          <Column id="uvstOrgCd" size="256" type="STRING"/>
+          <Column id="detaRcritScValue" size="256" type="STRING"/>
+          <Column id="detaRcritScNm" size="256" type="STRING"/>
+          <Column id="detaRcritScBgngYmd" size="256" type="STRING"/>
+          <Column id="detaRcritScEndYmd" size="256" type="STRING"/>
+          <Column id="coaAyr" size="256" type="STRING"/>
+          <Column id="coaRcritScCd" size="256" type="STRING"/>
+          <Column id="useYn" size="256" type="STRING"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsUvstRcritPrd" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="coaRcritPrd" size="256" type="STRING"/>
+          <Column id="prdYn" size="256" type="STRING"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearch" oncolumnchanged="dsSearch_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="coaRcritScNm" type="STRING" size="256"/>
+          <Column id="uvstOrgCd" type="STRING" size="256"/>
+          <Column id="detaRcritScNm" type="STRING" size="256"/>
+          <Column id="detaRcritScValue" type="STRING" size="256"/>
+          <Column id="cddcOrgCd" type="STRING" size="256"/>
+          <Column id="dmndRtrcnTime" type="STRING" size="256"/>
+          <Column id="rreqRsnCn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRreqApst" oncolumnchanged="dsSearch_oncolumnchanged" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="256"/>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="uvstOrgCd" type="STRING" size="256"/>
+          <Column id="cddcOrgCd" type="STRING" size="256"/>
+          <Column id="cddcOrgCdNm" type="STRING" size="256"/>
+          <Column id="detaRcritScValue" type="STRING" size="256"/>
+          <Column id="trprPin" type="STRING" size="256"/>
+          <Column id="passYr" type="STRING" size="256"/>
+          <Column id="passTme" type="STRING" size="256"/>
+          <Column id="trprRrno" type="STRING" size="256"/>
+          <Column id="displayRrno" type="STRING" size="256"/>
+          <Column id="apstSn" type="STRING" size="256"/>
+          <Column id="rreqNts" type="STRING" size="256"/>
+          <Column id="apstDmndStsCd" type="STRING" size="256"/>
+          <Column id="rreqApstStsCd" type="STRING" size="256"/>
+          <Column id="dmndExcl" type="STRING" size="256"/>
+          <Column id="rtrcnCeckYn" type="STRING" size="256"/>
+          <Column id="rtrcnYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRtrcn" oncolumnchanged="dsSearch_oncolumnchanged" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="256"/>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="uvstOrgCd" type="STRING" size="256"/>
+          <Column id="cddcOrgCd" type="STRING" size="256"/>
+          <Column id="cddcOrgCdNm" type="STRING" size="256"/>
+          <Column id="detaRcritScValue" type="STRING" size="256"/>
+          <Column id="trprPin" type="STRING" size="256"/>
+          <Column id="passYr" type="STRING" size="256"/>
+          <Column id="passTme" type="STRING" size="256"/>
+          <Column id="trprRrno" type="STRING" size="256"/>
+          <Column id="displayRrno" type="STRING" size="256"/>
+          <Column id="apstSn" type="STRING" size="256"/>
+          <Column id="rreqNts" type="STRING" size="256"/>
+          <Column id="apstDmndStsCd" type="STRING" size="256"/>
+          <Column id="rreqApstStsCd" type="STRING" size="256"/>
+          <Column id="dmndExcl" type="STRING" size="256"/>
+          <Column id="rtrcnCeckYn" type="STRING" size="256"/>
+          <Column id="rtrcnYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRreq" oncolumnchanged="dsSearch_oncolumnchanged" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="256"/>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="uvstOrgCd" type="STRING" size="256"/>
+          <Column id="cddcOrgCd" type="STRING" size="256"/>
+          <Column id="cddcOrgCdNm" type="STRING" size="256"/>
+          <Column id="detaRcritScValue" type="STRING" size="256"/>
+          <Column id="trprPin" type="STRING" size="256"/>
+          <Column id="passYr" type="STRING" size="256"/>
+          <Column id="passTme" type="STRING" size="256"/>
+          <Column id="trprRrno" type="STRING" size="256"/>
+          <Column id="displayRrno" type="STRING" size="256"/>
+          <Column id="apstSn" type="STRING" size="256"/>
+          <Column id="rreqNts" type="STRING" size="256"/>
+          <Column id="apstDmndStsCd" type="STRING" size="256"/>
+          <Column id="rreqApstStsCd" type="STRING" size="256"/>
+          <Column id="dmndExcl" type="STRING" size="256"/>
+          <Column id="rtrcnCeckYn" type="STRING" size="256"/>
+          <Column id="rtrcnYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRreqApstValid" oncolumnchanged="dsSearch_oncolumnchanged" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="256"/>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="uvstOrgCd" type="STRING" size="256"/>
+          <Column id="cddcOrgCd" type="STRING" size="256"/>
+          <Column id="cddcOrgCdNm" type="STRING" size="256"/>
+          <Column id="detaRcritScValue" type="STRING" size="256"/>
+          <Column id="trprPin" type="STRING" size="256"/>
+          <Column id="passYr" type="STRING" size="256"/>
+          <Column id="passTme" type="STRING" size="256"/>
+          <Column id="trprRrno" type="STRING" size="256"/>
+          <Column id="displayRrno" type="STRING" size="256"/>
+          <Column id="apstSn" type="STRING" size="256"/>
+          <Column id="apstDmndStsCd" type="STRING" size="256"/>
+          <Column id="rreqApstStsCd" type="STRING" size="256"/>
+          <Column id="dmndExcl" type="STRING" size="256"/>
+          <Column id="rtrcnCeckYn" type="STRING" size="256"/>
+          <Column id="rtrcnYn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRtrcnParts" oncolumnchanged="dsSearch_oncolumnchanged" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="256"/>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="uvstOrgCd" type="STRING" size="256"/>
+          <Column id="cddcOrgCd" type="STRING" size="256"/>
+          <Column id="cddcOrgCdNm" type="STRING" size="256"/>
+          <Column id="detaRcritScValue" type="STRING" size="256"/>
+          <Column id="trprPin" type="STRING" size="256"/>
+          <Column id="passYr" type="STRING" size="256"/>
+          <Column id="passTme" type="STRING" size="256"/>
+          <Column id="trprRrno" type="STRING" size="256"/>
+          <Column id="displayRrno" type="STRING" size="256"/>
+          <Column id="apstSn" type="STRING" size="256"/>
+          <Column id="rreqNts" type="STRING" size="256"/>
+          <Column id="apstDmndStsCd" type="STRING" size="256"/>
+          <Column id="rreqApstStsCd" type="STRING" size="256"/>
+          <Column id="dmndExcl" type="STRING" size="256"/>
+          <Column id="rtrcnCeckYn" type="STRING" size="256"/>
+          <Column id="rtrcnYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRreqParts" oncolumnchanged="dsSearch_oncolumnchanged" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="256"/>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="uvstOrgCd" type="STRING" size="256"/>
+          <Column id="cddcOrgCd" type="STRING" size="256"/>
+          <Column id="cddcOrgCdNm" type="STRING" size="256"/>
+          <Column id="detaRcritScValue" type="STRING" size="256"/>
+          <Column id="trprPin" type="STRING" size="256"/>
+          <Column id="passYr" type="STRING" size="256"/>
+          <Column id="passTme" type="STRING" size="256"/>
+          <Column id="trprRrno" type="STRING" size="256"/>
+          <Column id="displayRrno" type="STRING" size="256"/>
+          <Column id="apstSn" type="STRING" size="256"/>
+          <Column id="rreqNts" type="STRING" size="256"/>
+          <Column id="apstDmndStsCd" type="STRING" size="256"/>
+          <Column id="rreqApstStsCd" type="STRING" size="256"/>
+          <Column id="dmndExcl" type="STRING" size="256"/>
+          <Column id="rtrcnCeckYn" type="STRING" size="256"/>
+          <Column id="rtrcnYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtCoaAyr" propid="value" datasetid="dsSearch" columnid="coaAyr"/>
+      <BindItem id="item1" compid="divSearch.form.edtCoaRcritScNm" propid="value" datasetid="dsSearch" columnid="coaRcritScNm"/>
+      <BindItem id="item2" compid="divSearch.form.cboDetaRcrit" propid="value" datasetid="dsSearch" columnid="detaRcritScValue"/>
+      <BindItem id="item3" compid="divSearch.form.cboCddcScCd" propid="value" datasetid="dsSearch" columnid="cddcOrgCd"/>
+      <BindItem id="item4" compid="div03.form.txtRreqRsnCn" propid="value" datasetid="dsSearch" columnid="rreqRsnCn"/>
+    </Bind>
+  </Form>
+</FDL>

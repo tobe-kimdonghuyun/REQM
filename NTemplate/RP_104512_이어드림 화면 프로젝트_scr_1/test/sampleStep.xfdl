@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleStep" width="580" height="800" titletext="스텝" onload="sampleStep_onload" scrollbartype="none none" scrolltype="none">
+    <Layouts>
+      <Layout height="800" width="580" screenid="ScreenDeskTopP">
+        <Div id="divNotice" taborder="0" left="0" top="0" width="538" height="690" formscrolltype="none" text="" url="test::sampleStepNotice.xfdl" ontouchend="divNotice_ontouchend" ontouchstart="divNotice_ontouchstart" formscrollbartype="none none"/>
+        <Button id="btnNext" taborder="1" text="다음" left="117" top="740" width="53" height="39" onclick="btnCtrl_onclick"/>
+        <Button id="btnPrev" taborder="2" text="이전" left="47" top="740" width="53" height="39" onclick="btnCtrl_onclick"/>
+        <Button id="btnAddStep" taborder="3" text="추가" left="217" top="740" width="53" height="39" onclick="btnAddStep_onclick"/>
+      </Layout>
+      <Layout name="mobile" screenid="mobileP,tabletP" width="600" height="900" mobileorientation="portrait" type="default">
+        <Div id="divNotice" width="600" left="0" top="0" height="840"/>
+        <Button id="btnNext" left="117" top="860" width="53" height="39"/>
+        <Button id="btnPrev" left="47" top="860" width="53" height="39"/>
+        <Button id="btnAddStep" left="180" top="860" width="53" height="39"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    
+*  @FileName 	sampleStep.xfdl
+*  @Creator 
+*  @CreateDate 	2023.3.28
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.3.28     	RHS 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fvWidth = 50;
+this.fvAddWidth = 36;
+
+this.popCnt = 0;	//전체 팝업 수
+this.popNum = 0;	//현재 선택된 팝업
+
+//터치 이벤트를 위한 정보
+this.popClientX = 0;     //처음 눌렸을때의 x좌표
+this.popMvSize = 20;    //x좌표가 어느만큼 움직여야 이미지 전환을 할지 지정
+
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.sampleStep_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 공지사항의 데이타수만큼  for문으로 스텝을 동적생성한다.
+};
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+
+// 공지영역 터치하여 1스텝씩 이동한다.
+this.divNotice_ontouchend = function(obj:nexacro.Div,e:nexacro.TouchEventInfo)
+{
+	var nStepNo = this.divNotice.form.getStepIndex();
+	var nStepCnt = (this.divNotice.form.getStepCount()-1);
+	var nStepIdx;
+	
+	//var newClientX = parseInt(e.touchinputinfos[0].clientx,10);
+	var newClientX = parseInt(e.touchinputinfos[0].screenx,10);
+	var moveX = 0;
+
+	//step  이동
+	if(newClientX > this.popClientX){		// 왼쪽에서 오른쪽으로 이동 (앞페이지)
+		moveX = parseInt(newClientX,10) - parseInt(this.popClientX,10);
+		if(moveX > this.popMvSize){ 	//페이지 이동할 만큼 움직인 경우
+			nStepIdx = nStepNo-1;
+		}else {
+			nStepIdx = nStepNo;
+		}
+	}else{		// 오른쪽에서 왼쪽으로 이동 (다음페이지)
+		moveX = this.popClientX - newClientX;
+		if(moveX > this.popMvSize){ 	//페이지 이동할 만큼 움직인 경우
+			nStepIdx = nStepNo+1;
+			if (nStepNo==nStepCnt)	nStepIdx = nStepNo;
+			
+		}else {
+			nStepIdx = nStepNo;
+		}		
+	}
+
+	this.divNotice.form.setStepIndex(nStepIdx);
+	this.divNotice.set_positionstep(nStepIdx);
+};
+
+
+this.divNotice_ontouchstart = function(obj:nexacro.Div,e:nexacro.TouchEventInfo)
+{
+	this.popClientX = parseInt(e.touchinputinfos[0].screenx,10);	//현재 위치 저장
+};
+
+
+//이전Step, 다음Step 으로 이동
+this.btnCtrl_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nStepNo = this.divNotice.form.getStepIndex();
+	
+	if (obj.id =="btnNext") {
+		this.divNotice.form.setStepIndex(nStepNo+1);
+	}else {
+		this.divNotice.form.setStepIndex(nStepNo-1);
+	}
+};
+
+
+//Step을 추가
+this.btnAddStep_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	var stepCnt = nexacro.toNumber(this.divNotice.form.stepselector.stepcount)+1;
+	this.divNotice.form.setStepCount(stepCnt);
+	
+	this.fnCreateStep(stepCnt);
+};
+
+// StepCount 증가-div생성,url 
+this.fnCreateStep = function(nStep){
+
+	this.divNotice.form.fnCreateNoticeStep(nStep);
+
+	//데이타Row 만큼 생성한 후, StepIndex는 맨 처음으로
+	this.divNotice.form.setStepIndex(0);
+	this.divNotice.set_positionstep(0);	
+}
+
+
+
+]]></Script>
+  </Form>
+</FDL>

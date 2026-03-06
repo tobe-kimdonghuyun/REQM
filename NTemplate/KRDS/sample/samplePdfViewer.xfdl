@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="samplePdfViewer" width="888" height="700" onload="form_onload" titletext="PDF 뷰어">
+    <Layouts>
+      <Layout height="700" width="888" screenid="Desktop_screen,mobile_small">
+        <WebBrowser id="WebPdfShow" taborder="0" left="0" top="50" right="20" bottom="30"/>
+        <Combo id="cboPdfFile" taborder="2" text="TOBESOFT-CONSULTING.pdf" left="99" width="263" innerdataset="Dataset00" codecolumn="Column0" datacolumn="Column0" index="0" value="TOBESOFT-CONSULTING.pdf" onitemchanged="cboPdfFile_onitemchanged" itemheight="40" bottom="WebPdfShow:2" height="48"/>
+        <Static id="Static02" taborder="1" text="PDF File" left="0" top="0" width="99" height="43" cssclass="sta_WF_SchDetail" fittocontents="width"/>
+        <Button id="btnPdf" taborder="3" text="새창에서보기" left="370" top="0" width="134" height="48" onclick="btn00_onclick"/>
+        <WebBrowser id="webPdf" taborder="4" left="479" top="17" width="95" height="47" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="Dataset00">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">TOBESOFT-CONSULTING.pdf</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">nexacro17_en.pdf</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">nexacro17_ko.pdf</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">Conversion-Service.pdf</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">X-PUSH-v28.pdf</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">RPA Connector.pdf</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	samplePdfViewer.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022/05/13
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2022/05/13			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+ */
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	this.webPdf.set_url(nexacro.getEnvironment().services['svcUrl'].url + "thirdParty/pdf/view.html");
+	this.loadPdfViewer(this.cboPdfFile.value);
+};
+
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+/**
+ * @description Pdf View
+ */
+this.loadPdfViewer = function(filename)
+{
+	//var webrootUrl = nexacro.getProjectPath();
+	//this.WebBrowser00.set_url(webrootUrl + "../pdfjs-dist/web/viewer.html?file=" + filename);
+	
+	var sUrl = nexacro.getEnvironment().services['svcUrl'].url + "thirdParty/pdfjs-dist/web/viewer.html?file=" + filename;
+	this.WebPdfShow.set_url(sUrl);	
+};
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+/**
+ * @description webBrowser내 웹페이지 load 완료 시 발생 이벤트
+*/
+this.cboPdfFile_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.loadPdfViewer(e.postvalue);
+};
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var strURL = nexacro.getEnvironment().services["svcUrl"].url;
+	var objParam = {"url" : strURL + "downloadPdfFile.do?file=" + this.cboPdfFile.value};	
+	var objWeb = this.webPdf.getProperty("window");
+	objWeb.callMethod("fnCall", objParam);
+};
+]]></Script>
+  </Form>
+</FDL>

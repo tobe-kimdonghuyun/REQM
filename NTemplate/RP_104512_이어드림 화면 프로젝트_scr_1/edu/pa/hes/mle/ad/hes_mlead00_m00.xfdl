@@ -1,0 +1,479 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="hes_mlead00_m00" left="0" top="0" width="1200" height="1035" titletext="행정처분사항조회" onload="form_onload" oninit="fnOninit">
+    <Layouts>
+      <Layout screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="65" height="54" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="행정처분사항조회" left="0" top="0" height="54" cssclass="img_WF_SubTit01" width="260" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSearch" taborder="1" left="0" top="144" height="110" cssclass="div_WF_Search" right="0" initvalueid="ivDivAccessibilityOn" accessibilitylabel="조회영역">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="시설명" left="0" top="20" width="68" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtInsrNm" taborder="1" left="68" width="314" height="30" top="20" initvalueid="ivEdtNormal"/>
+              <Static id="Static00_00" taborder="2" text="접수일" left="382" top="20" width="81" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Calendar id="calEmpmnYmdStart" taborder="3" left="463" top="20" width="150" height="30" dateformat="yyyy.MM.dd" readonly="false" editformat="yyyy.MM.dd" initvalueid="ivCalNormal"/>
+              <Static id="Static65" taborder="4" text="~" left="613" top="20" height="30" cssclass="sta_WF_AC" width="15" initvalueid="ivStcAccessibilityOn" accessibilitylabel="부터"/>
+              <Calendar id="calEmpmnYmdEnd" taborder="5" left="628" top="20" width="150" height="30" dateformat="yyyy.MM.dd" readonly="false" editformat="yyyy.MM.dd" initvalueid="ivCalNormal"/>
+              <Static id="Static00_00_00" taborder="6" text="점검일" left="-1" top="60" width="68" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn" onclick="Common_onclick"/>
+              <Calendar id="calEmpmnYmdStart00" taborder="7" left="67" top="60" width="150" height="30" dateformat="yyyy.MM.dd" readonly="false" editformat="yyyy.MM.dd" onclick="Common_onclick" initvalueid="ivCalNormal"/>
+              <Static id="Static65_00" taborder="8" text="~" left="217" top="60" height="30" cssclass="sta_WF_AC" width="15" initvalueid="ivStcAccessibilityOn" accessibilitylabel="부터"/>
+              <Calendar id="calEmpmnYmdEnd00" taborder="9" left="232" top="60" width="150" height="30" dateformat="yyyy.MM.dd" readonly="false" editformat="yyyy.MM.dd" onclick="Common_onclick" initvalueid="ivCalNormal"/>
+              <Static id="Static00_00_01" taborder="10" text="처리상태" left="382" top="60" width="81" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboOnlCvlcptAprvCd" taborder="11" left="463" top="60" width="150" height="30" value="0" index="0" color="#000000" font="14px/normal &quot;Noto Sans KR&quot;" cssclass="cmb_edu" innerdataset="dsPrcsStsCd" codecolumn="id" datacolumn="value" text="전체" initvalueid="ivCmbNormal"/>
+              <Button id="btnSearch" taborder="12" text="조회" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="divSearch_btnSearch_onclick" initvalueid="ivBtnAccessibilityButton" bottom="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div00_00" taborder="2" left="0" top="254" height="781" right="0" text="" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="img00_00_00_01_00" taborder="0" text="행정처분내역정보" left="0" top="30" width="150" height="30" cssclass="img_WF_SubTit04" initvalueid="ivTitleAccessibilityOn" onclick="div00_00_img00_00_00_01_00_onclick"/>
+              <Grid id="grdAdmdsp" taborder="1" binddataset="dsAdmdsp" autoenter="select" autofittype="col" onkeydown="grd_list_onkeydown" onheadclick="grd_list_onheadclick" left="0" top="70" height="119" right="0" oncellclick="grdMain_oncellclick" cellsizingtype="col" extendsizetype="row" selecttype="cell" initvalueid="ivGrdAccessibilityOn">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="40"/>
+                      <Column size="191"/>
+                      <Column size="80"/>
+                      <Column size="182"/>
+                      <Column size="85"/>
+                      <Column size="88"/>
+                      <Column size="89"/>
+                      <Column size="72"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="순번"/>
+                      <Cell col="1" text="시설명"/>
+                      <Cell col="2" text="점검일"/>
+                      <Cell col="3" text="행정처분내역"/>
+                      <Cell col="4" text="행정처분일자"/>
+                      <Cell col="5" text="위반건수"/>
+                      <Cell col="6" text="접수일"/>
+                      <Cell col="7" text="처리상태" cssclass="LineNo"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:no" textAlign="center" textDecoration="none"/>
+                      <Cell col="1" text="bind:acaNm" cursor="pointer" textDecoration="none"/>
+                      <Cell col="2" text="bind:chckYmd" calendardateformat="yyyy.MM.dd" textAlign="center" textDecoration="none" displaytype="date" calendareditformat="yyyy.MM.dd"/>
+                      <Cell col="3" text="bind:admdspCn" textDecoration="none"/>
+                      <Cell col="4" text="bind:admdspYmd" textAlign="center" textDecoration="none" displaytype="date" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd"/>
+                      <Cell col="5" text="bind:viltNocs" textAlign="center" textDecoration="none"/>
+                      <Cell col="6" text="bind:regDt" textAlign="center" textDecoration="none" displaytype="text" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd"/>
+                      <Cell col="7" text="bind:onlCvlcptAprvCdNm" textAlign="center" textDecoration="none" cssclass="LineNo"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <ImageViewer id="img00_00_00_00" taborder="2" text="행정처분사항 상세정보" left="0" top="219" width="200" height="30" cssclass="img_WF_SubTit04" initvalueid="ivTitleAccessibilityOn" onclick="div00_00_img00_00_00_00_onclick"/>
+              <Static id="Static11_00" text="위반사항" cssclass="sta_WF_Input01Top" left="0" top="259" width="190" height="42" taborder="3" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staViltMteCn" cssclass="sta_WF_Input02Top" left="190" top="259" width="410" height="42" taborder="4" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta_admstMeasuYmd00" text="위반내역" cssclass="sta_WF_Input01Top" left="600" top="259" width="190" height="42" taborder="5" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staViltCn" cssclass="sta_WF_Input02Top" left="790" top="259" height="42" taborder="6" width="410" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="Static11" text="행정처분사항" cssclass="sta_WF_Input01" left="0" top="300" width="190" height="42" taborder="7" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staAdmstMeasuMatrCodeNm" cssclass="sta_WF_Input02" left="190" top="300" width="410" height="42" taborder="8" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta_admstMeasuYmd" text="행정처분일" cssclass="sta_WF_Input01" left="600" top="300" width="190" height="42" taborder="9" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staAdmdspYmd" cssclass="sta_WF_Input02" left="790" top="300" height="42" taborder="10" right="0" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="Static00" text="행정처분내역" cssclass="sta_WF_Input01" left="0" top="341" width="190" height="42" taborder="11" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staAdmdspCn" cssclass="sta_WF_Input02" left="190" top="341" width="410" height="42" taborder="12" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="Static06" text="벌점" cssclass="sta_WF_Input01" left="600" top="341" width="190" height="42" taborder="13" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staPpenaCnt" onclick="Div00_Static07_onclick" cssclass="sta_WF_Input02" left="790" top="341" height="42" taborder="14" right="0" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="Static15" text="시정시작일" cssclass="sta_WF_Input01" left="0" top="382" width="190" height="42" taborder="15" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="Static16" cssclass="sta_WF_Input02" left="190" top="382" width="410" height="42" taborder="16" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="Static17" text="시정종료일" cssclass="sta_WF_Input01" left="600" top="382" width="190" height="42" taborder="17" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="Static27" cssclass="sta_WF_Input02" left="790" top="382" height="42" taborder="18" right="0" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="Static19" text="시정내역" cssclass="sta_WF_Input01" left="0" top="423" width="190" height="110" taborder="19" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="Static20" cssclass="sta_WF_Input02" left="190" top="423" height="110" taborder="20" right="0" text="" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="Static15_00" text="지도점검종류" cssclass="sta_WF_Input01" left="0" top="532" width="190" height="42" taborder="21" onclick="Static_onclick" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staCchCkKndCodeNm" cssclass="sta_WF_Input02" left="190" top="532" width="410" height="42" taborder="22" onclick="Static_onclick" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="Static17_00" text="과태료" cssclass="sta_WF_Input01" left="600" top="532" width="190" height="42" taborder="23" onclick="Static_onclick" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staFfnlgAmt" cssclass="sta_WF_Input02" left="790" top="532" height="42" taborder="24" onclick="Static_onclick" right="0" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta_dcsnYmd04" text="증빙서류제출방식" cssclass="sta_WF_Input01" left="0" top="573" width="190" height="42" taborder="25" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta_02_00" cssclass="sta_WF_Input02" left="190" top="573" height="42" onclick="div_reg_sta_email02_onclick" taborder="26" right="1" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta45_00_00_00_00_01_00" taborder="27" left="0" width="190" height="126" cssclass="sta_WF_Input01" text="증빙서류 첨부" top="614" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta44_00_00_00_01_00" taborder="28" left="190" height="126" cssclass="sta_WF_Input02" top="614" initvalueid="ivStcAccessibilityOn" right="0"/>
+              <Static id="Static15_00_00" text="반려일" cssclass="sta_WF_Input01" left="0" top="739" width="190" height="42" taborder="29" onclick="Static_onclick" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staRjctYmd" cssclass="sta_WF_Input02" left="190" top="739" width="410" height="42" taborder="30" onclick="Static_onclick" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="Static17_00_00" text="반려사유" cssclass="sta_WF_Input01" left="600" top="739" width="190" height="42" taborder="31" onclick="Static_onclick" textAlign="center" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staRjctRsnCn" cssclass="sta_WF_Input02" left="790" top="739" height="42" taborder="32" onclick="Static_onclick" right="0" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="Static99_00_00_00_00_00_01_00" taborder="33" left="0" top="0" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta99_00_00_00_00_01_01_01_00_00_00_00_01_00_00" taborder="34" left="0" top="60" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff" onclick="Common_onclick"/>
+              <Static id="Static99_00_00_00_00_00_01" taborder="35" left="0" top="189" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta99_00_00_00_00_01_01_01_00_00_00_00_00" taborder="36" left="0" top="249" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static99_00_00_00_00" taborder="3" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00" taborder="4" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00_00" taborder="5" left="0" top="-353" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="inDatasets">search=dsSearch</Col>
+            <Col id="outDatasets">dsAdmdsp=mainAdmdsp</Col>
+            <Col id="asynctp"/>
+            <Col id="url">hes_mle_ad00_000.do</Col>
+            <Col id="id">list</Col>
+            <!-- 행정처분내역 조회 -->
+          </Row>
+          <Row>
+            <Col id="inDatasets">search=dsSearchAdmdspDtlInfo</Col>
+            <Col id="outDatasets">dsAdmdspDtlInfo=result</Col>
+            <Col id="asynctp"/>
+            <Col id="url">hes_mle_ad00_001.do</Col>
+            <Col id="id">select</Col>
+            <!-- 행정처분사항 상세정보 조회 -->
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="acaNm" type="STRING" size="256" sumtext="학원명"/>
+          <Column id="sttRegYmd" type="STRING" size="256" sumtext="접수시작일자"/>
+          <Column id="endRegYmd" type="STRING" size="256" sumtext="접수종료일자"/>
+          <Column id="sttCkYmd" type="STRING" sumtext="점검시작일자"/>
+          <Column id="endCkYmd" type="STRING" size="256" sumtext="점검종료일자"/>
+          <Column id="onlCvlcptAprvCd" type="STRING" size="256" sumtext="온라인민원승인코드"/>
+          <Column id="acaInstiScCd" type="STRING" size="256" sumtext="학원교습소구분코드"/>
+          <Column id="dstrtOfcdcCd" type="STRING" sumtext="지역교육청코드"/>
+          <Column id="funrRrno" type="STRING" sumtext="주민등록번호"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsAdmdsp" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="NO" type="STRING" size="256" sumtext="순번"/>
+          <Column id="tmprAcaDsgnNo" type="STRING" size="256" sumtext="임시학원지정번호"/>
+          <Column id="acaDsgnNo" type="STRING" size="256" sumtext="학원지정번호"/>
+          <Column id="acaInstiScCd" type="STRING" sumtext="학원교습소구분코드"/>
+          <Column id="acaNm" type="STRING" sumtext="학원명"/>
+          <Column id="cteOfcdcCd" type="STRING" sumtext="관할교육청코드"/>
+          <Column id="acaSeqDsgnNo" type="STRING" size="256" sumtext="학원순서지정번호"/>
+          <Column id="chckYmd" type="STRING" size="256" sumtext="점검일자"/>
+          <Column id="admdspYmd" type="STRING" sumtext="행정처분일자"/>
+          <Column id="admdspMteCd" type="STRING" sumtext="행정처분사항코드"/>
+          <Column id="admdspMteCdNm" type="STRING" sumtext="행정처분사항코드명"/>
+          <Column id="admdspCn" type="STRING" sumtext="행정처분내용"/>
+          <Column id="admdspBgngYmd" type="STRING" sumtext="행정처분시작일자"/>
+          <Column id="admdspEndYmd" type="STRING" sumtext="행정처분종료일자"/>
+          <Column id="viltNocs" type="STRING" sumtext="위반건수"/>
+          <Column id="corecBgngYmd" type="STRING" sumtext="시정시작일자"/>
+          <Column id="corecEndYmd" type="STRING" sumtext="시정종료일자"/>
+          <Column id="corecCn" type="STRING" sumtext="시정내용"/>
+          <Column id="cchChckKndCd" type="STRING" sumtext="지도점검종류코드"/>
+          <Column id="cchChckKndCdNm" type="STRING" sumtext="지도점검종류코드명"/>
+          <Column id="regDsgnNo" type="STRING" sumtext="등록지정번호"/>
+          <Column id="viltCn" type="STRING" sumtext="위반내용"/>
+          <Column id="dstrtOfcdcCd" type="STRING" size="256" sumtext="지역교육청코드"/>
+          <Column id="rjctYmd" type="STRING" sumtext="반려일자"/>
+          <Column id="rjctRsnCn" type="STRING" sumtext="반려사유내용"/>
+          <Column id="onlCvlcptPrcsStsCd" type="STRING" sumtext="온라인민원처리상태코드"/>
+          <Column id="onlCvlcptAprvCd" type="STRING" sumtext="온라인민원승인코드"/>
+          <Column id="onlCvlcptAprvCdNm" type="STRING" sumtext="온라인민원승인코드명"/>
+          <Column id="admdspRegYmd" type="STRING" sumtext="행정처분등록일자"/>
+          <Column id="admDspsRegCd" type="STRING" sumtext="행정처분등록코드"/>
+          <Column id="admDspsDsgnNo" type="STRING" size="256" sumtext="행정처분지정번호"/>
+          <Column id="funrKornFlnm" type="STRING" sumtext="설립자한글성명"/>
+          <Column id="viltMteCn" type="STRING" sumtext="위반사항내용"/>
+          <Column id="regDt" type="STRING" sumtext="접수일자"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearchAdmdspDtlInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="tmprAcaDsgnNo" type="STRING" size="256" sumtext="임시학원지정번호"/>
+          <Column id="acaDsgnNo" type="STRING" size="256" sumtext="학원지정번호"/>
+          <Column id="dstrtOfcdcCd" type="STRING" size="256" sumtext="지역교육청코드"/>
+          <Column id="acaInstiScCd" type="STRING" sumtext="학원교습소구분코드"/>
+          <Column id="admDspsDsgnNo" type="STRING" size="256" sumtext="행정처분지정번호"/>
+          <Column id="acaSeqDsgnNo" type="STRING" size="256" sumtext="학원순서지정번호"/>
+          <Column id="chckYmd" type="STRING" size="256" sumtext="점검일자"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsAdmdspDtlInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="tmprAcaDsgnNo" type="STRING" size="256" sumtext="임시학원지정번호"/>
+          <Column id="acaDsgnNo" type="STRING" size="256" sumtext="학원지정번호"/>
+          <Column id="acaInstiScCd" type="STRING" sumtext="학원교습소구분코드"/>
+          <Column id="acaNm" type="STRING" sumtext="학원명"/>
+          <Column id="cteOfcdcCd" type="STRING" sumtext="관할교육청코드"/>
+          <Column id="acaSeqDsgnNo" type="STRING" size="256" sumtext="학원순서지정번호"/>
+          <Column id="chckYmd" type="STRING" size="256" sumtext="점검일자"/>
+          <Column id="admdspYmd" type="STRING" sumtext="행정처분일자"/>
+          <Column id="admdspMteCd" type="STRING" sumtext="행정처분사항코드"/>
+          <Column id="admdspMteCdNm" type="STRING" sumtext="행정처분사항코드명"/>
+          <Column id="admdspCn" type="STRING" sumtext="행정처분내용"/>
+          <Column id="admdspBgngYmd" type="STRING" sumtext="행정처분시작일자"/>
+          <Column id="admdspEndYmd" type="STRING" sumtext="행정처분종료일자"/>
+          <Column id="viltNocs" type="STRING" sumtext="위반건수"/>
+          <Column id="corecBgngYmd" type="STRING" sumtext="시정시작일자"/>
+          <Column id="corecEndYmd" type="STRING" sumtext="시정종료일자"/>
+          <Column id="corecCn" type="STRING" sumtext="시정내용"/>
+          <Column id="cchChckKndCd" type="STRING" sumtext="지도점검종류코드"/>
+          <Column id="cchChckKndCdNm" type="STRING" sumtext="지도점검종류코드명"/>
+          <Column id="regDsgnNo" type="STRING" sumtext="등록지정번호"/>
+          <Column id="viltCn" type="STRING" sumtext="위반내용"/>
+          <Column id="dstrtOfcdcCd" type="STRING" size="256" sumtext="지역교육청코드"/>
+          <Column id="rjctYmd" type="STRING" sumtext="반려일자"/>
+          <Column id="rjctRsnCn" type="STRING" sumtext="반려사유내용"/>
+          <Column id="onlCvlcptPrcsStsCd" type="STRING" sumtext="온라인민원처리상태코드"/>
+          <Column id="onlCvlcptAprvCd" type="STRING" sumtext="온라인민원승인코드"/>
+          <Column id="onlCvlcptAprvCdNm" type="STRING" sumtext="온라인민원승인코드명"/>
+          <Column id="admdspRegYmd" type="STRING" sumtext="행정처분등록일자"/>
+          <Column id="admDspsRegCd" type="STRING" sumtext="행정처분등록코드"/>
+          <Column id="admDspsRegCdNm" type="STRING" sumtext="행정처분등록코드명"/>
+          <Column id="admDspsDsgnNo" type="STRING" size="256" sumtext="행정처분지정번호"/>
+          <Column id="funrKornFlnm" type="STRING" sumtext="설립자한글성명"/>
+          <Column id="viltMteCn" type="STRING" sumtext="위반사항내용"/>
+          <Column id="regDt" type="STRING" sumtext="접수일자"/>
+          <Column id="ffnlgAmt" type="STRING" sumtext="과태료금액"/>
+          <Column id="ppenaCnt" type="STRING" sumtext="벌점수"/>
+          <Column id="txofNtfctnYn" type="STRING" sumtext="세무서통보여부"/>
+          <Column id="prufDocuSbmsnMetCd" type="STRING" sumtext="증빙서류제출방식코드"/>
+          <Column id="prufDocuSbmsnMetCdNm" type="STRING" sumtext="증빙서류제출방식코드명"/>
+          <Column id="fileRefrnId" type="STRING" sumtext="파일참조id"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsOnlCvlcptAprvCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value="ONL_CVLCPT_APRV_CD"/>
+          <Column id="unyCdValue" type="STRING" size="10"/>
+          <Column id="unyCdValueNm" type="STRING" size="30"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPrcsStsCd">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*   대국민 - 행정처분사항조회
+*  @MenuPath    TEMPLATE
+*  @FileName 	hes_mlead00_m00.xfdl
+*  @Creator 	HMH
+*  @CreateDate 	2022.12.20
+*  @Desction    행정처분사항조회
+
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.6.20     	HMH 	        최초 생성 
+*******************************************************************************
+*/
+include "lib::cm_script.xjs"
+include "lib::hes_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ //this.fv_param;	//화면에서 넘어온 param값
+ /************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ *************************************************************************************************/
+ //화면 접근 시 로그인정보 확인
+this.fnOninit = function(obj:nexacro.Form,e:nexacro.EventInfo)
+{
+	this.hesSetGoUrl("pa_hes_mle_ad::hes_mlead00_m00.xfdl");
+};
+
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnListAdmdsp();
+};
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼을 초기화
+	this.smfInitForm(obj);
+	
+	// 공통코드 호출
+	this.smfCodeList("code", [this.dsOnlCvlcptAprvCd])
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;	
+			
+			// 처리상태 콤보박스 세팅
+			this.dsPrcsStsCd.addRow();
+			this.dsPrcsStsCd.setColumn(0, 1, "전체");	// 코드명
+			
+			this.dsPrcsStsCd.addRow();
+			this.dsPrcsStsCd.setColumn(1, 0, "0");	// 코드
+			this.dsPrcsStsCd.setColumn(1, 1, "미상신");	// 코드명
+
+			var rowCount = this.dsPrcsStsCd.getRowCount();
+			//alert(rowCount);
+			for(var i = 0; i < this.dsOnlCvlcptAprvCd.getRowCount(); i++){
+				this.dsPrcsStsCd.addRow();
+				this.dsPrcsStsCd.setColumn(rowCount, 0, this.dsOnlCvlcptAprvCd.getColumn(i, 0));	// 코드
+				this.dsPrcsStsCd.setColumn(rowCount, 1, this.dsOnlCvlcptAprvCd.getColumn(i, 1));	// 코드명
+				rowCount++;
+			}
+			
+			this.dsSearch.setColumn(0,"dstrtOfcdcCd", this.hesGetAtptOfcdcOrgCode);	 
+			this.dsSearch.setColumn(0,"funrRrno", this.smfGetTrprRrno());	
+			this.dsSearch.setColumn(0,"acaInstiScCd",this.hesGetAcaInstiScCd);	
+	
+			this.fnListAdmdsp();
+		})		
+		.run()
+	;
+};
+//그리드 셀클릭 이벤트
+this.grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{ 
+	
+	//데이터셋 초기화
+	this.fnInit();
+	
+	var nRow = e.row;
+	var objDs = obj.getBindDataset();
+	
+	//사용자정보 조회시 필요한 값 셋팅
+	this.dsSearchAdmdspDtlInfo.setColumn(0,"tmprAcaDsgnNo",objDs.getColumn(nRow,"tmprAcaDsgnNo"));
+	this.dsSearchAdmdspDtlInfo.setColumn(0,"acaDsgnNo",objDs.getColumn(nRow,"acaDsgnNo"));
+	this.dsSearchAdmdspDtlInfo.setColumn(0,"dstrtOfcdcCd",objDs.getColumn(nRow,"dstrtOfcdcCd"));
+	this.dsSearchAdmdspDtlInfo.setColumn(0,"acaInstiScCd",objDs.getColumn(nRow,"acaInstiScCd"));
+	this.dsSearchAdmdspDtlInfo.setColumn(0,"admDspsDsgnNo",objDs.getColumn(nRow,"admDspsDsgnNo"));
+	this.dsSearchAdmdspDtlInfo.setColumn(0,"acaSeqDsgnNo",objDs.getColumn(nRow,"acaSeqDsgnNo"));
+	this.dsSearchAdmdspDtlInfo.setColumn(0,"chckYmd",objDs.getColumn(nRow,"chckYmd"));
+	
+	//행정처분 상세정보 조회  
+	this.fnSelectAdmdspDtlInfo();
+	
+};
+
+
+ /**
+ * @description  기본정보초기화 Transaction
+ */ 
+this.fnInit = function () {
+	this.dsAdmdspDtlInfo.setColumn(0,"tmprAcaDsgnNo", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"acaDsgnNo", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"acaInstiScCd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"acaNm", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"cteOfcdcCd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"acaSeqDsgnNo", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"chckYmd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"admdspYmd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"admdspMteCd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"admdspMteCdNm", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"admdspCn", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"admdspBgngYmd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"admdspEndYmd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"viltNocs", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"corecBgngYmd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"corecEndYmd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"corecCn", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"cchChckKndCd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"cchChckKndCdNm", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"viltCn", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"dstrtOfcdcCd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"rjctYmd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"rjctRsnCn", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"onlCvlcptPrcsStsCd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"onlCvlcptAprvCd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"onlCvlcptAprvCdNm", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"admDspsRegCdNm", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"admDspsDsgnNo", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"funrKornFlnm", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"viltMteCn", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"regDt", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"ffnlgAmt", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"ppenaCnt", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"txofNtfctnYn", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"prufDocuSbmsnMetCd", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"prufDocuSbmsnMetCdNm", '');
+	this.dsAdmdspDtlInfo.setColumn(0,"fileRefrnId", '');
+
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+// 서비스 콜백
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+	
+};
+
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * @description 행정처분사항 목록 조회 Transaction
+ */
+ this.fnListAdmdsp= function () {
+	
+	this.smfSearchService("list")
+	.run()
+	.callback(function(callbackParams){
+		if(callbackParams.errors) return;
+	});
+	
+ };
+ 
+ /**
+ * @description 행정처분 상세정보 조회  Transaction
+ */
+ this.fnSelectAdmdspDtlInfo= function () {
+	
+	this.smfSearchService("select")
+	.run()
+	.callback(function(callbackParams){
+		if(callbackParams.errors) return;
+	});
+	
+ };]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtInsrNm" propid="value" datasetid="dsSearch" columnid="acaNm"/>
+      <BindItem id="item1" compid="divSearch.form.calEmpmnYmdStart" propid="value" datasetid="dsSearch" columnid="sttRegYmd"/>
+      <BindItem id="item2" compid="divSearch.form.calEmpmnYmdEnd" propid="value" datasetid="dsSearch" columnid="endRegYmd"/>
+      <BindItem id="item3" compid="divSearch.form.calEmpmnYmdStart00" propid="value" datasetid="dsSearch" columnid="sttCkYmd"/>
+      <BindItem id="item4" compid="divSearch.form.calEmpmnYmdEnd00" propid="value" datasetid="dsSearch" columnid="endCkYmd"/>
+      <BindItem id="item5" compid="divSearch.form.cboOnlCvlcptAprvCd" propid="value" datasetid="dsSearch" columnid="onlCvlcptAprvCd"/>
+      <BindItem id="item6" compid="div00_00.form.staViltMteCn" propid="text" datasetid="dsAdmdspDtlInfo" columnid="viltMteCn"/>
+      <BindItem id="item7" compid="div00_00.form.staViltCn" propid="text" datasetid="dsAdmdspDtlInfo" columnid="viltCn"/>
+      <BindItem id="item8" compid="div00_00.form.staAdmstMeasuMatrCodeNm" propid="text" datasetid="dsAdmdspDtlInfo" columnid="admdspMteCdNm"/>
+      <BindItem id="item9" compid="div00_00.form.staAdmdspYmd" propid="text" datasetid="dsAdmdspDtlInfo" columnid="admdspYmd"/>
+      <BindItem id="item10" compid="div00_00.form.staAdmdspCn" propid="text" datasetid="dsAdmdspDtlInfo" columnid="admdspCn"/>
+      <BindItem id="item11" compid="div00_00.form.staPpenaCnt" propid="text" datasetid="dsAdmdspDtlInfo" columnid="ppenaCnt"/>
+      <BindItem id="item12" compid="div00_00.form.Static16" propid="text" datasetid="dsAdmdspDtlInfo" columnid="corecBgngYmd"/>
+      <BindItem id="item13" compid="div00_00.form.Static27" propid="text" datasetid="dsAdmdspDtlInfo" columnid="corecEndYmd"/>
+      <BindItem id="item14" compid="div00_00.form.Static20" propid="text" datasetid="dsAdmdspDtlInfo" columnid="corecCn"/>
+      <BindItem id="item15" compid="div00_00.form.staCchCkKndCodeNm" propid="text" datasetid="dsAdmdspDtlInfo" columnid="cchChckKndCdNm"/>
+      <BindItem id="item16" compid="div00_00.form.staFfnlgAmt" propid="text" datasetid="dsAdmdspDtlInfo" columnid="ffnlgAmt"/>
+      <BindItem id="item17" compid="div00_00.form.sta_02_00" propid="text" datasetid="dsAdmdspDtlInfo" columnid="prufDocuSbmsnMetCdNm"/>
+      <BindItem id="item18" compid="div00_00.form.staRjctYmd" propid="text" datasetid="dsAdmdspDtlInfo" columnid="rjctYmd"/>
+      <BindItem id="item19" compid="div00_00.form.staRjctRsnCn" propid="text" datasetid="dsAdmdspDtlInfo" columnid="rjctRsnCn"/>
+    </Bind>
+  </Form>
+</FDL>

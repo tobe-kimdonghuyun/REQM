@@ -1,0 +1,462 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="cmmMultiCombo" width="248" height="48" titletext="멀티콤보" onload="form_onload" scrollbartype="none none" scrolltype="none">
+    <Layouts>
+      <Layout height="48" mobileorientation="landscape" width="248">
+        <Button id="btnCbo" taborder="0" top="0" cssclass="btn_WF_Down" width="48" right="0" onclick="btnCbo_onclick" bottom="0"/>
+        <Edit id="edtCbo" taborder="1" left="0" top="0" bottom="0" right="btnCbo:8" displaynulltext="선택하세요" oneditclick="edtCbo_oneditclick" readonly="true"/>
+        <PopupDiv id="pdvCbo" text="pdiv00" visible="false" left="0" top="68" height="360" right="0" oncloseup="pdvCbo_oncloseup">
+          <Layouts>
+            <Layout>
+              <Static id="staBg" taborder="0" left="0" top="0" cssclass="sta_WF_GBg01" text="" right="0" bottom="0"/>
+              <Grid id="grdMultiCombo" taborder="1" left="0" top="0" right="0" bottom="58" autofittype="col" onheadclick="pdvCbo_grdMultiCombo_onheadclick" oncellclick="pdvCbo_grdMultiCombo_oncellclick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48"/>
+                      <Column size="120"/>
+                      <Column size="120"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="39" band="head"/>
+                      <Row size="57"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox" autosizecol="limitmax" text="0"/>
+                      <Cell col="1" text="code"/>
+                      <Cell col="2" text="value"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox" autosizecol="limitmax" text="bind:chk"/>
+                      <Cell col="1" text="bind:code"/>
+                      <Cell col="2" text="bind:value"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Button id="btnOk" taborder="2" text="확인" left="0" height="48" right="0" bottom="0" onclick="pdvCbo_btnOk_onclick" cssclass="btn_WF_Crud"/>
+            </Layout>
+          </Layouts>
+        </PopupDiv>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCombo">
+        <ColumnInfo>
+          <Column id="chk" type="STRING" size="256"/>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	cmmMultiCombo.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/12/02
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/12/02			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+this.comboinnerdataset;
+this.combocodecolumn;
+this.combodatacolumn;
+this.headname;
+this.callbackfunc;
+this.multiCheck = true;
+
+this.displayrowcount = 10;
+this.fvHeadHeight    = 28;
+this.fvRowHeight     = 28;
+this.fvWidth         = null; 
+
+this.fvAll           = false; 
+this.fvAllDisplay    = ""; 
+
+this.fvbReadOnly    = false; 
+
+this.fvOpenCount = 0;
+//this.objApp = this.gfnGetApplication();
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.fvOpenCount = 0;
+	var oDiv = this.parent;
+	
+	// combo 표시 건수 설정
+	if (this.gfnIsNull(oDiv.uDisplayrowcount) == false) {
+		this.displayrowcount = oDiv.uDisplayrowcount;
+	}
+	// combo 초기 전체 선택 여부
+	if (this.gfnIsNull(oDiv.uAll) == false) {
+		this.fvAll = oDiv.uAll;
+	}
+	// combo 전체 시 표시 값
+	if (this.gfnIsNull(oDiv.uAllDisplay) == false) {
+		this.fvAllDisplay = oDiv.uAllDisplay;
+	}
+	// popupDiv width 값
+	if (this.gfnIsNull(oDiv.uWidth) == false) {
+		this.fvWidth = oDiv.uWidth;
+	}
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+/**
+ * @description  멀티콤보 Dataset 및 Grid 설정
+ * @param {Dataset} objDs - 멀티콤보에 표시할 Dataset
+ * @param {String} sCodeColumn - code 칼럼 명
+ * @param {String} sDataColumn - data 칼럼 명
+ * @param {String} sHeadName - chk, 칼럼[1], 칼럼[2]
+ * @param {String} [sCallBack] - 콜백함수
+ * @return N/A
+ */
+this.setDataset = function (objDs, sCodeColumn, sDataColumn, sHeadName, sCallBack)
+{
+	this.comboinnerdataset = objDs;
+	this.combocodecolumn   = sCodeColumn;
+	this.combodatacolumn   = sDataColumn;
+	this.headname    	   = sHeadName;	
+	this.callbackfunc 	   = sCallBack;
+
+	// chk 미사용 시 1건 선택
+	if (this.headname.indexOf("chk") == -1) {	
+		this.multiCheck = false;
+		this.pdvCbo.form.grdMultiCombo.set_bottom(0);
+		this.pdvCbo.form.btnOk.set_visible(false);
+	}
+	
+	//데이터셋에  chk컬럼 없을 경우 생성
+	this.comboinnerdataset.set_enableevent(false);
+	var oColInfo = this.comboinnerdataset.getColumnInfo("chk");
+	if( this.gfnIsNull(oColInfo)) {
+		this.comboinnerdataset.addColumn("chk", "STRING");
+	}
+	
+	//checkbox값 세팅
+	var nIdx = this.comboinnerdataset.getRowCount();
+	for (var j=0; j<nIdx; j++){
+		
+		if (this.fvAll) { // 초기에 전체 선택이면
+			this.comboinnerdataset.setColumn(j, "chk", 1);
+		}else { 	
+			this.comboinnerdataset.setColumn(j, "chk", 0);
+		}
+	}
+	this.comboinnerdataset.set_rowposition(0);
+	this.comboinnerdataset.set_enableevent(true);
+	
+	// Grid format 및 Cell 설정
+	var oGrd = this.pdvCbo.form.grdMultiCombo;
+	
+	oGrd.set_enableevent(false);
+	oGrd.set_enableredraw(false);
+	
+	//oGrd.setFormatColProperty(0, "size", "48");	
+	oGrd.setCellProperty("body", 0, "text", "bind:chk");
+	oGrd.setCellProperty("body", 1, "text", "bind:"+this.combocodecolumn);
+	oGrd.setCellProperty("body", 2, "text", "bind:"+this.combodatacolumn);
+	
+	// chk 사용 미사용시 그리드 check 칼럼 삭제
+	if (this.multiCheck == false && oGrd.getCellProperty("head", 0, "displaytype")=="checkboxcontrol") {
+		var rtn = oGrd.deleteContentsCol("body", 0);
+	}
+	// 칼럼수에 따른 text 설정
+	var arrHeadList = this.headname.split(",");
+
+	for (var i=0;i<arrHeadList.length; i++) {
+		oGrd.setCellProperty("head", i, "text", arrHeadList[i]);
+	}
+	oGrd.set_binddataset(this.comboinnerdataset);
+	oGrd.set_enableevent(true);
+	oGrd.set_enableredraw(true);
+	this.pdvCbo.form.resetScroll();
+	
+	this.fnSyncValue();
+};
+
+this.fnSyncValue = function ()
+{
+	var arrTextList  = [];
+	var arrValueList = [];
+	
+	if(this.multiCheck==false){
+		arrValueList.push(this.comboinnerdataset.getColumn(this.comboinnerdataset.rowposition, this.combocodecolumn));
+		arrTextList.push(this.comboinnerdataset.getColumn(this.comboinnerdataset.rowposition, this.combodatacolumn));
+		this.fnSetComboText(arrValueList, arrTextList);
+		return;
+	}
+
+	var nRowCount = this.comboinnerdataset.getRowCount();
+	var nChkCount = this.comboinnerdataset.getCaseCount("chk=='1'");
+	
+	if( nRowCount == nChkCount){
+		//전체선택
+		this.pdvCbo.form.grdMultiCombo.setCellProperty("head", 0, "text", 1);
+	}else{
+		this.pdvCbo.form.grdMultiCombo.setCellProperty("head", 0, "text", 0);
+	}
+	
+	// 초기에 전체 선택이면
+	for (var i=0; i<nRowCount; i++) {
+		var sChkValue = this.comboinnerdataset.getColumn(i, "chk");
+		if (sChkValue == "1") {
+			arrValueList.push(this.comboinnerdataset.getColumn(i, this.combocodecolumn));
+			arrTextList.push(this.comboinnerdataset.getColumn(i, this.combodatacolumn));
+		}
+	}
+	this.fnSetComboText(arrValueList, arrTextList);
+};
+
+/**
+ * @description  선택된 Text Edit에 표시
+*/
+this.fnSetComboText = function(arrValueList, arrTextList)
+{
+	var sComboText = arrTextList.toString();
+	
+	this.edtCbo.uRetrunvalue = arrValueList;
+	this.edtCbo.uReturntext  = sComboText;
+	
+	if (this.gfnIsNull(sComboText)) {
+		this.edtCbo.set_value(null);
+	}else {
+		if (this.gfnIsNull(this.fvAllDisplay)) {
+			this.edtCbo.set_value(sComboText);
+		}else {
+			if (arrValueList.length == this.comboinnerdataset.rowcount) {
+				this.edtCbo.set_value(this.fvAllDisplay);
+				this.resetScroll();
+			}else {
+				this.edtCbo.set_value(sComboText);
+			}
+		}
+	}
+};
+
+
+/**
+ * @description  전체선택 해제 및 선택한 값 초기화
+*/
+this.fnInit = function ()
+{
+	var objDs = this.comboinnerdataset;
+	objDs.set_enableevent(false);
+	for (var i=0; i<objDs.rowcount; i++) {
+		objDs.setColumn(i, "chk", "0");			
+	}
+	objDs.set_enableevent(true);
+	
+	this.edtCbo.set_value(null);
+	this.edtCbo.uRetrunvalue = null;
+	this.edtCbo.uReturntext  = null;
+};
+
+/**
+ * @description  필수여부 css 변경
+*/
+this.setRequired = function(bValue)
+{
+	if (bValue) {
+		this.edtCbo.set_cssclass("essential");
+	}else {
+		this.edtCbo.set_cssclass("");
+	}
+};
+
+/**
+ * @description  ReadOnly여부 변경
+*/
+this.setReadOnly = function(bValue)
+{
+	this.fvbReadOnly = bValue;
+	this.btnCbo.set_enable(!bValue);
+};
+
+/**
+ * @description  멀티콤보 value 가져오기
+*/
+this.getValue = function()
+{
+	return this.edtCbo.uRetrunvalue;
+};
+
+
+/**
+ * @description  멀티콤보 text 가져오기
+*/
+this.getText = function()
+{
+	return this.edtCbo.uReturntext;
+};
+
+
+/**
+ * @description  멀티콤보 값 세팅
+*/
+this.setValue = function(sValue)
+{	
+	// 선택된 값 초기화
+	this.fnInit();
+
+	if (this.gfnIsNull(sValue)) return;
+	
+	var nFindRow;	
+	var arrTextList = [];
+	var arrValueList = (""+sValue).split(",");
+	
+	var objDs = this.comboinnerdataset;
+	objDs.set_enableevent(false);
+	for (var i=0; i<arrValueList.length; i++) {
+		nFindRow = objDs.findRow(this.combocodecolumn, arrValueList[i]);
+		if (nFindRow != -1) {
+			arrTextList.push(objDs.getColumn(nFindRow, this.combodatacolumn));
+			objDs.setColumn(nFindRow, "chk", "1");
+		}
+		
+	}
+	
+	objDs.set_enableevent(true);
+	objDs.set_rowposition(nFindRow);
+	this.fnSyncValue();
+};
+
+
+/**
+ * @description  전체선택
+*/
+this.fnSelectAll = function (bVal)
+{
+	var objDs = this.comboinnerdataset;
+	
+	objDs.set_enableevent(false);
+	for (var i=0; i<objDs.rowcount; i++) {
+		objDs.setColumn(i, "chk", bVal);			
+	}
+	objDs.set_enableevent(true);
+	
+	this.fnSyncValue();
+};
+
+/**
+ * @description   Popup Div Open
+*/
+this.fnOpenCombo = function()
+{	 
+	if (this.comboinnerdataset.getRowCount() <= 0) {
+		trace("멀티콤보에 표시할 Data가 없습니다. fnSetDataset으로 Dataset을 지정하세요!");
+		return;
+	}
+	else {
+		// PopupDiv width size 조정
+		if (!this.gfnIsNull(this.fvWidth)) {
+			this.pdvCbo.set_width(this.fvWidth);
+		}
+		this.fnSyncValue();
+		// pdv size 계산
+		var nRowCount = this.comboinnerdataset.getRowCount();
+		var nSize = this.displayrowcount;
+		if (nSize > nRowCount) nSize = nRowCount;
+		var nHeight = this.fvHeadHeight + (this.fvRowHeight  * nSize) + 2 + 30;
+		this.pdvCbo.set_height(nHeight);
+
+		this.pdvCbo.trackPopupByComponent(this.edtCbo, 0, this.edtCbo.getOffsetHeight()-1);
+		
+		
+	}
+};
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.edtCbo_oneditclick = function(obj:nexacro.Edit,e:nexacro.EditClickEventInfo)
+{
+	if(this.fvbReadOnly == false) {
+		this.fnOpenCombo();
+	}
+};
+
+this.btnCbo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnOpenCombo();
+};
+
+this.pdvCbo_grdMultiCombo_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	
+	if(this.multiCheck==false){
+		return;
+	}
+	var nCell = e.cell;
+	if(nCell==0){
+		var bVal = obj.getCellProperty("head", nCell, "text");
+		if( bVal == "1"){
+			bVal = "0";
+		}else{
+			bVal = "1";
+		}
+		this.fnSelectAll(bVal);
+	}
+};
+
+this.pdvCbo_grdMultiCombo_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var objDs = this.comboinnerdataset;
+
+	// chk 사용 미사용 시
+	if (this.multiCheck == false) {
+		var sVal = objDs.getColumn(e.row, this.combocodecolumn);
+		this.setValue(sVal);
+		this.pdvCbo.closePopup();
+	}else{
+		if( e.cell > 0){
+			if (objDs.getColumn(e.row, "chk") == "1") {
+				objDs.setColumn(e.row, "chk", "0");
+			}else {
+				objDs.setColumn(e.row, "chk", "1");
+			}
+		}
+		this.fnSyncValue();
+	}
+};
+
+
+this.pdvCbo_oncloseup = function(obj:nexacro.PopupDiv,e:nexacro.EventInfo)
+{
+	this.fnSyncValue();
+
+	if (!this.gfnIsNull(this.callbackfunc)) {	
+		this.lookupFunc(this.callbackfunc).call(this.parent.name, this.edtCbo.uRetrunvalue, this.edtCbo.uReturntext); 
+	}
+};
+
+this.pdvCbo_btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.pdvCbo.closePopup();
+	this.edtCbo.setFocus();
+};
+
+]]></Script>
+  </Form>
+</FDL>

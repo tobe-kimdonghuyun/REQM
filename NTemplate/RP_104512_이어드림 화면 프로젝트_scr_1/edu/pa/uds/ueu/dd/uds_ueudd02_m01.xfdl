@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="uds_ueudd02_m00" width="1200" height="543" titletext="고등학교별" onload="form_onload">
+    <Layouts>
+      <Layout height="543" width="1200" screenid="ScreenDeskTop">
+        <Div id="divSearch" taborder="0" left="0" top="20" height="110" cssclass="div_WF_Search" text="" right="0" initvalueid="ivDivAccessibilityOn" accessibilitylabel="조회영역">
+          <Layouts>
+            <Layout>
+              <Static id="staCoaAyr00" taborder="0" text="대입학년도" left="0" top="20" width="108" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtCoaAyr00" taborder="1" left="staCoaAyr00:0" width="80" height="30" top="20" initvalueid="ivEdtReadOnly" readonly="true" accessibilitylabel="대입학년도" value="2024" text="2024"/>
+              <Static id="staCoaRcritScNm" taborder="2" text="모집구분" left="174" top="20" width="96" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtCoaRcritScNm" taborder="3" left="staCoaRcritScNm:0" width="135" height="30" top="20" initvalueid="ivEdtReadOnly" readonly="true" accessibilitylabel="모집구분" value="수시" text="수시"/>
+              <Static id="staCtpv" taborder="4" text="시도" left="edtCoaRcritScNm:0" top="20" width="78" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboCddcScCd" taborder="5" left="staCtpv:0" width="175" height="30" innerdataset="dsCddcScCd" codecolumn="unyCdValue" datacolumn="unyCdValueNm" index="0" text="- 전체 -" readonly="false" value="1" top="20" initvalueid="ivCmbNormal" onitemchanged="tabCd_Tabpage2_divSearch_cboCddcScCd_onitemchanged"/>
+              <Static id="staHlvShlNm" taborder="6" text="고등학교명" left="cboCddcScCd:0" top="20" height="30" cssclass="sta_WF_Searchtxt01" width="108" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtHlvShlNm" taborder="7" left="staHlvShlNm:0" top="20" width="155" height="30" text="한국고등학교" initvalueid="ivEdtNormal" maxlength="100"/>
+              <Static id="staRegYmd" taborder="8" text="등록일자" left="0" top="60" width="108" cssclass="sta_WF_Searchtxt01" height="30" initvalueid="ivStcAccessibilityOn"/>
+              <Calendar id="calRegYmd1" taborder="9" left="staRegYmd:0" top="60" width="120" height="30" value="20230306" dateformat="yyyy.MM.dd." initvalueid="ivCalNormal" editformat="yyyy.MM.dd." readonly="false" onchanged="tabCd_Tabpage2_divSearch_calRegYmd1_onchanged" validate="required:true"/>
+              <Static id="Static65" taborder="10" text="~" left="calRegYmd1:0" top="60" width="15" height="30" cssclass="sta_WF_AC" initvalueid="ivStcAccessibilityOn" accessibilitylabel="부터"/>
+              <Calendar id="calRegYmd2" taborder="11" left="Static65:0" top="60" width="120" value="20230306" dateformat="yyyy.MM.dd." readonly="false" height="30" initvalueid="ivCalNormal" editformat="yyyy.MM.dd." onchanged="tabCd_Tabpage2_divSearch_calRegYmd2_onchanged" validate="required:true"/>
+              <Button id="btnSearch" taborder="12" text="조회" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="btnSearch_onclick" bottom="20" initvalueid="ivBtnAccessibilityButton"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staCoaRcritMmnt" taborder="1" left="0" top="150" height="34" cssclass="sta_WF_Blue14" text="모집기간 : [수시]2021.31 ~ 2021.11.30" wordWrap="char" initvalueid="ivStcAccessibilityOn" width="300"/>
+        <Grid id="grdRcptnPnstaPrgSittnCtpv" taborder="2" left="0" top="204" autofittype="col" right="0" bottom="0" binddataset="dsMain" initvalueid="ivGrdAccessibilityOn" selecttype="cell" accessibilitylabel="고등학교별 수신현황진행상황조회">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="50"/>
+                <Column size="50"/>
+                <Column size="50"/>
+                <Column size="50"/>
+                <Column size="50"/>
+                <Column size="50"/>
+                <Column size="50"/>
+                <Column size="50"/>
+                <Column size="50"/>
+                <Column size="50"/>
+                <Column size="50"/>
+              </Columns>
+              <Rows>
+                <Row size="31" band="head"/>
+                <Row size="31" band="head"/>
+                <Row size="31" band="head"/>
+                <Row size="40"/>
+                <Row size="40" band="summ"/>
+              </Rows>
+              <Band id="head" accessibilitylabel="제목영역">
+                <Cell rowspan="3" text="고등학교명"/>
+                <Cell col="1" colspan="5" text="전형자료요청"/>
+                <Cell col="6" colspan="2" text="전형자료생성"/>
+                <Cell col="8" colspan="2" text="전형자료수신"/>
+                <Cell col="10" colspan="2" text="전형자료복호화"/>
+                <Cell row="1" col="1" rowspan="2" text="요청대상"/>
+                <Cell row="1" col="2" rowspan="2" text="미요청"/>
+                <Cell row="1" col="3" colspan="2" text="요청오류"/>
+                <Cell row="1" col="5" rowspan="2" text="요청완료"/>
+                <Cell row="1" col="6" rowspan="2" text="미생성"/>
+                <Cell row="1" col="7" rowspan="2" text="생성완료"/>
+                <Cell row="1" col="8" rowspan="2" text="미수신"/>
+                <Cell row="1" col="9" rowspan="2" text="수신완료"/>
+                <Cell row="1" col="10" rowspan="2" text="블라인드"/>
+                <Cell row="1" col="11" rowspan="2" text="블라인드&#13;&#10;해제"/>
+                <Cell row="2" col="3" text="미존재"/>
+                <Cell row="2" col="4" text="미제공"/>
+              </Band>
+              <Band id="body" accessibilitylabel="내용영역">
+                <Cell text="bind:shlNm"/>
+                <Cell col="1" text="bind:dmndTrgtNocs" textAlign="right" displaytype="number"/>
+                <Cell col="2" text="bind:nreqNocs" textAlign="right" displaytype="number"/>
+                <Cell col="3" text="bind:pvsnImpsNocs" textAlign="right" displaytype="number"/>
+                <Cell col="4" text="bind:npvsnNocs" textAlign="right" displaytype="number"/>
+                <Cell col="5" text="bind:dmndCmptnNocs" textAlign="right" displaytype="number"/>
+                <Cell col="6" text="bind:unCrtNocs" textAlign="right" displaytype="number"/>
+                <Cell col="7" text="bind:crtCmptnNocs" textAlign="right" displaytype="number"/>
+                <Cell col="8" text="bind:unRcptnNocs" textAlign="right" displaytype="number"/>
+                <Cell col="9" text="bind:rcptnCmptnNocs" textAlign="right" displaytype="number"/>
+                <Cell col="10" text="bind:bldCrtCmptnNocs" textAlign="right" displaytype="number"/>
+                <Cell col="11" text="bind:seleDataCrtCmptnNocs" textAlign="right" displaytype="number"/>
+              </Band>
+              <Band id="summary" accessibilitylabel="합계영역">
+                <Cell text="합계" textAlign="center"/>
+                <Cell col="1" textAlign="right" displaytype="number" text="expr:dataset.getSum('dmndTrgtNocs')"/>
+                <Cell col="2" textAlign="right" text="expr:dataset.getSum('nreqNocs')" displaytype="number"/>
+                <Cell col="3" textAlign="right" text="expr:dataset.getSum('pvsnImpsNocs')" displaytype="number"/>
+                <Cell col="4" textAlign="right" text="expr:dataset.getSum('npvsnNocs')" displaytype="number"/>
+                <Cell col="5" textAlign="right" text="expr:dataset.getSum('dmndCmptnNocs')" displaytype="number"/>
+                <Cell col="6" textAlign="right" text="expr:dataset.getSum('unCrtNocs')" displaytype="number"/>
+                <Cell col="7" textAlign="right" text="expr:dataset.getSum('crtCmptnNocs')" displaytype="number"/>
+                <Cell col="8" textAlign="right" text="expr:dataset.getSum('unRcptnNocs')" displaytype="number"/>
+                <Cell col="9" textAlign="right" text="expr:dataset.getSum('rcptnCmptnNocs')" displaytype="number"/>
+                <Cell col="10" textAlign="right" text="expr:dataset.getSum('bldCrtCmptnNocs')" displaytype="number"/>
+                <Cell col="11" textAlign="right" text="expr:dataset.getSum('seleDataCrtCmptnNocs')" displaytype="number"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    수신현황진행상황조회
+*  @FileName 	uds_ueudd02_m00
+*  @Creator 	최재영
+*  @CreateDate 	2022.05.31  
+*  @Desction    대입전형-대학-수신현황진행상황조회
+************** 소스 수정 이력 ***********************************************
+*  date				Modifier				Description
+*******************************************************************************
+*  2022.05.31		최재영					최초 생성
+*  2023.03.08		최재영					개발
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::uds_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리
+ */
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+
+	// Div 초기화
+	this.smfInitDiv(obj);
+	
+	// 대입서비스체크
+	this.udsfCoaSvcChck(function(){
+		// 초기화
+		this.fnInit(obj);
+		
+		// 공통코드 조회
+		this.smfCodeList("code", [this.dsCddcScCd])
+			.run()
+			.callback(function(callbackParams){
+				if(callbackParams.errors) return;
+				
+				this.fnCoaRcritCtr(); // 대입모집기준 조회
+		});
+	
+	});
+		
+	this.tabCd.set_tabindex(0);
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+// 서비스 콜백
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+	
+	if(svcid == "listCoaRcritCtr"){
+		
+		var coaAyr       = this.dsCoaCtrBsc.getColumn(0, "coaAyr");
+		var coaRcritScCd = this.dsCoaCtrBsc.getColumn(0, "coaRcritScCd");
+		var coaRcritScNm = this.udsfGetCoaRcritScNm(coaRcritScCd);
+		
+		var rcritScByBgngYmd = this.dsCoaCtrBsc.getColumn(0,"rcritScByBgngYmd"); // 모집시작일자
+	    var rcritScByEndYmd  = this.dsCoaCtrBsc.getColumn(0,"rcritScByEndYmd");  // 모집종료일자
+	
+		if(!this.isNil(coaAyr) && !this.isNil(coaRcritScCd)){
+			this.dsSearch.setColumn(0,"coaAyr" , coaAyr);            // 대입학년도
+			this.dsSearch.setColumn(0,"coaRcritScCd", coaRcritScCd); // 대입모집구분코드
+			this.dsSearch.setColumn(0,"coaRcritScNm", coaRcritScNm); // 대입모집구분명
+			
+		    // 시도별
+			this.tabCd.Tabpage1.form.staCoaRcritMmnt.set_text("모집기간 : ["+coaRcritScNm+"]"+rcritScByBgngYmd.dateFormat("yyyy.MM.dd.")+ "~" +rcritScByEndYmd.dateFormat("yyyy.MM.dd."));
+			// 고등학교별
+			this.tabCd.Tabpage2.form.staCoaRcritMmnt.set_text("모집기간 : ["+coaRcritScNm+"]"+rcritScByBgngYmd.dateFormat("yyyy.MM.dd.")+ "~" +rcritScByEndYmd.dateFormat("yyyy.MM.dd."));
+			
+		}else{
+			coaAyr       = this.dsSearch.getColumn(0,"coaAyr");
+		    coaRcritScCd = this.dsSearch.getColumn(0,"coaRcritScCd");
+			coaRcritScNm = this.dsSearch.getColumn(0,"coaRcritScNm");
+		}
+		
+		this.dsSearch.setColumn(0,"bgngYmd", rcritScByBgngYmd); // 시작일
+		
+		this.tabCd_Tabpage1_divSearch_calRegYmd1_onchanged(); // 시도별 시작일 변경쿼리
+		this.tabCd_Tabpage1_divSearch_calRegYmd2_onchanged(); // 시도별 종료일 변경쿼리
+		
+		this.tabCd_Tabpage2_divSearch_calRegYmd1_onchanged(); // 고등학교별 시작일 변경쿼리
+		this.tabCd_Tabpage2_divSearch_calRegYmd2_onchanged(); // 고등학교별 종료일 변경쿼리
+		
+	}else if(svcid == "listCtpvRcptnPnsta"){
+		
+	}else if(svcid == "listHlvRcptnPnsta"){
+	
+	}
+};
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * @description 대입모집기준 조회 FUNCTION
+*/
+this.fnCoaRcritCtr = function()
+{
+	// 조회 서비스
+	this.smfSearchService("listCoaRcritCtr")
+		.confirmIfModifiedDataset(this.dsCoaCtrBsc) // 데이터가 변경되었으면 확인메시지
+		.validateForm(this.tabCd.Tabpage1.form.divSearch) // 폼 유효성검사
+		.run() // 실행
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		}); // 콜백
+};	
+
+/**
+ * @description 수신현황진행상황 조회 FUNCTION
+*/
+this.fnSearch = function() {
+	var tabIndex = this.tabCd.tabindex;
+	
+	if(tabIndex == 0){ // 시도별
+	
+	// 조회 서비스
+	this.smfSearchService("listCtpvRcptnPnsta")
+		.confirmIfModifiedDataset(this.dsMain) // 데이터가 변경되었으면 확인메시지
+		.validateForm(this.tabCd.Tabpage1.form.divSearch) // 폼 유효성검사
+		.run() // 실행
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		}); // 콜백
+		
+	}else { // 고등학교별
+	
+	// 조회 서비스
+	this.smfSearchService("listHlvRcptnPnsta")
+		.confirmIfModifiedDataset(this.dsMain) // 데이터가 변경되었으면 확인메시지
+		.validateForm(this.tabCd.Tabpage1.form.divSearch) // 폼 유효성검사
+		.run() // 실행
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		}); // 콜백
+	}
+	
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+this.fnRetrieve = function()
+{	
+	this.fnSearch(); // 조회
+}
+
+/**
+ * @description 초기화 FUNCTION
+ */
+this.fnInit = function(obj){
+ 	this.dsSearch.setColumn(0, "coaAyr", this.udsv_coaAyr);
+ 	this.dsSearch.setColumn(0, "coaRcritScCd", this.udsv_coaRcritScCd);
+ 	this.dsSearch.setColumn(0, "coaRcritScNm", this.udsv_coaRcritScNm);
+ 	this.dsSearch.setColumn(0, "uvstOrgCd", this.udsv_instCd);
+	this.dsSearch.setColumn(0, "bgngYmd",this.smfToday()); 
+ 	this.dsSearch.setColumn(0, "endYmd",this.smfToday()); 
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+/**
+ * @description 탭버튼 이동 Event
+ */
+this.tabCd_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	var rcritScByBgngYmd = this.dsCoaCtrBsc.getColumn(0,"rcritScByBgngYmd"); // 모집시작일자
+	var rcritScByEndYmd  = this.dsCoaCtrBsc.getColumn(0,"rcritScByEndYmd");  // 모집종료일자
+
+	this.fv_tabIndex = e.postindex;
+	this.dsMain.clearData(); // 탭이동시 그리드 초기화
+	
+	this.fnInit();// 초기화
+	
+	this.dsSearch.setColumn(0,"bgngYmd", rcritScByBgngYmd); // 시작일
+		
+	this.tabCd_Tabpage1_divSearch_calRegYmd1_onchanged(); // 시도별 시작일 변경쿼리
+	this.tabCd_Tabpage1_divSearch_calRegYmd2_onchanged(); // 시도별 종료일 변경쿼리
+	
+	this.tabCd_Tabpage2_divSearch_calRegYmd1_onchanged(); // 고등학교별 시작일 변경쿼리
+	this.tabCd_Tabpage2_divSearch_calRegYmd2_onchanged(); // 고등학교별 종료일 변경쿼리
+	
+};
+
+/**
+ * @description 조회버튼 클릭 Event
+ */
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnRetrieve();
+};
+
+/**
+ * @description 시도별 종료일 변경 Event
+ */
+this.tabCd_Tabpage1_divSearch_calRegYmd2_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	var objValue         = this.tabCd.Tabpage1.form.divSearch.form.calRegYmd2.value;
+	var rcritScByBgngYmd = this.dsCoaCtrBsc.getColumn(0,"rcritScByBgngYmd"); // 모집시작일자
+	var rcritScByEndYmd  = this.dsCoaCtrBsc.getColumn(0,"rcritScByEndYmd");  // 모집종료일자
+
+	
+	if(objValue < rcritScByBgngYmd || rcritScByEndYmd < objValue){
+		this.dsSearch.setColumn(0, "endYmd", rcritScByBgngYmd);
+	}
+};
+
+/**
+ * @description 시도별 시작일 변경 Event
+ */
+this.tabCd_Tabpage1_divSearch_calRegYmd1_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	var objValue         = this.tabCd.Tabpage1.form.divSearch.form.calRegYmd1.value;
+	var rcritScByBgngYmd = this.dsCoaCtrBsc.getColumn(0,"rcritScByBgngYmd"); // 모집시작일자
+	var rcritScByEndYmd  = this.dsCoaCtrBsc.getColumn(0,"rcritScByEndYmd");  // 모집종료일자
+
+	
+	if(objValue < rcritScByBgngYmd || rcritScByEndYmd < objValue){
+		this.dsSearch.setColumn(0, "bgngYmd", rcritScByBgngYmd);
+	}
+};
+
+/**
+ * @description 고등학교별 시작일 변경 Event
+ */
+this.tabCd_Tabpage2_divSearch_calRegYmd1_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	var objValue         = this.tabCd.Tabpage2.form.divSearch.form.calRegYmd1.value;
+	var rcritScByBgngYmd = this.dsCoaCtrBsc.getColumn(0,"rcritScByBgngYmd"); // 모집시작일자
+	var rcritScByEndYmd  = this.dsCoaCtrBsc.getColumn(0,"rcritScByEndYmd");  // 모집종료일자
+
+	if(objValue < rcritScByBgngYmd || rcritScByEndYmd < objValue){
+		this.dsSearch.setColumn(0, "bgngYmd", rcritScByBgngYmd);
+	}
+};
+
+/**
+ * @description 고등학교별 종료일 변경 Event
+ */
+this.tabCd_Tabpage2_divSearch_calRegYmd2_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	var objValue         = this.tabCd.Tabpage2.form.divSearch.form.calRegYmd2.value;
+	var rcritScByBgngYmd = this.dsCoaCtrBsc.getColumn(0,"rcritScByBgngYmd"); // 모집시작일자
+	var rcritScByEndYmd  = this.dsCoaCtrBsc.getColumn(0,"rcritScByEndYmd");  // 모집종료일자
+	
+	if(objValue < rcritScByBgngYmd || rcritScByEndYmd < objValue){
+		this.dsSearch.setColumn(0, "endYmd", rcritScByBgngYmd);
+	}
+};
+
+/**
+ * @description 검색조건 변경시 Event
+ */
+this.dsSearch_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	this.dsMain.clearData(); // 검색조건 변경시 그리드 초기화
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listCtpvRcptnPnsta</Col>
+            <Col id="url">uds_ueu_dd02_001.do</Col>
+            <Col id="outDatasets">dsMain</Col>
+            <Col id="inDatasets">dsSearch</Col>
+          </Row>
+          <Row>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsMain</Col>
+            <Col id="url">uds_ueu_dd02_002.do</Col>
+            <Col id="id">listHlvRcptnPnsta</Col>
+          </Row>
+          <Row>
+            <Col id="id">listCoaRcritCtr</Col>
+            <Col id="url">uds_ueu_dd00_712.do</Col>
+            <Col id="outDatasets">dsCoaCtrBsc</Col>
+            <Col id="inDatasets">dsSearch</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" oncolumnchanged="dsSearch_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="coaAyr" type="STRING" size="256" sumtext="대입학년도"/>
+          <Column id="coaRcritScCd" type="STRING" size="256" sumtext="대입모집구분코드"/>
+          <Column id="coaRcritScNm" type="STRING" size="256" sumtext="대입모집구분명"/>
+          <Column id="bgngYmd" type="STRING" size="256" sumtext="시작일"/>
+          <Column id="endYmd" type="STRING" size="256" sumtext="종료일"/>
+          <Column id="cddcScCd" type="STRING" size="256" sumtext="시도교육청구분코드"/>
+          <Column id="shlNm" type="STRING" size="256" sumtext="학교명"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="coaAyr"/>
+            <Col id="coaRcritScCd"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="cddcScCd" type="STRING" size="256" datapath="" sumtext="시도교육청구분코드"/>
+          <Column id="cddcScNm" type="STRING" size="256" sumtext="시도교육청구분명"/>
+          <Column id="shlCd" type="STRING" size="256" sumtext="학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" sumtext="학교"/>
+          <Column id="dmndTrgtNocs" type="BIGDECIMAL" size="10" sumtext="요청대상"/>
+          <Column id="nreqNocs" type="BIGDECIMAL" size="10" sumtext="미요청"/>
+          <Column id="pvsnImpsNocs" type="BIGDECIMAL" size="10" sumtext="미존재"/>
+          <Column id="npvsnNocs" type="BIGDECIMAL" size="10" sumtext="미제공"/>
+          <Column id="dmndCmptnNocs" type="BIGDECIMAL" size="10" sumtext="요청완료"/>
+          <Column id="unCrtNocs" type="BIGDECIMAL" size="10" sumtext="미생성"/>
+          <Column id="crtCmptnNocs" type="BIGDECIMAL" size="10" sumtext="생성완료"/>
+          <Column id="unRcptnNocs" type="BIGDECIMAL" size="10" sumtext="미수신"/>
+          <Column id="rcptnCmptnNocs" type="BIGDECIMAL" size="10" sumtext="수신완료"/>
+          <Column id="bldCrtCmptnNocs" type="BIGDECIMAL" size="10" sumtext="블라인드복호화완료"/>
+          <Column id="seleDataCrtCmptnNocs" type="BIGDECIMAL" size="10" sumtext="블라인드해제복호화완료"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCoaCtrBsc" oncolumnchanged="dsSearch_oncolumnchanged" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="coaAyr" type="STRING" size="256" sumtext="대입학년도"/>
+          <Column id="coaRcritScCd" type="STRING" size="256" sumtext="대입모집구분코"/>
+          <Column id="rcritScByBgngYmd" type="STRING" size="256" sumtext="모집구분별시작일자"/>
+          <Column id="rcritScByEndYmd" type="STRING" size="255" sumtext="모집구분별종료일자"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCddcScCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="FirstCode" type="STRING" size="30" value="ALL" datapath=""/>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value="CDDC_SC_CD"/>
+          <ConstColumn id="FilterExpr" type="STRING" size="30" value="unyCdValue != 'A00' &amp;&amp; unyCdValue != 'V10'"/>
+          <ConstColumn id="UnyCdGrpId" type="STRING" size="30" value=""/>
+          <ConstColumn id="BfrClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd1Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd2Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd3Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd4Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd5Value" type="STRING" size="30" value=""/>
+          <Column id="pgeId" type="STRING" size="256"/>
+          <Column id="clfCdValue" type="STRING" size="30"/>
+          <Column id="clfCdValueNm" type="STRING" size="120"/>
+          <Column id="clfCdUseYn" type="STRING" size="150"/>
+          <Column id="unyCdValue" type="STRING" size="10"/>
+          <Column id="unyCdValueNm" type="STRING" size="30"/>
+          <Column id="userDfnCd1Value" type="STRING" size="100"/>
+          <Column id="userDfnCd2Value" type="STRING" size="100"/>
+          <Column id="userDfnCd3Value" type="STRING" size="100"/>
+          <Column id="userDfnCd4Value" type="STRING" size="100"/>
+          <Column id="userDfnCd5Value" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtCoaAyr00" propid="value" datasetid="dsSearch" columnid="coaAyr"/>
+      <BindItem id="item1" compid="divSearch.form.edtCoaRcritScNm" propid="value" datasetid="dsSearch" columnid="coaRcritScNm"/>
+      <BindItem id="item2" compid="divSearch.form.cboCddcScCd" propid="value" datasetid="dsSearch" columnid="cddcScCd"/>
+      <BindItem id="item3" compid="divSearch.form.edtHlvShlNm" propid="value" datasetid="dsSearch" columnid="shlNm"/>
+      <BindItem id="item4" compid="divSearch.form.calRegYmd1" propid="value" datasetid="dsSearch" columnid="bgngYmd"/>
+      <BindItem id="item5" compid="divSearch.form.calRegYmd2" propid="value" datasetid="dsSearch" columnid="endYmd"/>
+    </Bind>
+  </Form>
+</FDL>

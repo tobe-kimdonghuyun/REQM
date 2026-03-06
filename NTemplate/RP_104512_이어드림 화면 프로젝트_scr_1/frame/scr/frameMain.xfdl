@@ -1,0 +1,1285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameMain" width="1430" height="1020" titletext="학부모소통시스템(frameMain)" onload="form_onload" scrollbartype="none none" scrollindicatorsize="10" nHeight="30" scrolltype="none" onsize="form_onsize" onlayoutchanged="form_onlayoutchanged" ontimer="form_ontimer">
+    <Layouts>
+      <Layout height="1020" mobileorientation="landscape" width="1430" screenid="desktopScr">
+        <Static id="staTopGuide" taborder="5" left="0" top="0" right="0" cssclass="sta_TF_Bg" height="128" accessibilityenable="false"/>
+        <Div id="divTop" taborder="0" left="0" top="0" async="false" url="frame::scr/frameTop.xfdl" height="130" text="" initvalueid="ivDivAccessibilityOn" formscrollbartype="none none" formscrolltype="none" accessibilitylabel="Top영역" minwidth="" formscrollbarsize="20" right="0" accessibilityenable="false"/>
+        <Div id="divAll" taborder="1" left="0" top="divTop:0" text="" accessibilityenable="false" accessibilityrole="none" bottom="0" initvalueid="ivDivAccessibilityOff" minwidth="" url="frame::scr/frameAll.xfdl" right="0" formscrolltype="vertical" formscrollbartype="none fixed"/>
+        <Div id="divMenu" taborder="2" text="divMenu" left="1500" top="65" width="200" height="150" url="frame::scr/frameTopMenu.xfdl" minwidth=""/>
+        <Div id="divSearch" taborder="3" text="divSearch" left="1500" top="295" width="200" height="150" url="frame::scr/frameTopSearch.xfdl" minwidth=""/>
+      </Layout>
+      <Layout height="1147" mobileorientation="Landscape" name="tablet" type="default" width="800" screenid="tabletScr,desktopScr">
+        <Div id="divTop"/>
+      </Layout>
+      <Layout height="1040" mobileorientation="Landscape" name="mobile" type="default" width="480" screenid="mobileScr,desktopScr">
+        <Static id="staTopGuide" height="76" left="0" top="0" right="0"/>
+        <Div id="divTop" height="76" left="0" top="0" right="0" accessibilityenable="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템
+*  @MenuPath    공통
+*  @FileName 	frameMain.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = nexacro.getApplication();
+
+this.fv_workPageParams = {};    //화면전환시 넘길 parameter
+this.fv_isMobile = false;   //모바일로 접속여부
+this.fv_device;     //device 종류
+
+// 각 Frame을 변수로 보관
+this.fvFrameTop; 
+this.fvFrameHead;
+this.fvFrameWork;
+this.fvFrameBottom;
+
+// 메인화면 구성을 위한 정보
+this.fv_introformUrl = "frame::scr/frameWorkIntro.xfdl";  // 메인화면(로그인전)
+this.fv_mainformUrl  = "frame::scr/frameWorkMain.xfdl";   // 메인화면(로그인후)
+
+this._fvPopup;
+
+this.fvUseHistory      = true;   // 뒤로가기 기능 사용여부(true:사용, false:미사용)
+this.fvApplyHistory    = false;   // 히스토리 내용 반영여부(true:반영, false:미반영)
+
+// History
+this.param = {
+        "menu"    : "",
+        "keyword" : "",
+        "page"    : 1,
+        "postId"  : "", 
+        "params"  : {},
+        "headArea" : "",
+        "menuText" : ""
+    };
+
+// [BEGIN] 디지털정부 UI/UX 가이드 적용관련
+this.APPLY_GOV_MODE = ["1","2"];	// 적용 실행 모드(임시)
+this.APPLY_GOV_GUIDE = false;
+this.USE_LOGGER = false;
+
+this.fvPopDivType = null;
+// [ END ] 디지털정부 UI/UX 가이드 적용관련
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//trace("Frame Main onload >>>>>>>");
+	//this.scrInitForm(obj);	//필수(화면초기화)
+
+	// 각 Frame을 변수로 보관
+	this.fvFrameTop    = this.divTop;
+	this.fvFrameHead   = this.divAll.form.divHead;
+	this.fvFrameWork   = this.divAll.form.divWork;
+	this.fvFrameBottom = this.divAll.form.divBottom;
+	
+	//모바일 접속여부 변수설정
+	this.fv_isMobile = nexacro.getEnvironmentVariable("ev_isMobile") == "Y"?true:false; 
+	
+	//스크린 레이아웃에 따라 전역변수 재설정
+	this.fnAfterLayoutChange();
+	
+    //뒤로가기 기능을 위한 초기설정
+    this.fnSetHistorySetup(); 
+	
+    //최초화면 설정
+//     if (nexacro._Browser =="Runtime") {
+// 		// 메인Intro 화면을 호출한다.
+// 		this.fnStartMainForm();
+// 	}
+// 	else {
+// 		// 로그인여부
+// 		this.checkScrLgn();
+//     }
+};
+
+/**
+ * @description 화면 사이즈 변경시
+*/
+this.form_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+// trace("FrameMain form_onsize >>>>>>>>");
+};
+
+//Form의 onlayoutchanged이벤트
+this.form_onlayoutchanged = function(obj,e)
+{
+	//전역변수 재설정
+	this.fnAfterLayoutChange();
+	
+	obj.setTimer(900, 55);
+};
+
+//MLM 레이아웃 변경후 설정
+this.fnAfter_onlayoutchanged = function(sLayoutId)
+{
+//trace("fnAfter_onlayoutchanged==="+sLayoutId);
+	if ( this.fvPopDivType ) 
+	{
+		this.fnShowPopDiv(this.fvPopDivType);
+	}	
+};
+
+//Form의 ontimer이벤트
+this.form_ontimer = function(obj,e)
+{
+	if ( e.timerid == 900 ) {
+		obj.killTimer(e.timerid);
+		this.fnAfter_onlayoutchanged(this.getCurrentLayoutID());
+	}
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+  /* 기본 트랙잭션 콜백 */
+ this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+//전체 Div 보이기
+this.fnShowPopDiv = function(sType)
+{	
+	this.staTopGuide.set_visible(false);
+	this.divTop.set_visible(false);
+	this.divAll.set_visible(false);
+
+	var objDiv = null, sUrl = "";
+	if ( sType == "menu" ) {
+		objDiv = this.divMenu;
+	} 
+	else if ( sType == "search" ) {
+		objDiv = this.divSearch;
+	}	
+	
+	objDiv.move(0,0,null,null,0,0);
+	this.fvPopDivType = sType;
+	objDiv.set_visible(true);
+	
+	objDiv.setFocus();
+};
+
+//전체 Div 감추기
+this.fnHidePopDiv = function(sType)
+{
+	this.staTopGuide.set_visible(true);
+	this.divTop.set_visible(true);
+	this.divAll.set_visible(true);
+	
+	var objDiv = null, sUrl = "";
+	if ( sType == "menu" ) {
+		objDiv = this.divMenu;
+	} 
+	else if ( sType == "search" ) {
+		objDiv = this.divSearch;
+	}
+	this.fvPopDivType = null;
+	objDiv.set_visible(false);
+	
+	this.divAll.setFocus();
+};
+
+//전체팝업 사이즈 설정
+this.fnPopDivMove = function(objDiv)
+{
+	/*
+	var nMainFrameWidth = this.objApp.mainframe.getOffsetWidth();
+
+	var nLeft = 0;
+	if ( nMainFrameWidth > 1436 ) {
+		nLeft = (nMainFrameWidth / 2) - (1436 / 2);
+	}
+	*/
+	
+    objDiv.move(0,0,null,null,0,0);
+	//this.resetScroll();
+};
+
+//메인화면 호출하기
+this.fnStartMainForm = function()
+{
+	var sUrl   = this.fv_mainformUrl;
+	var params = {menu : "MAIN",_url:sUrl};
+	this.fnSetWorkpage(sUrl, params, null, "HOME");
+};
+
+/**
+@class fnSetWorkpage
+@description 메뉴변경
+@param 필수 {String} sMenuUrl – 체크할 값
+@param option {Object} params - 새로열릴 페이지 parameter
+@param option {boolean} bShowHead - divHead표시여부
+@param option {String} sMenuText  - 메뉴명
+@param option {boolean} bShowToolbar - divQuickMenu표시여부
+@param option {boolean} bShowGrade - divGrade표시여부
+@return N/A
+*/
+this.fnSetWorkpage = function(sMenuUrl, params, bShowHead, sMenuText, bShowToolbar,bShowGrade, hisTime)
+{
+	//trace("fnSetWorkpage ="+ sMenuUrl);
+    if(this.isNil(sMenuUrl)) return;
+	
+	//로그인 여부에 따라 intro 페이지로 이동
+// 	if ( sMenuUrl == this.fv_mainformUrl && !this.smfIsLogin() )
+// 	{
+// 		sMenuUrl = this.fv_introformUrl;
+// 	};
+	    
+    // 가로,세로 스크롤 0
+    if(this.divAll.form.hscrollbar){
+        this.divAll.form.hscrollbar.set_pos(0); 
+    }
+    this.divAll.form.vscrollbar.set_pos(0);
+    
+    var objMenuDs = this.fvFrameTop.form.dsMenu;    
+    // 로그인 필수 여부 확인
+    var nFindRow = 0; //this.fnGetRowWithMenuUrl(objMenuDs,sMenuUrl, params);
+	var sMenuId  = "";
+    if(nFindRow>-1)
+    {
+		sMenuId = objMenuDs.getColumnNF(nFindRow,"menuId");
+        var sIsLogin = objMenuDs.getColumnNF(nFindRow,"isNeedLogin");
+        if(sIsLogin=="Y")
+        {       // 로그인했는지 체크하여 로그인으로 이동
+            if(!this.smfIsLogin()) 
+            {
+			
+				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				// 알럿
+				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				//this.scrAlert("CP001", null, function (result){ //사용자 로그인이 필요합니다.
+				this.scrAlert("로그인이 필요한 서비스입니다.", null, function (result){ // 로그인이 필요한 서비스입니다.
+				
+					// 메인화면을 호출한다.
+					this.fnStartMainForm();
+					
+				});
+				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				// 알럿
+				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					
+				return;
+					
+            }
+			
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			//  집중상담기간이 아닌 경우 메뉴 진입 불가 처리 시작
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			//trace("=============================================================================================================");
+			//trace("!frameMain ::: sMenuUrl ::: " + sMenuUrl );	
+			//trace("=============================================================================================================");
+
+			if("pa_scr_ctr_ir::scr_ctrir00_m00.xfdl" ==  sMenuUrl ){ // 메뉴 ::: 집중상담예약
+				var cnctrDscsnPrdYn = nexacro.getApplication().gdsScrLgnChildList.lookup("chcYn", "Y", "cnctrDscsnPrdYn"); // 집중상담기간여부
+				
+				//trace("=============================================================================================================");
+				//trace("frameMain ::: cnctrDscsnPrdYn ::: " + cnctrDscsnPrdYn );	
+				//trace("=============================================================================================================");
+
+				if("N" == cnctrDscsnPrdYn){				
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					// 알럿
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					this.scrAlert("집중상담기간이 아닙니다.", null, function (result){ // 집중상담기간이 아닙니다.
+					
+						// 메인화면을 호출한다.
+						//this.fnStartMainForm();
+						return;
+						
+					});
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					// 알럿
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				
+					return;					
+				}
+
+			}	
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			//  집중상담기간이 아닌 경우 메뉴 진입 불가 처리 종료
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			//  필수개인정보수집동의여부가 "Y" 아닌 경우 메뉴 진입 불가 처리 시작
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			//trace("=============================================================================================================");
+			//trace("frameMain ::: sMenuUrl ::: " + sMenuUrl );	
+			//trace("=============================================================================================================");
+
+			if("pa_scr_ctr_cr::scr_ctrcr00_m00.xfdl" == sMenuUrl  || "pa_scr_ctr_ir::scr_ctrir00_m00.xfdl" ==  sMenuUrl || "pa_scr_ctr_oc::scr_ctroc00_m00.xfdl" ==  sMenuUrl ){ // 메뉴 ::: 상시상담예약, 집중상담예약, 온라인(서면)상담
+				var mnrDsgnYn =nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'mnrDsgnYn'); // 필수개인정보수집동의여부 (세션에 없어서 대신사용)
+				
+				//trace("=============================================================================================================");
+				//trace("frameMain ::: mnrDsgnYn ::: " + mnrDsgnYn );	
+				//trace("=============================================================================================================");
+
+				if("N" == mnrDsgnYn){				
+ 
+					nexacro.getApplication().gdsScrLgnInfo.setColumn(0,"prvcAgreUrl", sMenuUrl);	
+
+					var sUrl = "frame::scr/framePrvcAgre.xfdl"; // 개인정보동의
+					var params = {menu : "MAIN",_url:sUrl};
+					this.fnSetWorkpage(sUrl, params, null, "HOME");
+				
+					return;					
+					
+				}
+
+			}	
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			//  필수개인정보수집동의여부가 "Y" 아닌 경우 메뉴 진입 불가 처리 종료
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			
+        }
+    }
+	else {
+		this.scrAlert("CM018");	//잘못된 요청경로 입니다.
+		return;
+	}
+
+	//////////////////////////////
+    // 뒤로가기 세팅 Start
+	//////////////////////////////
+	//this.fnSetHistoryHash(sMenuUrl, params, bShowHead, sMenuText, bShowToolbar,bShowGrade);
+
+    //History
+    var sUrl = "";
+    var sHash = "";
+    var sData = params;
+    var objDate = new Date();
+
+    if (sMenuUrl == this.fv_mainformUrl || sMenuUrl == this.fv_introformUrl) {
+        this.param.menu = sMenuUrl;
+        //History 에 저장될 hash값 만들기
+        sHash = "menu="+ this.param.menu;
+        sUrl = "./";
+        
+        if (this.smfIsNull(sData))  sData = {};
+    }else {
+        this.param.menu = sMenuUrl;
+        //sHash = "menu="+ this.param.menu;
+        if(!this.smfIsNull(hisTime)) sHash = "menu="+ this.param.menu +"&v="+ hisTime;
+        else                         sHash = "menu="+ this.param.menu +"&v="+ objDate.getTime();
+
+        sUrl = ".?" + sHash;
+    }
+    this.param.params = params;
+
+    //History Hash  생성
+    if (this.fvUseHistory)  MyHistory.setLocationHash(sHash, sData, sUrl);
+    trace("▶▶ fnSetWorkpage()  getData(sHash)  >> "+  sHash , sData, sUrl);
+	//////////////////////////////
+    // 뒤로가기 세팅 End.
+	//////////////////////////////
+
+	if(this.isNil(bShowToolbar)) bShowToolbar = false;
+    if(this.isNil(bShowHead  )) 
+    {
+        var sMenuHeadVal = "";
+        
+        if(nFindRow>-1)
+        {
+            sMenuHeadVal = objMenuDs.getColumnNF(nFindRow,"useHead");
+        }
+//trace(    "sMenuHeadVal==="+sMenuHeadVal);    
+        if(sMenuHeadVal=="N")
+        {
+            bShowHead    = false ;
+        }
+        else
+        {
+            bShowHead    = true ;
+        }
+    }
+    
+	bShowGrade    = false ;
+    
+    this.fv_workPageParams = {};
+    if(!this.smfIsNull(params)) this.fv_workPageParams = params;
+
+    // 이전의 URL과 동일한 URL을 호출시에는 Reload(같은 화면을 여러 메뉴에서 사용하는 경우)
+    if(this.fvFrameWork.url==sMenuUrl)
+    {
+        this.fvFrameWork.reload();
+    }
+    else    
+    {
+        this.fvFrameWork.set_url(sMenuUrl);
+    }
+    //trace("◆ fnSetWorkpage() 오픈화면 : "+ this.fvFrameWork.url );
+	
+	// 선택된 탑메뉴버튼 Cssclass 적용
+	this.fvFrameTop.form.fnSetStyleTopMenu(sMenuId);
+	
+	// Head영역을 표시/비표시한다.
+	this.fvFrameHead.form.fnRedrawMenuPath(sMenuId, bShowHead);
+
+    //@KBR [웹접근성] titleText 셋팅
+    if(sMenuUrl == this.fv_mainformUrl)
+    {
+        sMenuText = "MAIN"; //메인화면 sMenuText="MAIN"
+    }
+    else if(sMenuUrl == this.fv_introformUrl)
+    {
+        sMenuText = "INTRO";    //메인화면 sMenuText="INTRO"
+    }
+    this.fnSetTitleText(sMenuText);
+
+
+    //this.param에 담아둔다. - 화면을 오픈하기 위한 정보
+    this.param.headArea = bShowHead;
+    this.param.sMenuText = sMenuText;
+    this.param.bShowToolbar = bShowToolbar;
+    this.param.bShowGrade = bShowGrade;
+};
+
+//메인프레임 titletext변경
+this.fnSetTitleText = function(menuText)
+{
+    if( this.isNil(menuText) ) return;
+    var sMenuText = nexacro.getApplication().gv_appTtiletext;
+    
+    // 메인 화면 또는 첫번째 화면인 경우 별도 처리를 한다.
+    switch(menuText)
+    {
+        case "INTRO"  : sMenuText += ""             ; break;
+		case "MAIN"  : sMenuText += ""             ; break;
+        case "FIRST" : sMenuText += ""             ; break;
+		case "ALLMENU" : sMenuText += "전체메뉴"  ; break;
+        default      : sMenuText += ("|"+ menuText); break;     
+    }
+
+    this.objApp.mainframe.set_titletext(sMenuText);
+	
+	//trace("fnSetTitleText  sMenuText===="+sMenuText);
+}
+
+
+// 메뉴 URL을 가지고 데이터셋의 Row를 구한다.( 한개의 URL을 복수개의 메뉴에서 사용하는 경우 대비)
+this.fnGetRowWithMenuUrl = function(objDs,sUrl,pParam)
+{
+
+    // sUrl로 메뉴레벨별 메뉴아이디를 구한다.
+    // 메뉴아이디가 있으면 메뉴아이디로 검색한다.
+    // 메뉴아이디가 없으면 메뉴URL로 검색한다. (복수개인 경우 맨 처음 것)
+    var nFindRow = -1;
+    
+    var sMenuId = "";
+    if(pParam && (pParam.menu))
+    {
+        sMenuId = pParam.menu;
+    }
+    
+    if(this.smfIsNull(sMenuId))
+    {
+        nFindRow =objDs.findRowNF("menuUrl",sUrl);
+    }
+    else
+    {
+        nFindRow =objDs.findRowNF("menuId",sMenuId);
+    }
+	trace(  "sUrl==="+sUrl   + "::::nFindRow==="+nFindRow)
+    return nFindRow;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 로그인 관련 시작
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* 로그인여부 */
+this.checkScrLgn = function(){
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 서비스 객체 생성 시작
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	this.smfSearchService("checkScrLgn")
+	.run() // 실행
+	.callback(function(callbackParams){ // 콜백
+		if(callbackParams.errors) return;
+	
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// 처리 시작
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		if (this.dsScrLgnResult.getColumn(0, 'code') == 'SUCC'){
+
+
+			// 로그인 성공 시 처리
+			this.doScrLgnSussPrcs();
+			
+		}else{
+		
+			// 메인화면을 호출한다.
+			this.fnStartMainForm();
+			
+			this.form_onsize(obj);
+			
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// 처리 종료
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
+	});
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 서비스 객체 생성 시작
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}
+
+
+/* 로그인처리 */
+this.doScrLgn = function(lgnMthScCd){
+
+	trace("======================================================================================");
+	trace("lgnMthScCd ::: " + lgnMthScCd );			
+	trace("======================================================================================");
+
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 데이터 SET
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	this.dsScrLgnSrch.setColumn(0, 'lgnMthScCd', lgnMthScCd ); // 로그인 구분 01: 교육디지털원패스, 02: 공동인증서, 03: 간편인증
+
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 서비스 객체 생성 시작
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	this.smfSearchService("checkScrLogin")
+	.run() // 실행
+	.callback(function(callbackParams){ // 콜백
+		if(callbackParams.errors) return;
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// 처리 시작
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		if (this.dsScrLgnResult.getColumn(0, 'code') == 'SUCC'){
+
+			trace("======================================================================================");
+			trace("로그인 성공 ");
+			trace("로그인 성공여부 ::: " + this.dsScrLgnResult.getColumn(0, 'usePslYn') );			
+			trace("======================================================================================");
+			
+			if (this.dsScrLgnResult.getColumn(0, 'usePslYn') == 'Y'){ // 로그인 성공한 경우
+				//모든 팝업 Close
+				var arrPopFrame = nexacro.getPopupFrames();
+				for ( var i=0; i<arrPopFrame.length; i++ ) {
+					arrPopFrame[i].form.close();
+				}
+				
+				// 로그인 성공 후처리
+				this.doScrLgnSussPrcs(lgnMthScCd);
+			}else{
+			
+				this.scrAlert('LI155', ['로그인 정보가 올바르지 않습니다.']);
+			}
+			
+		}else{
+		
+			//알림메시지
+			this.scrAlert('CM000', [this.dsScrLgnResult.getColumn(0, 'message')]);
+			
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// 처리 종료
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
+	});
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 서비스 객체 생성 시작
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}
+
+/* 로그인 성공 시 처리 */
+this.doScrLgnSussPrcs = function(lgnMthScCd)
+{
+	// 글로벌변수 SET
+	this.objApp.gdsScrLgnInfo.copyData(this.dsScrLgnInfo);
+	this.objApp.gdsScrLgnChildList.copyData(this.dsScrLgnChildList);
+
+	// ds 초기화
+	this.dsScrLgnInfo.clearData();
+	this.dsScrLgnChildList.clearData();
+
+	// 로그인여부 SET
+	this.smfSetLoginState(true);		//ev_isLogin
+
+	//  접속로그 처리
+	if((lgnMthScCd!=null)&&(lgnMthScCd!="undefined")){
+	
+		this.smfSetCddcCode(nexacro.getApplication().gdsScrLgnInfo.getColumn(0, 'cddcOrgCd')); // 시도교육청코드 SET
+		
+		this.smfSendLoginLog(this, lgnMthScCd);
+
+	}
+						
+	// Top영역을 변경
+	var objTopFrameForm = this.getOwnerFrame().form.divTop.form;
+	if(objTopFrameForm)	{
+	
+		// frameTop 정보 변경
+		objTopFrameForm.fnScrFrameTopInfoChg(objTopFrameForm);
+
+	}
+
+	//히스토리 적용여부에 따라 분기
+	if ( this.fvApplyHistory == true) {	//메인에서 로그인(이미 적용)
+		// 메인화면을 호출한다.
+		this.fnStartMainForm();	
+	}
+	else {	//새로고침 or 최초실행(+링크)
+		//최초접속시 페이지 이동 처리 함수 호출
+		this.initPage();
+	}
+}
+
+
+/* 자녀 변경 */
+this.doScrChldChg = function(chldNo)
+{
+	trace("======================================================================================");
+	trace("chldNo ::: " + chldNo );			
+	trace("======================================================================================");
+
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 데이터 SET
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	this.dsScrLgnSrch.setColumn(0, 'chldNo', chldNo ); // 변경된 자녀 정보
+
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 서비스 객체 생성 시작
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	this.smfSearchService("checkScrLoginChg")
+	.run() // 실행
+	.callback(function(callbackParams){ // 콜백
+		if(callbackParams.errors) return;
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// 처리 시작
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		if (this.dsScrLgnResult.getColumn(0, 'code') == 'SUCC'){
+
+			trace("======================================================================================");
+			trace("로그인 성공 ");
+			trace("로그인 성공여부 ::: " + this.dsScrLgnResult.getColumn(0, 'usePslYn') );			
+			trace("======================================================================================");
+			
+			if (this.dsScrLgnResult.getColumn(0, 'usePslYn') == 'Y'){ // 로그인 성공한 경우
+
+				// 로그인여부
+				this.checkScrLgn();
+
+			}else{
+			
+				this.scrAlert('LI155', ['로그인 정보가 올바르지 않습니다.']);
+			}
+			
+		}else{
+		
+			//알림메시지
+			this.scrAlert("관리자한테 문의하세요");
+			
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// 처리 종료
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
+	});
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 서비스 객체 생성 시작
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 로그인 관련 종료
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//스크린 레이아웃 변경시 전역변수 재설정
+this.fnAfterLayoutChange = function()
+{
+	//전역변수 재설정
+	var sCurrLayout = this.getCurrentLayoutID();
+	if ( sCurrLayout == "mobile" ) {
+		this.objApp.gv_appScreenType = "M";
+	}
+	else if ( sCurrLayout == "tablet" ) {
+		this.objApp.gv_appScreenType = "T";
+	}
+	else {
+		this.objApp.gv_appScreenType = "P";
+	}
+};
+
+//*****************************************
+//  history처리 - Start
+//*****************************************
+// History 기능 사용을 위해 초기화 (application 실행시 한번만 호출)
+this.fnSetHistorySetup = function()
+{
+	//trace(	"히스토리 fnSetHistorySetup>>>>>>>>>>>>>>");
+	if (nexacro._Browser =="Runtime") {
+		//History 기능 사용 불가
+		this.fvUseHistory = false;
+		this.fvApplyHistory = true;
+	}
+	
+    if("undefined"!=typeof MyHistory)
+    {
+        // History 기능 사용을 위해 초기화 (application 실행 시 한번만 호출)
+        // 첫번째 인자는 뒤로가기, 앞으로가기가 실행됬을때 호출될 함수
+        // 두번째 인자는 함수내에서 this 로 사용할 scope
+        MyHistory.init(this.onChangeHistory, this);
+    }
+	else {
+		//History 기능 사용 불가
+		this.fvUseHistory = false;
+		this.fvApplyHistory = true;
+	}
+};
+
+/*
+* History
+* @description  : 최초 접속시 페이지 이동 처리 함수
+* @param        : N/A
+* @return       : N/A
+*/
+this.initPage = function() 
+{
+    if (!this.fvUseHistory) return;
+	//trace(	"히스토리 initPage>>>>>>>>>>>>>>");
+	this.fvApplyHistory = true;
+	
+	//링크타고 들어온 경우(postId, menu존재하는 경우) => 히스토리 사용불가
+	var urlParams = nexacro.urlParams;
+	if (urlParams && (this.smfIsNull(urlParams.postId)==false || this.smfIsNull(urlParams.menu)==false)) 
+	{
+		this.fvUseHistory      = false;
+		
+		//파라메타 표시 => 파라메타에 따라 처리는 미구현
+		for ( key in urlParams ) {
+			trace("urlParams = " + key + " : " +  urlParams[key]);
+		}
+		// 메인화면을 호출한다.
+		this.fnStartMainForm();
+	}
+	// 새로고침 시
+	else {
+		var sHash = MyHistory.getLocationHash();
+
+		// History 기록이 있을 경우
+		if (!this.smfIsNull(sHash)) {
+
+			var sData = {};
+			if (!this.smfIsNull(this.fv_mainformUrl)) {
+				sData = MyHistory.getData(sHash);
+			}
+
+			this.onChangeHistory(sHash, sData);
+		}
+		// History 기록이 없을 경우
+		else {
+			// 메인화면을 호출한다.
+			this.fnStartMainForm();    
+		}
+	}
+};
+
+/*
+* @description  : 브라우저 뒤로이동, 앞으로이동 호출 함수
+* @param  sHash : 브라우저에 기록된 현재 Hash 정보
+* @param  sData : 브라우저에 기록된 현재 Data 정보
+* @return       : N/A
+*/
+this.onChangeHistory = function(sHash, sData) 
+{
+    // 열려있는 팝업 닫기
+    if (nexacro.getPopupFrames().length>0) {
+		var objFrames = nexacro.getPopupFrames();
+		for (var i=0; i<objFrames.length; i++) {
+			objFrames[i].form.close();
+		}
+            return;
+    }
+
+    //메뉴 창 열려있으면 닫기
+	if ( this.divMenu.visible ) this.fnHidePopDiv("menu");
+	//검색 창 열려있으면 닫기
+	if ( this.divMenu.visible ) this.fnHidePopDiv("search");
+
+    //Hash 값으로 파라미터 정보 가져오기
+	var urlParams = {};
+    (function() {
+        var match,
+            pl = /\+/g,
+            search = /([^&=]+)=?([^&]*)/g,
+            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+            query = sHash;
+            while (match = search.exec(query)) { urlParams[decode(match[1])] = decode(match[2]); }
+        })();
+
+    //페이지 이동을 위한 파라미터 오브젝트에 값 추가
+    // urlParams.v : 시간, urlParams.menu : 메뉴URL
+    this.param.menu = urlParams.menu;
+    //this.param.params = urlParams.params;
+    //trace("♣ onChangeHistory()    ▶ urlParams.params >> "+urlParams.params , sData, sHash);
+
+	if (this.param.menu == this.fv_mainformUrl || this.param.menu == this.fv_introformUrl) 
+	{
+	//trace(	"메인메뉴인 경우 : 메인메뉴 실행");
+        // 메인메뉴인 경우
+        this.fnStartMainForm();
+		
+    }else {
+	
+		//Hash 값을 params 에 셋팅하여 전달한다
+		/*
+		sHash 값에 "::" 구문 포함되어 있어 특수문자로 인식하여 정상 처리 안되는 문제 발생
+		해당 구문을 encoding해주는 함수 URLSearchParams 사용하여 정상처리 되도록 수정 2024.4.18
+		*/
+		//var oData = MyHistory.getData(new URLSearchParams(sHash));
+		this.param.params = sData;		
+		//trace("♣ onChangeHistory()    ▶ this.param.menu >> " + this.param.menu, sData, sHash);
+		this.fnSetWorkpage(this.param.menu, this.param.params, this.param.headArea, this.param.sMenuText, this.param.bShowToolbar, this.param.bShowGrade, urlParams.v);
+    }       
+};
+
+// 브라우저의 뒤로가기, 앞으로가기 실행시 호출됨
+this.onChangeHistory_X = function(hash, data)
+{
+	//trace(	"히스토리 onChangeHistory_X    >>>>>>>>>>>>>>");
+    if(!this.fvUseHistory)  return;
+
+    if ( hash == "" )
+    {
+        trace("=====hash없음");
+        // 맨앞으로 간 것으로 판단하여 이전 화면으로 이동한다.
+        history.go(-1);
+    }   
+    else
+    {
+        var MenuUrl = hash;
+        var params = {};
+        var bShowHead    = false;
+        var sMenuText    = "";
+        var bShowToolbar = false;
+        var bShowGrade   = false;
+        
+        // hash id 를 확인하여 필요한 처리를 진행한다.
+        var objData = JSON.parse(data);
+        if(objData) 
+        {
+            // 화면으로 이동한다.
+            params       = objData.params || {};
+            bShowHead    = objData.bShowHead;
+            sMenuText    = objData.sMenuText || "";
+            bShowToolbar = objData.bShowToolbar;
+            bShowGrade   = objData.bShowGrade;
+			//trace(  "menu==="+MenuUrl,     params);   
+            this.fnSetWorkpage (MenuUrl, params,bShowHead, sMenuText, bShowToolbar,bShowGrade);
+        }
+        else
+        {
+            this.fnSetWorkpage (MenuUrl, params,bShowHead, sMenuText, bShowToolbar,bShowGrade);
+        }
+    }
+}
+
+
+this.fnSetHistoryHash = function(MenuUrl, params,bShowHead, sMenuText,bShowToolbar,bShowGrade)
+{
+    if(!this.fvUseHistory)  return;
+	//trace(	"히스토리 fnSetHistoryHash>>>>>>>>>>>>>>");
+    if("undefined"!=typeof MyHistory)
+    {
+        var sHash ="";
+        var sData ="";
+        
+        sHash = MenuUrl;
+        var objParam = {
+                         // 화면을 열기 위한 정보 
+                            "params"             : params
+                        ,   "bShowHead"          : bShowHead    
+                        ,   "sMenuText"          : sMenuText    
+                        ,   "bShowToolbar"       : bShowToolbar 
+                        ,   "bShowGrade"         : bShowGrade   
+                       };
+        sData = JSON.stringify(objParam,replacer) ;
+        MyHistory.setLocationHash(sHash, sData);
+        
+        // params의 데이터셋 오브젝트를 saveXML로 변경
+        function replacer(key,value)
+        {
+            if(value instanceof nexacro.NormalDataset)
+            {
+                return value.saveXML();
+            }
+            return value;
+        }           
+    }
+}
+//*****************************************
+//  history처리 - End
+//*****************************************
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">checkScrLgn</Col>
+            <Col id="url">/scr_mpg_mv00_000.do</Col>
+            <Col id="outDatasets">dsScrLgnResult=dsScrLgnResult dsScrLgnInfo=dsScrLgnInfo dsScrLgnChildList=dsScrLgnChildList</Col>
+          </Row>
+          <Row>
+            <Col id="id">checkScrLogin</Col>
+            <Col id="url">/scr_mpg_mv00_001.do</Col>
+            <Col id="inDatasets">dsScrLgnSrch=dsScrLgnSrch</Col>
+            <Col id="outDatasets">dsScrLgnResult=dsScrLgnResult dsScrLgnInfo=dsScrLgnInfo dsScrLgnChildList=dsScrLgnChildList</Col>
+          </Row>
+          <Row>
+            <Col id="url">/scr_mpg_mv00_002.do</Col>
+            <Col id="id">checkScrLoginChg</Col>
+            <Col id="outDatasets">dsScrLgnResult=dsScrLgnResult dsScrLgnInfo=dsScrLgnInfo dsScrLgnChildList=dsScrLgnChildList</Col>
+            <Col id="inDatasets">dsScrLgnSrch=dsScrLgnSrch</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMainFormInfo">
+        <ColumnInfo>
+          <Column id="subsys" type="STRING" size="256" description="(필수)서브시스탬"/>
+          <Column id="subsysname" type="STRING" size="256" description="(필수)서브시스템명"/>
+          <Column id="detailsys" type="STRING" size="256" description="(선택)서브상세시스템"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="firsturl" type="STRING" size="256" description="첫화면URL"/>
+          <Column id="mainurl" type="STRING" size="256" description="메인화면URL"/>
+          <Column id="desc" type="STRING" size="256" description="설명"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="subsys">PAS</Col>
+            <Col id="subsysname">대국민포털</Col>
+            <Col id="url">frame::pas/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::pas/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::pas/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsys">SQA</Col>
+            <Col id="subsysname">검정고시</Col>
+            <Col id="url">frame::sqa/frameSubMain.xfdl</Col>
+            <Col id="detailsys">101</Col>
+            <Col id="firsturl">frame::sqa/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::sqa/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">검정고시</Col>
+            <Col id="subsys">SQA</Col>
+            <Col id="url">frame::sqa/frameSubMain2.xfdl</Col>
+            <Col id="detailsys">102</Col>
+            <Col id="firsturl">frame::sqa/frameSubMain2.xfdl</Col>
+            <Col id="mainurl">frame::sqa/frameSubMain2.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">채용(교원채용)</Col>
+            <Col id="subsys">ORE</Col>
+            <Col id="url">frame::ore/frameFirstMain.xfdl</Col>
+            <Col id="firsturl">frame::ore/frameFirstMain.xfdl</Col>
+            <Col id="mainurl">frame::ore/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">채용(계약제교원인력풀)</Col>
+            <Col id="subsys">HRD</Col>
+            <Col id="url">frame::ore/frameFirstMain.xfdl</Col>
+            <Col id="firsturl">frame::ore/frameFirstMain.xfdl</Col>
+            <Col id="mainurl">frame::ore/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학원민원</Col>
+            <Col id="subsys">HES</Col>
+            <Col id="url">frame::hes/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::hes/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::hes/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">비영리법인민원</Col>
+            <Col id="subsys">BDM</Col>
+            <Col id="url">frame::bdm/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::bdm/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::bdm/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">유치원</Col>
+            <Col id="subsys">PAR</Col>
+            <Col id="url">frame::par/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::par/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::par/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsys">UDS</Col>
+            <Col id="subsysname">대입전형(학생부)</Col>
+            <Col id="url">frame::uds/frameFirstMain.xfdl</Col>
+            <Col id="detailsys">201</Col>
+            <Col id="firsturl">frame::uds/frameFirstMain.xfdl</Col>
+            <Col id="mainurl">frame::uds/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">대입전형(검정고시)</Col>
+            <Col id="subsys">SQA</Col>
+            <Col id="url">frame::sqa/frameSubMain3.xfdl</Col>
+            <Col id="detailsys">103</Col>
+            <Col id="firsturl">frame::uds/frameFirstMain.xfdl</Col>
+            <Col id="mainurl">frame::sqa/frameSubMain3.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">교육설문</Col>
+            <Col id="subsys">EDS</Col>
+            <Col id="url">frame::eds/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::eds/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::eds/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학교업무지원(방과후학교)</Col>
+            <Col id="subsys">AFS</Col>
+            <Col id="url">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::afs/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학교업무지원(초등돌봄교실)</Col>
+            <Col id="subsys">ECC</Col>
+            <Col id="url">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::afs/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학교업무지원(교과용도서)</Col>
+            <Col id="subsys">IBM</Col>
+            <Col id="url">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::afs/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학교업무지원(학교환경관리)</Col>
+            <Col id="subsys">SEM</Col>
+            <Col id="url">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::afs/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학교업무지원(체육)</Col>
+            <Col id="subsys">PHE</Col>
+            <Col id="url">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::afs/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학교업무지원(급식)</Col>
+            <Col id="subsys">SML</Col>
+            <Col id="url">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::afs/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학교업무지원(교육복지)</Col>
+            <Col id="subsys">SPR</Col>
+            <Col id="url">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::afs/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsys">EWS</Col>
+            <Col id="subsysname">교육복지원클릭</Col>
+            <Col id="url">frame::ews/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::ews/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::ews/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsys">UDA</Col>
+            <Col id="subsysname">대입전형자료(졸업생온라인신청)</Col>
+            <Col id="url">frame::uda/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::uda/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::uda/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsys">SCR</Col>
+            <Col id="subsysname">온라인학부모소통시스템</Col>
+            <Col id="url">frame::scr/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::scr/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::scr/frameSubMain.xfdl</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListPopup" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="popupId" type="string" size="256"/>
+          <Column id="popupTitlNm" type="STRING" size="256"/>
+          <Column id="popupCn" type="string" size="256"/>
+          <Column id="comPopupYn" type="STRING" size="256"/>
+          <Column id="popupTypCd" type="string" size="256"/>
+          <Column id="popupTptCd" type="string" size="256"/>
+          <Column id="pstStsCd" type="string" size="256"/>
+          <Column id="aplcnBgngYmd" type="string" size="256"/>
+          <Column id="aplcnEndYmd" type="string" size="256"/>
+          <Column id="aplcnBgngTm" type="STRING" size="256"/>
+          <Column id="aplcnEndTm" type="STRING" size="256"/>
+          <Column id="expsrSn" type="STRING" size="256"/>
+          <Column id="lnkTypCd" type="STRING" size="256"/>
+          <Column id="pafrBbsScCd" type="STRING" size="256"/>
+          <Column id="pafrBbsId" type="STRING" size="256"/>
+          <Column id="popupUrl" type="STRING" size="256"/>
+          <Column id="lnkNm" type="STRING" size="256"/>
+          <Column id="newinYn" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="rplcText" type="STRING" size="256"/>
+          <Column id="eventTitlNm" type="STRING" size="256"/>
+          <Column id="eventBgngYmd" type="STRING" size="256"/>
+          <Column id="eventEndYmd" type="STRING" size="256"/>
+          <Column id="eventBgngTm" type="STRING" size="256"/>
+          <Column id="eventEndTm" type="STRING" size="256"/>
+          <Column id="emrgYn" type="STRING" size="256"/>
+          <Column id="jobCn" type="STRING" size="256"/>
+          <Column id="haltWrkCn" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="rgtrDptNm" type="STRING" size="256"/>
+          <Column id="mdfrNm" type="STRING" size="256"/>
+          <Column id="mdfrDptNm" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="popupTptCd">01</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsIpChkResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="result" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsScrLgnSrch">
+        <ColumnInfo>
+          <Column id="name" type="STRING" size="256"/>
+          <Column id="phone" type="STRING" size="256"/>
+          <Column id="birthday" type="STRING" size="256"/>
+          <Column id="provider" type="STRING" size="256"/>
+          <Column id="ssn1" type="STRING" size="256"/>
+          <Column id="ssn2" type="STRING" size="256"/>
+          <Column id="ci" type="STRING" size="256"/>
+          <Column id="lgnMthScCd" type="STRING" size="256"/>
+          <Column id="userDtcNo" type="STRING" size="256"/>
+          <Column id="chldNo" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsScrLgnResult">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="연계상태값"/>
+          <Column id="message" type="STRING" size="256"/>
+          <Column id="usePslYn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsScrLgnInfo">
+        <ColumnInfo>
+          <Column id="prntNm" type="STRING" size="256" description="학부모_사용자명"/>
+          <Column id="prntMblNo" type="STRING" size="256" description="학부모_핸드폰번호"/>
+          <Column id="stdntNm" type="STRING" size="256" description="자녀_학생명"/>
+          <Column id="cddcCd" type="STRING" size="256" description="자녀_시도교육청코드 ::: 3자리 잘라서 사용"/>
+          <Column id="cddcOrgCd" type="STRING" size="256" description="자녀_시도교육청코드"/>
+          <Column id="cteOrgCd" type="STRING" size="256" description="자녀_관할조직코드"/>
+          <Column id="shlKndScCd" type="STRING" size="256" description="자녀_학교종류구분코드 ::: SG_BY_CD[학교급별코드]"/>
+          <Column id="shlCrseScCd" type="STRING" size="256" description="자녀_학교과정구분코드"/>
+          <Column id="shlCd" type="STRING" size="256" description="자녀_학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" description="자녀_학교명"/>
+          <Column id="ayr" type="STRING" size="256" description="자녀_학년도"/>
+          <Column id="grd" type="STRING" size="256" description="자녀_학년"/>
+          <Column id="dghtCrseScCd" type="STRING" size="256" description="자녀_주야과정구분코드"/>
+          <Column id="ordScCd" type="STRING" size="256" description="자녀_계열구분코드"/>
+          <Column id="dddepCd" type="STRING" size="256" description="자녀_학과코드"/>
+          <Column id="clsCd" type="STRING" size="256" description="자녀_학급코드"/>
+          <Column id="clsNo" type="STRING" size="256" description="자녀_학급번호"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsScrLgnChildList">
+        <ColumnInfo>
+          <Column id="chcYn" type="STRING" size="256" description="선택된자녀여부"/>
+          <Column id="chldNo" type="STRING" size="256" description="자녀_순번"/>
+          <Column id="stdntNm" type="STRING" size="256" description="자녀_학생명"/>
+          <Column id="cddcCd" type="STRING" size="256" description="자녀_시도교육청코드 ::: 3자리 잘라서 사용"/>
+          <Column id="cddcOrgCd" type="STRING" size="256" description="자녀_시도교육청코드"/>
+          <Column id="cteOrgCd" type="STRING" size="256" description="자녀_관할조직코드"/>
+          <Column id="shlKndScCd" type="STRING" size="256" description="자녀_학교종류구분코드 ::: SG_BY_CD[학교급별코드"/>
+          <Column id="shlCrseScCd" type="STRING" size="256" description="자녀_학교과정구분코드"/>
+          <Column id="shlCd" type="STRING" size="256" description="자녀_학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" description="자녀_학교명"/>
+          <Column id="ayr" type="STRING" size="256" description="자녀_학년도"/>
+          <Column id="grd" type="STRING" size="256" description="자녀_학년"/>
+          <Column id="dghtCrseScCd" type="STRING" size="256" description="자녀_주야과정구분코드"/>
+          <Column id="ordScCd" type="STRING" size="256" description="자녀_계열구분코드"/>
+          <Column id="dddepCd" type="STRING" size="256" description="자녀_학과코드"/>
+          <Column id="clsCd" type="STRING" size="256" description="자녀_학급코드"/>
+          <Column id="clsNo" type="STRING" size="256" description="자녀_학급번호"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <InitValue>
+      <Div id="divMenu" visible="false"/>
+      <Div id="divSearch" visible="false"/>
+    </InitValue>
+  </Form>
+</FDL>

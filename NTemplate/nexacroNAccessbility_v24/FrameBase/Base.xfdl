@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Base" width="1280" height="720" onload="form_onload">
+    <Layouts>
+      <Layout width="1280" height="720" screenid="Desktop_screen">
+        <Static id="staFirst" taborder="0" text="Static00" left="0" top="0" width="0" height="0" visible="false" accessibilitylabel="문서시작" hotkey="CTRL+HOME"/>
+        <Div id="divTop" taborder="1" left="0" top="0" height="100" right="0" url="FrameBase::Top.xfdl" text="" accessibilityenable="false" cssclass="div_MF_Menu"/>
+        <Div id="divContents" taborder="2" left="0" top="100" right="0" url="FrameBase::BaseCenter.xfdl" accessibilityenable="false" text="" bottom="0" onvscroll="divContents_onvscroll"/>
+        <Div id="divMenu" taborder="3" text="Div00" left="880" top="70" width="220" height="200" url="FrameBase::mMenu.xfdl" visible="false"/>
+        <Button id="btnTop" taborder="4" width="70" height="70" right="40" cssclass="btn_MF_Top" accessibilitylabel="최상단으로 이동 탑" accessibilityrole="button" visible="true" bottom="40" onclick="btnTop_onclick"/>
+        <Static id="staLast" taborder="5" text="Static00" width="0" height="0" right="0" bottom="0" visible="false" accessibilitylabel="문서끝" hotkey="CTRL+END"/>
+      </Layout>
+      <Layout height="678" name="mobile" width="480" screenid="Mobile_screen">
+        <Div id="divTop" left="0" top="0" height="100" right="0" text=""/>
+        <Div id="divContents" top="divTop:0" left="0" right="0" bottom="0"/>
+        <Div id="divMenu" left="0" top="0" width="480" height="678" background="#ffffff" accessibilityenable="false"/>
+        <Button id="btnTop" right="20" width="70" height="70" bottom="20"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  Nexacro Accessibility
+*  @FileName 	Base.xfdl 
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022.12.15
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.12.15     		TOBESOFT		 		최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = this.gfnGetApplication();
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.objApp.nexacroBase = this;
+
+	
+	this.divContents.form.divCenter.url = "FrameBase::Main.xfdl";
+
+	if (system.navigatorname == "nexacro" )
+	{
+		this.staFirst.visible = true;
+		this.staLast.visible = true;
+	}
+	else
+	{
+		if (this.objApp.gvOs.indexOf("WINDOWS") == -1)
+		{
+			this.divMenu.move(0, 0, null, null, 0, 0);
+		}
+	}
+};
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+this.fnMenuClick = function(bStatus, sUrl)
+{
+	if (bStatus)
+	{
+		this.divMenu.visible = true;
+		this.divMenu.setOffsetLeft(0);
+		this.divMenu.form.getFirstAccessibilityComponent(true).setFocus();
+	}
+	else
+	{
+		this.divMenu.visible = false;
+	}
+}
+
+this.fnCallMenu = function(sid)
+{
+	this.fvObjDs = this.objApp.gdsMenu;	
+	var sUrl  = this.fvObjDs.lookupAs( "MENUID", sid, "MENUURL");
+	var sName = this.fvObjDs.lookupAs( "MENUID", sid, "MENUNM");
+	
+	nexacro.getApplication().mainframe.titletext = sName + "|접근성지원시스템";
+	
+	this.divContents.form.divCenter.url = sUrl;	
+	
+	//this.divTop.form.staLogo.setFocus();
+	var firstComp = this.divTop.form.getFirstAccessibilityComponent(true);
+	firstComp.setFocus();
+}
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+
+this.divContents_onvscroll = function(obj:nexacro.Form,e:nexacro.ScrollEventInfo)
+{
+	if (e.pos == 0)
+	{
+	//	this.btnTop.set_visible(false);
+	}
+	else
+	{
+	//	this.btnTop.set_visible(true);
+	}
+};
+
+
+this.btnTop_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divContents.form.vscrollbar.set_pos(0);
+	
+	var firstComp = this.divTop.form.getFirstAccessibilityComponent(true);
+	firstComp.setFocus();	
+};
+]]></Script>
+  </Form>
+</FDL>

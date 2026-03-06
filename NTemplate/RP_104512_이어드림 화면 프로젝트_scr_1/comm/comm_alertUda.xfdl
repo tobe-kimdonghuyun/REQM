@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comm_alert" width="500" height="300" onload="comm_alert_onload" titletext="알림(대입전형)" background="white" onclose="comm_alert_onclose" onsize="comm_alert_onsize">
+    <Layouts>
+      <Layout height="300" width="500" screenid="ScreenDeskTop">
+        <Div id="divMain" taborder="0" text="div_00" left="10" top="0" bottom="50" right="10" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="3" left="220" top="10" width="40" height="40" cssclass="sta_LOGIN_InformIcon"/>
+              <Static id="staTitle" taborder="1" left="0" top="sta00:10" text="" wordWrap="char" textAlign="center" right="0" initvalueid="ivStcAccessibilityOn" cssclass="sta_WF_Txt22B" fittocontents="height" height="50" maxheight=""/>
+              <Static id="staMessage" taborder="0" left="0" top="staTitle:0" text="" wordWrap="char" textAlign="center" right="0" initvalueid="ivStcAccessibilityOn" fittocontents="height" verticalAlign="top" cssclass="sta_WF_Txt14" height="50" maxheight=""/>
+              <Static id="staRmk" taborder="2" left="0" top="staMessage:0" text="" wordWrap="char" textAlign="center" right="0" initvalueid="ivStcAccessibilityOn" fittocontents="height" cssclass="sta_WF_Txt14" height="80" maxheight=""/>
+            </Layout>
+            <Layout name="default0">
+              <Static id="staMessage" taborder="0" left="10" top="staTitle:0" text="" wordWrap="char" textAlign="center" right="10" bottom="80" cssclass="sta_WF_Txt24"/>
+              <Static id="staRmk" left="20" top="staMessage:0" right="20" cssclass="sta_WF_Txt24" bottom="20" textAlign="center"/>
+              <Static id="sta00" left="650" top="20" width="40" height="40" visible="false"/>
+              <Static id="staTitle" left="20" top="20" height="50" right="20" cssclass="font28B"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div00" taborder="1" text="div_00" left="0" background="whitesmoke" bottom="0" height="50" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Button id="btnOk" taborder="0" text="확인" left="42.00%" width="80" defaultbutton="true" escapebutton="true" bottom="10" height="30" onclick="btnOk_onclick" initvalueid="ivBtnAccessibilityButton"/>
+            </Layout>
+            <Layout name="default0">
+              <Button id="btnOk" taborder="0" text="확인" left="40%" top="20" width="108" height="50" defaultbutton="true" escapebutton="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout height="550" width="540" name="default0" screenid="mobile,tablet">
+        <Div id="div00" taborder="1" text="div_00" left="0" top="divMain:10" background="whitesmoke" right="0" bottom="0"/>
+        <Div id="divMain" taborder="0" text="div_00" left="0" top="0" right="0" bottom="100"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "lib::cm_script.xjs"
+
+
+// 로드
+this.comm_alert_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitPopup(obj);
+	trace("this.height="+this.getOffsetHeight() + " , this.parent.height="+this.parent.getOffsetHeight())
+	this.pv_params = this.smfGetPopupParams();
+	this.smfUpdatePopupTitle("알림");
+	
+	this.dsErrMsg.copyRow(0, this.pv_params.message, 0);
+	
+	var a = this.smfRowToObject(this.dsErrMsg, 0);
+	
+	this.divMain.form.staTitle.set_text(this.smfStr(a["message"]));
+	this.divMain.form.staMessage.set_text(this.smfStr(a["messageCn"]));
+	this.divMain.form.staRmk.set_text(this.smfStr(a["messageRmk"]));
+	
+	if ( this.pv_params.align ) { //staMessage align 설정
+	    this.divMain.form.staMessage.set_textAlign(this.pv_params.align);
+	}
+	if (this.pv_params.color){ //staRmk text color 설정
+		this.divMain.form.staRmk.set_color(this.pv_params.color);
+	}
+
+	this.divMain.form.staTitle.resize();
+	this.divMain.form.staMessage.resize();
+	this.divMain.form.staRmk.resize();
+};
+
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(true);
+};
+
+this.comm_alert_onclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	this.smfSendResponseToOpener({});
+};
+
+this.comm_alert_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	trace("comm_alert_onsize : e.cy="+e.cy);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsErrMsg" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="messageCode" type="STRING" size="256" description="메세지코드" datapath="메세지코드"/>
+          <Column id="message" type="STRING" size="256" description="메세지" datapath="메세지"/>
+          <Column id="messageCn" type="STRING" size="256" datapath="메세지내용" description="메세지내용"/>
+          <Column id="messageRmk" type="STRING" size="256" datapath="메세지비고" description="메세지비고"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

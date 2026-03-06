@@ -1,0 +1,2512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleGridGroup" width="888" height="4930" titletext="그리드 grouping/suppress" onload="form_onload">
+    <Layouts>
+      <Layout height="4930" mobileorientation="landscape" width="888" screenid="Desktop_screen">
+        <Static id="Static00" taborder="0" text="그리드 그룹" left="0" top="0" width="190" height="60" cssclass="sta_WF_H2_pc" fittocontents="width" accessibilityrole="heading2"/>
+        <Static id="Static01" taborder="1" left="Static00:15" top="20" width="1" height="21" cssclass="sta_WF_line"/>
+        <Static id="Static00_02" taborder="2" text="Suppress" left="Static01:15" top="0" width="149" height="60" cssclass="sta_WF_ParaH4_pc"/>
+        <Static id="staTitle00" taborder="3" text="Suppress" left="0" top="100" width="130" height="38" cssclass="sta_WF_ParaH4_pc" accessibilityrole="heading4"/>
+        <Grid id="grdSuppress" taborder="4" left="0" top="staTitle00:16" height="330" binddataset="dsSample" oncellclick="grdSuppress_oncellclick" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="200"/>
+                <Column size="210"/>
+                <Column size="210"/>
+                <Column size="210"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0" suppress="1" displaytype="buttoncontrol" edittype="button"/>
+                <Cell col="1" text="bind:Column1" suppress="2" cssclass="cell_WF_Center"/>
+                <Cell col="2" text="bind:Column2"/>
+                <Cell col="3" text="bind:Column3" displaytype="number" textAlign="right"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="staTitle01" taborder="5" text="Suppress&lt;fs v='15'&gt;(checkbox suppress)&lt;/fs&gt;" left="0" top="grdSuppress:40" width="330" height="38" cssclass="sta_WF_ParaH4_pc" accessibilityrole="heading4" usedecorate="true"/>
+        <Grid id="grdSuppress00" taborder="6" left="0" top="staTitle01:16" height="380" binddataset="dsSample" onexpandup="grdSuppress00_onexpandup" autoenter="select" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="160"/>
+                <Column size="270"/>
+                <Column size="200"/>
+                <Column size="160"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+                <Row size="57"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="chk"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+                <Cell col="4" text="chk"/>
+              </Band>
+              <Band id="body">
+                <Cell rowspan="3" suppress="2" displaytype="checkboxcontrol" edittype="checkbox" text="bind:chk"/>
+                <Cell col="1" rowspan="3" text="bind:Column1" suppress="1"/>
+                <Cell col="2" expandshow="hide" cssclass="cell_NoLineH"/>
+                <Cell col="3" text="bind:Column4" textAlign="left"/>
+                <Cell col="4" text="bind:chk"/>
+                <Cell row="1" col="2" expandshow="show" text="bind:Column2" displaytype="editcontrol" edittype="text" cssclass="cell_NoLineH" expandsize="48"/>
+                <Cell row="1" col="3" text="bind:Column5" textAlign="left"/>
+                <Cell row="1" col="4" text="bind:chk"/>
+                <Cell row="2" col="2"/>
+                <Cell row="2" col="3" text="bind:Column6" textAlign="left"/>
+                <Cell row="2" col="4" text="bind:chk"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="staTitle02" taborder="7" text="평균 - Dataset의 prop 설정" left="0" top="grdSuppress00:40" height="38" cssclass="sta_WF_ParaH4_pc" accessibilityrole="heading4" right="0"/>
+        <Grid id="grdDatasetProp" taborder="8" left="0" top="staTitle02:16" height="326" binddataset="dsSample02" selecttype="row" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="120"/>
+                <Column size="140"/>
+                <Column size="140"/>
+                <Column size="140"/>
+                <Column size="170"/>
+                <Column size="160"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+                <Row size="37" band="summ"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="순번" cssclass="cell_WF_Center"/>
+                <Cell col="1" text="Column0"/>
+                <Cell col="2" text="Column1"/>
+                <Cell col="3" text="Column2"/>
+                <Cell col="4" text="Column3"/>
+                <Cell col="5" text="rowLevel"/>
+              </Band>
+              <Band id="body">
+                <Cell cssclass="cell_WF_Center" expr="dataset.getRowLevel(currow) == 1 ? &quot;&quot; : row" text="bind:row"/>
+                <Cell col="1" text="bind:Column0" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;" suppress="1" expr="dataset.getRowLevel(currow) == 0 ? Column0 : '평균'"/>
+                <Cell col="2" text="bind:Column1" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;"/>
+                <Cell col="3" text="bind:Column2" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;"/>
+                <Cell col="4" text="bind:Column3" displaytype="number" textAlign="right" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;" edittype="mask"/>
+                <Cell col="5" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;" expr="dataset.getRowLevel(currow)"/>
+              </Band>
+              <Band id="summary">
+                <Cell/>
+                <Cell col="1" colspan="3" text="합계"/>
+                <Cell col="4" displaytype="number" textAlign="right" expr="dataset.getSum('Column3')"/>
+                <Cell col="5"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="staCount" taborder="9" text="총 &lt;fc v='#25649e'&gt;0&lt;/fc&gt; 건" left="0" top="grdDatasetProp:10" height="31" usedecorate="true" right="0" cssclass="sta_WF_Txt17B"/>
+        <Panel id="Panel02" taborder="10" left="0" top="staCount:40" height="48" flexwrap="wrap" horizontalgap="24" verticalgap="16" right="0">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="staTitle03"/>
+            <PanelItem id="PanelItem01" componentid="Panel01"/>
+          </Contents>
+        </Panel>
+        <Static id="staTitle03" taborder="11" text="평균, 갯수/소계/합계 계산식" left="447" top="362" width="300" height="38" cssclass="sta_WF_ParaH4_pc" accessibilityrole="heading4" flexgrow="1"/>
+        <Panel id="Panel01" taborder="12" left="640" top="421" width="200" height="48" horizontalgap="8">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="btn03"/>
+            <PanelItem id="PanelItem01" componentid="btn02"/>
+          </Contents>
+        </Panel>
+        <Button id="btn03" taborder="13" text="btn03" onclick="btn03_onclick" right="148" width="100" height="48" top="421"/>
+        <Button id="btn02" taborder="14" text="입력" width="100" onclick="btn02_onclick" right="20" height="48" top="421"/>
+        <Grid id="grdCal" taborder="15" left="0" top="Panel02:16" binddataset="dsSample00" selecttype="row" autoenter="select" right="0" height="326">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="200"/>
+                <Column size="170"/>
+                <Column size="170"/>
+                <Column size="160"/>
+                <Column size="160"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+                <Row size="37" band="summ"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+                <Cell col="4" text="rowLevel"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;" expr="dataset.getRowLevel(currow) == 0 ? Column0 : '갯수/평균/소계'" suppress="1" edittype="expr:dataset.getRowLevel(currow) == 0 ? &quot;normal&quot; : &quot;none&quot;"/>
+                <Cell col="1" text="bind:Column1" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;" expr="dataset.getRowLevel(currow) == 0 ? Column1 : dataset.getGroupRangeCount(currow)" edittype="expr:dataset.getRowLevel(currow) == 0 ? &quot;normal&quot; : &quot;none&quot;"/>
+                <Cell col="2" text="bind:Column2" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;" expr="dataset.getRowLevel(currow) == 0 ? Column2 : comp.parent.gfnRound(Column3/dataset.getGroupRangeCount(currow),2)" edittype="expr:dataset.getRowLevel(currow) == 0 ? &quot;normal&quot; : &quot;none&quot;"/>
+                <Cell col="3" text="bind:Column3" displaytype="number" textAlign="right" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;" edittype="expr:dataset.getRowLevel(currow) == 0 ? &quot;normal&quot; : &quot;none&quot;"/>
+                <Cell col="4" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;" expr="dataset.getRowLevel(currow)"/>
+              </Band>
+              <Band id="summary">
+                <Cell colspan="3" text="합계"/>
+                <Cell col="3" displaytype="number" textAlign="right" expr="dataset.getSum('Column3')"/>
+                <Cell col="4"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="staTitle04" taborder="16" text="소계, 합계 cell class" top="grdCal:40" height="38" cssclass="sta_WF_ParaH4_pc" left="0" accessibilityrole="heading4" width="220"/>
+        <Grid id="grdCellClass" taborder="17" left="0" top="staTitle04:16" height="326" binddataset="dsSample01" selecttype="row" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="210"/>
+                <Column size="210"/>
+                <Column size="210"/>
+                <Column size="210"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0" cssclass="expr:Column2 == '소계' ? &quot;cell_SubTotal&quot; : Column2 == '합계' ? &quot;cell_Total&quot; : &quot;&quot;" suppress="1"/>
+                <Cell col="1" text="bind:Column1" cssclass="expr:Column2 == '소계' ? &quot;cell_SubTotal&quot; : Column2 == '합계' ? &quot;cell_Total&quot; : &quot;&quot;"/>
+                <Cell col="2" text="bind:Column2" cssclass="expr:Column2 == '소계' ? &quot;cell_SubTotal&quot; : Column2 == '합계' ? &quot;cell_Total&quot; : &quot;&quot;" expr="dataset.getRowLevel(currow) == 0 ? Column2 : '소계'"/>
+                <Cell col="3" text="bind:Column3" displaytype="number" textAlign="right" cssclass="expr:Column2 == '소계' ? &quot;cell_SubTotal&quot; : Column2 == '합계' ? &quot;cell_Total&quot; : &quot;&quot;"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Panel id="Panel00" taborder="18" left="0" top="grdCellClass:40" height="48" right="0" fittocontents="height" flexwrap="wrap">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="staTitle05"/>
+            <PanelItem id="PanelItem01" componentid="btnSubRowHidden"/>
+          </Contents>
+        </Panel>
+        <Static id="staTitle05" taborder="19" text="소계 숨기기" left="427" top="1142" width="150" height="38" cssclass="sta_WF_ParaH4_pc" accessibilityrole="heading4" flexgrow="1"/>
+        <Button id="btnSubRowHidden" taborder="20" text="소계 Row 표시안하기" width="196" height="48" onclick="btnSubRowHidden_onclick" right="39" bottom="5972"/>
+        <Grid id="Grid03" taborder="21" left="0" top="Panel00:16" height="326" binddataset="dsSample00" selecttype="row" extendsizetype="row" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="160"/>
+                <Column size="200"/>
+                <Column size="200"/>
+                <Column size="200"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+                <Row size="37" band="summ"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="rowLevel" cssclass="cell_WF_Center"/>
+                <Cell col="1" text="Column0" cssclass="cell_WF_Center"/>
+                <Cell col="2" text="Column1" cssclass="cell_WF_Center"/>
+                <Cell col="3" text="Column2" cssclass="cell_WF_Center"/>
+                <Cell col="4" text="Column3" cssclass="cell_WF_Center"/>
+              </Band>
+              <Band id="body">
+                <Cell text="expr:dataset.getRowLevel(currow)" cssclass="cell_WF_Center"/>
+                <Cell col="1" text="bind:Column0" suppress="1"/>
+                <Cell col="2" text="bind:Column1" suppress="2"/>
+                <Cell col="3" text="expr:dataset.getRowLevel(currow) == 0 ? Column2 : '소계'"/>
+                <Cell col="4" text="bind:Column3" displaytype="number"/>
+              </Band>
+              <Band id="summary">
+                <Cell/>
+                <Cell col="1" colspan="3" text="합계" textAlign="right"/>
+                <Cell col="4" displaytype="number" expr="dataset.getSum('Column3')/100"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="staTitle06" taborder="22" text="명칭으로 Group 및 suppress 시 코드로 Sort 방법&lt;fs v='15'&gt; ( keystring G:Column0-Column1,Column2-Column3 )&lt;/fs&gt;" top="Grid03:40" height="86" cssclass="sta_WF_ParaH4_pc" left="0" accessibilityrole="heading4" usedecorate="true" fittocontents="height" right="0"/>
+        <Grid id="grd00" taborder="23" left="0" top="staTitle06:16" height="319" binddataset="dsSample03" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="140"/>
+                <Column size="140"/>
+                <Column size="140"/>
+                <Column size="140"/>
+                <Column size="140"/>
+                <Column size="140"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="대분류" cssclass="cell_WF_Center"/>
+                <Cell col="1" text="중분류" cssclass="cell_WF_Center"/>
+                <Cell col="2" text="값" cssclass="cell_WF_Center"/>
+                <Cell col="3" text="대분류코드" cssclass="cell_WF_Center"/>
+                <Cell col="4" text="중분류코드" cssclass="cell_WF_Center"/>
+                <Cell col="5" text="rowLevel" cssclass="cell_WF_Center"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column1" expr="dataset.getRowLevel(currow) == 2 ? '대분류 소계' : Column1" suppress="1" cssclass="expr:dataset.getRowLevel(currow) == 2 ? &quot;cell_SubTotal&quot; : &quot;&quot;"/>
+                <Cell col="1" text="bind:Column3" expr="dataset.getRowLevel(currow) == 1 ? '중분류 소계' : Column3" suppress="2" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : (dataset.getRowLevel(currow) == 2 ? &quot;cell_SubTotal&quot; : &quot;&quot;)"/>
+                <Cell col="2" text="bind:Column9" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : (dataset.getRowLevel(currow) == 2 ? &quot;cell_SubTotal&quot; : &quot;&quot;)"/>
+                <Cell col="3" text="bind:Column0" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : (dataset.getRowLevel(currow) == 2 ? &quot;cell_SubTotal&quot; : &quot;&quot;)"/>
+                <Cell col="4" text="bind:Column2" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : (dataset.getRowLevel(currow) == 2 ? &quot;cell_SubTotal&quot; : &quot;&quot;)"/>
+                <Cell col="5" expr="dataset.getRowLevel(currow)" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : (dataset.getRowLevel(currow) == 2 ? &quot;cell_SubTotal&quot; : &quot;&quot;)"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="staTitle07" taborder="24" text="Auto Size" left="0" top="grd00:40" width="140" height="38" cssclass="sta_WF_ParaH4_pc" accessibilityrole="heading4"/>
+        <Grid id="grdAutoSize1" taborder="25" left="0" top="staTitle07:16" height="300" binddataset="dsSize" autosizingtype="col" right="0" cellsizingtype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="405"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="칼럼0" cssclass="cell_WF_Center"/>
+                <Cell col="1" text="칼럼2" cssclass="cell_WF_Center"/>
+                <Cell col="2" text="칼럼3" autosizecol="limitmin" cssclass="cell_WF_Center"/>
+                <Cell col="3" text="칼럼1" cssclass="cell_WF_Center"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column2"/>
+                <Cell col="2" text="bind:Column3" autosizecol="limitmin"/>
+                <Cell col="3" text="bind:Column1" textAlign="left"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grdAutoSize2" taborder="26" left="0" top="grdAutoSize1:16" height="400" binddataset="dsSize" autosizingtype="both" extendsizetype="row" cellsizingtype="both" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="365"/>
+                <Column size="120"/>
+                <Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="칼럼0" cssclass="cell_WF_Center"/>
+                <Cell col="1" text="칼럼1" cssclass="cell_WF_Center"/>
+                <Cell col="2" text="칼럼2" cssclass="cell_WF_Center"/>
+                <Cell col="3" text="칼럼3" cssclass="cell_WF_Center"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1" textAlign="left"/>
+                <Cell col="2" text="bind:Column2"/>
+                <Cell col="3" text="bind:Column3"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grdAutoSize00" taborder="27" left="0" top="grdAutoSize2:24" height="285" binddataset="dsSize2" autosizingtype="col" extendsizetype="row" right="0" cellsizingtype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="120"/>
+                <Column size="90"/>
+                <Column size="90"/>
+                <Column size="204"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="칼럼0" cssclass="cell_WF_Center"/>
+                <Cell col="1" colspan="3" text="칼럼1" cssclass="cell_WF_Center"/>
+                <Cell col="4" text="칼럼4" cssclass="cell_WF_Center"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1" textAlign="left" edittype="text" displaytype="editcontrol" cssclass="cell_NoLineV"/>
+                <Cell col="2" text="변경" displaytype="buttoncontrol" autosizecol="limitmin" cssclass="cell_NoLineV"/>
+                <Cell col="3" text="취소" displaytype="buttoncontrol" autosizecol="limitmin"/>
+                <Cell col="4" text="bind:Column4"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="staTitle08" taborder="29" text="Suppress &amp; Auto size &amp; wordWrap" left="0" top="grdAutoSize00:40" width="400" height="38" cssclass="sta_WF_ParaH4_pc" accessibilityrole="heading4"/>
+        <Grid id="grdBgtEndwDetailList" taborder="28" left="0" top="staTitle08:16" right="0" autoenter="select" binddataset="dsBgtEndwDetailList" onheadclick="grdChargerMangList_onheadclick" uFunction="!sort" cellsizingtype="col" autosizingtype="row" extendsizetype="none" autosizebandtype="body" height="375">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="140" band="left"/>
+                <Column size="60" band="left"/>
+                <Column size="80" band="left"/>
+                <Column size="140" band="left"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell rowspan="2" colspan="4" text="구분" cssclass="cell_WF_Center"/>
+                <Cell col="4" colspan="2" text="2014년"/>
+                <Cell col="6" colspan="2" text="2015년"/>
+                <Cell col="8" colspan="2" text="2016년"/>
+                <Cell col="10" colspan="2" text="2017년"/>
+                <Cell col="12" colspan="2" text="2018년"/>
+                <Cell row="1" col="4" text="당초"/>
+                <Cell row="1" col="5" text="최종"/>
+                <Cell row="1" col="6" text="당초"/>
+                <Cell row="1" col="7" text="최종"/>
+                <Cell row="1" col="8" text="당초"/>
+                <Cell row="1" col="9" text="최종"/>
+                <Cell row="1" col="10" text="당초"/>
+                <Cell row="1" col="11" text="최종"/>
+                <Cell row="1" col="12" text="당초"/>
+                <Cell row="1" col="13" text="최종"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:divNm1" textAlign="left" wordWrap="char" suppressalign="middle" suppress="1" font="normal 13px/normal &quot;Dotum&quot;"/>
+                <Cell col="1" text="bind:divNm2" textAlign="center" wordWrap="char" suppress="2" suppressalign="middle" verticalAlign="middle"/>
+                <Cell col="2" text="bind:divNm3" textAlign="left" suppress="3" suppressalign="middle" wordWrap="char"/>
+                <Cell col="3" text="bind:divNm4" textAlign="left" wordWrap="char"/>
+                <Cell col="4" text="bind:bgnnAmt4" textAlign="right"/>
+                <Cell col="5" text="bind:lastAmt4" textAlign="right"/>
+                <Cell col="6" text="bind:bgnnAmt3" textAlign="right"/>
+                <Cell col="7" text="bind:lastAmt3" textAlign="right"/>
+                <Cell col="8" text="bind:bgnnAmt2" textAlign="right"/>
+                <Cell col="9" text="bind:lastAmt2" textAlign="right"/>
+                <Cell col="10" text="bind:bgnnAmt1" textAlign="right"/>
+                <Cell col="11" text="bind:lastAmt1" edittype="mask" displaytype="maskeditcontrol" textAlign="right" maskeditformat="###,###" editimemode="none" editinputfilter="none,dot,sign,space,symbol,comma,alpha" editinputtype="number" maskeditautoselect="true" editautoselect="true"/>
+                <Cell col="12" text="bind:bgnnAmt" edittype="mask" displaytype="maskeditcontrol" textAlign="right" maskeditformat="###,###" editimemode="none" editinputfilter="none,dot,sign,space,symbol,comma,alpha" editinputtype="number" maskeditautoselect="true" editautoselect="true"/>
+                <Cell col="13" text="bind:lastAmt" textAlign="right"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+      <Layout height="4930" mobileorientation="Portrait" name="Layout0" type="default" width="480" screenid="Desktop_screen,mobile_small">
+        <Static id="staTitle00" top="104" left="0" height="43" right="0" cssclass="sta_WF_ParaH4_m"/>
+        <Grid id="grdSuppress" top="163" left="0" height="319" right="0"/>
+        <Grid id="grdSuppress00" top="581" left="0" height="380" right="0"/>
+        <Grid id="grdDatasetProp" top="1060" left="0" height="326" right="0"/>
+        <Grid id="grdCal" top="1531" left="0" height="326" right="0"/>
+        <Grid id="grdCellClass" top="1956" left="0" height="326" right="0"/>
+        <Grid id="Grid03" top="2386" left="0" height="326" right="0"/>
+        <Static id="staTitle06" left="0" top="2752" height="96" fittocontents="height" right="0" cssclass="sta_WF_ParaH4_m"/>
+        <Grid id="grd00" top="2864" left="0" height="319" right="0"/>
+        <Grid id="grdAutoSize1" top="3282" left="0" height="300" right="0"/>
+        <Grid id="grdBgtEndwDetailList" top="4406" left="0" height="375" right="0"/>
+        <Static id="Static00_02" cssclass="sta_WF_ParaH4_m" right="0" left="Static01:15" top="0" height="60"/>
+        <Static id="Static00" cssclass="sta_WF_H2_m" width="132" left="0" top="0" height="60"/>
+        <Static id="staTitle01" right="0" left="0" top="grdSuppress:40" height="38" cssclass="sta_WF_ParaH4_m"/>
+        <Static id="staTitle02" right="0" left="0" top="grdSuppress00:40" height="38" cssclass="sta_WF_ParaH4_m"/>
+        <Static id="staTitle03" cssclass="sta_WF_ParaH4_m"/>
+        <Static id="staTitle04" cssclass="sta_WF_ParaH4_m" right="0" left="0" top="grdCal:40" height="38"/>
+        <Static id="staTitle05" cssclass="sta_WF_ParaH4_m"/>
+        <Static id="staTitle07" right="0" left="0" top="grd00:40" height="38" cssclass="sta_WF_ParaH4_m"/>
+        <Static id="staTitle08" cssclass="sta_WF_ParaH4_m" right="0" left="0" top="grdAutoSize00:40" height="38" fittocontents="height"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsSample" oncolumnchanged="dsSample_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="FLOAT" size="256"/>
+          <Column id="chk" type="STRING" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+          <Column id="Column5" type="STRING" size="256"/>
+          <Column id="Column6" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">red</Col>
+            <Col id="Column3">1</Col>
+            <Col id="chk">1</Col>
+            <Col id="Column4">aaa</Col>
+            <Col id="Column5">bbb</Col>
+            <Col id="Column6">ccc</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">yellow</Col>
+            <Col id="Column3">1200</Col>
+            <Col id="Column4">ddd</Col>
+            <Col id="Column5">eee</Col>
+            <Col id="Column6">fff</Col>
+            <Col id="chk">1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">blue</Col>
+            <Col id="Column3">3</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">navy</Col>
+            <Col id="Column3">4</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">lemon</Col>
+            <Col id="Column3">5</Col>
+            <Col id="chk">1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">orange</Col>
+            <Col id="Column3">1600</Col>
+            <Col id="chk">1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">test</Col>
+            <Col id="Column3">7</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">strawberry</Col>
+            <Col id="Column3">8</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">banana</Col>
+            <Col id="Column3">9</Col>
+            <Col id="chk">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSample00" keystring="Column0" oncolumnchanged="dsSample00_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="row" type="FLOAT" size="256"/>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="BIGDECIMAL" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">red</Col>
+            <Col id="Column3">1200</Col>
+            <Col id="row">1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">yellow</Col>
+            <Col id="Column3">1</Col>
+            <Col id="row">2</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">blue</Col>
+            <Col id="Column3">2</Col>
+            <Col id="row">3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">navy</Col>
+            <Col id="Column3">3</Col>
+            <Col id="row">4</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">lemon</Col>
+            <Col id="Column3">5</Col>
+            <Col id="row">5</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">orange</Col>
+            <Col id="Column3">1600</Col>
+            <Col id="row">6</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">test</Col>
+            <Col id="Column3">7</Col>
+            <Col id="row">7</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">strawberry</Col>
+            <Col id="Column3">8</Col>
+            <Col id="row">8</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">banana</Col>
+            <Col id="Column3">9</Col>
+            <Col id="row">9</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSize">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">가</Col>
+            <Col id="Column1">band 속성값이 "body"인 Row 의 높이가 자동조절됩니다.</Col>
+            <Col id="Column2">red</Col>
+            <Col id="Column3">1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나</Col>
+            <Col id="Column1">band 속성값이 "body"인 Row 의 높이가 자동조절됩니다.
+Row 중 가장 높이가 큰 Row에 맞게 모든 Row의 높이가 설정됩니다.</Col>
+            <Col id="Column2">yellow</Col>
+            <Col id="Column3">2</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다</Col>
+            <Col id="Column1">band 속성값이 "body"인 Row 의 높이가 자동조절됩니다.
+Row 중 가장 높이가 큰 Row에 맞게 모든 Row의 높이가 설정됩니다.
+band 속성값이 "head", "summary" 인 Row 의 높이는 자동조절하지 않고, 디자인 시 설정한 크기로 유지합니다.</Col>
+            <Col id="Column2">blue</Col>
+            <Col id="Column3">3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다라</Col>
+            <Col id="Column1">band 속성값이 "body"인 Row 의 높이가 자동조절됩니다.
+Row 중 가장 높이가 큰 Row에 맞게 모든 Row의 높이가 설정됩니다.
+band 속성값이 "head", "summary" 인 Row 의 높이는 자동조절하지 않고, 디자인 시 설정한 크기로 유지합니다.
+
+band 속성값이 "body"인 Column 의 너비가 자동조절됩니다.
+각 Column 별로 가장 너비가 큰 Cell 에 맞게 Column의 너비가 따로 설정됩니다.
+band 속성값이 "left", "right" 인 Column 의 너비는 자동조절하지 않고, 디자인 시 설정한 크기로 유지합니다.</Col>
+            <Col id="Column2">navy</Col>
+            <Col id="Column3">4</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSample01">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="BIGDECIMAL" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">red</Col>
+            <Col id="Column3">1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">yellow</Col>
+            <Col id="Column3">1200</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">blue</Col>
+            <Col id="Column3">3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">navy</Col>
+            <Col id="Column3">4</Col>
+          </Row>
+          <Row>
+            <Col id="Column2">소계</Col>
+            <Col id="Column3">1208</Col>
+            <Col id="Column0">color</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">lemon</Col>
+            <Col id="Column3">5</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">orange</Col>
+            <Col id="Column3">1600</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">test</Col>
+            <Col id="Column3">7</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">strawberry</Col>
+            <Col id="Column3">8</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">banana</Col>
+            <Col id="Column3">9</Col>
+          </Row>
+          <Row>
+            <Col id="Column2">소계</Col>
+            <Col id="Column3">1629</Col>
+            <Col id="Column0">fruits</Col>
+          </Row>
+          <Row>
+            <Col id="Column2">합계</Col>
+            <Col id="Column3">2837</Col>
+            <Col id="Column0">항목</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSample02" keystring="G:Column0" onrowposchanged="dsSample00_onrowposchanged">
+        <ColumnInfo>
+          <Column id="row" type="FLOAT" size="256"/>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="BIGDECIMAL" size="256" prop="AVG"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">red</Col>
+            <Col id="Column3">1</Col>
+            <Col id="row">1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">yellow</Col>
+            <Col id="Column3">1200</Col>
+            <Col id="row">2</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">blue</Col>
+            <Col id="Column3">3</Col>
+            <Col id="row">3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">navy</Col>
+            <Col id="Column3">4</Col>
+            <Col id="row">4</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">lemon</Col>
+            <Col id="Column3">5</Col>
+            <Col id="row">5</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">orange</Col>
+            <Col id="Column3">1600</Col>
+            <Col id="row">6</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">test</Col>
+            <Col id="Column3">7</Col>
+            <Col id="row">7</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">strawberry</Col>
+            <Col id="Column3">8</Col>
+            <Col id="row">8</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">banana</Col>
+            <Col id="Column3">9</Col>
+            <Col id="row">9</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSample03" keystring="G:Column0-Column1,Column2-Column3" onrowposchanged="dsSample00_onrowposchanged">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+          <Column id="Column9" type="BIGDECIMAL" size="256" prop="SUM"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">2</Col>
+            <Col id="Column1">코드2</Col>
+            <Col id="Column9">3</Col>
+            <Col id="Column2">1</Col>
+            <Col id="Column3">코드명1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">2</Col>
+            <Col id="Column1">코드2</Col>
+            <Col id="Column9">4</Col>
+            <Col id="Column2">2</Col>
+            <Col id="Column3">코드명2</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">1</Col>
+            <Col id="Column1">명칭1</Col>
+            <Col id="Column9">1</Col>
+            <Col id="Column2">11</Col>
+            <Col id="Column3">CCC</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">1</Col>
+            <Col id="Column1">명칭1</Col>
+            <Col id="Column9">2</Col>
+            <Col id="Column2">11</Col>
+            <Col id="Column3">CCC</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">1</Col>
+            <Col id="Column1">명칭1</Col>
+            <Col id="Column2">22</Col>
+            <Col id="Column3">BBB</Col>
+            <Col id="Column9">3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">1</Col>
+            <Col id="Column1">명칭1</Col>
+            <Col id="Column2">22</Col>
+            <Col id="Column3">BBB</Col>
+            <Col id="Column9">4</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">3</Col>
+            <Col id="Column1">구분3</Col>
+            <Col id="Column9">5</Col>
+            <Col id="Column2">3</Col>
+            <Col id="Column3">구분명3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">3</Col>
+            <Col id="Column1">구분3</Col>
+            <Col id="Column2">4</Col>
+            <Col id="Column3">구분명4</Col>
+            <Col id="Column9">5</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSize2">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="INT" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">가</Col>
+            <Col id="Column1">band 속성값이 "body"인 </Col>
+            <Col id="Column2">red</Col>
+            <Col id="Column3">1</Col>
+            <Col id="Column4">반갑습니다.</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나</Col>
+            <Col id="Column1">band 속성값이 "body"인 Row 의 높이가 </Col>
+            <Col id="Column2">yellow</Col>
+            <Col id="Column3">2</Col>
+            <Col id="Column4">오랜만입니다.</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다</Col>
+            <Col id="Column1">band 속성값이 "body"인 Row 의 높이가 자동</Col>
+            <Col id="Column2">blue</Col>
+            <Col id="Column3">3</Col>
+            <Col id="Column4">감사합니다.</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">가나다라</Col>
+            <Col id="Column1">band 속성값이 "body"인 Row 의 높이가 자동 조절됩니다.</Col>
+            <Col id="Column2">navy</Col>
+            <Col id="Column3">4</Col>
+            <Col id="Column4">즐거웠습니다.</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsBgtEndwDetailList">
+        <ColumnInfo>
+          <Column id="pblntfDetlCd" type="STRING" size="256"/>
+          <Column id="pblntfLevlOrdr" type="BIGDECIMAL" size="256"/>
+          <Column id="divNm1" type="STRING" size="256"/>
+          <Column id="divNm2" type="STRING" size="256"/>
+          <Column id="divNm3" type="STRING" size="256"/>
+          <Column id="divNm4" type="STRING" size="256"/>
+          <Column id="bgnnAmt4" type="BIGDECIMAL" size="256"/>
+          <Column id="lastAmt4" type="BIGDECIMAL" size="256"/>
+          <Column id="bgnnAmt3" type="BIGDECIMAL" size="256"/>
+          <Column id="lastAmt3" type="BIGDECIMAL" size="256"/>
+          <Column id="bgnnAmt2" type="BIGDECIMAL" size="256"/>
+          <Column id="lastAmt2" type="BIGDECIMAL" size="256"/>
+          <Column id="bgnnAmt1" type="BIGDECIMAL" size="256"/>
+          <Column id="lastAmt1" type="BIGDECIMAL" size="256"/>
+          <Column id="bgnnAmt" type="BIGDECIMAL" size="256"/>
+          <Column id="lastAmt" type="BIGDECIMAL" size="256"/>
+          <Column id="updusrId" type="STRING" size="256"/>
+          <Column id="accnutYr" type="STRING" size="256"/>
+          <Column id="pblntfSeCd" type="STRING" size="256"/>
+          <Column id="cddcSeCd" type="STRING" size="256"/>
+          <Column id="pblntfCd" type="STRING" size="256"/>
+          <Column id="chk" type="INT" size="1"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_001</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">계</Col>
+            <Col id="divNm4">계</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">254756407000</Col>
+            <Col id="lastAmt1">10000000</Col>
+            <Col id="bgnnAmt">210100000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_003</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">내부거래</Col>
+            <Col id="divNm4">출연금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">4000</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_005</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">내부거래</Col>
+            <Col id="divNm4">교특전입금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">99000000000</Col>
+            <Col id="lastAmt1">5000000</Col>
+            <Col id="bgnnAmt">10000000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_007</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">내부거래</Col>
+            <Col id="divNm4">예수금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_009</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">내부거래</Col>
+            <Col id="divNm4">예탁금원금회수예탁금원금회수</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_011</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">경상수입</Col>
+            <Col id="divNm4">이자수입</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">2977509000</Col>
+            <Col id="lastAmt1">2000000</Col>
+            <Col id="bgnnAmt">100000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_013</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">경상수입</Col>
+            <Col id="divNm4">기타수입</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_015</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">이전수입</Col>
+            <Col id="divNm4">국고보조금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_017</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">이전수입</Col>
+            <Col id="divNm4">지방보조금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_019</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">이전수입</Col>
+            <Col id="divNm4">기부금및지원금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_021</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">이전수입</Col>
+            <Col id="divNm4">기타이전수입</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_023</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">자본수입</Col>
+            <Col id="divNm4">자본수입금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_025</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">융자회수</Col>
+            <Col id="divNm4">융자금회수</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_027</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">보전수입</Col>
+            <Col id="divNm4">차입금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_029</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">보전수입</Col>
+            <Col id="divNm4">예치금회수</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">152778898000</Col>
+            <Col id="lastAmt1">3000000</Col>
+            <Col id="bgnnAmt">200000000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_031</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">보전수입</Col>
+            <Col id="divNm4">전년도이월금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_059</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">보전수입</Col>
+            <Col id="divNm4">순세계잉여금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_033</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">계</Col>
+            <Col id="divNm4">계</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">254756407000</Col>
+            <Col id="lastAmt1">11001000000</Col>
+            <Col id="bgnnAmt">101010000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_035</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">내부거래</Col>
+            <Col id="divNm4">교특회계전출금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_037</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">내부거래</Col>
+            <Col id="divNm4">예탁금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_039</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">내부거래</Col>
+            <Col id="divNm4">예수금원리금상환</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_041</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">경상지출</Col>
+            <Col id="divNm4">인력운영비</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_043</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">경상지출</Col>
+            <Col id="divNm4">기본경비</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">10000000</Col>
+            <Col id="lastAmt1">1000000</Col>
+            <Col id="bgnnAmt">10000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_045</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">경상지출</Col>
+            <Col id="divNm4">비융자성사업비</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">11729774000</Col>
+            <Col id="lastAmt1">1000000000</Col>
+            <Col id="bgnnAmt">1000000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_047</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">경상지출</Col>
+            <Col id="divNm4">기타지출</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_049</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">자본지출</Col>
+            <Col id="divNm4">비융자성사업비</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_051</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">융자지출</Col>
+            <Col id="divNm4">융자성사업비</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_053</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">보전지출</Col>
+            <Col id="divNm4">예치금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">243016633000</Col>
+            <Col id="lastAmt1">10000000000</Col>
+            <Col id="bgnnAmt">100000000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_055</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">보전지출</Col>
+            <Col id="divNm4">차입원리금상환</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1001_PRIM020107_057</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">통폐합학교지원기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">보전지출</Col>
+            <Col id="divNm4">다음연도이월액</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_001</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">계</Col>
+            <Col id="divNm4">계</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">6346779000</Col>
+            <Col id="lastAmt1">1502000000</Col>
+            <Col id="bgnnAmt">4055000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_003</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">내부거래</Col>
+            <Col id="divNm4">출연금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_005</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">내부거래</Col>
+            <Col id="divNm4">교특전입금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_007</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">내부거래</Col>
+            <Col id="divNm4">예수금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_009</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">내부거래</Col>
+            <Col id="divNm4">예탁금원금회수</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_011</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">경상수입</Col>
+            <Col id="divNm4">이자수입</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">50000000</Col>
+            <Col id="lastAmt1">1500000</Col>
+            <Col id="bgnnAmt">50000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_013</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">경상수입</Col>
+            <Col id="divNm4">기타수입</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">5000000</Col>
+            <Col id="lastAmt1">500000</Col>
+            <Col id="bgnnAmt">5000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_015</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">이전수입</Col>
+            <Col id="divNm4">국고보조금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_017</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">이전수입</Col>
+            <Col id="divNm4">지방보조금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_019</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">이전수입</Col>
+            <Col id="divNm4">기부금및지원금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_021</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">이전수입</Col>
+            <Col id="divNm4">기타이전수입</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_023</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">자본수입</Col>
+            <Col id="divNm4">자본수입금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_025</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">융자회수</Col>
+            <Col id="divNm4">융자금회수</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">3000000000</Col>
+            <Col id="lastAmt1">1000000000</Col>
+            <Col id="bgnnAmt">3000000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_027</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">보전수입</Col>
+            <Col id="divNm4">차입금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_029</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">보전수입</Col>
+            <Col id="divNm4">예치금회수</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">3291779000</Col>
+            <Col id="lastAmt1">500000000</Col>
+            <Col id="bgnnAmt">1000000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_031</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">보전수입</Col>
+            <Col id="divNm4">전년도이월금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_059</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">수입</Col>
+            <Col id="divNm3">보전수입</Col>
+            <Col id="divNm4">순세계잉여금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_033</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">계</Col>
+            <Col id="divNm4">계</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">6346779000</Col>
+            <Col id="lastAmt1">3000000</Col>
+            <Col id="bgnnAmt">5300000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_035</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">내부거래</Col>
+            <Col id="divNm4">교특회계전출금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_037</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">내부거래</Col>
+            <Col id="divNm4">예탁금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_039</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">내부거래</Col>
+            <Col id="divNm4">예수금원리금상환</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_041</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">경상지출</Col>
+            <Col id="divNm4">인력운영비</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_043</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">경상지출</Col>
+            <Col id="divNm4">기본경비</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_045</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">경상지출</Col>
+            <Col id="divNm4">비융자성사업비</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_047</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">경상지출</Col>
+            <Col id="divNm4">기타지출</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_049</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">자본지출</Col>
+            <Col id="divNm4">비융자성사업비</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_051</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">융자지출</Col>
+            <Col id="divNm4">융자성사업비</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">5300000000</Col>
+            <Col id="lastAmt1">1000000</Col>
+            <Col id="bgnnAmt">5000000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_053</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">보전지출</Col>
+            <Col id="divNm4">예치금</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">1046779000</Col>
+            <Col id="lastAmt1">2000000</Col>
+            <Col id="bgnnAmt">300000000</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_055</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">보전지출</Col>
+            <Col id="divNm4">차입원리금상환</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+          <Row>
+            <Col id="pblntfDetlCd">R1002_PRIM020107_057</Col>
+            <Col id="pblntfLevlOrdr">1</Col>
+            <Col id="divNm1">경상북도교육청공무원복지기금</Col>
+            <Col id="divNm2">지출</Col>
+            <Col id="divNm3">보전지출</Col>
+            <Col id="divNm4">다음연도이월액</Col>
+            <Col id="bgnnAmt4">0</Col>
+            <Col id="lastAmt4">0</Col>
+            <Col id="bgnnAmt3">0</Col>
+            <Col id="lastAmt3">0</Col>
+            <Col id="bgnnAmt2">0</Col>
+            <Col id="lastAmt2">0</Col>
+            <Col id="bgnnAmt1">0</Col>
+            <Col id="lastAmt1">0</Col>
+            <Col id="bgnnAmt">0</Col>
+            <Col id="lastAmt">0</Col>
+            <Col id="updusrId">zz</Col>
+            <Col id="accnutYr">2018</Col>
+            <Col id="pblntfSeCd">PRIM</Col>
+            <Col id="cddcSeCd">R10</Col>
+            <Col id="pblntfCd">PRIM020107</Col>
+            <Col id="chk">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleGridGroup.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/12/14
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/12/14			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	
+	this.staCount.set_text("총 <fc v='#25649e'>"+this.dsSample02.rowcount+"</fc> 건")
+	
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace(this.dsSample00.keystring);
+	this.edt00.set_value(this.dsSample00.keystring);
+};
+
+this.btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsSample00.set_keystring(this.edt00.value);
+};
+
+this.grdSuppress00_onexpandup = function(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo)
+{
+	trace("grdSuppress00_onexpandup");
+};
+
+this.btnSubRowHidden_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objGrid = this.Grid03;
+	var objDsList = this.Grid03.getBindDataset();
+	
+	objGrid.set_enableredraw(false);
+	
+	// 소계 부분 높이 조정하기(1px)
+	for(var i = 0 ; i < objGrid.rowcount ; i++) {
+		if(objDsList.getRowLevel(i) == 1) {
+			objGrid.setRealRowSize(i, 1);	
+		}
+	}
+	
+	// 소계부분 line 숨기기
+	var sExpr = "expr:dataset.getRowLevel(currow+1) == 1 ? 'cell_NoLineH' : ''";
+	objGrid.setCellProperty("body",0, "cssclass", sExpr);
+	objGrid.setCellProperty("body",1, "cssclass", sExpr);
+	objGrid.setCellProperty("body",2, "cssclass", sExpr);
+	objGrid.setCellProperty("body",3, "cssclass", sExpr);
+	objGrid.setCellProperty("body",4, "cssclass", sExpr);
+	
+	objGrid.set_enableredraw(true);
+};
+
+this.btn02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsSample00.insertRow(this.dsSample00.rowposition);
+};
+
+this.dsSample00_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if (e.columnid == "Column3") {
+		// dataSet의 Logical Data 갱신
+		obj.updateSortGroup(obj.keystring);
+	}
+};
+
+this.btn03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nRtn = this.grdCal.mergeContentsCell("body", 1, 0, 1, 3, 3, true);
+	trace("nRtn : " + nRtn);
+};
+
+this.dsSample_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if (e.columnid == "chk") {
+		var nChk = e.newvalue;
+		var sKey = this.dsSample.getColumn(e.row, "Column1");
+		this.dsSample.set_enableevent(false);
+		for (var i=0; i < this.dsSample.rowcount; i++) {
+			if (this.dsSample.getColumn(i, "Column1") == sKey) {
+				this.dsSample.setColumn(i, "chk", nChk);
+			}
+		}
+		this.dsSample.set_enableevent(true);
+	}
+};
+
+this.grdSuppress_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	trace(	obj.getCurEditType());
+	trace(e.fromobject + "||"+ e.fromreferenceobject);
+};
+]]></Script>
+  </Form>
+</FDL>

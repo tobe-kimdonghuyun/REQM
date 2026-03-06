@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleWebBrowser" width="1050" height="736" titletext="웹브라우저 사용샘플" onload="form_onload">
+    <Layouts>
+      <Layout height="736" mobileorientation="landscape" width="1050">
+        <Static id="staTitle00" taborder="4" text="웹브라우저" left="0" top="0" height="43" cssclass="sta_WF_ParaH3_pc" right="826"/>
+        <WebBrowser id="webSample" taborder="0" left="0" top="staTitle00:0" bottom="0" onusernotify="webSample_onusernotify" onloadcompleted="webSample_onloadcompleted" width="62.5%"/>
+        <Static id="staTitle" taborder="3" text="html에서 넘겨받은 내용" left="webSample:20" top="0" height="43" cssclass="sta_WF_ParaH3_pc" right="20"/>
+        <TextArea id="txaRtn" taborder="2" left="webSample:19" top="staTitle:77" right="0" bottom="0"/>
+        <Button id="btnCallHtml" taborder="1" text="HTML로 데이터셋 전송" width="209" height="48" fittocontents="width" right="0" onclick="btnCallHtml_onclick" bottom="txaRtn:16"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleWebBrowser.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/12/14
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/12/14			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	
+	var sUrl = nexacro.getEnvironment().services['svcUrl'].url + "sampleHtml/webBrowserSample.html";
+	this.webSample.set_url(sUrl);
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.webSample_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	if(e.userdata.indexOf("toValue:")>-1){
+		var sValue = this.txaRtn.value;
+		if(this.gfnIsNull(sValue)) sValue = "";
+		var sRtnValue = e.userdata.replace("toValue:","");
+		if(this.gfnIsNull(sRtnValue)) return;
+		
+		this.txaRtn.set_value(sValue + e.userdata.replace("toValue:","")+"\n");
+	}
+};
+
+this.webSample_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+	trace("webSample_onloadcompleted");
+};
+
+this.btnCallHtml_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sData = this.ds00.saveXML();
+	this.webSample.callMethod("fnFromNexacro",sData);
+	
+};
+]]></Script>
+    <Objects>
+      <Dataset id="ds00">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">1</Col>
+            <Col id="Column1">메뉴1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">2</Col>
+            <Col id="Column1">메뉴2</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">3</Col>
+            <Col id="Column1">메뉴3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">4</Col>
+            <Col id="Column1">메뉴4</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">5</Col>
+            <Col id="Column1">메뉴5</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

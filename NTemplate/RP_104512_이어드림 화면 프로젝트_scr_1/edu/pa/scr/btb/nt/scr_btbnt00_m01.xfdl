@@ -1,0 +1,622 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="scr_btbnt00_m01" width="1320" height="550" titletext="공지사항목록조회_시스템" onload="form_onload" ontimer="form_ontimer" oninit="form_oninit">
+    <Layouts>
+      <Layout height="550" width="1320" screenid="desktopScr">
+        <Div id="divKeyword" taborder="0" text="div00" left="0" top="34" height="40" width="384">
+          <Layouts>
+            <Layout>
+              <Edit id="edtKeyword" taborder="0" left="0" top="0" initvalueid="iv_Edit" accessibilitylabel="제목" right="0" bottom="0" onkeydown="divKeyword_edtKeyword_onkeydown" maxlength="200"/>
+            </Layout>
+            <Layout name="tablet"/>
+            <Layout name="mobile">
+              <Edit id="edtKeyword" taborder="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnSearch" taborder="1" text="조회" height="40" width="74" initvalueid="iv_Button" top="34" left="divKeyword:10" onclick="btnSearch_onclick"/>
+        <Grid id="grdMain" taborder="2" left="0" binddataset="dsSysNtc" top="98" right="0" formatid="default" autofittype="col" height="386" oncellclick="grdMain_oncellclick" cssclass="grd_WF_Original" nodatatext="조회된 데이터가 없습니다" onkillfocus="grdMain_onkillfocus" onsetfocus="grdMain_onsetfocus" accessibilitylabel="그리드라벨">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="400"/>
+                <Column size="130"/>
+              </Columns>
+              <Rows>
+                <Row size="60" band="head"/>
+                <Row size="54"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="번호"/>
+                <Cell col="1" text="제목"/>
+                <Cell col="2" text="작성일자"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:rownum" displaytype="text" textAlign="center"/>
+                <Cell col="1" accessibilitydescription="새창열기" displaytype="buttoncontrol" edittype="button" accessibilityrole="button" tooltiptext="bind:ntcMteTitlNm" cssclass="expr:imptYn == 'Y' ? (newYn == 'Y' ? 'cell_WF_TxtLinkNoticeNew' : 'cell_WF_TxtLinkNotice') : (newYn == 'Y' ? 'cell_WF_TxtLinkNew' : 'cell_WF_TxtLink')" text="expr:comp.parent.fnDisplayText(comp,1,currow,ntcMteTitlNm) "/>
+                <Cell col="2" text="bind:regDt" displaytype="date" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd" cssclass="cell_WF_TxtC"/>
+              </Band>
+            </Format>
+            <Format id="format00">
+              <Columns>
+                <Column size="12" band="left"/>
+                <Column size="100"/>
+                <Column size="220"/>
+                <Column size="120"/>
+                <Column size="12" band="right"/>
+              </Columns>
+              <Rows>
+                <Row size="12"/>
+                <Row size="35"/>
+                <Row size="34"/>
+                <Row size="12"/>
+                <Row size="16"/>
+              </Rows>
+              <Band id="body">
+                <Cell cssclass="cell_WF_LeftTop"/>
+                <Cell col="1" cssclass="cell_WF_Top"/>
+                <Cell col="2" cssclass="cell_WF_Top"/>
+                <Cell col="3" cssclass="cell_WF_Top"/>
+                <Cell col="4" cssclass="cell_WF_RightTop"/>
+                <Cell row="1" cssclass="cell_WF_Left"/>
+                <Cell row="1" col="1" colspan="3" tooltiptext="bind:ntcMteTitlNm" cssclass="expr:imptYn == 'Y' ? (newYn == 'Y' ? 'cell_WF_TxtLinkNoticeNewM' : 'cell_WF_TxtLinkNoticeM') : (newYn == 'Y' ? 'cell_WF_TxtLinkNewM' : 'cell_WF_TxtLink')" displaytype="buttoncontrol" edittype="button" text="expr:comp.parent.fnDisplayText(comp,1,currow,ntcMteTitlNm) "/>
+                <Cell row="1" col="4" cssclass="cell_WF_Right"/>
+                <Cell row="2" cssclass="cell_WF_Left"/>
+                <Cell row="2" col="1" text="작성일자"/>
+                <Cell row="2" col="2" text="bind:regDt" displaytype="date" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd" cssclass="cell_WF_TxtL"/>
+                <Cell row="2" col="3"/>
+                <Cell row="2" col="4" cssclass="cell_WF_Right"/>
+                <Cell row="3" cssclass="cell_WF_LeftBottom"/>
+                <Cell row="3" col="1" cssclass="cell_WF_Bottom"/>
+                <Cell row="3" col="2" cssclass="cell_WF_Bottom"/>
+                <Cell row="3" col="3" cssclass="cell_WF_Bottom"/>
+                <Cell row="3" col="4" cssclass="cell_WF_RightBottom"/>
+                <Cell row="4"/>
+                <Cell row="4" col="1"/>
+                <Cell row="4" col="2"/>
+                <Cell row="4" col="3"/>
+                <Cell row="4" col="4"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnViewMore" taborder="3" text="더보기" left="0" top="518" width="0" height="30" cssclass="btn_WF_More" accessibilityenable="false" onclick="btnViewMore_onclick"/>
+      </Layout>
+      <Layout height="550" mobileorientation="Landscape" name="tablet" type="default" width="780" screenid="desktopScr,tabletScr">
+        <Button id="btnSearch" left="divKeyword:10" top="34" width="74" height="40" taborder="1"/>
+        <Div id="divKeyword" left="0" top="34" height="40" width="40%" taborder="0"/>
+        <Grid id="grdMain" taborder="2"/>
+        <Button id="btnViewMore" taborder="3"/>
+      </Layout>
+      <Layout height="963" mobileorientation="Landscape" name="mobile" type="default" width="450" screenid="desktopScr,mobieScr">
+        <Grid id="grdMain" formatid="format00" cssclass="grd_WF_M" top="151" left="0" right="0" bottom="48" taborder="2"/>
+        <Button id="btnViewMore" left="39.56%" width="94" height="32" top="grdMain:16" taborder="3" accessibilityenable="true"/>
+        <Button id="btnSearch" top="34" width="74" height="40" left="divKeyword:10" taborder="1"/>
+        <Div id="divKeyword" left="0" top="34" height="40" right="84" taborder="0"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256"/>
+          <Column id="outDatasets" type="STRING" size="256"/>
+          <Column id="asynctp" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listSysNtcMte</Col>
+            <Col id="url">/scr_btb_nt00_001.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsSysNtc=dsSysNtc dsPageInfo=dsPageInfo</Col>
+          </Row>
+          <Row>
+            <Col id="id">listSysNtcMteMore</Col>
+            <Col id="url">/scr_btb_nt00_001.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsSysNtcMore=dsSysNtc dsPageInfo=dsPageInfo</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSrchScCd">
+        <ColumnInfo>
+          <Column id="srchScCd" type="STRING" size="256"/>
+          <Column id="srchScNm" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="srchScCd">1</Col>
+            <Col id="srchScNm">제목</Col>
+          </Row>
+          <Row>
+            <Col id="srchScCd">2</Col>
+            <Col id="srchScNm">내용</Col>
+          </Row>
+          <Row>
+            <Col id="srchScCd">3</Col>
+            <Col id="srchScNm">제목+내용</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="keyword" type="STRING" size="256"/>
+          <Column id="srchScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="keyword"/>
+            <Col id="srchScCd">3</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSysNtc" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="rownum" type="STRING" size="256"/>
+          <Column id="ntcMteId" type="STRING" size="256"/>
+          <Column id="ntcMteTitlNm" type="STRING" size="256"/>
+          <Column id="ntcMteClfCd" type="STRING" size="256"/>
+          <Column id="imptYn" type="STRING" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="newYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="initIsUsePageInfo" type="STRING" size="30" value="Y"/>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex">1</Col>
+            <Col id="pageSize">10</Col>
+            <Col id="totalCount">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSysNtcMore" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="rownum" type="STRING" size="256"/>
+          <Column id="ntcMteId" type="STRING" size="256"/>
+          <Column id="ntcMteTitlNm" type="STRING" size="256"/>
+          <Column id="ntcMteClfCd" type="STRING" size="256"/>
+          <Column id="imptYn" type="STRING" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="newYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템 
+*  @MenuPath    FAQ
+*  @FileName 	scr_btbnt00_m01.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.04.04
+*  @Desction    FAQ목록조회_시스템
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.04.04     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = nexacro.getApplication();
+
+this.tabIndex = 1; // 탭 번호
+this.paramDsList;	// 모바일에서 파라메터로 넘길 조회결과
+
+var isShowPageBtn = false;
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 oninit시 처리내역
+*/
+this.form_oninit = function(obj:nexacro.Form,e:nexacro.EventInfo)
+{
+	var isLogin = nexacro.getEnvironmentVariable("ev_isLogin");
+	if(isLogin == "N"){
+		this.tabIndex = 0;
+	}else{
+		this.tabIndex = 1;
+	}
+};
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.scrInitForm(obj);	//필수(화면초기화)
+
+	// 데이터 초기화
+	this.fnInitData();
+
+	// 파라메터 세팅
+	this.pv_params = this.smfGetFormParams();
+	
+	if(!this.smfIsNull(this.pv_params) && this.pv_params.tabIndex == this.tabIndex){
+		
+		// 검색 정보
+		if(!this.smfIsNull(this.pv_params.dsSearchParam)){
+			this.dsSearch.loadXML(this.pv_params.dsSearchParam);
+			
+			this.pv_params.dsSearchParam = "";
+		}
+		
+		// 페이지 정보
+		if(!this.smfIsNull(this.pv_params.dsPagingParam)){
+			this.dsPageInfo.loadXML(this.pv_params.dsPagingParam);
+			if(this.dsPageInfo.getConstColIndex("initIsUsePageInfo") < 0){
+				this.dsPageInfo.addConstColumn("initIsUsePageInfo","Y");
+			} else {
+				this.dsPageInfo.setConstColumn("initIsUsePageInfo","Y");
+			}
+			// 목록 개수 자동으로 처리 안되서 수동 SET
+			this.divPageSummary.form.fnSetInitPageSize(this.dsPageInfo.getColumn("0","pageSize"));
+			
+			this.pv_params.dsPagingParam = "";
+		}
+		
+		//모바일 상세페이지에서 되돌아온 경우, 목록 유지
+		if(!this.smfIsNull(this.pv_params.dsListParam) && (this.smfIsMobile() || this.objApp.gv_appScreenType == "M")){
+			
+			this.dsSysNtcMore.loadXML(this.pv_params.dsListParam);
+			
+			this.smfDataAppend(this, this.grdMain, this.dsSysNtcMore);
+			
+			var totalCount = this.dsPageInfo.getColumn(0,"totalCount");
+			var pageIndex = this.dsPageInfo.getColumn(0,"pageIndex");
+			var pageSize = this.dsPageInfo.getColumn(0,"pageSize");
+			var lastPage = Math.ceil(totalCount / pageSize);
+			// 더보기 숨김
+			if(this.dsSysNtcMore.getRowCount() == 0 || lastPage == pageIndex){
+				this.dsPageInfo.setColumn(0,"pageIndex",1);
+				isShowPageBtn = false;
+			}else{
+				isShowPageBtn = true;
+			}
+			
+			//var pageIdx = this.dsPageInfo.getColumn(0,"pageIndex");
+ 			//this.dsPageInfo.setColumn(0,"pageIndex", pageIdx-1);
+ 			this.divPaginator.form.fnInit(this.grdMain, this.dsPageInfo, this.divPageSummary, this.fnNtcListSearch, this);
+ 			this.divPageSummary.form.fnInit(this.grdMain, this.dsPageInfo, this.divPageSummary, this.fnNtcListSearch, this);
+			
+			// 화면 높이 조정
+			obj.setTimer(900, 55);
+			
+			this.pv_params.dsListParam = "";
+		}else{
+			//  페이지를 조회한다.
+			this.btnSearch.click();
+		}
+	}else{
+		//  페이지를 조회한다.
+		this.btnSearch.click();
+	}
+};
+
+/************************************************************************************************s
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnNtcListSearch = function(obj, e){
+	// 초기값 설정
+	var serviceId = "listSysNtcMte";
+	var tabValidate = this.divKeyword;
+	
+	var vSearchKeyword = this.divKeyword.form.edtKeyword.value;
+	var objRegExp = /[$]/gi;
+	if(!this.smfIsNull(vSearchKeyword)){
+		vSearchKeyword = vSearchKeyword.replace(objRegExp,"");	//특수문자 제거
+	}
+	this.dsSearch.setColumn(0,"keyword" , vSearchKeyword);
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 서브밋 시작
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 서비스 객체 생성
+	this.smfSearchService(serviceId)
+	// 데이터 검증
+	.validateForm(tabValidate)
+	// 페이징처리
+	.paginator(this.grdMain, this.divPaginator, this.divPageSummary, this.dsPageInfo, this.fnNtcListSearch, e)
+	// 실행
+	.run()
+	// 콜백
+	.callback(function(callbackParams){
+		if(callbackParams.errors){
+			return;
+		}
+		
+		var totalCount = this.dsPageInfo.getColumn(0,"totalCount");
+		if(this.smfIsMobile() || this.objApp.gv_appScreenType == "M"){
+			var pageIndex = this.dsPageInfo.getColumn(0,"pageIndex");
+			var pageSize = this.dsPageInfo.getColumn(0,"pageSize");
+			var lastPage = Math.ceil(totalCount / pageSize);
+			
+			// 더보기 숨김
+			if(this.dsSysNtc.getRowCount() == 0 || lastPage == pageIndex){
+				isShowPageBtn = false;
+			}else{
+				isShowPageBtn = true;
+			}
+			
+		}
+		
+		if(!this.smfIsMobile() && this.objApp.gv_appScreenType != "M"){
+			this.parent.parent.scrollTo(0,0);
+
+			//검색 결과가 없는 경우 페이징 숨김
+			if(this.dsSysNtc.getRowCount() == 0 || totalCount == this.dsSysNtc.getRowCount()){
+				isShowPageBtn = false;
+			}else{
+				isShowPageBtn = true;
+			}
+		}
+		
+		if(this.dsSysNtc.getRowCount() == 0 ) this.dsPageInfo.setColumn(0,"totalCount",0);
+		
+		// 화면 높이 조정
+		this.fnResetScreenHeight(this.grdMain,this.lookup("tabMain"));
+		//this.smfResetScroll(this);
+	});
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 서브밋 종료
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+};
+
+this.fnNtcListMore = function(obj, e){
+	// 초기값 설정
+	var serviceId = "listSysNtcMteMore";
+	var tabValidate = this.divKeyword;
+	
+	//this.dsSearch.setColumn(0,"srchScCd",this.cboSrchScCd.value);
+	//this.dsSearch.setColumn(0,"keyword",this.divKeyword.form.edtKeyword.value);
+	
+	if(this.dsPageInfo.getConstColIndex("initIsUsePageInfo") < 0){
+		this.dsPageInfo.addConstColumn("initIsUsePageInfo","Y");
+	} else {
+		this.dsPageInfo.setConstColumn("initIsUsePageInfo","Y");
+	}
+	
+	var pageIndex = this.dsPageInfo.getColumn(0,"pageIndex")+1;
+	var pageSize = this.dsPageInfo.getColumn(0,"pageSize");
+	var totalCount = this.dsPageInfo.getColumn(0,"totalCount");
+	var lastPage = Math.ceil(totalCount / pageSize);
+	
+	if(lastPage >= pageIndex){
+		this.dsPageInfo.setColumn(0,"pageIndex",pageIndex);
+	}else{
+		this.dsPageInfo.setColumn(0,"pageIndex",1);
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 서브밋 시작
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 서비스 객체 생성
+	this.smfSearchService(serviceId)
+	// 데이터 검증
+	.validateForm(tabValidate)
+	// 페이징처리
+	.paginator(this, this.divPaginator, this.divPageSummary, this.dsPageInfo, this.fnNtcListSearch, e)
+	// 실행
+	.run()
+	// 콜백
+	.callback(function(callbackParams){
+		if(callbackParams.errors){
+			return;
+		}
+		
+		//this.dsSysNtc.appendData(this.dsSysNtcMore);
+		this.smfDataAppend(this, this.grdMain, this.dsSysNtcMore);
+		
+		if(this.dsSysNtc.getRowCount() == 0 || lastPage == pageIndex){
+			isShowPageBtn = false;
+		}else{
+			isShowPageBtn = true;
+		}
+		//this.resetScroll();
+		
+		if(this.dsSysNtc.getRowCount() == 0 ) this.dsPageInfo.setColumn(0,"totalCount",0);
+		
+		// 화면 높이 조정
+		this.fnResetScreenHeight(this.grdMain,this.lookup("tabMain"));
+		
+	});
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 서브밋 종료
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ // 서비스 콜백
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnInitData = function(){
+	// 페이지 데이터 초기화
+	//this.dsPageInfo.setColumn(0,"pageIndex",1);
+	//this.dsPageInfo.setColumn(0,"pageSize",10);
+	//this.dsPageInfo.setColumn(0,"totalCount",0);
+
+	// 페이지 레코드 size SET
+	//this.divPageSummary.form.fnSetInitPageSize(10);
+	
+	// 검색구분 SET
+	//this.cboSrchScCd.set_value(this.dsSearch.getColumn(0,"srchScCd"));
+	//this.dsSearch.setColumn(0,"srchScCd",1);
+	
+	// 검색어 초기화
+	//this.divKeyword.form.edtKeyword.set_value("");
+	//this.dsSearch.setColumn(0,"keyword","");
+	
+	// validation SET
+	this.divKeyword.form.edtKeyword.validate = "maxlengthB:200";	
+}
+
+this.fnMoveToDetail = function(obj, e){
+	// 클릭한 셀을 구한다
+	var nRow = e.row;
+	var nCell = e.cell;
+	
+	// 제목 cell 설정
+	var titlNo = 1;
+	var titlNoM = 6;
+	var isMobileBtn = false;
+	if(this.smfIsMobile() || this.objApp.gv_appScreenType == "M"){
+		isMobileBtn = true;
+		// 상세로 전달할 list
+		this.paramDsList = this.dsSysNtc.saveXML();
+	}
+	
+	// 제목 클릭했을 때만 동작
+	if(nCell == titlNo || nCell == titlNoM || isMobileBtn){
+		// 상세화면으로 전달할 데이터 SET
+		var objDs = obj.getBindDataset();
+		var sNtcMteId = objDs.getColumn(nRow,"ntcMteId");
+		
+		var params = {tabIndex:this.tabIndex
+			, ntcMteId:sNtcMteId
+			, dsSearchParam:this.dsSearch.saveXML()
+			, dsPagingParam:this.dsPageInfo.saveXML()
+			, dsListParam : this.paramDsList
+		};
+		
+		// 상세화면 호출
+		this.smfSetWorkPage("pa_scr_btb_nt::scr_btbnt00_m04.xfdl", params);
+	}
+}
+
+this.fnResetScreenHeight = function(objGrd,objTab)
+{
+	// 그리드 사이즈 변경
+	var grdHeight = (objGrd.getRealRowFullSize("body") == null ? 0 : objGrd.getRealRowFullSize("body") == 0 ? 54 : objGrd.getRealRowFullSize("body"))
+					+ (objGrd.getRealRowFullSize("head") == null ? 0 : objGrd.getRealRowFullSize("head"))
+					+ (objGrd.getRealRowFullSize("summary") == null ? 0 : objGrd.getRealRowFullSize("summary"))
+					+ 2;
+	
+	objGrd.setOffsetHeight(grdHeight);
+	
+	// 탭 사이즈 변경
+	if(objTab != null){
+		var tHeight =  objGrd.getOffsetBottom() + 110;
+		objTab.setOffsetHeight(tHeight);
+	}
+	
+	// divWork(frame영역) 사이즈 계산
+	var nFormHeight = this.getOwnerFrame().form.divAll.form.divWork.form.staTitle.getOffsetHeight()
+					+ objTab.getOffsetHeight();
+					
+	// frameAll의 fnAfter_onlayoutchanged에서 divWork 높이 변경하는데 처리 순서가 고르지 않아 일단 여기서 셋팅
+	this.getOwnerFrame().form.divAll.form.fv_WorkFormHeight = nFormHeight; 
+	
+	// divWork(frame영역) 사이즈 변경
+	this.getOwnerFrame().form.divAll.form.divWork.setOffsetHeight(nFormHeight);
+	
+	this.resetScroll();
+	this.getOwnerFrame().form.divAll.form.resetScroll();
+	
+	// 페이지 버튼 숨김/표출
+	if(isShowPageBtn){
+		this.btnViewMore.set_visible(true);
+		this.divPaginator.set_visible(true);
+	}else{
+		this.btnViewMore.set_visible(false);
+		this.divPaginator.set_visible(false);
+	}
+};
+
+this.fnDisplayText = function(obj,nCell,nRow,sLongText)
+{
+	// 셀 가로 길이 가져오기
+	var objRect = obj.getCellRect(nRow,nCell);
+	var nObjWidth = objRect.width;
+	
+	// 모바일 셀 3개 병합되어 가로 합 가져오기
+ 	if ( this.objApp.gv_appScreenType == "M" ) {
+		objRect = obj.getCellRect(nRow,++nCell);
+		nObjWidth += objRect.width;
+		objRect = obj.getCellRect(nRow,++nCell);
+		nObjWidth += objRect.width;
+	}
+	
+	// 셀 가로 길이에 따라 가변으로 적용
+	var sSize = parseInt(nObjWidth/20);
+	
+	return this.scrDisplayText(sLongText, sSize);
+};
+
+/*
+* onlayoutchanged이벤트 발생후 자동호출
+*/
+this.fnAfter_onlayoutchanged = function(sLayoutId)
+{
+	// 화면 높이 조정
+	this.fnResetScreenHeight(this.grdMain,this.lookup("tabMain"));
+	
+	// 검색결과 {0}건 (모바일화면 : 총 {0}건) 다시 출력
+	this.divPageSummary.form.fnDisplayTotalText(this.dsPageInfo.getColumn(0,"totalCount"));
+};
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 목록 조회
+	this.fnNtcListSearch(obj, e);
+};
+
+this.divKeyword_edtKeyword_onkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	// 엔터 클릭 시 조회 버튼 동작
+	if(e.keycode == "13"){
+		this.btnSearch.click();
+	}
+};
+
+this.grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{	
+	// 상세화면 이동
+	this.fnMoveToDetail(obj, e);
+};
+
+this.btnViewMore_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 더보기 조회
+	this.fnNtcListMore(obj, e);
+};
+
+this.form_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if ( e.timerid == 900 ) {
+		obj.killTimer(e.timerid);
+		this.fnAfter_onlayoutchanged(this.getCurrentLayoutID());
+	}
+};
+]]></Script>
+    <InitValue/>
+    <Bind>
+      <BindItem id="item1" compid="divKeyword.form.edtKeyword" propid="value" datasetid="dsSearch" columnid="keyword"/>
+    </Bind>
+  </Form>
+</FDL>

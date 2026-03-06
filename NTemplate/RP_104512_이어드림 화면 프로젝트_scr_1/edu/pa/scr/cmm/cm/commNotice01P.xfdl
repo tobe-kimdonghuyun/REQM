@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="commNotice01P" width="518" height="518" titletext="시스템 공지" onload="commNotice01P_onload">
+    <Layouts>
+      <Layout height="518" width="518" screenid="desktopScr">
+        <ImageViewer id="ImageViewer00" taborder="0" top="10" height="130" right="0" stretch="fixaspectratio" image="url('theme::neisScr/images/img_popup_2.png')" width="130"/>
+        <Static id="title" taborder="1" text="대국민에서&#13;&#10;이벤트 안내점검" left="0" top="0" height="130" cssclass="sta_WF_Title" accessibilityrole="heading" right="ImageViewer00:20"/>
+        <Div id="divNotice" taborder="2" text="Div00" left="0" top="title:30" cssclass="div_POP_Con" right="0" bottom="0">
+          <Layouts>
+            <Layout>
+              <Div id="divText" taborder="0" text="**에디트영역**" left="40" top="10" height="140" initvalueid="ivDivAccessibilityOn" url="comm::comp_webEditor.xfdl" right="40"/>
+              <Static id="Static00" taborder="1" text="작업내용" left="28" top="178" width="103" height="40" cssclass="sta_POP_Label" rtl=""/>
+              <Static id="staJobCn" taborder="2" text="서버점검 안내 서버점검 안내 서버점검 안내 서버점검 안내 서버점검 안내 서버점검 안내 서버점검 안내" left="Static00:15" top="168" height="60" right="28"/>
+              <Static id="Static00_00" taborder="3" text="점검시간" left="28" top="235" width="103" height="40" cssclass="sta_POP_Label"/>
+              <Static id="staYmd" taborder="4" text="2023.01.01 12:00 ~ 2023.01.03 18:00" left="Static00_00:15" top="235" height="40" right="28"/>
+              <Static id="Static00_00_00" taborder="5" text="중단업무" left="28" top="289" width="103" height="40" cssclass="sta_POP_Label"/>
+              <Static id="staWrkCn" taborder="6" text="서버점검 안내 서버점검 안내 서버점검 안내 서버점검 안내 서버점검 안내 서버점검 안내 서버점검 안내" left="Static00_00_00:15" top="279" height="60" right="28"/>
+            </Layout>
+            <Layout name="mobile">
+              <Div id="divText" left="10" top="10" height="140" right="10"/>
+              <Static id="Static00" left="15" top="160" width="103" height="40"/>
+              <Static id="staJobCn" left="18" top="Static00:6" height="40" right="18" fittocontents="height"/>
+              <Static id="Static00_00" top="staJobCn:6" left="15" width="103" height="40" text="점검시간"/>
+              <Static id="staYmd" left="18" top="Static00_00:8" height="30" right="18" fittocontents="height"/>
+              <Static id="Static00_00_00" left="15" top="staYmd:8" width="103" height="40"/>
+              <Static id="staWrkCn" left="18" top="Static00_00_00:6" height="40" right="18" fittocontents="height"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout height="660" mobileorientation="Landscape" name="mobile" type="default" width="410" screenid="mobileScr,tabletScr,desktopScr">
+        <ImageViewer id="ImageViewer00" top="0" left="0" right="0" height="70"/>
+        <Static id="title" height="100" left="0" top="ImageViewer00:16" right="0" cssclass="sta_WF_Title,sta_WF_TxtCenter" text="대국민에서&#13;&#10;이벤트 안내점검" fittocontents="height"/>
+        <Div id="divNotice" top="title:20" left="0" right="0" bottom="0" text="Div00"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템 
+*  @MenuPath    pa_scr_cmm_cm
+*  @FileName 	commNotice01P.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.04.23
+*  @Desction    시스템 공지 팝업
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.04.23     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.commNotice01P_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.title.set_text(this.parent.params.eventTitlNm);		//팝업타이틀
+	
+	this.divNotice.form.divText.form.fnInit(this, this.fnWebEditorCallback, this.fnWebEditorSetHtmlCallback);
+	//this.divText.autoHeight = "Y";
+	this.divNotice.form.divText._html = this.parent.params.popupCn; //팝업 내용
+	
+	this.divNotice.form.staJobCn.set_text(this.parent.params.jobCn);		//작업내용
+	this.divNotice.form.staYmd.set_text(this.parent.params.eventYmd); 	    //작업시간
+	this.divNotice.form.staWrkCn.set_text(this.parent.params.haltWrkCn);	//중단업무내용
+	
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/*
+*	웹에디터가 onload된 이후 호출되는 callback
+*   obj : 웹에디터 Div오브젝트
+*/
+this.fnWebEditorCallback = function(obj)
+{
+	// 일반적으로는 데이터를 세팅
+	obj.form.fnSetHtml(obj._html);
+};
+
+/*
+*	웹에디터가 text를 변경 할 경우 호출하는 callback
+*   obj : 웹에디터 Div오브젝트
+*/
+this.fnWebEditorSetHtmlCallback = function(obj,contentHeight)
+{
+	//trace("***  웹에디터에 Text를 세팅했습니다.["+obj.id+"] contentHeight[=" + contentHeight + "]");
+	
+	// 일반적으로는 WebEditor Div를 resetScroll해줌.
+	//  (Web Editor의 높이가 변경이 되어 있음(autoHeight="Y"인 경우))
+	//this.smfResetScroll(this.divDetail.form.divWebEditor);
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+]]></Script>
+  </Form>
+</FDL>

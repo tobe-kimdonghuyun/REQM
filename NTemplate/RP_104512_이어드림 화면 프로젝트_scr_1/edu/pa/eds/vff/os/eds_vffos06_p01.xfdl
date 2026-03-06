@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="eds_vffos06_p01" width="670" height="316" titletext="교육설문-학교폭력(설문참여_객관식 예시팝업)" onload="fnOnload" cssclass="frm_Pop_bgTrsprt">
+    <Layouts>
+      <Layout height="316" width="670" screenid="ScreenDeskTop">
+        <Static id="staPopupTitleAss" taborder="0" left="20" top="20" width="20" height="20" initvalueid="ivStcAccessibilityOn"/>
+        <Div id="divMain" taborder="1" left="0" top="0" cssclass="div_WF_SurvPopLine" initvalueid="ivDivAccessibilityOff" background="#ffffff" right="0" bottom="0" text="">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="0" top="23" width="36" height="36" cssclass="btn_WF_SurvPopClose" initvalueid="ivBtnAccessibilityButton" right="19" onclick="div00_btnClose_onclick" accessibilitylabel="팝업닫기"/>
+              <Div id="div00" taborder="1" left="30" top="60" initvalueid="ivDivAccessibilityOff" background="#ffffff" right="30" bottom="30" text="" formscrolltype="vertical">
+                <Layouts>
+                  <Layout>
+                    <ImageViewer id="imgAtchFile" taborder="0" top="0" width="253" left="0" bottom="0" stretch="fit" fittocontents="none"/>
+                    <Static id="staQstnAdiEpl" taborder="1" left="313" top="0" cssclass="sta_WF_Txt16" initvalueid="ivStcAccessibilityOn" right="0" letterSpacing="-1px" verticalAlign="top" bottom="0" fittocontents="height" wordWrap="char"/>
+                  </Layout>
+                  <Layout name="Layout0">
+                    <Static id="staQstnAdiEpl" text="" left="0" top="imgAtchFile:30" right="0" fittocontents="height" height="351"/>
+                    <ImageViewer id="imgAtchFile" height="247" top="0" left="0" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="sta00" taborder="2" left="0" top="0" height="33" cssclass="sta_GD_Size" text="33" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" initvalueid="ivStcAccessibilityOff" right="0"/>
+              <Static id="sta01" taborder="3" left="303" top="33" height="125" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" initvalueid="ivStcAccessibilityOff" width="30"/>
+              <Static id="sta02" taborder="4" top="33" height="125" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" initvalueid="ivStcAccessibilityOff" right="0" width="30"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Button id="btnClose" top="23" width="36" height="36" right="33" visible="true" enable="true" taborder="0"/>
+              <Static id="sta01" left="302" top="32" width="30" height="125"/>
+              <Div id="div00" left="30" top="60" right="30" bottom="30"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="540" height="764" mobileorientation="portrait" type="default">
+        <Div id="divMain" left="0" top="0" bottom="0" right="0" formscrollbartype="indicator"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[/**
+* 
+*  @MenuPath    교육설문 > 학교폭력실태조사 > 교육설문-학교폭력(설문참여_객관식 예시팝업)
+*  @FileName 	eds_vffos06_p01.xfdl 
+*  @Creator 	김민성
+*  @CreateDate 	2022.11.07
+*  @Desction    교육설문-학교폭력(설문참여_객관식 예시팝업)
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.11.07            김민성                   최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.pv_params;
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitPopup(obj);
+	
+	// 필수
+	this.smfResetScroll(this);
+	this.pv_params = this.smfGetPopupParams();
+	
+	this.divMain.form.div00.form.imgAtchFile.set_image(this.pv_params.imgAtchFileValue);
+	this.divMain.form.div00.form.staQstnAdiEpl.set_text(this.pv_params.staQstnAdiEplValue);
+
+	// 단어 공백기준 줄바꿈
+	document.getElementsByClassName("Static sta_WF_Txt16").item(0).children.item(0).style.wordBreak = "keep-all";
+	
+	this.fnSetCompSize(this.pv_params.imgAtchFileValue);
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnSetCompSize = function(imgValue){
+	if (this.smfIsNull(this.pv_params.imgAtchFileValue)){
+		//this.divMain.form.div00.form.imgAtchFile.set_visible(false);
+		if (!this.smfIsMobile()){
+			this.divMain.form.div00.form.imgAtchFile.set_width(0);
+			this.divMain.form.div00.form.staQstnAdiEpl.set_left(0);
+		}else{
+			this.divMain.form.div00.form.imgAtchFile.set_height(0);
+			this.divMain.form.div00.form.staQstnAdiEpl.set_top(23);
+			this.divMain.form.div00.form.staQstnAdiEpl.set_height(641);
+		}
+		this.smfResetScroll(this.divMain.form);
+		
+		
+	}
+	else{
+		if(!this.smfIsMobile()){
+			this.divMain.form.div00.form.imgAtchFile.set_width(253);
+		}else{
+			this.divMain.form.div00.form.imgAtchFile.set_height(247);
+			this.divMain.form.div00.form.staQstnAdiEpl.set_height(351);
+		}
+		this.smfResetScroll(this.divMain.form);
+		
+		
+	}
+};
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * X 버튼 클릭 시
+* @param  : obj		   - [object]Button
+* @param  : e		   - [string]ClickEventInfo
+* @return : N/A
+ */
+this.div00_btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(false);
+};]]></Script>
+  </Form>
+</FDL>

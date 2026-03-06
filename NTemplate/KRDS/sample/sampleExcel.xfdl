@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleExcel" width="888" height="736" titletext="엑셀  EXPORT/IMPORT" onload="form_onload">
+    <Layouts>
+      <Layout height="736" mobileorientation="landscape" width="888" screenid="Desktop_screen">
+        <Static id="Static00" taborder="0" text="엑셀" left="0" top="0" width="70" height="60" cssclass="sta_WF_H2_pc" fittocontents="width" accessibilityrole="heading2"/>
+        <Static id="Static01" taborder="1" left="Static00:15" top="20" width="1" height="21" cssclass="sta_WF_line" accessibilityenable="false"/>
+        <Static id="Static00_02" taborder="2" text="Excel import/export" left="Static01:15" top="0" width="229" height="60" cssclass="sta_WF_ParaH4_pc"/>
+        <Div id="divSearch" taborder="3" left="0" top="100" height="128" cssclass="div_WF_SchBar" text="" right="0" fittocontents="height" accessibilityenable="false">
+          <Layouts>
+            <Layout type="horizontal" spacing="40px" flexwrap="wrap" verticalgap="16">
+              <Panel id="Panel02" taborder="0" left="40" top="40" width="372" height="48" horizontalgap="24" flexgrow="1" flexwrap="wrap" verticalgap="16">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="Panel01"/>
+                  <PanelItem id="PanelItem01" componentid="Panel00"/>
+                </Contents>
+              </Panel>
+              <Panel id="Panel01" taborder="1" left="0" top="12" width="214" height="48" flexgrow="0">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staSearchTitle00"/>
+                  <PanelItem id="PanelItem01" componentid="edtId"/>
+                </Contents>
+              </Panel>
+              <Static id="staSearchTitle00" taborder="2" text="아이디" left="0" top="12" width="74" height="48" cssclass="sta_WF_SchDetail"/>
+              <Edit id="edtId" taborder="3" left="74" top="12" width="140" height="48" accessibilitylabel="[@staSearchTitle00]"/>
+              <Panel id="Panel00" taborder="4" left="214" top="12" width="202" height="48" flexgrow="0">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staSearchTitle01"/>
+                  <PanelItem id="PanelItem01" componentid="edtName"/>
+                </Contents>
+              </Panel>
+              <Static id="staSearchTitle01" taborder="5" text="성명" left="214" top="12" width="74" height="48" cssclass="sta_WF_SchDetail"/>
+              <Edit id="edtName" taborder="6" left="276" top="12" width="140" height="48" accessibilitylabel="[@staSearchTitle01]"/>
+              <Button id="btnSearch" taborder="7" text="조회" top="40" width="120" height="48" cssclass="btn_WF_Sch" onclick="divSearch_btnSearch_onclick" visible="true" left="728" flexgrow="0"/>
+            </Layout>
+            <Layout name="Layout0" spacing="24px">
+              <Button id="btnSearch" flexgrow="1"/>
+              <Panel id="Panel01" flexgrow="1"/>
+              <Panel id="Panel00" flexgrow="1"/>
+              <Edit id="edtId" width="200" left="74" top="12" height="48" flexgrow="1"/>
+              <Edit id="edtName" flexgrow="1" width="200" left="276" top="12" height="48"/>
+              <Panel id="Panel02" left="40" top="40" width="400" height="112"/>
+              <Static id="staSearchTitle01" left="214" top="12" height="48" width="74"/>
+              <Static id="staSearchTitle00" left="0" top="12" height="48" width="74"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Panel id="Panel00" taborder="4" left="0" top="divSearch:24" height="48" right="0" flexgrow="1" fittocontents="height" flexwrap="wrap">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="staTitle"/>
+            <PanelItem id="PanelItem01" componentid="divCmmnBtn"/>
+          </Contents>
+        </Panel>
+        <Static id="staTitle" taborder="5" text="사용자 정보" left="0" top="140" width="342" height="48" cssclass="sta_WF_H4_pc" flexgrow="1" accessibilityrole="heading4"/>
+        <Div id="divCmmnBtn" taborder="6" top="131" width="491" height="48" text="" right="0" flexgrow="0" accessibilityenable="false">
+          <Layouts>
+            <Layout type="horizontal" horizontalgap="8" verticalgap="16" flexmainaxisalign="end">
+              <Button id="btnExcelDown" taborder="0" text="엑셀다운로드" top="0" width="162" height="48" cssclass="btn_WF_ExcelDown" onclick="divCmmnBtn_btnExcelDown_onclick" left="339" flexgrow="0"/>
+              <Button id="btnExcelTemplate" taborder="1" text="업로드템플릿다운" top="0" height="48" cssclass="btn_WF_TempSave" width="168" onclick="divCmmnBtn_btnExcelTemplate_onclick" left="188" flexgrow="0"/>
+              <Button id="btnExcelUp" taborder="2" text="엑셀업로드" top="0" width="145" height="48" cssclass="btn_WF_ExcelUp" onclick="divCmmnBtn_btnExcelUp_onclick" left="78" flexgrow="0"/>
+            </Layout>
+            <Layout name="Layout0" flexwrap="wrap" verticalgap="8">
+              <Button id="btnExcelUp" flexgrow="1"/>
+              <Button id="btnExcelTemplate" flexgrow="1"/>
+              <Button id="btnExcelDown" flexgrow="1"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdList" taborder="7" left="0" top="320" binddataset="dsList" autofittype="col" right="0" tabstop="false" height="416">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="아이디"/>
+                <Cell col="1" text="성명"/>
+                <Cell col="2" text="부서"/>
+                <Cell col="3" text="비고"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:SAMPLE_ID" displaytype="expr:dataset.getRowType(currow)=='2'?'editcontrol':'normal'" edittype="expr:dataset.getRowType(currow)=='2'?'text':'none'"/>
+                <Cell col="1" text="bind:SAMPLE_NM" edittype="text" displaytype="editcontrol"/>
+                <Cell col="2" text="bind:SAMPLE_DEPT_NM" edittype="text" displaytype="editcontrol"/>
+                <Cell col="3" text="bind:SAMPLE_DESC" edittype="text" displaytype="editcontrol"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+      <Layout height="940" mobileorientation="Landscape" name="Layout0" type="default" width="480" screenid="mobile_small,Desktop_screen">
+        <Div id="divSearch" top="104" left="0" height="224" right="0"/>
+        <Panel id="Panel00" left="0" top="divSearch:24" height="160" right="0"/>
+        <Div id="divCmmnBtn" flexgrow="1" top="131" width="480" height="104" right="0" fittocontents="height"/>
+        <Grid id="grdList" left="0" top="Panel00:20" height="408" right="0"/>
+        <Static id="Static00" cssclass="sta_WF_H2_m" width="52" left="0" top="0" height="60"/>
+        <Static id="Static00_02" cssclass="sta_WF_ParaH4_m" right="0" left="Static01:15" top="0" height="60"/>
+        <Static id="staTitle" cssclass="sta_WF_H4_m"/>
+      </Layout>
+    </Layouts>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtId" propid="value" datasetid="dsSearch" columnid="srchCond1"/>
+      <BindItem id="item1" compid="divSearch.form.edtName" propid="value" datasetid="dsSearch" columnid="srchCond2"/>
+    </Bind>
+    <Objects>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="srchCond1" type="STRING" size="256"/>
+          <Column id="srchCond2" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="SAMPLE_ID" type="STRING" size="256"/>
+          <Column id="SAMPLE_NM" type="STRING" size="256"/>
+          <Column id="SAMPLE_DEPT_NM" type="STRING" size="256"/>
+          <Column id="SAMPLE_DESC" type="STRING" size="256"/>
+          <Column id="SAMPLE_FILE_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleExcel.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/11/30
+*  @Desction   
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/11/30			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	
+	// 공통버튼 권한 제어
+	this.gfnSetCommBtn(this.divCmmnBtn);
+};
+
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+this.cfnAdd = function ()
+{
+	this.dsList.addRow();
+};
+
+this.cfnDel = function ()
+{
+	var nRow = this.dsList.rowposition;
+	var nDataType = this.dsList.getRowType(nRow);
+	if( nDataType == 2){
+		//추가된 로우는 그냥 삭제
+		this.dsList.deleteRow(nRow);
+	}else{
+		this.gfnAlert("confirm.before.delete");//삭제하시겠습니까?
+	}
+};
+
+this.cfnSave = function ()
+{
+	if(!this.gfnDsIsUpdated(this.dsList)){
+		this.gfnAlert("msg.save.nochange");//변경된 데이터가 없습니다.
+		return;
+	}
+	
+	var rtnValid = this.fnValidation(this.dsList);
+	if(rtnValid){
+		this.gfnAlert("confirm.save");//저장하시겠습니까?
+	}
+};
+
+this.cfnSearch = function ()
+{
+	this.fnSearch();
+};
+
+this.cfnRefresh = function ()
+{
+	this.fnSearchCondInit();
+	this.fnInit();
+};
+
+this.cfnExcelDown = function ()
+{
+	var sSubTitle = "아이디 : ";
+	if(this.gfnIsNull(this.divSearch.form.edtId.value)) sSubTitle += "전체 ";
+	else  sSubTitle += this.divSearch.form.edtId.value +" ";
+	sSubTitle += " 이름 : ";
+	if(this.gfnIsNull(this.divSearch.form.edtName.value)) sSubTitle += "전체 ";
+	else  sSubTitle += this.divSearch.form.edtName.value +" ";
+
+	this.gfnExcelExport(this.grdList, "sampleExcel", "sampleExcelExportImport", "EXCEL2007","",sSubTitle, true, "");
+};
+
+this.cfnExcelUp = function ()
+{
+	this.gfnExcelImport("dsList", "sampleExcel", "A4", "fnExcelImportCallback", "sampleExcel", "EXCEL2007", "A3:D3", this.grdList);
+};
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+this.fnSearch = function ()
+{
+	var strSvcId 	= "searchSampleList";
+	var strSvcUrl 	= "searchSampleList.do";
+	var inData 		= "inDs=dsSearch";
+	var outData 	= "dsList=outDs";
+	var strArg 		= "";
+	this.gfnTransaction(strSvcId, strSvcUrl, inData, outData, strArg);
+};
+
+this.fnSave = function ()
+{
+	var strSvcId 	= "saveSample";
+	var strSvcUrl 	= "saveSample.do";
+	var inData 		= "inDs=dsList:U";
+	var outData 	= "";
+	var strArg 		= "";
+	this.gfnTransaction(strSvcId, strSvcUrl, inData, outData, strArg);
+};
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+//transaction
+this.fnCallback = function (svcId, nErrCd, sErrMsg)
+{
+	switch(svcId) {
+		case "searchSampleList":
+			break;
+		case "saveSample":
+			this.fnSearch();
+			break;
+		default:break;
+	}
+};
+
+//message
+this.fnMsgCallback = function (sMsgId, sRtn)
+{
+	if(sMsgId=="confirm.before.save"){
+		if(sRtn){
+			this.fnSave();
+		}else{
+			return;
+		}
+	}else if(sMsgId=="confirm.before.delete"){
+		if(sRtn){
+			this.dsList.deleteRow(this.dsList.rowposition);
+		}else{
+			return;
+		}
+	}
+};
+
+//excel import callback
+this.fnExcelImportCallback = function (sImportId, e)
+{
+	if(sImportId == "sampleExcel"){
+		//import시 전체 데이터 normal로 넘어오므로 status update및 서버단에서 
+		//mergeinto로 처리하기 위한 임의 데이터 삽입
+		this.dsList.addColumn("_STATUS_","STRING");
+		for( var i=0; i<this.dsList.getRowCount(); i++){
+			this.dsList.setColumn(i, "_STATUS_", "EXCEL");
+		}
+		this.cfnSave();
+	}
+};
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+this.fnInit = function ()
+{
+	this.dsList.clearData();
+};
+
+this.fnSearchCondInit = function ()
+{
+	this.dsSearch.clearData();
+	this.dsSearch.addRow();
+};
+
+this.fnValidation = function ()
+{
+	//TODO..
+	return true;
+};
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+/**
+ * @description 조회 버튼 클릭
+*/
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 조회 트랜잭션 호출
+	this.cfnSearch();
+};
+
+/**
+ * @description 엑셀 업로드 버튼 클릭
+*/
+this.divCmmnBtn_btnExcelUp_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// Excel Import 공통함수 호출
+	this.gfnExcelImport("dsList", "sampleExcel", "A4", "fnExcelImportCallback", "sampleExcel", "EXCEL2007", "A3:D3", this.grdList);
+};
+
+/**
+ * @description 엑셀 다운로드 버튼 클릭
+*/
+this.divCmmnBtn_btnExcelDown_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 엑셀 상단 타이틀 텍스트 설정
+	var sSubTitle = this.staTitle.text + " 리스트";
+	
+	// Excel Export 공통함수 호출
+	this.gfnExcelExport(this.grdList, "sampleExcel", "sampleExcelExportImport", "EXCEL2007","",sSubTitle, true, "");
+};
+
+/**
+ * @description 업로드 템플릿 다운로드 버튼 클릭
+*/
+this.divCmmnBtn_btnExcelTemplate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var fileId = "엑셀샘플_Template.xlsx";
+	this.gfnDownTempate(fileId);
+};
+]]></Script>
+  </Form>
+</FDL>

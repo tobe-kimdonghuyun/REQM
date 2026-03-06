@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleCalToCalendar" width="1200" height="800" titletext="캘린더 오늘 이후로 선택 못하게">
+    <Layouts>
+      <Layout height="800" width="1200" screenid="mobile">
+        <Div id="Div00_00" taborder="0" text="Div00" left="460" top="200" height="146" cssclass="div_WF_Search" width="640">
+          <Layouts>
+            <Layout>
+              <Calendar id="Calendar00" taborder="0" left="20" top="36" width="280" height="60" dateformat="yyyy.MM.dd" editformat="yyyy.MM.dd" popuptype="system" canchange="cal_canchange"/>
+              <Calendar id="Calendar00_00" taborder="1" left="340" top="36" width="280" height="60" dateformat="yyyy.MM.dd" editformat="yyyy.MM.dd" popuptype="system" canchange="cal_canchange"/>
+              <Static id="sta00" taborder="2" text="~" left="300" top="36" width="40" height="60" textAlign="center"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static05" taborder="1" left="40" top="1132" height="1" cssclass="sta_WF_Line" right="-260"/>
+        <Static id="st01" taborder="2" left="99" width="694" height="81" top="2079"/>
+        <Static id="sta00" taborder="3" left="18" top="10" width="395" text="[기타] 스크립트 기능 문의&#13;&#10;&#13;&#10;&#9;&#13;&#10;안녕하십니까 일반행정1팀 비영리법인민원담당 서광명 대리입니다.&#13;&#10;&#13;&#10;기능구현중 어려움이 있어 문의드립니다.&#13;&#10;&#13;&#10;1. calendar 컴포넌트에 오늘날짜 이후를 선택하지 못하게 막는기능&#13;&#10; == &gt;  스크립트 참조 바람" height="510"/>
+        <Grid id="grd00" taborder="4" left="465" top="380" width="640" height="250" binddataset="ds00">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="200"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="30"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="캘린더"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0" displaytype="calendarcontrol" edittype="date"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*   대국민 -  [캘린더]기능 샘플
+*  @MenuPath    Test
+*  @FileName 	sampleCalToDay.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022.7.01
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.7.01     	TOBESOFT 	        최초 생성 
+*******************************************************************************
+*/
+
+this.cal_canchange = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	//오늘 이후 선택 안됨
+	if ( e.postvalue > this.smfToday() )
+	{
+		return false;
+	}	
+};
+
+this.ds00_cancolumnchange = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	//오늘 이후 변경 안됨
+	if ( e.newvalue > this.smfToday() )
+	{
+		return false;
+	}
+};]]></Script>
+    <Objects>
+      <Dataset id="ds00" cancolumnchange="ds00_cancolumnchange" canrowposchange="ds00_canrowposchange" onvaluechanged="ds00_onvaluechanged" onrowsetchanged="ds00_onrowsetchanged" onrowposchanged="ds00_onrowposchanged" onload="ds00_onload" oncolumnchanged="ds00_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">20200205</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">20210501</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

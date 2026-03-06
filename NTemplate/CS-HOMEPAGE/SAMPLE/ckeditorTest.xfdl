@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ckeditorTest" width="1280" height="720" titletext="New Form" onload="ckeditorTest_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <WebBrowser id="web_editor" taborder="0" left="10" top="82" width="900" height="908" onusernotify="web_editor_onusernotify" onloadcompleted="web_editor_onloadcompleted"/>
+        <Button id="Button00" taborder="1" text="getData" left="10" top="15" width="120" height="50" onclick="Button00_onclick"/>
+        <Button id="Button00_00" taborder="2" text="setData" left="140" top="15" width="120" height="50" onclick="Button00_00_onclick"/>
+        <Combo id="Combo00" taborder="3" text="Combo00" left="1014" top="79" width="150" height="20" type="filter"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+
+
+this.ckeditorTest_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.web_editor.set_url("http://localhost:8080/CKEDITOR_TEST/CKEDITOR/samples/index.html");
+	this.initEditor();
+	
+	//nexacro.getApplication().gv_mainFrame.form.resetScroll();
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var val = this.getContent();
+	alert("content : " + val);
+};
+this.Button00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//this.setContent("<p>This is the editor data.</p>");
+	this.setContent("<p>&nbsp;</p><pre><code class='language-javascript'>this.nexacro_onload = function (obj:Form, e:nexacro.LoadEventInfo){	this.set_height(2750);	this.parent.set_height(2750);	nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, 2800);};this.Button00_onclick = function (obj:Button, e:nexacro.ClickEventInfo){	system.execBrowser('http://nexaweb.com/products/nexacro-platform/');};</code></pre><p>&nbsp;</p><p>&nbsp;</p>");
+};
+
+// 컨텐츠 반환
+this.getContent = function()
+{
+	return this.getHTMLValue("editor.content");
+}
+
+// 컨텐츠 지정
+this.setContent = function(content) 
+{
+	this.web_editor.callMethod("setContent", content || emptyHtml, true);
+}
+
+// editor.html 영역에서 특정 값을 얻어온다.
+this.getHTMLValue = function(name)
+{
+	this.web_editor.callMethod("getHTMLValue", name);
+	
+	var el = this.web_editor.getProperty("document").callMethod("getElementById", "transfer");
+	var val = el.getProperty("value");
+	
+	el.setProperty("value", "");
+		
+	return val;	
+}
+
+this.initEditor = function()
+{	
+	
+}
+
+
+/******************************************************************************
+	WebBrowser Event
+******************************************************************************/
+// this.web_editor_onerror = function(obj:WebBrowser, e:nexacro.WebErrorEventInfo)
+// {
+// 	alert("초기 화면 로딩 에러 (" + e.url + ")");
+// }
+
+this.web_editor_onloadcompleted = function(obj:WebBrowser, e:nexacro.WebLoadCompEventInfo)
+{
+	if ( obj.url != "about:blank" && obj.url == e.url )
+	{
+		obj.__load = true;
+		// editor.html 의 initEditor 함수를 호출하고 완료되면 
+		// this.initRichTextEditor 을 호출하도록 지정
+		obj.callMethod("initEditor", "initRichTextEditor");
+	}
+}
+
+this.web_editor_onusernotify = function(obj:WebBrowser, e:nexacro.WebTitleChangeEventInfo)
+{
+	if ( obj.__load )
+	{
+		var userdata = e.userdata;		
+		if ( obj.url != userdata )
+		{
+			var func = null;
+			var params = userdata.split("|");			
+			var len = params.length;
+			if ( len > 0 )
+			{
+				func = this[params[0]];
+			}
+			else
+			{
+				trace("params is empty");
+			}
+			
+			if ( func )
+			{
+				params.splice(0, 1);
+				func.apply(this, params);
+			}
+		}
+	}
+}
+
+]]></Script>
+  </Form>
+</FDL>

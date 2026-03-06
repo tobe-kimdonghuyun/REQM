@@ -1,0 +1,746 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleValidation" width="888" height="3530" titletext="정합성 체크" onload="form_onload">
+    <Layouts>
+      <Layout height="3530" mobileorientation="landscape" width="888" screenid="Desktop_screen">
+        <Static id="Static00" taborder="0" text="정합성 체크" left="0" top="0" width="198" height="60" cssclass="sta_WF_H2_pc" fittocontents="width" accessibilityrole="heading2"/>
+        <Static id="Static01_01" taborder="1" left="Static00:15" top="20" width="1" height="21" cssclass="sta_WF_line" accessibilityenable="false"/>
+        <Static id="Static00_02" taborder="2" text="Vlidation" left="Static01_01:15" top="0" width="149" height="60" cssclass="sta_WF_ParaH4_pc"/>
+        <TextArea id="txa00" taborder="3" left="0" top="100" right="0" value="1.Validation 공통함수는 아래와 같이 4개의 함수가 제공된다. &#10;  1) Dataset에 설정된 정합성체크 RuleSet을 Clear한다.&#10;       this.gfnClearValidation(this.dsList);&#10;  2) Dataset의 Column별로 정합성체크 Rule을 등록한다.&#10;       this.gfnSetValidation(this.dsList, &quot;ID&quot;, &quot;아이디&quot;, &quot;required,minlength:5&quot;);&#10;  3) Dataset의 Column별로 설정된 정합성체크 Rule을 제거한다.&#10;       this.gfnRemoveValidation(this.dsList, &quot;ID&quot;);&#10;  4) Dataset에 등록된 데이터 정합성체크 RuleSet에의해 정합성을 체크를 하고 이상여부를 리턴한다.&#10;       this.gfnValidation(this.dsList, &quot;U&quot;);&#10;&#10;2. gfnSetValidation에 등록할 수 있는 Validation 체크 Rule의 종류&#10;  예) this.gfnSetValidation(this.dsList, &quot;ID&quot;, &quot;아이디&quot;, &quot;required,equalto:NAME&quot;);&#10;&#10;3. Validation 체크 Rule의 종류 &#10; required - 필수 체크&#10; length:7 - 길이가 7자리인지 체크&#10; max:7 - 값이 7 보다 큰지 체크&#9;&#10; min:7 - 값이 7 보다 작은지 체크&#10; maxlength:7 - 길이가 7자 보다 큰지 체크&#10; maxlengthbyte:7 - byte의 길이가 7보다 보다 큰지 체크&#10; maxlengthdec:8:4 - Decimal의 값의 길이가 정수 8자리, 소수 4자리 보다 큰지 체크&#10; minlength:3 - 길이가 3보다 작은지 체크&#10; minlengthbyte:3 - byte의 길이가 3보다 작은지 체크&#10; fromto:칼럼명 - 등록된 날짜가 칼럼의 값 보다 큰지 예) this.gfnSetValidation(this.dsList, &quot;DATE_TO&quot;, &quot;종료일자,시작일자&quot;, &quot;required,date,fromto:DATE_FROM&quot;);&#10; fromtosmall:칼럼명 - 등록된 날짜가 칼럼의 값 보다 작은지 예) this.gfnSetValidation(this.dsList, &quot;DATE_FROM&quot;, &quot;시작일자,종료일자&quot;, &quot;required,date,fromtosmall:DATE_TO&quot;);&#10; range:40:100 - 값이 40 ~ 100 사이의 값인지 체크&#9;&#10; isemail - 이메일 체크&#10; isssn - 주민번호 체크&#10; isbzid - 사업자등록번호 체크&#10; isfirmid - 법인등록번호 체크&#9;&#10; istel - 전화번호 체크&#10; ismobile - 핸드폰번호 체크&#10; isphone - 전화번호or핸드폰번호 체크&#10; date - 년월일형태의 날짜가 맞는지 체크&#10; dateym - 년월형태의 날짜가 맞는지 체크&#9;&#10; korean - 한글 여부 체크&#10; digits - 숫자 여부 체크&#10; engnum - 영문+숫자 여부 체크&#10; special - 특수문자 포함 여부 체크&#10; comparebig:칼럼명 - NAME 칼럼의 값보다 큰지 체크 예) this.gfnSetValidation(this.dsList2, &quot;CAMP&quot;, &quot;비교,최소값&quot;, &quot;required,comparebig:MIN_NUM&quot;);&#10; comparesmall:칼럼명 - NAME 칼럼의 값보다 작은지 체크 예) this.gfnSetValidation(this.dsList2, &quot;CAMP&quot;, &quot;비교,최소값&quot;, &quot;required,comparesmall:MIN_NUM&quot;);" height="1200" cssclass="txt_WF_Nochar" scrolltype="horizontal"/>
+        <Panel id="Panel02" taborder="4" left="0" top="txa00:40" height="500" flexwrap="wrap" verticalgap="24" spacing="40px" right="0" cssclass="pnl_WF_Detailbox" fittocontents="height">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Panel01"/>
+            <PanelItem id="PanelItem01" componentid="grdCheck"/>
+          </Contents>
+        </Panel>
+        <Panel id="Panel01" taborder="5" left="40" top="txa00:80" height="48" verticalgap="24" flexwrap="wrap" fittocontents="height" width="100%">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Static01"/>
+            <PanelItem id="PanelItem01" componentid="Panel00"/>
+          </Contents>
+        </Panel>
+        <Static id="Static01" taborder="6" text="Grid Validation Check" left="40" width="300" height="48" cssclass="sta_WF_ParaH4_pc" top="0" flexgrow="1" accessibilityrole="heading4"/>
+        <Panel id="Panel00" taborder="7" left="553" top="1357" width="316" height="48" horizontalgap="8">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="btnDel"/>
+            <PanelItem id="PanelItem01" componentid="btnAdd"/>
+            <PanelItem id="PanelItem02" componentid="btnGrdCheck"/>
+          </Contents>
+        </Panel>
+        <Button id="btnDel" taborder="8" text="행삭제" width="100" height="48" cssclass="btn_WF_Minus" right="256" onclick="btnDel_onclick" top="1357"/>
+        <Button id="btnAdd" taborder="9" text="행추가" width="100" height="48" cssclass="btn_WF_Add" right="148" onclick="btnAdd_onclick" top="1357"/>
+        <Button id="btnGrdCheck" taborder="10" text="체크" width="100" cssclass="btn_WF_Search" right="40" onclick="btnGrdCheck_onclick" height="48" top="0"/>
+        <Grid id="grdCheck" taborder="11" left="40" top="112" binddataset="dsList" height="300" width="100%" tabstop="false">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="120"/>
+                <Column size="89"/>
+                <Column size="95"/>
+                <Column size="96"/>
+                <Column size="136"/>
+                <Column size="100"/>
+                <Column size="120"/>
+                <Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="필수,길이(5자)"/>
+                <Cell col="1" text="주민번호"/>
+                <Cell col="2" colspan="2" text="투입기간(from-to)"/>
+                <Cell col="4" text="금액/정수7/소수2"/>
+                <Cell col="5" text="숫자/max10"/>
+                <Cell col="6" colspan="2" text="비교"/>
+                <Cell row="1" text="ID"/>
+                <Cell row="1" col="1" text="SSN"/>
+                <Cell row="1" col="2" text="DATE_FROM"/>
+                <Cell row="1" col="3" text="DATE_TO"/>
+                <Cell row="1" col="4" text="MAX_NUM"/>
+                <Cell row="1" col="5" text="DECIMAL"/>
+                <Cell row="1" col="6" text="COMPARE_1"/>
+                <Cell row="1" col="7" text="COMPARE_2"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:ID" displaytype="normal" edittype="normal" calendarautoselect="true" comboautoselect="true" editautoselect="true" maskeditautoselect="true"/>
+                <Cell col="1" text="bind:SSN" displaytype="normal" edittype="normal" calendarautoselect="true" comboautoselect="true" editautoselect="true" maskeditautoselect="true"/>
+                <Cell col="2" text="bind:DATE_FROM" displaytype="normal" edittype="normal" calendarautoselect="true" comboautoselect="true" editautoselect="true" maskeditautoselect="true"/>
+                <Cell col="3" text="bind:DATE_TO" displaytype="normal" edittype="normal" calendarautoselect="true" comboautoselect="true" editautoselect="true" maskeditautoselect="true"/>
+                <Cell col="4" text="bind:MAX_NUM" displaytype="normal" edittype="normal" calendarautoselect="true" comboautoselect="true" editautoselect="true" maskeditautoselect="true"/>
+                <Cell col="5" text="bind:DECIMAL" displaytype="normal" edittype="normal" calendarautoselect="true" comboautoselect="true" editautoselect="true" maskeditautoselect="true"/>
+                <Cell col="6" text="bind:COMPARE_1" displaytype="normal" edittype="normal" calendarautoselect="true" comboautoselect="true" editautoselect="true" maskeditautoselect="true"/>
+                <Cell col="7" text="bind:COMPARE_2" displaytype="normal" edittype="normal" calendarautoselect="true" comboautoselect="true" editautoselect="true" maskeditautoselect="true"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Panel id="Panel04" taborder="12" left="0" top="Panel02:40" height="542" verticalgap="24" flexwrap="wrap" spacing="40px" right="0" cssclass="pnl_WF_Detailbox" fittocontents="height">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Panel03"/>
+            <PanelItem id="PanelItem01" componentid="divDetail"/>
+          </Contents>
+        </Panel>
+        <Panel id="Panel03" taborder="13" left="40" top="1877" height="48" fittocontents="height" verticalgap="24" width="100%" flexwrap="wrap">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Static01_00"/>
+            <PanelItem id="PanelItem01" componentid="btnDetailCheck"/>
+          </Contents>
+        </Panel>
+        <Static id="Static01_00" taborder="14" text="Component Validation Check" left="40" width="320" height="48" cssclass="sta_WF_ParaH4_pc" top="1877" flexgrow="1" accessibilityrole="heading4"/>
+        <Button id="btnDetailCheck" taborder="15" text="체크" width="100" cssclass="btn_WF_Search" onclick="btnDetailCheck_onclick" height="48" top="1867" left="744"/>
+        <Div id="divDetail" taborder="16" text="div00" left="40" top="1925" height="388" width="100%" fittocontents="height">
+          <Layouts>
+            <Layout type="horizontal" flexwrap="wrap" horizontalgap="16" verticalgap="24">
+              <Panel id="Panel00" taborder="0" left="0" top="0" width="48.635235732009924%" height="79" flexwrap="wrap" verticalgap="8" flexgrow="1">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staTitle00"/>
+                  <PanelItem id="PanelItem01" componentid="calReq"/>
+                </Contents>
+              </Panel>
+              <Static id="staTitle00" taborder="1" text="필수(날짜)" left="0" top="0" width="100%" height="23" cssclass="sta_WF_Label"/>
+              <Calendar id="calReq" taborder="2" left="0" top="0" width="100%" height="48" accessibilitylabel="[@staTitle00]" cssclass="essential"/>
+              <Panel id="Panel02" taborder="3" left="413" top="1" width="48.635235732009924%" height="79" flexwrap="wrap" verticalgap="8" flexgrow="1">
+                <Contents>
+                  <PanelItem id="PanelItem02" componentid="staTitle00_00"/>
+                  <PanelItem id="PanelItem00" componentid="mskYM"/>
+                </Contents>
+              </Panel>
+              <Static id="staTitle00_00" taborder="4" text="년월" left="414" top="0" height="23" cssclass="sta_WF_Label" width="392"/>
+              <MaskEdit id="mskYM" taborder="5" top="31" height="48" format="####-##" type="string" left="51.351351351351354%" width="100%" accessibilitylabel="[@staTitle00_00]"/>
+              <Panel id="Panel03" taborder="6" left="0" top="103" width="48.635235732009924%" height="79" flexwrap="wrap" verticalgap="8" flexgrow="1">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staTitle01"/>
+                  <PanelItem id="PanelItem01" componentid="edtMax100"/>
+                </Contents>
+              </Panel>
+              <Static id="staTitle01" taborder="7" text="최대값 = 100" left="0" top="103" width="392" height="23" cssclass="sta_WF_Label"/>
+              <Edit id="edtMax100" taborder="8" left="0" top="134" width="100%" height="48" accessibilitylabel="[@staTitle01]"/>
+              <Panel id="Panel04" taborder="9" left="405" top="134" width="48.635235732009924%" height="79" flexwrap="wrap" verticalgap="8" flexgrow="1">
+                <Contents>
+                  <PanelItem id="PanelItem02" componentid="staTitle01_00"/>
+                  <PanelItem id="PanelItem00" componentid="edtMin10"/>
+                </Contents>
+              </Panel>
+              <Static id="staTitle01_00" taborder="10" text="최소값 = 10" left="414" top="103" height="23" cssclass="sta_WF_Label" width="392"/>
+              <Edit id="edtMin10" taborder="11" top="134" height="48" left="51.351351351351354%" width="100%" accessibilitylabel="[@staTitle01_00]"/>
+              <Panel id="Panel05" taborder="12" left="0" top="206" width="48.635235732009924%" height="79" flexwrap="wrap" verticalgap="8" flexgrow="1">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staTitle02"/>
+                  <PanelItem id="PanelItem01" componentid="edtLength3to8"/>
+                </Contents>
+              </Panel>
+              <Static id="staTitle02" taborder="13" text="최소길이3/최대길이8" left="0" top="206" width="392" height="23" cssclass="sta_WF_Label"/>
+              <Edit id="edtLength3to8" taborder="14" left="0" top="237" width="100%" height="48" accessibilitylabel="[@staTitle02]"/>
+              <Panel id="Panel06" taborder="15" left="405" top="237" width="48.635235732009924%" height="79" flexwrap="wrap" verticalgap="8" flexgrow="1">
+                <Contents>
+                  <PanelItem id="PanelItem02" componentid="staTitle02_00"/>
+                  <PanelItem id="PanelItem00" componentid="edtRange1to100"/>
+                </Contents>
+              </Panel>
+              <Static id="staTitle02_00" taborder="16" text="범위 1~100" left="414" top="206" height="23" cssclass="sta_WF_Label" width="392"/>
+              <Edit id="edtRange1to100" taborder="17" top="237" height="48" left="51.351351351351354%" width="100%" accessibilitylabel="[@staTitle02_00]"/>
+              <Panel id="Panel07" taborder="18" left="0" top="309" width="48.635235732009924%" height="79" flexwrap="wrap" verticalgap="8" flexgrow="1">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staTitle03"/>
+                  <PanelItem id="PanelItem01" componentid="edtCompa"/>
+                </Contents>
+              </Panel>
+              <Static id="staTitle03" taborder="19" text="컬럼비교 (최소값=10)" left="0" top="309" width="392" height="23" cssclass="sta_WF_Label"/>
+              <Edit id="edtCompa" taborder="20" left="0" top="340" width="100%" height="48" accessibilitylabel="[@staTitle03]"/>
+              <Panel id="Panel08" taborder="21" left="414" top="309" width="48.635235732009924%" height="79" flexwrap="wrap" verticalgap="8" flexgrow="1">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staTitle03_00"/>
+                  <PanelItem id="PanelItem01" componentid="edtPhone"/>
+                </Contents>
+              </Panel>
+              <Static id="staTitle03_00" taborder="22" text="전화번호" left="414" top="309" height="23" cssclass="sta_WF_Label" width="392"/>
+              <Edit id="edtPhone" taborder="23" top="340" height="48" width="100%" left="0" accessibilitylabel="[@staTitle03_00]"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Panel id="Panel00" width="100%" left="0" top="0" height="79"/>
+              <Panel id="Panel02" width="100%" left="413" top="1" height="79"/>
+              <Panel id="Panel03" width="100%" left="0" top="103" height="79"/>
+              <Panel id="Panel04" width="100%" left="405" top="134" height="79"/>
+              <Panel id="Panel05" width="100%" left="0" top="206" height="79"/>
+              <Panel id="Panel06" width="100%" left="405" top="237" height="79"/>
+              <Panel id="Panel07" width="100%" left="0" top="309" height="79"/>
+              <Panel id="Panel08" width="100%" left="414" top="309" height="79"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Panel id="Panel07" taborder="17" left="0" top="Panel04:40" height="504" flexwrap="wrap" spacing="40px" verticalgap="24" cssclass="pnl_WF_Detailbox" right="0" fittocontents="height">
+          <Contents>
+            <PanelItem id="PanelItem01" componentid="Panel06"/>
+            <PanelItem id="PanelItem00" componentid="grdDatasetProp"/>
+          </Contents>
+        </Panel>
+        <Panel id="Panel06" taborder="18" left="46" top="2500" width="100%" height="48" fittocontents="height" flexwrap="wrap" verticalgap="24">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Static01_00_00"/>
+            <PanelItem id="PanelItem01" componentid="Panel05"/>
+          </Contents>
+        </Panel>
+        <Static id="Static01_00_00" taborder="19" text="Group 지정시  Validation Check" left="40" width="300" height="48" cssclass="sta_WF_ParaH4_pc" top="2430" flexgrow="1" accessibilityrole="heading4"/>
+        <Panel id="Panel05" taborder="20" left="610" top="2509" width="230" height="48" horizontalgap="8">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="btnDupDsCheck"/>
+            <PanelItem id="PanelItem01" componentid="btnDupCheck"/>
+          </Contents>
+        </Panel>
+        <Button id="btnDupDsCheck" taborder="21" text="데이타셋 체크" width="140" height="48" cssclass="btn_WF_Search" right="138" onclick="btnDupDsCheck_onclick" top="2509"/>
+        <Button id="btnDupCheck" taborder="22" text="체크" width="100" height="48" cssclass="btn_WF_Search" right="40" onclick="btnDupCheck_onclick" top="2509"/>
+        <Grid id="grdDatasetProp" taborder="23" left="41" top="2560" binddataset="dsDataGrp" selecttype="row" height="350" width="100%" tabstop="false">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="48"/>
+                <Column size="130"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="150"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+                <Row size="37" band="summ"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="순번"/>
+                <Cell col="1" text="Column0"/>
+                <Cell col="2" text="Column1"/>
+                <Cell col="3" text="Column2"/>
+                <Cell col="4" text="Column3"/>
+                <Cell col="5" text="rowLevel"/>
+              </Band>
+              <Band id="body">
+                <Cell cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;" expr="dataset.getRowLevel(currow) == 1 ? &quot;&quot; : row" text="bind:row" edittype="normal"/>
+                <Cell col="1" text="bind:Column0" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;" suppress="1" expr="dataset.getRowLevel(currow) == 0 ? Column0 : '평균'" edittype="normal"/>
+                <Cell col="2" text="bind:Column1" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;" edittype="normal" suppress="2"/>
+                <Cell col="3" text="bind:Column2" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;" edittype="normal" suppress="3"/>
+                <Cell col="4" text="bind:Column3" displaytype="number" textAlign="right" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;" edittype="normal"/>
+                <Cell col="5" cssclass="expr:dataset.getRowLevel(currow) == 1 ? &quot;cell_SubTotal&quot; : &quot;&quot;" expr="dataset.getRowLevel(currow)" edittype="normal"/>
+              </Band>
+              <Band id="summary">
+                <Cell/>
+                <Cell col="1" colspan="3" text="합계"/>
+                <Cell col="4" displaytype="number" textAlign="right" expr="dataset.getSum('Column3')"/>
+                <Cell col="5"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Panel id="Panel09" taborder="24" left="0" top="Panel07:40" height="475" flexwrap="wrap" verticalgap="24" spacing="40px" cssclass="pnl_WF_Detailbox" right="0">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Panel08"/>
+            <PanelItem id="PanelItem01" componentid="grdDup"/>
+          </Contents>
+        </Panel>
+        <Panel id="Panel08" taborder="25" left="0" top="2976" width="100%" height="48" fittocontents="height" flexwrap="wrap">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Static01_00_00_00"/>
+            <PanelItem id="PanelItem01" componentid="btnGrpCheck"/>
+          </Contents>
+        </Panel>
+        <Static id="Static01_00_00_00" taborder="26" text="중복된 row 검사" left="40" width="280" height="48" cssclass="sta_WF_ParaH4_pc" top="2976" flexgrow="1" accessibilityrole="heading4"/>
+        <Button id="btnGrpCheck" taborder="27" text="체크" width="100" cssclass="btn_WF_Search" right="40" onclick="btnGrpCheck_onclick" height="48" top="2989"/>
+        <Grid id="grdDup" taborder="28" left="40" top="3086" height="321" binddataset="dsDupl" selecttype="row" autoenter="select" width="100%">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0" suppress="1"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2" displaytype="number" edittype="mask" textAlign="right" editinputfilter="digit"/>
+                <Cell col="3" text="bind:Column3" displaytype="number" textAlign="right" edittype="mask" editinputtype="digit"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+      <Layout height="4200" mobileorientation="Portrait" name="Layout0" type="default" width="480" screenid="Desktop_screen,mobile_small">
+        <Panel id="Panel02" spacing="23px" left="0" top="txa00:40" height="484" right="0"/>
+        <Static id="Static01" left="40" top="0" width="280" height="48" cssclass="sta_WF_ParaH4_m"/>
+        <Panel id="Panel01" left="40" top="23" width="90.00%" height="112" flexgrow="1" verticalgap="16"/>
+        <Panel id="Panel03" left="40" top="1877" width="90.00%" height="112" flexgrow="1" verticalgap="16"/>
+        <Panel id="Panel04" left="0" top="Panel02:40" height="984" right="0" spacing="23px"/>
+        <Div id="divDetail" left="40" top="1925" width="100%" height="800" flexgrow="1"/>
+        <Panel id="Panel07" spacing="23px" left="0" top="Panel04:40" height="534" right="0"/>
+        <Panel id="Panel06" left="46" top="2500" width="100%" height="112" flexgrow="1" verticalgap="16"/>
+        <Static id="Static01_00_00_00" left="40" top="2976" width="360" height="48"/>
+        <Panel id="Panel08" verticalgap="16" left="0" top="2976" width="100%" height="112" flexgrow="1"/>
+        <Panel id="Panel09" spacing="23px" left="0" top="Panel07:40" height="505" right="0"/>
+        <TextArea id="txa00" top="104" left="0" height="1200" right="0"/>
+        <Grid id="grdDup" width="100%" left="40" top="3086" height="321"/>
+        <Static id="Static01_00" width="360" left="40" top="1877" height="48"/>
+        <Static id="Static00" cssclass="sta_WF_H2_m" width="132" left="0" top="0" height="60"/>
+        <Static id="Static00_02" right="0" left="Static01_01:15" top="0" height="60" cssclass="sta_WF_ParaH4_m"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleValidation.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/12/02
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/12/02			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+/*
+== Validation 체크 Rule의 종류 ==
+ required 	- 필수 체크
+ length:7 	- 길이가 7자리인지 체크
+ max:7 		- 값이 7 보다 큰지 체크	
+ min:7 		- 값이 7 보다 작은지 체크
+ maxlength:7 - 길이가 7자 보다 큰지 체크
+ maxlengthbyte:7  - byte의 길이가 7보다 보다 큰지 체크
+ maxlengthdec:8:4 - Decimal의 값의 길이가 정수 8자리, 소수 4자리 보다 큰지 체크
+ minlength:3	  - 길이가 3보다 작은지 체크
+ minlengthbyte:3  - byte의 길이가 3보다 작은지 체크
+ fromto:칼럼명	  - 등록된 날짜가 칼럼의 값 보다 큰지 예) this.gfnSetValidation(this.dsList, "DATE_TO", "종료일자,시작일자", "required,date,fromto:DATE_FROM");
+ fromtosmall:칼럼명 - 등록된 날짜가 칼럼의 값 보다 작은지 예) this.gfnSetValidation(this.dsList, "DATE_FROM", "시작일자,종료일자", "required,date,fromtosmall:DATE_TO");
+ range:40:100  	  - 값이 40 ~ 100 사이의 값인지 체크	
+ isemail 	- 이메일 체크
+ isssn 		- 주민번호 체크
+ isbzid 	- 사업자등록번호 체크
+ isfirmid 	- 법인등록번호 체크	
+ istel 		- 전화번호 체크
+ ismobile 	- 핸드폰번호 체크
+ isphone 	- 전화번호or핸드폰번호 체크
+ date 		- 년월일형태의 날짜가 맞는지 체크
+ dateym 	- 년월형태의 날짜가 맞는지 체크	
+ korean 	- 한글 여부 체크
+ digits 	- 숫자 여부 체크
+ engnum 	- 영문+숫자 여부 체크
+ special 	- 특수문자 포함 여부 체크
+ comparebig:칼럼명 - NAME 칼럼의 값보다 큰지 체크 예) this.gfnSetValidation(this.dsList2, "CAMP", "비교,최소값", "required,comparebig:MIN_NUM");
+ comparesmall:칼럼명 - NAME 칼럼의 값보다 작은지 체크 예) this.gfnSetValidation(this.dsList2, "CAMP", "비교,최소값", "required,comparesmall:MIN_NUM");
+*/
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	
+};
+
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.btnAdd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nRow = this.dsList.addRow();
+};
+
+this.btnDel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nRow = this.dsList.rowposition;
+	this.dsList.deleteRow(nRow);
+};
+
+this.btnGrdCheck_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 정합성 체크
+	this.gfnClearValidation(this.dsList);
+	
+	this.gfnSetValidation(this.dsList, "ID"			, "아이디"				, "required,minlength:3,maxlength:8");
+	this.gfnSetValidation(this.dsList, "SSN"		, "주민번호"			, "required,isssn");
+	this.gfnSetValidation(this.dsList, "DATE_FROM"	, "시작일자,종료일자"	, "required,date");
+	this.gfnSetValidation(this.dsList, "DATE_TO"	, "종료일자,시작일자"	, "required,date,fromto:DATE_FROM");
+	this.gfnSetValidation(this.dsList, "MAX_NUM"	, "금액"				, "required,digits,maxlengthdec:7:2");
+	this.gfnSetValidation(this.dsList, "DECIMAL"	, "최대값"				, "required,digits,max:10");
+	this.gfnSetValidation(this.dsList, "COMPARE_1"	, "COMPARE_1,COMPARE_2"	, "comparebig:COMPARE_2");
+	
+ 	// Dataset의 변경된 Row Validation check
+  	if (this.gfnValidation(this.grdCheck, "U") == false) return;
+
+	trace("Validation이 통과 되었습니다.");
+};
+
+this.btnDetailCheck_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.dsDeatil.rowcount == 0) {
+		var nRow = this.dsDeatil.addRow();
+		this.dsDeatil.setColumn(nRow, "DATE", this.gfnGetDate());
+	}
+	
+	// 정합성 체크
+	this.gfnClearValidation(this.dsDeatil);
+	this.gfnSetValidation(this.dsDeatil, "DATE"			, "필수(날짜)"				, "required,date");
+	this.gfnSetValidation(this.dsDeatil, "YYYYMM"		, "년월"					, "required,dateym");	
+	this.gfnSetValidation(this.dsDeatil, "MAX_NUM"		, "최대값 = 100"			, "required,digits,max:100");
+	this.gfnSetValidation(this.dsDeatil, "MIN_NUM"		, "최소값 = 10"			, "required,digits,min:10");	
+	this.gfnSetValidation(this.dsDeatil, "LENGTH_MIN"	, "최소길이3/최대길이8"	, "required,minlength:3,maxlength:8");
+	this.gfnSetValidation(this.dsDeatil, "RANGE"		, "범위 1~100"				, "required,digits,range:1:100");
+	this.gfnSetValidation(this.dsDeatil, "CAMP"			, "컬럼비교 (최소값=10)"	, "required,comparebig:MIN_NUM");
+	this.gfnSetValidation(this.dsDeatil, "PHONE"		, "전화번호"				, "required,isphone");	
+	
+	// 전체 Row Validation check
+ 	if (this.gfnValidation(this.dsDeatil, "A") == false) return;
+	
+	trace("Validation이 통과 되었습니다.");
+};
+
+this.btnGrpCheck_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 정합성 체크
+	this.gfnClearValidation(this.dsDataGrp);
+	
+	this.gfnSetValidation(this.dsDataGrp, "Column0", "색상", "required");
+	this.gfnSetValidation(this.dsDataGrp, "Column1", "온도", "required");	
+	
+	// 수정된 Row만 Validation check
+ 	if (this.gfnValidation(this.grdDatasetProp, "A") == false) return;
+	
+	trace("Validation이 통과 되었습니다.");
+};
+
+this.btnDupCheck_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nRow = this.gfnChkDuplicateData(this.dsDupl, "Column0,Column1,Column2", this.dsDupl.rowposition);
+	
+	if (nRow > -1) {
+		this.gfnAlert("msg.err.validator.duplcation",[nRow+"번째 로우"]);
+		this.dsDupl.set_rowposition(nRow);
+		this.grdDup.setCellPos(2);
+		this.grdDup.showEditor(true);		
+		return;
+	}
+	
+	trace("Validation이 통과 되었습니다.");
+};
+
+this.btnDupDsCheck_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nRow = this.gfnDuplicateData(this.dsDupl, "Column0,Column1,Column2");
+
+	if (nRow > -1) {
+		this.gfnAlert("msg.err.validator.duplcation",[nRow+"번째 로우"]);
+		this.dsDupl.set_rowposition(nRow);
+		this.grdDup.setCellPos(2);
+		this.grdDup.showEditor(true);		
+		return;
+	}
+	trace("Validation이 통과 되었습니다.");
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="ID" type="STRING" size="256"/>
+          <Column id="SSN" type="STRING" size="256"/>
+          <Column id="DATE_FROM" type="STRING" size="256"/>
+          <Column id="DATE_TO" type="STRING" size="256"/>
+          <Column id="MAX_NUM" type="FLOAT" size="256"/>
+          <Column id="DECIMAL" type="BIGDECIMAL" size="256"/>
+          <Column id="COMPARE_1" type="STRING" size="256"/>
+          <Column id="COMPARE_2" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="ID">kimyk</Col>
+            <Col id="DATE_FROM">20171201</Col>
+            <Col id="DATE_TO">20171130</Col>
+            <Col id="MAX_NUM">10</Col>
+            <Col id="DECIMAL">1.25</Col>
+            <Col id="COMPARE_1">10</Col>
+            <Col id="COMPARE_2">20</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDeatil">
+        <ColumnInfo>
+          <Column id="DATE" type="STRING" size="256"/>
+          <Column id="YYYYMM" type="STRING" size="6"/>
+          <Column id="MAX_NUM" type="INT" size="256"/>
+          <Column id="MIN_NUM" type="INT" size="256"/>
+          <Column id="LENGTH_MIN" type="STRING" size="256"/>
+          <Column id="RANGE" type="STRING" size="256"/>
+          <Column id="CAMP" type="STRING" size="256"/>
+          <Column id="PHONE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDataGrp" onrowposchanged="dsSample00_onrowposchanged" keystring="G:Column0">
+        <ColumnInfo>
+          <Column id="row" type="FLOAT" size="256"/>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="BIGDECIMAL" size="256" prop="AVG"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">red</Col>
+            <Col id="Column3">1</Col>
+            <Col id="row">1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1"/>
+            <Col id="Column2">yellow</Col>
+            <Col id="Column3">1200</Col>
+            <Col id="row">2</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">blue</Col>
+            <Col id="Column3">3</Col>
+            <Col id="row">3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">navy</Col>
+            <Col id="Column3">4</Col>
+            <Col id="row">4</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">lemon</Col>
+            <Col id="Column3">5</Col>
+            <Col id="row">5</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">orange</Col>
+            <Col id="Column3">1600</Col>
+            <Col id="row">6</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">test</Col>
+            <Col id="Column3">7</Col>
+            <Col id="row">7</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">strawberry</Col>
+            <Col id="Column3">8</Col>
+            <Col id="row">8</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">banana</Col>
+            <Col id="Column3">9</Col>
+            <Col id="row">9</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDupl">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="BIGDECIMAL" size="256"/>
+          <Column id="Column3" type="BIGDECIMAL" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">1</Col>
+            <Col id="Column3">1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">2</Col>
+            <Col id="Column3">2</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">3</Col>
+            <Col id="Column3">3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">4</Col>
+            <Col id="Column3">4</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">5</Col>
+            <Col id="Column3">5</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">6</Col>
+            <Col id="Column3">9</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">7</Col>
+            <Col id="Column3">1600</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">8</Col>
+            <Col id="Column3">7</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">9</Col>
+            <Col id="Column3">8</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">10</Col>
+            <Col id="Column3">9</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">1</Col>
+            <Col id="Column3">5</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDupl00">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="BIGDECIMAL" size="256"/>
+          <Column id="Column3" type="BIGDECIMAL" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">1</Col>
+            <Col id="Column3">1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">warm</Col>
+            <Col id="Column2">1</Col>
+            <Col id="Column3">1</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">3</Col>
+            <Col id="Column3">3</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">4</Col>
+            <Col id="Column3">4</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">1</Col>
+            <Col id="Column3">5</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">color</Col>
+            <Col id="Column1">cool</Col>
+            <Col id="Column2">3</Col>
+            <Col id="Column3">9</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">2</Col>
+            <Col id="Column3">1600</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">1</Col>
+            <Col id="Column3">7</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">2</Col>
+            <Col id="Column3">8</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">sweet</Col>
+            <Col id="Column2">3</Col>
+            <Col id="Column3">9</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">fruits</Col>
+            <Col id="Column1">acid</Col>
+            <Col id="Column2">1</Col>
+            <Col id="Column3">5</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divDetail.form.calReq" propid="value" datasetid="dsDeatil" columnid="DATE"/>
+      <BindItem id="item2" compid="divDetail.form.edtMax100" propid="value" datasetid="dsDeatil" columnid="MAX_NUM"/>
+      <BindItem id="item3" compid="divDetail.form.edtMin10" propid="value" datasetid="dsDeatil" columnid="MIN_NUM"/>
+      <BindItem id="item4" compid="divDetail.form.edtLength3to8" propid="value" datasetid="dsDeatil" columnid="LENGTH_MIN"/>
+      <BindItem id="item5" compid="divDetail.form.edtRange1to100" propid="value" datasetid="dsDeatil" columnid="RANGE"/>
+      <BindItem id="item6" compid="divDetail.form.edtCompa" propid="value" datasetid="dsDeatil" columnid="CAMP"/>
+      <BindItem id="item7" compid="divDetail.form.edtPhone" propid="value" datasetid="dsDeatil" columnid="PHONE"/>
+      <BindItem id="item1" compid="divDetail.form.mskYM" propid="value" datasetid="dsDeatil" columnid="YYYYMM"/>
+    </Bind>
+  </Form>
+</FDL>

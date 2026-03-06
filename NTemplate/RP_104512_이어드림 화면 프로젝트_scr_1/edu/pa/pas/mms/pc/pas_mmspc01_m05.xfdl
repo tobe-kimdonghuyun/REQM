@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="pas_mmspc01_m05" width="1200" height="660" titletext="통합검색_이벤트공모전">
+    <Layouts>
+      <Layout height="660" width="1200" screenid="ScreenDeskTopP">
+        <Div id="divEvn" taborder="0" left="0" top="90" height="468" width="1200" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="staEvnCnt" taborder="0" text="이벤트·공모전&lt;fc v='#2b72de'&gt; 0&lt;/fc&gt;건" left="0" top="0" width="281" height="58" cssclass="font24B" usedecorate="true" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta00" taborder="1" left="0" top="74" width="250" height="10" border="1px solid #222222, 0px none, 0px none, 0px none" initvalueid="ivStcAccessibilityOff"/>
+              <Div id="div01" taborder="2" left="300" top="74" right="0" bottom="0" initvalueid="ivDivAccessibilityOff">
+                <Layouts>
+                  <Layout>
+                    <Grid id="grdMain" taborder="0" left="0" top="0" height="351" binddataset="dsEvnList" right="0" cssclass="grd_notice" selecttype="cell" scrolltype="none" scrollbartype="none none" initvalueid="ivGrdAccessibilityOn" border="1px solid #eaeaea,0px none,0px none" oncellclick="divEvn_div01_grdMain_oncellclick" nodatatext="조회된 데이터가 없습니다." accessibilitylabel="이벤트공모저 조회 목록">
+                      <Formats>
+                        <Format id="default">
+                          <Columns>
+                            <Column size="110"/>
+                            <Column size="590"/>
+                            <Column size="201"/>
+                          </Columns>
+                          <Rows>
+                            <Row size="70"/>
+                          </Rows>
+                          <Band id="body">
+                            <Cell displaytype="imagecontrol" padding="0px 10px 0px 30px" text="expr:status==&quot;진행중&quot; ? &quot;url('theme://images/grd_status_process.png')&quot;:status==&quot;예정&quot;? &quot;url('theme://images/grd_status_todo.png')&quot;:status==&quot;마감&quot;?&quot;url('theme://images/grd_status_end.png')&quot;:&quot;&quot;"/>
+                            <Cell col="1" text="bind:eventTitlNm" textAlign="left" cursor="pointer" expr="expr:comp.parent.parent.parent.parent.parent.fnDisplayText(comp,1,currow,eventTitlNm)" displaytype="decoratetext"/>
+                            <Cell col="2" calendardateformat="yyyy.MM.dd" cssclass="cell_bgGray02" text="expr:String(eventBgngYmd).dateFormat(&quot;yyyy.MM.dd.&quot;) + &quot; ~ &quot; + String(eventEndYmd).dateFormat(&quot;yyyy.MM.dd.&quot;)"/>
+                          </Band>
+                        </Format>
+                        <Format id="mobile">
+                          <Columns>
+                            <Column size="130"/>
+                            <Column size="463"/>
+                          </Columns>
+                          <Rows>
+                            <Row size="82"/>
+                            <Row size="56"/>
+                          </Rows>
+                          <Band id="body">
+                            <Cell border="0px none" displaytype="imagecontrol" padding="0px " text="expr:status==&quot;진행중&quot;?&quot;url('imagerc::pas_mmscn00_M/grd_status_process_M.png')&quot;:status==&quot;예정&quot;?&quot;url('imagerc::pas_mmscn00_M/grd_status_todo_M.png')&quot;:status==&quot;마감&quot;?&quot;url('imagerc::pas_mmscn00_M/grd_status_end_M.png')&quot;:&quot;&quot;"/>
+                            <Cell col="1" border="0px none" textAlign="left" padding="0px 20px 0px 0px" displaytype="decoratetext" text="expr:comp.parent.parent.parent.parent.parent.fnDisplayText(comp,1,currow,eventTitlNm)"/>
+                            <Cell row="1" colspan="2" border="2px solid #eaeaea,0px none" cssclass="cell_bgGray_M02" letterSpacing="-1px" padding="0px 0px 15px 20px" textAlign="left" verticalAlign="top" text="expr:String(eventBgngYmd).dateFormat(&quot;yyyy.MM.dd.&quot;) + &quot; ~ &quot; + String(eventEndYmd).dateFormat(&quot;yyyy.MM.dd.&quot;)"/>
+                          </Band>
+                        </Format>
+                      </Formats>
+                    </Grid>
+                  </Layout>
+                  <Layout name="Layout0">
+                    <Grid id="grdMain" formatid="mobile" cssclass="grd_notice_M" left="0" top="-2" height="691" right="0" autofittype="col"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="staEvnCnt" cssclass="font32B" taborder="0"/>
+              <Static id="sta00" border="2px solid #222222, 0px none, 0px none, 0px none" left="0" top="101" height="10" right="0" taborder="2"/>
+              <Div id="div01" left="0" top="104" right="0" bottom="0" taborder="1"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divPaging" taborder="1" left="0" top="divEvn:37" height="30" right="0" url="comm::comp_paginator2.xfdl" initvalueid="ivDivAccessibilityOn" accessibilitylabel="페이징 그룹박스"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="640" height="1130" mobileorientation="portrait" type="default">
+        <Div id="divEvn" left="20" top="87" height="840" right="20" taborder="0"/>
+        <Div id="divPaging" height="120" left="0" top="divEvn:43" right="0" formscrolltype="none" taborder="1"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsEvnList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="eventId" type="STRING" size="256"/>
+          <Column id="eventScCd" type="STRING" size="256"/>
+          <Column id="eventTitlNm" type="STRING" size="256"/>
+          <Column id="eventCn" type="STRING" size="256"/>
+          <Column id="pstStsCd" type="STRING" size="256"/>
+          <Column id="aplcnBgngYmd" type="STRING" size="256"/>
+          <Column id="aplcnEndYmd" type="STRING" size="256"/>
+          <Column id="aplcnBgngTm" type="STRING" size="256"/>
+          <Column id="aplcnEndTm" type="STRING" size="256"/>
+          <Column id="eventBgngYmd" type="STRING" size="256"/>
+          <Column id="eventEndYmd" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="pubcnRealmCn" type="STRING" size="256"/>
+          <Column id="opmtInstNm" type="STRING" size="256"/>
+          <Column id="mngtInstNm" type="STRING" size="256"/>
+          <Column id="qustCttpcCn" type="STRING" size="256"/>
+          <Column id="imageFileRefrnId" type="STRING" size="256"/>
+          <Column id="hmpgAddr" type="STRING" size="256"/>
+          <Column id="pubcnThmCn" type="STRING" size="256"/>
+          <Column id="pubcnPtptTrgtCn" type="STRING" size="256"/>
+          <Column id="pubcnPtptMthCn" type="STRING" size="256"/>
+          <Column id="sprtRealmCn" type="STRING" size="256"/>
+          <Column id="atwSdrqCn" type="STRING" size="256"/>
+          <Column id="pubcnFxCn" type="STRING" size="256"/>
+          <Column id="awdCn" type="STRING" size="256"/>
+          <Column id="srngCtrCn" type="STRING" size="256"/>
+          <Column id="etcCn" type="STRING" size="256"/>
+          <Column id="inqCnt" type="STRING" size="256"/>
+          <Column id="editUseYn" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="STRING" size="256"/>
+          <Column id="status" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEvnListTemp" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="eventId" type="STRING" size="256"/>
+          <Column id="eventScCd" type="STRING" size="256"/>
+          <Column id="eventTitlNm" type="STRING" size="256"/>
+          <Column id="eventCn" type="STRING" size="256"/>
+          <Column id="pstStsCd" type="STRING" size="256"/>
+          <Column id="aplcnBgngYmd" type="STRING" size="256"/>
+          <Column id="aplcnEndYmd" type="STRING" size="256"/>
+          <Column id="aplcnBgngTm" type="STRING" size="256"/>
+          <Column id="aplcnEndTm" type="STRING" size="256"/>
+          <Column id="eventBgngYmd" type="DATE" size="256"/>
+          <Column id="eventEndYmd" type="DATE" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="pubcnRealmCn" type="STRING" size="256"/>
+          <Column id="opmtInstNm" type="STRING" size="256"/>
+          <Column id="mngtInstNm" type="STRING" size="256"/>
+          <Column id="qustCttpcCn" type="STRING" size="256"/>
+          <Column id="imageFileRefrnId" type="STRING" size="256"/>
+          <Column id="hmpgAddr" type="STRING" size="256"/>
+          <Column id="pubcnThmCn" type="STRING" size="256"/>
+          <Column id="pubcnPtptTrgtCn" type="STRING" size="256"/>
+          <Column id="pubcnPtptMthCn" type="STRING" size="256"/>
+          <Column id="sprtRealmCn" type="STRING" size="256"/>
+          <Column id="atwSdrqCn" type="STRING" size="256"/>
+          <Column id="pubcnFxCn" type="STRING" size="256"/>
+          <Column id="awdCn" type="STRING" size="256"/>
+          <Column id="srngCtrCn" type="STRING" size="256"/>
+          <Column id="etcCn" type="STRING" size="256"/>
+          <Column id="inqCnt" type="STRING" size="256"/>
+          <Column id="editUseYn" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="STRING" size="256"/>
+          <Column id="status" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*   대국민 - 통합검색-이벤트공모전 검색
+*  @MenuPath    pa_pas_mms_pc
+*  @FileName 	pas_mmspc01_m05.xfdl
+*  @Creator 	최영아
+*  @CreateDate 	2022.11.15
+*  @Desction    통합검색 조회
+*
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.11.15     	최영아 	        최초 생성 
+*******************************************************************************
+*/
+include "lib::cm_script.xjs";
+
+//0501 CF 일괄등록
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ this.divEvn_div01_grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	// 클릭한 셀을 구한다
+	var nRow = e.row;
+	var nCell = e.cell;
+	
+	if(nCell == 1){ // 제목 클릭시 상세페이지로 이동
+	
+		var objDs = obj.getBindDataset();
+		var seventId = objDs.getColumn(nRow,"eventId");
+		var params = {pafrBbsId:seventId
+			};
+		
+		var seventScCd = objDs.getColumn(nRow,"eventScCd");
+		
+		//이벤트인지 공모전인지 구분해서 각 구분에 맞는 화면으로 이동
+		if(seventScCd == "1"){
+			this.smfSetWorkPage("pa_pas_mms_cn::pas_mmscn03_m02.xfdl", params);
+		}else{
+			this.smfSetWorkPage("pa_pas_mms_cn::pas_mmscn03_m03.xfdl", params);
+		}
+	}
+};
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.initForm = function(){
+
+	//데이터셋 세팅
+	if(this.smfIsMobile()){
+		this.dsEvnListTemp.copyData(this.parent.parent.dsEvnListTemp);
+		this.smfDataAppend(this, this.divEvn.form.div01.form.grdMain, this.dsEvnListTemp);
+		this.smfResetScroll(this.divEvn.form.div01.form);
+	}else {
+		this.dsEvnList.copyData(this.parent.parent.dsEvnList);
+	}
+
+	//조회 결과 카운트
+	var evnListCnt = this.parent.parent.dsCount.getColumn(0,"ntn_evnPubcn");
+	
+	//4. 이벤트·공모전
+	this.divEvn.form.staEvnCnt.set_text("이벤트·공모전 <fc v='#2b72de'>" + evnListCnt + "</fc>건");	
+	var vGrid = this.divEvn.form.div01.form.grdMain;
+	var vDsPageInfo = this.parent.parent.dsPageInfo;
+	var vFunction = this.parent.parent.fnSearch;
+	
+	if(vDsPageInfo.getColumn(0, "pageIndex") == 1 && this.dsEvnList.getRowCount() > 0){
+		this.divPaging.form.fnInit(vGrid, vDsPageInfo, null, vFunction, this.parent.parent);
+	}
+	
+	// 총 검색결과와 현재 검색 결과 수가 일치할 경우 [더보기]버튼 숨김 
+	if(this.smfIsMobile()){
+		if(this.dsEvnList.getRowCount() == evnListCnt){	
+			this.divPaging.set_visible(false);
+		}
+	}else{
+		//검색 결과가 없는 경우 페이징 숨김
+		if(this.dsEvnList.getRowCount() == 0){	
+			this.divPaging.set_visible(false);
+		}
+	}
+	
+	this.smfResetScroll(this);
+};
+
+this.fnDisplayText = function(obj,nCell,nRow,sLongText)
+{
+	var sFont = 'normal 400 18px/normal "Noto Sans KR","NotoSansKR-Regular"';
+	//var objFont = new nexacro._PaddingObject(sFont);
+	var nPadding = 30;
+
+	if(this.smfIsMobile())
+	{
+		sFont = 'normal 400 28px/normal "Noto Sans KR","NotoSansKR-Regular"';
+		nPadding = 90;
+	}
+
+	return this.smfDispLongTextGridDecorate(obj,nCell,nRow,sLongText,sFont,nPadding);
+};]]></Script>
+  </Form>
+</FDL>

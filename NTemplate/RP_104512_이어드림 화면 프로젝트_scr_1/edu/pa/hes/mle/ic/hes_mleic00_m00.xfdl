@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sqa_noibi" width="1200" height="763" titletext="안내사항조회" onload="sqa_noibi_onload" oninit="fnOninit">
+    <Layouts>
+      <Layout height="763" width="1200" screenid="ScreenDeskTop">
+        <ImageViewer id="imgTitle" taborder="0" text="안내 사항 조회" left="0" top="70" height="44" cssclass="img_WF_SubTit01" width="220" initvalueid="ivTitleAccessibilityOn"/>
+        <Div id="divSearch" taborder="1" left="0" top="144" height="70" cssclass="div_WF_Search" right="0" initvalueid="ivDivAccessibilityOn" accessibilitylabel="조회영역">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="안내사항" left="0" top="20" width="81" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtSearchKeyword" taborder="1" left="81" top="20" width="300" height="30" initvalueid="ivEdtNormal" onkeydown="edtSearchKeyword_onkeydown" displaynulltext="검색어를 입력해주세요."/>
+              <Static id="Static00_00" taborder="2" text="조회기간" left="381" top="20" width="81" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Calendar id="calSttInqYmd" taborder="3" left="462" top="20" width="150" height="30" dateformat="yyyy.MM.dd" readonly="false" editformat="yyyy.MM.dd"/>
+              <Static id="Static66" taborder="4" left="612" top="20" width="15" height="30" cssclass="sta_WF_AC" text="~" initvalueid="ivStcAccessibilityOn" accessibilitylabel="부터"/>
+              <Calendar id="calEndInqYmd" taborder="5" left="627" top="20" width="150" height="30" dateformat="yyyy.MM.dd" readonly="false" editformat="yyyy.MM.dd"/>
+              <Button id="btnSearch" taborder="6" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="btnSearch_onclick" initvalueid="ivBtnAccessibilityButton"/>
+              <Static id="Static99_00_00_00_00_00_01" taborder="7" left="1360" top="6" height="50" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" initvalueid="ivStcAccessibilityOff" width="20"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Edit id="edtSearchKeyword" left="20" top="120" height="60" displaynulltext="검색어를 입력해주세요." right="20" taborder="0"/>
+              <Static id="Static00" left="793" top="100" width="57" height="30" visible="false" taborder="2"/>
+              <Button id="btnSearch" width="164" right="20" taborder="1" height="60" bottom="40" cssclass="btn_WF_Search03"/>
+              <Static id="Static99_00_00_00_00_00_01" top="0" taborder="3" left="880" right="-300" height="100"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdMain" taborder="2" left="0" top="234" height="439" autofittype="col" right="0" binddataset="dsList" initvalueid="ivGrdAccessibilityOn" selecttype="cell" oncellclick="grdMain_oncellclick" mouseovertype="row">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="116"/>
+                <Column size="522"/>
+                <Column size="110"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="번호"/>
+                <Cell col="1" text="안내일자"/>
+                <Cell col="2" text="안내내용"/>
+                <Cell col="3" text="비고" cssclass="LineNo"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="normal" cssclass="expr:imptYn==&quot;Y&quot;?&quot;cell_bgGray&quot;:&quot;&quot;" text="bind:rowNum" textAlign="center"/>
+                <Cell col="1" cssclass="expr:imptYn==&quot;Y&quot;?&quot;cell_ImpNoti&quot;:&quot;&quot;" text="bind:sndngYmd" displaytype="date" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd"/>
+                <Cell col="2" displaytype="normal" edittype="none" text="bind:sndngCn" cssclass="expr:imptYn==&quot;Y&quot;?&quot;cell_ImpNoti&quot;:&quot;&quot;"/>
+                <Cell col="3" displaytype="normal" edittype="none" text="bind:rmkMteCn" cssclass="expr:imptYn==&quot;Y&quot;?&quot;cell_bgGray&quot;:&quot;&quot;"/>
+              </Band>
+            </Format>
+            <Format id="format00">
+              <Columns>
+                <Column size="140"/>
+                <Column size="463"/>
+              </Columns>
+              <Rows>
+                <Row size="50"/>
+                <Row size="50"/>
+                <Row size="50"/>
+                <Row size="50"/>
+                <Row size="50"/>
+                <Row size="50"/>
+              </Rows>
+              <Band id="body">
+                <Cell text="번호" cssclass="cell_WF_Label"/>
+                <Cell col="1" text="bind:Column0"/>
+                <Cell row="1" text="제목" cssclass="cell_WF_Label"/>
+                <Cell row="1" col="1" text="bind:Column1" autosizerow="limitmin"/>
+                <Cell row="2" text="첨부" cssclass="cell_WF_Label"/>
+                <Cell row="2" col="1" cssclass="cell_WF_File" displaytype="buttoncontrol" edittype="button"/>
+                <Cell row="3" text="작성일" cssclass="cell_WF_Label"/>
+                <Cell row="3" col="1" text="bind:Column3"/>
+                <Cell row="4" text="조회수" cssclass="cell_WF_Label"/>
+                <Cell row="4" col="1" text="bind:Column4"/>
+                <Cell row="5" text="공지여부" cssclass="cell_WF_Label, cell_WF_MiddleLine"/>
+                <Cell row="5" col="1" text="bind:Column5" cssclass="cell_WF_MiddleLine"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static99_00_00_00_00" taborder="3" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01" taborder="4" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_01" taborder="5" left="0" top="214" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="rowNum" type="STRING" size="256"/>
+          <Column id="acaDsgnNo" type="STRING" size="256"/>
+          <Column id="invlDsgnNo" type="STRING" size="256"/>
+          <Column id="cteOfcdcCd" type="STRING" size="256"/>
+          <Column id="acaInstiScCd" type="STRING" size="256"/>
+          <Column id="ntcMteClfCd" type="STRING" size="256"/>
+          <Column id="sn" type="STRING" size="256"/>
+          <Column id="sndngYmd" type="STRING" size="256"/>
+          <Column id="sndngCn" type="STRING" size="256"/>
+          <Column id="rmkMteCn" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsList=dsList</Col>
+            <Col id="url">/hes_mle_ic00_000.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="initPageIndex" type="INT" size="30" value="1"/>
+          <ConstColumn id="initPageSize" type="INT" size="30" value="10"/>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex"/>
+            <Col id="pageSize"/>
+            <Col id="totalCount"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cteOfcdcCd" type="STRING" size="256"/>
+          <Column id="acaDsgnNo" type="STRING" size="256"/>
+          <Column id="invlDsgnNo" type="STRING" size="256"/>
+          <Column id="sttInqYmd" type="STRING" size="256"/>
+          <Column id="endInqYmd" type="STRING" size="256"/>
+          <Column id="sndngCn" type="STRING" size="256"/>
+          <Column id="acaInstiScCd" type="STRING" size="256" sumtext="학원교습소구분코드"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*   대국민 학원관련민원 - 공지사항 목록조회
+*  @MenuPath    pa_hes_len_nt
+*  @FileName 	hes_lennt00_m00.xfdl
+*  @Creator 	박가혜
+*  @CreateDate 	2022.12.29
+*  @Desction    공지사항 목록조회
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.12.29    	이재열 	        최초 생성 
+*******************************************************************************
+*/
+
+include "lib::cm_script.xjs"
+include "lib::hes_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ //화면 접근 시 로그인정보 확인
+this.fnOninit = function(obj:nexacro.Form,e:nexacro.EventInfo)
+{
+	this.hesSetGoUrl("pa_hes_mle_ic::hes_mleic00_m00.xfdl");
+};
+this.sqa_noibi_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	this.dsSearch.addRow();
+	
+	//조회기간 종료일 현재날짜
+	var today = this.smfToday();
+	this.divSearch.form.calEndInqYmd.set_value(today);
+	
+	//  페이지를 조회한다.
+	this.divSearch.form.btnSearch.click();
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnSearch = function(obj, e)
+{
+
+	this.dsSearch.setColumn(0, "acaDsgnNo", this.hesGetAcaDsgnNo);	//접속교육지원청(학원지정번호) 세션 가져오기	
+	this.dsSearch.setColumn(0, "acaInstiScCd", this.hesGetAcaInstiScCd); //접속교육지원청(학원교습소구분코드) 세션 가져오기	
+	this.dsSearch.setColumn(0, "cteOfcdcCd", this.hesGetAtptOfcdcOrgCode); //접속교육지원청(관할교육청코드) 세션 가져오기	
+	this.dsSearch.setColumn(0, "invlDsgnNo",  this.hesGetInvlDsgnNo); //접속교육지원청(개인지정번호) 세션 가져오기	
+	
+	//40:공지사항 41:작성방법 안내 자료 42:설문조사 게시 관리
+
+ 	// 서비스 객체 생성
+	this.smfSearchService("select")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+		
+			this.parent.parent.scrollTo(0,0);
+			this.smfResetScroll(this);
+			trace("====세션 결과 데이터셋 ========== : "+this.dsList.rowcount);
+			for(var i = 0; i < this.dsList.rowcount; i++){
+				//var row = this.fnGetNum(i)
+				//trace("====세션 결과 데이터셋 ========== : "+row);
+				//this.dsList.setColumn(i,"rowNum",row)
+			}
+			
+			if(callbackParams.errors) return;
+		});
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnGetNum = function(row){
+
+	var total = this.dsPageInfo.getColumn(0,"totalCount")
+	var pageSize = this.dsPageInfo.getColumn(0,"pageSize")
+	var pageIndex = this.dsPageInfo.getColumn(0,"pageIndex")
+	var numOfPage = total - (pageSize * ( pageIndex -1 ));
+
+	return numOfPage - row;
+
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSearch(obj, e);
+};
+
+this.grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	// 클릭한 셀을 구한다
+	var nRow = e.row;
+	var nCell = e.cell;
+	
+	if(nCell == 2){ // 제목클릭 시
+		var objDs = obj.getBindDataset();
+		var sSn = objDs.getColumn(nRow,"sn");
+		var sSndngCn = objDs.getColumn(nRow,"sndngCn");		
+		alert(sSndngCn);
+	}
+};
+
+this.edtSearchKeyword_onkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == "13"){
+		this.divSearch.form.btnSearch.click();
+	}
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtSearchKeyword" propid="value" datasetid="dsSearch" columnid="sndngCn"/>
+      <BindItem id="item1" compid="divSearch.form.calSttInqYmd" propid="value" datasetid="dsSearch" columnid="sttInqYmd"/>
+      <BindItem id="item2" compid="divSearch.form.calEndInqYmd" propid="value" datasetid="dsSearch" columnid="endInqYmd"/>
+    </Bind>
+  </Form>
+</FDL>

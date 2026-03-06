@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comp_login_financeAuth" width="555" height="662" titletext="금융인증서공통모듈" onload="comp_login_financeAuth_onload" cssclass="frm_Pop_bgTrsprt">
+    <Layouts>
+      <Layout height="662" width="555">
+        <WebBrowser id="webMain" taborder="0" left="0" top="0" right="0" bottom="0" onloadcompleted="webMain_onloadcompleted" onusernotify="webMain_onusernotify"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	comp_login_financeAuth.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.12.2
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.12.2     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_afterAuthCallback;  // 인증완료후 호출할 callback함수 object
+this.fv_afterOnloadCallback;  // 로드완료후 호출할 callback함수 object
+this.fv_parentForm;  // 부모Form object
+this.fv_popupParam;   // 부모로 부터 받은 파라미터
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.comp_login_financeAuth_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitPopup(this);
+	
+	// 부모로 부터 받은 파라미터를 가져온다.
+	this.fv_popupParam = this.smfGetPopupParams();
+	
+	// this.fninit
+	//this.fnInit(this.fv_popupParam);	
+	
+	
+	// Url을 세팅한다.
+	var sBaseUrl= window.location.protocol + "//" + window.location.host;
+	var sUrl= sBaseUrl + "/thirdparty/auth/financeLogin.jsp"
+	this.webMain.set_url(sUrl);
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+// 환경을 세팅한다
+this.fnInit = function(objParam)
+{
+	/*
+			objParam = {
+						   objForm              : this
+						,  afterAuthCallback    : this.fnAfterAuthCallback
+						,  afterOnloadCallback  : this.fnAfterOnloadCallback
+			           };		
+	*/
+
+	// callback함수(object)을 세팅한다
+	//this.fv_afterAuthCallback   = objParam.afterAuthCallback  ;  // 인증완료후 호출할 callback함수 object
+	//this.fv_afterOnloadCallback = objParam.afterOnloadCallback;  // 로드완료후 호출할 callback함수 object
+	//this.fv_parentForm = objParam.afterOnloadCallback;
+}
+
+// 금융인증을 호출한다.
+this.fnExecAuth = function(objParam)
+{
+	var sGbn = (objParam.rrno?objParam.rrno:"MemberLogin");
+		
+	// 금융인증서를 띄운다.
+	this.webMain.callMethod("fnExecAuth",sGbn);
+	
+}
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.webMain_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+	if(this.fv_afterOnloadCallback)
+	{
+		this.fv_afterOnloadCallback.call(this.fv_parentForm)
+	}
+	
+	this.fnExecAuth(this.fv_popupParam);
+};
+
+this.webMain_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	
+	switch(e.userdata)
+	{
+		case "cert_init_call_error" :
+		case "cert_init_result_error" :
+		case "cert_tokenGet_error" :
+		case "cert_certSign_error" : 
+			var sData = this.webMain.callMethod("getNexacroData");
+			var bResult = false;
+		
+			if(this.fv_afterAuthCallback)
+			{
+				var objParam = {data:sData};
+				this.fv_afterAuthCallback.call(this.fv_parentForm,bResult,objParam);
+			}
+			
+			this.smfSendResponseToOpener({result:bResult,data:sData});
+
+			this.close(true);
+			break;
+			
+		case "cert_successcomplete" :
+			var sData = this.webMain.callMethod("getNexacroData");
+			var bResult = true;
+		
+			if(this.fv_afterAuthCallback)
+			{
+				var objParam = {data:sData};
+				this.fv_afterAuthCallback.call(this.fv_parentForm,bResult,objParam);
+			}
+			
+			this.smfSendResponseToOpener({result:bResult,data:sData});
+			this.close(true);
+			break;
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

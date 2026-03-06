@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ews_oclsm02_p01" width="460" height="210" titletext="비밀번호 팝업" onload="fnOnload">
+    <Layouts>
+      <Layout height="210" width="460" screenid="ScreenDeskTop">
+        <Static id="sta244" taborder="0" text="비밀번호를 입력해 주세요" left="20" top="30" height="40" cssclass="sta_WF_PolicyLink" textAlign="center" right="20" initvalueid="ivStcAccessibilityOn" accessibilitylabel="비밀번호를 입력해 주세요"/>
+        <Div id="div00_00" taborder="1" left="20" right="20" text="" initvalueid="ivDivAccessibilityOff" height="43" top="97">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" left="0" top="0" height="43" cssclass="sta_WF_Input02Top" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta00_01" taborder="1" left="0" top="0" height="43" cssclass="sta_WF_Input01Top" initvalueid="ivStcAccessibilityOn" width="130" text="비밀번호" accessibilitylabel="비밀번호"/>
+              <Edit id="edt00" taborder="2" left="137" top="6" width="210" height="30" initvalueid="ivEdtNormal" password="true" accessibilitylabel="비밀번호 입력칸"/>
+              <Button id="btn00" taborder="3" text="확인" left="356" top="6" width="50" height="30" cssclass="btn_WF_Crud" initvalueid="ivBtnAccessibilityButton" onclick="btnSearch_onclick" accessibilitylabel="확인"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="sta00" cssclass="sta_WF_TitleLine01" height="73" left="0" top="0" right="0"/>
+              <Static id="sta00_01" height="73" left="0" top="0" width="150" cssclass="sta_WF_TitleLine02" textAlign="center"/>
+              <Edit id="edt00" height="58" left="157" top="7" width="280"/>
+              <Button id="btn00" height="58" left="447" top="7" width="110"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" width="600" height="320" mobileorientation="landscape" type="default" screenid="mobile,tablet">
+        <Static id="sta244" left="80" top="43" height="60" right="80" cssclass="sta_WF_SubTit_32_M"/>
+        <Div id="div00_00" height="73" left="20" top="147" right="20"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    비밀번호 확인
+*  @FileName 	ews_oclsm02_p01.xfdl 
+*  @CreateDate 	2023.06.30
+*  @Desction    비밀번호 확인 화면
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2023.06.30     	류찬욱 	                최초 생성
+*******************************************************************************
+*/
+ 
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+var pv_params;
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 팝업 폼 초기화
+	this.smfInitPopup(obj);
+
+	pv_params = this.smfGetPopupParams();
+		
+	// opener 화면에서 시도교육청 코드를 넘겨주면 세팅
+	if(this.isNotNil(pv_params.qnaId)){
+		this.dsPawd.setColumn(0, "qnaId", pv_params.qnaId);
+		this.dsPawd.setColumn(0, "qnaLvl", pv_params.qnaLvl);
+	}
+	 
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ /**
+ * 조회서비스
+ * @param : N/A
+ * @param : N/A
+ */
+this.fnSearchList = function()
+{
+ 	// 서비스 객체 생성
+	this.smfSearchService("select")
+		// 데이터 검증
+		.validateForm(this.div00_00)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			trace(this.dsPawd.saveXML());
+			this.smfSendResponseToOpener({
+				"row": this.smfRowToObject(this.dsPawd)
+			});
+			
+			this.close(true);
+			
+		});
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * 입력창 입력 시
+* @param  : obj		   - [object]Edit
+* @param  : e		   - [string]KeyEventInfo
+* @return : N/A
+ */
+this.schulNm_onkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	// 엔터키 이벤트
+	if(e.keycode == "13"){
+		this.btnSearch_onclick();
+	}
+};
+
+/**
+ * 확인 버튼 클릭 시
+* @param  : obj		   - [object]Button
+* @param  : e		   - [string]ClickEventInfo
+* @return : N/A
+ */
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.fnSearchList();
+	 
+	this.smfSendResponseToOpener({
+		"row": this.smfRowToObject(this.dsPawd)
+	});
+	
+	this.close(true);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="searchKeyword" type="STRING" size="256"/>
+          <Column id="searchType" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256"/>
+          <Column id="outDatasets" type="STRING" size="256"/>
+          <Column id="asynctp" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="url">/ews_ocl_sm02_p01.do</Col>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsPawd=dsPawd</Col>
+            <Col id="outDatasets">dsPawd=dsPawd</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPawd" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="qnaId" type="STRING" size="256"/>
+          <Column id="newPswd" type="STRING" size="256"/>
+          <Column id="chkPawdYn" type="STRING" size="256"/>
+          <Column id="qnaLvl" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="div00_00.form.edtTitl" propid="value" datasetid="dsQnaDtl" columnid="qnaTitlNm"/>
+      <BindItem id="item1" compid="div00_00.form.edtNextTitl" propid="value" datasetid="dsQnaDtl" columnid="nextQnaTitlNm"/>
+      <BindItem id="item2" compid="div00_00.form.edtPreTitl" propid="value" datasetid="dsQnaDtl" columnid="preQnaTitlNm"/>
+      <BindItem id="item3" compid="div00_00.form.sta01_02" propid="visible" datasetid="dsQnaDtl" columnid="nextRegDt"/>
+      <BindItem id="item4" compid="div00_00.form.sta01_02_00" propid="visible" datasetid="dsQnaDtl" columnid="regDt"/>
+      <BindItem id="item5" compid="div00_00.form.sta01_02_00_00" propid="visible" datasetid="dsQnaDtl" columnid="preRegDt"/>
+      <BindItem id="item6" compid="div00_00.form.sta01_02" propid="text" datasetid="dsQnaDtl" columnid="nextRegDt"/>
+      <BindItem id="item7" compid="div00_00.form.sta01_02_00" propid="text" datasetid="dsQnaDtl" columnid="regDt"/>
+      <BindItem id="item8" compid="div00_00.form.sta01_02_00_00" propid="text" datasetid="dsQnaDtl" columnid="preRegDt"/>
+      <BindItem id="item9" compid="div00_00.form.edt00" propid="value" datasetid="dsPawd" columnid="newPswd"/>
+    </Bind>
+  </Form>
+</FDL>

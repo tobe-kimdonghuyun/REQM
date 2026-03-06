@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameSubMain" width="1280" height="4802" titletext="대국민포탈메인" scrollbartype="none none" scrolltype="none" onload="frameSubMain_onload" nHeight="4802" onbeforeclose="frameSubMain_onbeforeclose">
+    <Layouts>
+      <Layout height="4802" width="1280" screenid="ScreenDeskTopP">
+        <Div id="divSubMain1" taborder="0" text="div00" left="0" top="0" height="1080" right="0" url="test::sampleMain_sub0.xfdl" formscrollbartype="none none" formscrolltype="none"/>
+        <Div id="divSubMain2" taborder="1" text="div00" left="0" top="divSubMain1:0" height="980" right="10" url="test::sampleMain_sub1.xfdl" formscrollbartype="none none" formscrolltype="none"/>
+        <Div id="divSubMain3" taborder="2" text="div00" left="0" top="divSubMain2:0" height="980" right="0" url="test::sampleMain_sub2.xfdl" formscrollbartype="none none" formscrolltype="none"/>
+        <Div id="divSubMain4" taborder="3" text="div00" left="0" top="divSubMain3:0" height="980" right="0" url="test::sampleMain_sub3.xfdl" formscrollbartype="none none" formscrolltype="none"/>
+        <Div id="divSubMain5" taborder="4" left="0" top="divSubMain4:0" height="782" right="0" url="test::sampleMain_sub4.xfdl" formscrollbartype="none none" formscrolltype="none"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile" width="640" height="1144" mobileorientation="portrait" type="default"/>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="appoExamScCd" type="string" size="256"/>
+          <Column id="sn" type="STRING" size="256"/>
+          <Column id="ntcMteTitlNm" type="string" size="256"/>
+          <Column id="ntcMteCn" type="bigdecimal" size="256"/>
+          <Column id="inqCnt" type="string" size="256"/>
+          <Column id="maiNtcMteYn" type="string" size="256"/>
+          <Column id="pttTopFixYn" type="string" size="256"/>
+          <Column id="regDt" type="string" size="256"/>
+          <Column id="mdfcnDt" type="string" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex">1</Col>
+            <Col id="pageSize">10</Col>
+            <Col id="totalCount">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="searchType" type="STRING" size="256"/>
+          <Column id="searchKeyword" type="STRING" size="256"/>
+          <Column id="appoExamScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="searchType">TITL</Col>
+            <Col id="appoExamScCd">B</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearchTypeCd">
+        <ColumnInfo>
+          <Column id="cd" type="STRING" size="256"/>
+          <Column id="text" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cd">ALL</Col>
+            <Col id="text">제목+내용</Col>
+          </Row>
+          <Row>
+            <Col id="cd">TITL</Col>
+            <Col id="text">제목</Col>
+          </Row>
+          <Row>
+            <Col id="cd">CN</Col>
+            <Col id="text">내용</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResultTemp" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="appoExamScCd" type="string" size="256"/>
+          <Column id="sn" type="STRING" size="256"/>
+          <Column id="ntcMteTitlNm" type="string" size="256"/>
+          <Column id="ntcMteCn" type="bigdecimal" size="256"/>
+          <Column id="inqCnt" type="string" size="256"/>
+          <Column id="maiNtcMteYn" type="string" size="256"/>
+          <Column id="pttTopFixYn" type="string" size="256"/>
+          <Column id="regDt" type="string" size="256"/>
+          <Column id="mdfcnDt" type="string" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsResult=dsResult dsPageInfo=dsPageInfo</Col>
+            <Col id="url">hrd_oew_rm02_m00.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">selectTemp</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsResultTemp=dsResult dsPageInfo=dsPageInfo</Col>
+            <Col id="url">hrd_oew_rm02_m00.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  대국민포탈 - 메인
+*  @MenuPath    test > sampleframeSubMain
+*  @FileName 	sampleframeSubMain.xfdl 
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022.08.04
+*  @Desction    Main
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.08.04     		TOBESOFT		 	  	  최초 생성 
+*******************************************************************************
+*/
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ 
+/**
+ * 화면 onload시 처리내역...
+*/
+this.frameSubMain_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	//앙카 설정
+	this.topInfo[0] = this.divSubMain1;
+	this.topInfo[1] = this.divSubMain2;
+	this.topInfo[2] = this.divSubMain3;
+	this.topInfo[3] = this.divSubMain4;
+	this.topInfo[4] = this.divSubMain5;
+	
+	this.addEventHandler("onmousewheel",this.smfMainOnMouseWheel,this);
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+};
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+//화면 닫기 전 divAll 공통 요소 삭제
+this.frameSubMain_onbeforeclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	this.smfOnbeforeClose();
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+
+]]></Script>
+  </Form>
+</FDL>

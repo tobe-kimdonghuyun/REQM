@@ -1,0 +1,437 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="phe_phesm18_m00" width="1200" height="780" titletext="스포츠클럽 강사관리" onload="fnOnload" nHeight="754">
+    <Layouts>
+      <Layout height="780" width="1200" screenid="ScreenDeskTop">
+        <Static id="sta00" taborder="0" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="divTitle" taborder="1" left="0" top="sta00:0" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="스포츠클럽 강사관리" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="380" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta01" taborder="2" left="0" top="divTitle:0" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="divSearch" taborder="3" left="0" top="sta01:0" height="70" cssclass="div_WF_Search" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="staItem" taborder="0" text="종목" left="0" top="20" width="63" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboItem" taborder="1" left="staItem:0" width="105" height="30" index="0" text="전체" readonly="false" top="20" value="" initvalueid="ivCmbNormal" innerdataset="dsItemCd" codecolumn="unyCdValue" datacolumn="unyCdValueNm" displaynulltext="- 선택 -"/>
+              <Static id="staLedrSc" taborder="2" text="인력구분" left="cboItem:0" top="20" width="85" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Button id="btnSearch" taborder="6" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="divSearch_btnSearch_onclick" initvalueid="ivBtnAccessibilityButton"/>
+              <Combo id="cboLedrSc" taborder="3" left="staLedrSc:0" width="105" height="30" index="0" text="" readonly="false" top="20" value="" initvalueid="ivCmbNormal" innerdataset="dsLedrScCd" codecolumn="unyCdValue" datacolumn="unyCdValueNm"/>
+              <Static id="staHffcYn" taborder="4" text="재직여부" left="cboLedrSc:0" top="20" width="85" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboHffcYn" taborder="5" left="staHffcYn:0" width="105" height="30" index="0" text="전체" readonly="false" top="20" value="" initvalueid="ivCmbNormal" onitemchanged="divSearch_cboHffcYn_onitemchanged" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="datacolumn">전체</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">1</Col>
+                      <Col id="datacolumn">재직</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">2</Col>
+                      <Col id="datacolumn">퇴직</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta02" taborder="4" left="0" top="divSearch:0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Button id="btnChg" taborder="5" text="변경요청" top="sta02:0" height="30" width="76" fittocontents="width" cssclass="btn_WF_Custom" visible="true" initvalueid="ivBtnAccessibilityButton" onclick="btnChg_onclick" left="1124"/>
+        <Static id="sta03" taborder="6" left="-1" top="btnChg:0" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Grid id="grdMain" taborder="7" left="-1" top="sta03:0" autofittype="col" right="0" binddataset="dsInsrMngList" selecttype="cell" initvalueid="ivGrdAccessibilityOn" height="416" oncellclick="grdMain_oncellclick" onheadclick="grdMain_onheadclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="120"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="120"/>
+                <Column size="40"/>
+                <Column size="80"/>
+                <Column size="150"/>
+                <Column size="120"/>
+                <Column size="70"/>
+                <Column size="70"/>
+              </Columns>
+              <Rows>
+                <Row size="60" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="클럽명"/>
+                <Cell col="2" text="종목"/>
+                <Cell col="3" text="학교"/>
+                <Cell col="4" text="성명"/>
+                <Cell col="5" text="생년월일"/>
+                <Cell col="6" text="성별"/>
+                <Cell col="7" text="인력구분" cssclass="LineNo"/>
+                <Cell col="8" text="지도기간"/>
+                <Cell col="9" text="승인요청일시"/>
+                <Cell col="10" text="승인여부"/>
+                <Cell col="11" text="재직여부"/>
+              </Band>
+              <Band id="body">
+                <Cell textAlign="center" text="bind:chk" displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" textAlign="center" text="bind:pheSscNm"/>
+                <Cell col="2" textAlign="center" text="bind:sscItemNm"/>
+                <Cell col="3" textAlign="center" text="bind:shlNm"/>
+                <Cell col="4" textAlign="center" text="bind:sprtsInsrNm" textDecoration="underline" calendardateformat="yyyy.MM.dd ddd"/>
+                <Cell col="5" calendardateformat="yyyy.MM.dd " textAlign="center" text="bind:sprtsInsrBrdt" calendareditformat="yyyy.MM.dd "/>
+                <Cell col="6" textAlign="center" text="bind:sxdsScCd"/>
+                <Cell col="7" cssclass="LineNo" textAlign="center" text="bind:ledrScCd"/>
+                <Cell col="8" text="expr:appoEnfcYmdBgng ~ appoEnfcYmdEnd" textAlign="center"/>
+                <Cell col="9" text="bind:aprvYmd" textAlign="center" calendareditformat="yyyy.MM.dd " calendardateformat="yyyy.MM.dd"/>
+                <Cell col="10" text="bind:pheDmndAprvCd" textAlign="center"/>
+                <Cell col="11" text="bind:hffcYn" textAlign="center"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="sta04" taborder="8" left="-1" top="grdMain:0" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="div00" taborder="9" text="div00" left="0" top="sta02:0" height="546" url="pa_phe_phe_sm::phe_phesm18_m02.xfdl" visible="false" right="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    체육인력서비스(교육공공클라우드) > 스포츠클럽 강사관리
+*  @FileName 	phe_phesm18_m00.xfdl 
+*  @Creator 	Kangchaeyoon
+*  @CreateDate 	2022.09.27 
+*  @Desction    체육인력서비스(교육공공클라우드) > 스포츠클럽 강사관리
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.09.27            Kangchaeyoon                   최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	// 공통코드의 코드구분
+	this.smfCodeList("code", [this.dsItemCd, this.dsLedrScCd])
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		})
+	;
+	
+	// 서버단에서 설정한 유효성 검증 목록을 획득하여 설정
+	this.smfValidateService("validateMain", {
+		url : "/phe_phe_sm18_000.do",
+		})
+		.mappingRulesetToForm(this.divSearch, "search")
+		.callback(function(callbackParams) {
+		})
+		.run()
+	;
+	
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * @description 강사관리 목록 조회 Transaction
+ */
+this.fnSearchInsrList = function()
+{
+ 	// 서비스 객체 생성
+	this.smfSearchService("listInsr")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		});
+};
+
+/**
+ * @description 변경요청 처리 Transaction
+ */
+this.fnSaveChgDmnd = function()
+{
+ 	// 서비스 객체 생성
+	this.smfSaveService("saveChgDmnd")
+		.messagePrefix(["변경요청"])
+		// 데이터 변경 필수 
+		.requireModifredData(this.dsInsrMngList)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			//강사관리 목록 조회
+			this.fnSearchInsrList();
+		});
+};
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * @description 화면제어,statusValue : 강사정보 수정 화면 보이기(true), 숨기기(false)
+*/
+this.fnDivShowSet = function(statusValue){
+	if (statusValue){
+		this.divTitle.form.imgTitle.set_text(this.div00.form.titletext);
+	}else{
+		this.divTitle.form.imgTitle.set_text(this.titletext);
+	}
+	this.div00.set_visible(statusValue);
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 조회 버튼 클릭
+*/
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var itemSc = this.dsSearch.getColumn(0, "itemSc");
+	if(this.isNil(itemSc)){
+		//선택된 {0}이(가) 없습니다. {0}을(를) 선택하여 주십시오.
+		this.smfAlert('CM013', ['종목']);
+		return false;
+	}
+	//조회 처리
+	this.fnSearchInsrList();
+};
+
+/**
+ * @description 변경요청 버튼 클릭
+*/
+this.btnChg_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+ 	var chkList = this.dsInsrMngList.extractRows("chk==1");
+	if(this.isNil(chkList)){
+		//선택된 {0}이(가) 없습니다. {0}을(를) 선택하여 주십시오.
+		this.smfAlert('CM013', ['행']);
+		return false;
+	}
+	// 변경요청 처리
+	this.fnSaveChgDmnd();
+};
+
+/**
+ * @description 그리드(성명) 클릭 
+*/
+this.grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	//강사명 클릭 시
+	if(e.col == 4){
+		this.div00.form.dsInsrInfo.copyRow(0, this.dsInsrMngList, e.row);
+		// 전화번호 분리 함수 호출
+		this.div00.form.fnTelNumSpeCnnc('spe');
+		this.fnDivShowSet(true);
+	}
+};
+
+/**
+ * @description 그리드 체크박스 헤드 클릭
+*/
+this.grdMain_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	//체크박스 전체 선택 
+	this.smfSetGridCheckAll(obj, e, function (ds, nRow){
+		if(ds.getColumn(nRow,"chk" )!= "1"){
+			return false;
+		}else{
+			return true;
+		}
+	});
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsSearch" useclientlayout="false">
+        <ColumnInfo>
+          <Column id="itemSc" type="STRING" size="256" description="종목"/>
+          <Column id="ledrSc" type="STRING" size="256" description="인력구분"/>
+          <Column id="hffcYn" type="STRING" size="256" description="재직여부"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listInsr</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsInsrMngList=dsInsrMngList</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/phe_phe_sm18_001.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+          <Row>
+            <Col id="id">saveChgDmnd</Col>
+            <Col id="inDatasets">dsInsrMngList=dsInsrMngList:U</Col>
+            <Col id="outDatasets"/>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/phe_phe_sm18_002.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsInsrMngList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="chk" type="STRING" size="256" description="체크여부"/>
+          <Column id="invlNo" type="STRING" size="256" description="강사개인번호"/>
+          <Column id="shlNm" type="STRING" size="256" description="학교명"/>
+          <Column id="pheSscNm" type="STRING" size="256" description="클럽명"/>
+          <Column id="sscItemNm" type="STRING" size="256" description="종목명"/>
+          <Column id="ledrAppoScCd" type="STRING" size="256" description="지도자구분"/>
+          <Column id="sprtsInsrNm" type="STRING" size="256" description="강사명"/>
+          <Column id="sprtsInsrBrdt" type="STRING" size="256" description="생년월일"/>
+          <Column id="slrcYn" type="STRING" size="256" description="양력여부"/>
+          <Column id="sxdsScCd" type="STRING" size="256" description="성별"/>
+          <Column id="ledrScCd" type="STRING" size="256" description="인력구분"/>
+          <Column id="sprtsInsrAddr" type="STRING" size="256" description="주소"/>
+          <Column id="sprtsInsrDtlAddr" type="STRING" size="256" description="상세주소"/>
+          <Column id="sprtsInsrZip" type="STRING" size="256" description="우편번호"/>
+          <Column id="sprtsInsrTelno" type="STRING" size="256" description="연락처"/>
+          <Column id="sprtsInsrMblTelno" type="STRING" size="256" description="휴대폰"/>
+          <Column id="appoEnfcYmdBgng" type="STRING" size="256" description=" 지도기간시작일"/>
+          <Column id="appoEnfcYmdEnd" type="STRING" size="256" description=" 지도기간종료일"/>
+          <Column id="aprvYmd" type="STRING" size="256" description=" 승인요청일시"/>
+          <Column id="pheDmndAprvCd" type="STRING" size="256" description=" 승인여부"/>
+          <Column id="rmkMteCn" type="STRING" size="256" description="비고"/>
+          <Column id="hffcYn" type="STRING" size="256" description=" 재직여부"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsItemCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="FirstCode" type="STRING" size="30" value="" datapath=""/>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value="ITEM_CD"/>
+          <ConstColumn id="FilterExpr" type="STRING" size="30" value=""/>
+          <ConstColumn id="UnyCdGrpId" type="STRING" size="30" value=""/>
+          <ConstColumn id="BfrClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd1Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd2Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd3Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd4Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd5Value" type="STRING" size="30" value=""/>
+          <Column id="pgeId" type="STRING" size="256"/>
+          <Column id="clfCdValue" type="STRING" size="30"/>
+          <Column id="clfCdValueNm" type="STRING" size="120"/>
+          <Column id="clfCdUseYn" type="STRING" size="150"/>
+          <Column id="unyCdValue" type="STRING" size="10"/>
+          <Column id="unyCdValueNm" type="STRING" size="30"/>
+          <Column id="userDfnCd1Value" type="STRING" size="100"/>
+          <Column id="userDfnCd2Value" type="STRING" size="100"/>
+          <Column id="userDfnCd3Value" type="STRING" size="100"/>
+          <Column id="userDfnCd4Value" type="STRING" size="100"/>
+          <Column id="userDfnCd5Value" type="STRING" size="100"/>
+          <Column id="chk" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsLedrScCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="FirstCode" type="STRING" size="30" value="ALL" datapath=""/>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value="LEDR_SC_CD"/>
+          <ConstColumn id="FilterExpr" type="STRING" size="30" value=""/>
+          <ConstColumn id="UnyCdGrpId" type="STRING" size="30" value=""/>
+          <ConstColumn id="BfrClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd1Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd2Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd3Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd4Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd5Value" type="STRING" size="30" value=""/>
+          <Column id="pgeId" type="STRING" size="256"/>
+          <Column id="clfCdValue" type="STRING" size="30"/>
+          <Column id="clfCdValueNm" type="STRING" size="120"/>
+          <Column id="clfCdUseYn" type="STRING" size="150"/>
+          <Column id="unyCdValue" type="STRING" size="10"/>
+          <Column id="unyCdValueNm" type="STRING" size="30"/>
+          <Column id="userDfnCd1Value" type="STRING" size="100"/>
+          <Column id="userDfnCd2Value" type="STRING" size="100"/>
+          <Column id="userDfnCd3Value" type="STRING" size="100"/>
+          <Column id="userDfnCd4Value" type="STRING" size="100"/>
+          <Column id="userDfnCd5Value" type="STRING" size="100"/>
+          <Column id="chk" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.cboItem" propid="value" datasetid="dsSearch" columnid="itemSc"/>
+      <BindItem id="item1" compid="divSearch.form.cboLedrSc" propid="value" datasetid="dsSearch" columnid="ledrSc"/>
+      <BindItem id="item2" compid="divSearch.form.cboHffcYn" propid="value" datasetid="dsSearch" columnid="hffcYn"/>
+    </Bind>
+  </Form>
+</FDL>

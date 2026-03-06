@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sample_formBackendValidation" left="0" top="0" width="831" height="1000" titletext="UI 인풋 유효성검사" onload="fnOnload">
+    <Script type="xscript5.1"><![CDATA[// 콜백함수
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd <= -1) return;
+};
+
+// 폼 초기화 이벤트
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	this.dsSearch.addRow();
+	this.dsMain.addRow();
+	
+	this.smfValidateService("validateMain", {
+			url: "/cmc_sam_pl11_100.do",
+		})
+		// 서버의 search룰셋을 divMain에 매핑한다
+		.mappingRulesetToForm(this.divMain, "search") 
+		.mappingRulesetToForm(this.divValidateNumbers, "numbers")
+		.run()
+		.callback(function(callbackParams){
+		})
+	; 	
+}
+
+
+// 조회버튼 클릭
+this.Div00_btn_search_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	// 서비스 객체 생성 
+	this.smfSearchService("selectSearch")
+		// 데이터 검증
+		.validateForm(this.divMain) 
+ 
+		// 실행
+		.run()
+
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			this.smfAlert("CM001");
+		});
+};
+
+
+// function을 활용한 유효성검사 
+// return이 true면 검증성공
+// return이 String이면 검증실패및 메시지리턴
+this.fnMyfunction = function(obj){
+	if("400" == obj.value) return true;
+
+	return "myfunction 항목은 400이어야 합니다";
+};
+
+// 검증버튼 클릭
+this.div_validateNumbers_btn_search_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 서비스 객체 생성 
+	this.smfSearchService("selectNumbers")
+		// 데이터 검증
+		.validateForm(this.divValidateNumbers) 
+ 
+		// 실행
+		.run()
+
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+
+			this.smfAlert("CM001");
+		});
+};
+]]></Script>
+    <Layouts>
+      <Layout>
+        <Div id="divMain" taborder="0" left="25" top="46" width="801" height="584" cssclass="div_src_bg" text="">
+          <Layouts>
+            <Layout>
+              <Button id="btnSearch" taborder="37" text="검증" left="700" top="16" width="89" height="34" onclick="Div00_btn_search_onclick"/>
+              <Combo id="cboChk" taborder="1" innerdataset="@dsCombo" codecolumn="code" datacolumn="value" left="148" top="16" width="176" height="34" enable="false"/>
+              <Edit id="edtClsfCodeName" taborder="5" left="148" top="59" width="176" height="34"/>
+              <MaskEdit id="mskCompareNumber" taborder="9" left="148" top="102" width="176" height="34" autoselect="true"/>
+              <Static id="Static03" text="분류체계" cssclass="SubName" left="5" top="16" width="139" height="34" taborder="0"/>
+              <Static id="Static00" text="분류코드" cssclass="SubName" left="5" top="231" width="139" height="34" taborder="19"/>
+              <Static id="Static01" text="분류코드명" cssclass="SubName" left="5" top="59" width="139" height="34" taborder="4" refinputcomponent="edt_clsfCodeName"/>
+              <Calendar id="calFrom" taborder="13" left="148" top="145" width="146" height="34" dateformat="yyyy.MM.dd" editformat="yyyy.MM.dd"/>
+              <Calendar id="calTo" taborder="14" dateformat="yyyy.MM.dd" left="303" top="145" width="146" height="34" editformat="yyyy.MM.dd"/>
+              <Calendar id="calFrom2" taborder="16" dateformat="yyyy.MM.dd" left="148" top="188" width="146" height="34" editformat="yyyy.MM.dd"/>
+              <Calendar id="calTo2" taborder="17" dateformat="yyyy.MM.dd" left="303" top="188" width="146" height="34" editformat="yyyy.MM.dd"/>
+              <Static id="Static02" text="분류코드(확인)" cssclass="SubName" left="5" top="274" width="139" height="34" taborder="21"/>
+              <Edit id="edtClsfCode02" taborder="22" left="148" top="274" width="176" height="34"/>
+              <Edit id="edtClsfCode" taborder="20" left="148" top="231" width="176" height="34"/>
+              <Static id="Static05" text="날짜비교" cssclass="SubName" left="5" top="145" width="139" height="34" taborder="12" refinputcomponent="x"/>
+              <Static id="Static06" text="Number 비교" cssclass="SubName" left="5" top="102" width="139" height="34" taborder="8"/>
+              <Static id="Static04" text="주민등록번호" cssclass="SubName" left="345" top="16" width="139" height="34" refinputcomponent="MaskEdit00" taborder="2"/>
+              <MaskEdit id="mskRrn" taborder="3" text="______-_______" type="string" format="######-#######" left="488" top="16" width="176" height="34" visible="true" trimtype="both"/>
+              <Calendar id="calYm" taborder="11" dateformat="yyyy.MM" editformat="yyyy.MM" left="488" top="99" width="176" height="34" showmonthspin="true" showyearspin="true" popuptype="none"/>
+              <Static id="Static07" text="시작년월" cssclass="sta_input_boldHeader" left="345" top="99" width="139" height="34" taborder="10"/>
+              <Edit id="edtMyfunc" taborder="24" left="488" top="274" width="176" height="34"/>
+              <Static id="Static08" text="use function" cssclass="SubName" left="345" top="274" width="139" height="34" taborder="23"/>
+              <Edit id="edtZipcode" taborder="26" left="148" top="317" width="176" height="34"/>
+              <Static id="Static09" text="우편번호" cssclass="SubName" left="5" top="317" width="139" height="34" taborder="25"/>
+              <Static id="Static09_00" text="법인번호" cssclass="SubName" left="5" top="360" width="139" height="34" taborder="27"/>
+              <Edit id="edtCorpno" taborder="28" left="148" top="360" width="176" height="34"/>
+              <Static id="Static09_00_00" text="사업자등록번호" cssclass="SubName" left="5" top="403" width="139" height="34" taborder="29"/>
+              <Edit id="edtBizno" taborder="30" left="148" top="403" width="176" height="34"/>
+              <Static id="Static09_00_00_00" text="휴대전화" cssclass="SubName" left="5" top="446" width="139" height="34" taborder="31"/>
+              <Edit id="edtMobileno" taborder="32" left="148" top="446" width="176" height="34" text="010, 017, 018 ..등 휴대전화 검증"/>
+              <Static id="sta_" text="전화번호" cssclass="SubName" left="5" top="489" width="139" height="34" taborder="33"/>
+              <Edit id="edtPhoneno" taborder="34" left="148" top="489" width="176" height="34" text="휴대전화 + 집전화 + 070, 080 포함"/>
+              <Edit id="edtEmail" taborder="36" left="148" top="532" width="176" height="34"/>
+              <Static id="sta_00" text="이메일" cssclass="SubName" left="5" top="532" width="139" height="34" taborder="35"/>
+              <Static id="Static09_00_00_00_00" text="010, 017, 018 ..등 휴대전화 검증" cssclass="SubName" left="336" top="446" width="309" height="34" taborder="38"/>
+              <Static id="Static09_00_00_00_00_00" text="휴대전화 + 집전화 + 070, 080 포함" cssclass="SubName" left="336" top="489" width="309" height="34" taborder="39"/>
+              <Static id="Static09_00_00_00_00_01" text="날짜 입력 비교(입력 필수)" cssclass="SubName" left="466" top="145" width="309" height="34" taborder="15"/>
+              <Static id="Static09_00_00_00_00_01_00" text="날짜 입력 비교(입력 필수 X)" cssclass="SubName" left="466" top="188" width="309" height="34" taborder="18"/>
+              <MaskEdit id="mskRrn00" taborder="7" text="______-_______" type="string" format="######-#######" left="488" top="56" width="176" height="34" visible="true" trimtype="both"/>
+              <Static id="Static04_00" text="주민등록번호&#13;&#10;(예전검증방식)" cssclass="SubName" left="345" top="56" width="139" height="34" refinputcomponent="MaskEdit00" taborder="6"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="main_title" taborder="1" text="폼 유효성검사" left="10" top="10" width="215" height="26"/>
+        <Div id="divValidateNumbers" taborder="2" left="25" top="666" width="801" height="314" cssclass="div_src_bg" text="">
+          <Layouts>
+            <Layout>
+              <Button id="btnSearch" taborder="12" text="검증" left="664" top="34" width="111" height="34" onclick="div_validateNumbers_btn_search_onclick"/>
+              <Edit id="edtDigit" taborder="3" left="148" top="76" width="176" height="34" autoselect="true"/>
+              <Static id="Static06" text="0포함 양수" cssclass="SubName" left="5" top="76" width="139" height="34" taborder="2" refinputcomponent="mae_compareNumber"/>
+              <Static id="Static06_00" text="decimal(3,2)" cssclass="SubName" left="5" top="33" width="139" height="34" taborder="0" refinputcomponent="edt_fixedNumber"/>
+              <Edit id="edtFixedNumber" taborder="1" left="148" top="33" width="176" height="34" autoselect="true"/>
+              <Static id="Static06_01" text="0포함 양수(9999)" cssclass="SubName" left="5" top="119" width="139" height="34" taborder="4" refinputcomponent="mae_compareNumber"/>
+              <Edit id="edtDigitMaxLength" taborder="5" left="148" top="119" width="176" height="34" autoselect="true"/>
+              <Edit id="edtMax" taborder="9" left="148" top="205" width="176" height="34" autoselect="true"/>
+              <Static id="Static06_01_00" text="max(100)" cssclass="SubName" left="5" top="205" width="139" height="34" taborder="8" refinputcomponent="mae_compareNumber"/>
+              <Static id="Static06_01_00_00" text="min(50)" cssclass="SubName" left="5" top="162" width="139" height="34" taborder="6" refinputcomponent="mae_compareNumber"/>
+              <Edit id="edtMin" taborder="7" left="148" top="162" width="176" height="34" autoselect="true"/>
+              <Edit id="edtBetween" taborder="11" left="148" top="248" width="176" height="34" autoselect="true"/>
+              <Static id="sta_" text="between&#13;&#10;(100~200)" cssclass="SubName" left="5" top="248" width="139" height="34" taborder="10" refinputcomponent="mae_compareNumber"/>
+              <Static id="Static00" taborder="13" text="숫자검증" left="11" top="-4" width="281" height="34" font="bold 12px/normal &quot;Gulim&quot;"/>
+              <Static id="Static06_00_00" text="integer&#13;&#10;(4바이트)" cssclass="SubName" left="345" top="73" width="80" height="34" taborder="16" refinputcomponent="edt_fixedNumber"/>
+              <Edit id="edtFixedNumber00" taborder="17" left="448" top="73" width="176" height="34" autoselect="true"/>
+              <Edit id="edtFixedNumber00_00" taborder="19" left="448" top="113" width="176" height="34" autoselect="true"/>
+              <Static id="Static06_00_00_00" text="biginteger&#13;&#10;(8바이트)" cssclass="SubName" left="345" top="113" width="80" height="34" taborder="18" refinputcomponent="edt_fixedNumber"/>
+              <Static id="Static06_00_00_01" text="smallinteger&#13;&#10;(2바이트)" cssclass="SubName" left="345" top="33" width="90" height="34" taborder="14" refinputcomponent="edt_fixedNumber"/>
+              <Edit id="edtFixedNumber00_01" taborder="15" left="448" top="33" width="176" height="34" autoselect="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCombo" preload="true" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">A01</Col>
+            <Col id="value">공통</Col>
+          </Row>
+          <Row>
+            <Col id="code">A02</Col>
+            <Col id="value">장학</Col>
+          </Row>
+          <Row>
+            <Col id="code">A03</Col>
+            <Col id="value">입학</Col>
+          </Row>
+          <Row>
+            <Col id="code">A04</Col>
+            <Col id="value">교무/학사</Col>
+          </Row>
+          <Row>
+            <Col id="code">A05</Col>
+            <Col id="value">보건</Col>
+          </Row>
+          <Row>
+            <Col id="code">A06</Col>
+            <Col id="value">시스템관리</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" preload="true" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+          <Column id="Column5" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">CM001</Col>
+            <Col id="Column1">시스템코드</Col>
+            <Col id="Column2">시스템영역</Col>
+            <Col id="Column3">사용</Col>
+            <Col id="Column4"/>
+            <Col id="Column5">필요</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">CM002</Col>
+            <Col id="Column1">조직구분</Col>
+            <Col id="Column2">시스템영역</Col>
+            <Col id="Column3">사용</Col>
+            <Col id="Column4"/>
+            <Col id="Column5">필요</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">CM003</Col>
+            <Col id="Column1">시도교육청구분</Col>
+            <Col id="Column2">시스템영역</Col>
+            <Col id="Column3">사용</Col>
+            <Col id="Column4"/>
+            <Col id="Column5">필요</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">CM004</Col>
+            <Col id="Column1">코드사용영역구분</Col>
+            <Col id="Column2">시스템영역</Col>
+            <Col id="Column3">사용</Col>
+            <Col id="Column4"/>
+            <Col id="Column5">필요</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">CM005</Col>
+            <Col id="Column1">공통코드구분</Col>
+            <Col id="Column2">시스템영역</Col>
+            <Col id="Column3">사용</Col>
+            <Col id="Column4"/>
+            <Col id="Column5">필요</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRadio" preload="true" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="text" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">A01</Col>
+            <Col id="text">사용코드</Col>
+          </Row>
+          <Row>
+            <Col id="code">A02</Col>
+            <Col id="text">미사용 코드</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="state" type="STRING" size="256" sumtext="서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="서비스호출후 결과메시지"/>
+          <Column id="strmsg" type="STRING" size="256" sumtext="사용자 정의 Message 처리"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectSearch</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="inDatasets">search=dsSearch</Col>
+            <Col id="url">/cmc_sam_pl11_010.do</Col>
+            <Col id="outDatasets"/>
+            <Col id="svctp">C</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectNumbers</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="inDatasets">numbers=dsNumbers</Col>
+            <Col id="url">/cmc_sam_pl11_011.do</Col>
+            <Col id="outDatasets"/>
+            <Col id="svctp">C</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="clsfCdValue" type="STRING" size="256"/>
+          <Column id="clsfCdValueNm" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+          <Column id="Column4" type="STRING" size="256"/>
+          <Column id="Column5" type="STRING" size="256"/>
+          <Column id="Column6" type="STRING" size="256"/>
+          <Column id="Column7" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="clsfCdValue" type="STRING" size="256"/>
+          <Column id="clsfCdValueNm" type="STRING" size="256"/>
+          <Column id="rrn" type="STRING" size="256"/>
+          <Column id="rrnOld" type="STRING" size="256"/>
+          <Column id="number" type="STRING" size="256"/>
+          <Column id="dateYm" type="STRING" size="256"/>
+          <Column id="dateFrom" type="STRING" size="256"/>
+          <Column id="dateTo" type="STRING" size="256"/>
+          <Column id="dateRequiredFrom" type="STRING" size="256"/>
+          <Column id="dateRequiredTo" type="STRING" size="256"/>
+          <Column id="clsfCode" type="STRING" size="256"/>
+          <Column id="clsfCodeEqual" type="STRING" size="256"/>
+          <Column id="zipCd" type="STRING" size="256"/>
+          <Column id="bizno" type="STRING" size="256"/>
+          <Column id="corpno" type="STRING" size="256"/>
+          <Column id="mobileno" type="STRING" size="256"/>
+          <Column id="phoneno" type="STRING" size="256"/>
+          <Column id="email" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsNumbers">
+        <ColumnInfo>
+          <Column id="decimal" type="STRING" size="256"/>
+          <Column id="digits" type="STRING" size="256"/>
+          <Column id="digitmax" type="STRING" size="256"/>
+          <Column id="min" type="STRING" size="256"/>
+          <Column id="max" type="STRING" size="256"/>
+          <Column id="between" type="STRING" size="256"/>
+          <Column id="smallint" type="STRING" size="256"/>
+          <Column id="integer" type="STRING" size="256"/>
+          <Column id="bigint" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="digits">-1</Col>
+            <Col id="digitmax">99999</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divMain.form.mskRrn" propid="value" datasetid="dsSearch" columnid="rrn"/>
+      <BindItem id="item1" compid="divMain.form.edtClsfCodeName" propid="value" datasetid="dsSearch" columnid="clsfCdValueNm"/>
+      <BindItem id="item2" compid="divMain.form.calYm" propid="value" datasetid="dsSearch" columnid="dateYm"/>
+      <BindItem id="item3" compid="divMain.form.mskCompareNumber" propid="value" datasetid="dsSearch" columnid="number"/>
+      <BindItem id="item4" compid="divMain.form.calFrom" propid="value" datasetid="dsSearch" columnid="dateRequiredFrom"/>
+      <BindItem id="item5" compid="divMain.form.calTo" propid="value" datasetid="dsSearch" columnid="dateRequiredTo"/>
+      <BindItem id="item6" compid="divMain.form.calFrom2" propid="value" datasetid="dsSearch" columnid="dateFrom"/>
+      <BindItem id="item7" compid="divMain.form.calTo2" propid="value" datasetid="dsSearch" columnid="dateTo"/>
+      <BindItem id="item8" compid="divMain.form.edtClsfCode" propid="value" datasetid="dsSearch" columnid="clsfCode"/>
+      <BindItem id="item9" compid="divMain.form.edtClsfCode02" propid="value" datasetid="dsSearch" columnid="clsfCodeEqual"/>
+      <BindItem id="item10" compid="divMain.form.edtZipcode" propid="value" datasetid="dsSearch" columnid="zipcode"/>
+      <BindItem id="item11" compid="divMain.form.edtCorpno" propid="value" datasetid="dsSearch" columnid="corpno"/>
+      <BindItem id="item12" compid="divMain.form.edtBizno" propid="value" datasetid="dsSearch" columnid="bizno"/>
+      <BindItem id="item13" compid="divMain.form.edtMobileno" propid="value" datasetid="dsSearch" columnid="mobileno"/>
+      <BindItem id="item14" compid="divMain.form.edtPhoneno" propid="value" datasetid="dsSearch" columnid="phoneno"/>
+      <BindItem id="item15" compid="divMain.form.edtEmail" propid="value" datasetid="dsSearch" columnid="email"/>
+      <BindItem id="item16" compid="divValidateNumbers.form.edtDigit" propid="value" datasetid="dsNumbers" columnid="digits"/>
+      <BindItem id="item17" compid="divValidateNumbers.form.edtFixedNumber" propid="value" datasetid="dsNumbers" columnid="decimal"/>
+      <BindItem id="item18" compid="divValidateNumbers.form.edtDigitMaxLength" propid="value" datasetid="dsNumbers" columnid="digitmax"/>
+      <BindItem id="item19" compid="divValidateNumbers.form.edtMax" propid="value" datasetid="dsNumbers" columnid="max"/>
+      <BindItem id="item20" compid="divValidateNumbers.form.edtMin" propid="value" datasetid="dsNumbers" columnid="min"/>
+      <BindItem id="item21" compid="divValidateNumbers.form.edtBetween" propid="value" datasetid="dsNumbers" columnid="between"/>
+      <BindItem id="item22" compid="divMain.form.cboChk" propid="value" datasetid="dsSearch" columnid="clsfCdValue"/>
+      <BindItem id="item23" compid="divMain.form.mskRrn00" propid="value" datasetid="dsSearch" columnid="rrnOld"/>
+      <BindItem id="item24" compid="divMain.form.edtZipcode" propid="accessibilityaction" datasetid="dsSearch" columnid="zipCd"/>
+      <BindItem id="item25" compid="divMain.form.edtCorpno" propid="accessibilityaction" datasetid="dsSearch" columnid="bizno"/>
+      <BindItem id="item26" compid="divMain.form.edtBizno" propid="accessibilityaction" datasetid="dsSearch" columnid="corpno"/>
+      <BindItem id="item27" compid="divValidateNumbers.form.edtFixedNumber" propid="accessibilityaction" datasetid="dsNumbers" columnid="decimal"/>
+      <BindItem id="item28" compid="divValidateNumbers.form.edtDigit" propid="accessibilityaction" datasetid="dsNumbers" columnid="digits"/>
+      <BindItem id="item29" compid="divValidateNumbers.form.edtDigitMaxLength" propid="accessibilityaction" datasetid="dsNumbers" columnid="digitmax"/>
+      <BindItem id="item30" compid="divValidateNumbers.form.edtMin" propid="accessibilityaction" datasetid="dsNumbers" columnid="min"/>
+      <BindItem id="item31" compid="divValidateNumbers.form.edtMax" propid="accessibilityaction" datasetid="dsNumbers" columnid="max"/>
+      <BindItem id="item32" compid="divValidateNumbers.form.edtBetween" propid="accessibilityaction" datasetid="dsNumbers" columnid="between"/>
+      <BindItem id="item33" compid="divValidateNumbers.form.edtFixedNumber00" propid="value" datasetid="dsNumbers" columnid="integer"/>
+      <BindItem id="item35" compid="divValidateNumbers.form.edtFixedNumber00_00" propid="value" datasetid="dsNumbers" columnid="bigint"/>
+      <BindItem id="item36" compid="divValidateNumbers.form.edtFixedNumber00_00" propid="accessibilityaction" datasetid="dsNumbers" columnid="decimal"/>
+      <BindItem id="item34" compid="divValidateNumbers.form.edtFixedNumber00_01" propid="value" datasetid="dsNumbers" columnid="smallint"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="commNotice02P" width="518" height="518" titletext="일반공지" onload="commNotice02P_onload">
+    <Layouts>
+      <Layout height="518" width="518" screenid="desktopScr">
+        <ImageViewer id="ImageViewer00_00" taborder="0" top="0" height="150" right="0" stretch="fixaspectratio" image="url('theme::neisScr/images/img_popup_3.png')" width="150"/>
+        <Static id="title" taborder="1" text="여러분의 의견을 들려주세요." left="0" top="0" height="150" cssclass="sta_WF_Title" accessibilityrole="heading" right="170"/>
+        <Div id="divNotice" taborder="2" text="내용" left="0" top="title:10" bottom="80" right="0">
+          <Layouts>
+            <Layout>
+              <Div id="divText" taborder="0" text="**에디트영역**" left="0" top="0" initvalueid="ivDivAccessibilityOn" url="comm::comp_webEditor.xfdl" right="0" bottom="0"/>
+            </Layout>
+            <Layout name="mobile">
+              <Div id="divText" left="0" top="0" right="0" bottom="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnLink" taborder="3" text="설문 참여하기" height="40" width="26.45%" cssclass="btn_WF_Crud04" initvalueid="iv_Button" bottom="10" left="36.87%" onclick="btnLink_onclick"/>
+      </Layout>
+      <Layout height="660" mobileorientation="Landscape" name="mobile" type="default" width="410" screenid="mobileScr,tabletScr,desktopScr">
+        <Static id="title" left="0" top="ImageViewer00_00:20" height="82" right="0" cssclass="sta_WF_Title,sta_WF_TxtCenter" text="여러분의 의견을&#13;&#10;들려주세요."/>
+        <ImageViewer id="ImageViewer00_00" top="0" height="100" left="0" right="0"/>
+        <Button id="btnLink" left="31.75%" width="138" height="40" bottom="10"/>
+        <Div id="divNotice" top="title:20" left="0" right="0" bottom="80"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템 
+*  @MenuPath    pa_scr_cmm_cm
+*  @FileName 	commNotice02P.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.04.23
+*  @Desction    일반 공지 팝업
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.04.23     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+this.commNotice02P_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.title.set_text(this.parent.params.eventTitlNm);		//팝업타이틀
+	this.btnLink.set_text(this.parent.params.lnkNm);			//팝업 버튼 명
+	//this.img00.set_accessibilitylabel(this.parent.params.rplcText);	//팝업 이미지 대체 텍스트
+	
+	this.divNotice.form.divText.form.fnInit(this, this.fnWebEditorCallback, this.fnWebEditorSetHtmlCallback);
+	//this.divText.autoHeight = "Y";
+	this.divNotice.form.divText._html = this.parent.params.popupCn; //팝업 내용
+	
+	if(this.parent.params.lnkTypCd == '0'){	//링크유형이 없을 경우 버튼 숨김
+		this.btnLink.set_visible(false);
+		//내용 높이 늘리기
+		if(this.smfIsMobile()){
+			//this.sta00.set_height(455);
+			//this.divNotice.form.divText.set_height(567);
+		}else{
+			//this.sta00.set_height(355);
+			//this.divNotice.form.divText.set_height(508);
+		}
+		
+	}
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/*
+*	웹에디터가 onload된 이후 호출되는 callback
+*   obj : 웹에디터 Div오브젝트
+*/
+this.fnWebEditorCallback = function(obj)
+{
+	// 일반적으로는 데이터를 세팅
+	obj.form.fnSetHtml(obj._html);
+};
+
+/*
+*	웹에디터가 text를 변경 할 경우 호출하는 callback
+*   obj : 웹에디터 Div오브젝트
+*/
+this.fnWebEditorSetHtmlCallback = function(obj,contentHeight)
+{
+	//trace("***  웹에디터에 Text를 세팅했습니다.["+obj.id+"] contentHeight[=" + contentHeight + "]");
+	
+	// 일반적으로는 WebEditor Div를 resetScroll해줌.
+	//  (Web Editor의 높이가 변경이 되어 있음(autoHeight="Y"인 경우))
+	//this.smfResetScroll(this.divDetail.form.divWebEditor);
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.btnLink_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getOwnerFrame().form.commNoticeAll.form.fnClickEvt(obj,e);	//링크 클릭시 이벤트
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameSubMain" width="1410" height="890" onload="form_onload" titletext="divAll Form" onsize="form_onsize" scrollbartype="auto fixed" onlayoutchanged="form_onlayoutchanged" scrollbarsize="20" ontimer="form_ontimer" onvscroll="frameSubMain_onvscroll">
+    <Layouts>
+      <Layout height="890" width="1410" screenid="desktopScr">
+        <Div id="divHead" taborder="0" text="divHead" left="0" top="0" height="130" url="frame::scr/frameHead.xfdl" maxwidth="1340" minwidth="" formscrolltype="none" formscrollbartype="none none" right="70" async="false" onclick="divHead_onclick" visible="false"/>
+        <Div id="divWork" taborder="1" text="divWork" left="0" height="350" maxwidth="1340" minwidth="" formscrolltype="none" formscrollbartype="none none" right="70" url="frame::scr/frameWorkIntro.xfdl" top="divHead:0"/>
+        <Static id="staSiteBg" taborder="2" left="0" cssclass="sta_BF_SiteBg" right="0" maxwidth="" initvalueid="ivStcAccessibilityOff" height="54" top="divWork:90"/>
+        <Static id="staBFBg" taborder="3" left="0" cssclass="sta_BF_Bg" right="0" maxwidth="" initvalueid="ivStcAccessibilityOff" height="265" top="divWork:144"/>
+        <Button id="btnGoTop" taborder="4" top="divWork:68" width="50" height="50" cssclass="btn_WF_ToTop" accessibilitylabel="Top" accessibilitydescription="상단으로 가기" initvalueid="iv_Button" left="divWork:10" onclick="btnGoTop_onclick"/>
+        <Div id="divBottom" taborder="5" text="divBottom" left="0" url="frame::scr/frameBottom.xfdl" formscrolltype="none" formscrollbartype="none none" top="divWork:90" height="319" maxwidth="1340" minwidth="" right="70"/>
+      </Layout>
+      <Layout name="tablet" width="800" height="1070" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start" flexwrap="nowrap" tabledirection="horizontal" screenid="tabletScr,desktopScr" scrollbartype="autoindicator autoindicator">
+        <Div id="divHead" right="0" left="0" top="0" height="130"/>
+        <Div id="divWork" right="0" left="0" top="divHead:0" height="350"/>
+        <Static id="staBFBg" height="446" left="0" top="624" right="0"/>
+        <Div id="divBottom" left="0" top="divWork:90" right="0" height="500"/>
+        <Button id="btnGoTop"/>
+      </Layout>
+      <Layout height="1026" width="480" screenid="mobileScr,desktopScr" name="mobile" visible="true" scrollbartype="autoindicator autoindicator">
+        <Div id="divHead" height="76" left="0" top="0" right="0"/>
+        <Div id="divWork" right="0" left="0" top="divHead:0" height="350"/>
+        <Static id="staSiteBg" height="47" left="0" top="divWork:70" right="0"/>
+        <Static id="staBFBg" left="0" top="staSiteBg:0" right="0" height="483"/>
+        <Div id="divBottom" left="0" top="divWork:70" right="0" height="530"/>
+        <Button id="btnGoTop"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템
+*  @MenuPath    공통
+*  @FileName 	frameAll.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = nexacro.getApplication();
+this.fv_homePageUrl = "frame::scr/frameWorkMain.xfdl";
+this.fv_WorkFormHeight = 350;
+this.fv_HeadFormHeight = 130;
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//trace("Frame All onload >>>>>>>");
+};
+
+/**
+ * @description 화면 사이즈 변경시
+*/
+this.form_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	var nMainFrameWidth = this.objApp.mainframe.getOffsetWidth();
+	var nWorkFormWidth  = 1436; //1340 + 90 +6
+
+	var nLeft = 0;
+	if ( nMainFrameWidth > nWorkFormWidth ) {
+		nLeft = (nMainFrameWidth / 2) - (nWorkFormWidth / 2);
+	}
+ 
+    this.divHead.setOffsetLeft(nLeft);
+	this.divWork.setOffsetLeft(nLeft);
+	this.divBottom.setOffsetLeft(nLeft);
+    //trace("fnResizeProc====nLeft ====="+ nLeft + ":::::divWork form ====="+ this.divWork.form.getOffsetWidth() + ":::::nWorkFormWidth ====="+ nWorkFormWidth + ":::::nMainFrameWidth ====="+ nMainFrameWidth);	
+	this.resetScroll();
+};
+
+//Form의 onlayoutchanged이벤트
+this.form_onlayoutchanged = function(obj,e)
+{
+	//trace("frameAll form_onlayoutchanged>>>>>>");
+	obj.setTimer(900, 55);
+};
+
+//MLM 레이아웃 변경후 설정
+this.fnAfter_onlayoutchanged = function(sLayoutId)
+{
+	if ( sLayoutId == "default" ) {
+		this.btnGoTop.set_visible(true);
+	} else {
+		this.btnGoTop.set_visible(false);
+	}
+	
+	this.divHead.setOffsetHeight(this.fv_HeadFormHeight);
+	this.divWork.setOffsetHeight(this.fv_WorkFormHeight);
+	
+	this.resetScroll();
+};
+
+//Form의 ontimer이벤트
+this.form_ontimer = function(obj,e)
+{
+	if ( e.timerid == 900 ) {
+		obj.killTimer(e.timerid);
+		this.fnAfter_onlayoutchanged(this.getCurrentLayoutID());
+	}
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.btnGoTop_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.vscrollbar.set_pos(0);
+};
+
+//수직 스크롤 사용시
+this.frameSubMain_onvscroll = function(obj:nexacro.Form,e:nexacro.ScrollEventInfo)
+{
+	//if ( this.divBottom.form.pdvSite.isPopup() ) this.divBottom.form.pdvSite.closePopup();
+	if (this.divBottom.form.divSite.visible) this.divBottom.form.fnCloseDivSite();
+};
+
+]]></Script>
+  </Form>
+</FDL>

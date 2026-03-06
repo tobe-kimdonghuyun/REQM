@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="stepNotice" width="538" height="580" titletext="공지안내" background="#ffffff" ontouchstart="notice1_ontouchstart" scrollbartype="none none" scrolltype="none" stepitemgap="0" stepitemsize="0">
+    <Layouts>
+      <Layout height="580" screenid="ScreenDeskTopP" width="538" stepcount="0">
+        <Div id="divNotice0" taborder="0" left="0" top="0" width="538" height="660" formscrolltype="none" text="" borderRadius="20px"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="560" height="660" mobileorientation="portrait" type="default"/>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    
+*  @FileName 	sampleStepNotice.xfdl
+*  @Creator 
+*  @CreateDate 	2023.3.28
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.3.28     	RHS 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/* 
+스텝의 기본버튼을 사용할 경우, 화면 속성 stepitemgap, stepitemsize 의 값을 삭제,
+버튼을 생성하여 따로 사용할 경우, 화면 속성 stepitemgap, stepitemsize 을 0으로 설정하여
+ 생성한 버튼으로 스텝을 이동하게 한다.
+
+*/
+
+//0501 CF 일괄등록
+
+this.stepNotice_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	/*
+	this.title.set_text(this.parent.params.eventTitlNm);		//팝업타이틀
+	this.subTitle1.set_text(this.parent.params.popupCn);			//팝업 내용
+	this.subTitle2.set_text(this.parent.params.eventYmd);		//팝업 기간
+	trace("긴급공지안내 팝업");
+	*/
+};
+
+// 생성된 step에 Div를 생성하고 set_url 함
+this.fnCreateNoticeStep = function(nStep){
+	var strUrl = "templateP::notice5.xfdl";
+
+	var objNm = "divNotice"+nStep;
+	var pWidth = nexacro.getEnvironmentVariable("ev_isMobile") == "Y" ? "560":"538";
+	var pHeigth= nexacro.getEnvironmentVariable("ev_isMobile") == "Y" ? "660":"580";
+
+	var objDiv = new Div();
+	objDiv.init(objNm,0,0,pWidth,pHeigth);
+	this.addChild(objNm, objDiv);
+	objDiv.set_url(strUrl);
+	objDiv.set_positionstep(nStep-1);
+	objDiv.show();	
+};
+
+]]></Script>
+  </Form>
+</FDL>

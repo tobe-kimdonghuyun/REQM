@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ADL version="2.0">
+  <Application id="application" screenid="mobile" onload="application_onload">
+    <Layout>
+      <MainFrame id="mainframe" showtitlebar="false" showstatusbar="false" left="0" top="0" width="480" height="768" titletext="Mobile" resizable="true" openalign="center middle" showcascadetitletext="false">
+        <ChildFrame id="baseChild" showtitlebar="false" showstatusbar="false" formurl="frame::frmBase.xfdl"/>
+      </MainFrame>
+    </Layout>
+  </Application>
+  <Script type="xscript5.1"><![CDATA[/**
+*  Mobile 프로젝트
+*  @FileName 	application 
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2023/10/30
+*  @Desction   
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2023/10/30			TOBESOFT				application
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * application 변수 선언 영역
+ ************************************************************************************************/
+this.gvOs = system.osversion.toUpperCase();
+ /************************************************************************************************
+ * application EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo)
+{
+	var sRunMode = "S";  // S : Studio, L : local, D : 개발, R : 운영
+	var objEnv	 = nexacro.getEnvironment();
+	var objSrv   = objEnv.services["svcUrl"];
+	
+	// 런타임 접속
+	if (system.navigatorname == "nexacro") 
+	{			
+		var sXadl = nexacro.getProjectPath();
+		// 로컬(Studio)
+		if (sXadl.indexOf("file://") != -1) 
+		{        
+			sRunMode = "S";
+			this.mainframe.set_titletext("로컬(Studio) - " + this.mainframe.titletext);
+		}	
+		
+		if (this.gvOs.indexOf("WINDOWS") > -1)
+		{
+			this.mainframe.set_showtitlebar(true);
+		}
+		// Runtime 실행할때 border 보이도록 설정
+		this.mainframe.set_border("1px solid #111111");
+	} 	
+	else 	//WEB 접속
+	{		
+		var urlPath = window.location.protocol + "//" + window.location.host;		
+		//서비스  URL 세팅
+ 		objSrv.set_url(urlPath+"/");
+		
+		// 로컬(웹)
+	    if (objSrv.url.indexOf("localhost") > -1 || objSrv.url.indexOf("127.0.0.1") > -1 ) 
+		{			
+			sRunMode = "L";
+			this.mainframe.set_titletext("로컬(웹)  - " + this.mainframe.titletext);
+		}
+	}
+	this.gvRunMode = sRunMode;
+ 	trace("========== 접속경로 : " + nexacro.getProjectPath() + " / 실행환경(nRunMode) : " + this.gvRunMode + " / 서비스URL : " + objSrv.url + " ================");
+
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ 
+ /************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+
+]]></Script>
+</ADL>

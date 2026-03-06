@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="bdm_cmmua00_m00" width="1200" height="651" titletext="비영리법인민원 로그인" onsize="samplePortalResize_onsize" onload="bdm_cmmua00_m00_onload">
+    <Layouts>
+      <Layout height="651" width="1200" screenid="ScreenDeskTop">
+        <ImageViewer id="img00_00" taborder="0" text="비영리법인  로그인" left="390" top="77" height="58" cssclass="font34B_C" width="420" initvalueid="ivTitleAccessibilityOn" onclick="img00_00_onclick"/>
+        <Div id="div00_00" taborder="1" left="162" top="520" width="876" height="91" cssclass="div_Login_Notice01" initvalueid="ivDivAccessibilityOff" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta02" taborder="0" text="처음 이용하는 사용자는 &lt;fc v='#d32850'&gt;법인 인증서&lt;/fc&gt;를 등록하여 이용해 주시기 바랍니다." left="55" top="28" width="483" height="34" cssclass="sta_WF_SurvCautionS" initvalueid="ivStcAccessibilityOn" usedecorate="true" onclick="div00_00_sta02_onclick" font="normal 15px/1.5 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Regular&quot;,&quot;Malgun Gothic&quot;,&quot;Arial&quot;,&quot;MS PGothic&quot;" color="#2b72de"/>
+              <Button id="btn_serviceLink00" taborder="1" text="법인인증서 등록" top="23" width="142" height="44" cssclass="btn_Login_Linkblue" right="55" initvalueid="ivBtnAccessibilityLink" onclick="div00_00_btn_serviceLink00_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div01" taborder="2" left="250" top="img00_00:49" width="700" height="305" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="sta02_00" taborder="0" text="사업자등록번호(고유번호)는 숫자만 입력해주세요." left="177" top="118" width="333" height="26" cssclass="sta_Login_MemberNotice" initvalueid="ivStcAccessibilityOn" usedecorate="true"/>
+              <Edit id="edtBrno" taborder="1" left="176" top="60" width="348" height="50" text="성명을 입력하세요" initvalueid="ivEdtNormal" cssclass="edi_Login_Normal" displaynulltext="사업자등록번호(고유번호)를 입력해주세요." inputtype="number" maxlength="10"/>
+              <Button id="btn00" taborder="2" text="공동인증서 로그인" left="176" top="189" width="348" height="60" cssclass="btn_Login_PartyCert" initvalueid="ivBtnAccessibilityButton" onclick="div01_btn00_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btn_serviceLink00" taborder="3" text="테스트 로그인" top="466" width="142" height="44" cssclass="btn_Login_Linkblue" right="218" initvalueid="ivBtnAccessibilityLink" onclick="div00_btnLogin00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    TEMPLATE
+*  @FileName 	frameLogin.xfdl
+*  @Creator 	홍길동
+*  @CreateDate 	2022.7.5
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.7.5     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+include "lib::bdm_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+this.fv_nextFormUrl = "";  // 
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.bdm_cmmua00_m00_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 데이터 클리어
+	this.dsCorpCertLogin.clearData();
+	var nAddRow = this.dsCorpCertLogin.addRow();
+	// 값을 세팅
+	this.dsCorpCertLogin.setColumn(nAddRow, "cddcCd", this.smfGetCddcCode());
+	
+	
+	// 넘어온 파라미터를 보관한다.(없으면 메인화면)
+	this.pv_params = this.smfGetFormParams();
+	
+	// 로그인 후 움직일 화면을 저장한다.
+	this.fv_nextFormUrl = this.pv_params.resendUrl; 
+	
+	// 접속환경
+	var sRunMode = nexacro.getEnvironmentVariable("ev_runMode");
+
+	// TODO 운영, 시험환경 테스트로그인 비표시 
+	if(sRunMode === "3" || sRunMode === "4"){ // 로컬(1), 개발(2), 운영(3), 시험(4)
+		this.btn_serviceLink00.set_visible(false)
+	}
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+ * @description Transaction CallBack 함수(선택)
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	if(errcd == -1) return;
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * 로그인 진행
+ */
+this.fnLogin = function (certKey)
+{	
+	//체크용 키값 세팅
+	this.dsCorpCertLogin.setColumn(0,"certKey", certKey);
+	
+	this.smfSearchService("selectCorpCertLogin")
+	.run()
+	.callback(function(callbackParams){
+		if(callbackParams.errors) return;
+		
+		if(!this.smfIsNull(this.dsCorpCertSucc.getColumn(0,"corpCd")) && this.dsCorpCertSucc.getColumn(0,"corpCd").length > 9){
+		
+			this.smfSetSessionDataset(this.dsCorpCertSucc);
+		
+			var objFrame = this.getOwnerFrame();
+			
+			if(objFrame.form.divAll)
+			{	
+				/*LG002:NPKI*/
+				var sLgnTypCd = "LG002";
+				this.smfSendLoginLog(this,sLgnTypCd);
+				// Top 에 값을 세팅
+				var sMainUrl = objFrame.form.fv_mainformUrl;
+				
+				// 메인URL로 이동한다.
+				if(!this.smfIsNull(sMainUrl))
+				{
+					this.getOwnerFrame().form.divTop.form.fnLoginAfter();
+					objFrame.form.fnSetMainpage(sMainUrl);	
+				}
+			}
+			
+		}else {
+			this.bdmAlert("CM018", []); // 잘못된 요청경로 입니다.
+		}
+		
+		return false; 
+	})
+};
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnFindFirstWorkPageUrl = function(sSubSystemGb)
+{
+	var sUrl = "";
+	
+	var objTopFrameForm = this.getOwnerFrame().form.divTop.form;
+	var objDs = objTopFrameForm.dsMenu;
+	
+	for(var i=0;i<objDs.rowcount;i++)
+	{
+		var sMenuUrl = objDs.getColumn(i,"menuUrl");
+		var sIsShow = objDs.getColumn(i,"isShow");
+		
+		if((!this.smfIsNull(sMenuUrl)) && sIsShow!="N")
+		{
+			sUrl =  sMenuUrl;
+			break;
+		}
+	}
+	
+	return sUrl;
+}
+
+
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+	var sLog = "";
+	
+	if(e.result){
+		var sData = JSON.parse(e.data);
+		if(sData.vidResult == "true"){
+			this.fnLogin(sData.subjectDn);
+		}else if(sData.vidResult.indexOf("VID") != -1){
+			this.bdmAlert("PA024", []); // 입력된 사업자등록번호와 일치하지 않습니다. 다시한번 확인해 주세요.
+		}else{
+			this.bdmAlert("PA025", []); // 인증서 인증에 에러가 발생했습니다. 관리자에게 문의하세요.
+		}
+		
+	}else{
+		var sData = e.data;
+		var arrData = sData.split(":");
+		
+		if(arrData[0].trim()=="800000")
+		{  // 유저가 팝업을 강제 종료한 경우
+			sLog += "처리결과 : [에러(유저강제종료)]\n";
+			sLog += "data : ["+sData+"]";
+		}
+		else
+		{
+			sLog += "처리결과 : [에러]\n";
+			sLog += "data : ["+sData+"]";	
+		}
+		trace(sLog);
+	}
+
+};
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ /**
+ * 공동인증서 로그인 버튼
+ */
+this.div01_btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var brno = this.div01.form.edtBrno.value
+	if(this.smfIsNull(brno)){
+		this.bdmAlert("PA014", ["사업자등록번호"]); // valNmArray[i]+"는 필수입력입니다.
+		return false;
+	}
+	
+	var sConnectBaseUrl = window.location.protocol + "//" + window.location.host;
+
+	var sInitUrl  = sConnectBaseUrl + "/cmc_fcm_es01_003.do";
+	var sLoginUrl = sConnectBaseUrl + "/cmc_fcm_es01_004.do";
+	
+	var objLoginInfo = {
+							initUrl  : sInitUrl    // init시 사용하는 서비스명(앞에 "/"을 붙일 것)
+						,   loginUrl : sLoginUrl   // login시 사용하는 서비스명(앞에 "/"을 붙일 것)
+						,	userId : brno
+	                   };   // 생략가능
+
+	var objParam = {objForm:this, popupcallback:this.fnPopupCallback, loginInfo:objLoginInfo};
+	this.smfExecNpkiAuth(objParam);
+};
+
+/**
+ * 법인인증서 등록 버튼
+ */
+this.div00_00_btn_serviceLink00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var params = {}
+	this.smfSetWorkPage("pa_bdm_cmm_ua::bdm_cmmua01_m00.xfdl", params, false);
+};
+
+/**
+ * 테스트 로그인
+ */
+this.div00_btnLogin00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var brno = this.div01.form.edtBrno.value
+	if(this.smfIsNull(brno)){
+		this.bdmAlert("PA014", ["사업자등록번호"]); // valNmArray[i]+"는 필수입력입니다.
+		return false;
+	}
+	
+	this.fnLogin();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="description" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectCorpCertLogin</Col>
+            <Col id="inDatasets">dsCorpCertLogin=dsCorpCertLogin</Col>
+            <Col id="url">/bdm_cmm_ua00_001.do</Col>
+            <Col id="outDatasets">dsCorpCertSucc=dsCorpCertSucc</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCorpCertLogin" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="brno" type="STRING" size="256" description="사업자등록번호"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="certKey" type="STRING" size="256" description="체크용"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCorpCertSucc" progressload="false" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="corpCd" type="STRING" size="256" description="ss"/>
+          <Column id="corpNm" type="STRING" size="256" description="sss"/>
+          <Column id="orgCd" type="STRING" size="256" description="sss"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="div01.form.edtBrno" propid="value" datasetid="dsCorpCertLogin" columnid="brno"/>
+    </Bind>
+  </Form>
+</FDL>

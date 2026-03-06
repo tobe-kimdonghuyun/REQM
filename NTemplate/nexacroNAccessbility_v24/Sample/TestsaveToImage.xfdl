@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Test" width="1280" height="800" titletext="테스트" background="#F4F4F4" onload="form_onload">
+    <Layouts>
+      <Layout height="800" width="1280" screenid="Desktop_screen">
+        <Button id="btnPopup" taborder="1" text="VOC" left="118" top="8" width="148" height="61" onclick="btnPopup_onclick"/>
+        <Button id="Button00" taborder="1" text="모달" left="306" top="12" width="139" height="60" onclick="Button00_onclick"/>
+      </Layout>
+      <Layout height="768" name="mobile" width="480" screenid="Mobile_screen">
+        <Button id="btnPopup" taborder="0" text="팝업모바일" left="128" top="8" width="148" height="61"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  Nexacro Accessibility
+*  @FileName 	Test.xfdl 
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022.12.15
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.12.15     		TOBESOFT		 		최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+//this.objApp = this.gfnGetApplication();
+this.sServerUrl = "http://localhost:8080/npN/accessbility/";
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	if (system.navigatorname != "nexacro"){
+
+		this.fnJsInclude(this.sServerUrl+"js/html2canvas.js");
+	}
+};
+
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+this.fnJsInclude = function(FileDir, strIntegrity, strCrossorigin) 
+{ 
+    var includejs = document.createElement("script");
+    includejs.src = FileDir;
+    
+    if (strIntegrity)includejs.integrity = strIntegrity;
+    if (strCrossorigin)includejs.crossOrigin = strCrossorigin;
+    
+    document.head.appendChild(includejs);
+};
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+
+
+this.btnPopup_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var popupId = "addBoard";
+	var popupUrl = "Sample::boardPu.xfdl";
+	var oArg   = { };
+	var sPopupCallBack = "fnPopupCallback";
+	var sTitle = "게시글";
+	var oOption = {title:sTitle
+					,titlebar:true
+					, popuptype:"modeless"
+					};
+	this.gfnOpenPopup(popupId, popupUrl, oArg, sPopupCallBack, oOption);
+
+
+};
+
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.gfnOpenPopup("test", "Sample::TestSavePop.xfdl", "", "fnPopCallback", "");
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList_" canrowposchange="dsList_canrowposchange" cancolumnchange="dsList_cancolumnchange">
+        <ColumnInfo>
+          <Column id="EMP_NO" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="PASSWORD" type="STRING" size="256"/>
+          <Column id="KORN_NM" type="STRING" size="256"/>
+          <Column id="ENGL_NM" type="STRING" size="256"/>
+          <Column id="DEPT_CD" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="USER_FLAG_CD" type="STRING" size="256"/>
+          <Column id="HIRE_DATE" type="STRING" size="256"/>
+          <Column id="WKGD_CD" type="STRING" size="256"/>
+          <Column id="CHK" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="EMP_NO">1</Col>
+            <Col id="USER_ID">tobe</Col>
+            <Col id="KORN_NM">김철수</Col>
+            <Col id="DEPT_CD">01</Col>
+            <Col id="HIRE_DATE">20120701</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NO">2</Col>
+            <Col id="USER_ID">soft</Col>
+            <Col id="KORN_NM">홍길동</Col>
+            <Col id="DEPT_CD">02</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NO">3</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDept">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">01</Col>
+            <Col id="NAME">회계팀</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">02</Col>
+            <Col id="NAME">기획팀</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">03</Col>
+            <Col id="NAME">인사팀</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsNews">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">cell_Noti</Col>
+            <Col id="Column2">2022-12-01</Col>
+            <Col id="Column1">인사발령(입사)</Col>
+            <Col id="Column3">공지사항</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">cell_Noti</Col>
+            <Col id="Column2">2022-12-01</Col>
+            <Col id="Column1">퇴직연금 신규가입 및 이전 관련 안내</Col>
+            <Col id="Column3">공지사항</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">cell_PR</Col>
+            <Col id="Column2">2022-12-01</Col>
+            <Col id="Column1">투비소프트 넥사크로 디플로이 '자바 버전' 제공</Col>
+            <Col id="Column3">보도자료</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">cell_PR</Col>
+            <Col id="Column2">2022-12-01</Col>
+            <Col id="Column1">넥사크로 N 온라인 콘퍼런스 개최</Col>
+            <Col id="Column3">보도자료</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" canrowposchange="dsList_canrowposchange" cancolumnchange="dsList_cancolumnchange">
+        <ColumnInfo>
+          <Column id="EMP_NO" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="PASSWORD" type="STRING" size="256"/>
+          <Column id="KORN_NM" type="STRING" size="256"/>
+          <Column id="ENGL_NM" type="STRING" size="256"/>
+          <Column id="DEPT_CD" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="USER_FLAG_CD" type="STRING" size="256"/>
+          <Column id="WKGD_CD" type="STRING" size="256"/>
+          <Column id="WKDT_CD" type="STRING" size="256"/>
+          <Column id="OCCU_CD" type="STRING" size="256"/>
+          <Column id="CHAG_WORK" type="STRING" size="256"/>
+          <Column id="JOIN_DATE" type="STRING" size="256"/>
+          <Column id="RETR_DATE" type="STRING" size="256"/>
+          <Column id="HOOF_STAT_CD" type="STRING" size="256"/>
+          <Column id="REGI_NUMB" type="STRING" size="256"/>
+          <Column id="BIR_DT" type="STRING" size="256"/>
+          <Column id="CELL_NUMB" type="STRING" size="256"/>
+          <Column id="PHONE1" type="STRING" size="256"/>
+          <Column id="PHONE2" type="STRING" size="256"/>
+          <Column id="PHONE3" type="STRING" size="256"/>
+          <Column id="EMAIL" type="STRING" size="256"/>
+          <Column id="ZIP_NUMB" type="STRING" size="256"/>
+          <Column id="BASC_ADDR" type="STRING" size="256"/>
+          <Column id="DTL_ADDR" type="STRING" size="256"/>
+          <Column id="EMAIL2" type="STRING" size="256"/>
+          <Column id="THEME_CD" type="STRING" size="256"/>
+          <Column id="ETC" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="EMP_NO">1</Col>
+            <Col id="USER_ID">12345</Col>
+            <Col id="PASSWORD">1111</Col>
+            <Col id="KORN_NM">홍길동</Col>
+            <Col id="ENGL_NM">HONG GIL DONG</Col>
+            <Col id="DEPT_CD">01</Col>
+            <Col id="DEPT_NM">회계팀</Col>
+            <Col id="USER_FLAG_CD">01</Col>
+            <Col id="WKGD_CD">01</Col>
+            <Col id="WKDT_CD">01</Col>
+            <Col id="OCCU_CD">01</Col>
+            <Col id="JOIN_DATE">20120801</Col>
+            <Col id="RETR_DATE">20120801</Col>
+            <Col id="HOOF_STAT_CD">01</Col>
+            <Col id="BIR_DT">20120801</Col>
+            <Col id="CELL_NUMB">0221407700</Col>
+            <Col id="PHONE1">010</Col>
+            <Col id="EMAIL">help</Col>
+            <Col id="ZIP_NUMB">13584</Col>
+            <Col id="BASC_ADDR">서울시 강남구</Col>
+            <Col id="EMAIL2">tobesoft.com</Col>
+            <Col id="THEME_CD">01</Col>
+            <Col id="CHAG_WORK">지출결의</Col>
+            <Col id="PHONE2">1234</Col>
+            <Col id="PHONE3">5678</Col>
+            <Col id="ETC">너는&#13;
+누구냐</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NO">2</Col>
+            <Col id="USER_ID">67890</Col>
+            <Col id="PASSWORD">1111</Col>
+            <Col id="KORN_NM">제임스</Col>
+            <Col id="ENGL_NM">James</Col>
+            <Col id="DEPT_CD">02</Col>
+            <Col id="DEPT_NM">인사팀</Col>
+            <Col id="USER_FLAG_CD">02</Col>
+            <Col id="WKGD_CD">02</Col>
+            <Col id="WKDT_CD">02</Col>
+            <Col id="OCCU_CD">02</Col>
+            <Col id="CHAG_WORK">급여</Col>
+            <Col id="JOIN_DATE">20180304</Col>
+            <Col id="RETR_DATE">20180304</Col>
+            <Col id="HOOF_STAT_CD">02</Col>
+            <Col id="BIR_DT">20120801</Col>
+            <Col id="CELL_NUMB">0221407701</Col>
+            <Col id="PHONE1">011</Col>
+            <Col id="EMAIL">help</Col>
+            <Col id="ZIP_NUMB">13584</Col>
+            <Col id="BASC_ADDR">서울시 강남구</Col>
+            <Col id="EMAIL2">tobesoft.com</Col>
+            <Col id="THEME_CD">02</Col>
+            <Col id="PHONE2">5678</Col>
+            <Col id="PHONE3">1234</Col>
+          </Row>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

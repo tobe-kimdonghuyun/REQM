@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="test" width="888" height="1150" titletext="채팅 샘플" onload="form_onload">
+    <Layouts>
+      <Layout height="1150" width="888">
+        <Div id="divChat" taborder="0" left="0" top="8" width="320" height="444" border="1px solid" flexgrow="1" text="">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <TextArea id="txtSend" taborder="1" left="350" top="521" width="100%" height="150" onkeyup="txtSend_onkeyup"/>
+        <Button id="btnSend" taborder="2" text="보내기" left="565" top="525" width="90" height="48" onclick="btnSend_onclick" cssclass="btn_WF_Custom"/>
+        <Panel id="Panel00" taborder="8" left="0" top="0" height="526" right="0" flexwrap="wrap" horizontalgap="24" verticalgap="24" cssclass="pnl_WF_Detailbox" spacing="40px">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="divChat"/>
+            <PanelItem id="PanelItem01" componentid="Panel02"/>
+          </Contents>
+        </Panel>
+        <Grid id="grd00" taborder="3" left="0" top="Panel00:40" height="300" binddataset="dsStatic" flexgrow="1" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="258"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="compId"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:compId"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divChat00" taborder="4" left="0" top="grd00:40" width="320" height="312" border="1px solid" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="우리나라는&#13;&#10;날씨가 너무 더워요~" top="5" width="120" height="36" background="antiquewhite" fittocontents="both" right="0"/>
+              <Static id="sta00_00" taborder="1" text="그렇죠~&#13;&#10;더운데 몸 관리 잘 하세요" top="sta00:10" width="150" height="36" background="azure" fittocontents="both" left="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Panel id="Panel02" taborder="5" left="340" top="10" width="320" height="444" type="vertical" flexcrossaxisalign="end" verticalgap="16" flexgrow="1">
+          <Contents>
+            <PanelItem id="PanelItem03" componentid="txtReceive"/>
+            <PanelItem id="PanelItem02" componentid="btnReceive"/>
+            <PanelItem id="PanelItem00" componentid="txtSend"/>
+            <PanelItem id="PanelItem01" componentid="btnSend"/>
+          </Contents>
+        </Panel>
+        <TextArea id="txtReceive" taborder="6" left="10" top="10" width="100%" height="150" onkeyup="txtReceive_onkeyup"/>
+        <Button id="btnReceive" taborder="7" text="받기" left="352" top="226" width="90" height="48" onclick="btnReceive_onclick" cssclass="btn_WF_Custom"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsStatic">
+        <ColumnInfo>
+          <Column id="compId" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleChatting.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2021/08/04
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2021/08/04			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+this.fvNCnt = 0;	// Statice count
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	
+};
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/**
+ * @description 채팅 Static 생성
+ */
+this.fnCreate = function(sGubun, sText)
+{
+	var sColor = "";
+	var nLeft  = null;
+	var nRight  = null;
+	if (sGubun == "send") {
+		sColor = "antiquewhite";
+		nLeft  = null;
+		nRight = 3;
+	}
+	else {
+		sColor = "azure";
+		nLeft  = 3;
+		nRight = null;
+	}
+	
+	var nCnt = this.dsStatic.rowcount;
+	var nTop = 10;
+	if (nCnt > 0) {
+		nTop  = this.dsStatic.getColumn(nCnt-1, "compId")+":10";
+	}
+	
+	// count 증가
+	this.fvNCnt = this.fvNCnt + 1;
+	
+	// 동적생성
+	var objStatic = new Static();
+	var sStaName = "sta_" + this.fvNCnt;
+	       // init(strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]] )
+		   // init( "Button00", "Button22:10", 300, null, null, "Button33:10", "20%", 300, 500, 200, 500 );
+	objStatic.init(sStaName, nLeft, nTop, 10, 10, nRight); 
+	this.divChat.addChild(sStaName, objStatic);
+	objStatic.set_text(sText);
+	objStatic.set_background(sColor);
+	objStatic.set_fittocontents("both");
+	objStatic.show();
+	trace("추가한 objStatic : " + sStaName + " / nTop : " + nTop);
+	
+	// 화면 갱신
+	this.divChat.form.resetScroll();
+
+	// scroll 맨 밑으로 내리기
+	this.divChat.form.scrollBy(0, objStatic.getOffsetHeight()+10);
+	
+	// Dataset에 정보 추가
+	var nAddRow = this.dsStatic.addRow();
+	this.dsStatic.setColumn(nAddRow, "compId", sStaName);
+};
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.btnSend_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnCreate("send", this.txtSend.value);
+	this.txtSend.set_value("");
+};
+
+this.btnReceive_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnCreate("receive", this.txtReceive.value);
+	this.txtReceive.set_value("");
+};
+
+this.txtSend_onkeyup = function(obj:nexacro.TextArea,e:nexacro.KeyEventInfo)
+{
+	//trace("e.ctrlkey : " + e.ctrlkey + " / e.altkey : " + e.altkey + " / e.keycode : " + e.keycode);
+	if (e.ctrlkey == true && e.keycode == 13) {
+		this.fnCreate("send", this.txtSend.value);
+		this.txtSend.set_value("");
+	}
+};
+
+this.txtReceive_onkeyup = function(obj:nexacro.TextArea,e:nexacro.KeyEventInfo)
+{
+	if (e.ctrlkey == true && e.keycode == 13) {
+		this.fnCreate("receive", this.txtReceive.value);
+		this.txtReceive.set_value("");
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

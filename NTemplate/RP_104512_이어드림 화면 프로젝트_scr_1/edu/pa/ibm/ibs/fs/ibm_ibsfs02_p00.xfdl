@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ibm_ibsfs02_p00" width="1000" height="800" titletext="도서등록" nHeight="754" onload="fnOnload">
+    <Layouts>
+      <Layout height="800" width="1000" screenid="ScreenDeskTop">
+        <Static id="staPopupTitleAss" taborder="0" left="20" top="20" width="20" height="20" initvalueid="ivStcAccessibilityOn"/>
+        <Div id="divTitle" taborder="1" left="20" top="15" height="54" text="" right="20" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="도서등록" left="0" top="0" height="54" cssclass="img_WF_SubTit01" width="140" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSearch" taborder="2" left="20" top="94" height="96" cssclass="div_WF_Search" right="20" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="staSbjt" taborder="0" text="교과목명" left="6" top="14" width="120" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtSbjtNm" taborder="1" left="staSbjt:10" top="14" height="30" text="우리날" width="150" initvalueid="ivEdtNormal" maxlength="50" autoselect="true" onkeydown="divSearch_edt_onkeydown"/>
+              <Static id="staUtxbNm" taborder="2" text="도서명" left="edtSbjtNm:20" top="14" width="120" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtUtxbNm" taborder="3" left="staUtxbNm:10" top="14" height="30" text="우리날" width="150" initvalueid="ivEdtNormal" maxlength="50" autoselect="true" onkeydown="divSearch_edt_onkeydown"/>
+              <Button id="btnSearch" taborder="8" text="조회" top="52" width="74" height="30" cssclass="btn_WF_Search03" right="10" initvalueid="ivBtnAccessibilityButton" onclick="fnSearch"/>
+              <Static id="staPucSc" taborder="4" text="출판사명" left="6" top="staSbjt:8" width="120" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtPucNm" taborder="5" left="staPucSc:10" top="52" height="30" text="우리날" width="150" initvalueid="ivEdtNormal" maxlength="50" autoselect="true" onkeydown="divSearch_edt_onkeydown"/>
+              <Static id="staAutNm" taborder="6" text="저자명" left="306" top="52" width="120" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtAutNm" taborder="7" left="staAutNm:10" top="52" height="30" text="우리날" width="150" initvalueid="ivEdtNormal" maxlength="50" autoselect="true" onkeydown="divSearch_edt_onkeydown"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta01" taborder="8" left="20" top="190" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20"/>
+        <Static id="sta01_01" taborder="15" left="20" top="240" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20"/>
+        <Grid id="grdMain" taborder="3" left="20" top="sta01_01:0" autofittype="col" right="20" selecttype="cell" initvalueid="ivGrdAccessibilityOn" binddataset="dsList" autosizingtype="row" extendsizetype="row" cellsizingtype="both" bottom="60" onheadclick="grdMain_onheadclick" oncellclick="grdMain_oncellclick" wheelscrollrow="1">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="30"/>
+                <Column size="150"/>
+                <Column size="60"/>
+                <Column size="60"/>
+                <Column size="70"/>
+                <Column size="60"/>
+                <Column size="80"/>
+                <Column size="120"/>
+                <Column size="150"/>
+                <Column size="100"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="교육과정차수"/>
+                <Cell col="2" text="도서구분"/>
+                <Cell col="3" text="교과서 /&#13;&#10;지도서"/>
+                <Cell col="4" text="학교급"/>
+                <Cell col="5" text="사용학기"/>
+                <Cell col="6" text="사용학년"/>
+                <Cell col="7" text="교과목명"/>
+                <Cell col="8" text="도서명"/>
+                <Cell col="9" text="출판사&#13;&#10;(발행사)"/>
+                <Cell col="10" text="저자"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:chk"/>
+                <Cell col="1" text="bind:eduCrseDgrNm" tooltiptext="bind:eduCrseDgrNm" textAlign="center" wordWrap="char"/>
+                <Cell col="2" text="bind:utxbScNm" tooltiptext="bind:utxbScNm" textAlign="center" autosizerow="limitmin"/>
+                <Cell col="3" tooltiptext="bind:thmrScNm" text="bind:thmrScNm" textAlign="center" autosizerow="limitmin" wordWrap="char"/>
+                <Cell col="4" text="bind:shlCrseScNm" tooltiptext="bind:shlCrseScNm" textAlign="center" autosizerow="limitmin"/>
+                <Cell col="5" text="bind:semScNm" tooltiptext="bind:semScNm" textAlign="center" autosizerow="limitmin"/>
+                <Cell col="6" text="bind:grdNm" tooltiptext="bind:grdNm" autosizerow="limitmin" wordWrap="char"/>
+                <Cell col="7" text="bind:sbjtNm" tooltiptext="bind:sbjtNm" textAlign="center" autosizerow="limitmin" wordWrap="char"/>
+                <Cell col="8" text="bind:utxbNm" textAlign="left" wordWrap="char" autosizerow="limitmin" tooltiptext="bind:utxbNm"/>
+                <Cell col="9" text="bind:pucNm" tooltiptext="bind:pucNm" autosizerow="limitmin" wordWrap="char"/>
+                <Cell col="10" text="bind:autNm" tooltiptext="bind:autNm" autosizerow="limitmin" wordWrap="char"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="sta03" taborder="10" left="20" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff" bottom="0"/>
+        <Button id="btnClose" taborder="5" text="닫기" onclick="btn_close_onclick" cssclass="btn_WF_Custom" width="50" height="30" escapebutton="true" hotkey="ALT+C" initvalueid="ivBtnAccessibilityButton" bottom="sta03:0" right="445"/>
+        <Static id="sta00" taborder="6" left="20" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20"/>
+        <Static id="sta01_00" taborder="7" left="20" top="64" height="30" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta02" taborder="9" left="20" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff" bottom="50"/>
+        <Static id="sta04" taborder="11" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" initvalueid="ivStcAccessibilityOff" width="20" height="800" left="0"/>
+        <Static id="sta05" taborder="12" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" initvalueid="ivStcAccessibilityOff" width="20" right="0" height="800"/>
+        <Button id="btnSave" taborder="4" text="등록" width="50" fittocontents="width" initvalueid="ivBtnAccessibilityButton" onclick="fnSave" left="445" height="30" bottom="sta03:0"/>
+        <Static id="staTotalList" taborder="13" left="20" top="210" width="24" height="30" text="총"/>
+        <Static id="staTotal" taborder="14" left="staTotalList:0" top="210" width="116" height="30" text="0건"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile" width="640" height="560" mobileorientation="portrait" type="default">
+        <Button id="btnSave" left="260" top="510" width="50" height="30"/>
+        <Button id="btnClose" right="260" width="50" height="30" bottom="20"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">list</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsList=dsMain dsApiResponseList=dsApiResponseList</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+            <Col id="url">/ibm_ims_fs02_002.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">save</Col>
+            <Col id="inDatasets">dsParam=dsParam dsTarget=dsTarget</Col>
+            <Col id="svctp">U</Col>
+            <Col id="outDatasets">dsApiResponseList=dsApiResponseList</Col>
+            <Col id="url">/ibm_ims_fs02_003.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="sbjtNm" type="STRING" size="256" description="교과목명"/>
+          <Column id="utxbNm" type="STRING" size="256" description="도서명"/>
+          <Column id="pucNm" type="STRING" size="256" description="출판사명"/>
+          <Column id="autNm" type="STRING" size="256" description="저자명"/>
+          <Column id="srchScVal" type="STRING" size="256" description="조회구분값(1:메인/2:팝업)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="chk" type="STRING" size="256" description="체크박스"/>
+          <Column id="eduCrseDgrNm" type="STRING" size="256" description="교육과정차수"/>
+          <Column id="utxbScNm" type="STRING" size="256" description="도서구분"/>
+          <Column id="thmrScNm" type="STRING" size="256" description="교과서/지도서 구분"/>
+          <Column id="shlCrseScNm" type="STRING" size="256" description="학교급"/>
+          <Column id="semScNm" type="STRING" size="256" description="사용학기"/>
+          <Column id="grdNm" type="STRING" size="256" description="사용학년"/>
+          <Column id="sbjtNm" type="STRING" size="256" description="교과목명"/>
+          <Column id="utxbCd" type="STRING" size="256" description="도서코드"/>
+          <Column id="utxbNm" type="STRING" size="256" description="도서명"/>
+          <Column id="pucNm" type="STRING" size="256" description="출판사(발행사)"/>
+          <Column id="autNm" type="STRING" size="256" description="저자"/>
+          <Column id="aprvPrgStsNm" type="STRING" size="256" description="승인진행상태명"/>
+          <Column id="aprvPrgStsCd" type="STRING" size="256" description="승인진행상태코드"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsParam" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="regScVal" type="STRING" size="256" description="등록구분값"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTarget" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="utxbCd" type="STRING" size="256" description="도서코드"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsApiResponseList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="연계상태값"/>
+          <Column id="message" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    교과용도서(공급업체서비스)-공급도서 목록 관리-도서등록
+*  @FileName 	ibm_ibsfs02_p00.xfdl 
+*  @Creator 	dylee
+*  @CreateDate 	2024.05.10 
+*  @Desction    교과용도서(공급업체서비스)-공급도서 목록 관리-도서등록 팝업
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2024.05.10            dylee                   최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ /*
+ * 화면 load시
+ */
+
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitPopup(obj);
+	
+	//필수 파라미터 값 세팅
+	this.dsSearch.setColumn(0, "cddcCd", this.smfGetCddcCode());
+	this.dsParam.setColumn(0, "cddcCd", this.smfGetCddcCode());
+	this.dsParam.setColumn(0, "regScVal", "1"); //등록구분값 : 등록
+};
+
+
+
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+			
+	switch(svcid) {	
+	
+	
+	
+	}
+}
+
+
+/**
+ * 메세지 콜백함수
+ * @param : N/A
+ * @return : N/A
+ */
+this.fnMessageCallback = function(){
+	
+};
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ /**
+ * 조회버튼 클릭
+ * @param : N/A
+ * @return : N/A
+ */
+this.fnSearch = function()
+{
+	this.dsSearch.setColumn(0, "sbjtNm", this.divSearch.form.edtSbjtNm.value);
+	this.dsSearch.setColumn(0, "utxbNm", this.divSearch.form.edtUtxbNm.value);
+	this.dsSearch.setColumn(0, "pucNm", this.divSearch.form.edtPucNm.value);
+	this.dsSearch.setColumn(0, "autNm", this.divSearch.form.edtAutNm.value);
+
+	var sbjtNm = this.dsSearch.getColumn(0, "sbjtNm");
+	var utxbNm = this.dsSearch.getColumn(0, "utxbNm");
+	var pucNm = this.dsSearch.getColumn(0, "pucNm");
+	var autNm = this.dsSearch.getColumn(0, "autNm");
+	
+	if(this.isNil(sbjtNm) && this.isNil(utxbNm) && this.isNil(pucNm) && this.isNil(autNm)){
+		this.smfAlert('CM000', ["조회조건을 입력해주세요"]);
+		return;
+	}
+
+	//조회구분설정(1:메인/2:팝업)
+	this.dsSearch.setColumn(0, "srchScVal", "2");
+	
+	//호출
+	this.smfSearchService("list")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors){//에러
+				return;
+			}
+			if (this.dsApiResponseList.getColumn(0, 'code') == 'succ'){
+				//총 조회건수 세팅
+				this.totalRowCountSet();
+			}else{
+				this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'message')]);
+			}
+	});	//콜백 끝
+}
+
+
+
+ /************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/ 
+ /**
+ * @description 총 조회건수 세팅
+ */
+this.totalRowCountSet = function(){
+	
+	var rowCnt = this.dsList.getRowCount();
+	if(!this.isNil(rowCnt)) rowCnt == 0;
+
+	this.staTotal.set_text(rowCnt+"건");
+
+}
+
+ /**
+ * 이름검색에서 엔터키 누르면 조회하기
+ * @param : N/A
+ * @return : N/A
+ */
+this.divSearch_edt_onkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == "13"){
+		this.fnSearch();
+	}
+};
+
+
+
+ /**
+ * 닫기버튼 클릭
+ * @param : N/A
+ * @return : N/A
+ */
+this.btn_close_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+
+
+this.grdMain_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.smfToggleChkHeader(obj, e);
+};
+
+this.grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var ds = obj.getBindDataset();
+	if (e.col == 0){
+		if (ds.extractRows("chk == 1").length != ds.getRowCount()){
+			obj.setCellProperty( "head", e.cell, "expr", 0);
+		}else{
+			obj.setCellProperty( "head", e.cell, "expr", 1);
+		}
+	}
+};
+
+this.fnSave = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//기존 데이터 초기화
+	this.dsTarget.clearData();
+	
+	var dsListSize = this.dsList.getRowCount();
+	
+	var cnt = 0;
+	for(var i=0; i<dsListSize; i++){
+		if(this.dsList.getColumn(i, "chk") == true){
+			this.dsTarget.addRow();
+			this.dsTarget.setColumn(cnt, "utxbCd", this.dsList.getColumn(i, "utxbCd"));
+			cnt++;
+		}
+	}
+	
+	if(cnt == 0){
+		this.smfAlert('CM013', ["도서"]);
+		return;
+	}
+	
+	this.smfConfirm("총 "+cnt+"건의 도서를 등록하시겠습니까?", function(result){
+		if(result.confirmResult){	//YES
+			// 서비스 객체 생성
+			this.smfSaveService("save")
+				// 사용자에게 confirm메시지를 표시할지 여부
+				.showConfirm(false)
+				// 실행
+				.run()
+				// 콜백
+				.callback(function(callbackParams){
+					if(callbackParams.errors) return;
+					
+					if (this.dsApiResponseList.getColumn(0, 'code') == 'succ'){
+						this.smfAlert('CM002');
+						this.fnSearch();
+					}else{
+						this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'message')]);
+					}
+				});
+		}
+	});
+	
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item1" compid="divSearch.form.cboScCd" propid="value" datasetid="dsSearch" columnid="scCd"/>
+      <BindItem id="item0" compid="divSearch.form.edtUtxbNm" propid="value" datasetid="dsSearch" columnid="utxbNm"/>
+      <BindItem id="item2" compid="divSearch.form.edtSbjtNm" propid="value" datasetid="dsSearch" columnid="sbjtNm"/>
+      <BindItem id="item3" compid="divSearch.form.edtPucNm" propid="value" datasetid="dsSearch" columnid="pucNm"/>
+      <BindItem id="item4" compid="divSearch.form.edtAutNm" propid="value" datasetid="dsSearch" columnid="autNm"/>
+    </Bind>
+  </Form>
+</FDL>

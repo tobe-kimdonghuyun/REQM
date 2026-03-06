@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="form" width="1200" height="751" titletext="위탁업체강사등록신청" nHeight="754" onload="form_onload">
+    <Layouts>
+      <Layout height="751" width="1200" screenid="ScreenDeskTop">
+        <Static id="staPopupTitleAss" taborder="0" left="20" top="20" width="20" height="20" initvalueid="ivStcAccessibilityOn"/>
+        <Div id="divTitle" taborder="1" left="0" top="15" height="54" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="위탁업체강사등록신청" left="20" top="0" height="54" cssclass="img_WF_SubTit01" width="310" initvalueid="ivTitleAccessibilityOn" accessibilitylabel="위탁업체강사등록신청"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdShlList" taborder="2" left="20" top="94" height="271" autofittype="col" right="20" selecttype="cell" initvalueid="ivGrdAccessibilityOn" binddataset="dsShlList" accessibilitylabel="학교명목록">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="241"/>
+                <Column size="243"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="순번"/>
+                <Cell col="1" text="학교명"/>
+                <Cell col="2" text="소재지명" cssclass="LineNo"/>
+              </Band>
+              <Band id="body">
+                <Cell text="expr:currow+1" displaytype="normal" edittype="none"/>
+                <Cell col="1" text="bind:shlCdNm"/>
+                <Cell col="2" calendardateformat="yyyy-MM-dd " text="bind:lctnScCdNm" cssclass="LineNo"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grdInsrList" taborder="3" left="20" top="385" autofittype="col" right="20" binddataset="dsInsrList" bottom="71" oncelldblclick="grdInsrList_oncelldblclick" initvalueid="ivGrdAccessibilityOn" onheadclick="grdInsrList_onheadclick" selecttype="cell" accessibilitylabel="강사등록목록">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="48"/>
+                <Column size="40"/>
+                <Column size="142"/>
+                <Column size="135"/>
+                <Column size="110"/>
+                <Column size="223"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol"/>
+                <Cell col="1" text="순번"/>
+                <Cell col="2" text="강사명"/>
+                <Cell col="3" text="휴대전화번호" displaytype="normal"/>
+                <Cell col="4" text="이메일"/>
+                <Cell col="5" text="주소" cssclass="LineNo"/>
+              </Band>
+              <Band id="body">
+                <Cell edittype="expr:aslAplyStsScCd == &quot;&quot; || aslAplyStsScCd == undefined ? &quot;checkbox&quot; : &quot;none&quot;" displaytype="expr:aslAplyStsScCd == &quot;&quot; || aslAplyStsScCd == undefined ? &quot;checkboxcontrol&quot; : &quot;none&quot;" text="bind:chk"/>
+                <Cell col="1" displaytype="text" text="expr:currow+1"/>
+                <Cell col="2" text="bind:insrNm"/>
+                <Cell col="3" text="bind:mblTelno" maskeditclipmode="excludespace" textAlign="center" displaytype="mask" maskeditautoselect="true" maskeditformat="@@@-@@@@-@@@@" maskedittype="string"/>
+                <Cell col="4" calendardateformat="yyyy-MM-dd " text="bind:emlAddr"/>
+                <Cell col="5" text="bind:homeAddr" cssclass="LineNo"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnClose" taborder="4" text="닫기" height="30" width="50" left="545" initvalueid="ivBtnAccessibilityButton" top="700" onclick="btnClose_onclick" cssclass="btn_WF_Custom" accessibilitylabel="닫기"/>
+        <Button id="btnIdnty" taborder="5" text="확인" height="30" initvalueid="ivBtnAccessibilityButton" onclick="btnIdnty_onclick" left="605" top="700" width="50" accessibilitylabel="확인"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  
+*  @MenuPath    대국민 > 방과후학교(외부강사) > 위탁업체
+*  @FileName 	afs_atscm30_p01
+*  @Creator 	강채윤
+*  @CreateDate 	2022.06.08
+*  @Desction    방과후학교(외부강사) 위탁업체강사등록신청
+*
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.06.08            강채윤                   최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::afs_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_cddcCd      = ""; 	//시도교육청코드 
+this.fv_brno        = "";	//사업자등록번호
+this.fv_cnsgnComyId = "";
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{ 
+	//폼을 초기화 
+	this.smfInitPopup(obj)
+	
+	this.afsfSetSession(this);
+	
+	this.pv_params = this.smfGetPopupParams();
+	if(this.pv_params.procType == "insert"){
+		this.grdInsrList.setCellProperty("body", 0, "displaytype", 'expr:aslAplyStsScCd == "" || aslAplyStsScCd == undefined ? "checkboxcontrol" : "none"');
+		this.grdInsrList.setCellProperty("body", 0, "edittype", 'expr:aslAplyStsScCd == "" || aslAplyStsScCd == undefined ? "checkbox" : "none"');
+	}else{
+		this.grdInsrList.setCellProperty("body", 0, "displaytype", 'expr:aslAplyStsScCd == "11" || aslAplyStsScCd == "21" || aslAplyStsScCd == "22" || aslAplyStsScCd == "23" ? "checkboxcontrol" : "none"');
+		this.grdInsrList.setCellProperty("body", 0, "edittype", 'expr:aslAplyStsScCd == "11" || aslAplyStsScCd == "21" || aslAplyStsScCd == "22" || aslAplyStsScCd == "23" ? "checkbox" : "none"');
+	}
+}
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * @description 위탁업체 등록학교 조회 Transaction
+ */
+this.fnListShl = function () {
+
+	// 서비스 객체 생성
+	this.smfSearchService("listShl")
+		
+	// 실행
+	.run()
+	
+	// 콜백
+	.callback(function(callbackParams) {
+		if(callbackParams.errors) return;
+		
+		if(this.dsShlList.rowcount > 0 && this.dsInsrList.rowcount > 0){
+			this.grdShlList.selectRow(0, true);
+			//this.grdShlList_oncellclick();
+		}
+	});
+	
+};
+
+/**
+ * @description 위탁업체소속강사 목록 조회 Transaction
+ */
+this.fnListInsr = function () {
+
+	// 서비스 객체 생성
+	this.smfSearchService("listInsr")
+		
+	// 실행
+	.run()
+	
+	// 콜백
+	.callback(function(callbackParams) {
+		if(callbackParams.errors) return;
+		
+		if(this.dsShlList.rowcount > 0 && this.dsInsrList.rowcount > 0){
+			this.grdShlList.selectRow(0, true);
+			//this.grdShlList_oncellclick();
+		}
+	});
+	
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+ * @description Transaction CallBack 함수(선택)
+*/
+this.fnTransCallback  = function(svcid,errcd,errmsg) {
+	if(errcd < 0) { 
+		return; 
+	}
+	
+	switch(svcid) {	
+		case "selectSession" : 
+			this.fv_cddcCd        = this.dsSearch.getColumn(0,"cddcCd"); 	//시도교육청코드 
+			this.fv_brno          = this.dsSearch.getColumn(0,"brno");
+			this.fv_cnsgnComyId   = this.dsSearch.getColumn(0,"cnsgnComyId");
+			
+			this.fnListShl();
+			this.fnListInsr();
+			break;
+	}
+};
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ 
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.dsShlList_onrowposchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo)
+{
+	this.dsInsrList.set_updatecontrol(false);
+	this.dsInsrList.reset();
+	this.dsInsrList.filter("shlCd=='"+this.dsShlList.getColumn(this.dsShlList.rowposition, "shlCd")+"'");
+	this.dsInsrList.set_updatecontrol(true);
+};
+
+this.grdInsrList_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if (e.col == 0){
+		this.smfToggleChkHeader(obj, e, function (ds, nRow){
+			if(this.pv_params.procType == "insert"){
+				if(ds.getColumn(nRow,"aslAplyStsScCd" )==undefined || ds.getColumn(nRow,"aslAplyStsScCd" )==""){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				if(ds.getColumn(nRow,"aslAplyStsScCd" )=="11" || ds.getColumn(nRow,"aslAplyStsScCd" )=="21" || ds.getColumn(nRow,"aslAplyStsScCd" )=="22" || ds.getColumn(nRow,"aslAplyStsScCd" )=="23"){
+					return true;
+				}else{
+					return false;
+				}
+			}
+			
+		});
+	}
+};
+
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(false);
+};
+
+
+
+this.btnIdnty_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.dsInsrList.rowcount < 1) return;
+	
+	//체크박스 선택 여부 확인
+	var arrChk = this.dsInsrList.extractRows("chk==1");
+
+	if(this.isNil(arrChk)){  // 체크한 소속 강사 없으면
+		this.smfAlert('CM013', ['학교']);	 //선택된 학교이(가) 없습니다. 학교을(를) 선택하여 주십시오.
+		return;
+	}
+	
+	
+	// 응답을 
+	this.smfSendResponseToOpener({
+		"row": this.afsfCopyRow(this.dsInsrList, arrChk)
+	});
+	
+	this.close(false);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cnsgnComyId" type="STRING" size="256" description="위탁업체ID"/>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="brno" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cnsgnComyId"/>
+            <Col id="cddcCd"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="outDatasets">dsShlList=dsShlList</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="id">listShl</Col>
+            <Col id="url">/afs_ats_cm30_005.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">listInsr</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsInsrList=dsInsrList</Col>
+            <Col id="url">/afs_ats_cm30_006.do</Col>
+          </Row>
+          <Row>
+            <Col id="url">/afs_ats_tc10_003.do</Col>
+            <Col id="inDatasets">insert=dsInsrList:U</Col>
+            <Col id="id">insert</Col>
+            <Col id="outDatasets"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsShlList" useclientlayout="true" onrowposchanged="dsShlList_onrowposchanged">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청 코드"/>
+          <Column id="cddcNm" type="STRING" size="256" description="시도교육청명"/>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="shlCdNm" type="STRING" size="256" description="학교명"/>
+          <Column id="lctnScCdNm" type="STRING" size="256"/>
+          <Column id="lctnScCd" type="STRING" size="256"/>
+          <Column id="scaSysScCd" type="STRING" size="256"/>
+          <Column id="cntnCtpvScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsInsrList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="chk" type="int" size="1"/>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="cnsgnComyId" type="STRING" size="256" description="위탁업체ID"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="userId" type="string" size="256" description="사용자ID"/>
+          <Column id="insrNm" type="string" size="256" description="강사명"/>
+          <Column id="mblTelno" type="string" size="256" description="휴대전화번호"/>
+          <Column id="homeAddr" type="string" size="256" description="자택주소"/>
+          <Column id="emlAddr" type="string" size="256" description="이메일주소"/>
+          <Column id="delYn" type="STRING" size="256" description="삭제여부"/>
+          <Column id="aslAplyStsScCd" type="STRING" size="256"/>
+          <Column id="scaSysScCd" type="STRING" size="256"/>
+          <Column id="cntnCtpvScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

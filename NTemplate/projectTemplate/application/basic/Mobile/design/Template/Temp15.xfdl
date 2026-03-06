@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Temp01" width="480" height="1000" titletext="Folding+List" onload="form_onload">
+    <Layouts>
+      <Layout height="1000" mobileorientation="portrait" screenid="mobile" width="480">
+        <Div id="div00" taborder="0" text="div00" left="30" right="30" top="30" height="330">
+          <Layouts>
+            <Layout>
+              <Edit id="Edit09_00_00" taborder="2" left="0" top="140" height="50" text="TOBESOFT" value="TOBESOFT" right="0"/>
+              <Static id="Static00_00_00" taborder="3" text="프로젝트명" left="0" top="100" width="120" height="40" cssclass="sta_WF_Label"/>
+              <Static id="Static01" taborder="0" text="고객명" left="0" top="0" width="120" height="40" cssclass="sta_WF_LabelE"/>
+              <Edit id="Edit09_00" taborder="1" left="0" top="40" height="50" text="홍길동" value="홍길동" right="0"/>
+              <Static id="Static00" taborder="4" text="기간" left="0" top="200" width="120" height="50" cssclass="sta_WF_Label"/>
+              <Calendar id="Calendar00" taborder="5" left="0" top="250" height="50" right="0" value="20231030" dateformat="yyyy-MM-dd"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btn00" taborder="2" left="30" height="40" cssclass="btn_WF_CloseCon" text="" onclick="btn00_onclick" right="30" top="div00:0"/>
+        <Static id="Static03" taborder="1" left="0" top="btn00:0" height="12" cssclass="sta_WF_Boundary" right="0"/>
+        <Button id="btn00_00" taborder="3" left="520" top="365" width="233" height="40" cssclass="btn_WF_OpenCon" visible="false"/>
+        <Grid id="Grid00" taborder="4" left="30" top="Static03:30" right="30" cssclass="grd_WF_SearchBoard" binddataset="Dataset00" autofittype="col" bottom="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="420"/>
+              </Columns>
+              <Rows>
+                <Row size="40"/>
+                <Row size="50"/>
+              </Rows>
+              <Band id="body">
+                <Cell text="Nexacro Mobile UI Guide"/>
+                <Cell row="1" text="김투비 ｜2023.10.24 09:00｜첨부파일 0건" cssclass="cell_WF_Line"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="Dataset00">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+          <Row/>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  Mobile 프로젝트
+*  @FileName 	Temp15.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2023/10/30
+*  @Desction   
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2023/10/30			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//필수함수
+	this.gfnFormOnLoadM(obj);
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+//조회
+this.cfnSearch = function ()
+{
+	//TODO..
+};
+
+//저장
+this.cfnSave = function ()
+{
+	//TODO..
+};
+
+//추가
+this.cfnAdd = function ()
+{
+	//TODO..
+};
+
+//삭제
+this.cfnDel = function ()
+{
+	//TODO..
+};
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+//버튼 클릭
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//버튼 css변경 + div00, staTop 조절
+	var sCss = obj.cssclass;
+
+	if(sCss.indexOf("Close")>0){
+		obj.set_cssclass("btn_WF_OpenCon");
+		this.div00.set_height(110);
+	}else if(sCss.indexOf("Open")>0){
+		obj.set_cssclass("btn_WF_CloseCon");			
+		this.div00.set_height(339);		
+	}
+	this.resetScroll();
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,517 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameTopDiv" width="1200" height="47" titletext="New Form" onload="frameTopDiv_onload">
+    <Layouts>
+      <Layout height="47" mobileorientation="landscape" width="1200" screenid="ScreenDeskTop">
+        <Static id="sta01" taborder="0" left="0" top="0" right="0" background="#4075e6" initvalueid="ivStcAccessibilityOff" height="47"/>
+        <Combo id="cboStuList" taborder="1" text="" left="6" top="5" width="180" height="37" innerdataset="dsStuList" codecolumn="stuDtcNo" datacolumn="stuFlnm" index="-1" value="" onitemchanged="cboStuList_onitemchanged" borderRadius="30px" cssclass="cmb_WF_par" initvalueid="ivCmbNormal"/>
+        <Static id="sta00" taborder="2" text="학부모님, " left="cboStuList:20" top="6" width="105" height="35" cssclass="sta_WF_Txt22B" color="#ffffff" initvalueid="ivStcAccessibilityOn"/>
+        <Static id="staSchNm" taborder="3" top="5" width="278" height="37" right="6" textAlign="right" cssclass="sta_WF_Txt22B" color="#ffffff" initvalueid="ivStcAccessibilityOn"/>
+        <Static id="sta00_01" taborder="4" text="안녕하세요." left="sta00:-5" top="6" width="124" height="35" color="#ffffff" initvalueid="ivStcAccessibilityOn" cssclass="sta_WF_Txt22"/>
+      </Layout>
+      <Layout height="60" mobileorientation="landscape" width="640" screenid="mobile,tablet" name="default0">
+        <Combo id="cboStuList" taborder="0" text="" left="20" top="7" width="240" innerdataset="dsStuList" codecolumn="stuDtcNo" datacolumn="stuFlnm" index="-1" value="" borderRadius="30px" height="45"/>
+        <Static id="sta00" left="276" top="0" width="164" height="58" cssclass="font40B_M" font="normal 700 38px/normal &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Regular&quot;,&quot;Malgun Gothic&quot;,&quot;Arial&quot;,&quot;MS PGothic&quot;" text="학부모님, "/>
+        <Static id="sta01" height="60" left="0" top="0" right="0"/>
+        <Static id="staSchNm" top="104" width="348" height="62" cssclass="font40B_M" textAlign="left" font="normal 700 38px/normal &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Regular&quot;,&quot;Malgun Gothic&quot;,&quot;Arial&quot;,&quot;MS PGothic&quot;" left="20" visible="false"/>
+        <Static id="sta00_01" top="0" width="194" height="58" cssclass="sta_WF_Txt30" left="sta00:-5"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 유치원 학부모서비스
+*  @MenuPath    샘플
+*  @FileName 	frameTopDiv.xfdl
+*  @Creator 	문형선
+*  @CreateDate 	2022.11.9
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.11.9     	문형선 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::par_script.xjs"
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_stuLoad = false;
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frameTopDiv_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	if(this.smfGetSubSystemGb()=="PAR")
+	{		
+		//세션 및 자녀목록 체크
+		this.parSessionCheck("1");
+		
+		this.fnSessionInfo();
+	}
+}; 
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	if(errcd <= -1) return;
+	
+	if(svcid == "selectStuIduzEduYn"){		
+
+		if(errcd == 0 && errmsg != "SUCCESS"){
+			//this.smfAlert(errmsg);
+			//this.dsStuIduzEduYn.clearData();
+			//this.dsStuIduzEduYn.addRow();
+		}
+			
+		//학부모고유번호 설정
+		this.dsStuIduzEduYn.setColumn(0, "schpaDtcNo", this.dsSchpaInfo.getColumn(0, "schpaDtcNo")); 
+
+		if(this.smfIsNull(this.dsStuIduzEduYn.getColumn(0, "ayr"))){
+// 			this.smfAlert("유치원의 학년도/학기 정보가 설정되지 않아\n학부모서비스를 정상 이용하실 수 없습니다.");
+			this.dsStuIduzEduYn.setColumn(0, "ayr", this.smfSubStr(this.dsStuIduzEduYn.getColumn(0, "toDay"), 0, 4));
+		}
+		
+		//유치원명 설정
+		this.staSchNm.set_text(this.dsStuIduzEduYn.getColumn(0, "shlNm"));
+		
+		//알림건수조회 서비스 호출
+		if(!this.smfIsNull(this.dsStuIduzEduYn.getColumn(0, "cddcScCd"))){
+			 this.fnSelectNotiCnt();
+		}
+		
+		//TOP Frame을 찾아서 메뉴처리
+		var objMenuForm = this.getOwnerFrame().form.divTop.form;
+
+		//개별화여부에 따라 메뉴 필터
+		var subSystemGb = this.smfGetSubSystemGb();
+		var projectPath = nexacro.getProjectPath();
+		
+		var objMenu = objMenuForm.divMenu.form.dsMenu_par;
+		//로컬, 개발서버는 "dsMenu_par_dev" 개발용 메뉴를 설정
+		if(subSystemGb=="PAR" && (projectPath.indexOf("localhost") > -1 || projectPath.indexOf("dev.firstschool.neis.go.kr") > -1)){
+			objMenu = objMenuForm.divMenu.form.dsMenu_par_dev;
+		}
+		
+		if(this.dsStuIduzEduYn.getColumn(0, "iduzEduYn") == "Y"){
+			objMenu.filter("");
+			objMenuForm.dsMenu.copyData(objMenu, false);
+			
+			this.getOwnerFrame().form.divAll.form.divHead.form.fnSetFilter("");
+		}else{				
+			objMenu.filter("menuId != '1002'"); //학기별개별화교육
+			objMenuForm.dsMenu.copyData(objMenu, true);
+			
+			this.getOwnerFrame().form.divAll.form.divHead.form.fnSetFilter("menuId != '1002'");
+		}
+		
+		
+		//서브화면에 대한 설정
+		this.fv_stuLoad = true;
+		
+		var objWorkForm = this.getOwnerFrame().form.divAll.form.divWork.form;
+
+		if(objWorkForm.name == "frameSubMain"){//서브화면이 유치원 학부모서비스 메인인 경우			
+			objWorkForm.fnFormInit();
+		}else if(objWorkForm.name.substring(0,7) == "par_sps"){//서브화면이 학부모서비스인 경우
+			objWorkForm.reload();
+		}
+	}else if(svcid == "selectNotiYn"){
+		if(this.dsPageInfo.getColumn(0, "totalCount") > 0){
+			var procType = "none";
+			
+			// 팝업을 동작에 필요한 파라메터 지정
+			var popupParams = {
+				callback : this.fnPopupCallback, // 콜백함수 지정
+				sender : obj, // sender 지정
+				// 팝업 전달 파라메터 지정
+				params : {
+					// 처리타입 지정
+					procType : procType,
+					// 파라메터 전달
+					dataset: this.dsSearch
+				},
+			};
+			
+			if(this.smfIsMobile()){
+				var srcInfo = this.smfCurScreenInfo();
+				var srcInfoW = srcInfo[0];
+				var srcInfoH = srcInfo[1];
+				this.smfDialog("_auto", "pa_par_sps_sl::par_spssl05_p02.xfdl", popupParams, "", "", srcInfoW, srcInfoH);
+			}else{
+				this.smfDialog("_auto", "pa_par_sps_sl::par_spssl05_p02.xfdl", popupParams);
+			}
+		}
+	}
+}
+
+this.fnPopupCallback = function(context, responseParams, sender){
+}
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+//세선정보를 확인.
+this.fnSessionInfo = function(){
+	this.dsStuList.clearData();
+	
+	// 서비스 객체 생성
+	this.smfSearchService("selectSessionInfo")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) {
+				return;
+			};
+			
+			if (!this.smfIsNull(this.dsSchpaInfo.getColumn(0, "schpaDtcNo")))  {
+				this.fnSelectStuList();
+				this.getOwnerFrame().form.divTop.form.fnLoginAfter();
+
+			}
+	});
+}
+
+// 현재 세션의 학생을 선택 처리
+this.fnSelectStuList = function(){
+	var stuDtcNo =  this.dsSchpaInfo.getColumn(0, "stuDtcNo");
+	var i = 0;
+	
+	if(this.dsStuList.getRowCount() > 0){
+		if(this.smfIsNull(stuDtcNo)){
+			this.cboStuList.set_index(0);
+		}else{
+			for (i = 0 ; i < this.dsStuList.getRowCount() ; i++) {
+				if (stuDtcNo == this.dsStuList.getColumn(i, "stuDtcNo")) {
+					this.cboStuList.set_index(i);
+				}
+			}
+		}
+		
+		this.fnSelectStuIduzEduYn();
+	}else{
+		return;
+	}
+};
+
+/**
+ * 개별화교육여부 및 유아정보 조회서비스
+ * @param : N/A
+ * @param : N/A
+ */
+this.fnSelectStuIduzEduYn = function()
+{
+	//조회 전 조건 설정
+	this.dsSearch.clearData();
+	var addRow = this.dsSearch.addRow();
+	this.dsSearch.setColumn(addRow, "stuDtcNo", this.cboStuList.value);
+	this.dsSearch.setColumn(addRow, "schpaDtcNo", this.dsSchpaInfo.getColumn(0, "schpaDtcNo"));
+
+ 	// 서비스 객체 생성
+	this.smfSearchService("selectStuIduzEduYn")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+
+	});
+};
+
+//알림 건수 조회
+this.fnSelectNotiCnt = function(){
+	// 서비스 객체 생성
+	this.smfSearchService("selectNotiCnt")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			//알림 건수 표시
+			this.getOwnerFrame().form.divAll.form.divWork.form.div01.form.div00_00.form.btnShlNoti.set_text( this.dsNotiCnt.getColumn(0, "shlNoti") + "건");
+			this.getOwnerFrame().form.divAll.form.divWork.form.div01.form.div00_00.form.btnSysNoti.set_text( this.dsNotiCnt.getColumn(0, "sysNoti") + "건");
+			var cnt = this.dsNotiCnt.getColumn(0, "shlNoti") + this.dsNotiCnt.getColumn(0, "sysNoti");
+			
+			if(cnt > 0){
+				this.getOwnerFrame().form.divTop.form.divDispArea.form.divPARLink2.form.btn01.set_visible(false);
+				this.getOwnerFrame().form.divTop.form.divDispArea.form.divPARLink2.form.btnNotiNew.set_visible(true);
+			}else{
+				this.getOwnerFrame().form.divTop.form.divDispArea.form.divPARLink2.form.btn01.set_visible(true);
+				this.getOwnerFrame().form.divTop.form.divDispArea.form.divPARLink2.form.btnNotiNew.set_visible(false);
+			}
+	});
+ }
+ 
+ //학교수업지원플랫폼으로 이동 처리
+ this.postForm = function (path, params, method)
+ {
+		method = method || 'post';
+		
+		var form = document.createElement('form');
+		
+		form.setAttribute('method', method);
+		form.setAttribute('action', path);
+		
+		for (var key in params) {
+			if (params.hasOwnProperty(key)) {
+				var hiddenField = document.createElement('input');
+				hiddenField.setAttribute('type', 'hidden');
+				hiddenField.setAttribute('name', key);
+				hiddenField.setAttribute('value', params[key]);
+				
+				form.appendChild(hiddenField);
+			}
+		}
+		
+		document.body.appendChild(form);
+		form.submit();
+ };
+ 
+ /**
+ * 현재 세션을 로그아웃 처리 후 학교수업지원 플랫폼으로 이동 처리한다.
+ */
+this.fnDeleteJwt = function()
+{	
+ 	// 서비스 객체 생성
+	this.smfSearchService("selectJwtClear")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;		
+			this.dsSchpaInfo.clearData();
+			this.dsStuList.clearData();
+			var url = this.smfReplace(this.dsJwt.getColumn(0, "url"), "/usr/ses/pa/usr_ses_pa01_002.do", "");
+			this.postForm(url + "/csp-prnt/#/prn-main/intro", {  }  );
+	});
+};
+
+this.fnHome = function()
+{	
+	var stuDtcNo = this.cboStuList.value;
+
+	this.dsJwt.clearData();
+	this.dsJwt.addRow();
+	this.dsJwt.setColumn(0, "stuDtcNo", this.cboStuList.value);
+	this.dsJwt.setColumn(0, "schpaDtcNo", this.dsSchpaInfo.getColumn(0, "schpaDtcNo"));
+
+	this.smfSearchService("selectJwtHome")
+	// 실행
+	.run()
+	// 콜백
+	.callback(function(callbackParams){
+		if(callbackParams.errors) return;
+		var url = this.smfReplace(this.dsJwt.getColumn(0, "url"), "/usr/ses/pa/usr_ses_pa01_002.do", "");
+		this.postForm(url + "/usr/ses/pa/usr_ses_pa01_002.do", { token : this.dsJwt.getColumn(0, "encJwt") }  );
+	});
+};
+ 
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.cboStuList_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	var stuDtcNo = this.cboStuList.value;
+
+	var i = 0;
+	var kdgtsYn = "";
+	for (i = 0 ; i < this.dsStuList.getRowCount() ; i++) {
+			if (stuDtcNo == this.dsStuList.getColumn(i, "stuDtcNo")) {
+				kdgtsYn = this.dsStuList.getColumn(i, "kdgtsYn");
+			}
+	}
+
+	if (kdgtsYn == "Y") {
+		this.fnSelectStuIduzEduYn();
+	} else {
+	
+		this.dsJwt.clearData();
+		this.dsJwt.addRow();
+		this.dsJwt.setColumn(0, "stuDtcNo", this.cboStuList.value);
+		this.dsJwt.setColumn(0, "schpaDtcNo", this.dsSchpaInfo.getColumn(0, "schpaDtcNo"));
+		
+		this.smfSearchService("selectJwt")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			var url = this.smfReplace(this.dsJwt.getColumn(0, "url"), "/usr/ses/pa/usr_ses_pa01_002.do", "");
+			this.postForm(url + "/usr/ses/pa/usr_ses_pa01_002.do", { token : this.dsJwt.getColumn(0, "encJwt") }  );
+		});
+	}
+	
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectStuIduzEduYn</Col>
+            <Col id="url">/par_sps_ci01_002.do</Col>
+            <Col id="outDatasets">dsSearch=dsSearch dsStuIduzEduYn=dsStuIduzEduYn dsStuAyrList=dsStuAyrList dsSchpaInfo=dsSchpaInfo</Col>
+            <Col id="inDatasets">dsSearch</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectNotiYn</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsPageInfo=dsPageInfo</Col>
+            <Col id="url">/par_sps_sl05_006.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectNotiCnt</Col>
+            <Col id="url">/par_sps_sl05_009.do</Col>
+            <Col id="inDatasets">dsSearch=dsStuIduzEduYn</Col>
+            <Col id="outDatasets">dsNotiCnt=dsNotiCnt</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectSessionInfo</Col>
+            <Col id="url">/par_sps_cm00_006.do</Col>
+            <Col id="outDatasets">dsSchpaInfo=dsSchpaInfo dsStuList=dsStuList</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectJwt</Col>
+            <Col id="url">/par_sps_cm00_010.do</Col>
+            <Col id="inDatasets">dsJwt=dsJwt</Col>
+            <Col id="outDatasets">dsJwt=dsJwt</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectJwtClear</Col>
+            <Col id="outDatasets">dsJwt=dsJwt</Col>
+            <Col id="url">/par_sps_cm00_011.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectJwtHome</Col>
+            <Col id="url">/par_sps_cm00_012.do</Col>
+            <Col id="inDatasets">dsJwt=dsJwt</Col>
+            <Col id="outDatasets">dsJwt=dsJwt</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsStuList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="stuDtcNo" type="STRING" size="256"/>
+          <Column id="stuFlnm" type="STRING" size="256"/>
+          <Column id="kdgtsYn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsStuIduzEduYn" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" description="유치원명"/>
+          <Column id="ayr" type="STRING" size="256" description="학년도"/>
+          <Column id="sem" type="STRING" size="256" description="학기"/>
+          <Column id="semBgngYmd" type="STRING" size="256" description="학기 시작일자"/>
+          <Column id="semEndYmd" type="STRING" size="256" description="학기 종료일자"/>
+          <Column id="stuInvlNo" type="STRING" size="256" description="학생번호"/>
+          <Column id="stuDtcNo" type="STRING" size="18" description="학생고유번호"/>
+          <Column id="stuFlnm" type="STRING" size="256" description="학생이름"/>
+          <Column id="clsScCd" type="STRING" size="256" description="학급구분코드"/>
+          <Column id="clsScNm" type="STRING" size="256"/>
+          <Column id="clsNm" type="STRING" size="256" description="반명"/>
+          <Column id="stuClsNo" type="STRING" size="256" description="반번호"/>
+          <Column id="acclaNm" type="STRING" size="256" description="담임명"/>
+          <Column id="iduzEduYn" type="STRING" size="256" description="개별화교육 수강여부"/>
+          <Column id="yearAge" type="STRING" size="256" description="만나이"/>
+          <Column id="stuRoadAddr" type="STRING" size="256" description="유아도로명주소"/>
+          <Column id="cddcScCd" type="STRING" size="3" description="시도코드"/>
+          <Column id="toDay" type="STRING" size="256" description="오늘일자"/>
+          <Column id="dayOfWeek" type="STRING" size="256" description="오늘요일"/>
+          <Column id="schpaDtcNo" type="STRING" size="256" description="학부모고유번호"/>
+          <Column id="startYmd" type="STRING" size="256" description="학년도 시작일자"/>
+          <Column id="endYmd" type="STRING" size="256" description="학년도 종료일자"/>
+          <Column id="sprtYr" type="STRING" size="4" description="지원연도"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="false">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="10" sumtext="" description="학교코드"/>
+          <Column id="stuDtcNo" type="STRING" size="18" description="학생고유번호"/>
+          <Column id="userVrID" type="STRING" size="256"/>
+          <Column id="schpaDtcNo" type="STRING" size="18" description="학부모고유번호"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="schpaDtcNo"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsStuAyrList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="stuInvlNo" type="STRING" size="256"/>
+          <Column id="ayr" type="STRING" size="256"/>
+          <Column id="ayrNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex">1</Col>
+            <Col id="pageSize">1</Col>
+            <Col id="totalCount">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSchpaInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="schpaDtcNo" type="STRING" size="256"/>
+          <Column id="schpaNm" type="STRING" size="256"/>
+          <Column id="mblTelno" type="STRING" size="256"/>
+          <Column id="brdt" type="STRING" size="256"/>
+          <Column id="apsRelNm" type="STRING" size="256"/>
+          <Column id="stuDtcNo" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="schpaDtcNo"></Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsNotiCnt" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlNoti" type="INT" size="3"/>
+          <Column id="sysNoti" type="INT" size="3"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsJwt" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="encJwt" type="STRING" size="2048"/>
+          <Column id="stuDtcNo" type="STRING" size="256"/>
+          <Column id="schpaDtcNo" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

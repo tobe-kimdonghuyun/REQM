@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameTopSearch" width="1430" height="720" titletext="검색" onload="form_onload">
+    <Layouts>
+      <Layout height="720" width="1430" screenid="desktopScr">
+        <Static id="staBg" taborder="0" left="0" top="0" right="0" bottom="0" cssclass="sta_WF_PopBg" minheight="500" maxheight=""/>
+        <Static id="staInfo01" taborder="1" text="검색어를 입력해주세요" left="30.00%" top="212" height="60" right="30.00%" cssclass="sta_WF_PopSch"/>
+        <Edit id="edtSearch" taborder="2" left="30%" top="272" height="63" right="30%" accessibilitylabel="검색어 입력" initvalueid="iv_Edit" displaynulltext="무엇을 찾고 계시나요?" cssclass="edt_WF_Sch"/>
+        <Button id="btnSearch" taborder="3" top="272" width="63" height="63" right="30%" initvalueid="iv_Button" accessibilitylabel="검색" cssclass="btn_WF_Sch"/>
+        <Button id="btnClose" taborder="4" width="40" height="40" right="60" top="60" cssclass="btn_WF_Close" accessibilitylabel="창 닫기" initvalueid="iv_Button" onclick="btnClose_onclick"/>
+      </Layout>
+      <Layout height="720" mobileorientation="Landscape" name="tablet" type="default" width="800" screenid="tabletScr,desktopScr">
+        <Static id="staInfo01" left="18%" top="212" height="60" right="18%"/>
+        <Edit id="edtSearch" left="18%" top="272" height="63" right="18%"/>
+        <Button id="btnSearch" right="18%" top="272" width="63" height="63"/>
+      </Layout>
+      <Layout height="720" mobileorientation="Landscape" name="mobile" type="default" width="480" screenid="mobileScr,desktopScr">
+        <Static id="staInfo01" left="10%" top="212" height="60" right="10%"/>
+        <Edit id="edtSearch" left="10%" top="272" height="63" right="10%"/>
+        <Button id="btnSearch" right="10%" top="272" width="63" height="63"/>
+        <Button id="btnClose" top="30" width="40" height="40" right="20"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템
+*  @MenuPath    공통
+*  @FileName 	frameTopSearch.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//trace("frameTopSearch onload >>>>>>>");
+	this.edtSearch.setFocus();
+};
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+//닫기버튼
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.parent.parent.fnHidePopDiv("search");
+};]]></Script>
+  </Form>
+</FDL>

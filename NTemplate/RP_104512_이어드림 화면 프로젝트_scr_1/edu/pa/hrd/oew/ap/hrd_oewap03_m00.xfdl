@@ -1,0 +1,730 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmMain" width="1200" height="884" titletext="계약제교원인력풀-인력풀 신청현황" visible="true" onload="frmMain_onload">
+    <Layouts>
+      <Layout height="884" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff" minwidth="">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="인력풀신청현황" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="262" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staText00" taborder="1" top="144" width="370" height="30" cssclass="sta_WF_Red14R" text="※ 채용중에는 신청 및 변경이 불가합니다." initvalueid="ivStcAccessibilityOn" right="0" fittocontents="both" visible="false"/>
+        <Div id="divSearch" taborder="2" left="0" top="184" height="70" cssclass="div_WF_Search" right="0" initvalueid="ivDivAccessibilityOff" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="등록일자" left="0" top="20" width="88" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcEssential" font="16px/normal &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Regular&quot;,&quot;Malgun Gothic&quot;,&quot;Arial&quot;,&quot;MS PGothic&quot;"/>
+              <Calendar id="cal00" taborder="1" left="88" top="20" width="140" height="30" cssclass="essential" initvalueid="ivCalEssential" dateformat="yyyy.MM.dd " editformat="yyyy.MM.dd " onchanged="divSearch_cal00_onchanged"/>
+              <Static id="sta01" taborder="2" text="~" left="228" top="20" width="15" height="30" textAlign="center" initvalueid="ivStcAccessibilityOn" accessibilitylabel="부터"/>
+              <Calendar id="cal01" taborder="3" left="243" top="20" width="140" height="30" cssclass="essential" initvalueid="ivCalEssential" dateformat="yyyy.MM.dd " editformat="yyyy.MM.dd " onchanged="divSearch_cal01_onchanged"/>
+              <Static id="sta02" taborder="4" text="학교급구분" left="383" top="20" width="103" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn" font="16px/normal &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Regular&quot;,&quot;Malgun Gothic&quot;,&quot;Arial&quot;,&quot;MS PGothic&quot;" textAlign="left"/>
+              <Combo id="cbo00" taborder="5" left="486" top="20" width="170" height="30" value="0" index="0" innerdataset="dsMnplSgScCd" codecolumn="unyCdValue" datacolumn="unyCdValueNm" text="" onitemchanged="divSearch_cbo00_onitemchanged" initvalueid="ivCmbNormal"/>
+              <Button id="btnSearch" taborder="6" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="30" onclick="divSearch_btnSearch_onclick" initvalueid="ivBtnAccessibilityButton"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divAdmit" taborder="3" text="div00" left="0" top="254" height="550" right="0" cssclass="div_WF_Detail" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="img00" taborder="0" text="인력풀 신청내역" left="0" top="20" width="137" height="30" cssclass="img_WF_SubTit04" initvalueid="ivTitleAccessibilityOn"/>
+              <Grid id="grdAdmit" taborder="1" left="0" top="60" height="490" right="0" binddataset="dsResultMnplAplyPnsta" autofittype="col" selecttype="cell" initvalueid="ivGrdAccessibilityOn" oncellclick="divAdmit_grdAdmit_oncellclick" accessibilitylabel="지원내역목록">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="30"/>
+                      <Column size="298"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="114"/>
+                      <Column size="100"/>
+                      <Column size="65"/>
+                      <Column size="85"/>
+                      <Column size="80"/>
+                      <Column size="261"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="NO"/>
+                      <Cell col="1" text="개요명"/>
+                      <Cell col="2" text="학교급구분"/>
+                      <Cell col="3" text="계약제구분"/>
+                      <Cell col="4" text="희망과목"/>
+                      <Cell col="5" text="신청서제출일자"/>
+                      <Cell col="6" colspan="2" text="승인상태"/>
+                      <Cell col="8" text="확인일자"/>
+                      <Cell col="9" text="반려사유"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="expr:currow +1"/>
+                      <Cell col="1" text="bind:mnplOtlNm" textAlign="left" wordWrap="char"/>
+                      <Cell col="2" text="bind:mnplSgScCdNm" textAlign="center" wordWrap="char"/>
+                      <Cell col="3" text="bind:ctrsScCdNm" textAlign="center" wordWrap="char"/>
+                      <Cell col="4" text="bind:listHopSbjtCd" autosizerow="default" textAlign="center" controlautosizingtype="height" wordWrap="char"/>
+                      <Cell col="5" text="bind:reqsSbmsnYmd" textAlign="center" displaytype="date" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd" calendardisplaynulltype="none"/>
+                      <Cell col="6" text="bind:mnplAprvStsCdNm" textAlign="center" expr="[mnplAprvStsCd]=='N'?&quot;작성중&quot;:([mnplAprvStsCd]=='0'?&quot;신청대기&quot;:([mnplAprvStsCd]=='1'?&quot;신청&quot;:[mnplAprvStsCdNm]))"/>
+                      <Cell col="7" edittype="none" text="bind:mnplAprvStsCd" accessibilityrole="button" padding="7px" expr="[mnplAprvStsCd]=='N'?&quot;수정&quot;:([mnplAprvStsCd]=='3'?&quot;재신청&quot;:([mnplAprvStsCd]=='2'?&quot;승인취소&quot;:([mnplAprvStsCd]=='0'?&quot;재전송&quot;:'none')))" displaytype="expr:[mnplAprvStsCd]=='1'?'none':([mnplAprvStsCd]=='4'?'none':'buttoncontrol')" textAlign="center"/>
+                      <Cell col="8" text="bind:idntyYmd" textAlign="center" displaytype="date" calendardateformat="yyyy.MM.dd" calendareditformat="yyyy.MM.dd" calendardisplaynulltype="none" expr="[idntyYmd] != null?[idntyYmd]:&quot;미확인&quot;"/>
+                      <Cell col="9" text="bind:rjctRsnCn" textAlign="center" wordWrap="char"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="staGD00" taborder="2" left="0" top="0" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" right="0" initvalueid="ivStcAccessibilityOff" visible="false"/>
+              <Static id="staGD01" taborder="3" left="0" top="50" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" right="0" initvalueid="ivStcAccessibilityOff" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staText01" taborder="4" left="0" top="804" width="370" height="30" cssclass="sta_WF_Red14" text="※ 승인 처리된 인력풀 신청서만 취소 요청이 가능합니다." initvalueid="ivStcAccessibilityOn"/>
+        <Static id="staGD00" taborder="5" left="0" top="0" height="69" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGD01" taborder="6" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="staGD02" taborder="7" left="0" top="174" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" right="0" initvalueid="ivStcAccessibilityOff" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsResultMnplAplyPnsta" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="NO" type="STRING" size="256" description="순번"/>
+          <Column id="mnplReqsId" type="STRING" size="256" description="인력풀신청서ID"/>
+          <Column id="mnplOtlId" type="STRING" size="256" description="인력풀개요ID"/>
+          <Column id="mnplOtlNm" type="STRING" size="256" description="인력풀개요명"/>
+          <Column id="mnplSgScCd" type="STRING" size="256" description="학교급구분코드"/>
+          <Column id="mnplSgScCdNm" type="STRING" size="256" description="학교급구분명"/>
+          <Column id="ctrsScCdNm" type="STRING" size="256" description="계약제구분명"/>
+          <Column id="listHopSbjtCd" type="STRING" size="256" description="희망과목"/>
+          <Column id="reqsSbmsnYmd" type="STRING" size="256" description="신청서제출일자"/>
+          <Column id="mnplAprvStsCd" type="STRING" size="256" description="인력풀승인상태코드"/>
+          <Column id="mnplAprvStsCdNm" type="STRING" size="256" description="승인상태"/>
+          <Column id="idntyYmd" type="STRING" size="256" description="확인일자"/>
+          <Column id="rjctRsnCn" type="STRING" size="256" description="반려사유내용"/>
+          <Column id="rcptBgngYmd" type="STRING" size="256" description="신청시작일자"/>
+          <Column id="rcptEndYmd" type="STRING" size="256" description="신청종료일자"/>
+          <Column id="hopPlwkCnt" type="STRING" size="256" description="희망근무지수"/>
+          <Column id="hopSbjtCnt" type="STRING" size="256" description="희망과목수"/>
+          <Column id="onslLtoiNeedYn" type="STRING" size="256" description="자기소개필요여부"/>
+          <Column id="mnplEmpmnYn" type="STRING" size="256"/>
+          <Column id="tchQlfEsntlYn" type="STRING" size="256"/>
+          <Column id="pafrUserId" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectMnplAplyPnsta</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsResultMnplAplyPnsta=dsResultMnplAplyPnsta</Col>
+            <Col id="url">hrd_oew_ap03_000.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">saveAprvSts</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="url">hrd_oew_ap03_001.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectDate</Col>
+            <Col id="url">cmc_fcm_dt01_001.do</Col>
+            <Col id="outDatasets">dsDateTime=dsDateTime</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectEmpmn</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsResultEmpmn=dsResultEmpmn</Col>
+            <Col id="url">hrd_oew_ap03_002.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectReaplcn</Col>
+            <Col id="inDatasets">dsChkReaplcn=dsChkReaplcn</Col>
+            <Col id="outDatasets">dsReaplcnYn=dsReaplcnYn</Col>
+            <Col id="url">hrd_oew_ap03_003.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">saveRetrns</Col>
+            <Col id="inDatasets">dsRetrns=dsRetrns</Col>
+            <Col id="outDatasets">dsResultRetrns=dsResultRetrns</Col>
+            <Col id="url">hrd_oew_ap03_004.do</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectRetrnsYn</Col>
+            <Col id="inDatasets">dsRetrns=dsRetrns dsChkReaplcn=dsChkReaplcn</Col>
+            <Col id="outDatasets">dsResultRetrnsYn=dsResultRetrnsYn</Col>
+            <Col id="url">hrd_oew_ap03_005.do</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="strDate" type="STRING" size="256" description="시작검색일자"/>
+          <Column id="endDate" type="STRING" size="256" description="종료검색일자"/>
+          <Column id="mnplSgScCd" type="STRING" size="256" description="학교급구분코드"/>
+          <Column id="cddcScCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="mnplReqsId" type="STRING" size="256" description="인력풀신청서아이디"/>
+          <Column id="apstFlnm" type="STRING" size="256" description="지원자성명"/>
+          <Column id="brdt" type="STRING" size="256" description="생년월일"/>
+          <Column id="mblTelno" type="STRING" size="256" description="휴대전화"/>
+          <Column id="pafrUserId" type="STRING" size="256" description="대국민아이디(사용자CI)"/>
+          <Column id="mnplRegstRtrcnRsnCn" type="STRING" size="256"/>
+          <Column id="mnplOtlId" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMnplSgScCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="FirstCode" type="STRING" size="30" value="ALL" datapath=""/>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value="MNPL_SG_SC_CD"/>
+          <ConstColumn id="FilterExpr" type="STRING" size="30" value=""/>
+          <ConstColumn id="UnyCdGrpId" type="STRING" size="30" value=""/>
+          <ConstColumn id="BfrClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd1Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd2Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd3Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd4Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd5Value" type="STRING" size="30" value=""/>
+          <Column id="pgeId" type="STRING" size="256"/>
+          <Column id="clfCdValue" type="STRING" size="30"/>
+          <Column id="clfCdValueNm" type="STRING" size="120"/>
+          <Column id="clfCdUseYn" type="STRING" size="150"/>
+          <Column id="unyCdValue" type="STRING" size="10"/>
+          <Column id="unyCdValueNm" type="STRING" size="30"/>
+          <Column id="userDfnCd1Value" type="STRING" size="100"/>
+          <Column id="userDfnCd2Value" type="STRING" size="100"/>
+          <Column id="userDfnCd3Value" type="STRING" size="100"/>
+          <Column id="userDfnCd4Value" type="STRING" size="100"/>
+          <Column id="userDfnCd5Value" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsAprvSts" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="mnplReqsId" type="STRING" size="256" description="인력풀신청서ID"/>
+          <Column id="mnplAprvStsCd" type="STRING" size="256" description="인력풀승인상태코드"/>
+          <Column id="cddcScCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="mnplRegstRtrcnRsnCn" type="STRING" size="256" description="인력풀등재취소사유"/>
+          <Column id="pafrUserId" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDateTime" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="mm" type="STRING" size="256"/>
+          <Column id="dd" type="STRING" size="256"/>
+          <Column id="hhmmss" type="STRING" size="256"/>
+          <Column id="yyyymmdd" type="STRING" size="256"/>
+          <Column id="yyyy" type="STRING" size="256"/>
+          <Column id="hhmmsssss" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearchEmpmn" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="apstFlnm" type="STRING" size="256" description="지원자성명"/>
+          <Column id="mblTelno" type="STRING" size="256" description="휴대폰번호"/>
+          <Column id="brdt" type="STRING" size="256" description="생년월일"/>
+          <Column id="mblTelno00" type="STRING" size="256"/>
+          <Column id="mblTelno01" type="STRING" size="256"/>
+          <Column id="mblTelno02" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResultEmpmn" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="mnplEmpmnYn" type="STRING" size="256" description="인력풀채용여부"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsChkReaplcn" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="mnplOtlId" type="STRING" size="256" description="인력풀개요ID"/>
+          <Column id="mnplSgScCd" type="STRING" size="256" description="학교급구분코드"/>
+          <Column id="apstFlnm" type="STRING" size="256" description="지원자성명"/>
+          <Column id="brdt" type="STRING" size="256" description="생년월일"/>
+          <Column id="mblTelno" type="STRING" size="256" description="휴대전화"/>
+          <Column id="pafrUserId" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsReaplcnYn" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="reaplcnYn" type="STRING" size="256" description="재신청여부"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsLogInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="brdt" type="STRING" size="256" description="생년월일"/>
+          <Column id="apstFlnm" type="STRING" size="256" description="지원자성명"/>
+          <Column id="mblTelno00" type="STRING" size="256"/>
+          <Column id="mblTelno01" type="STRING" size="256"/>
+          <Column id="mblTelno02" type="STRING" size="256"/>
+          <Column id="mblTelno" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResultRetrns" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="esbRsltCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRetrns" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="mnplReqsId" type="STRING" size="256"/>
+          <Column id="cddcScCd" type="STRING" size="256"/>
+          <Column id="pafrUserId" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResultRetrnsYn" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="mnplReqsId" type="STRING" size="256"/>
+          <Column id="cddcScCd" type="STRING" size="256"/>
+          <Column id="pafrUserId" type="STRING" size="256"/>
+          <Column id="resultRetrnsYn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  온라인통합채용-계약제교원인력풀-인력풀 신청현황
+*  @MenuPath    pa_hrd_oew_ap
+*  @FileName 	pa_hrd_oewap03_m00.xfdl
+*  @Creator 	
+*  @CreateDate 	2022.8.18
+*  @Desction    온라인통합채용-계약제교원인력풀-인력풀 신청현황
+************** 소스 수정 이력 ***********************************************
+*  date                Modifier            Description
+*******************************************************************************
+*  2022.8.18    	 	최지원             최초 생성 
+********************************************************************************/
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::ore_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ //파라미터
+this.apstFlnm;
+this.brdt;
+this.mblTelno;
+this.userDtcNo;
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frmMain_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 주민번호로 로그인의 경우 brdt check & set
+	this.brdt = this.smfGetSessionValue('brdt');
+	if(this.smfIsNull(this.brdt)){
+		 this.brdt = this.applpRrnoToBrdt(nexacro.base64Decode(this.smfGetSessionValue('userRrno')));
+	}
+	// 휴대전화번호 필수 로그인 세션 체크
+	var logInChkParam = {
+		 redirectUrl : 'pa_hrd_oew_ap::hrd_oewap03_m00.xfdl' // 현재 PAGE URL
+		, redirectMenuId : '3002' // 계약제교원 인력풀신청현황 메뉴 ID
+	};
+	// 휴대전화번호 세션 없을 시 로그인 페이지이동
+	this.isEssenMblTelnoLogin(logInChkParam);
+	
+	// Form의 default 초기처리를 한다.
+	this.smfInitForm(obj);
+	
+ 	// 파라메터 세팅 -- test
+	var cddcCd = this.smfGetCddcCode();
+	
+	// 세션 set
+	this.apstFlnm  = this.smfGetSessionValue('userNm');
+	this.mblTelno  = this.smfGetSessionValue('mblTelNo');
+	this.userDtcNo = this.smfGetSessionValue('userDtcNo');
+
+	// 로그인 set
+// 	this.dsLogInfo.setColumn(0, 'brdt',		this.brdt);
+// 	this.dsLogInfo.setColumn(0, 'apstFlnm', this.apstFlnm);
+// 	this.dsLogInfo.setColumn(0, 'mblTelno', this.mblTelno);
+	
+	// 승인상태 set(test)
+	this.dsSearch.setColumn(0, 'cddcScCd', this.smfGetCddcCode().substring(0, 3));
+	this.dsSearch.setColumn(0, 'mnplRegstRtrcnRsnCn', '사용자신청');
+	// 조회조건 set
+	this.dsSearch.setColumn(0, "apstFlnm",   this.apstFlnm);
+	this.dsSearch.setColumn(0, "brdt",		 this.brdt);
+	this.dsSearch.setColumn(0, "mblTelno",	 this.mblTelno);
+	this.dsSearch.setColumn(0, 'pafrUserId', this.userDtcNo);
+	// 채용여부 조회조건  set
+// 	this.dsSearchEmpmn.setColumn(0, "apstFlnm", this.dsLogInfo.getColumn(0, "apstFlnm"));
+// 	this.dsSearchEmpmn.setColumn(0, "brdt", 	this.dsLogInfo.getColumn(0, "brdt"));
+// 	this.dsSearchEmpmn.setColumn(0, "mblTelno", this.dsLogInfo.getColumn(0, "mblTelno"));
+// 	
+// 	// 재신청가능 조회조건 set
+// 	this.dsChkReaplcn.setColumn(0, "apstFlnm",	this.dsLogInfo.getColumn(0, "apstFlnm"));
+// 	this.dsChkReaplcn.setColumn(0, "brdt", 		this.dsLogInfo.getColumn(0, "brdt"));
+// 	this.dsChkReaplcn.setColumn(0, "mblTelno",  this.dsLogInfo.getColumn(0, "mblTelno"));
+	
+// 	// 휴대전화 (미사용)
+// 	var mblTelno00 = this.mblTelno.substr(0,3);
+// 	var mblTelno01 = this.mblTelno.substr(4,4);
+// 	var mblTelno02 = this.mblTelno.substr(9,4);
+// 	this.dsLogInfo.setColumn(0, 'mblTelno00', mblTelno00);
+// 	this.dsLogInfo.setColumn(0, 'mblTelno01', mblTelno01);
+// 	this.dsLogInfo.setColumn(0, 'mblTelno02', mblTelno02);
+	
+	// 공통코드 
+	// dsMnplSgScCd : 학교급구분 
+	this.smfCodeList("code", [this.dsMnplSgScCd])
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		})		
+		.run();
+		
+	// 서비스 객체 생성
+	// 일자 조회 default set
+	this.smfSearchService("selectDate")
+		// 실행
+		.run()
+		
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			// 검색 기간 default
+			var toDay = parseInt(this.dsDateTime.getColumn(0, "yyyymmdd"));
+			this.divSearch.form.cal01.set_value(toDay);
+			var yyyy = parseInt(this.dsDateTime.getColumn(0, "yyyy") -1);
+			var mm = this.dsDateTime.getColumn(0, "mm");
+			var dd = this.dsDateTime.getColumn(0, "dd");
+			var fromDay = [yyyy, mm, dd].join(""); 
+			this.divSearch.form.cal00.set_value(fromDay);
+		});
+		
+	// 채용여부 조회 Y/N
+	this.fnSearch();
+	this.fnSearchEmpmn();
+	
+	
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ 
+ /************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ /**
+ *현재 일자 검색
+ */
+this.fnSearchDate = function(obj, e)
+{	
+	// 서비스 객체 생성
+	this.smfSearchService("selectDate")
+		// 실행
+		.run()
+		
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+
+		});
+}
+// 채용여부조회
+ this.fnSearchEmpmn = function ()
+ {
+ 	// 서비스 객체 생성
+	this.smfSearchService("selectEmpmn")	
+ 		// 실행
+ 		.run()	
+		// 콜백
+		.callback(function(callbackParams){
+ 			if(callbackParams.errors) return;
+			
+ 		});	
+ };
+// 신청현황조회
+ this.fnSearch = function ()
+ {
+ 	// 서비스 객체 생성
+	this.smfSearchService("selectMnplAplyPnsta")	
+ 		// 실행
+ 		.run()	
+		// 콜백
+		.callback(function(callbackParams){
+ 			if(callbackParams.errors) return;
+			
+ 		});	
+ };
+ /**
+  * 승인상태수정 
+  */
+ this.fnSaveMnplDtl = function (){
+
+	// 서비스 객체 생성
+	this.smfSaveService("saveAprvSts")
+	
+	// 실행
+	.run()
+	
+	// 콜백
+	.callback(function(callbackParams
+	){
+		if(callbackParams.errors) return;
+		
+	});
+};
+
+// 재신청상태조회
+ this.fnSearchReaplcn = function ()
+ {
+ 	// 서비스 객체 생성
+	this.smfSearchService("selectReaplcn")	
+ 		// 실행
+ 		.run()	
+		// 콜백
+		.callback(function(callbackParams){
+ 			if(callbackParams.errors) return;
+			
+ 		});	
+ };
+
+ /************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * 조회버튼 클릭
+ */
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var str = this.divSearch.form.cal00.value;
+	var end = this.divSearch.form.cal01.value;
+	if(str > end && end != "" ){
+		this.smfAlert("시작일자는 종료일자보다 이전이어야 합니다.");
+		return false;
+	}
+	this.dsSearch.setColumn(0, 'pafrUserId', this.userDtcNo);
+	this.fnSearch();
+	this.fnSearchDate();
+	
+// 	// 채용여부에 따른 그리드 사용 여부 set
+// 	if(this.dsResultEmpmn.getColumn(0, 'mnplEmpmnYn') == "Y"){
+// 		this.divAdmit.form.grdAdmit.set_enable(false);
+// 		this.smfAlert('채용 상태 중으로 신청 및 변경이 불가합니다.');
+// 	}
+};
+/**
+ * 캘린더 변경 시 -- 시작일자
+ */
+this.divSearch_cal00_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	this.dsSearch.setColumn(0, "strDate", this.divSearch.form.cal00.value.substring(0, 8));
+
+};
+/**
+ * 캘린더 변경 시 -- 종료일자
+ */
+this.divSearch_cal01_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	this.dsSearch.setColumn(0, "endDate", this.divSearch.form.cal01.value.substring(0, 8));
+
+	
+};
+/**
+ * 학교급구분 콤보 변경 시
+ */
+this.divSearch_cbo00_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.dsSearch.setColumn(0,"mnplSgScCd", obj.value);
+
+};
+
+/**
+ * 그리드 셀 클릭 시
+ */
+this.divAdmit_grdAdmit_oncellclick = function(obj:nexacro.Button,e:nexacro.GridClickEventInfo)
+{
+	// 클릭한 셀을 구한다
+	var nRow = e.row;
+	var nCell = e.cell;
+	// 승인상태(N : 임시저장(미신청) 0: 연계오류(재전송) 1 : 신청완료 2 : 승인 3: 반려 4 : 승인취소(등재취소))
+	var sVal = this.dsResultMnplAplyPnsta.getColumn(nRow, "mnplAprvStsCd");
+	// 신청기간
+	var bgngYmd = parseInt(this.dsResultMnplAplyPnsta.getColumn(nRow, "rcptBgngYmd"));
+	var endYmd = parseInt(this.dsResultMnplAplyPnsta.getColumn(nRow, "rcptEndYmd"));
+	var today = parseInt(this.dsDateTime.getColumn(0, 'yyyymmdd'));
+	// 수정 여부
+	var prePage = 'Y';
+	// 반려상태 
+	var aprvSts = '3';
+	// 재신청 가능 여부 조회 set
+	this.dsChkReaplcn.setColumn(0, "mnplOtlId", this.dsResultMnplAplyPnsta.getColumn(nRow, "mnplOtlId"));
+	this.dsChkReaplcn.setColumn(0, "mnplSgScCd", this.dsResultMnplAplyPnsta.getColumn(nRow, "mnplSgScCd"));
+	this.dsChkReaplcn.setColumn(0, "pafrUserId", this.userDtcNo);
+	
+	// 버튼 클릭
+	if(nCell == 7)
+	{ 
+//      // 2024.01.23 채용중 상태의 사용자도 재신청할 수 있게끔 채용여부 체크로직 삭제 요청
+// 		// 채용여부에 따른 그리드 사용 여부 set
+// 		if(this.dsResultEmpmn.getColumn(0, 'mnplEmpmnYn') == "Y"){
+// 			this.divAdmit.form.grdAdmit.set_enable(false);
+// 			this.smfAlert('채용 상태 중으로 신청 및 변경이 불가합니다.');
+// 			return;
+// 		}
+		// 신청기한 (가능)
+		if(bgngYmd <= today && endYmd >= today) 
+		{
+			// 재전송 일때 
+			if (sVal == '0')
+			{
+				this.smfConfirm("인력풀 신청서를 재전송하시겠습니까?", function (result)
+				{
+					if(result.confirmResult){
+						this.dsRetrns.setColumn(0, "mnplReqsId", this.dsResultMnplAplyPnsta.getColumn(nRow, "mnplReqsId"));
+						this.dsRetrns.setColumn(0, "cddcScCd", this.smfGetCddcCode().substring(0, 3));
+						this.dsRetrns.setColumn(0, "pafrUserId", this.userDtcNo);
+						// 서비스 객체 생성
+						this.smfSearchService("selectRetrnsYn")
+						// 실행
+						.run()	
+						// 콜백
+						.callback(function(callbackParams){
+							if(callbackParams.errors) return;
+							if(this.dsResultRetrnsYn.getColumn(0, "resultRetrnsYn") == 'N') {
+								this.smfAlert("계약제인력풀 전송중입니다.");
+								return;
+							}
+							
+							// 서비스 객체 생성
+							this.smfSaveService("saveRetrns")
+							// 메세지 표시(미출력)
+							.showConfirm(false)
+							// 실행
+							.run()	
+							// 콜백
+							.callback(function(callbackParams){
+								if(callbackParams.errors) return;
+								
+								if ('SUCC' != this.dsResultRetrns.getColumn(0, "esbRsltCd"))
+								{
+									this.smfAlert("인력풀 신청에 실패했습니다.");
+									this.fnSearch();
+									return;
+								}
+								this.smfAlert("인력풀 신청이 완료되었습니다.");	
+								this.fnSearch();				
+							});
+						});
+						
+					}
+				});
+			}
+			// 미신청 상태 (작성중)
+			if (sVal == 'N') 
+			{
+				var params = {
+					prePage 		: prePage, 
+					mnplReqsId 		: this.dsResultMnplAplyPnsta.getColumn(nRow, "mnplReqsId"),
+					mnplOtlNm 		: this.dsResultMnplAplyPnsta.getColumn(nRow, "mnplOtlNm"),
+					mnplSgScCdNm 	: this.dsResultMnplAplyPnsta.getColumn(nRow, "mnplSgScCdNm"),
+					hopPlwkCnt 		: this.dsResultMnplAplyPnsta.getColumn(nRow, "hopPlwkCnt"),
+					hopSbjtCnt 		: this.dsResultMnplAplyPnsta.getColumn(nRow, "hopSbjtCnt"),
+					onslLtoiNeedYn 	: this.dsResultMnplAplyPnsta.getColumn(nRow, "onslLtoiNeedYn"),
+					tchQlfEsntlYn	: this.dsResultMnplAplyPnsta.getColumn(nRow, "tchQlfEsntlYn")
+			};
+			// 지원서 작성화면으로
+			this.smfSetWorkPage("pa_hrd_oew_ap::hrd_oewap02_m00.xfdl", params);
+			// 반려상태 (재신청)
+			} else if(sVal == '3') {
+				
+				// 서비스 객체 생성
+				this.smfSearchService("selectReaplcn")	
+					// 실행
+					.run()	
+					// 콜백
+					.callback(function(callbackParams){
+						if(callbackParams.errors) return;
+						// 신청가능 여부 확인
+						if ("Y" != this.dsReaplcnYn.getColumn(0, "reaplcnYn"))
+						{
+							this.smfAlert("작성중 또는 신청 및 승인된 인력풀이 존재합니다.");
+							return;
+						}
+						var params = {
+							aprvSts 		: aprvSts,
+							mnplReqsId 		: this.dsResultMnplAplyPnsta.getColumn(nRow, "mnplReqsId"),
+							mnplOtlId 		: this.dsResultMnplAplyPnsta.getColumn(nRow, "mnplOtlId"),
+							mnplOtlNm 		: this.dsResultMnplAplyPnsta.getColumn(nRow, "mnplOtlNm"),
+							mnplSgScCd 		: this.dsResultMnplAplyPnsta.getColumn(nRow, "mnplSgScCd"),
+							mnplSgScCdNm 	: this.dsResultMnplAplyPnsta.getColumn(nRow, "mnplSgScCdNm"),
+							hopPlwkCnt 		: this.dsResultMnplAplyPnsta.getColumn(nRow, "hopPlwkCnt"),
+							hopSbjtCnt 		: this.dsResultMnplAplyPnsta.getColumn(nRow, "hopSbjtCnt"),
+							onslLtoiNeedYn 	: this.dsResultMnplAplyPnsta.getColumn(nRow, "onslLtoiNeedYn"),
+							tchQlfEsntlYn	: this.dsResultMnplAplyPnsta.getColumn(nRow, "tchQlfEsntlYn")
+						};
+						// 지원서 작성화면으로
+						this.smfSetWorkPage("pa_hrd_oew_ap::hrd_oewap02_m00.xfdl", params);
+						});	
+					
+				
+			// 승인상태
+			} else if (sVal == '2')
+			{
+				this.smfConfirm('인력풀에 정보등재를 취소하시겠습니까? ', function(result)
+				{
+					if(result.confirmResult)
+					{	
+						// 승인 취소 버튼 
+						this.dsSearch.setColumn(0, "mnplReqsId", this.dsResultMnplAplyPnsta.getColumn(nRow, "mnplReqsId"));
+						this.dsResultMnplAplyPnsta.setColumn(nRow, "mnplAprvStsCd", '4');
+						this.dsResultMnplAplyPnsta.setColumn(nRow, "mnplAprvStsCdNm", '승인취소');
+						// 서비스 생성
+						this.smfSaveService("saveAprvSts")
+							// 메세지 표시 선택
+							.showConfirm(false)
+							.run()
+							.callback(function(callbackParams){
+							
+							if(callbackParams.errors){
+								return;
+							}
+							this.smfAlert("인력풀 등재가 취소되었습니다.");
+						});
+							
+					}
+					this.fnSearch();
+				});
+				
+			}
+		} else {
+			this.smfAlert('신청기간이 아닙니다.')
+			return;
+		}
+
+	} 	
+};
+
+]]></Script>
+  </Form>
+</FDL>

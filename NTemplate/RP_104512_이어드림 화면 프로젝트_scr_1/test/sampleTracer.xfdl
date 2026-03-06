@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleTracer" width="1280" height="745" titletext="온라인대기표(TRACER) 연동 샘플" onload="sampleTracer_onload">
+    <Layouts>
+      <Layout height="745" width="1280">
+        <Static id="sta00" taborder="0" text="온라인대기표(TRACER) 사용 샘플" left="6" top="3" width="514" height="50"/>
+        <Button id="btnTransaction" taborder="1" text="진입" left="57" top="341" width="184" height="36" onclick="btnTransaction_onclick"/>
+        <Button id="btnTransaction00" taborder="2" text="작업완료" left="57" top="401" width="184" height="36" onclick="btnTransaction00_onclick"/>
+        <Static id="sta01" taborder="3" text="도메인URL" left="42" top="70" width="170" height="33"/>
+        <Edit id="edtDomainUrl" taborder="4" left="231" top="64" width="295" height="38" value="localhost" text="localhost"/>
+        <Edit id="edtDomainPort" taborder="5" left="231" top="114" width="295" height="38" value="8080" text="8080"/>
+        <Static id="sta01_00" taborder="6" text="도메인 포트" left="42" top="120" width="170" height="33"/>
+        <Edit id="edtClientUrl" taborder="7" left="231" top="164" width="295" height="38" value="10.200.111.25" text="10.200.111.25"/>
+        <Static id="sta01_00_00" taborder="8" text="클라이언트아이피" left="42" top="170" width="170" height="33"/>
+        <Edit id="edtTargetUrl" taborder="9" left="231" top="214" width="295" height="38" value="test::sampleTracer.xfdl" text="test::sampleTracer.xfdl"/>
+        <Static id="sta01_00_00_00" taborder="10" text="이동하려는 페이지 URL" left="42" top="220" width="170" height="33"/>
+        <Button id="btn00" taborder="11" text="btn00" left="589" top="136" width="71" height="37"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleTracer.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.8.4
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.8.4     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+include "lib::trc_script.xjs";
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.sampleTracer_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//this.smfInitForm();
+	
+	// 
+	//this.TracerIp1 = "172.16.12.89"; //
+	
+	trace("sampleTracer_onload ===> Start");
+	
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+
+this.fnTracerCallback = function(bReturn,sPageUrl)
+{
+	trace("fnTracerCallback=== bReturn=["+bReturn+"],sPageUrl=["+sPageUrl+"]");
+}
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+// 진입
+this.btnTransaction_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var oOption = {
+						workForm    : this                          // 작업할 Form(callback함수가 있는 form. 예, this )
+					,	domainUrl   : this.edtDomainUrl.value       // 도메인URL(예, www.neis.go.kr)
+					,	domainPort  : this.edtDomainPort.value      // 도메인Port(예, 80)
+					,	clientIp    : this.edtClientUrl.value       // 클라이언트IP(예, 172.10.10.10)
+					,	targetUrl   : this.edtTargetUrl.value       // 이동할 화면URL(예, "sampleTracer.xfdl")
+					,	callback    : this.fnTracerCallback         // 전달받을 callback함수
+	              };
+
+	this.smfSetTracerInput("selectRprsTelno", oOption);	
+	//this.fnSearch();
+	//trace("btnTransaction_onclick");
+};
+
+// 작업종료
+this.btnTransaction00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var oOption = {
+						workForm    : this                          // 작업할 Form(callback함수가 있는 form. 예, this )
+					,	domainUrl   : this.edtDomainUrl.value       // 도메인URL(예, www.neis.go.kr)
+					,	domainPort  : this.edtDomainPort.value      // 도메인Port(예, 80)
+					,	clientIp    : this.edtClientUrl.value       // 클라이언트IP(예, 172.10.10.10)
+					,	targetUrl   : this.edtTargetUrl.value       // 이동할 화면URL(예, "sampleTracer.xfdl")
+					,	callback    : this.fnTracerCallback         // 전달받을 callback함수
+	              };
+				  
+	this.smfSetTracerOutput("selectRprsTelno", oOption);		
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectRprsTelno</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsRprsTelno=dsRprsTelno</Col>
+            <Col id="url">sqa_cmm_cm02_001.do</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="pbancNtcScCd" type="STRING" size="256"/>
+          <Column id="pbancNtcDtlCd" type="STRING" size="256"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pbancNtcScCd"/>
+            <Col id="pbancNtcDtlCd"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRprsTelno" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="rprsTelno" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

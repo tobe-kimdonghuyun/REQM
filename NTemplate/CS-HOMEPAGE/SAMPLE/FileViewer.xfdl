@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="FileViewer" classname="FileViewer" left="0" top="0" width="1027" height="767" onload="FileViewer_onload">
+    <Layouts>
+      <Layout>
+        <Static id="Static00" taborder="1" text="X" left="991" top="7" height="32" style="font:bold 20 Gulim;" onclick="Static00_onclick" width="27" visible="false"/>
+        <Grid id="Grid00" taborder="2" useinputpanel="false" left="0.88%" top="3" right="50%" height="83" binddataset="ds_File" oncellclick="Grid00_oncellclick" visible="false">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="484"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="FILE_NAME"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:FILE_NAME"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <TextArea id="TextArea00" taborder="3" left="10" top="10" right="10" bottom="10"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_File" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="FM_SEQ" type="BIGDECIMAL" size="19"/>
+          <Column id="FILE_NAME" type="STRING" size="255"/>
+          <Column id="SAVE_FILE_NAME" type="STRING" size="255"/>
+          <Column id="SAVE_PATH" type="STRING" size="255"/>
+          <Column id="SOURCE_CD" type="STRING" size="255"/>
+          <Column id="SOURCE_SEQ" type="BIGDECIMAL" size="19"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRtn">
+        <ColumnInfo>
+          <Column id="contents" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="TextArea00" propid="value" datasetid="dsRtn" columnid="contents"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[var ext_Array = new Array("xml","xfdl","js","xjs","html","jsp","txt","xadl","asp","csv", "css","xcss");
+this.Static00_onclick = function(obj:Static,  e:nexacro.ClickEventInfo)
+{
+	this.close();
+}
+
+this.FileViewer_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+// 	//this.webBrowResult.set_url();
+// 	
+// 	this.ds_File.copyData(this.getOwnerFrame().dsNM);
+// 	//alert(this.getOwnerFrame().nRow);
+// 	trace(this.ds_File.saveXML());
+// 	
+// 	var ext = this.get_FlieExt(this.ds_File.getColumn(this.getOwnerFrame().nRow,"SAVE_FILE_NAME"));
+// 	var chk = false;
+// 	for(var i=0; i<ext_Array.length; i++){
+// 		if( ext_Array[i] == ext ) {
+// 			chk = true;		
+// 			break;
+// 		}	
+// 	}
+// 
+// 	if( !chk ) {
+// 		alert("xml, xfdl, xadl, js, xjs, css, xcss, html, jsp, txt, asp, csv 확장자만 가능합니다.");
+// 		return;
+// 	}
+// 	
+// 	var arg = "path="+this.ds_File.getColumn(this.getOwnerFrame().nRow,"SAVE_PATH")+//.replace("E:","D:")+
+// 	          " file="+this.ds_File.getColumn(this.getOwnerFrame().nRow,"SAVE_FILE_NAME") + 
+// 	          " realFileNm="+this.ds_File.getColumn(this.getOwnerFrame().nRow,"FILE_NAME");
+// 	trace(arg);
+// 	this.transaction( "Select" ,"SVC_JSP::Next_JSP/FileDownload/FileRead.jsp","","dsRtn=output",arg,"callbackFunction");
+// 
+// 	return;
+// 
+// 	
+// 	var strUrl = application.gv_DomainInfo  
+// 	+  "Next_JSP/FileDownload/FileRead.jsp?path="
+// 	+encodeURIComponent(this.ds_File.getColumn(this.getOwnerFrame().nRow,"SAVE_PATH"))//.replace("E:","D:"))
+// 	+ "&file="
+// 	+ encodeURIComponent(this.ds_File.getColumn(this.getOwnerFrame().nRow,"SAVE_FILE_NAME")) 
+// 	+ "&realFileNm='"
+// 	+encodeURIComponent(this.ds_File.getColumn(this.getOwnerFrame().nRow,"FILE_NAME"));
+// 	trace(strUrl);
+// 	this.webBrowResult.set_url(strUrl);
+}
+
+this.Grid00_oncellclick = function(obj:Grid, e:nexacro.GridClickEventInfo)
+{ 
+// 	var ext = this.get_FlieExt(this.ds_File.getColumn(e.row,"SAVE_FILE_NAME"));
+// 	var chk = false;
+// 	for(var i=0; i<ext_Array.length; i++){
+// 		if( ext_Array[i] == ext ) {
+// 			chk = true;		
+// 			break;
+// 		}	
+// 	}
+// 
+// 	if( !chk ) {
+// 		alert("xml, xfdl, xadl, js, xjs, css, xcss, html, jsp, txt, asp, csv 확장자만 가능합니다.");
+// 		return;
+// 	}
+// 	
+// 	var arg = "path="+this.ds_File.getColumn(e.row,"SAVE_PATH").replace("E:","D:")+
+// 	          " file="+this.ds_File.getColumn(e.row,"SAVE_FILE_NAME") + 
+// 	          " realFileNm="+this.ds_File.getColumn(e.row,"FILE_NAME");
+// 	trace(arg);
+// 	this.transaction( "Select" ,"SVC_JSP::Next_JSP/FileDownload/FileRead.jsp","","dsRtn=output",arg,"callbackFunction");
+// 
+// 	return;
+// 
+// 	
+// 	var strUrl = application.gv_DomainInfo  +  "Next_JSP/FileDownload/FileRead.jsp?path="+encodeURIComponent(this.ds_File.getColumn(e.row,"SAVE_PATH").replace("E:","D:"))+ "&file="+ encodeURIComponent(this.ds_File.getColumn(e.row,"SAVE_FILE_NAME")) + "&realFileNm='"+encodeURIComponent(this.ds_File.getColumn(e.row,"FILE_NAME"));
+// 	trace(strUrl);
+// 	this.webBrowResult.set_url(strUrl);
+}
+
+
+this.get_FlieExt = function(filename)
+{
+	var fileSplit = filename.split('.');
+	var fileExt = '';
+	if (fileSplit.length > 1) {
+		fileExt = fileSplit[fileSplit.length - 1];
+	} 
+	return fileExt;
+}]]></Script>
+  </Form>
+</FDL>

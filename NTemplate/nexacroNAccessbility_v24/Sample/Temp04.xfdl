@@ -1,0 +1,714 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="orgUserMgFm" width="1280" height="850" titletext="회원관리" onload="form_onload">
+    <Layouts>
+      <Layout height="850" width="1280" screenid="Desktop_screen">
+        <Static id="Static00" taborder="0" left="0" top="5" width="30" height="40" cssclass="btn_WF_Bookmark" accessibilitylabel="즐겨찾기 비활성화" background="url('theme://images/btn_WF_Bookmark.png') no-repeat center center"/>
+        <Static id="Static01" taborder="1" text="메인&gt;&lt;fc v='#000000'&gt;회원관리&lt;/fc&gt;" left="Static00:0" top="5" width="140" height="40" usedecorate="true" cssclass="sta_WF_Location" accessibilityrole="heading2"/>
+        <Div id="divSearch" taborder="2" left="0" top="50" height="50" cssclass="div_WF_Search" text="" right="0" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <Static id="staTitle00" taborder="0" text="사용자 ID" left="0" top="12" width="90" height="24" cssclass="sta_WF_SchLabel" fittocontents="width" accessibilitylabel="필수"/>
+              <Edit id="edtUserId" taborder="1" left="staTitle00:0" top="12" width="140" height="24" accessibilitylabel="필수입력 사용자 ID" initvalueid="iv_EditE"/>
+              <Static id="staTitle01" taborder="2" text="사번/ID " left="edtUserId:0" top="12" width="83" height="24" cssclass="sta_WF_SchLabel" fittocontents="width"/>
+              <Edit id="edtEmpNo" taborder="3" left="staTitle01:0" top="12" width="140" height="24" accessibilitylabel="사번/ID " initvalueid=""/>
+              <Static id="staTitle02" taborder="4" text="사용자명" left="edtEmpNo:0" top="12" width="86" height="24" cssclass="sta_WF_SchLabel"/>
+              <Edit id="edtUserNm" taborder="5" left="staTitle02:0" top="12" width="140" height="24" accessibilitylabel="사용자명" initvalueid=""/>
+              <Static id="staTitle03" taborder="6" text="재직상태" left="edtUserNm:0" top="12" width="86" height="24" cssclass="sta_WF_SchLabel"/>
+              <Combo id="cboHoofStat" taborder="7" left="staTitle03:0" top="12" width="80" height="24" index="1" initvalueid="iv_Combo0" innerdataset="dsHoof" codecolumn="CODE" datacolumn="NAME" text="재직" value="01" accessibilitylabel="재직상태"/>
+              <Button id="btnSearch" taborder="8" text="조회" top="10" width="48" height="28" cssclass="btn_WF_Search" right="25" onclick="divSearch_btnSearch_onclick"/>
+            </Layout>
+            <Layout name="mobile">
+              <Edit id="edtEmpNo" left="20" top="150" height="50" right="20"/>
+              <Static id="staTitle00" height="50" left="0" top="0" width="190"/>
+              <Button id="btnSearch" height="60" left="0" right="0" top="425"/>
+              <Edit id="edtUserId" height="50" left="20" top="50" right="20"/>
+              <Static id="staTitle01" height="50" left="0" top="100" width="190"/>
+              <Static id="staTitle02" height="50" left="0" top="199" text="사용자명" width="190"/>
+              <Edit id="edtUserNm" height="50" left="20" top="249" right="20"/>
+              <Static id="staTitle03" height="50" left="0" top="299" width="190"/>
+              <Combo id="cboHoofStat" height="50" left="20" top="349" right="20" text="재직"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staTitle01" taborder="3" text="사용자" left="0" width="200" height="43" top="divSearch:0" cssclass="sta_WF_Title" accessibilityrole="heading3"/>
+        <Div id="divCmmnBtn" taborder="4" text="div00" top="110" width="580" right="0" height="28" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <Button id="btnSearchDeptUserList" taborder="0" text="부서별사용자조회" top="0" height="28" fittocontents="width" right="232" width="122" onclick="divCmmnBtn_btnSearchDeptUserList_onclick" visible="true" accessibilitylabel="팝업"/>
+              <Button id="btnExcelUpload" taborder="1" text="엑셀업로드" top="0" height="28" fittocontents="width" cssclass="btn_WF_ExcelUp" right="122" width="107" onclick="divCmmnBtn_btnExcelUpload_onclick"/>
+              <Button id="btnExcelDown" taborder="2" text="엑셀다운로드" top="0" width="119" height="28" fittocontents="width" cssclass="btn_WF_ExcelSave" onclick="divCmmnBtn_btnExcelDown_onclick" right="0"/>
+            </Layout>
+            <Layout name="mobile">
+              <Button id="btnSearchDeptUserList" text="부서별사용자조회" top="0" height="60" left="0" right="0" fittocontents="none" visible="true"/>
+              <Button id="btnExcelUpload" top="70" height="60" left="0" right="0" fittocontents="none"/>
+              <Button id="btnExcelDown" top="btnExcelUpload:10" height="60" left="0" right="0" fittocontents="none"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdList" taborder="5" left="0" top="staTitle01:0" right="0" binddataset="dsList" autofittype="col" autoenter="select" uFunction="filter,sort,!colfix,!initial,find" minheight="250" maxheight="" height="411" accessibilitylabel="사용자 ID, 사번 ID, 사용자명, 부서, 재직상태, 수정 버튼 그리드표" selecttype="cell" cellclickbound="cell" oncellclick="grdList_oncellclick" showcellselection="true">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="사용자 ID"/>
+                <Cell col="1" text="사번/ID"/>
+                <Cell col="2" text="사용자명"/>
+                <Cell col="3" text="부서"/>
+                <Cell col="4" text="재직상태"/>
+                <Cell col="5" text="수정"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:USER_ID" edittype="normal"/>
+                <Cell col="1" text="bind:EMP_NO" edittype="text"/>
+                <Cell col="2" text="bind:KORN_NM" edittype="text"/>
+                <Cell col="3" text="bind:DEPT_NM" edittype="combo" displaytype="combocontrol" combodataset="dsCombo" combocodecol="cd" combodatacol="data"/>
+                <Cell col="4" text="bind:HOOF_STAT_CD" combodataset="dsHoof" combocodecol="CODE" combodatacol="NAME" displaytype="combotext" edittype="combo"/>
+                <Cell col="5" text="수정" displaytype="buttoncontrol" edittype="button" accessibilitylabel="bind:USER_ID"/>
+              </Band>
+            </Format>
+            <Format id="default_00">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="50" band="head"/>
+                <Row size="50"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="사용자 ID"/>
+                <Cell col="1" text="사번/ID"/>
+                <Cell col="2" text="사용자명"/>
+                <Cell col="3" text="부서"/>
+                <Cell col="4" text="재직상태"/>
+                <Cell col="5" text="수정"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:USER_ID"/>
+                <Cell col="1" text="bind:EMP_NO"/>
+                <Cell col="2" text="bind:KORN_NM"/>
+                <Cell col="3" text="bind:DEPT_NM"/>
+                <Cell col="4" text="bind:HOOF_STAT_CD" combodataset="dsHoof" combocodecol="CODE" combodatacol="NAME" displaytype="combotext"/>
+                <Cell col="5" text="수정" displaytype="buttoncontrol" edittype="button" accessibilitydescription="팝업"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="staTitle00" taborder="6" text="사용자 상세" left="0" right="20" cssclass="sta_WF_SubTitle" height="47" top="grdList:0" accessibilityrole="heading3"/>
+        <Div id="divDetail" taborder="7" text="div00" left="0" right="0" height="199" top="staTitle00:0" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <Static id="staBg01" taborder="0" left="0" top="0" height="34" cssclass="sta_WF_LabelBg" right="0" text="" onclick="Static_onclick" accessibilityenable="false"/>
+              <Static id="staBg02" taborder="1" left="0" top="33" height="34" cssclass="sta_WF_LabelBg" right="0" accessibilityenable="false"/>
+              <Static id="staBg03" taborder="2" left="0" top="staBg02:-1" height="34" cssclass="sta_WF_LabelBg" right="0" onclick="Static_onclick" accessibilityenable="false"/>
+              <Static id="staBg04" taborder="3" left="0" top="staBg03:-1" height="34" cssclass="sta_WF_LabelBg" right="0" onclick="Static_onclick" accessibilityenable="false" text=""/>
+              <Static id="staBg05" taborder="4" left="0" top="staBg04:-1" height="34" cssclass="sta_WF_LabelBg" right="0" onclick="Static_onclick" accessibilityenable="false"/>
+              <Static id="staBg06" taborder="5" left="0" top="staBg05:-1" height="34" cssclass="sta_WF_LabelBg" right="0" text="" onclick="Static_onclick" accessibilityenable="false"/>
+              <Static id="staTitle01" taborder="6" text="사용자 ID" left="0" top="0" width="90" height="34" cssclass="sta_WF_Label" onclick="Static_onclick" accessibilitylabel="필수"/>
+              <Edit id="edtUserId" taborder="7" left="95" top="5" width="130" height="24" readonly="true" imemode="alpha" maxlength="20" inputtype="digit,english" accessibilitylabel="사용자 ID"/>
+              <Static id="staTitle05" taborder="8" text="사번/ID" left="230" top="0" width="90" height="34" cssclass="sta_WF_Label" onclick="Static_onclick" accessibilitylabel="필수"/>
+              <Edit id="edtEmpNo" taborder="9" left="325" top="5" width="130" height="24" maxlength="10" inputtype="digit,alpha" cssclass="essential" accessibilitylabel="필수입력 사번/ID" initvalueid="iv_EditE"/>
+              <Static id="staTitle02" taborder="10" text="비밀번호" left="459" top="0" width="110" height="34" cssclass="sta_WF_Label" onclick="Static_onclick" accessibilitylabel="필수"/>
+              <Edit id="edtPassword" taborder="11" left="573" top="5" width="130" height="24" cssclass="essential" password="true" imemode="alpha" maxlength="30" accessibilitylabel="필수입력 비밀번호" initvalueid="iv_EditE"/>
+              <Static id="staTitle03" taborder="12" text="사용자명" left="707" top="0" width="110" height="34" cssclass="sta_WF_Label" onclick="Static_onclick" accessibilitylabel="필수"/>
+              <Edit id="edtUserNm" taborder="13" left="821" top="5" height="24" imemode="hangul" maxlength="30" cssclass="essential" width="130" accessibilitylabel="필수입력 사용자명" initvalueid="iv_EditE"/>
+              <Static id="staTitle04" taborder="14" text="영문명" left="0" top="33" width="90" height="34" cssclass="sta_WF_Label" onclick="Static_onclick"/>
+              <Edit id="edtUserNmEng" taborder="15" left="95" top="38" height="24" imemode="alpha" maxlength="30" width="130" accessibilitylabel="영문명"/>
+              <Static id="staTitle06" taborder="16" text="부서" left="230" top="33" width="90" height="34" cssclass="sta_WF_Label" onclick="Static_onclick"/>
+              <Edit id="Edit00" taborder="17" left="325" top="39" width="130" height="24" accessibilitylabel="부서"/>
+              <Static id="staTitle07" taborder="18" text="직원구분" left="459" top="33" width="110" height="34" cssclass="sta_WF_Label" onclick="Static_onclick"/>
+              <Combo id="cboUserFlagCd" taborder="19" left="573" top="38" width="130" height="24" onitemchanged="cbo_onitemchange" accessibilitylabel="직원구분" initvalueid="iv_Combo0" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">01</Col>
+                      <Col id="datacolumn">Y</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">02</Col>
+                      <Col id="datacolumn">N</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="staTitle08" taborder="20" text="직급" left="707" top="33" width="110" height="34" cssclass="sta_WF_Label" onclick="Static_onclick"/>
+              <Combo id="cboWkgdCd" taborder="21" left="821" top="38" height="24" onitemchanged="cbo_onitemchange" width="130" accessibilitylabel="직급" initvalueid="iv_Combo0" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">01</Col>
+                      <Col id="datacolumn">사원</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">02</Col>
+                      <Col id="datacolumn">대리</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">03</Col>
+                      <Col id="datacolumn">과장</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">차장</Col>
+                      <Col id="codecolumn">04</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">부장</Col>
+                      <Col id="codecolumn">05</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="staTitle09_00" taborder="22" text="직책" left="0" top="66" width="90" height="34" cssclass="sta_WF_Label" onclick="Static_onclick"/>
+              <Combo id="cboWkdtCd" taborder="23" left="95" top="71" height="24" onitemchanged="cbo_onitemchange" width="130" accessibilitylabel="직책" initvalueid="iv_Combo0" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">00</Col>
+                      <Col id="datacolumn">없음</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">01</Col>
+                      <Col id="datacolumn">팀장</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">02</Col>
+                      <Col id="datacolumn">그룹장</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="staTitle09" taborder="24" text="직종" left="230" top="66" width="90" height="34" cssclass="sta_WF_Label" onclick="Static_onclick"/>
+              <Combo id="cboOccuCd" taborder="25" left="325" top="71" height="24" onitemchanged="cbo_onitemchange" width="130" accessibilitylabel="직종" initvalueid="iv_Combo0" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">01</Col>
+                      <Col id="datacolumn">사무직</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">02</Col>
+                      <Col id="datacolumn">현장직</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="staTitle10" taborder="26" text="담당업무" left="459" top="66" width="110" height="34" cssclass="sta_WF_Label" onclick="Static_onclick"/>
+              <Edit id="edtChagWork" taborder="27" top="71" height="24" left="573" width="130" accessibilitylabel="담당업무"/>
+              <Static id="staTitle08_00" taborder="28" text="테마" left="707" top="66" width="110" height="34" cssclass="sta_WF_Label" onclick="Static_onclick"/>
+              <Combo id="cboThemId" taborder="29" left="821" top="71" height="24" onitemchanged="cbo_onitemchange" width="130" accessibilitylabel="테마" initvalueid="iv_Combo0" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">01</Col>
+                      <Col id="datacolumn">Light</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">02</Col>
+                      <Col id="datacolumn">Dark</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="staTitle11" taborder="30" text="입사일자" left="0" top="99" width="90" height="34" cssclass="sta_WF_Label" onclick="Static_onclick"/>
+              <Calendar id="calJoinDate" taborder="31" left="95" top="104" width="130" height="24" dateformat="yyyy-MM-dd" accessibilitylabel="입사일자" initvalueid="iv_Calendar0"/>
+              <Static id="staTitle12" taborder="32" text="퇴사일자" left="230" top="99" width="90" height="34" cssclass="sta_WF_Label" onclick="Static_onclick"/>
+              <Calendar id="calRetrDate" taborder="33" left="325" top="104" width="130" height="24" dateformat="yyyy-MM-dd" accessibilitylabel="퇴사일자" initvalueid="iv_Calendar0"/>
+              <Static id="staTitle13" taborder="34" text="재직상태" left="459" top="99" width="110" height="34" cssclass="sta_WF_Label" onclick="Static_onclick" accessibilitylabel="필수"/>
+              <Combo id="cboHoofStatCd" taborder="35" left="573" top="104" width="130" height="24" cssclass="essential" accessibilitylabel="필수입력 재직상태" initvalueid="iv_ComboE" innerdataset="dsHoof" codecolumn="CODE" datacolumn="NAME"/>
+              <Static id="staTitle14" taborder="36" text="생년월일" left="707" top="99" width="110" height="34" cssclass="sta_WF_Label" onclick="Static_onclick"/>
+              <Calendar id="calBirDt" taborder="37" left="staTitle14:4" top="104" height="24" width="130" accessibilitylabel="생년월일" initvalueid="iv_Calendar0"/>
+              <Static id="staTitle15" taborder="38" text="핸드폰번호" left="0" top="132" width="90" height="34" cssclass="sta_WF_Label" onclick="Static_onclick"/>
+              <Combo id="cboPhone1" taborder="39" text="010" left="95" top="137" width="60" height="24" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" value="010" index="0" accessibilitylabel="핸드폰번호 앞번호" initvalueid="iv_Combo0">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">010</Col>
+                      <Col id="datacolumn">010</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">011</Col>
+                      <Col id="datacolumn">011</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">016</Col>
+                      <Col id="datacolumn">016</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">018</Col>
+                      <Col id="datacolumn">018</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">019</Col>
+                      <Col id="datacolumn">019</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="staDash1" taborder="40" text="-" left="155" top="137" width="12" height="24" cssclass="sta_WF_Center" onclick="Static_onclick" textAlign="center" accessibilityenable="false"/>
+              <Edit id="edtPhone2" taborder="41" left="167" top="137" width="60" height="24" value="1234" text="1234" maxlength="4" inputtype="digit" accessibilitylabel="핸드폰번호 중간번호"/>
+              <Static id="staDash2" taborder="42" text="-" left="227" top="137" width="12" height="24" cssclass="sta_WF_Center" onclick="Static_onclick" accessibilityenable="false"/>
+              <Edit id="edtPhone3" taborder="43" left="239" top="137" width="60" height="24" value="5678" text="5678" maxlength="4" inputtype="digit" accessibilitylabel="핸드폰번호 끝번호"/>
+              <Static id="staTitle16" taborder="44" text="이메일" left="459" top="132" width="110" height="34" cssclass="sta_WF_Label" onclick="Static_onclick"/>
+              <Edit id="edtEmail" taborder="45" left="573" top="137" height="24" imemode="alpha" width="130" accessibilitylabel="이메일 아이디"/>
+              <Static id="Static00" taborder="46" text="@" left="edtEmail:0" top="137" width="20" height="24" cssclass="sta_WF_Center" accessibilityenable="false"/>
+              <Edit id="Edit02" taborder="47" left="Static00:0" top="137" width="228" height="24" accessibilitylabel="이메일 도메인"/>
+              <Static id="staTitle17" taborder="48" text="주소" left="0" top="165" width="90" height="34" cssclass="sta_WF_Label" onclick="Static_onclick"/>
+              <Edit id="Edit01" taborder="49" left="95" height="24" top="171" width="130" accessibilitylabel="주소 우편번호"/>
+              <Edit id="Edit03" taborder="50" left="230" top="171" height="24" width="520" accessibilitylabel="주소"/>
+              <Edit id="Edit04" taborder="51" left="754" top="171" height="24" right="5" accessibilitylabel="주소 상세주소"/>
+            </Layout>
+            <Layout name="mobile">
+              <Static id="staBg01" left="0" top="0" cssclass="sta_WF_DetailBg" text="" right="0" bottom="0"/>
+              <Static id="staBg02" height="31" left="0" top="48" visible="false" right="470"/>
+              <Static id="staBg03" height="31" left="0" top="89" text="" visible="false" right="470"/>
+              <Static id="staBg04" height="31" left="0" top="staBg03:3" text="" visible="false" right="470"/>
+              <Static id="staBg05" height="31" left="0" top="staBg04:3" visible="false" right="470"/>
+              <Static id="staBg06" height="31" left="0" top="staBg05:3" visible="false" right="470"/>
+              <Static id="staTitle01" height="50" left="25" top="0" right="25"/>
+              <Edit id="edtUserId" height="50" left="25" top="50" right="25"/>
+              <Static id="staTitle02" height="50" left="25" top="200" right="25"/>
+              <Edit id="edtPassword" height="50" left="25" top="250" right="25"/>
+              <Static id="staTitle03" height="50" left="25" top="300" right="25"/>
+              <Static id="staTitle06" height="50" left="25" top="500" right="25"/>
+              <Static id="staTitle07" height="50" left="25" top="600" right="25"/>
+              <Combo id="cboUserFlagCd" height="50" left="25" top="650" right="25"/>
+              <Static id="staTitle08" height="50" left="25" top="700" right="25"/>
+              <Static id="staTitle09" height="50" left="25" top="900" right="25"/>
+              <Combo id="cboOccuCd" height="50" left="25" top="950" right="25"/>
+              <Static id="staTitle10" height="50" left="25" top="1000" right="25"/>
+              <Edit id="edtChagWork" height="50" left="25" top="1050" right="25"/>
+              <Static id="staTitle13" height="50" left="25" top="1400" right="25"/>
+              <Combo id="cboHoofStatCd" height="50" left="25" top="1450" right="25"/>
+              <Static id="staTitle14" height="50" left="25" top="1500" right="25"/>
+              <Static id="staTitle16" height="50" left="25" top="1700" width="190" text="이메일"/>
+              <Edit id="edtEmail" height="50" left="25" top="1750" right="267"/>
+              <Static id="staTitle17" height="50" left="25" top="1807" right="25"/>
+              <Static id="staTitle15" height="50" left="25" top="1600" right="25"/>
+              <Combo id="cboPhone1" height="50" left="25" top="1650" right="315" text="010" value="010" index="0"/>
+              <Static id="staDash1" height="50" top="1650" textAlign="center" right="300" width="15"/>
+              <Edit id="edtPhone2" height="50" top="1650" width="130" right="170"/>
+              <Static id="staDash2" height="50" top="1650" width="15" textAlign="center" right="155"/>
+              <Edit id="edtPhone3" height="50" top="1650" width="130" right="25"/>
+              <Static id="staTitle11" height="50" left="25" top="1200" text="입사일자" right="25"/>
+              <Calendar id="calJoinDate" height="50" left="25" top="1250" right="25"/>
+              <Static id="staTitle12" height="50" left="25" top="1300" right="25" text="퇴사일자"/>
+              <Calendar id="calRetrDate" height="50" left="25" top="1350" right="25"/>
+              <Static id="staTitle09_00" height="50" left="25" top="800" right="25"/>
+              <Combo id="cboWkdtCd" height="50" left="25" top="850" right="25"/>
+              <Static id="staTitle04" height="50" left="25" top="400" right="25"/>
+              <Edit id="edtUserNmEng" height="50" left="25" top="450" right="25"/>
+              <Static id="staTitle05" height="50" left="25" top="100" right="25"/>
+              <Edit id="edtEmpNo" height="50" left="25" top="150" right="25"/>
+              <Static id="staTitle08_00" height="50" left="25" top="1100" right="25"/>
+              <Edit id="edtUserNm" height="50" left="25" top="350" right="25"/>
+              <Combo id="cboWkgdCd" height="50" left="25" top="750" right="25"/>
+              <Calendar id="calBirDt" height="50" left="25" top="1550" right="25"/>
+              <Combo id="cboThemId" height="50" left="25" top="1150" right="25"/>
+              <Edit id="Edit00" height="50" left="25" top="550" right="25"/>
+              <Edit id="Edit01" height="50" left="25" top="1857" right="25"/>
+              <Static id="Static00" top="1750" width="35" height="50" right="232"/>
+              <Edit id="Edit02" top="1750" width="207" height="50" right="25"/>
+              <Edit id="Edit03" left="25" top="1917" height="50" right="25"/>
+              <Edit id="Edit04" left="25" top="1977" height="50" right="25"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="zStaLastComponent" taborder="8" left="0" top="divDetail:0" width="50" height="50" accessibilityenable="false"/>
+      </Layout>
+      <Layout height="3520" name="mobile" width="480" screenid="Mobile_screen">
+        <Div id="divSearch" left="20" top="51" height="487" right="20" taborder="2"/>
+        <Static id="staTitle01" left="25" top="divSearch:40" width="300" height="50" taborder="3"/>
+        <Div id="divCmmnBtn" top="staTitle01:10" height="200" left="25" right="25" taborder="5"/>
+        <Grid id="grdList" left="25" top="divCmmnBtn:20" height="411" right="25" formatid="default_00" accessibilitylabel="사용자 ID, 사번 ID, 사용자명, 부서, 재직상태, 수정 버튼 그리드표" taborder="4"/>
+        <Static id="staTitle00" left="25" top="grdList:40" height="50" width="300" taborder="6"/>
+        <Div id="divDetail" left="0" top="staTitle00:10" text="div00" width="480" height="2052" taborder="7"/>
+        <Static id="zStaLastComponent" top="divDetail:0" left="0" height="50" width="50" taborder="8"/>
+        <Static id="Static00" taborder="0" left="250" top="5" width="40" height="41" visible="false" accessibilityenable="false"/>
+        <Static id="Static01" taborder="1" left="Static00:10" top="15" width="140" height="31" visible="false" accessibilityenable="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  Nexacro Accessibility
+*  @FileName 	Temp04.xfdl 
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2022.12.15
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.12.15     		TOBESOFT		 		최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = this.gfnGetApplication();
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(obj);
+
+	//readonly css 추가 (접근성 대응)
+	this.fnSetReadonlyCss(this);
+};
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+this.fnSetReadonlyCss = function(obj)
+{
+	var nCnt = obj.components.length;
+	for (var i = 0; i < nCnt; i++) 
+	{
+		var comp = obj.components[i];
+		
+		if(comp instanceof Div) {
+			this.fnSetReadonlyCss(comp.form);
+			continue;
+		}
+		
+		if (comp.readonly) {
+			comp.addEventHandler("onsetfocus",this.readonly_setfocus,obj);
+			comp.addEventHandler("onkillfocus",this.readonly_killfocus,obj);
+		}
+	}
+}
+
+this.readonly_setfocus = function(obj, e)
+{
+	obj.cssclass = (obj.cssclass? obj.cssclass+"," : "") + "readonly";
+}
+
+this.readonly_killfocus = function(obj, e)
+{
+	obj.cssclass = obj.cssclass.replace(",readonly","").replace("readonly","");
+}
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.grdList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+  if (e.cell == 5) {
+	this.dsInfo.clearData();
+	var newRow = this.dsInfo.addRow();
+	var nRow = this.dsList.rowposition;
+	this.dsInfo.copyRow(newRow, this.dsList, nRow);
+  }
+};
+
+
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+          <Column id="EMP_NO" type="STRING" size="256"/>
+          <Column id="HOOF_STAT_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList_" canrowposchange="dsList_canrowposchange" cancolumnchange="dsList_cancolumnchange">
+        <ColumnInfo>
+          <Column id="사용자ID" type="STRING" size="256"/>
+          <Column id="사번" type="STRING" size="256"/>
+          <Column id="사용자명" type="STRING" size="256"/>
+          <Column id="부서" type="STRING" size="256"/>
+          <Column id="재직상태" type="STRING" size="256"/>
+          <Column id="수정" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="사용자ID">20221221</Col>
+            <Col id="사번">112345</Col>
+            <Col id="사용자명">홍길동</Col>
+            <Col id="부서">컨설팅사업 1팀</Col>
+            <Col id="재직상태">재직중</Col>
+          </Row>
+          <Row>
+            <Col id="사번">122345</Col>
+            <Col id="사용자ID">20221222</Col>
+            <Col id="사용자명">김철수</Col>
+            <Col id="부서">컨설팅사업 1팀</Col>
+            <Col id="재직상태">재직중</Col>
+          </Row>
+          <Row>
+            <Col id="사번">123345</Col>
+            <Col id="사용자ID">20221223</Col>
+            <Col id="사용자명">이미애</Col>
+            <Col id="부서">컨설팅사업 1팀</Col>
+            <Col id="재직상태">퇴사</Col>
+          </Row>
+          <Row>
+            <Col id="사번">123445</Col>
+            <Col id="사용자ID">20221224</Col>
+            <Col id="사용자명">김영철</Col>
+            <Col id="부서">디자인팀</Col>
+            <Col id="재직상태">재직중</Col>
+          </Row>
+          <Row>
+            <Col id="사번">123455</Col>
+            <Col id="사용자ID">20221225</Col>
+            <Col id="사용자명">이영희</Col>
+            <Col id="부서">디자인팀</Col>
+            <Col id="재직상태">퇴사</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCheckUserId">
+        <ColumnInfo>
+          <Column id="USER_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCheckResult"/>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="EMP_NO" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="PASSWORD" type="STRING" size="256"/>
+          <Column id="KORN_NM" type="STRING" size="256"/>
+          <Column id="ENGL_NM" type="STRING" size="256"/>
+          <Column id="DEPT_CD" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="USER_FLAG_CD" type="STRING" size="256"/>
+          <Column id="WKGD_CD" type="STRING" size="256"/>
+          <Column id="WKDT_CD" type="STRING" size="256"/>
+          <Column id="OCCU_CD" type="STRING" size="256"/>
+          <Column id="CHAG_WORK" type="STRING" size="256"/>
+          <Column id="JOIN_DATE" type="STRING" size="256"/>
+          <Column id="RETR_DATE" type="STRING" size="256"/>
+          <Column id="HOOF_STAT_CD" type="STRING" size="256"/>
+          <Column id="REGI_NUMB" type="STRING" size="256"/>
+          <Column id="BIR_DT" type="STRING" size="256"/>
+          <Column id="CELL_NUMB" type="STRING" size="256"/>
+          <Column id="PHONE1" type="STRING" size="256"/>
+          <Column id="PHONE2" type="STRING" size="256"/>
+          <Column id="PHONE3" type="STRING" size="256"/>
+          <Column id="EMAIL" type="STRING" size="256"/>
+          <Column id="ZIP_NUMB" type="STRING" size="256"/>
+          <Column id="BASC_ADDR" type="STRING" size="256"/>
+          <Column id="DTL_ADDR" type="STRING" size="256"/>
+          <Column id="EMAIL2" type="STRING" size="256"/>
+          <Column id="THEME_CD" type="STRING" size="256"/>
+          <Column id="chk" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="EMP_NO">1</Col>
+            <Col id="USER_ID">12345</Col>
+            <Col id="PASSWORD">1111</Col>
+            <Col id="KORN_NM">홍길동</Col>
+            <Col id="ENGL_NM">HONG GIL DONG</Col>
+            <Col id="DEPT_CD">01</Col>
+            <Col id="DEPT_NM">A</Col>
+            <Col id="USER_FLAG_CD">01</Col>
+            <Col id="WKGD_CD">01</Col>
+            <Col id="WKDT_CD">01</Col>
+            <Col id="OCCU_CD">01</Col>
+            <Col id="JOIN_DATE">20120801</Col>
+            <Col id="RETR_DATE">20120801</Col>
+            <Col id="HOOF_STAT_CD">01</Col>
+            <Col id="BIR_DT">20120801</Col>
+            <Col id="CELL_NUMB">0221407700</Col>
+            <Col id="PHONE1">010</Col>
+            <Col id="EMAIL">help</Col>
+            <Col id="ZIP_NUMB">13584</Col>
+            <Col id="BASC_ADDR">서울시 강남구</Col>
+            <Col id="EMAIL2">tobesoft.com</Col>
+            <Col id="THEME_CD">01</Col>
+            <Col id="CHAG_WORK">지출결의</Col>
+            <Col id="PHONE2">1234</Col>
+            <Col id="PHONE3">5678</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NO">2</Col>
+            <Col id="USER_ID">67890</Col>
+            <Col id="PASSWORD">1111</Col>
+            <Col id="KORN_NM">제임스</Col>
+            <Col id="ENGL_NM">James</Col>
+            <Col id="DEPT_CD">02</Col>
+            <Col id="DEPT_NM">C</Col>
+            <Col id="USER_FLAG_CD">02</Col>
+            <Col id="WKGD_CD">02</Col>
+            <Col id="WKDT_CD">02</Col>
+            <Col id="OCCU_CD">02</Col>
+            <Col id="CHAG_WORK">급여</Col>
+            <Col id="JOIN_DATE">20180304</Col>
+            <Col id="RETR_DATE">20180304</Col>
+            <Col id="HOOF_STAT_CD">02</Col>
+            <Col id="BIR_DT">20120801</Col>
+            <Col id="CELL_NUMB">0221407701</Col>
+            <Col id="PHONE1">011</Col>
+            <Col id="EMAIL">help</Col>
+            <Col id="ZIP_NUMB">13584</Col>
+            <Col id="BASC_ADDR">서울시 강남구</Col>
+            <Col id="EMAIL2">tobesoft.com</Col>
+            <Col id="THEME_CD">02</Col>
+            <Col id="PHONE2">5678</Col>
+            <Col id="PHONE3">1234</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsHoof">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">00</Col>
+            <Col id="NAME">전체</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">01</Col>
+            <Col id="NAME">재직</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">02</Col>
+            <Col id="NAME">퇴직</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCombo">
+        <ColumnInfo>
+          <Column id="cd" type="STRING" size="256"/>
+          <Column id="data" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cd">A</Col>
+            <Col id="data">컨설팅팀</Col>
+          </Row>
+          <Row>
+            <Col id="cd">B</Col>
+            <Col id="data">회계팀</Col>
+          </Row>
+          <Row>
+            <Col id="cd">C</Col>
+            <Col id="data">총무팀</Col>
+          </Row>
+          <Row>
+            <Col id="cd">D</Col>
+            <Col id="data">기술지원팀</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsInfo">
+        <ColumnInfo>
+          <Column id="EMP_NO" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="PASSWORD" type="STRING" size="256"/>
+          <Column id="KORN_NM" type="STRING" size="256"/>
+          <Column id="ENGL_NM" type="STRING" size="256"/>
+          <Column id="DEPT_CD" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="USER_FLAG_CD" type="STRING" size="256"/>
+          <Column id="WKGD_CD" type="STRING" size="256"/>
+          <Column id="WKDT_CD" type="STRING" size="256"/>
+          <Column id="OCCU_CD" type="STRING" size="256"/>
+          <Column id="CHAG_WORK" type="STRING" size="256"/>
+          <Column id="JOIN_DATE" type="STRING" size="256"/>
+          <Column id="RETR_DATE" type="STRING" size="256"/>
+          <Column id="HOOF_STAT_CD" type="STRING" size="256"/>
+          <Column id="REGI_NUMB" type="STRING" size="256"/>
+          <Column id="BIR_DT" type="STRING" size="256"/>
+          <Column id="CELL_NUMB" type="STRING" size="256"/>
+          <Column id="PHONE1" type="STRING" size="256"/>
+          <Column id="PHONE2" type="STRING" size="256"/>
+          <Column id="PHONE3" type="STRING" size="256"/>
+          <Column id="EMAIL" type="STRING" size="256"/>
+          <Column id="ZIP_NUMB" type="STRING" size="256"/>
+          <Column id="BASC_ADDR" type="STRING" size="256"/>
+          <Column id="DTL_ADDR" type="STRING" size="256"/>
+          <Column id="EMAIL2" type="STRING" size="256"/>
+          <Column id="THEME_CD" type="STRING" size="256"/>
+          <Column id="chk" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item2" compid="divDetail.form.edtUserId" propid="value" datasetid="dsInfo" columnid="USER_ID"/>
+      <BindItem id="item3" compid="divDetail.form.edtPassword" propid="value" datasetid="dsInfo" columnid="PASSWORD"/>
+      <BindItem id="item4" compid="divDetail.form.edtUserNm" propid="value" datasetid="dsInfo" columnid="KORN_NM"/>
+      <BindItem id="item8" compid="divDetail.form.cboUserFlagCd" propid="value" datasetid="dsInfo" columnid="USER_FLAG_CD"/>
+      <BindItem id="item9" compid="divDetail.form.cboWkgdCd" propid="value" datasetid="dsInfo" columnid="WKGD_CD"/>
+      <BindItem id="item10" compid="divDetail.form.cboWkdtCd" propid="value" datasetid="dsInfo" columnid="WKDT_CD"/>
+      <BindItem id="item11" compid="divDetail.form.cboOccuCd" propid="value" datasetid="dsInfo" columnid="OCCU_CD"/>
+      <BindItem id="item12" compid="divDetail.form.edtChagWork" propid="value" datasetid="dsInfo" columnid="CHAG_WORK"/>
+      <BindItem id="item13" compid="divDetail.form.calJoinDate" propid="value" datasetid="dsInfo" columnid="JOIN_DATE"/>
+      <BindItem id="item14" compid="divDetail.form.calRetrDate" propid="value" datasetid="dsInfo" columnid="RETR_DATE"/>
+      <BindItem id="item15" compid="divDetail.form.cboHoofStatCd" propid="value" datasetid="dsInfo" columnid="HOOF_STAT_CD"/>
+      <BindItem id="item16" compid="divDetail.form.calBirDt" propid="value" datasetid="dsInfo" columnid="BIR_DT"/>
+      <BindItem id="item17" compid="divDetail.form.cboPhone1" propid="value" datasetid="dsInfo" columnid="PHONE1"/>
+      <BindItem id="item18" compid="divDetail.form.edtPhone2" propid="value" datasetid="dsInfo" columnid="PHONE2"/>
+      <BindItem id="item19" compid="divDetail.form.edtPhone3" propid="value" datasetid="dsInfo" columnid="PHONE3"/>
+      <BindItem id="item20" compid="divDetail.form.edtEmail" propid="value" datasetid="dsInfo" columnid="EMAIL"/>
+      <BindItem id="item5" compid="divDetail.form.edtUserNmEng" propid="value" datasetid="dsInfo" columnid="ENGL_NM"/>
+      <BindItem id="item6" compid="divDetail.form.edtEmpNo" propid="value" datasetid="dsInfo" columnid="EMP_NO"/>
+      <BindItem id="item0" compid="divSearch.form.edtUserId" propid="value" datasetid="dsCond" columnid="USER_ID"/>
+      <BindItem id="item1" compid="divSearch.form.edtEmpNo" propid="value" datasetid="dsCond" columnid="EMP_NO"/>
+      <BindItem id="item25" compid="divSearch.form.edtUserNm" propid="value" datasetid="dsCond" columnid="USER_NM"/>
+      <BindItem id="item26" compid="divDetail.form.cboThemId" propid="value" datasetid="dsInfo" columnid="THEME_CD"/>
+      <BindItem id="item27" compid="divSearch.form.cboHoofStat" propid="value" datasetid="dsCond" columnid="HOOF_STAT_CD"/>
+      <BindItem id="item7" compid="divDetail.form.Edit00" propid="value" datasetid="dsInfo" columnid="DEPT_NM"/>
+      <BindItem id="item21" compid="divDetail.form.Edit01" propid="value" datasetid="dsInfo" columnid="ZIP_NUMB"/>
+      <BindItem id="item22" compid="divDetail.form.Edit03" propid="value" datasetid="dsInfo" columnid="BASC_ADDR"/>
+      <BindItem id="item23" compid="divDetail.form.Edit02" propid="value" datasetid="dsInfo" columnid="EMAIL2"/>
+    </Bind>
+  </Form>
+</FDL>

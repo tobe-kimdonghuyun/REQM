@@ -1,0 +1,535 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="zzz_fwcba00_m00" width="1552" height="754" titletext="배치관리" onload="form_onload" onbeforeclose="zzz_fwcba00_m00_onbeforeclose">
+    <Layouts>
+      <Layout height="754" width="1552">
+        <Div id="divSearch" taborder="0" left="0" top="30" height="52" cssclass="div_WF_Search" right="0">
+          <Layouts>
+            <Layout>
+              <Static id="staJobId" taborder="0" text="배치JobId" left="0" top="11" height="30" cssclass="sta_WF_Searchtxt01" width="94"/>
+              <Edit id="edtJobName" taborder="1" left="staJobId:0" top="11" width="140" height="30" enable="true" onkeyup="divSearch_edtJobName_onkeyup"/>
+              <Static id="staJobNm" taborder="2" text="배치명" left="234" top="11" height="30" cssclass="sta_WF_Searchtxt01" onclick="divSearch_staJobId00_onclick" width="71"/>
+              <Edit id="edtJobKorName" taborder="3" left="staJobNm:0" top="11" width="150" height="30"/>
+              <Static id="staBusnScCd" taborder="4" text="업무구분" left="455" top="11" height="30" cssclass="sta_WF_Searchtxt01" onclick="divSearch_staJobId00_onclick" width="85"/>
+              <Combo id="cboBusnScCd" taborder="5" left="staBusnScCd:0" top="11" width="168" height="30" innerdataset="dsBunsCd" codecolumn="businessCode" onitemchanged="divSearch_cboBusnScCd_onitemchanged" datacolumn="businessNm"/>
+              <Button id="btnSearch" top="11" width="74" height="30" taborder="6" text="조회" tooltiptext="조회" onclick="divSearch_btnSearch_onclick" cssclass="btn_WF_Search03" right="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdBatchJobList" taborder="1" left="0" top="142" binddataset="dsMain" autoenter="select" cellcombopopuptype="center" oncellclick="grdBatchJobList_oncellclick" onheadclick="grdBatchJobList_onheadclick" autofittype="col" cellclickbound="cell" right="0" bottom="10" cellsizingtype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="45"/>
+                <Column size="60"/>
+                <Column size="130"/>
+                <Column size="200"/>
+                <Column size="190"/>
+                <Column size="300"/>
+                <Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="40" band="head"/>
+                <Row size="34"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="순번"/>
+                <Cell col="2" text="배치JobId"/>
+                <Cell col="3" text="배치명"/>
+                <Cell col="4" text="업무구분"/>
+                <Cell col="5" text="배치파라미터"/>
+                <Cell col="6" text="배치실행"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:_chk"/>
+                <Cell col="1" text="expr:currow+1" edittype="none" textAlign="center"/>
+                <Cell col="2" text="bind:jobName" edittype="text" textAlign="center"/>
+                <Cell col="3" text="bind:jobKorName" edittype="text"/>
+                <Cell col="4" displaytype="combotext" edittype="combo" comboautoselect="false" combocodecol="businessCode" combodatacol="businessNm" combodataset="dsBunsCd" text="bind:businessCode" textAlign="center"/>
+                <Cell col="5" text="bind:jobParams" edittype="text"/>
+                <Cell col="6" displaytype="buttoncontrol" text="배치실행" edittype="button"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnAddRow" taborder="2" position="absolute" defaultbutton="true" right="129" width="63" top="102" height="30" cssclass="btn_WF_Custom" text="행추가" onclick="btnAddRow_onclick"/>
+        <Button id="btnDeleteRow" taborder="3" position="absolute" defaultbutton="true" right="58" width="63" top="102" height="30" cssclass="btn_WF_Custom" text="행삭제" onclick="btnDeleteRow_onclick"/>
+        <Button id="btnSave" taborder="4" position="absolute" defaultbutton="true" right="0" width="50" top="102" height="30" cssclass="btn_WF_Custom" text="저장" onclick="fnSave"/>
+        <Static id="Static99_00_00_00_00" taborder="5" left="0" top="0" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="Static99_00_00_00_00_00" taborder="6" left="0" top="82" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="Static99_00_00_00_00_00_00" taborder="7" left="0" top="132" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0"/>
+        <Static id="Static99_00_00_00_00_00_00_00" taborder="8" left="0" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" bottom="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    배치관리
+*  @FileName 	zzz_fwcba00_m00.xfdl 
+*  @Creator 	이준우
+*  @CreateDate 	2022.01.02
+*  @Desction    form CRUD 샘플
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.01.02     	   이준우 	                최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::cm_script.xjs" 
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼을 초기화
+	this.smfInitForm(obj);
+	this.divSearch.form.cboBusnScCd.set_index(0);
+	
+	// 조회 입력값 엔터키입력시 조회수행 이벤트 설정
+	this.smfBindEnterKeyToSearch(this.divSearch, this.divSearch.form.btnSearch);
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * @description 조회
+*/
+this.fnSearch = function ()
+{ 
+ 	// 서비스 객체 생성
+	this.smfSearchService("select")
+		// 데이터 검증
+		.validateForm(this.divSearch)
+		// 데이터가 변경되었으면 확인메시지
+		.confirmIfModifiedDataset(this.dsMain)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		});
+};	
+
+/**
+ * @description 저장
+*/
+this.fnSave = function ()
+{
+	// 서비스 객체 생성 
+	this.smfSaveService("save")
+		// 데이터 존재 필수
+		//.requireExistsData(this.dsMain)
+		
+		// 데이터 검증
+		// dsMainValid의 row는 2개가 있는데
+		// 첫번째는 Dataset.ROWTYPE_INSERT에 해당하는 유효성검사 룰셋을 담당한다
+		// 두번째는 Dataset.ROWTYPE_UPDATE에 해당하는 유효성검사 룰셋을 담당한다
+		// 컬럼값에 = 은 INSERT와 동일한 룰셋을 사용한다는 의미이다
+		.validateGrid(this.grdBatchJobList, this.dsMainValid) 
+		
+		// 그리드 영역에서 중복검사
+		.validateDuplicate({
+			grid: this.grdBatchJobList,
+			columnNames: ["jobName"], // 중복검사할 컬럼명
+			columnText: "배치JobID",
+		})
+		
+		// 데이터 변경 필수
+		.requireModifredData(this.dsMain) 
+		
+		// 실행
+		.run()
+
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			this.smfAlert('CM002', [], this.divSearch_btnSearch_onclick);
+		});
+		
+};
+
+/**
+ * @description 삭제
+*/
+this.fnDelete = function()
+{
+	// 삭제처리
+	this.smfDeleteService("delete")
+	
+		// 데이터 존재 필수
+		.requireExistsData(this.dsMain) 
+		
+		// 삭제를 위한 검증수행
+		.validateGridDelete(this.grdBatchJobList)
+
+		.run()
+		// 콜백
+		.callback(function(callbackParams){ 
+			if(callbackParams.errors) return;
+			
+// 			var alerter = this.smfAlerter();
+// 			alerter.message = this.smfAfterServiceMessage();
+// 			alerter.onOk = function(){
+// 				this.dsSearch.clearData();
+// 				alert('[참고] 데이터 삭제는 서버에서 동작하지 않도록 처리하였습니다');
+// 			};
+// 			alerter.run();
+//			this.smfAlert('삭제하였습니다.', this.divSearch_btnSearch_onclick);
+		})
+		;
+
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+/**
+ * @description Transaction CallBack 함수(선택)
+*/
+
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+	
+};
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+/**
+ * @description 조회버튼
+*/
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 검색조건 세팅
+	this.dsSearch.setColumn(0, "jobName", this.divSearch.form.edtJobName.value);
+	this.dsSearch.setColumn(0, "jobKorName", this.divSearch.form.edtJobKorName.value);
+	this.dsSearch.setColumn(0, "businessCode", this.divSearch.form.cboBusnScCd.value);
+	
+	this.dsMain.clearData();
+
+	this.fnSearch();
+};
+
+/**
+ * @description 행추가
+*/
+this.btnAddRow_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 데이터 클리어
+	//this.dsBatchJobInfoList.clearData();
+	
+	//로우를 추가하고 초기화 시킨다.
+	this.smfInitRow(this.dsMain, this.dsMain.addRow());
+	
+	//업무구분값 초기셋팅처리
+	this.dsMain.setColumn(this.dsMain.rowposition, "businessCode", "");
+	this.dsMain.setColumn(this.dsMain.rowposition, "_chk", "0");
+};
+
+/**
+ * @description 행삭제
+*/
+this.btnDeleteRow_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//check된 row들을 삭제한다.
+	//this.smfDeleteGridConfirm("delete", this.grdBatchJobList);
+	//this.dsMain.deleteRow(this.dsMain.rowposition);
+	/* 삭제처리
+	this.smfDeleteService("delete")
+		.validateGridDelete(this.grdBatchJobList, this.dsMainValid)
+		.run()
+		// 콜백
+		.callback(function(callbackParams){ 
+			if(callbackParams.errors) return;
+			
+			// 삭제하였습니다 알림 후 재조회
+			this.smfLiteralAlert(this.smfAfterServiceMessage(), this.divSearch_btnSearch_onclick);
+	});*/
+	
+	// 초기화
+	this.dsSchedule.clearData();
+
+	// 스케줄 확인 후 제거
+	this.smfSearchService("checkSchedule")
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if(this.dsSchedule.getRowCount() > 0){
+				this.smfAlert("스케줄관리에 등록된 데이터가 있습니다. \n삭제 후 진행해 주세요.");
+			} else {
+				this.smfDeleteGridConfirm("delete", this.grdBatchJobList);
+			}		
+	});
+};
+
+
+this.grdBatchJobList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(e.cell == 6){
+		this.dsExecuteParam.clearData();
+		var row = this.dsExecuteParam.addRow();
+		this.dsExecuteParam.setColumn(row, "jobId", this.dsMain.getColumn(e.row, "jobName"));
+		this.dsExecuteParam.setColumn(row, "batchParameter", this.dsMain.getColumn(e.row, "jobParams"));
+		// 서비스 객체 생성 
+		this.smfSaveService("execute")
+			// 데이터 존재 필수
+			.requireExistsData(this.dsExecuteParam)
+			
+			// 실행
+			.run()
+
+			// 콜백
+			.callback(function(callbackParams){
+				if(callbackParams.errors) return;
+
+				this.smfAlert('실행하였습니다', this.divSearch_btnSearch_onclick);
+			});
+	}else if ( e.cell == 4){
+		obj.dropdownCombo();
+	}
+};
+
+/**
+ * @description 헤드 클릭 이벤트
+*/
+
+this.grdBatchJobList_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.smfCheckAndSort(obj, e); 
+};
+
+/**
+ * @description 조회조건 엔터키 이벤트
+*/
+this.divSearch_edtJobName_onkeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == "13"){
+		this.divSearch_btnSearch_onclick();
+	}
+};
+
+
+/**
+ * @description 조회조건 엔터키 이벤트
+*/
+this.divSearch_edtJobKorName_onkeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == "13"){
+		this.divSearch_btnSearch_onclick();
+	}
+};
+
+// 폼 닫기전 이벤트
+this.zzz_fwcba00_m00_onbeforeclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	// 변경내역이 발생한 경우 종료전 confirm수행
+	return this.smfCloseFormConfirm(this.dsMain);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="jobName" type="STRING" size="256" description="배치JOBID"/>
+          <Column id="jobKorName" type="STRING" size="256"/>
+          <Column id="businessCode" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true" preload="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="256"/>
+          <Column id="jobName" type="STRING" size="256" description="배치Job ID"/>
+          <Column id="jobKorName" type="STRING" size="256" description="배치명"/>
+          <Column id="businessCode" type="STRING" size="256" description="업무구분"/>
+          <Column id="jobParams" type="STRING" size="256"/>
+          <Column id="jobDesc" type="STRING" size="256"/>
+          <Column id="batchExcute" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsMain=dsMain</Col>
+            <Col id="url">/zzz_fwc_ba00_000.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">save</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsMain=dsMain:U</Col>
+            <Col id="outDatasets">dsSearch=dsSearch dsMain=dsMain</Col>
+            <Col id="url">/zzz_fwc_ba00_001.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">delete</Col>
+            <Col id="inDatasets">dsMain=dsMain:U</Col>
+            <Col id="outDatasets">dsSearch=dsSearch dsMain=dsMain</Col>
+            <Col id="url">/zzz_fwc_ba00_001.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">execute</Col>
+            <Col id="inDatasets">dsExecuteParam=dsExecuteParam</Col>
+            <Col id="url">/zzz_fwc_ba00_002.do</Col>
+            <Col id="outDatasets">dsExecuteParam=dsExecuteParam</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">checkSchedule</Col>
+            <Col id="inDatasets">dsMain=dsMain</Col>
+            <Col id="outDatasets">dsSchedule=dsSchedule</Col>
+            <Col id="url">/zzz_fwc_ba00_003.do</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsBunsCd">
+        <ColumnInfo>
+          <Column id="businessCode" type="STRING" size="256" description="업무구분코드"/>
+          <Column id="businessNm" type="STRING" size="256" description="업무구분이름"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="businessNm">선택</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">SM</Col>
+            <Col id="businessNm">시스템관리</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">CM</Col>
+            <Col id="businessNm">공통관리</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">GA</Col>
+            <Col id="businessNm">일반행정</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">SA</Col>
+            <Col id="businessNm">학교행정</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">SW</Col>
+            <Col id="businessNm">교무업무</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">OP</Col>
+            <Col id="businessNm">정보개방</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">EP</Col>
+            <Col id="businessNm">업무포털</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">PA</Col>
+            <Col id="businessNm">대국민서비스</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">CP</Col>
+            <Col id="businessNm">학교수업지원플랫폼</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">US</Col>
+            <Col id="businessNm">사용자지원</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">PM</Col>
+            <Col id="businessNm">프로젝트관리</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">NS</Col>
+            <Col id="businessNm">일반설문</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">EO</Col>
+            <Col id="businessNm">교육디지털원패스</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">LI</Col>
+            <Col id="businessNm">소재정보확인</Col>
+          </Row>
+          <Row>
+            <Col id="businessCode">KG</Col>
+            <Col id="businessNm">유치원</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMainValid" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="256" prop="NONE"/>
+          <Column id="jobName" type="STRING" size="256"/>
+          <Column id="jobKorName" type="STRING" size="256"/>
+          <Column id="businessCode" type="STRING" size="256" prop="NONE"/>
+          <Column id="jobParams" type="STRING" size="256" prop="NONE"/>
+          <Column id="jobDesc" type="STRING" size="256"/>
+          <Column id="batchExcute" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="_chk"/>
+            <Col id="jobName">title:배치JobId,required</Col>
+            <Col id="jobKorName">title:배치명,required</Col>
+            <Col id="businessCode">title:업무구분,required</Col>
+            <Col id="jobParams"/>
+          </Row>
+          <Row>
+            <Col id="_chk"/>
+            <Col id="jobName">=</Col>
+            <Col id="jobKorName">=</Col>
+            <Col id="businessCode">=</Col>
+            <Col id="jobParams">=</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsExecuteParam" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="jobId" type="STRING" size="256" description="JobId"/>
+          <Column id="batchParameter" type="STRING" size="256" description="배치파라미터"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSchedule" useclientlayout="true" preload="true">
+        <ColumnInfo>
+          <Column id="jobName" type="STRING" size="256" description="배치Job ID"/>
+          <Column id="scheduleNo" type="STRING" size="256" description="배치명"/>
+          <Column id="scheduleKorName" type="STRING" size="256" description="업무구분"/>
+          <Column id="scheduleCn" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtJobName" propid="value" datasetid="dsSearch" columnid="jobName"/>
+      <BindItem id="item1" compid="divSearch.form.edtJobKorName" propid="value" datasetid="dsSearch" columnid="jobKorName"/>
+    </Bind>
+  </Form>
+</FDL>

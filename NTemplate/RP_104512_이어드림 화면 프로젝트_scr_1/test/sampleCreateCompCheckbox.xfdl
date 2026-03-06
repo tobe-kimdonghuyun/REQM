@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleCreateCompCheckbox" width="1280" height="745" titletext="New Form">
+    <Layouts>
+      <Layout height="745" mobileorientation="landscape" width="1280">
+        <Div id="div00" taborder="0" text="div00" left="40" top="81" width="721" height="269" border="1px solid black"/>
+        <Button id="btn00" taborder="1" text="checkBox생성" left="41" top="42" width="151" height="34" onclick="btn00_onclick"/>
+        <Button id="btn00_00" taborder="2" text="체크한 항목 리스트 가져오기" left="41" top="370" width="191" height="34" onclick="btn00_00_onclick"/>
+        <TextArea id="txt00" taborder="3" left="42" top="417" width="720" height="166"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleCreateCompCheckbox.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.11.7
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.11.7     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.sampleCreateCompCheckbox_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+this.fnCreateCheckbox = function(divComp:nexacro.Div,dsList:nexacro.NormalDataset,objOption)
+{
+	// 나중을 위해 설정 값 저장
+	divComp._option = objOption;
+
+	var sCheckboxIdPrefix = "chkQlflIdf_";
+	var sCheckboxId="";
+	var oCheckbox=null;
+	
+	// 기본 설정
+	var nBlockCount = this.smfNvl(objOption.blockcount,1 );  // 지정이 없으면 1
+	var nBlockGap   = this.smfNvl(objOption.blockgap  ,10);  // 지정이 없으면 10
+	var nLeftGap    = this.smfNvl(objOption.leftgap   ,10);  // 지정이 없으면 10
+	var nHeight     = this.smfNvl(objOption.height    ,30);  // 지정이 없으면 30
+	var nHeightGap  = this.smfNvl(objOption.heightgap ,10);  // 지정이 없으면 10
+	
+	var nWidth = parseInt((divComp.getOffsetWidth()
+			   - ((nBlockCount-1)*nBlockGap) - nLeftGap)/nBlockCount);
+	for(var i=0;i<dsList.rowcount;i++)
+	{
+		// Text값을 데이터셋에서 가져옴.
+		var sQlflIdfCd    = dsList.getColumn(i,"qlflIdfCd"   );  // 자격증식별코드
+		var sQlflIdfValue = dsList.getColumn(i,"qlflIdfValue");  // 자격증식별값
+		
+		// 해당오브젝트를 구한다.
+		sCheckboxId = sCheckboxIdPrefix+i;
+		oCheckbox = divComp[sCheckboxId];
+		
+		// 위치를 계산
+		var nBlockIdx = i%nBlockCount;
+		var nLeft = nLeftGap + (nBlockIdx*nWidth) + (nBlockIdx*nBlockGap);
+		var nTop = parseInt(i/nBlockCount) * nHeight;
+		
+		if(!oCheckbox)
+		{
+			oCheckbox = new CheckBox(sCheckboxId,nLeft,nTop,nWidth,nHeight);
+			divComp.addChild(sCheckboxId,oCheckbox);
+			oCheckbox.show();
+		}
+		else
+		{
+			// 이미 만들어져 있는 경우 
+			oCheckbox.move(nLeft,nTop,nWidth,nHeight);			
+			oCheckbox.set_visible(true);
+		}
+		oCheckbox.set_value(false);
+		oCheckbox._qlflIdfCd = sQlflIdfCd;
+		oCheckbox.set_text(sQlflIdfValue);
+		
+		
+	}
+	
+	
+}
+
+
+this.fnGetCheckedList = function(divComp:nexacro.Div,sCheckPrefix)
+{
+	var arrComps = divComp.form.components;
+	var arrCheckedList = [];
+	sCheckPrefix = this.smfNvl(sCheckPrefix,"chkQlflIdf_");	
+	
+	for(var i=0;i<arrComps.length;i++)
+	{
+		var objComp = arrComps[i];
+		
+		if(objComp.id.indexOf(sCheckPrefix)==0)
+		{
+			if(objComp.value)
+			{
+				arrCheckedList.push(objComp._qlflIdfCd);
+			}
+		}		
+	}
+	
+	return arrCheckedList;
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objOption = {
+	                    blockcount : 3   // 몇개의 block으로 나눌지 같은폭으로 생성
+					  , blockgap   : 10  // 블럭사이의 Gap(pixel)
+	                };
+
+	this.fnCreateCheckbox(this.div00,this.dslmttDsTrtList,objOption);
+};
+
+this.btn00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var arrCheckedList =  this.fnGetCheckedList(this.div00);
+	var sCheckedList = arrCheckedList.toString();
+	this.txt00.set_value(sCheckedList);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dslmttDsTrtList">
+        <ColumnInfo>
+          <Column id="qlflIdfCd" type="STRING" size="256" description="자격증식별코드"/>
+          <Column id="qlflIdfValue" type="STRING" size="256" description="자격증식별값"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="qlflIdfCd">10</Col>
+            <Col id="qlflIdfValue">항목1</Col>
+          </Row>
+          <Row>
+            <Col id="qlflIdfCd">10</Col>
+            <Col id="qlflIdfValue">항목10</Col>
+          </Row>
+          <Row>
+            <Col id="qlflIdfCd">11</Col>
+            <Col id="qlflIdfValue">항목11</Col>
+          </Row>
+          <Row>
+            <Col id="qlflIdfCd">12</Col>
+            <Col id="qlflIdfValue">항목12</Col>
+          </Row>
+          <Row>
+            <Col id="qlflIdfCd">13</Col>
+            <Col id="qlflIdfValue">항목13</Col>
+          </Row>
+          <Row>
+            <Col id="qlflIdfCd">14</Col>
+            <Col id="qlflIdfValue">항목14</Col>
+          </Row>
+          <Row>
+            <Col id="qlflIdfCd">15</Col>
+            <Col id="qlflIdfValue">항목15</Col>
+          </Row>
+          <Row>
+            <Col id="qlflIdfCd">16</Col>
+            <Col id="qlflIdfValue">항목16</Col>
+          </Row>
+          <Row>
+            <Col id="qlflIdfCd">17</Col>
+            <Col id="qlflIdfValue">항목17</Col>
+          </Row>
+          <Row>
+            <Col id="qlflIdfCd">18</Col>
+            <Col id="qlflIdfValue">항목18</Col>
+          </Row>
+          <Row>
+            <Col id="qlflIdfCd">19</Col>
+            <Col id="qlflIdfValue">항목19</Col>
+          </Row>
+          <Row>
+            <Col id="qlflIdfCd">20</Col>
+            <Col id="qlflIdfValue">항목20</Col>
+          </Row>
+          <Row>
+            <Col id="qlflIdfCd">21</Col>
+            <Col id="qlflIdfValue">항목21</Col>
+          </Row>
+          <Row>
+            <Col id="qlflIdfCd">22</Col>
+            <Col id="qlflIdfValue">항목22</Col>
+          </Row>
+          <Row>
+            <Col id="qlflIdfCd">23</Col>
+            <Col id="qlflIdfValue">항목23</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

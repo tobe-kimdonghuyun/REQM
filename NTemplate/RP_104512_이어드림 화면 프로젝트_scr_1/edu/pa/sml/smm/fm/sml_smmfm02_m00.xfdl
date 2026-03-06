@@ -1,0 +1,889 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sml_smmfm02_m00" width="1200" height="1208" titletext="식재료검수처리" onload="fnOnload">
+    <Layouts>
+      <Layout height="1208" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="식재료검수처리" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="320" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+            <Layout name="Layout0">
+              <ImageViewer id="imgTitle" height="65" left="0" top="0" width="280"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSearch" taborder="1" left="0" top="144" height="110" cssclass="div_WF_Search" right="0" initvalueid="ivDivAccessibilityOff" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staAcpParngYmd" taborder="0" text="*검수예정일자" left="0" top="20" width="124" height="30" initvalueid="ivStcEssential" cssclass="sta_WF_Essential01" onclick="divSearch_staAcpParngYmd_onclick"/>
+              <Calendar id="calAcpParngYmd1" taborder="1" left="staAcpParngYmd:10" top="20" width="130" height="30" dateformat="yyyy.MM.dd" readonly="false" initvalueid="ivCalNormal" editformat="yyyy.MM.dd" onchanged="calCond" accessibilitylabel="검수예정시작일자"/>
+              <Static id="sta00" taborder="2" text="~" left="calAcpParngYmd1:0" top="20" width="15" height="30" cssclass="sta_WF_AC" initvalueid="ivStcAccessibilityOn"/>
+              <Calendar id="calAcpParngYmd2" taborder="3" left="sta00:0" top="20" width="130" height="30" dateformat="yyyy.MM.dd" readonly="false" initvalueid="ivCalNormal" editformat="yyyy.MM.dd" onchanged="calCond" accessibilitylabel="검수예정종료일자"/>
+              <Static id="staMmealScCd" taborder="4" text="*식사구분" left="calAcpParngYmd2:20" top="20" width="96" cssclass="sta_WF_Essential01" height="30" initvalueid="ivStcEssential"/>
+              <CheckBox id="chkMealScCd1" taborder="5" text="조식" left="staMmealScCd:21" width="72" height="29" top="21" initvalueid="ivChkNormal" mmealScCd="1" cssclass="essential" onchanged="chkMealScCd_onchanged" accessibilitylabel="조식"/>
+              <CheckBox id="chkMealScCd2" taborder="6" text="중식" left="chkMealScCd1:5" width="72" height="29" top="21" initvalueid="ivChkNormal" mmealScCd="2" onchanged="chkMealScCd_onchanged" cssclass="essential" accessibilitylabel="중식"/>
+              <Static id="staGob" taborder="8" text="업체군" left="0" top="60" width="71" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboGob" taborder="9" left="134" width="130" height="30" index="-1" text="전체" readonly="false" top="60" initvalueid="ivCmbNormal" innerdataset="dsComyGrpList" codecolumn="gobCd" datacolumn="gobCdNm" accessibilitylabel="업체군"/>
+              <Static id="staAcpYn" taborder="10" text="진행상태" left="429" top="60" width="96" cssclass="sta_WF_Searchtxt01" height="30" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboAcpYn" taborder="11" left="staAcpYn:21" width="130" height="30" index="0" readonly="false" top="60" initvalueid="ivCmbNormal" codecolumn="codecolumn" datacolumn="datacolumn" value="11" text="미검수" innerdataset="innerdataset" accessibilitylabel="진행상태">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="datacolumn">- 전체 -</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">검수처리</Col>
+                      <Col id="codecolumn">acp_Y</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">검수미처리</Col>
+                      <Col id="codecolumn">acp_N</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Button id="btnInit" taborder="12" text="초기화" width="88" height="30" cssclass="btn_WF_Refresh03" onclick="divSearch_btnInit_onclick" right="102" initvalueid="ivBtnAccessibilityButton" bottom="20"/>
+              <Button id="btnSearch" taborder="13" text="조회" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="divSearch_btnSearch_onclick" initvalueid="ivBtnAccessibilityButton" bottom="20"/>
+              <CheckBox id="chkMealScCd3" taborder="7" text="석식" left="chkMealScCd2:5" width="72" height="29" top="21" initvalueid="ivChkNormal" mmealScCd="3" onchanged="chkMealScCd_onchanged" cssclass="essential" accessibilitylabel="석식"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="staAcpYn" left="0" top="cboGob:30" width="173" height="42" taborder="7"/>
+              <Combo id="cboAcpYn" left="20" top="staAcpYn:10" height="60" right="20" taborder="8"/>
+              <Static id="staGob" left="0" top="chkMealScCd1:40" width="173" height="42" taborder="5"/>
+              <Combo id="cboGob" left="20" top="staGob:10" height="60" text="" right="20" taborder="6"/>
+              <Static id="staMmealScCd" left="20" top="calAcpParngYmd1:30" width="100" height="42" taborder="4" text="식사구분" color="#d32850"/>
+              <Calendar id="calAcpParngYmd1" left="20" top="staAcpParngYmd:10" width="260" height="60" popuptype="system" taborder="1"/>
+              <Calendar id="calAcpParngYmd2" left="sta00:0" top="84" width="260" height="60" popuptype="system" taborder="3"/>
+              <Static id="sta00" left="calAcpParngYmd1:0" top="84" width="30" height="60" taborder="2"/>
+              <Static id="staAcpParngYmd" top="32" left="20" width="198" height="42" taborder="0" color="#d32850"/>
+              <Button id="btnInit" width="185" height="60" right="204" taborder="9" top="630"/>
+              <Button id="btnSearch" height="60" width="164" bottom="40" taborder="10" text="조회" left="btnInit:20"/>
+              <CheckBox id="chkMealScCd1" left="20" top="226" width="30%" height="60"/>
+              <CheckBox id="chkMealScCd2" left="chkMealScCd1:0" top="226" width="30%" height="60"/>
+              <CheckBox id="chkMealScCd3" left="chkMealScCd2:0" top="226" width="30%" height="60"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <ImageViewer id="img00" taborder="2" text="검수처리 목록" left="0" top="284" width="130" height="30" cssclass="img_WF_SubTit03" initvalueid="ivTitleAccessibilityOn"/>
+        <Grid id="grdMain" taborder="3" left="0" top="324" height="439" right="0" selecttype="cell" initvalueid="ivGrdAccessibilityOn" autofittype="col" binddataset="dsFigtCnsulAcpBscList" onheadclick="grdMain_onheadclick" autosizingtype="row" extendsizetype="row" accessibilitylabel="검수처리 목록">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="50"/>
+                <Column size="200"/>
+                <Column size="117"/>
+                <Column size="117"/>
+                <Column size="113"/>
+                <Column size="95"/>
+                <Column size="205"/>
+                <Column size="220"/>
+                <Column size="69"/>
+                <Column size="73"/>
+                <Column size="92"/>
+                <Column size="131"/>
+              </Columns>
+              <Rows>
+                <Row size="60" band="head"/>
+                <Row size="40"/>
+                <Row size="40" band="summ"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="진행상태"/>
+                <Cell col="2" text="검수예정일자"/>
+                <Cell col="3" text="품의일자"/>
+                <Cell col="4" text="급식일자"/>
+                <Cell col="5" text="식사구분"/>
+                <Cell col="6" text="식품명"/>
+                <Cell col="7" text="식품속성"/>
+                <Cell col="8" text="규격"/>
+                <Cell col="9" text="단위"/>
+                <Cell col="10" text="검수수량"/>
+                <Cell col="11" text="계약금"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:chk" displaytype="checkboxcontrol" edittype="checkbox" cursor="pointer"/>
+                <Cell col="1" text="bind:cnsulChgWrkScCdNm" textAlign="center" cursor="pointer"/>
+                <Cell col="2" displaytype="date" calendardateformat="yyyy.MM.dd" textAlign="center" calendareditformat="yyyy.MM.dd" text="bind:acpParngYmd" cursor="pointer"/>
+                <Cell col="3" calendardateformat="yyyy.MM.dd" verticalAlign="middle" textAlign="center" calendareditformat="yyyy.MM.dd" text="bind:cnsulPrgYmd" displaytype="expr:cnsulPrgYmd != null ? 'date' : 'normal'" cursor="pointer"/>
+                <Cell col="4" displaytype="expr:mlsvYmd != null? 'date' : 'normal'" calendardateformat="yyyy.MM.dd" textAlign="center" calendareditformat="yyyy.MM.dd" text="bind:mlsvYmd" cursor="pointer"/>
+                <Cell col="5" textAlign="center" text="bind:mmealScCdNm" cursor="pointer"/>
+                <Cell col="6" text="bind:foodComCdNm" cursor="pointer" tooltiptext="bind:foodComCdNm" wordWrap="english"/>
+                <Cell col="7" text="bind:foodAtrbEpl" textAlign="center" cursor="pointer" tooltiptext="bind:foodAtrbEpl" wordWrap="english" autosizerow="limitmin"/>
+                <Cell col="8" text="bind:gyugyuk" textAlign="center" cursor="pointer"/>
+                <Cell col="9" text="bind:mlsvUnitCdNm" textAlign="center" cursor="pointer"/>
+                <Cell col="10" textAlign="center" text="bind:acpQty" cursor="pointer"/>
+                <Cell col="11" text="bind:cttAmt" textAlign="right" displaytype="mask" maskeditlimitbymask="both" maskeditformat="###,###,##0" cursor="pointer"/>
+              </Band>
+              <Band id="summary">
+                <Cell colspan="11" text="계약금 합계 : " textAlign="right"/>
+                <Cell col="11" textAlign="right" text="expr:dataset.getSum('cttAmt')" displaytype="number"/>
+              </Band>
+            </Format>
+            <Format id="format00">
+              <Columns>
+                <Column size="50"/>
+                <Column size="200"/>
+                <Column size="150"/>
+                <Column size="150"/>
+                <Column size="150"/>
+                <Column size="110"/>
+                <Column size="249"/>
+                <Column size="310"/>
+                <Column size="100"/>
+                <Column size="90"/>
+                <Column size="120"/>
+                <Column size="150"/>
+              </Columns>
+              <Rows>
+                <Row size="60" band="head"/>
+                <Row size="70"/>
+                <Row size="70" band="summ"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="진행상태"/>
+                <Cell col="2" text="검수예정일자"/>
+                <Cell col="3" text="품의일자"/>
+                <Cell col="4" text="급식일자"/>
+                <Cell col="5" text="식사구분"/>
+                <Cell col="6" text="식품명"/>
+                <Cell col="7" text="식품속성"/>
+                <Cell col="8" text="규격"/>
+                <Cell col="9" text="단위"/>
+                <Cell col="10" text="검수수량"/>
+                <Cell col="11" text="계약금"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:chk" displaytype="checkboxcontrol" edittype="checkbox" cursor="pointer"/>
+                <Cell col="1" text="bind:cnsulChgWrkScCdNm" textAlign="center" cursor="pointer"/>
+                <Cell col="2" displaytype="date" calendardateformat="yyyy.MM.dd" textAlign="center" calendareditformat="yyyy.MM.dd" text="bind:acpParngYmd" cursor="pointer"/>
+                <Cell col="3" calendardateformat="yyyy.MM.dd" verticalAlign="middle" textAlign="center" calendareditformat="yyyy.MM.dd" text="bind:cnsulPrgYmd" displaytype="expr:cnsulPrgYmd != null ? 'date' : 'normal'" cursor="pointer"/>
+                <Cell col="4" displaytype="expr:mlsvYmd != null? 'date' : 'normal'" calendardateformat="yyyy.MM.dd" textAlign="center" calendareditformat="yyyy.MM.dd" text="bind:mlsvYmd" cursor="pointer"/>
+                <Cell col="5" textAlign="center" text="bind:mmealScCdNm" cursor="pointer"/>
+                <Cell col="6" text="bind:foodComCdNm" cursor="pointer"/>
+                <Cell col="7" text="bind:foodAtrbEpl" textAlign="center" cursor="pointer" wordWrap="char" autosizerow="limitmin"/>
+                <Cell col="8" text="bind:gyugyuk" textAlign="center" cursor="pointer"/>
+                <Cell col="9" text="bind:mlsvUnitCdNm" textAlign="center" cursor="pointer"/>
+                <Cell col="10" textAlign="center" text="bind:acpQty" cursor="pointer"/>
+                <Cell col="11" text="bind:cttAmt" textAlign="right" displaytype="mask" maskeditlimitbymask="both" maskeditformat="###,###,##0" cursor="pointer"/>
+              </Band>
+              <Band id="summary">
+                <Cell colspan="11" text="계약금 합계 : " textAlign="right"/>
+                <Cell col="11" textAlign="right" text="expr:dataset.getSum('cttAmt')" displaytype="number"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <ImageViewer id="img01" taborder="4" text="상세" left="0" top="793" width="48" height="30" cssclass="img_WF_SubTit03" initvalueid="ivTitleAccessibilityOn"/>
+        <Div id="div00" taborder="5" left="0" top="833" height="305" right="0" cssclass="div_WF_Detail" initvalueid="ivDivAccessibilityOff" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="30" left="149" height="42" cssclass="sta_WF_Input02Top" top="0" initvalueid="ivStcAccessibilityOff" width="251"/>
+              <Static id="sta01" taborder="31" left="550" height="42" cssclass="sta_WF_Input02Top" top="0" initvalueid="ivStcAccessibilityOff" width="221"/>
+              <Static id="sta02" taborder="32" left="921" cssclass="sta_WF_Input02Top" top="0" right="0" initvalueid="ivStcAccessibilityOff" height="42" text=""/>
+              <Static id="sta03" taborder="33" left="149" height="42" cssclass="sta_WF_Input02" top="41" initvalueid="ivStcAccessibilityOff" width="251"/>
+              <Static id="sta04" taborder="34" left="550" height="42" cssclass="sta_WF_Input02" top="41" initvalueid="ivStcAccessibilityOff" width="221"/>
+              <Static id="sta06" taborder="36" left="149" height="42" cssclass="sta_WF_Input02" top="82" initvalueid="ivStcAccessibilityOff" width="251" accessibilitylabel="검수예정일자"/>
+              <Static id="sta07" taborder="37" left="550" height="42" cssclass="sta_WF_Input02" top="82" initvalueid="ivStcAccessibilityOff" width="221"/>
+              <Static id="sta08" taborder="38" left="921" cssclass="sta_WF_Input02" top="82" right="0" initvalueid="ivStcAccessibilityOff" height="42"/>
+              <Static id="sta09" taborder="39" left="149" height="42" cssclass="sta_WF_Input02" top="123" initvalueid="ivStcAccessibilityOff" width="251"/>
+              <Static id="sta10" taborder="40" left="550" height="42" cssclass="sta_WF_Input02" top="122" initvalueid="ivStcAccessibilityOff" width="221"/>
+              <Static id="sta11" taborder="41" left="921" cssclass="sta_WF_Input02" top="122" right="0" initvalueid="ivStcAccessibilityOff" height="42"/>
+              <Static id="sta12" taborder="42" left="149" height="42" cssclass="sta_WF_Input02" top="164" initvalueid="ivStcAccessibilityOff" width="251"/>
+              <Static id="sta13" taborder="43" left="550" height="42" cssclass="sta_WF_Input02" top="164" initvalueid="ivStcAccessibilityOff" right="0"/>
+              <Static id="sta14" taborder="44" left="150" height="100" cssclass="sta_WF_Input02" top="205" initvalueid="ivStcAccessibilityOff" right="0"/>
+              <Static id="staCnsuYmd" taborder="0" left="0" width="150" height="42" cssclass="sta_WF_Input01Top" text="품의일자" top="0" initvalueid="ivStcAccessibilityOn" padding="0px"/>
+              <Static id="staMlsvYmd" taborder="2" left="400" width="150" height="42" cssclass="sta_WF_Input01Top" text="급식일자" top="0" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staMmealScNm" taborder="4" left="771" width="150" height="42" cssclass="sta_WF_Input01Top" text="식사구분" top="0" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtMmealScNm" taborder="5" left="926" top="6" width="110" height="30" text="중식" readonly="true" initvalueid="ivEdtReadOnly" accessibilitylabel="식사구분"/>
+              <Static id="staFoodNm" taborder="6" left="0" width="150" height="42" cssclass="sta_WF_Input01" text="공통식품명" top="41" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtFoodNm" taborder="7" left="154" top="47" width="240" height="30" text="고추장/고추장" readonly="true" initvalueid="ivEdtReadOnly" accessibilitylabel="공통식품명"/>
+              <Static id="staFoodAtrbEpl" taborder="8" left="400" width="150" height="42" cssclass="sta_WF_Input01" text="공통식품속성" top="41" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtFoodAtrbEpl" taborder="9" left="555" top="47" width="210" height="30" text="1000g/kg" readonly="true" initvalueid="ivEdtReadOnly" accessibilitylabel="공통식품속성"/>
+              <Static id="staAcpParngYmd" taborder="12" left="0" width="150" height="42" cssclass="sta_WF_Input01" text="검수예정일자" top="82" initvalueid="ivStcAccessibilityOn" padding="0px"/>
+              <Static id="staAcpQty" taborder="14" left="400" width="150" height="42" cssclass="sta_WF_Input01" text="검수수량" top="82" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staGobCdNm" taborder="16" left="771" width="150" height="42" cssclass="sta_WF_Input01" text="업체군" top="82" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtGobCdNm" taborder="17" left="925" top="88" width="210" height="30" text="K000000009" readonly="true" initvalueid="ivEdtReadOnly" accessibilitylabel="업체군"/>
+              <Static id="staPavStsGoodYn" taborder="18" left="0" width="150" height="42" cssclass="sta_WF_Input01" text="포장상태" top="123" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboPavStsGoodYn" taborder="19" left="154" top="129" width="240" height="30" initvalueid="ivCmbNormal" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" displaynulltext="- 선택 -" text="- 선택 -" value="" accessibilitylabel="포장상태">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="datacolumn">- 선택 -</Col>
+                      <Col id="codecolumn"/>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">양호</Col>
+                      <Col id="codecolumn">1</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">보통</Col>
+                      <Col id="codecolumn">2</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">불량</Col>
+                      <Col id="codecolumn">3</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="staExdYmd" taborder="20" left="400" width="150" height="42" cssclass="sta_WF_Input01" text="유통기한" top="123" initvalueid="ivStcAccessibilityOn"/>
+              <Calendar id="calExdYmd" taborder="21" left="555" top="129" width="130" height="30" dateformat="yyyy.MM.dd" initvalueid="ivCalNormal" editformat="yyyy.MM.dd" accessibilitylabel="유통기한"/>
+              <Static id="staQlityStsGoodYn" taborder="24" left="0" width="150" height="42" cssclass="sta_WF_Input01" text="품질상태" top="164" initvalueid="ivStcAccessibilityOn" padding="0px"/>
+              <Combo id="cboQlityStsGoodYn" taborder="25" left="154" top="170" width="240" height="30" initvalueid="ivCmbNormal" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" displaynulltext="- 선택 -" text="양호" index="1" accessibilitylabel="품질상태">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="datacolumn">- 선택 -</Col>
+                      <Col id="codecolumn"/>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">양호</Col>
+                      <Col id="codecolumn">1</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">보통</Col>
+                      <Col id="codecolumn">2</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">불량</Col>
+                      <Col id="codecolumn">3</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="staFoodTemCnt" taborder="26" left="400" width="150" height="42" cssclass="sta_WF_Input01" text="식품온도" top="164" initvalueid="ivStcAccessibilityOn"/>
+              <MaskEdit id="mskFoodTemCnt" taborder="27" left="555" top="170" width="110" height="30" initvalueid="ivMskNormal" textAlign="left" format="990.09" limitbymask="both" accessibilitylabel="식품온도"/>
+              <Static id="staActnMteCn" taborder="28" left="0" width="150" height="100" cssclass="sta_WF_Input01" text="조치사항" top="205" initvalueid="ivStcAccessibilityOn"/>
+              <TextArea id="txtActnMteCn" taborder="29" left="155" top="211" height="88" right="5" initvalueid="ivTxtNormal" accessibilitylabel="조치사항"/>
+              <Static id="staMlsvComyNm" taborder="10" left="771" width="150" height="42" cssclass="sta_WF_Input01" text="업체명" top="41" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta05" taborder="35" left="921" cssclass="sta_WF_Input02" top="41" right="0" initvalueid="ivStcAccessibilityOff" height="42" text=""/>
+              <Edit id="edtMlsvComyNm" taborder="11" left="925" top="47" width="210" height="30" text="중식" readonly="true" initvalueid="ivEdtReadOnly" accessibilitylabel="업체명"/>
+              <Static id="staAcpUtp" taborder="22" left="771" width="150" height="42" cssclass="sta_WF_Input01" text="단가" top="122" initvalueid="ivStcAccessibilityOn"/>
+              <MaskEdit id="mskAcpUtp" taborder="23" left="staAcpUtp:5" top="128" width="110" height="30" initvalueid="ivMskNormal" textAlign="left" limitbymask="both" format="999,999,990" accessibilitylabel="단가"/>
+              <MaskEdit id="mskAcpQty" taborder="15" left="555" top="88" width="110" height="30" initvalueid="ivMskNormal" type="number" textAlign="left" limitbymask="both" format="999,990.09" accessibilitylabel="검수수량"/>
+              <MaskEdit id="mskCnsuYmd" taborder="1" left="154" top="6" width="240" height="30" readonly="true" type="string" format="####.##.##" initvalueid="ivMskReadOnly" textAlign="left" accessibilitylabel="품의일자"/>
+              <MaskEdit id="mskMlsvYmd" taborder="3" left="555" top="6" width="210" height="30" readonly="true" type="string" format="####.##.##" initvalueid="ivMskReadOnly" textAlign="left" accessibilitylabel="급식일자"/>
+              <MaskEdit id="mskAcpParngYmd" taborder="13" left="154" top="88" width="240" height="30" readonly="true" type="string" format="####.##.##" initvalueid="ivMskReadOnly" textAlign="left"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="sta03" left="160" top="sta02:-1" height="80" cssclass="sta_WF_Dtl01" taborder="3" right="0"/>
+              <Static id="sta04" left="160" top="sta03:-1" height="80" right="0" cssclass="sta_WF_Dtl01" taborder="4"/>
+              <Static id="staFoodNm" left="0" top="237" width="160" height="80" cssclass="sta_WF_DtlLabel01" taborder="19"/>
+              <Static id="staFoodAtrbEpl" left="0" top="316" width="160" height="80" cssclass="sta_WF_DtlLabel01" taborder="21"/>
+              <Static id="sta06" left="160" top="475" height="80" cssclass="sta_WF_Dtl01" taborder="5" right="0"/>
+              <Static id="sta07" left="160" top="sta06:-1" height="80" cssclass="sta_WF_Dtl01" taborder="6" right="0"/>
+              <Static id="sta08" left="160" top="sta07:-1" height="80" right="0" cssclass="sta_WF_Dtl01" taborder="7" text=""/>
+              <Static id="staAcpQty" left="0" top="554" width="160" height="80" cssclass="sta_WF_DtlLabel01" taborder="25"/>
+              <Static id="staGobCdNm" left="0" top="633" width="160" height="80" cssclass="sta_WF_DtlLabel01" taborder="27"/>
+              <Static id="staAcpParngYmd" left="0" top="475" width="160" height="80" cssclass="sta_WF_DtlLabel01" taborder="23"/>
+              <Static id="sta09" left="160" top="sta08:-1" height="80" cssclass="sta_WF_Dtl01" taborder="8" right="0"/>
+              <Static id="sta10" left="160" top="sta09:-1" height="80" right="0" cssclass="sta_WF_Dtl01" taborder="9"/>
+              <Static id="staExdYmd" left="0" top="791" width="160" height="80" cssclass="sta_WF_DtlLabel01" taborder="31"/>
+              <Static id="staPavStsGoodYn" left="0" top="712" width="160" height="80" cssclass="sta_WF_DtlLabel01" taborder="29"/>
+              <Static id="sta12" left="160" top="sta11:0" height="80" cssclass="sta_WF_Dtl01" taborder="10" right="0"/>
+              <Static id="sta13" left="160" top="sta12:-1" height="80" right="0" cssclass="sta_WF_Dtl01" taborder="11"/>
+              <Combo id="cboQlityStsGoodYn" left="staQlityStsGoodYn:10" top="960" height="60" taborder="34" right="0"/>
+              <Static id="staFoodTemCnt" left="0" top="1029" width="160" height="80" cssclass="sta_WF_DtlLabel01" taborder="35"/>
+              <Static id="staQlityStsGoodYn" left="0" top="950" width="160" height="80" cssclass="sta_WF_DtlLabel01" taborder="33"/>
+              <Edit id="edtFoodNm" left="staFoodNm:10" top="247" height="60" right="0" taborder="20"/>
+              <Edit id="edtFoodAtrbEpl" left="staFoodAtrbEpl:10" top="326" height="60" taborder="22" right="0"/>
+              <Edit id="edtGobCdNm" left="staGobCdNm:10" top="643" height="60" taborder="28" right="0"/>
+              <Calendar id="calExdYmd" left="staExdYmd:10" top="801" height="60" taborder="32" right="50"/>
+              <Combo id="cboPavStsGoodYn" left="staPavStsGoodYn:10" top="722" height="60" taborder="30" right="0"/>
+              <MaskEdit id="mskFoodTemCnt" left="staFoodTemCnt:10" top="1039" height="60" taborder="36" right="0"/>
+              <Static id="staActnMteCn" left="0" top="1108" width="160" height="150" cssclass="sta_WF_DtlLabel01" taborder="37"/>
+              <Static id="sta14" left="160" top="sta13:-1" height="150" right="0" cssclass="sta_WF_Dtl01" taborder="12"/>
+              <TextArea id="txtActnMteCn" left="staActnMteCn:10" top="1119" height="128" right="0" taborder="38"/>
+              <Static id="sta01" left="160" top="sta00:-1" height="80" cssclass="sta_WF_Dtl01" taborder="1" right="0"/>
+              <Static id="sta02" left="160" top="sta01:-1" height="80" right="0" cssclass="sta_WF_Dtl01" taborder="2"/>
+              <Static id="staMlsvYmd" left="0" top="79" width="160" height="80" cssclass="sta_WF_DtlLabel01" taborder="15"/>
+              <Static id="staMmealScNm" left="0" top="158" width="160" height="80" cssclass="sta_WF_DtlLabel01" taborder="17"/>
+              <Edit id="edtMmealScNm" left="staMmealScNm:10" top="168" height="60" taborder="18" right="0"/>
+              <Static id="staCnsuYmd" cssclass="sta_WF_DtlLabel01Top" height="80" left="0" top="0" width="160" taborder="13"/>
+              <Static id="sta00" cssclass="sta_WF_Dtl01Top" left="160" top="0" height="80" right="0" taborder="0" text=""/>
+              <Static id="staMlsvComyNm" left="0" top="395" width="160" height="80" cssclass="sta_WF_DtlLabel01" text="업체명"/>
+              <Static id="sta05" left="staMlsvComyNm:0" top="sta04:-1" height="80" right="0" cssclass="sta_WF_Dtl01"/>
+              <Edit id="edtMlsvComyNm" left="170" top="405" height="60" right="0"/>
+              <Static id="staAcpUtp" left="0" top="staExdYmd:-1" width="160" height="80" cssclass="sta_WF_DtlLabel01"/>
+              <Static id="sta11" left="160" top="sta10:-1" height="80" right="0" cssclass="sta_WF_Dtl01"/>
+              <MaskEdit id="mskAcpUtp" left="staAcpUtp:10" top="880" height="60" right="0"/>
+              <MaskEdit id="mskAcpQty" left="staAcpQty:10" top="564" height="60" right="0"/>
+              <MaskEdit id="mskAcpParngYmd" left="staAcpParngYmd:10" top="485" height="60" right="0"/>
+              <MaskEdit id="mskCnsuYmd" left="staCnsuYmd:10" top="10" height="60" right="0"/>
+              <MaskEdit id="mskMlsvYmd" left="staMlsvYmd:10" top="89" height="60" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div01" taborder="6" top="1168" width="515" height="41" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnQrCd" taborder="0" text="QR코드" top="0" cssclass="btn_WF_Action" initvalueid="ivBtnAccessibilityLink" height="40" width="120" right="390" onclick="div01_btnQrCd_onclick" visible="false" tabstop="false"/>
+              <Button id="btnAcpPrcs" taborder="1" text="검수처리" top="0" height="40" cssclass="btn_WF_ActionLine" width="120" right="260" initvalueid="ivBtnAccessibilityButton" onclick="div01_btnAcpPrcs_onclick"/>
+              <Button id="btnAcpRtrcn" taborder="2" text="검수취소" top="0" height="40" cssclass="btn_WF_ActionLine" width="120" right="130" initvalueid="ivBtnAccessibilityButton" onclick="div01_btnAcpRtrcn_onclick"/>
+              <Button id="btnSave" taborder="3" text="저장" top="0" cssclass="btn_WF_Action" initvalueid="ivBtnAccessibilityButton" height="40" width="120" right="0" onclick="div01_btnSave_onclick"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Button id="btnAcpRtrcn" cssclass="btn_WF_Custom" top="0" height="60" right="0" left="btnAcpPrcs:10" taborder="1"/>
+              <Button id="btnQrCd" top="120" width="49.17%" height="60" cssclass="btn_WF_Big" left="0" taborder="2"/>
+              <Button id="btnSave" top="btnAcpRtrcn:60" height="60" cssclass="btn_WF_Big" left="btnQrCd:10" right="0" taborder="3"/>
+              <Button id="btnAcpPrcs" height="60" top="0" width="49.17%" cssclass="btn_WF_Custom" left="0" taborder="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta00" taborder="7" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta01" taborder="8" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta02" taborder="9" left="0" top="254" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta03" taborder="10" left="0" top="314" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta04" taborder="11" left="0" top="763" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta05" taborder="12" left="0" top="823" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta06" taborder="13" left="0" top="1138" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="640" height="3540" mobileorientation="portrait" type="default" cssclass="sta_WF_Searchtxt01">
+        <Div id="divTitle" height="65" left="20" top="70" right="20" taborder="0"/>
+        <Static id="sta02" left="0" top="divSearch:0" height="60" right="0" text="60" taborder="9"/>
+        <ImageViewer id="img00" left="20" top="985" height="60" cssclass="img_WF_SubTit02" taborder="2" right="20"/>
+        <Grid id="grdMain" left="20" top="1065" height="763" right="20" taborder="3" formatid="format00" autofittype="none"/>
+        <Div id="div00" left="20" top="img01:20" height="1282" right="20" taborder="5" text=""/>
+        <ImageViewer id="img01" left="20" top="1888" height="60" cssclass="img_WF_SubTit02" taborder="4" right="20"/>
+        <Static id="sta03" left="0" top="1045" height="20" right="0" text="20" taborder="10"/>
+        <Static id="sta04" left="0" top="grdMain:0" height="60" right="0" text="60" taborder="11"/>
+        <Static id="sta05" left="0" top="img01:0" height="20" right="0" text="20" taborder="12"/>
+        <Div id="div01" top="div00:60" height="180" left="20" right="20" taborder="6"/>
+        <Static id="sta06" left="0" top="3250" height="60" right="0" text="60" taborder="13"/>
+        <Div id="divSearch" left="20" top="195" height="730" right="20" taborder="1" text=""/>
+        <Static id="sta01" left="0" top="135" height="60" right="0" text="60" taborder="8"/>
+        <Static id="sta00" taborder="7"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    급식관리(모바일) > 식재료검수처리(모바일)
+*  @FileName 	sml_smmfm02_m00.xfdl 
+*  @Creator 	Kangchaeyoon
+*  @CreateDate 	2022.08.26
+*  @Desction    급식관리(모바일) 식재료검수처리(모바일)
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2022.08.26            Kangchaeyoon                   최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_modifyYn;		//수정 여부
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo){
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	// 서버단에서 설정한 유효성 검증 목록을 획득하여 설정
+	this.smfValidateService("validateMain", {
+			url : "/sml_smm_fm02_000.do",
+		})
+		.mappingRulesetToDataset(this.dsFigtCnsulAcpBscListValid, "save")
+		.callback(function(callbackParams) {
+		})
+		.run()
+	;
+	
+	//조회조건 필수값 세팅
+	this.dsSearch.setColumn(0, "cddcCd", this.smfGetCddcCode());
+	this.dsSearch.setColumn(0, 'mmealScCd', 2);
+	this.divSearch.form.chkMealScCd2.set_value(true);
+	
+	//조회조건 조회
+	this.fnSearchInqCondCn();
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup) 
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+};
+
+/**
+ * 등록신청 팝업 CALLBACK
+ */
+this.fnPopupCallback = function(context, responseParams, sender){
+	this.fnSearchAcpPrcs();
+}
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * @description 조회조건 조회 Transaction
+ */
+ this.fnSearchInqCondCn = function(){
+ 	// 서비스 객체 생성
+	this.smfSearchService("listCondCn")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			this.dsComyGrpList.setColumn(this.dsComyGrpList.insertRow(0), "gobCdNm", "- 전체 -");
+			this.dsSearch.setColumn(0, "acpParngBgngYmd", this.dsSearch.getColumn(0, "mlsvBgngYmd"));
+			this.dsSearch.setColumn(0, "acpParngEndYmd", this.dsSearch.getColumn(0, "mlsvEndYmd"));
+		});
+};
+
+/**
+ * @description 검수처리 목록 조회 Transaction
+ */
+this.fnSearchAcpPrcs = function(){
+ 	// 서비스 객체 생성
+	this.smfSearchService("list")
+		// 데이터 검증
+		.validateForm(this.divSearch)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if(this.dsApiResponseList.getColumn(0, 'resultCode') == 'SUCC'){
+			}else{
+				this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'resultMsg')]);
+			}
+		});
+};
+
+/**
+ * @description 검수처리 저장 Transaction
+ */
+this.fnSaveFigtAcpPrcsDtl = function(){
+	// 서비스 객체 생성
+	this.smfSaveService("save")
+		// (권장) 데이터 존재 필수
+		.requireExistsData(this.dsFigtCnsulAcpBscList)
+		// 데이터 변경 필수 
+		.requireModifredData(this.dsFigtCnsulAcpBscList)
+		// 데이터 검증
+		.validateForm(this.div00)
+		// 실행   
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if(this.dsApiResponseList.getColumn(0, 'resultCode') == 'SUCC'){
+				this.smfAlert('CM002', []); 	//저장이 완료되었습니다.
+				
+				//검수처리 조회
+				this.fnSearchAcpPrcs();
+			}else{
+				this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'resultMsg')]);
+			}
+		});  
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * @description 캘린더 날짜 조건 세팅
+*/
+this.calCond = function(){
+	//시작일이 종료일보다 작게
+	var calAcpParngYmd1 = this.divSearch.form.calAcpParngYmd1.getDisplayText();
+	var calAcpParngYmd2 = this.divSearch.form.calAcpParngYmd2.getDisplayText();
+	
+	if(calAcpParngYmd1 > calAcpParngYmd2){
+		this.smfAlert('CM107', ['검수종료일은 검수시작일']);
+		this.divSearch.form.calAcpParngYmd2.set_value(calAcpParngYmd1);
+		return;
+	}
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description '초기화' 버튼 클릭
+*/
+this.divSearch_btnInit_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	this.dsSearch.setColumn(0, "acpParngBgngYmd", this.dsSearch.getColumn(0, "mlsvBgngYmd"));
+	this.dsSearch.setColumn(0, "acpParngEndYmd", this.dsSearch.getColumn(0, "mlsvEndYmd"));
+	this.divSearch.form.chkMealScCd2.set_value(true);
+	this.divSearch.form.chkMealScCd1.set_value(false);
+	this.divSearch.form.chkMealScCd3.set_value(false);
+	this.dsSearch.setColumn(0, 'mmealScCd', 2);
+	this.divSearch.form.cboGob.set_index(0);
+	this.divSearch.form.cboAcpYn.set_index(0);
+};
+
+/**
+ * @description 그리드 체크박스 헤드 클릭
+*/
+this.grdMain_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo){   
+	//체크박스 전체 선택 
+	this.smfSetGridCheckAll(obj, e, function (ds, nRow){
+		if(ds.getColumn(nRow,"chk" )!= "1"){
+			return false;
+		}else{
+			return true;
+		}
+	});
+};
+
+/**
+ * @description '조회' 버튼 클릭
+*/
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	if (this.smfIsNull(this.dsSearch.getColumn(0, 'acpParngBgngYmd'))){
+		this.smfAlert('CM006', ["검수예정시작일자"]); // {0}은(는) 필수 입력입니다.
+		return;
+	}else if (this.smfIsNull(this.dsSearch.getColumn(0, 'acpParngEndYmd'))){
+		this.smfAlert('CM006', ["검수예정종료일자"]); // {0}은(는) 필수 입력입니다.
+		return;
+	}else if (this.smfIsNull(this.dsSearch.getColumn(0, 'mmealScCd'))){
+		this.smfAlert('CM006', ["식사구분"]); // {0}은(는) 필수 입력입니다.
+		return;
+	}
+	
+	//식재료 검수처리 조회
+	this.fnSearchAcpPrcs();
+};
+
+/**
+ * @description '저장' 버튼 클릭
+*/
+this.div01_btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){	
+	//저장 상태 값 추가
+	this.dsFigtCnsulAcpBscList.set_updatecontrol(false);
+	var idx = this.dsFigtCnsulAcpBscList.rowposition;
+	this.dsFigtCnsulAcpBscList.setColumn(idx, "cnsulChgWrkScCd", "60");
+	this.dsFigtCnsulAcpBscList.set_updatecontrol(true);
+		
+	//저장 처리
+	this.fnSaveFigtAcpPrcsDtl();
+};
+
+/**
+ * @description '검수처리' 버튼 클릭
+*/
+this.div01_btnAcpPrcs_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	var idxArr = this.dsFigtCnsulAcpBscList.extractRows("chk == 1");
+	if(idxArr.length <= 0){
+		this.smfAlert("검수처리목록에서 검수처리 대상을 선택해주세요.");
+		return false;
+	}
+	
+	for(var i = 0; i < idxArr.length; i++){
+		this.dsFigtCnsulAcpBscList.setColumn(idxArr[i], "cnsulChgWrkScCd", "81");
+		this.dsFigtCnsulAcpBscList.setRowType(idxArr[i], "u");
+	}
+	
+	//저장 처리
+	this.fnSaveFigtAcpPrcsDtl();
+};
+
+/**
+ * @description '검수취소' 버튼 클릭
+*/
+this.div01_btnAcpRtrcn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	var idxArr = this.dsFigtCnsulAcpBscList.extractRows("chk == 1");
+	if(idxArr.length <= 0){
+		this.smfAlert("검수처리목록에서 검수취소 대상을 선택해주세요.");
+		return false;
+	}
+	for(var i = 0; i < idxArr.length; i++){
+		this.dsFigtCnsulAcpBscList.setColumn(idxArr[i], "cnsulChgWrkScCd", "82");
+		this.dsFigtCnsulAcpBscList.setRowType(idxArr[i], "u");
+	}
+	
+	//저장 처리
+	this.fnSaveFigtAcpPrcsDtl();
+};
+
+/**
+ * @description 'QR코드' 버튼 클릭
+*/
+this.div01_btnQrCd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	//파라미터 변수 세팅 (조회 조건 값)
+	var popupParams = {
+		sender: obj,								// sender 지정
+		callback: this.fnPopupCallback,				// 콜백함수 지정
+		internalCallback : this.fnPopupCallback,	// 콜백함수 지정	
+		params: {
+			procType: 'none', 						// 처리타입 지정
+			dsSearch: this.dsSearch.saveXML(),
+			dsFigtCnsulAcpBscList: this.dsFigtCnsulAcpBscList.saveXML()
+		},
+	};
+	
+	//모달팝업 실행
+	this.smfDialog("_auto", "pa_sml_smm_fm::sml_smmfm02_p01.xfdl", popupParams);
+};
+
+/**
+ * @description 식사구분 체크박스 변경 시
+*/
+this.chkMealScCd_onchanged = function(obj:nexacro.CheckBox,e:nexacro.ClickEventInfo){
+	var chkList = new Array();
+	for(var i = 1; i < 4; i++){
+		if (this.divSearch.form["chkMealScCd" + i].value){
+			chkList.push(this.divSearch.form["chkMealScCd" + i].mmealScCd);
+		}
+	}
+	
+	this.dsSearch.setColumn(0, 'mmealScCd', chkList.join(','));	
+};]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listCondCn</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="url">/sml_smm_fm02_001.do</Col>
+            <Col id="outDatasets">dsSearch=dsSearch dsComyGrpList=dsComyGrpList</Col>
+            <Col id="svctp">C</Col>
+          </Row>
+          <Row>
+            <Col id="id">list</Col>
+            <Col id="url">/sml_smm_fm02_002.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsFigtCnsulAcpBscList=dsFigtCnsulAcpBscList dsApiResponseList=dsApiResponseList</Col>
+            <Col id="svctp">C</Col>
+          </Row>
+          <Row>
+            <Col id="id">save</Col>
+            <Col id="url">/sml_smm_fm02_003.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsFigtCnsulAcpBscList=dsFigtCnsulAcpBscList:U</Col>
+            <Col id="svctp">U</Col>
+            <Col id="outDatasets">dsApiResponseList=dsApiResponseList</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="userId" type="STRING" size="256" description="사용자ID"/>
+          <Column id="instCd" type="STRING" size="256" description="기관코드"/>
+          <Column id="cteOrgCd" type="STRING" size="256" description="소속기관코드"/>
+          <Column id="acpParngBgngYmd" type="STRING" size="256" description="검수예정시작일자"/>
+          <Column id="acpParngEndYmd" type="STRING" size="256" description="검수예정종료일자"/>
+          <Column id="mmealScCd" type="STRING" size="256" description="식사구분코드"/>
+          <Column id="gobCd" type="STRING" size="256" description="업체군코드"/>
+          <Column id="acpYn" type="STRING" size="256" description="검수여부"/>
+          <Column id="cnsulChgWrkScCd" type="STRING" size="256" description="진행상태"/>
+          <Column id="cddcCd" type="STRING" size="256" description="시도교육청코드"/>
+          <Column id="mlsvBgngYmd" type="STRING" size="256"/>
+          <Column id="mlsvEndYmd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsComyGrpList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="instCd" type="STRING" size="256"/>
+          <Column id="gobCd" type="STRING" size="256"/>
+          <Column id="gobCdNm" type="STRING" size="256"/>
+          <Column id="cdSorNo" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsFigtCnsulAcpBscList" useclientlayout="true" updatecontrol="true">
+        <ColumnInfo>
+          <Column id="chk" type="STRING" size="256" description="체크여부"/>
+          <Column id="instCd" type="STRING" size="256" description="기관코드"/>
+          <Column id="cnsulChgWrkScCd" type="STRING" size="256" description="품의변경업무구분코드"/>
+          <Column id="cnsulChgWrkScCdNm" type="STRING" size="256" description="품의변경업무구분코드명"/>
+          <Column id="cnsulPrgStsCd" type="STRING" size="256" description="품의진행상태코드"/>
+          <Column id="acpParngYmd" type="STRING" size="256" description="검수예정일자"/>
+          <Column id="cnsulPrgYmd" type="STRING" size="256" description="품의일자"/>
+          <Column id="acpYmd" type="STRING" size="256" description="검수일자"/>
+          <Column id="mlsvYmd" type="STRING" size="256" description="급식일자"/>
+          <Column id="mmealScCd" type="STRING" size="256" description="식사구분코드"/>
+          <Column id="mmealScCdNm" type="STRING" size="256" description="식사구분코드명"/>
+          <Column id="foodLclfCd" type="STRING" size="256" description="식품대분류코드"/>
+          <Column id="foodLclfCdNm" type="STRING" size="256" description="식품대분류코드명"/>
+          <Column id="foodMclfCd" type="STRING" size="256" description="식품중분류코드"/>
+          <Column id="foodMclfCdNm" type="STRING" size="256" description="식품중분류코드명"/>
+          <Column id="foodSclfCd" type="STRING" size="256" description="식품소분류코드"/>
+          <Column id="foodSclfCdNm" type="STRING" size="256" description="식품소분류코드명"/>
+          <Column id="foodComCd" type="STRING" size="256" description="식품공통코드"/>
+          <Column id="foodComCdNm" type="STRING" size="256" description="식품공통코드명"/>
+          <Column id="foodAtrbEpl" type="STRING" size="256" description="식품속성설명"/>
+          <Column id="mlsvSdrqCd" type="STRING" size="256" description="급식규격코드"/>
+          <Column id="mlsvSdrqCdNm" type="STRING" size="256" description="급식규격코드명"/>
+          <Column id="sdrqCnt" type="STRING" size="256" description="규격수"/>
+          <Column id="mlsvUnitCd" type="STRING" size="256" description="급식단위코드"/>
+          <Column id="mlsvUnitCdNm" type="STRING" size="256" description="급식단위코드명"/>
+          <Column id="gyugyuk" type="STRING" size="256" description="규격수-식품규격"/>
+          <Column id="cnsulQty" type="STRING" size="256" description="품의수량"/>
+          <Column id="cnsulUtp" type="STRING" size="256" description="품의단가"/>
+          <Column id="bfchAcpQty" type="STRING" size="256" description="검수수량"/>
+          <Column id="bfchAcpUtp" type="STRING" size="256" description="검수단가"/>
+          <Column id="bfchCttAmt" type="STRING" size="256" description="검수총"/>
+          <Column id="acpQty" type="STRING" size="256" description="검수수량"/>
+          <Column id="acpUtp" type="STRING" size="256" description="검수단가"/>
+          <Column id="mktUtp" type="STRING" size="256" description="시장단가"/>
+          <Column id="cttAmt" type="INT" size="256" description="계약금"/>
+          <Column id="plorCd" type="STRING" size="256" description="원산지코드"/>
+          <Column id="plorCdNm" type="STRING" size="256" description="원산지코드명"/>
+          <Column id="pavStsCd" type="STRING" size="256" description="포장상태코드"/>
+          <Column id="pavStsCdNm" type="STRING" size="256" description="포장상태코드명"/>
+          <Column id="pavMthCdValue" type="STRING" size="256" description="포장방법코드값"/>
+          <Column id="pavMthCdValueCn" type="STRING" size="256" description="포장방법코드값내용"/>
+          <Column id="foodTemCnt" type="STRING" size="256" description="식품온도수"/>
+          <Column id="exdYmd" type="STRING" size="256" description="유통기한일자"/>
+          <Column id="qlityStsCd" type="STRING" size="256" description="품질상태코드"/>
+          <Column id="qlityStsCdNm" type="STRING" size="256" description="품질상태코드명"/>
+          <Column id="figtQlityClaCd" type="STRING" size="256" description="식재료품질등급코드"/>
+          <Column id="figtQlityClaCdNm" type="STRING" size="256" description="식재료품질등급코드명"/>
+          <Column id="gobCd" type="STRING" size="256" description="업체군코드"/>
+          <Column id="gobCdNm" type="STRING" size="256" description="업체군코드명"/>
+          <Column id="mlsvComyCd" type="STRING" size="256" description="급식업체코드"/>
+          <Column id="mlsvComyCdNm" type="STRING" size="256" description="급식업체코드명"/>
+          <Column id="actnMteCn" type="STRING" size="256" description="조치사항내용"/>
+          <Column id="bfchFoodComCd" type="STRING" size="256" description="변경전식품공통코드"/>
+          <Column id="bfchFoodComCdNm" type="STRING" size="256" description="변경전식품공통코드명"/>
+          <Column id="rgtrId" type="STRING" size="256" description="등록자ID"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsApiResponseList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="연계상태값"/>
+          <Column id="message" type="STRING" size="256" description="연계결과코드"/>
+          <Column id="resultCode" type="STRING" size="256" description="연계결과구분"/>
+          <Column id="resultMsg" type="STRING" size="256" description="연계결과내용"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsFigtCnsulAcpBscListValid" useclientlayout="true" cancolumnchange="dsFigtCnsulAcpBscList_cancolumnchange">
+        <ColumnInfo>
+          <Column id="chk" type="STRING" size="256" description="체크여부"/>
+          <Column id="instCd" type="STRING" size="256" description="기관코드"/>
+          <Column id="cnsulChgWrkScCd" type="STRING" size="256" description="품의변경업무구분코드"/>
+          <Column id="cnsulChgWrkScCdNm" type="STRING" size="256" description="품의변경업무구분코드명"/>
+          <Column id="cnsulPrgStsCd" type="STRING" size="256" description="품의진행상태코드"/>
+          <Column id="acpParngYmd" type="STRING" size="256" description="검수예정일자"/>
+          <Column id="cnsulPrgYmd" type="STRING" size="256" description="품의일자"/>
+          <Column id="acpYmd" type="STRING" size="256" description="검수일자"/>
+          <Column id="mlsvYmd" type="STRING" size="256" description="급식일자"/>
+          <Column id="mmealScCd" type="STRING" size="256" description="식사구분코드"/>
+          <Column id="mmealScCdNm" type="STRING" size="256" description="식사구분코드명"/>
+          <Column id="foodLclfCd" type="STRING" size="256" description="식품대분류코드"/>
+          <Column id="foodLclfCdNm" type="STRING" size="256" description="식품대분류코드명"/>
+          <Column id="foodMclfCd" type="STRING" size="256" description="식품중분류코드"/>
+          <Column id="foodMclfCdNm" type="STRING" size="256" description="식품중분류코드명"/>
+          <Column id="foodSclfCd" type="STRING" size="256" description="식품소분류코드"/>
+          <Column id="foodSclfCdNm" type="STRING" size="256" description="식품소분류코드명"/>
+          <Column id="foodComCd" type="STRING" size="256" description="식품공통코드"/>
+          <Column id="foodComCdNm" type="STRING" size="256" description="식품공통코드명"/>
+          <Column id="foodAtrbEpl" type="STRING" size="256" description="식품속성설명"/>
+          <Column id="mlsvSdrqCd" type="STRING" size="256" description="급식규격코드"/>
+          <Column id="mlsvSdrqCdNm" type="STRING" size="256" description="급식규격코드명"/>
+          <Column id="sdrqCnt" type="STRING" size="256" description="규격수"/>
+          <Column id="mlsvUnitCd" type="STRING" size="256" description="급식단위코드"/>
+          <Column id="mlsvUnitCdNm" type="STRING" size="256" description="급식단위코드명"/>
+          <Column id="gyugyuk" type="STRING" size="256" description="규격수-식품규격"/>
+          <Column id="cnsulQty" type="STRING" size="256" description="품의수량"/>
+          <Column id="cnsulUtp" type="STRING" size="256" description="품의단가"/>
+          <Column id="bfchAcpQty" type="STRING" size="256" description="검수수량"/>
+          <Column id="bfchAcpUtp" type="STRING" size="256" description="검수단가"/>
+          <Column id="bfchCttAmt" type="STRING" size="256" description="검수총"/>
+          <Column id="acpQty" type="STRING" size="256" description="검수수량"/>
+          <Column id="acpUtp" type="STRING" size="256" description="검수단가"/>
+          <Column id="mktUtp" type="STRING" size="256" description="시장단가"/>
+          <Column id="cttAmt" type="INT" size="256" description="계약금"/>
+          <Column id="plorCd" type="STRING" size="256" description="원산지코드"/>
+          <Column id="plorCdNm" type="STRING" size="256" description="원산지코드명"/>
+          <Column id="pavStsCd" type="STRING" size="256" description="포장상태코드"/>
+          <Column id="pavStsCdNm" type="STRING" size="256" description="포장상태코드명"/>
+          <Column id="pavMthCdValue" type="STRING" size="256" description="포장방법코드값"/>
+          <Column id="pavMthCdValueCn" type="STRING" size="256" description="포장방법코드값내용"/>
+          <Column id="foodTemCnt" type="STRING" size="256" description="식품온도수"/>
+          <Column id="exdYmd" type="STRING" size="256" description="유통기한일자"/>
+          <Column id="qlityStsCd" type="STRING" size="256" description="품질상태코드"/>
+          <Column id="qlityStsCdNm" type="STRING" size="256" description="품질상태코드명"/>
+          <Column id="figtQlityClaCd" type="STRING" size="256" description="식재료품질등급코드"/>
+          <Column id="figtQlityClaCdNm" type="STRING" size="256" description="식재료품질등급코드명"/>
+          <Column id="gobCd" type="STRING" size="256" description="업체군코드"/>
+          <Column id="gobCdNm" type="STRING" size="256" description="업체군코드명"/>
+          <Column id="mlsvComyCd" type="STRING" size="256" description="급식업체코드"/>
+          <Column id="mlsvComyCdNm" type="STRING" size="256" description="급식업체코드명"/>
+          <Column id="actnMteCn" type="STRING" size="256" description="조치사항내용"/>
+          <Column id="bfchFoodComCd" type="STRING" size="256" description="변경전식품공통코드"/>
+          <Column id="bfchFoodComCdNm" type="STRING" size="256" description="변경전식품공통코드명"/>
+          <Column id="rgtrId" type="STRING" size="256" description="등록자ID"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.calAcpParngYmd1" propid="value" datasetid="dsSearch" columnid="acpParngBgngYmd"/>
+      <BindItem id="item1" compid="divSearch.form.calAcpParngYmd2" propid="value" datasetid="dsSearch" columnid="acpParngEndYmd"/>
+      <BindItem id="item2" compid="divSearch.form.cboMmealScCd" propid="value" datasetid="dsSearch" columnid="mmealScCd"/>
+      <BindItem id="item3" compid="divSearch.form.cboGob" propid="value" datasetid="dsSearch" columnid="gobCd"/>
+      <BindItem id="item4" compid="divSearch.form.cboAcpYn" propid="value" datasetid="dsSearch" columnid="cnsulChgWrkScCd"/>
+      <BindItem id="item5" compid="div00.form.edtCnsuYmd" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="cnsulPrgYmd"/>
+      <BindItem id="item6" compid="div00.form.edtMlsvYmd" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="mlsvYmd"/>
+      <BindItem id="item7" compid="div00.form.edtFoodNm" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="foodComCdNm"/>
+      <BindItem id="item8" compid="div00.form.edtFoodAtrbEpl" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="foodAtrbEpl"/>
+      <BindItem id="item9" compid="div00.form.calAcpParngYmd" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="acpParngYmd"/>
+      <BindItem id="item10" compid="div00.form.edtAcpQty" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="acpQty"/>
+      <BindItem id="item11" compid="div00.form.cboPavStsGoodYn" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="pavStsCd"/>
+      <BindItem id="item12" compid="div00.form.calExdYmd" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="exdYmd"/>
+      <BindItem id="item13" compid="div00.form.cboQlityStsGoodYn" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="qlityStsCd"/>
+      <BindItem id="item14" compid="div00.form.mskFoodTemCnt" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="foodTemCnt"/>
+      <BindItem id="item15" compid="div00.form.txtActnMteCn" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="actnMteCn"/>
+      <BindItem id="item16" compid="div00.form.edtMmealScNm" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="mmealScCdNm"/>
+      <BindItem id="item17" compid="div00.form.edtGobCdNm" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="gobCdNm"/>
+      <BindItem id="item18" compid="div00.form.edtMlsvComyNm" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="mlsvComyCdNm"/>
+      <BindItem id="item19" compid="div00.form.edtUnit" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="acpUtp"/>
+      <BindItem id="item20" compid="div00.form.mskAcpUtp" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="acpUtp"/>
+      <BindItem id="item21" compid="div00.form.mskAcpQty" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="acpQty"/>
+      <BindItem id="item22" compid="div00.form.mskCnsuYmd" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="cnsulPrgYmd"/>
+      <BindItem id="item23" compid="div00.form.mskMlsvYmd" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="mlsvYmd"/>
+      <BindItem id="item24" compid="div00.form.mskAcpParngYmd" propid="value" datasetid="dsFigtCnsulAcpBscList" columnid="acpParngYmd"/>
+    </Bind>
+  </Form>
+</FDL>

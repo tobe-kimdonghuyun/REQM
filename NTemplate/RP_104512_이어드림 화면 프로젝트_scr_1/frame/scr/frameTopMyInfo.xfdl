@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameTopMyInfo" width="240" height="185" titletext="내정보" onload="form_onload">
+    <Layouts>
+      <Layout height="185" width="240" screenid="desktopScr,tabletScr">
+        <Static id="staTF_MyBg" taborder="0" left="0" top="0" right="0" bottom="0" cssclass="sta_TF_MyBg" text=""/>
+        <Static id="staLabel1" taborder="1" text="이름" top="40" width="66" height="25" cssclass="sta_TF_Label" left="15"/>
+        <Static id="staPrntNm" taborder="2" left="104" top="40" height="25" right="10" cssclass="sta_TF_Data"/>
+        <Static id="staLabel2" taborder="3" text="연락처" top="73" width="66" height="25" cssclass="sta_TF_Label" left="15"/>
+        <Static id="staPrntMblNo" taborder="4" left="104" top="73" height="25" right="10" cssclass="sta_TF_Data" onclick="Div02_Static01_00_onclick" text="010-9855-5555"/>
+        <Static id="staLabel3" taborder="5" text="자녀정보" top="106" width="66" height="25" cssclass="sta_TF_Label" left="15"/>
+        <Div id="divStudent" taborder="6" left="104" top="105" width="70" bottom="46" accessibilityenable="false" visible="true" formscrolltype="none" formscrollbartype="none none">
+          <Layouts>
+            <Layout/>
+            <Layout name="Layout0">
+              <Button id="Button00" height="26" left="0" top="0" right="0"/>
+              <Button id="Button00_00" left="0" top="28" height="26" right="0"/>
+              <Button id="Button00_01" left="0" top="56" height="26" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnLogout" taborder="7" text="로그아웃" left="8" right="8" bottom="8" cssclass="btn_TF_Logout" height="34" onclick="btnLogout_onclick"/>
+        <Button id="btnClose" taborder="8" top="20" width="26" height="26" cssclass="btn_TF_MyClose" right="10" onclick="btnClose_onclick"/>
+      </Layout>
+      <Layout height="185" mobileorientation="Portrait" name="mobile" type="default" width="450" screenid="mobileScr,desktopScr">
+        <Static id="staTF_MyBg" taborder="0"/>
+        <Static id="staLabel1" taborder="1"/>
+        <Static id="staPrntNm" taborder="2"/>
+        <Static id="staLabel2" taborder="3"/>
+        <Static id="staPrntMblNo" taborder="4"/>
+        <Static id="staLabel3" taborder="5"/>
+        <Button id="btnClose" taborder="7"/>
+        <Button id="btnLogout" taborder="6"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsStudent">
+        <ColumnInfo>
+          <Column id="chcYn" type="STRING" size="256" description="선택된자녀여부"/>
+          <Column id="chldNo" type="STRING" size="256" description="자녀_순번"/>
+          <Column id="stdntNm" type="STRING" size="256" description="자녀_학생명"/>
+          <Column id="cddcCd" type="STRING" size="256" description="자녀_시도교육청코드 ::: 3자리 잘라서 사용"/>
+          <Column id="cddcOrgCd" type="STRING" size="256" description="자녀_시도교육청코드"/>
+          <Column id="cteOrgCd" type="STRING" size="256" description="자녀_관할조직코드"/>
+          <Column id="shlKndScCd" type="STRING" size="256" description="자녀_학교종류구분코드 ::: SG_BY_CD[학교급별코드"/>
+          <Column id="shlCrseScCd" type="STRING" size="256" description="자녀_학교과정구분코드 ::: [1:유치원, 2:초등학교, 3:중학교, 4:고등학교, 5:특수학교교(부), 6:전공과]"/>
+          <Column id="shlCd" type="STRING" size="256" description="자녀_학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" description="자녀_학교명"/>
+          <Column id="ayr" type="STRING" size="256" description="자녀_학년도"/>
+          <Column id="grd" type="STRING" size="256" description="자녀_학년"/>
+          <Column id="dghtCrseScCd" type="STRING" size="256" description="자녀_주야과정구분코드"/>
+          <Column id="ordScCd" type="STRING" size="256" description="자녀_계열구분코드"/>
+          <Column id="dddepCd" type="STRING" size="256" description="자녀_학과코드"/>
+          <Column id="clsCd" type="STRING" size="256" description="자녀_학급코드"/>
+          <Column id="clsNm" type="STRING" size="256" description="자녀_학급명"/>
+          <Column id="clsNo" type="STRING" size="256" description="자녀_학급번호"/>
+          <Column id="cthrTcrNm" type="STRING" size="256" description="담임_사용자명"/>
+          <Column id="cthrTcrIdfId" type="STRING" size="256" description="담임_담임교사식별ID"/>
+          <Column id="cthrUserDtcNo" type="STRING" size="256" description="담임_사용자고유번호"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템
+*  @MenuPath    공통
+*  @FileName 	frameTopMyInfo.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.objApp = nexacro.getApplication();
+this.fvOwnerForm;
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//trace("Frame Bottom onload >>>>>>>");
+	this.fvOwnerForm = this.parent.parent;	//frameTop
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnInitMyInfo = function()
+{
+	//학부모정보
+	var prntNm    = this.objApp.gdsScrLgnInfo.getColumn(0, 'prntNm');		//학부모명
+	var prntMblNo = this.objApp.gdsScrLgnInfo.getColumn(0, 'prntMblNo');	//학부모 전화번호
+	this.staPrntNm.set_text(prntNm);
+	this.staPrntMblNo.set_text(this.fnGetFormatPhoneNo(prntMblNo));
+	
+	//자녀정보
+	var objDs = this.dsStudent;
+	objDs.copyData(this.objApp.gdsScrLgnChildList);
+	var sChildNo = "", sChildNames = "", sCss = "", sType = "";
+	var nTop = 0;
+	this.divStudent.reload();
+	
+	var nFindRow = objDs.findRow("chcYn","Y");
+	for ( i=0; i<objDs.rowcount; i++) {
+		sChildNo    = objDs.getColumn(i,"chldNo");
+		sChildNames = objDs.getColumn(i, "stdntNm");
+		
+		if ( this.objApp.gv_appScreenType == "M" ) {	//모바일
+			if ( i == nFindRow ) {
+				sCss = "btn_TF_Stu_S";
+			} else {
+				sCss = "btn_TF_Stu_";
+			}
+		} else {
+			sCss = "sta_TF_Data,sta_WF_TxtTop";
+		}
+		nTop = this.fnCreateBtnStudent(sChildNo, sChildNames, nTop, sCss, this.objApp.gv_appScreenType);
+	}	
+};
+
+this.fnGetFormatPhoneNo = function(sPhoneNo)
+{
+	if ( this.smfIsNull(sPhoneNo) ) return "";
+	
+	return sPhoneNo.substr(0,3) + "-" + sPhoneNo.substr(3,4) + "-" + sPhoneNo.substr(7,4);
+};
+
+/**
+@class fnCreateBtnStudent
+@description Student 버튼 creation
+@param  필수 {String} strID - 버튼아이디
+		필수 {String} strName - 버튼 text
+		필수 {Number} nTop - 버튼 Top
+@return N/A
+*/
+this.fnCreateBtnStudent = function (strID, strName, nTop, sCss, sType)
+{
+	var objBtn = null;
+	if ( sType == "M" ) {
+		objBtn = new nexacro.Button();
+	} else {
+		objBtn = new nexacro.Static();
+	}
+	objBtn.init("btn_" + strID, 0, nTop, null, 26, 0, null);
+	nTop = nTop + objBtn.getOffsetHeight();
+	
+	this.divStudent.addChild(objBtn.name, objBtn);
+	objBtn.set_text(strName);	
+	objBtn.set_cssclass(sCss);
+	if ( sType == "M" ) {
+		objBtn.set_initvalueid("iv_Button");
+		objBtn.setEventHandler("onclick", this.btnStudentButton_onclick, this);
+		
+		objBtn.studentid = strID;
+		objBtn.studentnm = strName;
+	}	
+	objBtn.show();
+	
+	return nTop;
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+//로그아웃
+this.btnLogout_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.parent.closePopup();
+	this.fvOwnerForm.fnLogout_onclick(obj,e);	
+};
+
+//닫기버튼
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.parent.closePopup();
+};
+
+//자녀리스트 버튼 onclick 이벤트
+this.btnStudentButton_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.parent.closePopup();
+
+	this.fvOwnerForm.fnChangeChild(obj.studentid, obj.studentnm);	
+};
+]]></Script>
+    <InitValue/>
+  </Form>
+</FDL>

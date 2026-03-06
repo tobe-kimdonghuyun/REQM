@@ -1,0 +1,2841 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="techinquireList" width="1300" height="1110" titletext="New Form" onload="techinquireList_onload" onbeforeclose="techinquireList_onbeforeclose" scrollbarsize="0">
+    <Layouts>
+      <Layout width="1300" height="1110">
+        <Edit id="edtSearch" taborder="0" left="12" top="60" width="980" height="75" cssclass="edt_WF_search" onkeyup="edtSearch_onkeyup" accessibilitylabel="검색어"/>
+        <Button id="btnSearch" taborder="1" text="검색" left="1007" top="60" width="155" height="75" cssclass="btn_WF_search" onclick="btnSearch_onclick"/>
+        <Div id="div_autoCompleteCover" taborder="2" top="136" width="980" height="332" text="" onclick="div_autoCompleteCover_onclick" accessibilitylabel="검색어 자동완성 목록" onkillfocus="div_autoCompleteCover_onkillfocus" left="1360" visible="false">
+          <Layouts>
+            <Layout>
+              <Div id="div_autoCompleteResult" taborder="0" left="-13" top="-7" width="367" height="327" visible="false" text="" accessibilityenable="false">
+                <Layouts>
+                  <Layout/>
+                </Layouts>
+              </Div>
+              <Static id="sta_autoCompleteResult" taborder="1" left="0" top="0" width="980" height="250" accessibilityenable="false" cssclass="sta_TF_searchBg"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnFilterResize" taborder="3" top="88" width="104" height="18" cssclass="btn_WF_filterOpen" left="1191" onclick="btnFilter_onclick" text="" accessibilitylabel="상세검색" accessibilitydescription="조건영역 닫힘"/>
+        <Div id="divSearch" taborder="4" left="0" top="edtSearch:20" height="0" text="" accessibilityenable="false" right="0" visible="false">
+          <Layouts>
+            <Layout>
+              <Static id="Static03" taborder="0" text="제품선택" left="30" top="37" width="80" height="37" cssclass="sta_WF_search"/>
+              <CheckBox id="Chk_ALL" taborder="1" text="전체" left="179" top="37" width="150" height="37" cssclass="chk_WF_product" onclick="divSearch_Chk_ALL_onclick" value="true"/>
+              <CheckBox id="Chk_NPN" taborder="2" text="Nexacro N" left="304" top="37" width="150" height="37" cssclass="chk_WF_product" onclick="divSearch_Chk_onclick" value="true"/>
+              <CheckBox id="Chk_NP17" taborder="3" text="nexacro 17" left="469" top="37" width="150" height="37" cssclass="chk_WF_product" onclick="divSearch_Chk_onclick" value="true"/>
+              <CheckBox id="Chk_NP14" taborder="4" text="nexacro 14" left="634" top="37" width="150" height="37" cssclass="chk_WF_product" onclick="divSearch_Chk_onclick" value="true"/>
+              <CheckBox id="Chk_XP" taborder="5" text="XPLATFORM" left="799" top="37" width="150" height="37" cssclass="chk_WF_product" onclick="divSearch_Chk_onclick" value="true"/>
+              <CheckBox id="Chk_MP" taborder="6" text="MiPlatform" left="979" top="37" width="150" height="37" cssclass="chk_WF_product" onclick="divSearch_Chk_onclick" value="true"/>
+              <CheckBox id="Chk_TDO" taborder="7" text="TobeDevOps" left="1139" top="37" width="150" height="37" cssclass="chk_WF_product" onclick="divSearch_Chk_onclick" value="true"/>
+              <Static id="Static03_00" taborder="8" text="조회조건" left="30" top="Static03:18" width="80" height="37" cssclass="sta_WF_search" value="true"/>
+              <Radio id="rdoField" taborder="9" left="179" top="92" width="657" height="37" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" cssclass="rdo_WF_search" index="1" text="제목" value="200" onitemchanged="divSearch_rdoField_onitemchanged" accessibilitylabel="[@Static03_00]" initvalueid="iv_Radio0">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">100</Col>
+                      <Col id="datacolumn">제목+내용</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">200</Col>
+                      <Col id="datacolumn">제목</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">300</Col>
+                      <Col id="datacolumn">내용</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">600</Col>
+                      <Col id="datacolumn">번호</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Radio id="rdoOperator" taborder="10" left="840" top="92" width="330" height="37" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" cssclass="rdo_WF_search" index="0" text="OR" value="0" onitemchanged="divSearch_rdoOperator_onitemchanged" accessibilitylabel="[@Static03_00]" initvalueid="iv_Radio0">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">OR</Col>
+                      <Col id="datacolumn">OR</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">AND</Col>
+                      <Col id="datacolumn">AND</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Static id="Static03_00_00" taborder="11" text="조회기간" left="30" top="Static03_00:16" width="80" height="37" cssclass="sta_WF_search" onclick="divSearch_Static03_00_00_onclick"/>
+              <Radio id="rdoTerm" taborder="12" left="182" top="145" width="657" height="37" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" cssclass="rdo_WF_search" index="0" text="전체" value="1" onitemchanged="divSearch_rdoTerm_onitemchanged" accessibilitylabel="[@Static03_00_00]" initvalueid="iv_Radio0">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">1</Col>
+                      <Col id="datacolumn">전체</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">2</Col>
+                      <Col id="datacolumn">오늘</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">3</Col>
+                      <Col id="datacolumn">1주일</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">4</Col>
+                      <Col id="datacolumn">1달</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Static id="Static03_00_00_00" taborder="13" text="조회기간" left="840.00" top="145" width="80" height="37" cssclass="sta_WF_search" onclick="divSearch_Static03_00_00_onclick"/>
+              <Calendar id="calStart" taborder="14" left="959.00" top="145" width="155" height="40" dateformat="yyyy-MM-dd" cssclass="cal_WF_search" accessibilitylabel="시작 날짜" autoselect="true"/>
+              <Static id="Static00" taborder="15" text="~" left="1114.00" top="145" width="20" height="40" textAlign="center" accessibilityenable="false"/>
+              <Calendar id="calEnd" taborder="16" left="1134.00" top="145" width="155" height="40" dateformat="yyyy-MM-dd" cssclass="cal_WF_search" accessibilitylabel="종료 날짜" autoselect="true"/>
+              <Button id="btnClear" taborder="17" text="초기화" left="537" top="calEnd:35" width="110" height="40" cssclass="btn_WF_searchReset" onclick="divSearch_btnClear_onclick"/>
+              <Button id="btnApply" taborder="18" text="적용" left="657" width="110" height="40" cssclass="btn_WF_searchReset" onclick="divSearch_btnApply_onclick" top="220"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divResult" taborder="5" text="Div00" left="0" top="divSearch:0" width="1300" height="95" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <Button id="btn1" taborder="0" text="전체" left="1" top="25" width="186" height="70" cssclass="btn_WF_resultTab_S" onclick="divResult_btnProd_onclick" visible="true"/>
+              <Button id="btn2" taborder="1" text="Nexacro N" left="btn1:-1" top="25" width="186" height="70" cssclass="btn_WF_resultTab" onclick="divResult_btnProd_onclick" visible="true"/>
+              <Button id="btn3" taborder="2" text="nexacro 17" left="btn2:-1" top="25" width="186" height="70" cssclass="btn_WF_resultTab" onclick="divResult_btnProd_onclick" visible="true"/>
+              <Button id="btn4" taborder="3" text="nexacro 14" left="btn3:-1" top="25" width="186" height="70" cssclass="btn_WF_resultTab" onclick="divResult_btnProd_onclick" visible="true"/>
+              <Button id="btn5" taborder="4" text="XPLATFORM" left="btn4:-1" top="25" width="186" height="70" cssclass="btn_WF_resultTab" onclick="divResult_btnProd_onclick" visible="true"/>
+              <Button id="btn6" taborder="5" text="MiPlatform" top="25" width="186" height="70" cssclass="btn_WF_resultTab" left="btn5:-1" onclick="divResult_btnProd_onclick" visible="true"/>
+              <Button id="btn7" taborder="6" text="TobeDevOps" top="25" width="186" height="70" cssclass="btn_WF_resultTab" left="btn6:-1" onclick="divResult_btnProd_onclick" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Combo id="cboListType" taborder="6" text="타이틀+상세" left="831" top="divResult:0" width="126" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" index="0" value="0" cssclass="cmb_WF_view" onitemchanged="cboListType_onitemchanged" accessibilitylabel="구분">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">0</Col>
+                <Col id="datacolumn">타이틀+상세</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">1</Col>
+                <Col id="datacolumn">타이틀</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Div id="divInquireList" taborder="7" left="0" top="cboListType:0" width="945" height="1045" text="검색 결과가 없습니다."/>
+        <View id="viewPaging" taborder="8" text="View01" viewdataset="viewdataset" left="0" top="divInquireList:40" width="945" height="40" visible="false" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <Button id="btnPageHome" left="229" top="4" width="32" height="32" text=" " cssclass="btn_WF_pageHome" onclick="viewPaging_btnPageHome_onclick" accessibilitylabel="이전 페이지 목록" accessibilitydescription="링크"/>
+              <Button id="btnPagePre" left="264" top="4" width="32" height="32" text=" " cssclass="btn_WF_pagePre" onclick="viewPaging_btnPagePre_onclick" accessibilitylabel="이전 페이지" accessibilitydescription="링크"/>
+              <Button id="btnPageNum1" left="299" top="4" width="32" height="32" text="1" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick" accessibilitydescription="링크"/>
+              <Button id="btnPageNum2" left="334" top="4" width="32" height="32" text="2" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick" accessibilitydescription="링크"/>
+              <Button id="btnPageNum3" left="369" top="4" width="32" height="32" text="3" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick" accessibilitydescription="링크"/>
+              <Button id="btnPageNum4" left="404" top="4" width="32" height="32" text="4" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick" accessibilitydescription="링크"/>
+              <Button id="btnPageNum5" left="439" top="4" width="32" height="32" text="5" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick" accessibilitydescription="링크"/>
+              <Button id="btnPageNum6" left="474" top="4" width="32" height="32" text="6" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick" accessibilitydescription="링크"/>
+              <Button id="btnPageNum7" left="509" top="4" width="32" height="32" text="7" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick" accessibilitydescription="링크"/>
+              <Button id="btnPageNum8" left="544" top="4" width="32" height="32" text="8" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick" accessibilitydescription="링크"/>
+              <Button id="btnPageNum9" left="579" top="4" width="32" height="32" text="9" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick" accessibilitydescription="링크"/>
+              <Button id="btnPageNum10" left="614" top="4" width="32" height="32" text="10" cssclass="btn_WF_pageNum" onclick="viewPaging_btnPageNum_onclick" accessibilitydescription="링크"/>
+              <Button id="btnPageNext" left="649" top="4" width="32" height="32" text=" " cssclass="btn_WF_pageNext" onclick="viewPaging_btnPageNext_onclick" accessibilitylabel="다음 페이지" accessibilitydescription="링크"/>
+              <Button id="btnPageEnd" left="684" top="4" width="32" height="32" text=" " cssclass="btn_WF_pageEnd" onclick="viewPaging_btnPageEnd_onclick" accessibilitylabel="다음 페이지 목록" accessibilitydescription="링크"/>
+            </Layout>
+          </Layouts>
+          <ModelInfo modelserviceid="MODEL" serviceid="" modelid="paging" filepath="COMMON.xmodel">
+            <Fields>
+              <Field id="PageHome" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PagePre" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum1" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum2" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum3" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum4" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum5" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum6" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum7" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum8" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum9" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNum10" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageNext" description="" fieldwidth="32px" fieldheight="32px"/>
+              <Field id="PageEnd" description="" fieldwidth="32px" fieldheight="32px"/>
+            </Fields>
+            <Components>
+              <Component id="btnPageHome" fields="PageHome"/>
+              <Component id="btnPagePre" fields="PagePre"/>
+              <Component id="btnPageNum1" fields="PageNum1"/>
+              <Component id="btnPageNum2" fields="PageNum2"/>
+              <Component id="btnPageNum3" fields="PageNum3"/>
+              <Component id="btnPageNum4" fields="PageNum4"/>
+              <Component id="btnPageNum5" fields="PageNum5"/>
+              <Component id="btnPageNum6" fields="PageNum6"/>
+              <Component id="btnPageNum7" fields="PageNum7"/>
+              <Component id="btnPageNum8" fields="PageNum8"/>
+              <Component id="btnPageNum9" fields="PageNum9"/>
+              <Component id="btnPageNum10" fields="PageNum10"/>
+              <Component id="btnPageNext" fields="PageNext"/>
+              <Component id="btnPageEnd" fields="PageEnd"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="PagingViewTemplate.xviewgen">
+            <Attribute id="direction" value="horizontal"/>
+            <Attribute id="halign" value="center"/>
+            <Attribute id="valign" value="middle"/>
+          </ViewTemplateInfo>
+        </View>
+        <Div id="divPageExpr" taborder="9" url="COMMFORM::frmPageCtrl.xfdl" left="0" visible="true" height="40" background="transparent" width="945" text="" top="divInquireList:40" accessibilityenable="false"/>
+        <Div id="divRight" taborder="10" left="985.00" top="cboListType:0" width="318" height="1076" url="FRAME::RightFrame.xfdl" text="" accessibilityenable="false"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_totalCnt" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="totalCnt" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_SearchParam" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="loginAcc" type="STRING" size="256"/>
+          <Column id="dispGubun" type="STRING" size="256"/>
+          <Column id="PCategory2" type="STRING" size="256"/>
+          <Column id="display_cnt" type="STRING" size="256"/>
+          <Column id="page" type="STRING" size="256"/>
+          <Column id="searchfield" type="STRING" size="256"/>
+          <Column id="searchgubun" type="STRING" size="256"/>
+          <Column id="keyword" type="STRING" size="256"/>
+          <Column id="search_resort" type="STRING" size="256"/>
+          <Column id="keywordall" type="STRING" size="256"/>
+          <Column id="BusinessSection" type="STRING" size="256"/>
+          <Column id="User_id" type="STRING" size="256"/>
+          <Column id="ProjectCd" type="STRING" size="256"/>
+          <Column id="period" type="STRING" size="256"/>
+          <Column id="fromDate" type="STRING" size="256"/>
+          <Column id="toDate" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="dispGubun"/>
+            <Col id="BusinessSection">000</Col>
+            <Col id="searchgubun"/>
+            <Col id="searchfield">200</Col>
+            <Col id="search_resort">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_ReqDetail" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false" onload="ds_end_detail_onload">
+        <ColumnInfo>
+          <Column id="idx" type="STRING" size="256"/>
+          <Column id="req_dt" type="STRING" size="256"/>
+          <Column id="nation" type="STRING" size="256"/>
+          <Column id="req_comp" type="STRING" size="256"/>
+          <Column id="project_cd" type="STRING" size="256"/>
+          <Column id="site_version" type="STRING" size="256"/>
+          <Column id="req_user_pwd" type="STRING" size="256"/>
+          <Column id="req_user" type="STRING" size="256"/>
+          <Column id="req_telno" type="STRING" size="256"/>
+          <Column id="req_email" type="STRING" size="256"/>
+          <Column id="req_status" type="STRING" size="256"/>
+          <Column id="req_kind1" type="STRING" size="256"/>
+          <Column id="req_kind2" type="STRING" size="256"/>
+          <Column id="req_kind3" type="STRING" size="256"/>
+          <Column id="req_title" type="STRING" size="256"/>
+          <Column id="proc_level" type="STRING" size="256"/>
+          <Column id="pub_yn" type="STRING" size="256"/>
+          <Column id="open_yn" type="STRING" size="256"/>
+          <Column id="rep_idx" type="STRING" size="256"/>
+          <Column id="res_idx" type="STRING" size="256"/>
+          <Column id="proc_time" type="STRING" size="256"/>
+          <Column id="mip_version" type="STRING" size="256"/>
+          <Column id="next_seq" type="STRING" size="256"/>
+          <Column id="next_client" type="STRING" size="256"/>
+          <Column id="next_project" type="STRING" size="256"/>
+          <Column id="req_remark" type="STRING" size="256"/>
+          <Column id="work_time" type="STRING" size="256"/>
+          <Column id="res_remark" type="STRING" size="256"/>
+          <Column id="proc_cause" type="STRING" size="256"/>
+          <Column id="rep_level" type="STRING" size="256"/>
+          <Column id="rep_step" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_downloadfile" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="fileGubun" type="STRING" size="256"/>
+          <Column id="fileKey" type="STRING" size="256"/>
+          <Column id="fileName" type="STRING" size="256"/>
+          <Column id="saveName" type="STRING" size="256"/>
+          <Column id="writeDt" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_CustSafctData" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="idx" type="STRING" size="256"/>
+          <Column id="user_id" type="STRING" size="256"/>
+          <Column id="case" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_hotlist" firefirstcount="0" useclientlayout="true" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false" onload="ds_hotlist_onload">
+        <ColumnInfo>
+          <Column id="rowNum" type="STRING" size="256"/>
+          <Column id="QL_SEQ" type="STRING" size="256"/>
+          <Column id="INSERT_USER_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_CODE" type="STRING" size="256"/>
+          <Column id="qc_no" type="STRING" size="256"/>
+          <Column id="SUBJECT" type="STRING" size="256"/>
+          <Column id="CONTENTS" type="STRING" size="256"/>
+          <Column id="CONTENTS_TEXT" type="STRING" size="256"/>
+          <Column id="disp_SUBJECT" type="STRING" size="256"/>
+          <Column id="INSERT_DATE" type="STRING" size="256"/>
+          <Column id="gridLevelImage" type="STRING" size="256"/>
+          <Column id="STATUS_CODE" type="STRING" size="256"/>
+          <Column id="user_cnt" type="STRING" size="256"/>
+          <Column id="user_cnt1" type="STRING" size="256"/>
+          <Column id="user_cnt2" type="STRING" size="256"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="WAIT_TIME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_InParam" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="idx" type="STRING" size="256"/>
+          <Column id="req_dt" type="STRING" size="256"/>
+          <Column id="nation" type="STRING" size="256"/>
+          <Column id="req_comp" type="STRING" size="256"/>
+          <Column id="project_cd" type="STRING" size="256"/>
+          <Column id="site_version" type="STRING" size="256"/>
+          <Column id="req_user" type="STRING" size="256"/>
+          <Column id="req_telno" type="STRING" size="256"/>
+          <Column id="req_email" type="STRING" size="256"/>
+          <Column id="req_status" type="STRING" size="256"/>
+          <Column id="req_idx" type="STRING" size="256"/>
+          <Column id="filekey" type="STRING" size="256"/>
+          <Column id="tobe_user" type="STRING" size="256"/>
+          <Column id="proc_user" type="STRING" size="256"/>
+          <Column id="req_kind1" type="STRING" size="256"/>
+          <Column id="req_kind2" type="STRING" size="256"/>
+          <Column id="req_kind3" type="STRING" size="256"/>
+          <Column id="req_title" type="STRING" size="256"/>
+          <Column id="req_title_lang" type="STRING" size="256"/>
+          <Column id="proc_level" type="STRING" size="256"/>
+          <Column id="req_user_pwd" type="STRING" size="256"/>
+          <Column id="user_cnt" type="STRING" size="256"/>
+          <Column id="pub_yn" type="STRING" size="256"/>
+          <Column id="goods_cd" type="STRING" size="256"/>
+          <Column id="open_yn" type="STRING" size="256"/>
+          <Column id="req_memo" type="STRING" size="256"/>
+          <Column id="req_ymd" type="STRING" size="256"/>
+          <Column id="mip_version" type="STRING" size="256"/>
+          <Column id="accept_userid" type="STRING" size="256"/>
+          <Column id="req_userid" type="STRING" size="256"/>
+          <Column id="next_client" type="STRING" size="256"/>
+          <Column id="next_project" type="STRING" size="256"/>
+          <Column id="next_client_code" type="STRING" size="256"/>
+          <Column id="next_project_code" type="STRING" size="256"/>
+          <Column id="rep_idx" type="STRING" size="256"/>
+          <Column id="rep_level" type="STRING" size="256"/>
+          <Column id="rep_step" type="STRING" size="256"/>
+          <Column id="open_nation" type="STRING" size="256"/>
+          <Column id="sch_dt" type="STRING" size="256"/>
+          <Column id="req_remark" type="STRING" size="256"/>
+          <Column id="req_remark_lang" type="STRING" size="256"/>
+          <Column id="black_yn" type="STRING" size="256"/>
+          <Column id="req_type" type="STRING" size="256"/>
+          <Column id="black_remark" type="STRING" size="256"/>
+          <Column id="req_telno2" type="STRING" size="256"/>
+          <Column id="tobe_yn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="site_version"/>
+            <Col id="req_user"/>
+            <Col id="req_telno"/>
+            <Col id="req_email"/>
+            <Col id="next_client"/>
+            <Col id="next_project"/>
+            <Col id="mip_version"/>
+            <Col id="open_yn"/>
+            <Col id="req_title"/>
+            <Col id="req_kind1"/>
+            <Col id="req_remark"/>
+            <Col id="idx"/>
+            <Col id="req_dt"/>
+            <Col id="nation"/>
+            <Col id="req_comp"/>
+            <Col id="project_cd"/>
+            <Col id="req_status"/>
+            <Col id="req_idx"/>
+            <Col id="filekey"/>
+            <Col id="tobe_user"/>
+            <Col id="proc_user"/>
+            <Col id="req_kind2"/>
+            <Col id="req_kind3"/>
+            <Col id="req_title_lang"/>
+            <Col id="proc_level"/>
+            <Col id="req_user_pwd"/>
+            <Col id="user_cnt"/>
+            <Col id="pub_yn"/>
+            <Col id="goods_cd"/>
+            <Col id="req_memo"/>
+            <Col id="req_ymd"/>
+            <Col id="accept_userid"/>
+            <Col id="req_userid"/>
+            <Col id="next_client_code"/>
+            <Col id="next_project_code"/>
+            <Col id="rep_idx"/>
+            <Col id="rep_level"/>
+            <Col id="rep_step"/>
+            <Col id="open_nation"/>
+            <Col id="sch_dt"/>
+            <Col id="req_remark_lang"/>
+            <Col id="black_yn"/>
+            <Col id="req_type"/>
+            <Col id="black_remark"/>
+            <Col id="req_telno2"/>
+            <Col id="tobe_yn"/>
+          </Row>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row>
+            <Col id="idx">11</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_bookMark"/>
+      <Dataset id="ds_update">
+        <ColumnInfo>
+          <Column id="SQL_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_userInfo"/>
+      <Dataset id="ds_cnt">
+        <ColumnInfo>
+          <Column id="TOTAL" type="INT" size="11"/>
+          <Column id="NPN" type="INT" size="11"/>
+          <Column id="NP17" type="INT" size="11"/>
+          <Column id="NP14" type="INT" size="11"/>
+          <Column id="XP" type="INT" size="11"/>
+          <Column id="MP" type="INT" size="11"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind/>
+    <Script type="xscript5.1"><![CDATA[/**
+*  QnA리스트
+*
+*  @MenuPath 
+*  @FileName 		SUPPORT::frmTechInquireList.xfdl 
+*  @Creator 		김광호
+*  @CreateDate 		2022.01.01
+*  @LastModifier  
+*  @LastModifyDate  
+*  @Version 		1.0
+*  @Outline 		QnA리스트
+*  @Desction 
+************** 소스 수정 이력 *************************************************
+*    date          Modifier            Description
+*******************************************************************************
+*  2022.01.01      김광호	           최초 생성 
+*******************************************************************************
+*/
+
+this.user_id = "";			// 투비직원여부를 위한 user id
+
+this.keywordall = "";		// 검색어
+
+this.tobe_yn = false;		// 투비직원 여부
+
+this.TotalCnt = "";			// 나의질문내역&북마크 에서 토탈건수로 페이징 보정
+this.fvTotalN = 0;			// 각 총건수
+this.fvTotal17 = 0;
+this.fvTotal14 = 0;
+this.fvTotalXP = 0;
+this.fvTotalMP = 0;
+this.fvTotalAll = 0;
+
+this.nDivRightHeight = 0;	// RightFrame의 높이
+
+this.fromDate = "";			// 조회조건 시작날짜
+this.toDate = "";			// 조회조건 종료날짜
+
+this.fvBookCD = 0;			// 북마크 코드
+
+
+//Search영역 폼변수
+this.period = "전체";
+this.fromDate = "";
+this.toDate = "";
+this.searchGubun = "OR";
+this.searchfield = "200";
+this.searchVersion = "";
+
+
+// 높이 저장
+this.fvSearchOpen = 266;
+this.fvSearchClose = 0;
+this.fvWorkHeight = 0;
+
+
+
+this.techinquireList_onload = function (obj:Form, e:nexacro.LoadEventInfo)
+{	
+	if (nexacro.getApplication().gv_mainFrame.PCategory2 == "MyQnAList" || nexacro.getApplication().gv_mainFrame.PCategory2 == "Bookmark" || nexacro.getApplication().gv_mainFrame.PCategory2 == "Bookmark_Tip") 
+	{
+		//검색영역 없애기.
+		this.fn_setSearchArea(false);
+	
+		if (nexacro.getApplication().gv_mainFrame.MYPAGE_Cond_Prod > 0)
+		{
+			nexacro.getApplication().gv_mainFrame.divMain.form.divBookmark.form.tabProduct.set_tabindex(nexacro.getApplication().gv_mainFrame.MYPAGE_Cond_Prod);
+		}
+		// 로그인 확인
+		if(nexacro.getApplication().gds_UserInfo.getRowCount() <= 0)
+		{
+			nexacro.getApplication().gv_mainFrame.TargetUrl = nexacro.getApplication().gv_mainFrame.PCategory2;
+			nexacro.getApplication().gv_mainFrame.param = {
+				'menu': "login",
+				'keyword': "",
+				'page': 1,
+				'postId': ""
+				};
+			nexacro.getApplication().gv_mainFrame.gfnGoMain();
+			return;
+		}
+	} else {
+		//검색영역
+		this.fn_setSearchArea(true);
+		this.search_onload();	
+	}
+
+	// 비교를 위해 초기 RightFrame의 높이를 저장
+	this.nDivRightHeight = this.divRight.getOffsetHeight();
+	
+	// 페이지 가져오기
+	if (!this.gfnIsNull(nexacro.getApplication().gv_mainFrame.param.page))
+	{
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Page = nexacro.getApplication().gv_mainFrame.param.page;
+	}
+	
+	this.user_id = nexacro.getApplication().gds_UserInfo.getColumn(0, "User_id");
+	
+	// 리스트 타입 설정
+	if (nexacro.getApplication().gv_mainFrame.QA_Cond_ListType == 1)
+	{
+		this.cboListType.set_index(1);
+		//this.grdInquireList.set_formatid("title");
+		this.fn_SetInitSize();
+	}
+	
+// 	// 통합검색에서 들어왔을 경우 return;
+// 	if (!this.gfnIsNull(nexacro.getApplication().gv_mainFrame.SearchEngineFlag))
+// 	{
+// 		// 페이징 교체
+// 		this.divPageExpr.set_visible(false);
+// 		this.viewPaging.set_visible(true);
+// 		nexacro.getApplication().gv_searchEngine.fn_search(nexacro.getApplication().gv_mainFrame.QA_Cond_Page);
+// 		return;
+// 	}
+
+//	this.formOnload();
+	
+	// 조회조건 초기화
+	this.ds_SearchParam.clearData();
+	this.ds_SearchParam.addRow();
+	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "display_cnt", nexacro.getApplication().gv_mainFrame.QA_Cond_DisplayCnt);
+	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "page", nexacro.getApplication().gv_mainFrame.QA_Cond_Page);
+	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "searchfield", nexacro.getApplication().gv_mainFrame.QA_Cond_Searchfield);
+	if(this.gfnIsNull(nexacro.getApplication().gv_mainFrame.QA_Cond_Searchgubun))nexacro.getApplication().gv_mainFrame.QA_Cond_Searchgubun = "OR";
+	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "searchgubun", nexacro.getApplication().gv_mainFrame.QA_Cond_Searchgubun);
+	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "BusinessSection", nexacro.getApplication().gv_mainFrame.QA_Cond_BusinessSection);
+	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "search_resort", nexacro.getApplication().gv_mainFrame.QA_Cond_Resort);
+	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "keyword", nexacro.getApplication().gv_mainFrame.QA_Cond_Keyword);
+	this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "keywordall", nexacro.getApplication().gv_mainFrame.QA_Cond_Keyword);
+	
+	this.fvBookCD = nexacro.getApplication().gv_BookmarkTipCd;
+	var objTab = nexacro.getApplication().gv_mainFrame.divMain.form.divBookmark.form.tabProduct;
+	
+	var nRow = nexacro.getApplication().gv_mainFrame.dsScreenUrl.findRow("subCatgy", nexacro.getApplication().gv_mainFrame.param.menu);
+	var sLayout = nexacro.getApplication().gv_mainFrame.dsScreenUrl.getColumn(nRow, "Layout");
+	if(sLayout == "MYQNALIST" || sLayout == "BOOKMARK")
+	{
+		if(!this.gfnIsNull(nexacro.getApplication().gv_BookmarkTipCd))
+		{
+			var sBookCD = this.fvBookCD;
+			objTab.set_tabindex(sBookCD);
+			nexacro.getApplication().gv_BookmarkTipCd=0;
+		}
+		else
+		{
+			objTab.set_tabindex(sBookCD);
+			nexacro.getApplication().gv_BookmarkTipCd=0;
+		}
+	}
+	
+	nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, 1000);
+	
+	// 페이지 제어 초기화
+	nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo = nexacro.floor((parseInt(nexacro.getApplication().gv_mainFrame.QA_Cond_Page)-1)/10);
+	this.divPageExpr.form.fn_PageInit(this.ds_hotlist, "", this, "fn_CallTrans()", "fn_SetInitSize()");
+	// 상세에서 뒤로 가기 시 목록 전체 이므로 전체 표시
+	if (nexacro.getApplication().gv_mainFrame.PCategory2 == "QnA")
+	{
+		// 저장된 nexacro.getApplication().gv_mainFrame.QA_Tab_Index 에 따라 해당 제품을 조회
+		nexacro.getApplication().gv_searchEngine.fn_selectTab(nexacro.getApplication().gv_mainFrame.QA_Tab_Index);
+		return;
+	}
+	this.fn_CallTrans();
+
+	//타이틀+상세 위로 올리기
+	//this.cboListType.bringToPrev();
+};
+
+
+this.fn_setSearchArea = function(bFlag)
+{
+	this.edtSearch.visible = bFlag;
+	this.btnSearch.visible = bFlag;
+	this.btnFilterResize.visible = bFlag;
+	//this.divSearch.visible = bFlag; //divSearch default false상태
+	this.divResult.visible = bFlag;
+	
+	if (!bFlag) this.cboListType.set_top(0);
+}
+
+this.search_onload = function()
+{
+	nexacro.getApplication().gv_searchEngine = this;
+	
+	if (!this.gfnIsNull(nexacro.getApplication().gv_mainFrame.param.keyword))
+	{
+		this.edtSearch.set_value(nexacro.getApplication().gv_mainFrame.param.keyword);
+	}
+	if (!this.gfnIsNull(nexacro.getApplication().gv_mainFrame.param.page))
+	{
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Page = nexacro.getApplication().gv_mainFrame.param.page;
+	}
+	
+	// 새로고침이나 브라우저 히스토리 이동 시 각종 값이 초기화되지 않도록 저장
+	var sData = nexacro.getApplication().gv_mainFrame.gfnGetHistoryData();
+	
+	if (!this.gfnIsNull(sData))
+	{
+		// 히스토리 sData에서 불러오기
+		if (!this.gfnIsNull(sData.Chk_ALL)){	this.divSearch.form.Chk_ALL.set_value(sData.Chk_ALL); }
+		if (!this.gfnIsNull(sData.Chk_NPN)){	this.divSearch.form.Chk_NPN.set_value(sData.Chk_NPN); }
+		if (!this.gfnIsNull(sData.Chk_NP17)){	this.divSearch.form.Chk_NP17.set_value(sData.Chk_NP17); }
+		if (!this.gfnIsNull(sData.Chk_NP14)){	this.divSearch.form.Chk_NP14.set_value(sData.Chk_NP14); }
+		if (!this.gfnIsNull(sData.Chk_XP)){	this.divSearch.form.Chk_XP.set_value(sData.Chk_XP); }
+		if (!this.gfnIsNull(sData.Chk_MP)){	this.divSearch.form.Chk_MP.set_value(sData.Chk_MP); }
+		if (!this.gfnIsNull(sData.Chk_TDO)){	this.divSearch.form.Chk_TDO.set_value(sData.Chk_TDO); }		
+		if (!this.gfnIsNull(sData.rdoField)){	this.divSearch.form.rdoField.set_value(sData.rdoField);
+			this.searchfield = sData.rdoField; }
+		if (!this.gfnIsNull(sData.rdoOperator)){	this.divSearch.form.rdoOperator.set_value(sData.rdoOperator);
+			this.searchGubun = sData.rdoOperator;
+			nexacro.getApplication().gv_mainFrame.QA_Cond_Searchgubun = sData.rdoOperator; }
+		if (!this.gfnIsNull(sData.rdoTerm)){	this.divSearch.form.rdoTerm.set_value(sData.rdoTerm); }
+		if (!this.gfnIsNull(sData.Chk_ALL)){	this.period = sData.rdoTerm; }
+		if (!this.gfnIsNull(sData.calStart)){	this.divSearch.form.calStart.set_value(sData.calStart);
+			this.fromDate = sData.calStart; }
+		if (!this.gfnIsNull(sData.calEnd)){	this.divSearch.form.calEnd.set_value(sData.calEnd);
+			this.toDate = sData.calEnd; }
+		if (!this.gfnIsNull(sData.filterstatus)){nexacro.getApplication().gv_mainFrame.filterstatus = sData.filterstatus}else{nexacro.getApplication().gv_mainFrame.filterstatus="close"};
+		if (!this.gfnIsNull(sData.QA_Tab_Index)){nexacro.getApplication().gv_mainFrame.QA_Tab_Index = sData.QA_Tab_Index};
+	}
+	// 키워드 셋팅
+	if (!this.gfnIsNull(nexacro.getApplication().gv_mainFrame.param.keyword))
+	{
+		 this.edtSearch.set_value(nexacro.getApplication().gv_mainFrame.param.keyword);
+	}
+	
+	// 제품탭 설정
+	if (!this.divSearch.form.Chk_NPN.value && !this.divSearch.form.Chk_NP17.value && !this.divSearch.form.Chk_NP14.value && !this.divSearch.form.Chk_XP.value && !this.divSearch.form.Chk_MP.value && !this.divSearch.form.Chk_TDO.value)
+	{
+		alert("선택한 제품이 없습니다.");
+		return;
+	}
+	this.divResult.form.btn2.set_width(this.divSearch.form.Chk_NPN.value?186:0);
+	this.divResult.form.btn3.set_width(this.divSearch.form.Chk_NP17.value?186:0);
+	this.divResult.form.btn4.set_width(this.divSearch.form.Chk_NP14.value?186:0);
+	this.divResult.form.btn5.set_width(this.divSearch.form.Chk_XP.value?186:0);
+	this.divResult.form.btn6.set_width(this.divSearch.form.Chk_MP.value?186:0);
+	this.divResult.form.btn7.set_width(this.divSearch.form.Chk_TDO.value?186:0);
+	this.fn_setTabBtnVisible();
+	
+	this.divResult.form.resetScroll();
+
+	nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, 1850);
+};
+
+//보이지 않는 Tab버튼 visible처리.
+this.fn_setTabBtnVisible = function()
+{
+	// 버튼 width 0일경우 visible여부 처리 (접근성)
+	var nCnt = this.divResult.form.components.length;
+	for (var i = 1; i < nCnt; i++)
+	{
+		var nComp = this.divResult.form.components[i];
+		if (nComp.width == 0) nComp.visible = false;
+		else 				  nComp.visible = true;
+	}	
+}
+
+
+this.fn_DetailCallBack = function (svcid, errCode, errMsg)
+{
+	var nIdx = 2;
+	if (nexacro.getApplication().gv_mainFrame.tabCount > 0) 
+	{
+		nIdx = 3;
+	}
+	this.fn_indexChange(nIdx);
+	// 화면 이동
+	this.tabQnaExpr.set_tabindex(nIdx);
+	// 수정시 설정
+	this.tabQnaExpr.tabpg3.form.divInquireData.fn_InquireDetail(nexacro.getApplication().gv_mainFrame.QAStatus);
+};
+
+
+this.fn_InquireList = function (obj, e)
+{
+	this.fn_CallTrans();
+};
+
+this.fn_CallTrans = function ()
+{	
+	if (nexacro.getApplication().gv_mainFrame.PCategory2 == "QnA")
+	{
+		if (!this.gfnIsNull(nexacro.getApplication().gv_searchEngine.edtSearch.value))
+		{
+			this.ds_SearchParam.setColumn(0, "keyword", nexacro.getApplication().gv_searchEngine.edtSearch.value.trim());
+			// 연관검색어 로딩
+			nexacro.getApplication().gv_rightFrame.fn_relativeCallData(nexacro.getApplication().gv_searchEngine.edtSearch.value.trim());
+		}
+		else
+		{
+			this.ds_SearchParam.setColumn(0, "keyword", "");
+		}
+	}
+
+	this.user_nm = nexacro.getApplication().gds_UserInfo.getColumn(0, "User_nm");
+	this.tel_hp  = nexacro.getApplication().gds_UserInfo.getColumn(0, "Tel_hp");
+	
+	nexacro.getApplication().gds_MiWizard.clearData();
+	nexacro.getApplication().com_AddMiWizard("","output","user_nm='" + this.user_nm +"'&tel_no='" + this.tel_hp + "'","SYSTEM,sys_findStaff,11");
+	this.com_CallService("selectTobeUser", "", "", "ds_userInfo=output", "", "CS", false);		
+	
+	if( this.ds_userInfo.rowcount > 0 ) this.tobe_yn = true;
+	
+	//투비 직원인 경우 QC번호 그리드에 표현
+// 	if( this.tobe_yn == false )
+// 	{
+// 		this.grdInquireList.setCellProperty("body", 10, "text", "");
+// 	}
+	
+	
+	// 검색조건
+	// dispGubun : "MY" or 일반 검색
+	// keyword : 현재 검색어
+	// keywordall : 이전 검색어 두개를 같이 검색
+	// PCategory2 : "nexacro", "MiPlatform", "XPLATFROM", "X-UP", "X-POP", "X-PUSH"
+	// display_cnt : 화면에 나타내는 레코드 갯수
+	// page : 현재 페이지
+	// searchfield : 제목, 내용, 등록자, 번호
+	// searchgubun : AND, OR
+	// search_resort : 재질문
+	// BusinessSection : 제품 분류
+	// loginAcc : 로그인시의 접근인지 구분
+	if (nexacro.getApplication().gv_mainFrame.PCategory2 == "MyQnAList") 
+	{
+	}
+	if (this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "keyword") == undefined) 
+	{
+		this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "keyword", "");
+	}
+	this.keywordall = this.ds_SearchParam.getColumn(0, "keyword");
+
+	
+	this.ds_SearchParam.setColumn(0, "searchgubun", nexacro.getApplication().gv_mainFrame.QA_Cond_Searchgubun);
+	this.ds_SearchParam.setColumn(0, "keywordall", this.keywordall);
+	if( nexacro.getApplication().gv_mainFrame.PCategory2 == "QnA" && nexacro.getApplication().gv_mainFrame.QA_Cond_Prod == "All" )
+	{
+		this.PCategory = "";
+		if( nexacro.getApplication().gv_searchEngine.divSearch.form.Chk_NPN.value ) this.PCategory += ",Nexacro N";
+		if( nexacro.getApplication().gv_searchEngine.divSearch.form.Chk_NP17.value ) this.PCategory += ",nexacro platform17";
+		if( nexacro.getApplication().gv_searchEngine.divSearch.form.Chk_NP14.value ) this.PCategory += ",nexacro platform14";
+		if( nexacro.getApplication().gv_searchEngine.divSearch.form.Chk_XP.value ) this.PCategory += ",XPLATFORM";
+		if( nexacro.getApplication().gv_searchEngine.divSearch.form.Chk_MP.value ) this.PCategory += ",MiPlatform";	
+		if( nexacro.getApplication().gv_searchEngine.divSearch.form.Chk_TDO.value ) this.PCategory += ",TobeDevOps";	
+		this.ds_SearchParam.setColumn(0, "PCategory2", this.PCategory.substr(1));
+	}
+	else if (nexacro.getApplication().gv_mainFrame.PCategory2 == "MyQnAList" && nexacro.getApplication().gv_mainFrame.QA_Cond_Prod != "NewBoard")
+	{
+		this.ds_SearchParam.setColumn(0, "PCategory2", nexacro.getApplication().gv_mainFrame.QA_Cond_Prod);
+		this.ds_SearchParam.setColumn(0, "period", "전체");
+		this.ds_SearchParam.setColumn(0, "fromDate", "");
+		this.ds_SearchParam.setColumn(0, "toDate", "");
+	}
+	else
+	{
+		this.ds_SearchParam.setColumn(0, "PCategory2", nexacro.getApplication().gv_mainFrame.QA_Cond_Prod);
+	}
+	
+	this.ds_SearchParam.setColumn(0, "display_cnt", this.divPageExpr.form.unitSelRowNo);
+	this.ds_SearchParam.setColumn(0, "page", this.divPageExpr.form.startPageNo + 1);
+
+	this.ds_SearchParam.setColumn(0, "loginAcc", "OFF");
+	this.ds_SearchParam.setColumn(0, "User_id", nexacro.getApplication().gds_UserInfo.getColumn(nexacro.getApplication().gds_UserInfo.rowposition, "User_id"));
+	// 조회조건 날짜 및 And, Or
+	if (nexacro.getApplication().gv_mainFrame.PCategory2 == "QnA")
+	{
+		this.ds_SearchParam.setColumn(0, "period", nexacro.getApplication().gv_searchEngine.period);	
+		this.ds_SearchParam.setColumn(0, "searchfield", nexacro.getApplication().gv_searchEngine.searchfield);	
+		this.ds_SearchParam.setColumn(0, "fromDate", nexacro.getApplication().gv_searchEngine.divSearch.form.calStart.value);	
+		this.ds_SearchParam.setColumn(0, "toDate", nexacro.getApplication().gv_searchEngine.divSearch.form.calEnd.value);
+		if( this.gfnIsNull(nexacro.getApplication().gv_searchEngine.divSearch.form.calStart.value) ) this.ds_SearchParam.setColumn(0, "fromDate", "");
+		if( this.gfnIsNull(nexacro.getApplication().gv_searchEngine.divSearch.form.calEnd.value) ) this.ds_SearchParam.setColumn(0, "toDate", "");
+	}
+	
+	// 나의메뉴 > 북마크 일경우
+	var nRow = nexacro.getApplication().gv_mainFrame.dsScreenUrl.findRow("subCatgy", nexacro.getApplication().gv_mainFrame.param.menu);
+	var sLayout = nexacro.getApplication().gv_mainFrame.dsScreenUrl.getColumn(nRow, "Layout");
+	if (sLayout == "BOOKMARK")
+	{
+		this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition,"bookMark", "OK");
+		nexacro.getApplication().gds_SearchParam.setColumn(0,"bookMark", "OK");
+		this.ds_SearchParam.setColumn(0, "period", "전체");
+		this.ds_SearchParam.setColumn(0, "fromDate", "");	
+		this.ds_SearchParam.setColumn(0, "toDate", "");
+		this.ds_SearchParam.setColumn(0, "dispGubun", "MY");
+		
+		// PCategory2 : "nexacro", "MiPlatform", "XPLATFROM", "X-UP", "X-POP", "X-PUSH"
+		var nTabIndex = nexacro.getApplication().gv_mainFrame.divMain.form.divBookmark.form.tabProduct.tabindex
+		var sPCate = "";		
+		// PCategoryGubun 셋팅
+		switch(nTabIndex) {
+		case 0:
+			sPCate = "All";	// 전체		// ,Nexacro N,nexacro platform17,nexacro platform14,XPLATFORM,MiPlatform
+			break;
+		case 1:
+			sPCate = "Nexacro N";	// N
+			break;
+		case 2:
+			sPCate = "nexacro platform17";	// 17
+			break;
+		case 3:
+			sPCate = "nexacro platform14";	// 14
+			break;
+		case 4:
+			sPCate = "XPLATFORM";	// XP
+			break;
+		case 5:
+			sPCate = "MiPlatform";	// MP
+			break;
+		case 7:
+			sPCate = "TobeDevOps";	// MP
+			break;				
+		default:
+		}
+		this.ds_SearchParam.setColumn(0, "PCategory2", sPCate);
+	}
+	
+	nexacro.getApplication().com_SetParam(this.ds_SearchParam);
+
+	this.ds_hotlist.filter("");
+
+	this.ds_hotlist.deleteAll();
+
+	// 인수 설정
+	var strArgs = "RTYPE=XML DB='CS' sessionChk=false nationCd='" + nexacro.getApplication().gv_NationCd + "' JSESSIONID='" + nexacro.getApplication().JSESSIONID + "'";
+	var strUrl = "SVC_JSP::Next_JSP/Support/SearchQA_SSV.jsp?";
+	var strDsInput = "input1=gds_SearchParam";
+	var strDsOutput = "ds_hotlist=output";
+
+	if (nexacro.getApplication().gv_mainFrame.PCategory2 == "MyQnAList" && nexacro.getApplication().gv_mainFrame.QA_Cond_Prod != "NewBoard") 
+	{
+		this.ds_SearchParam.setColumn(0, "dispGubun", "MY");
+		nexacro.getApplication().gds_SearchParam.setColumn(0, "dispGubun", "MY");
+		this.ds_SearchParam.setColumn(0, "period", "전체");
+		this.ds_SearchParam.setColumn(0, "fromDate", "");	
+		this.ds_SearchParam.setColumn(0, "toDate", "");
+	}
+	else if (nexacro.getApplication().gv_mainFrame.PCategory2 == "Bookmark")
+	{
+		nexacro.getApplication().gds_SearchParam.setColumn(0, "bookMark", "OK");
+		this.ds_SearchParam.setColumn(0,"keyword","");
+		this.keywordall = "";
+	}
+	
+	if (nexacro.getApplication().gv_mainFrame.PCategory2 == "QnA")	// QnA리스트일 경우 제품 탭에 전체 건수 표시를 위해 조회
+	{
+		this.fn_getCount();
+	}
+	
+	// PCategory2 ==> 제품
+	// 북마크 조회조건
+
+	if( nexacro.getApplication().gv_mainFrame.QA_Cond_Prod == "NewBoard"){
+		var strBoardId = "%";
+		strArgs = "RTYPE=XML DB='CS' sessionChk=false BoardID=" + strBoardId + " BoardID2=" + strBoardId +"Q" + " PCategoryGubun='%' nationCd=" +  nexacro.getApplication().gv_NationCd + "' JSESSIONID='"+nexacro.getApplication().JSESSIONID+"'";
+		nexacro.getApplication().gds_SearchParam.setColumn(0, "dispGubun", null);
+		nexacro.getApplication().gds_SearchParam.setColumn(0, "PCategory2", null);
+		var strDsOutput = "ds_totalCnt=output1 ds_hotlist=output2";
+		var strUrl = "SVC_JSP::Next_JSP/Board/SearchBoard_new3.jsp";
+	} else {
+		var strUrl = "SVC_JSP::Next_JSP/Support/SearchQA_SSV_new.jsp?";
+	}	
+	this.com_TransSend("selectList", strUrl, strDsInput, strDsOutput, strArgs, "fn_SelectListCallBack");
+};
+
+//  전체건수 가져오기 조회
+this.condSQL = "";              
+this.fn_getCount = function()
+{
+	var flag    = "";
+	var sqlquery = "";
+	var sqlquery1 = "";
+	this.condSQL = "";
+	var sqlkeyword = nexacro.getApplication().gv_searchEngine.edtSearch.value;
+	var searchgubun = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "searchgubun");
+	if (this.gfnIsNull(sqlkeyword))
+	{
+		sqlkeyword = " ";
+	}
+	var strTemp = sqlkeyword.split(" ");
+	// 재검색시 키워드 설정
+	if (strTemp.length > 0) {
+		sqlquery = " and (";
+	}
+	
+	// 전체 검색 조건인 경우   
+	if (this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "searchfield") == "100") {
+		for (var i = 0; i < strTemp.length; i++) {
+				//sqlquery += " SUBJECT like N''%" + strTemp[i] + "%'' or CONTENTS like N''%" + strTemp[i] + "%''";			
+				sqlquery += " SUBJECT like N''%" + strTemp[i] + "%'' or CONTENTS_TEXT like N''%" + strTemp[i] + "%''";
+			if (i == (strTemp.length - 1)) {
+				sqlquery += " ) ";
+			} else {
+				sqlquery += " " + searchgubun + " ";
+			}
+		}
+		this.condSQL += sqlquery;
+	} else if (this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "searchfield") == "200") {
+		for (var i = 0; i < strTemp.length; i++) {
+				sqlquery += " SUBJECT like N''%" + strTemp[i] + "%''";			
+			if (i == (strTemp.length - 1)) {
+				sqlquery += " ) ";
+			} else {
+				sqlquery += " " + searchgubun + " ";
+			}
+		}
+		this.condSQL += sqlquery;	
+	} else if (this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "searchfield") == "300") {
+		for (var i = 0; i < strTemp.length; i++) {
+				//sqlquery += " CONTENTS like N''%" + strTemp[i] + "%''";			
+				sqlquery += " CONTENTS_TEXT like N''%" + strTemp[i] + "%''";
+			if (i == (strTemp.length - 1)) {
+				sqlquery += " ) ";
+			} else {
+				sqlquery += " " + searchgubun + " ";
+			}
+		}
+		this.condSQL += sqlquery;	
+	}else if (this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "searchfield") == "600") {
+		for (var i = 0; i < strTemp.length; i++) {
+				sqlquery += " QL_SEQ like N''" + strTemp[i] + "''";			
+			if (i == (strTemp.length - 1)) {
+				sqlquery += " ) ";
+			} else {
+				sqlquery += " " + searchgubun + " ";
+			}
+		}
+		this.condSQL += sqlquery;	
+	}	
+	
+	if( !this.gfnIsNull(nexacro.getApplication().gv_searchEngine.divSearch.form.calStart.value) ){
+		sqlquery1 = " AND CONVERT(VARCHAR(8), INSERT_DATE, 112) > ''" + this.gfnAddDate(nexacro.getApplication().gv_searchEngine.divSearch.form.calStart.value,-1) +"'' ";
+		this.condSQL += sqlquery1;
+	}
+
+	if( !this.gfnIsNull(nexacro.getApplication().gv_searchEngine.divSearch.form.calEnd.value) ){
+		sqlquery1 = " AND CONVERT(VARCHAR(8), INSERT_DATE, 112) < ''" + this.gfnAddDate(nexacro.getApplication().gv_searchEngine.divSearch.form.calEnd.value,1) +"'' ";
+		this.condSQL += sqlquery1;
+	}
+	
+	var args  = "";
+	
+	var args = "query='" + this.condSQL + "'";
+	nexacro.getApplication().gds_MiWizard.clearData();	
+	nexacro.getApplication().com_AddMiWizard("","output",args,"XPLATFORM,XP_STATUS,29");		
+	this.com_CallService("selectCnt", "", "", "ds_cnt=output", "fn_SelectListCallBack", "CS", false);		
+}
+
+
+this.fn_SelectListCallBack = function (svcid, errCode, errMsg)
+{
+	//trace(this.ds_hotlist.saveXML());
+	if (svcid == "selectList") 
+	{
+		//trace(this.ds_hotlist.saveXML());
+		// 키워드강조하기
+		if (!this.gfnIsNull(this.keywordall))
+		{
+			var sKeyWord = this.keywordall.replaceAll(" ", "|");
+			var objRegExp = new RegExp('('+sKeyWord+')', 'gi');
+			
+			var sSubject;
+			var sContents;
+			
+			//this.grdInquireList.set_enableredraw(false);
+			this.ds_hotlist.set_enableevent(false);
+			
+			// 키워드강조하기
+			if (!this.gfnIsNull(sKeyWord))
+			{
+				if (this.ds_SearchParam.getColumn(0, "searchfield") == 200)		// 제목만
+				{
+					for (var i = 0; i < this.ds_hotlist.rowcount; i++)
+					{
+						sSubject = this.ds_hotlist.getColumn(i, "SUBJECT");
+						sSubject = sSubject.toString().replace(objRegExp, "<fc v='#ff0000'>"+"$&"+"</fc>");
+						this.ds_hotlist.setColumn(i, "SUBJECT", sSubject);
+					}
+				}
+				else if (this.ds_SearchParam.getColumn(0, "searchfield") == 300)	// 내용만
+				{
+					for (var i = 0; i < this.ds_hotlist.rowcount; i++)
+					{
+						sContents = this.ds_hotlist.getColumn(i, "CONTENTS");
+						sContents = sContents.toString().replace(objRegExp, "<fc v='#ff0000'>"+"$&"+"</fc>");
+						this.ds_hotlist.setColumn(i, "CONTENTS", sContents);
+					}
+				}
+				else 																// 제목+내용
+				{
+					for (var i = 0; i < this.ds_hotlist.rowcount; i++)
+					{
+						sSubject = this.ds_hotlist.getColumn(i, "SUBJECT");
+						sContents = this.ds_hotlist.getColumn(i, "CONTENTS");
+						
+						sSubject = sSubject.toString().replace(objRegExp, "<fc v='#ff0000'>"+"$&"+"</fc>");
+						sContents = sContents.toString().replace(objRegExp, "<fc v='#ff0000'>"+"$&"+"</fc>");
+						
+						this.ds_hotlist.setColumn(i, "SUBJECT", sSubject);
+						this.ds_hotlist.setColumn(i, "CONTENTS", sContents);
+					}
+				}
+			}
+			this.ds_hotlist.set_enableevent(true);
+			//this.grdInquireList.set_enableredraw(true);
+		}
+		
+		// 데이터가 있을경우
+		this.ds_totalCnt.clearData();
+		this.ds_totalCnt.addRow();
+		this.ds_totalCnt.setColumn(0, "totalCnt", errMsg);
+		this.divPageExpr.form.fn_PageInit(this.ds_hotlist, "", this, "fn_CallTrans()", "fn_SetInitSize()");
+
+		if (this.ds_hotlist.rowcount > 0) 
+		{
+			if((nexacro.getApplication().gv_mainFrame.PCategory2 == "MyQnAList")||(nexacro.getApplication().gv_mainFrame.PCategory2 == "Bookmark")){
+				this.TotalCnt = this.ds_hotlist.rowcount;
+			}
+			this.fn_setGridView(this.ds_hotlist);
+			this.divPageExpr.form.serverRowCount = this.ds_hotlist.getRowCount();
+			
+			if (nexacro.getApplication().gv_mainFrame.PCategory2 == "QnA")	// QnA리스트일 경우 제품 탭에 전체 건수 표시를 위해 조회
+			{
+				// 선택된 탭 별로 다른 총건수 적용
+				switch(nexacro.getApplication().gv_mainFrame.QA_Tab_Index) {
+				case 0:
+					this.divPageExpr.form.totalCount = this.fvTotalAll;
+					break;
+				case 1:
+					this.divPageExpr.form.totalCount = this.fvTotalN;
+					break;
+				case 2:
+					this.divPageExpr.form.totalCount = this.fvTotal17;
+					break;
+				case 3:
+					this.divPageExpr.form.totalCount = this.fvTotal14;
+					break;
+				case 4:
+					this.divPageExpr.form.totalCount = this.fvTotalXP;
+					break;
+				case 5:
+					this.divPageExpr.form.totalCount = this.fvTotalMP;
+					break;
+				case 6:
+					this.divPageExpr.form.totalCount = this.fvTotalTDO;
+					break;							
+				default:
+				}
+			}
+			else
+			{
+				this.divPageExpr.form.totalCount = this.TotalCnt;
+			}
+			
+			this.divPageExpr.form.set_visible(true);
+
+			var iLastRow = this.divPageExpr.form.startPageNo * this.divPageExpr.form.unitSelRowNo;
+
+			this.ds_hotlist.filter("rowNum >= " + (iLastRow + this.divPageExpr.form.startPageNo) + " && rowNum <= " + (iLastRow + this.divPageExpr.form.rowCount));
+
+			this.divPageExpr.form.fn_SetPageNo();
+			
+			this.divPageExpr.form.fn_indexBtnSet(nexacro.toNumber(nexacro.getApplication().gv_mainFrame.QA_Cond_Page));
+		}
+		else 
+		{
+			var strMsg = "msg_nation1";
+			if (nexacro.getApplication().gv_NationCd == "002") 
+			{
+				strMsg = "msg_nation2";
+			}
+			else if (nexacro.getApplication().gv_NationCd == "003") 
+			{
+				strMsg = "msg_nation3";
+			}
+			
+			this.divPageExpr.form.fn_SetPageNo();
+			this.divPageExpr.form.fn_indexBtnSet(nexacro.toNumber(nexacro.getApplication().gv_mainFrame.QA_Cond_Page));
+			this.divPageExpr.form.set_visible(false);
+			//this.grdInquireList.set_nodatatext(nexacro.getApplication().gds_MessageCd.lookup("msg_code_id", "MSG_000029", strMsg));
+			//this.grdInquireList.set_height(100);
+			this.divInquireList.text = nexacro.getApplication().gds_MessageCd.lookup("msg_code_id", "MSG_000029", strMsg);
+			this.divInquireList.set_height(100);
+		}
+		// 저장된 스크롤 위치가 있으면 이동
+		nexacro.getApplication().gv_mainFrame.vscrollbar.set_pos(nexacro.getApplication().gv_mainFrame.SCROLL_POS);
+		nexacro.getApplication().gv_mainFrame.SCROLL_POS = 0;
+	}
+	else if (svcid == "selectCnt") 
+	{
+		var nNpN = this.fn_SetFormatNumber("NPN");
+		var nNp17 = this.fn_SetFormatNumber("NP17");
+		var nNp14 = this.fn_SetFormatNumber("NP14");
+		var nXp	= this.fn_SetFormatNumber("XP");
+		var nMp = this.fn_SetFormatNumber("MP");
+		var nTdo = this.fn_SetFormatNumber("TDO");
+		this.fvTotalN = nNpN;
+		this.fvTotal17 = nNp17;
+		this.fvTotal14 = nNp14;
+		this.fvTotalXP = nXp;
+		this.fvTotalMP = nMp;
+		this.fvTotalTDO = nTdo;
+		var nTotalAll = 0;
+
+		nexacro.getApplication().gv_searchEngine.divResult.form.btn2.set_text("Nexacro N\n("+ nNpN +")");
+		nexacro.getApplication().gv_searchEngine.divResult.form.btn3.set_text("nexacro 17\n("+ nNp17 +")");
+		nexacro.getApplication().gv_searchEngine.divResult.form.btn4.set_text("nexacro 14\n("+ nNp14 +")");
+		nexacro.getApplication().gv_searchEngine.divResult.form.btn5.set_text("XPLATFORM\n("+ nXp +")");
+		nexacro.getApplication().gv_searchEngine.divResult.form.btn6.set_text("MiPlatform\n("+ nMp +")");
+		nexacro.getApplication().gv_searchEngine.divResult.form.btn7.set_text("TobeDevOps\n("+ nTdo +")");
+		if (nNpN == 0) { nexacro.getApplication().gv_searchEngine.divResult.form.btn2.set_enable(false); } else {nexacro.getApplication().gv_searchEngine.divResult.form.btn2.set_enable(true);}
+		if (nNp17 == 0) { nexacro.getApplication().gv_searchEngine.divResult.form.btn3.set_enable(false); } else {nexacro.getApplication().gv_searchEngine.divResult.form.btn3.set_enable(true);}
+		if (nNp14 == 0) { nexacro.getApplication().gv_searchEngine.divResult.form.btn4.set_enable(false); } else {nexacro.getApplication().gv_searchEngine.divResult.form.btn4.set_enable(true);}
+		if (nXp == 0) { nexacro.getApplication().gv_searchEngine.divResult.form.btn5.set_enable(false); } else {nexacro.getApplication().gv_searchEngine.divResult.form.btn5.set_enable(true);}
+		if (nMp == 0) { nexacro.getApplication().gv_searchEngine.divResult.form.btn6.set_enable(false); } else {nexacro.getApplication().gv_searchEngine.divResult.form.btn6.set_enable(true);}
+		if (nTdo == 0) { nexacro.getApplication().gv_searchEngine.divResult.form.btn7.set_enable(false); } else {nexacro.getApplication().gv_searchEngine.divResult.form.btn7.set_enable(true);}
+		nexacro.getApplication().gv_searchEngine.divResult.form.resetScroll();
+		
+		if (nexacro.getApplication().gv_searchEngine.divSearch.form.Chk_NPN.value)
+		{	
+			if(parseInt(nNpN) > 0)
+			{
+				nTotalAll += this.ds_cnt.lookup("PRODUCT_CODE","NPN","total_cnt");
+			}
+		}
+		else 
+		{
+			nexacro.getApplication().gv_searchEngine.divResult.form.btn2.set_text("Nexacro N\n(0)");
+		}
+		if (nexacro.getApplication().gv_searchEngine.divSearch.form.Chk_NP17.value)
+		{
+			if(parseInt(nNp17) > 0)
+			{
+				nTotalAll += this.ds_cnt.lookup("PRODUCT_CODE","NP17","total_cnt"); 
+			}
+		}
+		else {nexacro.getApplication().gv_searchEngine.divResult.form.btn3.set_text("nexacro 17\n(0)");}
+		if (nexacro.getApplication().gv_searchEngine.divSearch.form.Chk_NP14.value)
+		{
+			if(parseInt(nNp14) > 0)
+			{
+				nTotalAll += this.ds_cnt.lookup("PRODUCT_CODE","NP14","total_cnt"); 
+			}
+		}
+		else {nexacro.getApplication().gv_searchEngine.divResult.form.btn4.set_text("nexacro 14\n(0)");}
+		if (nexacro.getApplication().gv_searchEngine.divSearch.form.Chk_XP.value)
+		{
+			if(parseInt(nXp) > 0)
+			{
+				nTotalAll += this.ds_cnt.lookup("PRODUCT_CODE","XP","total_cnt"); 
+			}
+		}
+		else 
+		{
+			nexacro.getApplication().gv_searchEngine.divResult.form.btn5.set_text("XPLATFORM\n(0)");
+		}
+		if (nexacro.getApplication().gv_searchEngine.divSearch.form.Chk_MP.value)
+		{
+			if(parseInt(nMp) > 0)
+			{
+				nTotalAll += this.ds_cnt.lookup("PRODUCT_CODE","MP","total_cnt");
+			}
+		}
+		else 
+		{
+			nexacro.getApplication().gv_searchEngine.divResult.form.btn6.set_text("MiPlatform\n(0)");
+		}
+		if (nexacro.getApplication().gv_searchEngine.divSearch.form.Chk_TDO.value)
+		{
+			if(parseInt(nTdo) > 0)
+			{
+				nTotalAll += this.ds_cnt.lookup("PRODUCT_CODE","TDO","total_cnt");
+			}
+		}
+		else 
+		{
+			nexacro.getApplication().gv_searchEngine.divResult.form.btn7.set_text("TobeDevOps\n(0)");
+		}		
+		
+		nTotalAll = this.fn_SetFormatNumber(nTotalAll);
+		nexacro.getApplication().gv_searchEngine.divResult.form.btn1.set_text("전체\n("+ nTotalAll +")");
+		if (nTotalAll == 0) 
+		{
+			nexacro.getApplication().gv_searchEngine.divResult.form.btn1.set_enable(false);
+			nexacro.getApplication().gv_searchEngine.divResult.form.btn1.set_cssclass("btn_WF_resultTab");
+			alert("검색된 데이터가 없습니다.");
+		}
+		else 
+		{
+			nexacro.getApplication().gv_searchEngine.divResult.form.btn1.set_enable(true);
+		}
+		
+
+		var sKeyword = "";
+		if (nexacro.getApplication().gv_mainFrame.PCategory2 == "QnA")
+		{
+			if (!this.gfnIsNull(nexacro.getApplication().gv_searchEngine.edtSearch.value))
+			{
+				sKeyword = nexacro.getApplication().gv_searchEngine.edtSearch.value;
+			}
+		}
+		
+		this.fvTotalAll = nTotalAll;
+		// 전체건수 표시
+		nexacro.getApplication().gv_searchEngine.divResult.form.btn1.set_text("전체\n("+ nTotalAll +")");
+		
+		// 건수 표시 완료 후 접근성label 적용.
+		var nCnt = nexacro.getApplication().gv_searchEngine.divResult.form.components.length;
+		for (var i = 1; i <= nCnt; i++)
+		{
+			var btn = nexacro.getApplication().gv_searchEngine.divResult.form.components["btn" + i];
+			if (btn.cssclass == "btn_WF_resultTab_S") {
+				btn.set_accessibilitylabel("선택");
+			} else {
+				btn.set_accessibilitylabel("링크");
+			}
+		}
+	}	
+
+	if(!this.gfnIsNull(nexacro.getApplication().gv_mainFrame.filterstatus))
+	{
+		nexacro.getApplication().gv_searchEngine.fn_filterBFsize();
+	}
+};
+
+
+//div 동적생성..
+this.fn_createList = function()
+{
+	var nListType = nexacro.getApplication().gv_mainFrame.QA_Cond_ListType;
+	var nRowCnt = this.ds_hotlist.rowcount;
+	
+	var nLeft 	= 0;
+	var nTop 	= 0;
+	var nHeight = nListType==0?226:141;
+	var nWidth 	= 945;
+	var sDivId 	= "divInquireList";
+	var sUrl 	= nListType==0?"SUPPORT::frmTechInquireList_01_Default.xfdl":"SUPPORT::frmTechInquireList_02_Title.xfdl";
+	
+	var nLen = this.divInquireList.form.components.length;
+	for (var i = nLen - 1; i >= 0; i--) {
+		var objDel = this.divInquireList.removeChild(this.divInquireList.form.components[i].name);
+		objDel.destroy();
+		objDel = null;		
+	}
+	this.divInquireList.set_accessibilityenable(true);
+	
+	if (nRowCnt > 0) {
+		this.divInquireList.set_accessibilityenable(false);
+		this.divInquireList.set_text("");
+		
+		for (var i = 0; i < nRowCnt; i++) {
+			var newDiv = new Div();
+			newDiv.init(sDivId + i, nLeft, nTop, nWidth, nHeight);
+			this.divInquireList.addChild(newDiv.id, newDiv);
+			newDiv.set_url(sUrl);
+			newDiv.set_accessibilityenable(false);
+			newDiv.show();
+			
+			nTop = nTop + nHeight;
+		}
+		
+		var lastDiv = this.divInquireList.form.components[sDivId + (nRowCnt-1)];
+		
+		this.divInquireList.set_height(lastDiv.getOffsetBottom());
+		this.divPageExpr.set_top(this.divInquireList.getOffsetBottom() + 40);
+		//this.viewPaging.set_top(this.divInquireList.getOffsetBottom() + 40);	
+	}
+};
+
+
+this.fn_setGridView = function (dsTargetObj)
+{
+	// 상태표시용 컬럼 추가
+	dsTargetObj.addColumn("str_status", "string");
+
+	// 전체/접수/처리중/완료 를 취득
+	var txtLang = nexacro.getApplication().gds_CompLang.getColumn(nexacro.getApplication().gds_CompLang.rowposition, "tabQuesList");
+	var arrTxt = txtLang.split("/");
+	// 그리드 Head Text를 설정 [번호/제목/등록자/등록일/상태]
+
+	var compCnt = 0;
+	var recivCnt = 0;
+	var procCnt = 0;
+
+	dsTargetObj.set_enableevent(false);
+
+	dsTargetObj.set_enableevent(true);
+	
+};
+
+//숫자 단위 표시
+this.fn_SetFormatNumber = function(sProduct)
+{
+	var sPrice = 0;
+	if(!this.gfnIsNull(sProduct))
+	{
+		if(typeof(sProduct) == "string")
+		{
+			sPrice = this.ds_cnt.lookup("PRODUCT_CODE",sProduct,"total_cnt");
+		}
+		else
+		{
+			sPrice = sProduct;
+		}
+	}
+	if(this.gfnIsNull(sPrice))
+	{
+		sPrice = 0;
+		return sPrice;
+	}
+	return sPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+
+this.fn_SetInitSize = function ()
+{
+	var nRow = nexacro.getApplication().gv_mainFrame.dsScreenUrl.findRow("subCatgy", nexacro.getApplication().gv_mainFrame.param.menu);
+	var sLayout = nexacro.getApplication().gv_mainFrame.dsScreenUrl.getColumn(nRow, "Layout");
+	
+	var i;
+	this.nGrdSize = 0;
+	
+	//this.nGrdSize = this.grdInquireList.getRealRowFullSize();
+	var nDivHeight = this.cboListType.index==0? 226 : 141;
+	this.nGrdSize = this.ds_hotlist.getRowCount() * nDivHeight;
+	
+	// 그리드 전체 사이즈 구하는 함수
+	if(this.nGrdSize < this.nDivRightHeight)
+	{
+		this.divInquireList.set_height(this.nGrdSize);
+		this.divPageExpr.set_top(this.divInquireList.getOffsetBottom() + 40);
+		this.divRight.set_height(this.nDivRightHeight);
+		this.resetScroll();
+		
+		if(sLayout == "QnA")
+		{
+			this.fvWorkHeight = 280 + parseInt(this.nDivRightHeight) + 40 + 40 + 11;
+			nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, this.fvWorkHeight );
+		}
+		else
+		{
+			this.fvWorkHeight = 40 + parseInt(this.nDivRightHeight) + 40 + 40 + 160;
+			nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, this.fvWorkHeight );
+		}
+	}
+	else
+	{
+		
+		this.divInquireList.set_height(this.nGrdSize);
+		this.divPageExpr.set_top(this.divInquireList.getOffsetBottom()+40);
+		this.divRight.set_height(this.nGrdSize);
+		this.resetScroll();
+		
+		if(sLayout == "QnA") 
+		{
+			this.fvWorkHeight = 280 + this.nGrdSize + 40 + 40 + 86;
+			nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, this.fvWorkHeight);
+		}
+		else
+		{
+			this.fvWorkHeight = 40 + this.nGrdSize + 40 + 40 + 160 + 74;
+			nexacro.getApplication().gv_mainFrame.fn_setMainResize(false, this.fvWorkHeight);
+		}
+	}
+};
+
+this.grdInquireList_oncellclick = function (obj:Grid, e:nexacro.GridClickEventInfo)
+{		
+	if(e.cell != "12"){
+		return false;
+	}
+	var dsDataCur = eval("this." + obj.binddataset);
+	
+	var strIdx = dsDataCur.getColumn(e.row, "QL_SEQ");
+	
+	nexacro.getApplication().gv_mainFrame.TargetPostId = strIdx;
+
+	//이전글,다음글 번호 저장
+	nexacro.getApplication().gv_mainFrame.arrIdx[0] = dsDataCur.getColumn(e.row-1, "QL_SEQ"); //다음글
+	nexacro.getApplication().gv_mainFrame.arrIdx[1] = dsDataCur.getColumn(e.row+1, "QL_SEQ"); //이전글
+	
+	nexacro.getApplication().gv_mainFrame.strTempFilder1 = strIdx;
+
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Searchfield = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "searchfield");
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Searchgubun = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "searchgubun");
+	nexacro.getApplication().gv_mainFrame.QA_Cond_BusinessSection = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "BusinessSection");
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Resort = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "search_resort");
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Keyword = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "keyword");
+	nexacro.getApplication().gv_mainFrame.QA_Cond_KeywordAll = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "keywordall");
+
+	var nRow = nexacro.getApplication().gv_mainFrame.dsScreenUrl.findRow("subCatgy", nexacro.getApplication().gv_mainFrame.param.menu);
+	var sLayout = nexacro.getApplication().gv_mainFrame.dsScreenUrl.getColumn(nRow, "Layout");
+	
+	if(sLayout == "MYQNALIST" || sLayout == "BOOKMARK")
+	{
+		nexacro.getApplication().gv_BookmarkTipCd = nexacro.getApplication().gv_mainFrame.divMain.form.divBookmark.form.tabProduct.tabindex;
+	}
+	
+	var sMenu = "QnA_View";
+	if (nexacro.getApplication().gv_mainFrame.PCategory2 == "Bookmark")
+	{
+		sMenu = "Bookmark_View";
+		nexacro.getApplication().gv_mainFrame.Bookmark_Tab_Index = nexacro.getApplication().gv_mainFrame.divMain.form.divBookmark.form.tabProduct.tabindex;
+	}
+	else if (nexacro.getApplication().gv_mainFrame.PCategory2 == "MyQnAList")
+	{
+		sMenu = "MyQnAList_View";
+		nexacro.getApplication().gv_mainFrame.My_Tab_Index = nexacro.getApplication().gv_mainFrame.divMain.form.divBookmark.form.tabProduct.tabindex;
+	}
+	else if (nexacro.getApplication().gv_mainFrame.PCategory2 == "SearchEngine")
+	{
+		sMenu = "SearchEngine_QnA_View";
+	}
+	
+	var strCode =  dsDataCur.getColumn(e.row, "PRODUCT_CODE");	
+	if (strCode == "044")
+	{
+		sMenu = "Sketch_View";
+	}
+	else if (strCode == "045")
+	{
+		sMenu = "Tutorial_View";
+	}	
+
+	// 현재 스크롤 위치 저장
+	nexacro.getApplication().gv_mainFrame.SCROLL_POS = nexacro.getApplication().gv_mainFrame.vscrollbar.pos;
+
+	nexacro.getApplication().gv_mainFrame.param = {
+		'menu': sMenu,
+		'keyword': nexacro.getApplication().gv_mainFrame.QA_Cond_Keyword,
+		'page': nexacro.getApplication().gv_mainFrame.QA_Cond_Page,
+		'postId': strIdx,
+		'gbn': nexacro.getApplication().gv_mainFrame.PCategory2
+		};
+	nexacro.getApplication().gv_mainFrame.gfnGoMain();
+};
+
+this.fn_InqstaTitle_onclick = function (ds, nIdx)
+{		
+	var dsDataCur = ds;
+	
+	var strIdx = dsDataCur.getColumn(nIdx, "QL_SEQ");
+	
+	nexacro.getApplication().gv_mainFrame.TargetPostId = strIdx;
+
+	//이전글,다음글 번호 저장
+	nexacro.getApplication().gv_mainFrame.arrIdx[0] = dsDataCur.getColumn(nIdx-1, "QL_SEQ"); //다음글
+	nexacro.getApplication().gv_mainFrame.arrIdx[1] = dsDataCur.getColumn(nIdx+1, "QL_SEQ"); //이전글
+	
+	nexacro.getApplication().gv_mainFrame.strTempFilder1 = strIdx;
+
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Searchfield = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "searchfield");
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Searchgubun = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "searchgubun");
+	nexacro.getApplication().gv_mainFrame.QA_Cond_BusinessSection = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "BusinessSection");
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Resort = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "search_resort");
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Keyword = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "keyword");
+	nexacro.getApplication().gv_mainFrame.QA_Cond_KeywordAll = this.ds_SearchParam.getColumn(this.ds_SearchParam.rowposition, "keywordall");
+
+	var nRow = nexacro.getApplication().gv_mainFrame.dsScreenUrl.findRow("subCatgy", nexacro.getApplication().gv_mainFrame.param.menu);
+	var sLayout = nexacro.getApplication().gv_mainFrame.dsScreenUrl.getColumn(nRow, "Layout");
+	
+	if(sLayout == "MYQNALIST" || sLayout == "BOOKMARK")
+	{
+		nexacro.getApplication().gv_BookmarkTipCd = nexacro.getApplication().gv_mainFrame.divMain.form.divBookmark.form.tabProduct.tabindex;
+	}
+	
+	var sMenu = "QnA_View";
+	if (nexacro.getApplication().gv_mainFrame.PCategory2 == "Bookmark")
+	{
+		sMenu = "Bookmark_View";
+		nexacro.getApplication().gv_mainFrame.Bookmark_Tab_Index = nexacro.getApplication().gv_mainFrame.divMain.form.divBookmark.form.tabProduct.tabindex;
+	}
+	else if (nexacro.getApplication().gv_mainFrame.PCategory2 == "MyQnAList")
+	{
+		sMenu = "MyQnAList_View";
+		nexacro.getApplication().gv_mainFrame.My_Tab_Index = nexacro.getApplication().gv_mainFrame.divMain.form.divBookmark.form.tabProduct.tabindex;
+	}
+	else if (nexacro.getApplication().gv_mainFrame.PCategory2 == "SearchEngine")
+	{
+		sMenu = "SearchEngine_QnA_View";
+	}
+	
+	var strCode =  dsDataCur.getColumn(nIdx, "PRODUCT_CODE");	
+	if (strCode == "044")
+	{
+		sMenu = "Sketch_View";
+	}
+	else if (strCode == "045")
+	{
+		sMenu = "Tutorial_View";
+	}	
+
+	// 현재 스크롤 위치 저장
+	nexacro.getApplication().gv_mainFrame.SCROLL_POS = nexacro.getApplication().gv_mainFrame.vscrollbar.pos;
+
+	nexacro.getApplication().gv_mainFrame.param = {
+		'menu': sMenu,
+		'keyword': nexacro.getApplication().gv_mainFrame.QA_Cond_Keyword,
+		'page': nexacro.getApplication().gv_mainFrame.QA_Cond_Page,
+		'postId': strIdx,
+		'gbn': nexacro.getApplication().gv_mainFrame.PCategory2
+		};
+	nexacro.getApplication().gv_mainFrame.gfnGoMain();
+};
+
+
+this.fn_QueryDataDetail = function (reqIdx)
+{
+};
+
+this.getTabIndex = function (idx)
+{
+	var nIdx = nexacro.toNumber(idx) + 1;
+	if (nexacro.getApplication().gv_mainFrame.tabCount > 0) 
+	{
+		if (idx == "1") 
+		{
+			nIdx = 4;
+		}
+		else if (idx == "2" || idx == "3") 
+		{
+			nIdx = nexacro.toNumber(idx);
+		}
+		else 
+		{
+			nIdx = 1;
+		}
+	}
+
+	return nIdx;
+};
+
+
+this.initCallback = function (svcid, errCode, errMsg)
+{
+	if (svcid == "TabCount") 
+	{
+		nexacro.getApplication().gv_mainFrame.tabCount = this.ds_AccPro.rowcount;
+	}
+	this.formOnload();
+};
+
+this.formOnload = function ()
+{
+	if ((nexacro.getApplication().gv_mainFrame.QAStatus == "Modify") || (nexacro.getApplication().gv_mainFrame.QAStatus == "Reply")) 
+	{
+		this.fn_SetInitSize();
+
+		nexacro.getApplication().gds_MiWizard.clearData();
+		nexacro.getApplication().com_AddMiWizard("", "output1", "req_idx=" + nexacro.getApplication().gv_mainFrame.QAKeyNo, "CS,cs_request_proc,25");
+
+		var outDs = "ds_ReqDetail=output1";
+		this.com_CallService("selectDetail", "", "", outDs, "fn_DetailCallBack", "CS", true);
+		return;
+	}
+	else if (nexacro.getApplication().gv_mainFrame.QAStatus == "List") 
+	{
+		nexacro.getApplication().gv_mainFrame.QAStatus = "List";
+		this.ds_SearchParam.clearData();
+		this.ds_SearchParam.addRow();
+		this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "display_cnt", nexacro.getApplication().gv_mainFrame.QA_Cond_DisplayCnt);
+		this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "page", nexacro.getApplication().gv_mainFrame.QA_Cond_Page);
+		this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "searchfield", nexacro.getApplication().gv_mainFrame.QA_Cond_Searchfield);
+		this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "searchgubun", nexacro.getApplication().gv_mainFrame.QA_Cond_Searchgubun);
+		this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "BusinessSection", nexacro.getApplication().gv_mainFrame.QA_Cond_BusinessSection);
+		this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "search_resort", nexacro.getApplication().gv_mainFrame.QA_Cond_Resort);
+		this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "keyword", nexacro.getApplication().gv_mainFrame.QA_Cond_Keyword);
+		this.ds_SearchParam.setColumn(this.ds_SearchParam.rowposition, "keywordall", nexacro.getApplication().gv_mainFrame.QA_Cond_Keyword);
+
+	}
+	else 
+	{
+		nexacro.getApplication().gv_mainFrame.QAStatus = "Write";
+		var nIdx = 0;
+
+		// 페이지 제어 초기화
+		this.divPageExpr.form.fn_PageInit(this.ds_hotlist, "", this, "fn_CallTrans()", "fn_SetInitSize()");
+	}
+};
+
+this.techinquireList_onbeforeclose = function (obj:Form, e:nexacro.CloseEventInfo)
+{
+};
+
+this.attachFileUpload_onsuccess = function (obj:FileUpload, e:nexacro.FileUploadEventInfo)
+{
+	var ds_OutPut = new Dataset;
+	ds_OutPut.copyData(e.datasets[0]);
+	var errorCode = e.errorcode;
+	var errorMsg = e.errormsg;
+
+
+	if (errorCode < 0) 
+	{
+		this.attachFileUpload.deleteItem(0);
+		this.attachFileUpload.appendItem();
+	}
+	else 
+	{
+		// 정상적으로 등록되었습니다<b>17시</b> 이후에 등록된 내용은 익일 처리됩니다.
+		nexacro.getApplication().com_SetMessage("MSG_000063", false);
+		// 질문내역 화면으로 이동
+		var nCount = this.tabQnaExpr.getTabpageCount();
+		var nIdx = nCount - 2;
+		this.fn_indexChange(nIdx);
+	}
+};
+
+this.fn_setFilePosition = function ()
+{
+	var nTop = this.tabQnaExpr.getOffsetTop() + this.tabQnaExpr.tabpg3.getOffsetTop() + this.tabQnaExpr.tabpg3.form.divInquireData.getOffsetTop()
+		 + this.tabQnaExpr.tabpg3.form.divInquireData.stcTempFile.getOffsetTop();
+	var nLeft = this.tabQnaExpr.getOffsetLeft() + this.tabQnaExpr.tabpg3.form.divInquireData.txtReqRemark.getOffsetLeft();
+
+	this.attachFileUpload.move(nLeft, nTop);
+};
+
+// expr : 그리드의 expr로 제품 선택
+this.fnProductCode = function(sPdCd)
+{
+/*
+ *	N     043
+ *	17    039
+ *	14    024 025 026 027 034
+ *	XP    010 011 019 020 021 022 023 031 032 033
+ *	MP    001 002 003 004 005 006 007 008 009 017 018 028 029 030
+ *  URL('theme://images/grd_WF_iconN.png')
+ *  URL('theme://images/grd_WF_icon17.png')
+ *  URL('theme://images/grd_WF_icon14.png')
+ *  URL('theme://images/grd_WF_iconXP.png')
+ *  URL('theme://images/grd_WF_iconMI.png')
+ *  NexacroN
+ *  Nexacro17
+ *  Nexacro14
+ *  Xplatform
+ *  MiPlatform
+ */
+	var sRtn = "";
+	switch(sPdCd) {
+	case "047":
+		sRtn = "TobeDevOps";
+		break;		
+	case "045":
+		sRtn = "Build";
+		break;	
+	case "044":
+		sRtn = "Sketch";
+		break;	
+	case "043":
+	case "046":	
+		sRtn = "Nexacro N";
+		break;		
+	case "039":
+		sRtn = "nexacro 17";
+		break;
+	case "024": case "025": case "026": case "027": case "034":
+		sRtn = "nexacro 14";
+		break;
+	case "010": case "011": case "019": case "020": case "021": case "022": case "023": case "031": case "032": case "033":
+		sRtn = "XPLATFORM";
+		break;
+	case "001": case "002": case "003": case "004": case "005": case "006": case "007": case "008": case "009": case "017": case "018": case "028": case "029": case "030":
+		sRtn = "MiPlatform";
+		break;
+	default:
+	}
+	return sRtn;
+};
+
+// expr : 그리드의 expr로 제품 선택
+this.fnProductCodeIcon = function(sPdCd)
+{
+/*
+ *	N     043
+ *	17    039
+ *	14    024 025 026 027 034
+ *	XP    010 011 019 020 021 022 023 030 031 032 033
+ *	MP    001 002 003 004 005 006 007 008 009 017 018 028 029 030
+ *  URL('theme://images/grd_WF_iconN.png')
+ *  URL('theme://images/grd_WF_icon17.png')
+ *  URL('theme://images/grd_WF_icon14.png')
+ *  URL('theme://images/grd_WF_iconXP.png')
+ *  URL('theme://images/grd_WF_iconMI.png')
+ */
+	var sRtn = "";
+	switch(sPdCd) {
+	case "047":
+		sRtn = "URL('theme://images/grd_WF_iconTDO.png')";
+		break;		
+	case "046":
+		sRtn = "URL('theme://images/grd_WF_iconN24.png')";
+		break;
+	case "043":
+	case "044":
+	case "045":
+		sRtn = "URL('theme://images/grd_WF_iconN.png')";
+		break;
+	case "039":
+		sRtn = "URL('theme://images/grd_WF_icon17.png')";
+		break;
+	case "024": case "025": case "026": case "027": case "034":
+		sRtn = "URL('theme://images/grd_WF_icon14.png')";
+		break;
+	case "010": case "011": case "019": case "020": case "021": case "022": case "023": case "031": case "032": case "033":
+		sRtn = "URL('theme://images/grd_WF_iconXP.png')";
+		break;
+	case "001": case "002": case "003": case "004": case "005": case "006": case "007": case "008": case "009": case "017": case "018": case "028": case "029": case "030":
+		sRtn = "URL('theme://images/grd_WF_iconMI.png')";
+		break;
+	default:
+	}
+	return sRtn;
+};
+
+
+this.fnProductCodeIconLabel = function(sPdCd)
+{
+/*
+ *	N     043
+ *	17    039
+ *	14    024 025 026 027 034
+ *	XP    010 011 019 020 021 022 023 030 031 032 033
+ *	MP    001 002 003 004 005 006 007 008 009 017 018 028 029 030
+ *  URL('theme://images/grd_WF_iconN.png')
+ *  URL('theme://images/grd_WF_icon17.png')
+ *  URL('theme://images/grd_WF_icon14.png')
+ *  URL('theme://images/grd_WF_iconXP.png')
+ *  URL('theme://images/grd_WF_iconMI.png')
+ */
+	var sRtn = "";
+	switch(sPdCd) {
+	case "047":
+		sRtn = "TobeDevOps 아이콘";
+		break;		
+	case "046":
+		sRtn = "Nexacro N 아이콘";
+		break;
+	case "043":
+	case "044":
+	case "045":
+		sRtn = "Nexacro N 아이콘";
+		break;
+	case "039":
+		sRtn = "Nexacro 17 아이콘";
+		break;
+	case "024": case "025": case "026": case "027": case "034":
+		sRtn = "Nexacro 14 아이콘";
+		break;
+	case "010": case "011": case "019": case "020": case "021": case "022": case "023": case "031": case "032": case "033":
+		sRtn = "XPLATFORM 아이콘";
+		break;
+	case "001": case "002": case "003": case "004": case "005": case "006": case "007": case "008": case "009": case "017": case "018": case "028": case "029": case "030":
+		sRtn = "MiPlatform 아이콘";
+		break;
+	default:
+	}
+	return sRtn;
+};
+
+
+// expr : 재질문 여부에 따라 글제목 들여쓰기
+this.fnStaCssclass = function(sStr)
+{
+	//trace("sStr:"+sStr);
+	var rtn = "";
+	switch(sStr.substr(31,1)) {
+	case "0":
+		rtn = "sta_WF_ConTitle";
+		break;
+	case "1":
+		rtn = "sta_WF_ConTitle1";
+		break;
+	case "2":
+		rtn = "sta_WF_ConTitle2";
+		break;
+	case "3":
+		rtn = "sta_WF_ConTitle3";
+		break;
+	case "4":
+		rtn = "sta_WF_ConTitle4";
+		break;
+	case "5":
+		rtn = "sta_WF_ConTitle5";
+		break;
+	default:
+	}
+	if (this.gfnIsNull(rtn))
+	{
+		rtn = "sta_WF_ConTitle";
+	}
+	//trace(rtn);
+	return rtn;
+}
+
+// expr : 재질문 여부에 따라 글제목 들여쓰기
+this.fnGrdCssclass = function(sStr)
+{
+	//trace("sStr:"+sStr);
+	var rtn = "";
+	switch(sStr.substr(31,1)) {
+	case "0":
+		rtn = "grd_WF_title0";
+		break;
+	case "1":
+		rtn = "grd_WF_title1";
+		break;
+	case "2":
+		rtn = "grd_WF_title2";
+		break;
+	case "3":
+		rtn = "grd_WF_title3";
+		break;
+	case "4":
+		rtn = "grd_WF_title4";
+		break;
+	case "5":
+		rtn = "grd_WF_title5";
+		break;
+	default:
+	}
+	if (this.gfnIsNull(rtn))
+	{
+		rtn = "grd_WF_title0";
+	}
+	//trace(rtn);
+	return rtn;
+}
+
+// cboListType콤보 이벤트 그리드를 제목만 <-> 제목/내용 변경
+this.cboListType_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if (e.postindex == 0)
+	{
+		//this.grdInquireList.set_formatid("default");
+		nexacro.getApplication().gv_mainFrame.QA_Cond_ListType = 0;
+		this.fn_createList();
+		this.fn_SetInitSize();
+	}
+	else
+	{
+		//this.grdInquireList.set_formatid("title");
+		nexacro.getApplication().gv_mainFrame.QA_Cond_ListType = 1;
+		this.fn_createList();
+		this.fn_SetInitSize();
+	}
+};
+
+
+// expr : 그리드 처리현황 표시
+this.fn_statusCss = function(sStatus,qc_no)
+{
+	if (sStatus.substr(0,1) == "P")
+	{
+		return "sta_WF_Status1";
+	}
+	else if (sStatus.substr(0,1) == "W" || sStatus.substr(0,1) == "A")
+	{
+		return "sta_WF_Status2";
+	}
+	else if (sStatus.substr(0,1) == "C")
+	{
+		return "sta_WF_Status3"
+	}
+	else
+	{
+		return "";
+	}
+}
+
+// expr : 그리드 처리현황 표시
+this.fn_statusCss_Grid = function(sStatus,qc_no)
+{
+	if (sStatus.substr(0,1) == "P")
+	{
+		if (this.tobe_yn && !this.gfnIsNull(qc_no))
+		{
+			return "grd_WF_status2";
+		}
+		else
+		{
+			return "grd_WF_status1";
+		}
+	}
+	else if (sStatus.substr(0,1) == "W" || sStatus.substr(0,1) == "A")
+	{
+		if (this.tobe_yn && !this.gfnIsNull(qc_no))
+		{
+			return "grd_WF_status4";
+		}
+		else
+		{
+			return "grd_WF_status3";
+		}
+	}
+	else if (sStatus.substr(0,1) == "C")
+	{
+		if (this.tobe_yn && !this.gfnIsNull(qc_no))
+		{
+			return "grd_WF_status6";
+		}
+		else
+		{
+			return "grd_WF_status5";
+		}
+	}
+	else
+	{
+		return "";
+	}
+
+}
+
+
+this.fn_statusAccessibility = function(sStatus,qc_no){
+
+	if (sStatus.substr(0,1) == "P")
+	{
+		return "진행상태 처리중";
+	}
+	else if (sStatus.substr(0,1) == "W" || sStatus.substr(0,1) == "A")
+	{
+		return "진행상태 접수";
+	}
+	else if (sStatus.substr(0,1) == "C")
+	{
+		return "진행상태 답변완료";
+	}
+	else
+	{
+		return "";
+	}
+};
+
+//처리상태 접근성 label 적용.
+this.fn_statusAccessibility_Grid = function(sStatus,qc_no){
+
+	if (sStatus.substr(0,1) == "P")
+	{
+		if (this.tobe_yn && !this.gfnIsNull(qc_no))
+		{
+			return "진행상태 처리중, qc번호 " + qc_no;
+		}
+		else
+		{
+			return "진행상태 처리중";
+		}
+	}
+	else if (sStatus.substr(0,1) == "W" || sStatus.substr(0,1) == "A")
+	{
+		if (this.tobe_yn && !this.gfnIsNull(qc_no))
+		{
+			return "진행상태 접수, qc번호 " + qc_no;
+		}
+		else
+		{
+			return "진행상태 접수";
+		}
+	}
+	else if (sStatus.substr(0,1) == "C")
+	{
+		if (this.tobe_yn && !this.gfnIsNull(qc_no))
+		{
+			return  "진행상태 답변완료, qc번호 " + qc_no;
+		}
+		else
+		{
+			return "진행상태 답변완료";
+		}
+	}
+	else
+	{
+		return "";
+	}
+};
+
+
+
+// expr : 그리드 처리시간 표시
+this.fn_statusWait = function(sStatus,qc_no,WAIT_TIME,QL_SEQ)
+{
+	//trace( (new Date()).getTime());
+	//기본 대기시간 표시
+	if( (sStatus.substr(0,1)=='W'||sStatus.substr(0,1)=='A'||sStatus.substr(0,1)=='P') && this.gfnIsNull(qc_no) && !this.gfnIsNull(WAIT_TIME)){
+		return "예상 대응시간 "+WAIT_TIME +" (시간)";
+	} else if (sStatus.substr(0,1)=='C' && !this.gfnIsNull(qc_no) && !this.gfnIsNull(WAIT_TIME)){ //완료 + tops접수건
+		if( WAIT_TIME > 24 ){			
+			return "완료 대응시간 " + nexacro.round(WAIT_TIME/24) +" (일)";
+		} else {
+			return "완료 대응시간 " + WAIT_TIME +" (시간)";
+		}
+	//} else if (sStatus.substr(0,1)=='P' && !this.gfnIsNull(qc_no) && !this.gfnIsNull(WAIT_TIME)){ //처리중 + tops접수건
+	} else if (sStatus.substr(0,1)=='P' && !this.gfnIsNull(qc_no)){ //처리중 + tops접수건
+		return "예상 대응시간 보류";
+	} else if(sStatus.substr(0,1)=='C' && !this.gfnIsNull(WAIT_TIME) && this.gfnIsNull(qc_no)) {
+		if( WAIT_TIME > 24 ){			
+			return "완료 대응시간 " + nexacro.round(WAIT_TIME/24) +" (일)";
+		} else {
+			return "완료 대응시간 " + WAIT_TIME +" (시간)";
+		}
+	} else if(sStatus.substr(0,1)=='P' && this.gfnIsNull(WAIT_TIME) ) {
+		return "예상 대응시간 보류";
+	}
+	
+}
+
+
+/************************************************************************
+ * ↓↓↓↓↓↓ 여기부터 페이징 ↓↓↓↓↓↓
+ ************************************************************************/
+
+// // 통합검색용 페이징 버튼이벤트
+// this.viewPaging_btnPageNum_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	nexacro.getApplication().gv_searchEngine.fn_search(obj.text);
+// 	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+// 	this.fn_SetHistoryData();
+// };
+// 
+// // 통합검색용 페이징 이전버튼
+// this.viewPaging_btnPagePre_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	nexacro.getApplication().gv_searchEngine.fn_search(parseInt(nexacro.getApplication().gv_searchEngine.fvPageNum)-1);
+// 	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+// 	this.fn_SetHistoryData();
+// };
+// 
+// // 통합검색용 페이징 다음버튼
+// this.viewPaging_btnPageNext_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	nexacro.getApplication().gv_searchEngine.fn_search(parseInt(nexacro.getApplication().gv_searchEngine.fvPageNum)+1);
+// 	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+// 	this.fn_SetHistoryData();
+// };
+// 
+// // 통합검색용 페이징 이전10개 버튼
+// this.viewPaging_btnPageHome_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	var nstartPageNum = 1;
+// 	if (nexacro.getApplication().gv_searchEngine.fvPageNum > 10)
+// 	{
+// 		nstartPageNum = nexacro.floor(nexacro.getApplication().gv_searchEngine.fvPageNum/10)*10+1;
+// 	}
+// 	nexacro.getApplication().gv_searchEngine.fn_search(nstartPageNum-10);
+// 	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+// 	this.fn_SetHistoryData();
+// };
+// 
+// // 통합검색용 페이징 다음10개 버튼
+// this.viewPaging_btnPageEnd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	var nstartPageNum = 1;
+// 	if (nexacro.getApplication().gv_searchEngine.fvPageNum > 10)
+// 	{
+// 		nstartPageNum = nexacro.floor(nexacro.getApplication().gv_searchEngine.fvPageNum/10)*10+1;
+// 	}
+// 	nexacro.getApplication().gv_searchEngine.fn_search(nstartPageNum+10);
+// 	//페이징 처리될 때마다, url를 히스토리에 기록한다.
+// 	this.fn_SetHistoryData();
+// };
+
+// 페이징 번호 초기화
+this.fn_pageNumInit = function(pageNum, total)
+{
+	var sBtnNum = pageNum%10;
+	if (sBtnNum == 0)
+	{
+		sBtnNum = 10;
+	}
+	
+	var nLastCnt = 0;// = total%10;
+	if (total%10 != 0)
+	{
+		nLastCnt = nexacro.floor(total/10)%10 + 1;
+	}
+	else
+	{
+		nLastCnt = nexacro.floor(total/10)%10;
+	}
+	var nstartPageNum = 1;
+	if (pageNum > 10)
+	{
+		nstartPageNum = nexacro.floor((pageNum-1)/10)*10+1;
+	}
+	if (nLastCnt == 0)
+	{
+		nLastCnt = 10;
+	}
+	// 각 숫자 셋팅
+	var i;
+	for (i = 0; i < 10; i++)
+	{
+		eval("this.viewPaging.form.btnPageNum"+(i+1)+".set_text("+(nstartPageNum+i)+");");
+		if (nexacro.floor(total/10) < nstartPageNum+10 && nLastCnt <= i)
+		{
+			eval("this.viewPaging.form.btnPageNum"+(i+1)+".set_visible(false);");
+		}
+		else
+		{
+			eval("this.viewPaging.form.btnPageNum"+(i+1)+".set_visible(true);");
+		}
+	}
+	
+	// cssclass 셋팅
+	this.viewPaging.form.btnPageHome.set_enable(true);
+	this.viewPaging.form.btnPagePre.set_enable(true);
+	this.viewPaging.form.btnPageNum1.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum2.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum3.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum4.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum5.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum6.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum7.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum8.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum9.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum10.set_cssclass("btn_WF_pageNum");
+	this.viewPaging.form.btnPageNum1.set_accessibilitydescription("");
+	this.viewPaging.form.btnPageNum2.set_accessibilitydescription("");
+	this.viewPaging.form.btnPageNum3.set_accessibilitydescription("");
+	this.viewPaging.form.btnPageNum4.set_accessibilitydescription("");
+	this.viewPaging.form.btnPageNum5.set_accessibilitydescription("");
+	this.viewPaging.form.btnPageNum6.set_accessibilitydescription("");
+	this.viewPaging.form.btnPageNum7.set_accessibilitydescription("");
+	this.viewPaging.form.btnPageNum8.set_accessibilitydescription("");
+	this.viewPaging.form.btnPageNum9.set_accessibilitydescription("");
+	this.viewPaging.form.btnPageNum10.set_accessibilitydescription("");	
+	this.viewPaging.form.btnPageNext.set_enable(true);
+	this.viewPaging.form.btnPageEnd.set_enable(true);
+	
+	if (pageNum <= 10)
+	{
+		this.viewPaging.form.btnPageHome.set_enable(false);
+	}
+	if (pageNum == 1)
+	{
+		this.viewPaging.form.btnPagePre.set_enable(false);
+	}
+	eval("this.viewPaging.form.btnPageNum"+sBtnNum+".set_cssclass('btn_WF_pageNum_S');");
+	eval("this.viewPaging.form.btnPageNum"+sBtnNum+".set_accessibilitydescription('선택');");
+	
+	if (pageNum == nexacro.ceil(total/10))
+	{
+		this.viewPaging.form.btnPageNext.set_enable(false);
+	}
+	if (nexacro.floor(total/10) < nstartPageNum+10)
+	{
+		this.viewPaging.form.btnPageEnd.set_enable(false);
+	}
+};
+
+// 페이징용 히스토리 셋팅
+// this.fn_SetHistoryData = function()
+// {
+// 	var sData = {};
+// 	
+// 	var sHash = "menu=" + nexacro.getApplication().gv_mainFrame.param.menu + "&page=" + nexacro.getApplication().gv_mainFrame.QA_Cond_Page;
+// 	var sKeyword = nexacro.getApplication().gv_mainFrame.param.keyword;
+// 	if(!this.gfnIsNull(sKeyword)) sHash += "&keyword="+sKeyword;
+// 	var sUrl = ".?"+sHash;
+// 	sData = nexacro.getApplication().gv_searchEngine.fn_savePagingData();
+// 	//trace(sHash+"/"+sData+"/"+sUrl);
+// 	MyHistory.setLocationHash(sHash, sData, sUrl);
+// };
+/************************************************************************
+ * ↑↑↑↑↑↑ 여기까지 페이징 ↑↑↑↑↑↑↑↑
+ ************************************************************************/
+ 
+ 
+ 
+ /************************************************************************
+ * ↓↓↓↓↓↓ search 영역 ↓↓↓↓↓↓
+ ************************************************************************/
+ // 검색창에서 키입력 시 이벤트
+this.edtSearch_onkeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	//열려있는 연관검색어 Div 닫기
+	nexacro.getApplication().gv_mainFrame.showAutoCompleteResult(false);
+	
+	nexacro.getApplication().gv_mainFrame.Search_divCover = this.div_autoCompleteCover;
+	nexacro.getApplication().gv_mainFrame.Search_div = this.div_autoCompleteCover.form.div_autoCompleteResult;
+	nexacro.getApplication().gv_mainFrame.Search_Edit = obj;
+	
+	if (e.keycode == 13)
+	{
+		this.btnSearch.click();
+		nexacro.getApplication().gv_mainFrame.fn_SearchKey_onkeyup(obj, e);
+	}
+	else
+	{
+		nexacro.getApplication().gv_mainFrame.Top_Edit_flag = false;
+		nexacro.getApplication().gv_mainFrame.fn_SearchKey_onkeyup(obj, e);
+	}
+};
+
+// 조회버튼 클릭
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.divSearch.form.Chk_NPN.value && !this.divSearch.form.Chk_NP17.value && !this.divSearch.form.Chk_NP14.value && !this.divSearch.form.Chk_XP.value && !this.divSearch.form.Chk_MP.value && !this.divSearch.form.Chk_TDO.value)
+	{
+		alert("선택한 제품이 없습니다.");
+		return;
+	}
+	
+	//열려있는 연관검색어 Div 닫기
+	nexacro.getApplication().gv_mainFrame.showAutoCompleteResult(false);	
+
+	// 제품 조회 조건에 따라 안보이게 처리
+	this.divResult.form.btn2.set_width(this.divSearch.form.Chk_NPN.value?186:0);
+	this.divResult.form.btn3.set_width(this.divSearch.form.Chk_NP17.value?186:0);
+	this.divResult.form.btn4.set_width(this.divSearch.form.Chk_NP14.value?186:0);
+	this.divResult.form.btn5.set_width(this.divSearch.form.Chk_XP.value?186:0);
+	this.divResult.form.btn6.set_width(this.divSearch.form.Chk_MP.value?186:0);
+	this.divResult.form.btn7.set_width(this.divSearch.form.Chk_TDO.value?186:0);
+	this.fn_setTabBtnVisible();
+	this.divResult.form.resetScroll();
+	
+	switch(this.searchVersion) {
+	case "btn1":
+		this.divResult.form.btn1.click();	// 전체건수로 조회
+		break;
+	case "btn2":
+		this.divResult.form.btn2.click();	
+		break;
+	case "btn3":
+		this.divResult.form.btn3.click();	
+		break;
+	case "btn4":
+		this.divResult.form.btn4.click();	
+		break;
+	case "btn5":
+		this.divResult.form.btn5.click();	
+		break;
+	case "btn6":
+		this.divResult.form.btn6.click();	
+		break;
+	case "btn7":
+		this.divResult.form.btn7.click();	
+		break;				
+	default:
+		this.divResult.form.btn1.click();	// 전체건수로 조회
+	}		
+};
+
+this.btnFilter_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fn_filterResize();	
+};
+
+// 검색필터 리사이즈
+this.fn_filterResize = function()
+{
+	var changedHeight = 0;
+	if (this.divSearch.height == this.fvSearchOpen)
+	{
+		nexacro.getApplication().gv_mainFrame.filterstatus = "close";
+		this.divSearch.set_height(this.fvSearchClose);
+		nexacro.getApplication().gv_mainFrame.staBGG.set_height(221);
+		this.btnFilterResize.set_cssclass("btn_WF_filterOpen");
+		this.btnFilterResize.set_accessibilitydescription("조건영역 닫힘");
+		changedHeight = 0;
+		
+		this.fn_setCompVisible(false);
+	}
+	else
+	{
+		nexacro.getApplication().gv_mainFrame.filterstatus = "open";
+		this.divSearch.set_height(this.fvSearchOpen);
+		nexacro.getApplication().gv_mainFrame.staBGG.set_height(460);
+		this.btnFilterResize.set_cssclass("btn_WF_filterClose");
+		this.btnFilterResize.set_accessibilitydescription("조건영역 열림");
+		changedHeight = this.fvSearchOpen;
+		
+		this.fn_setCompVisible(true);
+	}
+	
+	this.divResult.set_top(this.divSearch.getOffsetBottom());
+	this.resetScroll();
+	this.divPageExpr.set_top(this.divInquireList.getOffsetBottom() + 40);
+	this.set_height(this.fvWorkHeight + changedHeight);
+	
+	//TODO
+	nexacro.getApplication().gv_mainFrame.fn_setFilterResize();
+};
+
+this.fn_filterBFsize = function()
+{
+	var changedHeight = 0;
+	if (nexacro.getApplication().gv_mainFrame.filterstatus == "close")
+	{
+		this.divSearch.set_height(this.fvSearchClose);
+		nexacro.getApplication().gv_mainFrame.staBGG.set_height(221);
+		this.btnFilterResize.set_cssclass("btn_WF_filterOpen");
+		this.btnFilterResize.set_accessibilitydescription("조건영역 닫힘");
+		changedHeight = 0;
+		
+		this.fn_setCompVisible(false);
+	}
+	else
+	{
+		this.divSearch.set_height(this.fvSearchOpen);
+		nexacro.getApplication().gv_mainFrame.staBGG.set_height(460);
+		this.btnFilterResize.set_cssclass("btn_WF_filterClose");
+		this.btnFilterResize.set_accessibilitydescription("조건영역 열림");
+		changedHeight = this.fvSearchOpen;
+		
+		this.fn_setCompVisible(true);
+	}
+	
+	this.divResult.set_top(this.divSearch.getOffsetBottom());
+	this.resetScroll();
+	this.divPageExpr.set_top(this.divInquireList.getOffsetBottom() + 40);
+	this.set_height(this.fvWorkHeight + changedHeight);
+	
+	nexacro.getApplication().gv_mainFrame.fn_setFilterResize();
+}
+
+//상세조회 조건 visible처리
+this.fn_setCompVisible = function(bFlag)
+{
+	this.divSearch.visible = bFlag;
+	
+	//화면 onload될 때 divSearch가 visible=false여도 내부 컴포넌트 읽어주는 현상이 있음.
+	var comps = this.divSearch.form.components;
+	for (var i = 0; i < comps.length; i++)
+	{
+		var obj = comps[i];
+		obj.visible = bFlag;
+	}
+};
+
+// 전체 체크박스 이벤트
+this.divSearch_Chk_ALL_onclick = function(obj:nexacro.CheckBox,e:nexacro.ClickEventInfo)
+{
+	if (obj.value)
+	{
+		this.divSearch.form.Chk_NPN.set_value(obj.value);
+		this.divSearch.form.Chk_NP17.set_value(obj.value);
+		this.divSearch.form.Chk_NP14.set_value(obj.value);
+		this.divSearch.form.Chk_XP.set_value(obj.value);
+		this.divSearch.form.Chk_MP.set_value(obj.value);
+		this.divSearch.form.Chk_TDO.set_value(obj.value);
+		nexacro.getApplication().gv_mainFrame.Chk_NPN_flag = true;
+		nexacro.getApplication().gv_mainFrame.Chk_NP17_flag = true;
+		nexacro.getApplication().gv_mainFrame.Chk_NP14_flag = true;
+		nexacro.getApplication().gv_mainFrame.Chk_XP_flag = true;
+		nexacro.getApplication().gv_mainFrame.Chk_MP_flag = true;
+		nexacro.getApplication().gv_mainFrame.Chk_TDO_flag = true;
+	}
+	else
+	{
+		this.divSearch.form.Chk_NPN.set_value(obj.value);
+		this.divSearch.form.Chk_NP17.set_value(obj.value);
+		this.divSearch.form.Chk_NP14.set_value(obj.value);
+		this.divSearch.form.Chk_XP.set_value(obj.value);
+		this.divSearch.form.Chk_MP.set_value(obj.value);
+		this.divSearch.form.Chk_TDO.set_value(obj.value);
+		nexacro.getApplication().gv_mainFrame.Chk_NPN_flag = false;
+		nexacro.getApplication().gv_mainFrame.Chk_NP17_flag = false;
+		nexacro.getApplication().gv_mainFrame.Chk_NP14_flag = false;
+		nexacro.getApplication().gv_mainFrame.Chk_XP_flag = false;
+		nexacro.getApplication().gv_mainFrame.Chk_MP_flag = false;
+		nexacro.getApplication().gv_mainFrame.Chk_TDO_flag = false;
+	}	
+};
+
+this.divSearch_Chk_onclick = function(obj:nexacro.CheckBox,e:nexacro.ClickEventInfo)
+{
+	if (obj.value)
+	{
+		this.divSearch.form.Chk_ALL.set_value(true);
+		switch(obj.name) {
+		case "Chk_NPN":
+			nexacro.getApplication().gv_mainFrame.Chk_NPN_flag = true;
+			break;
+		case "Chk_NP17":
+			nexacro.getApplication().gv_mainFrame.Chk_NP17_flag = true;
+			break;
+		case "Chk_NP14":
+			nexacro.getApplication().gv_mainFrame.Chk_NP14_flag = true;
+			break;
+		case "Chk_XP":
+			nexacro.getApplication().gv_mainFrame.Chk_XP_flag = true;
+			break;
+		case "Chk_MP":
+			nexacro.getApplication().gv_mainFrame.Chk_MP_flag = true;
+			break;
+		case "Chk_TDO":
+			nexacro.getApplication().gv_mainFrame.Chk_TDO_flag = true;
+			break;				
+		default:
+		}
+	}
+	else
+	{
+		switch(obj.name) {
+		case "Chk_NPN":
+			nexacro.getApplication().gv_mainFrame.Chk_NPN_flag = false;
+			break;
+		case "Chk_NP17":
+			nexacro.getApplication().gv_mainFrame.Chk_NP17_flag = false;
+			break;
+		case "Chk_NP14":
+			nexacro.getApplication().gv_mainFrame.Chk_NP14_flag = false;
+			break;
+		case "Chk_XP":
+			nexacro.getApplication().gv_mainFrame.Chk_XP_flag = false;
+			break;
+		case "Chk_MP":
+			nexacro.getApplication().gv_mainFrame.Chk_MP_flag = false;
+			break;
+		case "Chk_TDO":
+			nexacro.getApplication().gv_mainFrame.Chk_TDO_flag = false;
+			break;				
+		default:
+		}
+		if (this.divSearch.form.Chk_NPN.value == false && this.divSearch.form.Chk_NP17.value == false && this.divSearch.form.Chk_NP14.value == false && this.divSearch.form.Chk_XP.value == false && this.divSearch.form.Chk_MP.value == false && this.divSearch.form.Chk_TDO.value == false)		{
+			this.divSearch.form.Chk_ALL.set_value(false);
+		}
+		if (this.divSearch.form.Chk_NPN.value == true && this.divSearch.form.Chk_NP17.value == true && this.divSearch.form.Chk_NP14.value == true && this.divSearch.form.Chk_XP.value == true && this.divSearch.form.Chk_MP.value == true && this.divSearch.form.Chk_TDO.value == true)
+		{
+			nexacro.getApplication().gv_mainFrame.Chk_All_flag = true;
+		}
+		else
+		{
+			nexacro.getApplication().gv_mainFrame.Chk_All_flag = false;
+		}
+	}	
+};
+
+// 조회조건 (전체, 내용 등) 변경 시
+this.divSearch_rdoField_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	this.searchfield = obj.value;	
+};
+
+// 조회조건 AND, OR 설정
+this.divSearch_rdoOperator_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	nexacro.getApplication().gv_mainFrame.QA_Cond_Searchgubun = obj.value;	
+};
+
+// 날짜 조회 조건 변경
+this.divSearch_rdoTerm_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	var sDate = "";
+	var eDate = "";
+	var today = this.gfnGetDate();
+
+	switch(e.postindex) {
+	case 0:	// 전체
+		sDate = "";
+		eDate = "";
+		break;
+	case 1:	// 오늘
+		sDate = today;
+		eDate = today;
+		break;
+	case 2:	// 1주일
+		sDate = this.gfnAddDate(today, -7);
+		eDate = today;
+		break;
+	case 3:	// 1달
+		sDate = this.gfnAddMonth(today, -1);
+		eDate = today;
+		break;
+	case 4:
+		break;
+	default:
+	}
+	this.period = this.divSearch.form.rdoTerm.text;
+	this.fromDate = sDate;
+	this.toDate = eDate;
+	this.divSearch.form.calStart.set_value(sDate);
+	this.divSearch.form.calEnd.set_value(eDate);	
+};
+
+// 초기화 버튼
+this.divSearch_btnClear_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.edtSearch.set_value("");
+	
+	this.divSearch.form.Chk_ALL.set_value(1);
+	this.divSearch.form.Chk_NPN.set_value(1);
+	this.divSearch.form.Chk_NP17.set_value(1);
+	this.divSearch.form.Chk_NP14.set_value(1);
+	this.divSearch.form.Chk_XP.set_value(1);
+	this.divSearch.form.Chk_MP.set_value(1);
+	this.divSearch.form.Chk_TDO.set_value(1);
+	
+	this.divSearch.form.rdoField.set_value(200);
+	this.searchfield = 200;
+	this.divSearch.form.rdoOperator.set_value("OR");
+	
+	this.divSearch.form.rdoTerm.set_value(1);
+	this.divSearch.form.calStart.set_value("");
+	this.divSearch.form.calEnd.set_value("");
+	
+	if (!this.divSearch.form.Chk_NPN.value && !this.divSearch.form.Chk_NP17.value && !this.divSearch.form.Chk_NP14.value && !this.divSearch.form.Chk_XP.value && !this.divSearch.form.Chk_MP.value && !this.divSearch.form.Chk_TDO.value)
+	{
+		alert("선택한 제품이 없습니다.");
+		return;
+	}
+
+	this.divResult.form.btn2.set_width(this.divSearch.form.Chk_NPN.value?186:0);
+	this.divResult.form.btn3.set_width(this.divSearch.form.Chk_NP17.value?186:0);
+	this.divResult.form.btn4.set_width(this.divSearch.form.Chk_NP14.value?186:0);
+	this.divResult.form.btn5.set_width(this.divSearch.form.Chk_XP.value?186:0);
+	this.divResult.form.btn6.set_width(this.divSearch.form.Chk_MP.value?186:0);
+	this.divResult.form.btn7.set_width(this.divSearch.form.Chk_TDO.value?186:0);	
+	this.divResult.form.resetScroll();
+	
+	this.divResult.form.btn1.click();	
+};
+
+// 적용 버튼 이벤트
+this.divSearch_btnApply_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.divSearch.form.Chk_NPN.value && !this.divSearch.form.Chk_NP17.value && !this.divSearch.form.Chk_NP14.value && !this.divSearch.form.Chk_XP.value && !this.divSearch.form.Chk_MP.value && !this.divSearch.form.Chk_TDO.value)
+	{
+		alert("선택한 제품이 없습니다.");
+		return;
+	}
+
+	this.divResult.form.btn2.set_width(this.divSearch.form.Chk_NPN.value?186:0);
+	this.divResult.form.btn3.set_width(this.divSearch.form.Chk_NP17.value?186:0);
+	this.divResult.form.btn4.set_width(this.divSearch.form.Chk_NP14.value?186:0);
+	this.divResult.form.btn5.set_width(this.divSearch.form.Chk_XP.value?186:0);
+	this.divResult.form.btn6.set_width(this.divSearch.form.Chk_MP.value?186:0);
+	this.divResult.form.btn7.set_width(this.divSearch.form.Chk_TDO.value?186:0);
+	this.fn_setTabBtnVisible();
+	this.divResult.form.resetScroll();
+	
+	//this.divResult.form.btn1.click();
+	switch(this.searchVersion) {
+	case "btn1":
+		this.divResult.form.btn1.click();	// 전체건수로 조회
+		break;
+	case "btn2":
+		this.divResult.form.btn2.click();	
+		break;
+	case "btn3":
+		this.divResult.form.btn3.click();	
+		break;
+	case "btn4":
+		this.divResult.form.btn4.click();	
+		break;
+	case "btn5":
+		this.divResult.form.btn5.click();	
+		break;
+	case "btn6":
+		this.divResult.form.btn6.click();	
+		break;
+	case "btn7":
+		this.divResult.form.btn7.click();	
+		break;			
+	default:
+		this.divResult.form.btn1.click();	// 전체건수로 조회
+	}		
+};
+
+// 제품탭 선택
+this.divResult_btnProd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.searchVersion = obj.name;
+	var sKeyword = this.edtSearch.value;
+	// 번호일때 숫자 체크
+	if (this.searchfield == 600)
+	{
+		var chkNo = /^\d+$/.test(sKeyword);
+		if (this.gfnIsNull(sKeyword) || chkNo == false)	// 검색조건(번호) & 번호가 아닐때
+		{
+			alert("번호를 입력해주세요.");
+			return;
+		}
+	}
+
+	this.divResult.form.btn1.set_cssclass("btn_WF_resultTab");
+	this.divResult.form.btn2.set_cssclass("btn_WF_resultTab");
+	this.divResult.form.btn3.set_cssclass("btn_WF_resultTab");
+	this.divResult.form.btn4.set_cssclass("btn_WF_resultTab");
+	this.divResult.form.btn5.set_cssclass("btn_WF_resultTab");
+	this.divResult.form.btn6.set_cssclass("btn_WF_resultTab");
+	this.divResult.form.btn7.set_cssclass("btn_WF_resultTab");	
+	
+	obj.set_cssclass("btn_WF_resultTab_S");
+
+	switch(obj.name) {
+	case "btn1":
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Prod = "All";
+		nexacro.getApplication().gv_mainFrame.QA_Tab_Index = 0;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo = 0;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Page = 1;
+		break;
+	case "btn2":
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Prod = "Nexacro N";
+		nexacro.getApplication().gv_mainFrame.QA_Tab_Index = 1;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo = 0;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Page = 1;
+		break;
+	case "btn3":
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Prod = "nexacro platform17";
+		nexacro.getApplication().gv_mainFrame.QA_Tab_Index = 2;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo = 0;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Page = 1;
+		break;
+	case "btn4":
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Prod = "nexacro platform14";
+		nexacro.getApplication().gv_mainFrame.QA_Tab_Index = 3;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo = 0;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Page = 1;
+		break;
+	case "btn5":
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Prod = "XPLATFORM";
+		nexacro.getApplication().gv_mainFrame.QA_Tab_Index = 4;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo = 0;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Page = 1;
+		break;
+	case "btn6":
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Prod = "MiPlatform";
+		nexacro.getApplication().gv_mainFrame.QA_Tab_Index = 5;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo = 0;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Page = 1;
+		break;
+	case "btn7":
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Prod = "TobeDevOps";
+		nexacro.getApplication().gv_mainFrame.QA_Tab_Index = 6;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_startPageNo = 0;
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Page = 1;
+		break;				
+	default:
+	}
+	
+	this.fn_saveHistoryData();	// 히스토리 세션 데이터 저장
+
+	// 검색 조건 번호일때 키워드 없으면 반려
+	var sKeyword = "";
+	if (!this.gfnIsNull(this.edtSearch.value))
+	{
+		sKeyword = this.edtSearch.value.trim();
+	}
+	else
+	{
+		sKeyword = this.edtSearch.value;
+	}
+	this.edtSearch.value;
+
+	this.fn_CallTrans();	// 조회	
+};
+
+
+// 제품탭 선택(사용자 클릭 아님)
+this.fn_selectTab = function(nTabIndex)
+{
+	var sKeyword = this.edtSearch.value;
+	// 번호일때 숫자 체크
+	if (this.searchfield == 600)
+	{
+		var chkNo = /^\d+$/.test(sKeyword);
+		if (this.gfnIsNull(sKeyword) || chkNo == false)	// 검색조건(번호) & 번호가 아닐때
+		{
+			alert("번호를 입력해주세요.");
+			return;
+		}
+	}
+
+	this.divResult.form.btn1.set_cssclass("btn_WF_resultTab");
+	this.divResult.form.btn2.set_cssclass("btn_WF_resultTab");
+	this.divResult.form.btn3.set_cssclass("btn_WF_resultTab");
+	this.divResult.form.btn4.set_cssclass("btn_WF_resultTab");
+	this.divResult.form.btn5.set_cssclass("btn_WF_resultTab");
+	this.divResult.form.btn6.set_cssclass("btn_WF_resultTab");
+	this.divResult.form.btn7.set_cssclass("btn_WF_resultTab");
+	
+	switch(nTabIndex) {
+	case 0:
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Prod = "All";
+		nexacro.getApplication().gv_mainFrame.QA_Tab_Index = 0;
+		this.divResult.form.btn1.set_cssclass("btn_WF_resultTab_S");
+		break;
+	case 1:
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Prod = "Nexacro N";
+		nexacro.getApplication().gv_mainFrame.QA_Tab_Index = 1;
+		this.divResult.form.btn2.set_cssclass("btn_WF_resultTab_S");
+		break;
+	case 2:
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Prod = "nexacro platform17";
+		nexacro.getApplication().gv_mainFrame.QA_Tab_Index = 2;
+		this.divResult.form.btn3.set_cssclass("btn_WF_resultTab_S");
+		break;
+	case 3:
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Prod = "nexacro platform14";
+		nexacro.getApplication().gv_mainFrame.QA_Tab_Index = 3;
+		this.divResult.form.btn4.set_cssclass("btn_WF_resultTab_S");
+		break;
+	case 4:
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Prod = "XPLATFORM";
+		nexacro.getApplication().gv_mainFrame.QA_Tab_Index = 4;
+		this.divResult.form.btn5.set_cssclass("btn_WF_resultTab_S");
+		break;
+	case 5:
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Prod = "MiPlatform";
+		nexacro.getApplication().gv_mainFrame.QA_Tab_Index = 5;
+		this.divResult.form.btn6.set_cssclass("btn_WF_resultTab_S");
+		break;
+	case 6:
+		nexacro.getApplication().gv_mainFrame.QA_Cond_Prod = "TobeDevOps";
+		nexacro.getApplication().gv_mainFrame.QA_Tab_Index = 6;
+		this.divResult.form.btn7.set_cssclass("btn_WF_resultTab_S");
+		break;		
+	default:
+	}
+	
+	this.fn_saveHistoryData();	// 히스토리 세션 데이터 저장
+	
+	this.fn_CallTrans();	// 조회
+};
+
+
+// 새로고침을 대비해 검색 데이터 저장
+this.fn_saveHistoryData = function()
+{
+	nexacro.getApplication().gv_mainFrame.param.keyword = this.edtSearch.value;
+	// 히스토리 sData에 저장
+	var sData = {
+	Chk_ALL:this.divSearch.form.Chk_ALL.value
+	,Chk_NPN:this.divSearch.form.Chk_NPN.value
+	,Chk_NP17:this.divSearch.form.Chk_NP17.value
+	,Chk_NP14:this.divSearch.form.Chk_NP14.value
+	,Chk_XP:this.divSearch.form.Chk_XP.value
+	,Chk_MP:this.divSearch.form.Chk_MP.value
+	,Chk_TDO:this.divSearch.form.Chk_TDO.value	
+	,rdoField:this.divSearch.form.rdoField.value
+	,rdoOperator:this.divSearch.form.rdoOperator.value
+	,rdoTerm:this.divSearch.form.rdoTerm.value
+	,calStart:this.divSearch.form.calStart.value
+	,calEnd:this.divSearch.form.calEnd.value
+	,filterstatus:nexacro.getApplication().gv_mainFrame.filterstatus
+	,QA_Tab_Index:nexacro.getApplication().gv_mainFrame.QA_Tab_Index
+	};
+	nexacro.getApplication().gv_mainFrame.gfnSetHistoryData(sData);
+};
+
+
+// 페이징 검색 데이터 저장
+this.fn_savePagingData = function()
+{
+	nexacro.getApplication().gv_mainFrame.param.keyword = this.edtSearch.value;
+	// 히스토리 sData에 저장
+	var sData = {
+	Chk_ALL:this.divSearch.form.Chk_ALL.value
+	,Chk_NPN:this.divSearch.form.Chk_NPN.value
+	,Chk_NP17:this.divSearch.form.Chk_NP17.value
+	,Chk_NP14:this.divSearch.form.Chk_NP14.value
+	,Chk_XP:this.divSearch.form.Chk_XP.value
+	,Chk_MP:this.divSearch.form.Chk_MP.value
+	,Chk_TDO:this.divSearch.form.Chk_TDO.value
+	,rdoField:this.divSearch.form.rdoField.value
+	,rdoOperator:this.divSearch.form.rdoOperator.value
+	,rdoTerm:this.divSearch.form.rdoTerm.value
+	,calStart:this.divSearch.form.calStart.value
+	,calEnd:this.divSearch.form.calEnd.value
+	,filterstatus:nexacro.getApplication().gv_mainFrame.filterstatus
+	,QA_Tab_Index:nexacro.getApplication().gv_mainFrame.QA_Tab_Index
+	};
+	return sData;
+};
+
+ /************************************************************************
+ * ↑↑↑↑↑↑ 여기까지 search 영역 ↑↑↑↑↑↑↑↑
+ ************************************************************************/
+ 
+this.div_autoCompleteCover_onclick = function(obj:nexacro.Div,e:nexacro.ClickEventInfo)
+{
+	nexacro.getApplication().gv_mainFrame.div_autoCompleteCover_onclick();
+};
+
+this.div_autoCompleteCover_onkillfocus = function(obj:nexacro.Div,e:nexacro.KillFocusEventInfo)
+{
+	nexacro.getApplication().gv_mainFrame.div_autoCompleteCover_onkillfocus();
+};
+]]></Script>
+  </Form>
+</FDL>

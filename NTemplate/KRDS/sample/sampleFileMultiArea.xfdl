@@ -1,0 +1,638 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleFileMultiArea" width="888" height="1400" titletext="파일 up/download" onload="form_onload">
+    <Layouts>
+      <Layout height="1400" mobileorientation="landscape" width="888" screenid="Desktop_screen">
+        <Static id="Static00" taborder="0" text="파일 미리보기" left="0" top="0" width="220" height="60" cssclass="sta_WF_H2_pc" fittocontents="width" accessibilityrole="heading2"/>
+        <Static id="Static01" taborder="1" left="Static00:15" top="20" width="1" height="21" cssclass="sta_WF_line"/>
+        <Static id="Static00_02" taborder="2" text="Upload" left="Static01:15" top="0" width="159" height="60" cssclass="sta_WF_ParaH4_pc"/>
+        <Div id="divSearch" taborder="3" cssclass="div_WF_SchBar" text="" visible="false" left="0" top="100" height="128" right="0" fittocontents="height" accessibilityenable="false">
+          <Layouts>
+            <Layout type="horizontal" flexwrap="wrap" horizontalgap="24" verticalgap="16" spacing="40px 40px 40px 40px ">
+              <Panel id="Panel00" taborder="0" left="0" top="0" width="226" height="48" flexgrow="1" visible="false">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staSearchTitle00"/>
+                  <PanelItem id="PanelItem01" componentid="Edit00_00"/>
+                </Contents>
+              </Panel>
+              <Static id="staSearchTitle00" taborder="1" text="파일명" left="0" top="12" width="86" height="48" cssclass="sta_WF_SchDetail" fittocontents="width" visible="false"/>
+              <Edit id="Edit00_00" taborder="2" left="staSearchTitle00:0" top="12" width="140" height="48" visible="false"/>
+              <Button id="btnSearch" taborder="3" text="조회" top="12" width="120" height="48" cssclass="btn_WF_Sch" onclick="divSearch_btnSearch_onclick" visible="false" left="905"/>
+            </Layout>
+            <Layout name="Layout0" spacing="24px 24px 24px 24px"/>
+          </Layouts>
+        </Div>
+        <Static id="staTitle" taborder="4" text="파일리스트" left="0" top="divSearch:40" height="38" cssclass="sta_WF_H4_pc" flexgrow="1" accessibilityrole="heading3" right="0"/>
+        <Grid id="grdList" taborder="5" left="0" top="staTitle:16" binddataset="dsList" autofittype="col" oncelldblclick="grdList_oncelldblclick" height="338" flexgrow="1" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="91"/>
+                <Column size="323"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="IDX"/>
+                <Cell col="1" text="파일명"/>
+                <Cell col="2" text="파일 사이즈"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:ATTC_FILE_IDX" textAlign="center"/>
+                <Cell col="1" text="bind:ATTC_FILE_NM"/>
+                <Cell col="2" text="bind:ATTC_FILE_SIZE" displaytype="number"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="staTitle00" taborder="6" text="이미지업로드" top="grdList:32" height="38" cssclass="sta_WF_H4_pc" left="0" flexgrow="1" accessibilityrole="heading3" right="0"/>
+        <Panel id="Panel01" taborder="7" top="staTitle00:16" height="342" verticalgap="16" horizontalgap="24" left="0" right="0" spacing="40px 40px 40px 40px" fittocontents="height" flexwrap="wrap" cssclass="pnl_WF_Detailbox">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="div1"/>
+            <PanelItem id="PanelItem01" componentid="div2"/>
+          </Contents>
+        </Panel>
+        <Div id="div1" taborder="8" text="div00" top="354" width="296" height="262" left="424" flexgrow="1" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgPre" taborder="0" left="2" top="1" ondragleave="imgPre_ondragleave" ondrop="imgPre_ondrop" height="260" stretch="fit" border="1px solid black" ondragenter="imgPre_ondragenter" text="" right="40"/>
+              <Button id="btnDel" taborder="1" top="1" width="32" height="32" onclick="btnDel_onclick" visible="false" right="0" cssclass="btn_WF_Delete"/>
+              <Static id="staHelpMessage1" taborder="2" left="45" top="130" visible="false" width="40" height="20" onclick="staHelpMessage_onclick" usedecorate="true" cursor="pointer" textAlign="center" text="&lt;fc v='blue'&gt;&lt;u v='true'&gt;여기를&lt;/u&gt;&lt;/fc&gt;"/>
+              <Static id="staHelpMessage" taborder="4" left="24" top="103" text="마우스로 파일을 끌어오거나 &#13;&#10;&lt;fc v='blue'&gt;&lt;u v='true'&gt;여기를&lt;/u&gt;&lt;/fc&gt; 클릭하세요" visible="true" height="55" onclick="staHelpMessage_onclick" cursor="pointer" usedecorate="true" textAlign="center" right="64"/>
+            </Layout>
+            <Layout name="Layout0"/>
+          </Layouts>
+        </Div>
+        <Div id="div2" taborder="9" text="div00" top="354" width="296" height="262" right="0" flexgrow="1" accessibilityenable="false">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgPre" taborder="0" left="2" top="1" ondragleave="imgPre_ondragleave" ondrop="imgPre_ondrop" height="260" stretch="fit" border="1px solid black" ondragenter="imgPre_ondragenter" text="" right="42"/>
+              <Button id="btnDel" taborder="1" top="1" width="32" height="32" onclick="btnDel_onclick" visible="false" right="0" cssclass="btn_WF_Delete"/>
+              <Static id="staHelpMessage" taborder="2" left="24" top="103" text="마우스로 파일을 끌어오거나 &#13;&#10;&lt;fc v='blue'&gt;&lt;u v='true'&gt;여기를&lt;/u&gt;&lt;/fc&gt; 클릭하세요" visible="true" height="55" onclick="staHelpMessage_onclick" usedecorate="true" cursor="pointer" textAlign="center" right="64"/>
+              <Static id="staHelpMessage1" taborder="3" left="45" top="130" visible="false" width="40" height="20" onclick="staHelpMessage_onclick" usedecorate="true" cursor="pointer" textAlign="center" text="&lt;fc v='blue'&gt;&lt;u v='true'&gt;여기를&lt;/u&gt;&lt;/fc&gt;"/>
+            </Layout>
+            <Layout name="Layout0"/>
+          </Layouts>
+        </Div>
+        <Grid id="grd00" taborder="10" top="Panel01:24" height="164" binddataset="dsUpload" cellsizingtype="col" autofittype="col" fillareatype="allrow" left="0" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="237"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="57"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="DivName"/>
+                <Cell col="1" text="FileName"/>
+                <Cell col="2" text="FileSize"/>
+                <Cell col="3" text="FileId"/>
+                <Cell col="4" text="Path"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:DivName"/>
+                <Cell col="1" text="bind:FileName"/>
+                <Cell col="2" text="bind:FileSize"/>
+                <Cell col="3" text="bind:FileId"/>
+                <Cell col="4" text="bind:Path"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnFileSave" taborder="11" text="파일저장" width="100" right="0" onclick="btnFileSave_onclick" height="48" top="grd00:40"/>
+      </Layout>
+      <Layout height="1400" mobileorientation="Portrait" name="Layout0" type="default" width="480" screenid="Desktop_screen,mobile_small">
+        <Div id="divSearch" left="0" top="100" height="96" right="0"/>
+        <Static id="Static00" cssclass="sta_WF_H2_m" width="156" left="0" top="0" height="60"/>
+        <Static id="Static00_02" right="0" left="Static01:15" top="0" height="60" cssclass="sta_WF_ParaH4_m"/>
+        <Static id="staTitle" cssclass="sta_WF_H4_m"/>
+        <Static id="staTitle00" cssclass="sta_WF_H4_m"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleFileMultiArea.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/11/30
+*  @Description    이미지 파일 미리보기 기능(only html5)
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2022/08/17			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	this.dsUpload.sDiv = "div1";
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+this.cfnSearch = function ()
+{
+	this.fnSearch();
+};
+
+this.cfnRefresh = function ()
+{
+	//TODO
+};
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+this.fnSearch = function()
+{
+	// DB 저장이 아닌 현재 저장경로에 있는  fileList를 불러옴
+	var strSvcId 	= "searchFileList";
+	var strSvcUrl 	= "searchFileList.do";
+	var inData 		= "inDs=dsSearch";
+	var outData 	= "dsList=outDs";
+	var strArg 		= "";
+	this.gfnTransaction(strSvcId, strSvcUrl, inData, outData, strArg);
+};
+
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+this.fnCallback = function (sSvcId, nErrCd, sErrMsg)
+{
+	switch(sSvcId) {
+		case "searchFileList":
+			//TODO..
+		//	this.fnInit();
+			this.dsUpload.clearData();
+			this.futFile.clearFileList();
+			break;
+		default: break;
+	}
+};
+
+this.fnMsgCallback = function (sMsgId, sRtn)
+{
+	//TODO..
+};
+
+this.fnFileDialogCallback= function (objDs, objFileDialog, e)
+{
+	//TODO..
+};
+
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+this.fnInit = function ()
+{
+	this.fnHelpMessage(this.div1, true);
+	this.fnHelpMessage(this.div2, true);
+	this.div1.form.btnDel.set_visible(false);
+	this.div2.form.btnDel.set_visible(false);
+	
+	this.dsUpload.clearData();
+	this.futFile.clearFileList();	
+};
+
+this.fnFileDownload = function (nRow)
+{
+	this.fdtFile.setPostData("filePath"		, this.dsList.getColumn(nRow, "ATTC_FILE_PATH"));
+	this.fdtFile.setPostData("saveFileName"	, this.dsList.getColumn(nRow, "SERV_ATTC_FILE_NM"));
+	this.fdtFile.setPostData("orgFileName"	, this.dsList.getColumn(nRow, "ATTC_FILE_NM"));
+	
+	this.fdtFile.set_downloadfilename( this.dsList.getColumn(nRow, "ATTC_FILE_NM"))
+	this.fdtFile.download("svcUrl::downloadFile.do");
+};
+
+this.fnFileDialogOpen = function(sDiv)
+{
+	this.fdgFile.sDiv = sDiv;
+	this.fdgFile.open("file_upload", FileDialog.LOAD);
+};
+
+this.fnFileUploadTran = function ()
+{
+	// 파일 업로드 시 Dataset 전달 샘플 코드
+	// PostData : Dataset 전달 --------------------------------------- Start
+	var listDs = [];
+		listDs.push(this.dsList);
+		listDs.push(this.dsTest);
+	var dsList = this.fnSerializeXML(listDs);
+	//var dsList = this.fnSerializeSSV(listDs);
+	
+	dsList = encodeURIComponent(dsList);
+	this.futFile.setPostData("infoDatasets", dsList);
+
+	this.futFile.upload("svcUrl::uploadFile.do");
+};
+
+
+this.fnSetFile = function (aVFiles, sDiv)
+{
+	var aVFile = aVFiles[0];
+	var id = aVFile.id;
+	var sName = aVFile.filename;
+	var nSize = aVFile._handle.size;
+	var fileExt = sName.slice(sName.lastIndexOf(".")+1).toLowerCase();
+	var imgExt = ["jpg", "jpeg", "gif", "png", "bmp"];
+
+	if (imgExt.indexOf(fileExt) == -1)
+	{		
+		this.gfnAlert("msg.file.allowtype", [fileExt, imgExt]);
+		return;
+	}
+
+	if (this.dsUpload.findRow("FileName", sName) > -1) 
+	{
+		this.gfnAlert("msg.file.exist", [sName]);
+
+		if (this.gfnIsNull(this.components[sDiv].form.imgPre.image)) 
+		{
+			this.fnHelpMessage(this.components[sDiv], true);
+		}
+		return;	
+	}
+
+	if (system.navigatorname == "nexacro")
+	{	
+		var vFile = new VirtualFile("vFile");
+		vFile = aVFile;			
+		vFile.addEventHandler("onsuccess", function(obj, e) {
+			switch (e.reason)
+			{		
+				case 1 :	// open
+					obj.getFileSize();
+					break;		
+				case 9 :	// getFileSize
+					if (e.filesize > 0)
+					{ 	
+						if (e.filesize > 10485760)
+						{		
+							this.gfnAlert("msg.file.filesize", ["10"]);
+							return;
+						}					
+					
+						this.dsUpload.sDiv = sDiv;
+						this.futFile.addFile(id, obj);
+						
+						var nRow = this.dsUpload.findRow("DivName", sDiv);
+						if (nRow == -1)
+						{
+							nRow = this.dsUpload.addRow();
+						}
+						
+						this.dsUpload.setColumn(nRow, "FileName", obj.filename);
+						this.dsUpload.setColumn(nRow, "Path"	, e.fullpath);
+						this.dsUpload.setColumn(nRow, "FileSize", e.filesize);
+						this.dsUpload.setColumn(nRow, "FileId"	, id);
+						this.dsUpload.setColumn(nRow, "DivName"	, sDiv);							
+						this.components[sDiv].form.imgPre.set_image("URL('file://"+aVFile.fullpath+"')");
+					}
+					obj.close();
+					break;
+			}	
+		}, this);		
+		
+		vFile.addEventHandler("onerror", function(obj, e) {
+			trace("errortype: "+e.errortype + " , "+ e.errormsg + " , "+  e.statuscode);
+		}, this);				
+		
+		vFile.open(null, VirtualFile.openRead);	
+	}	
+	else
+	{
+		if (nSize > 10485760)
+		{		
+			this.gfnAlert("msg.file.filesize", ["10"]);
+			return;
+		}
+
+		this.dsUpload.sDiv = sDiv;
+		this.futFile.addFile(id, aVFile);
+		
+		var nRow = this.dsUpload.findRow("DivName", sDiv);
+		if (nRow == -1)
+		{
+			nRow = this.dsUpload.addRow();
+		}
+		
+		this.dsUpload.setColumn(nRow, "FileName", sName);
+		this.dsUpload.setColumn(nRow, "Path"	, aVFile.fullpath);
+		this.dsUpload.setColumn(nRow, "FileSize", nSize);
+		this.dsUpload.setColumn(nRow, "FileId"	, id);
+		this.dsUpload.setColumn(nRow, "DivName"	, sDiv);	
+	
+		//브라우저 실행시
+		//if ( /\.(jpe?g|png|gif)$/i.test(filelist[0].filename) ) {
+		var reader = new FileReader();		
+		reader.targetForm = this;	  
+		reader.addEventListener("load", function () {
+			reader.targetForm.components[sDiv].form.imgPre.set_image(this.result);
+		}, false);
+		reader.readAsDataURL(aVFile._handle);
+	}
+};
+				
+// PlatformData 구성 : DataSet XML
+this.fnSerializeXML = function (arrDataset) 
+{
+	var depth = 0;
+	var list = [];
+	
+	if (system.navigatorname != "nexacro") 
+	{
+		//[START] xml 통신시 아래의 특수문자가 서버쪽 SAX parser 에러가 발생해서 임시 추가함.
+		this.fnWriteData(list, "<?xml version=\'1.0\' encoding=\'UTF-8\'?>", depth);
+		//this._writeData(list, "<!DOCTYPE p_nexacro [ <!ENTITY nbsp '&#160;'> <!ENTITY quot '&#34;'>" +
+		//		" <!ENTITY amp '&#38;'> <!ENTITY lt '&#60;'> <!ENTITY gt '&#62;'> ]>", depth);
+		//[END] xml 통신시 아래의 특수문자가 서버쪽 SAX parser 에러가 발생해서 임시 추가함.
+		
+		this.fnWriteData(list, "<Root xmlns=\'http://www.nexacroplatform.com/platform/dataset\'>", depth++);
+		
+		for (var i = 0; i < arrDataset.length; i++) {
+			list.push(arrDataset[i].saveXML(arrDataset.name, "normal", depth, false));
+		}
+		
+		this.fnWriteData(list, "</Root>", --depth);
+		
+		var rtnList = list.join("\n");
+		
+	} 
+	else 
+	{
+		// 런타임의 경우.......... ??????? 
+		//[START] xml 통신시 아래의 특수문자가 서버쪽 SAX parser 에러가 발생해서 임시 추가함.
+		this.fnWriteData(list, "<?xml version=\'1.0\' encoding=\'UTF-8\'?>", depth);
+		//this._writeData(list, "<!DOCTYPE p_nexacro [ <!ENTITY nbsp '&#160;'> <!ENTITY quot '&#34;'>" +
+		//		" <!ENTITY amp '&#38;'> <!ENTITY lt '&#60;'> <!ENTITY gt '&#62;'> ]>", depth);
+		//[END] xml 통신시 아래의 특수문자가 서버쪽 SAX parser 에러가 발생해서 임시 추가함.
+		
+		this.fnWriteData(list, "<Root xmlns=\'http://www.nexacroplatform.com/platform/dataset\'>", depth++);
+		
+		for (var i = 0; i < arrDataset.length; i++) {
+			list.push(arrDataset[i].saveXML(arrDataset.name, "normal", depth, false));
+		}
+		
+		this.fnWriteData(list, "</Root>", --depth);
+		
+		var rtnList = list.join("\n");
+	}
+	
+	return rtnList;
+};
+
+
+// PlatformData 구성 : DataSet 
+this._TABS = ["", "\t", "\t\t", "\t\t\t", "\t\t\t\t", "\t\t\t\t\t", "\t\t\t\t\t\t"];
+this.fnWriteData = function (list, str, depth) 
+{
+	list[list.length] = this._TABS[depth] + str;
+};
+
+// PlatformData 구성 : DataSet SSV
+this.fnSerializeSSV = function (arrDataset)
+{
+	var _rs_ = String.fromCharCode(30);
+	var _cs_ = String.fromCharCode(31);
+
+	var list = [];
+		list.push("SSV:utf-8" + _rs_);
+	
+	// Dataset
+	for (var i = 0; i < arrDataset.length; i++) {
+		list.push(arrDataset[i].saveSSV(arrDataset[i].name, "normal"));
+	}
+	
+	var rtnVal = list.join("");
+	return rtnVal;
+};
+
+/*
+ * @class static 안내메세지 보이기/숨기기 처리
+ * @param {Object} oComp - div Object
+ * @param {Boolean} bFlag - [true/false]
+ */
+this.fnHelpMessage = function (oComp, bFlag) 
+{
+	oComp.form.components["staHelpMessage"].set_visible(bFlag);
+	oComp.form.components["staHelpMessage1"].set_visible(bFlag);
+};
+
+
+this.fnReadImageFile = function(filelist, oComp)
+{
+	if (filelist)
+	{
+		if (filelist.length > 1)
+		{
+			this.gfnAlert("msg.noselect",["하나의 파일을"]);
+
+			if (this.gfnIsNull(oComp.parent.components["imgPre"].image)) 
+			{
+				this.fnHelpMessage(oComp.parent.parent, true);
+			}
+		}
+		else 
+		{
+			this.fnHelpMessage(oComp.parent.parent, false);	//static메세지 처리
+			this.fnSetFile(filelist, oComp.parent.parent.name);
+		}		
+	}
+};
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.grdList_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.fnFileDownload(e.row);
+};
+
+this.fdtFile_onerror = function(obj:nexacro.FileDownTransfer,e:nexacro.FileDownTransferErrorEventInfo)
+{
+	trace(e.errormsg + "}}"+ "fdtFile_onerror : " + e.requesturi +"__"+ e.locationuri);
+};
+
+this.fdtFile_onsuccess = function(obj:nexacro.FileDownTransfer,e:nexacro.FileDownTransferEventInfo)
+{
+	trace("fdtFile_onsuccess : " + e.targetfullpath);
+};
+
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.cfnSearch();
+};
+
+this.btnFileSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.dsUpload.findRow("DivName", "div1") == -1)
+	{
+		this.gfnAlert("msg.err.validator.required" ,["첫번째 이미지"]);
+	}
+	else if (this.dsUpload.findRow("DivName", "div2") == -1)
+	{
+		this.gfnAlert("msg.err.validator.required" ,["두번째 이미지"]);
+	}
+	else
+	{
+		this.fnFileUploadTran();
+	}
+};
+
+this.fdgFile_onclose = function(obj:nexacro.FileDialog,e:nexacro.FileDialogEventInfo)
+{
+	if ( e.reason == 1 )
+	{
+		var oComp = obj.sDiv;		
+		this.fnHelpMessage(oComp, false);
+		this.fnSetFile(e.virtualfiles, oComp.name);
+	}
+};
+
+this.futFile_onsuccess = function(obj:nexacro.FileUpTransfer,e:nexacro.FileUpTransferEventInfo)
+{
+	this.futFile.clearFileList();
+	this.dsUpload.clearData();
+	
+	this.cfnSearch();
+};
+
+this.futFile_onerror = function(obj:nexacro.FileUpTransfer,e:nexacro.FileUpTransferErrorEventInfo)
+{
+	this.gfnAlert("msg.server.error.msg" ,[e.errormsg]);
+};
+
+this.dsUpload_onrowsetchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSRowsetChangeEventInfo)
+{
+	if (e.reason == Dataset.REASON_CLEARDATA)
+	{
+		return;
+	}
+
+	var objForm = this.components[obj.sDiv].form;
+	if( obj.rowcount > 0 )
+	{
+		objForm.staHelpMessage.set_visible(false);
+		objForm.staHelpMessage1.set_visible(false);
+		objForm.btnDel.set_visible(true);
+	}
+	else
+	{
+		objForm.staHelpMessage.set_visible(true);
+		objForm.staHelpMessage1.set_visible(true);
+		objForm.btnDel.set_visible(false);
+	}
+};
+
+this.imgPre_ondragleave = function(obj:nexacro.ImageViewer,e:nexacro.DragEventInfo)
+{
+	var objStaHelp = obj.parent.components["staHelpMessage"];
+	var objBtnDel = obj.parent.components["btnDel"];
+	
+	if (!objStaHelp.visible && this.dsUpload.getRowCount() == 0)
+	{
+		this.fnHelpMessage(obj.parent.parent, true);	
+	}
+	else
+	{
+		this.fnHelpMessage(obj.parent.parent, false);
+		
+		if (this.gfnIsNull(obj.image)) 
+		{
+			this.fnHelpMessage(obj.parent.parent, true);
+		}
+	}
+};
+
+this.imgPre_ondrop = function(obj:nexacro.ImageViewer,e:nexacro.DragEventInfo)
+{
+	if (e.datatype == "file")
+	{
+		this.fnReadImageFile(e.filelist, obj);
+	}
+};
+
+this.imgPre_ondragenter = function(obj:nexacro.ImageViewer,e:nexacro.DragEventInfo)
+{
+	this.fnHelpMessage(obj.parent.parent, false);
+};
+
+this.btnDel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nRow = this.dsUpload.findRow("DivName", obj.parent.parent.name);
+	this.futFile.removeFile(this.dsUpload.getColumn(nRow, "FileId"));
+	this.dsUpload.deleteRow(nRow);
+	obj.parent.components["imgPre"].set_image("");
+	this.fnHelpMessage(obj.parent.parent, true);
+	obj.set_visible(false);
+};
+
+this.staHelpMessage_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	this.fnFileDialogOpen(obj.parent.parent);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsList">
+        <ColumnInfo>
+          <Column id="ATTC_FILE_NM" type="STRING" size="256"/>
+          <Column id="SERV_ATTC_FILE_NM" type="STRING" size="256"/>
+          <Column id="ATTC_FILE_SIZE" type="STRING" size="256"/>
+          <Column id="ATTC_FILE_TYPE" type="STRING" size="256"/>
+          <Column id="ATTC_FILE_PATH" type="STRING" size="256"/>
+          <Column id="ATTC_FILE_IDX" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <FileDownTransfer id="fdtFile" url="svcUrl::downloadFile.do" onerror="fdtFile_onerror" onsuccess="fdtFile_onsuccess"/>
+      <FileUpTransfer id="futFile" onsuccess="futFile_onsuccess" onerror="futFile_onerror"/>
+      <FileDialog id="fdgFile" onclose="fdgFile_onclose"/>
+      <Dataset id="dsUpload" onrowsetchanged="dsUpload_onrowsetchanged">
+        <ColumnInfo>
+          <Column id="FileName" type="STRING" size="256"/>
+          <Column id="Path" type="STRING" size="256"/>
+          <Column id="FileSize" type="STRING" size="256"/>
+          <Column id="FileId" type="STRING" size="256"/>
+          <Column id="DivName" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsTest">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">11</Col>
+            <Col id="Column1">AA</Col>
+            <Col id="Column2">가나다</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">22</Col>
+            <Col id="Column1">BB</Col>
+            <Col id="Column2">가A나B</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.Edit00_00" propid="value" datasetid="dsSearch" columnid="srchCond1"/>
+    </Bind>
+  </Form>
+</FDL>

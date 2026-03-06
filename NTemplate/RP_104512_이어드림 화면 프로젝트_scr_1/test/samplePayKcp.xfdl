@@ -1,0 +1,721 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="samplePayKcp" width="1280" height="1730" titletext="결제를 위한 연동 샘플" onload="samplePayKcp_onload">
+    <Layouts>
+      <Layout height="1730" width="1280">
+        <GroupBox id="grb00" taborder="2" text="KCP결제" left="25" top="85" width="505" height="1625"/>
+        <Static id="sta00" taborder="0" text="결제연동을 위한 샘플" left="29" top="28" width="611" height="60"/>
+        <Button id="btnPayKcp" taborder="1" text="결제(KCP)" left="52" top="883" width="148" height="40" initvalueid="ivBtnAccessibilityButton" onclick="btnPayKcp_onclick"/>
+        <GroupBox id="grb00_00" taborder="3" text="kgINI결제" left="533" top="85" width="505" height="1625"/>
+        <Button id="btnPayKgini" taborder="4" text="결제(KGINI) - Open" left="564" top="883" width="148" height="40" initvalueid="ivBtnAccessibilityButton" onclick="btnPayKgini_onclick"/>
+        <Static id="sta01" taborder="5" text="주문번호(ordr_idxx)" left="76" top="580" width="150" height="30"/>
+        <Edit id="edtOrdr_idxx" taborder="6" left="243" top="576" width="255" height="36" value="TEST1234567890" text="TEST1234567890" cddcValue="K1000000"/>
+        <Static id="sta01_00" taborder="7" text="상품명(good_name)" left="76" top="150" width="150" height="30"/>
+        <Edit id="edtGood_name" taborder="8" left="243" top="146" width="255" height="36" value="운동화" text="운동화"/>
+        <Static id="sta01_00_00" taborder="9" text="상품금액(good_mny)" left="76" top="190" width="150" height="30"/>
+        <Edit id="edtGood_mny" taborder="10" left="243" top="186" width="255" height="36" value="1004" text="1004"/>
+        <Static id="sta01_00_00_00" taborder="11" text="주문자명(buyr_name)" left="76" top="280" width="150" height="30"/>
+        <Edit id="edtBuyr_name" taborder="12" left="243" top="276" width="255" height="36" value="홍길동" text="홍길동"/>
+        <Static id="sta01_00_00_00_00" taborder="13" text="전화번호(buyr_tel1)" left="76" top="320" width="150" height="30"/>
+        <Edit id="edtBuyr_tel1" taborder="14" left="243" top="316" width="255" height="36" value="02-0000-0000" text="02-0000-0000"/>
+        <Static id="sta01_00_00_00_01" taborder="15" text="휴대폰번호(buyr_tel2)" left="76" top="360" width="150" height="30"/>
+        <Edit id="edtBuyr_tel2" taborder="16" left="243" top="356" width="255" height="36" value="010-0000-0000" text="010-0000-0000"/>
+        <Static id="sta01_00_00_00_02" taborder="17" text="이메일(buyr_mail)" left="76" top="400" width="150" height="30"/>
+        <Edit id="edtBuyr_mail" taborder="18" left="243" top="396" width="255" height="36" value="test@test.co.kr" text="test@test.co.kr"/>
+        <ImageViewer id="img00_00" taborder="19" text="주문내역" left="50" top="110" width="286" height="34" cssclass="img_WF_SubTit02"/>
+        <ImageViewer id="img00_00_00" taborder="20" text="주문정보" left="50" top="240" width="286" height="34" cssclass="img_WF_SubTit02"/>
+        <TextArea id="txtResult" taborder="21" left="50" top="970" width="448" height="173"/>
+        <ImageViewer id="img00_00_00_00" taborder="22" text="서버로부터 받은 정보" left="50" top="540" width="286" height="34" cssclass="img_WF_SubTit02"/>
+        <Static id="sta01_00_00_00_03" taborder="23" text="가맹점ID(site_cd)" left="76" top="620" width="150" height="30"/>
+        <Edit id="edtSite_cd" taborder="24" left="243" top="616" width="255" height="36" value="T0000" text="T0000"/>
+        <Static id="sta01_00_00_00_00_00" taborder="25" text="가맹점명(site_name)" left="76" top="660" width="150" height="30"/>
+        <Edit id="edtSite_name" taborder="26" left="243" top="656" width="255" height="36" value="TEST SITE" text="TEST SITE"/>
+        <Static id="sta01_00_00_00_00_00_00" taborder="27" text="처리결과 :" left="56" top="930" width="150" height="30"/>
+        <Static id="sta01_01" taborder="28" text="주문번호(oid)" left="586" top="590" width="150" height="30" visible="false"/>
+        <Edit id="edtOid" taborder="29" left="753" top="586" width="255" height="36" text="INIpayTest" visible="false" value="INIpayTest"/>
+        <Static id="sta01_00_01" taborder="30" text="상품명(goodname)" left="586" top="150" width="150" height="30"/>
+        <Edit id="edtGoodname" taborder="31" left="753" top="146" width="255" height="36" value="테스트상품" text="테스트상품"/>
+        <Static id="sta01_00_00_01" taborder="32" text="상품금액(price)" left="586" top="190" width="150" height="30"/>
+        <Edit id="edtPrice" taborder="33" left="753" top="186" width="255" height="36" value="2000" text="2000"/>
+        <Static id="sta01_00_00_00_04" taborder="34" text="주문자명(buyername)" left="586" top="280" width="150" height="30"/>
+        <Edit id="edtBuyername" taborder="35" left="753" top="276" width="255" height="36" value="테스터" text="테스터"/>
+        <Static id="sta01_00_00_00_00_01" taborder="36" text="전화번호(buyr_tel1)" left="586" top="320" width="150" height="30" visible="false"/>
+        <Edit id="edtBuyr_tel1_00" taborder="37" left="753" top="316" width="255" height="36" value="02-0000-0000" text="02-0000-0000" visible="false"/>
+        <Static id="sta01_00_00_00_01_00" taborder="38" text="휴대폰번호(buyertel)" left="586" top="360" width="150" height="30"/>
+        <Edit id="edtBuyertel" taborder="39" left="753" top="356" width="255" height="36" value="01012345678" text="01012345678"/>
+        <Static id="sta01_00_00_00_02_00" taborder="40" text="이메일(buyeremail)" left="586" top="400" width="150" height="30"/>
+        <Edit id="edtBuyeremail" taborder="41" left="753" top="396" width="255" height="36" value="test@test.com" text="test@test.com"/>
+        <ImageViewer id="img00_00_00_01" taborder="42" text="주문정보" left="560" top="240" width="286" height="34" cssclass="img_WF_SubTit02"/>
+        <Static id="sta01_00_00_00_03_00" taborder="43" text="가맹점ID(mid)" left="586" top="630" width="150" height="30"/>
+        <Edit id="edtMid" taborder="44" left="753" top="626" width="255" height="36" text="INIpayTest" value="INIpayTest"/>
+        <ImageViewer id="img00_00_01" taborder="45" text="주문내역" left="560" top="110" width="286" height="34" cssclass="img_WF_SubTit02"/>
+        <Static id="sta01_00_00_00_00_00_00_00" taborder="46" text="처리결과 :" left="570" top="970" width="150" height="30"/>
+        <TextArea id="txtResult00" taborder="47" left="564" top="1010" width="448" height="133"/>
+        <ImageViewer id="img00_00_00_00_00_00" taborder="48" text="서버로부터 받은 정보" left="560" top="540" width="286" height="34" cssclass="img_WF_SubTit02"/>
+        <Static id="sta01_00_00_00_03_00_00" taborder="49" text="signKey" left="586" top="670" width="150" height="30"/>
+        <Edit id="edtSignKey" taborder="50" left="753" top="666" width="255" height="36" text="SU5JTElURV9UUklQTEVERVNfS0VZU1RS" value="SU5JTElURV9UUklQTEVERVNfS0VZU1RS"/>
+        <Static id="sta01_00_00_00_03_00_00_00" taborder="51" text="mKey" left="586" top="710" width="150" height="30"/>
+        <Edit id="edtMKey" taborder="52" left="753" top="706" width="255" height="36" text="3a9503069192f207491d4b19bd743fc249a761ed94246c8c42fed06c3cd15a33" value="3a9503069192f207491d4b19bd743fc249a761ed94246c8c42fed06c3cd15a33"/>
+        <Static id="sta01_00_00_00_03_00_00_00_00" taborder="53" text="timestamp" left="586" top="750" width="150" height="30"/>
+        <Edit id="edtTimestamp" taborder="54" left="753" top="746" width="255" height="36" text="1679631119369" value="1679631119369"/>
+        <Static id="sta01_00_00_00_03_00_00_00_00_00" taborder="55" text="orderNumber" left="586" top="790" width="150" height="30"/>
+        <Edit id="edtOrderNumber" taborder="56" left="753" top="786" width="255" height="36" text="INIpayTest_1679631119373" value="INIpayTest_1679631119373"/>
+        <Static id="sta01_00_00_00_03_00_00_00_00_00_00" taborder="57" text="signature" left="586" top="830" width="150" height="30"/>
+        <Edit id="edtSignature" taborder="58" left="753" top="826" width="255" height="36" text="5cec36266caf368be0cbe2f4340189fb9710046609c021446bc64bc5c81bed40" value="5cec36266caf368be0cbe2f4340189fb9710046609c021446bc64bc5c81bed40"/>
+        <Combo id="cboPay_method" taborder="59" text="신용카드" left="52" top="478" width="256" height="35" innerdataset="dsPayListKcp" codecolumn="code" datacolumn="text" index="0" value="100000000000"/>
+        <ImageViewer id="img00_00_00_00_01" taborder="60" text="결제수단" left="50" top="440" width="286" height="34" cssclass="img_WF_SubTit02"/>
+        <Button id="btnGetPayInfoKgini" taborder="61" text="서버에서정보가져오기" left="834" top="881" width="176" height="44" onclick="btn00_onclick"/>
+        <Button id="btnGetPayInfoKcp" taborder="62" text="서버에서정보가져오기" left="322" top="883" width="176" height="44" onclick="btn00_00_onclick"/>
+        <ImageViewer id="img00_00_00_00_01_00" taborder="63" text="결제수단" left="558" top="440" width="286" height="34" cssclass="img_WF_SubTit02"/>
+        <Combo id="cboGopaymethod" taborder="64" text="신용카드" left="560" top="478" width="256" height="35" innerdataset="dsPayListKgini" codecolumn="code" datacolumn="text" index="0" value="Card" onitemchanged="cboGopaymethod_onitemchanged"/>
+        <Static id="sta02" taborder="65" text="가맹점ID(siteCd)" left="76" top="1204" width="150" height="36"/>
+        <ImageViewer id="img00_00_02" taborder="66" text="주문취소정보" left="50" top="1160" width="286" height="34" cssclass="img_WF_SubTit02"/>
+        <ImageViewer id="img00_00_02_00" taborder="67" text="주문취소정보" left="570" top="1160" width="286" height="34" cssclass="img_WF_SubTit02"/>
+        <Edit id="edtCancelSite_cd" taborder="68" left="243" top="1204" width="255" height="36" value="T0000" text="T0000"/>
+        <Static id="sta02_00" taborder="69" text="지불수단코드(payMehtod)" left="586" top="1205" width="150" height="36"/>
+        <Static id="sta02_01" taborder="70" text="거래번호(tno)" left="76" top="1244" width="150" height="36"/>
+        <Edit id="edtCancelTno" taborder="71" left="243" top="1244" width="255" height="36" text="TEST SITE"/>
+        <Static id="sta02_01_00" taborder="72" text="거래방식(payMehtod)" left="76" top="1284" width="150" height="36"/>
+        <Edit id="edtCancelPayMethod" taborder="73" left="243" top="1284" width="255" height="36" value="STSC" text="STSC"/>
+        <Static id="sta02_01_00_00" taborder="74" text="설명(desc)" left="76" top="1324" width="150" height="36"/>
+        <Edit id="edtCancelDesc" taborder="75" left="243" top="1324" width="255" height="36" value="취소" text="취소"/>
+        <Combo id="cboGopaymethod00" taborder="76" text="신용카드" left="753" top="1206" width="256" height="35" innerdataset="dsPayListKgini" codecolumn="code" datacolumn="text" index="0" value="Card" onitemchanged="cboGopaymethod_onitemchanged"/>
+        <Static id="sta02_01_01" taborder="77" text="승인TID(tid)" left="586" top="1244" width="150" height="36"/>
+        <Edit id="edtCancelTid" taborder="78" left="753" top="1244" width="255" height="36" text="TEST SITE"/>
+        <Static id="sta02_01_00_01" taborder="79" text="시도별signKey(signKey)" left="586" top="1284" width="150" height="36"/>
+        <Edit id="edtCancelSignKey" taborder="80" left="753" top="1284" width="255" height="36" text="STSC"/>
+        <Static id="sta02_01_00_00_00" taborder="81" text="시도별 mid(mid)" left="586" top="1324" width="150" height="36"/>
+        <Edit id="edtCancelMid" taborder="82" left="753" top="1324" width="255" height="36" text="취소"/>
+        <Static id="sta02_01_00_00_00_00" taborder="83" text="clientIp" left="586" top="1364" width="150" height="36"/>
+        <Edit id="edtCancelCleintIp" taborder="84" left="753" top="1364" width="255" height="36" text="취소"/>
+        <Static id="sta02_01_00_00_00_00_00" taborder="85" text="취소요청 사유(msg)" left="586" top="1454" width="150" height="36"/>
+        <Edit id="edtCancelMsg" taborder="86" left="753" top="1454" width="255" height="36" value="취소" text="취소"/>
+        <Button id="btnPayCancelKcp" taborder="87" text="결제취소(KCP)" left="52" top="1500" width="148" height="40" initvalueid="ivBtnAccessibilityButton" onclick="btnPayCancelKcp_onclick"/>
+        <Button id="btnPayCancelKgini" taborder="88" text="결제취소(KGINI)" left="564" top="1500" width="148" height="40" initvalueid="ivBtnAccessibilityButton" onclick="btnPayCancelKgini_onclick"/>
+        <Static id="sta02_01_00_00_00_00_00_00" taborder="89" text="* 공백으로 넣을 경우 서버 IP를 java에서 파싱하여 넣도록 되어 있음" left="756" top="1400" width="250" height="46"/>
+        <Button id="btnPayKgini00" taborder="90" text="결제(KGINI) - Dialog" left="566" top="930" width="148" height="40" initvalueid="ivBtnAccessibilityButton" onclick="btnPayKgini00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	samplePayKcp.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.12.6
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.12.6     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.samplePayKcp_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+	// 실패한 경우
+	if(errcd<0)
+	{
+	}
+	
+	// 성공한 경우
+	if(svcid=="selectCancelKcp")  // KCP 경제취소
+	{
+		if(this.dsResult)
+		{
+			var sDsData = this.dsResult.saveXML();
+			this.txtResult.set_value(sDsData);
+		}
+	}
+	else if(svcid=="selectCancelKgini") // Kgini 결제취소
+	{
+		if(this.dsResult)
+		{
+			var sDsData = this.dsResult.saveXML();
+			this.txtResult00.set_value(sDsData);
+		}
+	}
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+	trace("===>this.fnPopupCallback : popup callback");
+	var sLog = "";
+	if(e.result)
+	{
+		var sData = e.data;
+		var objData = JSON.parse(sData);  // 데이터를 JSON으로 변경한 것
+		
+		sLog += "처리결과 : [성공]\n";
+		sLog += "data : ["+sData+"]";
+		
+		this.txtResult.set_value(sData);
+	}
+	else
+	{
+		var sData = e.data;
+		var objData = JSON.parse(sData);  // 데이터를 JSON으로 변경한 것
+		
+		if(objData.res_cd=="3001")
+		{  // 유저가 팝업을 강제 종료한 경우
+			sLog += "처리결과 : [에러(유저강제종료)]\n";
+			sLog += "data : ["+sData+"]";
+			
+			this.txtResult.set_value(sLog);			
+		}
+		else
+		{
+			sLog += "처리결과 : [에러]\n";
+			sLog += "data : ["+sData+"]";
+			
+			this.txtResult.set_value(sLog);			
+		}
+		
+	}
+};
+
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallbackKgini = function(e, sender){
+	trace("===>this.fnPopupCallbackKgini : popup callback");
+	var sLog = "";
+	if(e.result)
+	{
+		var sData = e.data;
+		var objData = JSON.parse(sData);  // 데이터를 JSON으로 변경한 것
+		
+		sLog += "처리결과 : [성공]\n";
+		sLog += "data : ["+sData+"]";
+		
+		this.txtResult00.set_value(sData);
+	}
+	else
+	{
+		var sData = e.data;
+		var objData = JSON.parse(sData);  // 데이터를 JSON으로 변경한 것
+		
+		if(objData.res_cd=="1000")
+		{  // 유저가 팝업을 강제 종료한 경우
+			sLog += "처리결과 : [에러(유저강제종료)]\n";
+			sLog += "data : ["+sData+"]";
+			
+			this.txtResult00.set_value(sLog);			
+		}
+		else
+		{
+			sLog += "처리결과 : [에러]\n";
+			sLog += "data : ["+sData+"]";
+			
+			this.txtResult00.set_value(sLog);			
+		}
+		
+	}
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.btnPayKcp_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objParam = {  objForm      : this
+	               , popupcallback : this.fnPopupCallback
+	               ,  order_info   : {
+				                          ordr_idxx  : this.edtOrdr_idxx.value  // 주문번호
+				                       ,  good_name  : this.edtGood_name.value  // 상품명
+				                       ,  good_mny   : this.edtGood_mny.value   // 결제금액
+				                       ,  buyr_name  : this.edtBuyr_name.value  // 주문자명
+				                       ,  buyr_tel1  : this.edtBuyr_tel1.value  // 주문자 연락처1
+				                       ,  buyr_tel2  : this.edtBuyr_tel2.value  // 휴대폰번호
+				                       ,  buyr_mail  : this.edtBuyr_mail.value  // 주문자 E-mail
+									   
+				                       ,  site_cd    : this.edtSite_cd.value    // 가맹점CD
+				                       ,  site_name  : this.edtSite_name.value  // 가맹점명
+									   
+				                       ,  payMethod  : this.cboPay_method.value  // 결제수단
+				                     }
+	               };
+	this.smfExecPayKCP(objParam);
+};
+
+
+this.btnPayKgini_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objParam = {  objForm      : this
+	               , popupcallback : this.fnPopupCallbackKgini
+	               ,  order_info   : {
+				                          oid         : this.edtOid.value          // 주문번호
+				                       ,  goodname    : this.edtGoodname.value     // 상품명
+				                       ,  price       : this.edtPrice.value        // 결제금액
+				                       ,  buyername   : this.edtBuyername.value    // 주문자명
+				                       ,  buyertel    : this.edtBuyertel.value     // 휴대폰번호
+				                       ,  buyr_mail   : this.edtBuyeremail.value   // 주문자 E-mail
+									   ,  gopaymethod : this.cboGopaymethod.value  // 결제수단
+									   
+									   // 아래의 값은 서비스를 통해 받은 값임
+				                       ,  mid         : this.edtMid.value          
+				                       ,  signKey     : this.edtSignKey.value          
+				                       ,  mKey        : this.edtMKey.value         
+				                       ,  timestamp   : this.edtTimestamp.value          
+				                       ,  orderNumber : this.edtOrderNumber.value          
+				                       ,  signature   : this.edtSignature.value          
+						   
+				                     }
+	               };
+	//this.smfExecPayKGINI(objParam);
+	this.smfExecPayKGINIOpen(objParam);
+	
+};
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfSearchService("selectKGINI")
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			this.edtMKey.set_value       (this.dsInicisStlmInfo.getColumn(0,"mKey"        ));
+			this.edtOrderNumber.set_value(this.dsInicisStlmInfo.getColumn(0,"orderNumber" ));
+			this.edtSignature.set_value  (this.dsInicisStlmInfo.getColumn(0,"signature"   ));
+			this.edtPrice.set_value      (this.dsInicisStlmInfo.getColumn(0,"price"       ));
+			this.edtMid.set_value        (this.dsInicisStlmInfo.getColumn(0,"mid"         ));
+			this.edtSignKey.set_value    (this.dsInicisStlmInfo.getColumn(0,"signKey"     ));
+			this.edtTimestamp.set_value  (this.dsInicisStlmInfo.getColumn(0,"timestamp"   ));
+		})
+	
+	
+	
+};
+
+
+
+this.btn00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfSearchService("selectKCP")
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+
+			this.edtGoodname.set_value  (this.dsKcpStlmInfo.getColumn(0,"goodName" ));
+			this.edtGood_mny.set_value  (this.dsKcpStlmInfo.getColumn(0,"goodMny"  ));
+			
+			this.edtOrdr_idxx.set_value (this.dsKcpStlmInfo.getColumn(0,"ordrIdxx" ));
+			this.edtSite_cd.set_value   (this.dsKcpStlmInfo.getColumn(0,"siteCd"   ));
+			this.edtSite_name.set_value (this.dsKcpStlmInfo.getColumn(0,"siteNm"   ));
+		})
+};
+
+this.btnPayCancelKcp_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objParam = {  objForm      : this
+	               , popupcallback : this.fnTransCallback
+	               ,  cancel_info   : {
+				                          siteCd     : this.edtCancelSite_cd.value  // 가맹점ID (default : T0000)
+				                       ,  tno        : this.edtCancelTno.value  // 거래번호 (default : 공백)
+				                       ,  payMehtod  : this.edtCancelPayMethod.value  // 거래방식 (default : STSC)
+				                       ,  desc       : this.edtCancelDesc.value  // 설명 (default : 취소)
+				                     }
+	               };
+	this.smfExecPayCancelKCP(objParam);	
+};
+
+this.btnPayCancelKgini_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objParam = {  objForm      : this
+	               , callback : this.fnTransCallback
+	               , cancel_info   : {
+				                          payMethod : this.cboGopaymethod00.value   // 지불수단 코드
+				                       ,  tid       : this.edtCancelTid.value       // 결제 후 리턴되는 승인TID(결제후 리턴받는 tid값)
+				                       ,  signKey   : this.edtCancelSignKey.value   // 각 시도별 signKey(java로직에서 로컬,개발,테스트에서는 테스트용 값이 자동으로 들어가도록 설정 되있음)
+				                       ,  mid       : this.edtCancelMid.value       // 각 시도별 mid(java로직에서 로컬,개발,테스트에서는 테스트용 값이 자동으로 들어가도록 설정 되있음)
+				                       ,  clientIp  : this.edtCancelCleintIp.value  // 취소요청을하는 서버 IP(공백으로 넣을 경우 서버 IP를 java에서 파싱하여 넣도록 되어 있음)
+				                       ,  msg       : this.edtCancelMsg.value       // 취소요청 사유(default : 취소)
+						   
+				                     }
+	               };
+	this.smfExecPayCancelKGINI(objParam);
+
+};
+
+
+//====================이 아래 부분은 공통함수로 이동예정 =======
+
+/**
+ * @class 결제취소연동(KCP)을 실행한다.	
+ * @example
+ */
+this.smfExecPayCancelKCP = function(objParam)
+{
+	var objForm = objParam.objForm;
+	var oServiceDs = objForm["dsService"];
+	
+	// 서비스정의 데이터셋이 있는 지 확인 (없으면 에러가 남.)
+	if(!oServiceDs)
+	{
+		oServiceDs = new Dataset();
+		objForm.addChild("dsService",oServiceDs);
+		// 컬럼도 만들어야 하는 지 확인 필요
+		oServiceDs.addColumn("id"               ,"string");
+		oServiceDs.addColumn("url"              ,"string");
+		oServiceDs.addColumn("inDatasets"       ,"string");
+		oServiceDs.addColumn("outDatasets"      ,"string");
+		oServiceDs.addColumn("bindingControls"  ,"string");
+		oServiceDs.addColumn("asynctp"          ,"string");
+	}
+	
+	// input 데이터셋 생성(있으면 재활용)
+	var sDsIn = "dsInPayCancelKcp";
+	var oInDs =  objForm[sDsIn];
+
+	if(!oInDs)
+	{
+		oInDs = new Dataset();
+		objForm.addChild(sDsIn,oInDs);
+		// 컬럼생성
+		
+		oInDs.addColumn("siteCd"   ,"string"); // 가맹점ID (default : T0000)
+		oInDs.addColumn("tno"      ,"string"); // 거래번호 (default : 공백)
+		oInDs.addColumn("payMehtod","string"); // 거래방식 (default : STSC)
+		oInDs.addColumn("desc"     ,"string"); // 설명 (default : 취소)
+	}
+	
+	// inputData clear 및 row 생성
+	oInDs.clearData();
+	oInDs.addRow();
+
+   var sSiteCd    = this.smfNvl(objParam.cancel_info.siteCd   ,"");
+   var sTno       = this.smfNvl(objParam.cancel_info.tno      ,"");
+   var sPayMehtod = this.smfNvl(objParam.cancel_info.payMehtod,"");
+   var sDesc      = this.smfNvl(objParam.cancel_info.desc     ,"");
+
+
+	oInDs.setColumn(0,"siteCd"   ,sSiteCd   );
+	oInDs.setColumn(0,"tno"      ,sTno      );
+	oInDs.setColumn(0,"payMehtod",sPayMehtod);
+	oInDs.setColumn(0,"desc"     ,sDesc     );
+	
+	var sServiceId = "selectCancelKcp";
+	this.smfDynService(sServiceId,{
+		id: sServiceId, 
+		url: "cmc_fcm_pg_kcp_cancle.do",
+		inDatasets: sDsIn+"="+sDsIn,
+		outDatasets: "dsResult=result"
+	})
+	.run()
+	.callback(function(callbackParams){
+		if(callbackParams.errors) return;
+		// 저장이 완료되었습니다.
+		if(objParam.callback)
+		{
+			objParam.callback.call(objForm,sServiceId,0,"SUCC");
+		}
+	});
+}	
+
+//this.fnTransCallback = function(svcid,errcd,errmsg){
+
+
+/**
+ * @class 결제취소연동(KCP)을 실행한다.	
+ * @example
+ */
+this.smfExecPayCancelKGINI = function(objParam)
+{
+	var objForm = objParam.objForm;
+	var oServiceDs = objForm["dsService"];
+	
+	// 서비스정의 데이터셋이 있는 지 확인 (없으면 에러가 남.)
+	if(!oServiceDs)
+	{
+		oServiceDs = new Dataset();
+		objForm.addChild("dsService",oServiceDs);
+		// 컬럼도 만들어야 하는 지 확인 필요
+		oServiceDs.addColumn("id"               ,"string");
+		oServiceDs.addColumn("url"              ,"string");
+		oServiceDs.addColumn("inDatasets"       ,"string");
+		oServiceDs.addColumn("outDatasets"      ,"string");
+		oServiceDs.addColumn("bindingControls"  ,"string");
+		oServiceDs.addColumn("asynctp"          ,"string");
+	}
+	
+	// input 데이터셋 생성(있으면 재활용)
+	var sDsIn = "dsInPayCancelKgini";
+	var oInDs =  objForm[sDsIn];
+
+	if(!oInDs)
+	{
+		oInDs = new Dataset();
+		objForm.addChild(sDsIn,oInDs);
+		// 컬럼생성
+		
+		oInDs.addColumn("payMethod"   ,"string"); // 지불수단 코드
+		oInDs.addColumn("tid"         ,"string"); // 결제 후 리턴되는 승인TID(결제후 리턴받는 tid값)
+		oInDs.addColumn("signKey"     ,"string"); // 각 시도별 signKey(java로직에서 로컬,개발,테스트에서는 테스트용 값이 자동으로 들어가도록 설정 되있음)
+		oInDs.addColumn("mid"         ,"string"); // 각 시도별 mid(java로직에서 로컬,개발,테스트에서는 테스트용 값이 자동으로 들어가도록 설정 되있음)
+		oInDs.addColumn("clientIp"    ,"string"); // 취소요청을하는 서버 IP(공백으로 넣을 경우 서버 IP를 java에서 파싱하여 넣도록 되어 있음)
+		oInDs.addColumn("msg"         ,"string"); // 취소요청 사유(default : 취소)
+		
+		
+	}
+	
+	// inputData clear 및 row 생성
+	oInDs.clearData();
+	oInDs.addRow();
+
+   var sPayMethod = this.smfNvl(objParam.cancel_info.payMethod,"");
+   var sTid       = this.smfNvl(objParam.cancel_info.tid      ,"");
+   var sSignKey   = this.smfNvl(objParam.cancel_info.signKey  ,"");
+   var sMid       = this.smfNvl(objParam.cancel_info.mid      ,"");
+   var sClientIp  = this.smfNvl(objParam.cancel_info.clientIp ,"");
+   var sMsg       = this.smfNvl(objParam.cancel_info.msg      ,"");
+
+
+	oInDs.setColumn(0,"payMethod" ,sPayMethod);
+	oInDs.setColumn(0,"tid"       ,sTid      );
+	oInDs.setColumn(0,"signKey"   ,sSignKey  );
+	oInDs.setColumn(0,"mid"       ,sMid      );
+	oInDs.setColumn(0,"clientIp"  ,sClientIp );
+	oInDs.setColumn(0,"msg"       ,sMsg      );
+
+	
+	var sServiceId = "selectCancelKgini";
+	this.smfDynService(sServiceId,{
+		id: sServiceId, 
+		url: "cmc_fcm_pg_kg_cancle.do",
+		inDatasets: sDsIn+"="+sDsIn,
+		outDatasets: "dsResult=result"
+	})
+	.run()
+	.callback(function(callbackParams){
+		if(callbackParams.errors) return;
+		// 저장이 완료되었습니다.
+		if(objParam.callback)
+		{
+			objParam.callback.call(objForm,sServiceId,0,"SUCC");
+		}
+	});
+	
+	
+}	
+
+this.smfExecPayKGINIOpen1 = function(objParam)
+{
+	var objFuncCallback   = objParam.popupcallback;
+	var objForm = objParam.objForm;
+	// 팝업을 동작에 필요한 파라메터 지정
+	var popupParams = {
+		callback: objFuncCallback, // 콜백함수 지정
+		sender: objForm, // sender 지정
+		titlebar:false,  // 타이틀바를 표시하지 않는다.
+		// 팝업 전달 파라메터 지정
+		params: {
+			// 처리타입 지정(필수)
+			procType : "none",  // "none","search","insert","update","delete"
+		    order_info : objParam.order_info   //  주문정보
+		}
+	};
+
+	// 모달팝업 실행
+	//this.smfDialog("_auto", "comm::comp_pay_kgini.xfdl", popupParams);
+
+	// 모달팝업 실행
+	this.smfOpen("_auto", "comm::comp_pay_kgini.xfdl", popupParams);
+	
+}
+
+this.btnPayKgini00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objParam = {  objForm      : this
+	               , popupcallback : this.fnPopupCallbackKgini
+	               ,  order_info   : {
+				                          oid         : this.edtOid.value          // 주문번호
+				                       ,  goodname    : this.edtGoodname.value     // 상품명
+				                       ,  price       : this.edtPrice.value        // 결제금액
+				                       ,  buyername   : this.edtBuyername.value    // 주문자명
+				                       ,  buyertel    : this.edtBuyertel.value     // 휴대폰번호
+				                       ,  buyr_mail   : this.edtBuyeremail.value   // 주문자 E-mail
+									   ,  gopaymethod : this.cboGopaymethod.value  // 결제수단
+									   
+									   // 아래의 값은 서비스를 통해 받은 값임
+				                       ,  mid         : this.edtMid.value          
+				                       ,  signKey     : this.edtSignKey.value          
+				                       ,  mKey        : this.edtMKey.value         
+				                       ,  timestamp   : this.edtTimestamp.value          
+				                       ,  orderNumber : this.edtOrderNumber.value          
+				                       ,  signature   : this.edtSignature.value          
+						   
+				                     }
+	               };
+	this.smfExecPayKGINI(objParam);
+	//this.smfExecPayKGINIOpen(objParam);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsPayListKgini">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="text" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="text">신용카드</Col>
+            <Col id="code">Card</Col>
+          </Row>
+          <Row>
+            <Col id="text">계좌이체</Col>
+            <Col id="code">Directbank</Col>
+          </Row>
+          <Row>
+            <Col id="text">무통장입금</Col>
+            <Col id="code">vbank</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectKCP</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsKcpStlmInfo=dsKcpStlmInfo</Col>
+            <Col id="url">ore_oew_ar21_m01_001.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+          <Row>
+            <Col id="id">selectKGINI</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsInicisStlmInfo=dsInicisStlmInfo</Col>
+            <Col id="url">ore_oew_ar01_m01_001.do</Col>
+            <Col id="asynctp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsInicisStlmInfo">
+        <ColumnInfo>
+          <Column id="mid" type="STRING" size="256"/>
+          <Column id="signKey" type="STRING" size="256"/>
+          <Column id="mKey" type="STRING" size="256"/>
+          <Column id="timestamp" type="STRING" size="256"/>
+          <Column id="orderNumber" type="STRING" size="256"/>
+          <Column id="price" type="STRING" size="256"/>
+          <Column id="signature" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPayListKcp">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="text" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="text">신용카드</Col>
+            <Col id="code">100000000000</Col>
+          </Row>
+          <Row>
+            <Col id="text">계좌이체</Col>
+            <Col id="code">010000000000</Col>
+          </Row>
+          <Row>
+            <Col id="text">가상계좌</Col>
+            <Col id="code">001000000000</Col>
+          </Row>
+          <Row>
+            <Col id="text">포인트</Col>
+            <Col id="code">000100000000</Col>
+          </Row>
+          <Row>
+            <Col id="text">휴대폰</Col>
+            <Col id="code">000010000000</Col>
+          </Row>
+          <Row>
+            <Col id="text">상품권</Col>
+            <Col id="code">000000001000</Col>
+          </Row>
+          <Row>
+            <Col id="text">신용카드/계좌이체/가상계좌</Col>
+            <Col id="code">111000000000</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256" description="접속시도코드"/>
+          <Column id="appoExamId" type="STRING" size="256" description="KCP_시험ID"/>
+          <Column id="ocptyCd" type="STRING" size="256" description="KCP_직류코드"/>
+          <Column id="jbgdCd" type="STRING" size="256" description="KCP_직급코드"/>
+          <Column id="aplemAmt" type="STRING" size="256" description="INICIS_공립응시료"/>
+          <Column id="privAplemAmt" type="STRING" size="256" description="INICIS_사립응시료"/>
+          <Column id="prapShlSprtMthCd" type="STRING" size="256" description="INICIS_공사립학교지원방법코드"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cddcCd">K100000001</Col>
+            <Col id="appoExamId">2022CY022</Col>
+            <Col id="ocptyCd">168</Col>
+            <Col id="jbgdCd">21350</Col>
+            <Col id="aplemAmt">1100</Col>
+            <Col id="privAplemAmt">1100</Col>
+            <Col id="prapShlSprtMthCd">1</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsKcpStlmInfo" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="ordrIdxx" type="STRING" size="256" description="주문번호"/>
+          <Column id="goodMny" type="STRING" size="256" description="결제금액"/>
+          <Column id="goodName" type="STRING" size="256" description="상품명"/>
+          <Column id="siteCd" type="STRING" size="256" description="가맹점CD"/>
+          <Column id="siteNm" type="STRING" size="256" description="가맹점명"/>
+          <Column id="usePayMethod" type="STRING" size="256" description="결제수단"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsResult"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="edtCancelSite_cd" propid="value" datasetid="dsCancelInputKcp" columnid="siteCd"/>
+      <BindItem id="item1" compid="edtCancelTno" propid="value" datasetid="dsCancelInputKcp" columnid="tno"/>
+      <BindItem id="item2" compid="edtCancelPayMethod" propid="value" datasetid="dsCancelInputKcp" columnid="payMehtod"/>
+      <BindItem id="item3" compid="edtCancelDesc" propid="value" datasetid="dsCancelInputKcp" columnid="desc"/>
+      <BindItem id="item4" compid="cboGopaymethod00" propid="value" datasetid="dsCancelInputKgini" columnid="payMethod"/>
+      <BindItem id="item5" compid="edtCancelTid" propid="value" datasetid="dsCancelInputKgini" columnid="tid"/>
+      <BindItem id="item6" compid="edtCancelSignKey" propid="value" datasetid="dsCancelInputKgini" columnid="signKey"/>
+      <BindItem id="item7" compid="edtCancelMid" propid="value" datasetid="dsCancelInputKgini" columnid="mid"/>
+      <BindItem id="item8" compid="edtCancelCleintIp" propid="value" datasetid="dsCancelInputKgini" columnid="clientIp"/>
+      <BindItem id="item9" compid="edtCancelMsg" propid="value" datasetid="dsCancelInputKgini" columnid="msg"/>
+    </Bind>
+  </Form>
+</FDL>

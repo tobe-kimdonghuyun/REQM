@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frame_privacy" width="1306" height="650" titletext="교육설문-개인정보처리방침" onload="fnOnload" cssclass="frm_Pop_bgTrsprt">
+    <Layouts>
+      <Layout height="650" width="1306" screenid="ScreenDeskTop">
+        <Button id="btnClose" taborder="0" top="0" width="48" height="48" cssclass="btn_Pop_close_W" initvalueid="ivBtnAccessibilityButton" right="-214" visible="false" enable="false" onclick="btnClose_onclick" accessibilitylabel="팝업 닫기"/>
+        <Div id="div03" taborder="1" text="div03" left="0" cssclass="div_WF_SurvPopLine" boxShadow="10px 10px 30px 0px rgba(20,20,20,0.35)" initvalueid="ivDivAccessibilityOff" width="1306" height="650" top="0">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="개인정보처리방침" left="40" top="40" height="54" cssclass="img_WF_SubTit01" width="301" initvalueid="ivTitleAccessibilityOn"/>
+              <Div id="div01" taborder="1" left="40" top="imgTitle:20" right="40" text="div01" url="frame::eds/frame_policy.xfdl" bottom="40"/>
+              <Button id="btnClose" taborder="2" top="20" width="36" height="36" cssclass="btn_WF_SurvPopClose" initvalueid="ivBtnAccessibilityButton" onclick="btnClose_onclick" right="20" text="" accessibilitylabel="팝업 닫기"/>
+              <Static id="sta01" taborder="3" left="0" top="0" height="40" cssclass="sta_WF_GDSize" text="40" visible="false" initvalueid="ivStcAccessibilityOff" width="380"/>
+              <Static id="sta02" taborder="4" left="0" top="40" height="329" cssclass="sta_WF_GDSize" text="40" visible="false" initvalueid="ivStcAccessibilityOff" width="40"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="sta01" height="30" left="0" top="0" right="0" text="40"/>
+              <Static id="sta02" width="30" left="0" top="30" height="329" text="30"/>
+              <Button id="btnClose" width="56" top="40" height="56" right="-206" visible="false"/>
+              <Div id="div01" left="30" top="imgTitle:20" formscrollbarsize="1" bottom="30" right="30"/>
+              <ImageViewer id="imgTitle" left="30" top="30" height="60" right="30"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="640" height="720" mobileorientation="portrait" type="default">
+        <Div id="div03" left="20" boxShadow="none" formscrollbartype="none none" text="div03" cssclass="div_Pop_SurvBox_C" right="20" top="60" taborder="1" bottom="20"/>
+        <Button id="btnClose" enable="true" visible="true" cssclass="btn_Pop_close_W_M" right="20" top="0" width="48" height="48" taborder="0"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Bind>
+      <BindItem id="item0" compid="div03.form.edtTitle03" propid="value" datasetid="dsSearch" columnid="shlNm"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    교육설문 > 개인정보처리방침 팝업
+*  @FileName 	frame_privacy.xfdl
+*  @Creator 	Kangchaeyoon
+*  @CreateDate 	2023.03.10
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.03.10     	Kangchaeyoon        최초 생성
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_ptptKndCd;
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitPopup(obj);
+	this.pv_params = this.smfGetPopupParams();
+	this.fv_ptptKndCd = this.pv_params.surveyType;
+	this.fvWidth = this.pv_params.widthSize;
+	this.fvHeight = this.pv_params.heightSize;
+	
+	// popup form width, height 세팅
+	if(!this.smfIsMobile()){	
+		this.div03.set_width(this.fvWidth);
+		this.div03.set_height(this.fvHeight);
+		this.div03.form.div01.set_height(this.fvHeight - 197);
+	}else{
+		this.div03.set_height(this.fvHeight - 111);
+		this.div03.form.div01.set_width(this.fvWidth - 115);
+		this.div03.form.div01.set_height(this.fvHeight - 311);
+	}
+	
+	
+// 	switch(this.fv_ptptKndCd) {
+// 		case '1' : this.div03.form.div01.set_url("frame::eds/frame_privacyList1.xfdl");	// 학폭설문일 때
+// 		break;
+// 		case '2' : this.div03.form.div01.set_url("frame::eds/frame_privacyList2.xfdl");	// 학생정서일 때
+// 		break;
+// 		case '4' : this.div03.form.div01.set_url("frame::eds/frame_privacyList4.xfdl");	// 특수설문일 때
+// 		break;
+// 		default: this.div03.form.div01.set_url("frame::eds/frame_privacyList.xfdl");
+// 	}
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description '닫기' 버튼 클릭 시 
+ */
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(false);
+};]]></Script>
+  </Form>
+</FDL>

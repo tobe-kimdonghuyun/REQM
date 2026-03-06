@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameLogin" width="480" height="768" cssclass="Login" background="#F2F3FF" onload="frameLogin_onload" titletext="로그인프레임">
+    <Layouts>
+      <Layout height="768" mobileorientation="portrait" width="480">
+        <Static id="staVersion" taborder="5" left="7" top="4" width="102" height="35" visible="false"/>
+        <Edit id="edtId" taborder="1" left="30" top="220" height="60" onkeyup="edtKeyup" right="30" autoselect="true" cssclass="edt_LOGIN_Id"/>
+        <Edit id="edtPw" taborder="2" left="30" top="290" height="60" cssclass="edt_LOGIN_Pw" onkeyup="edtKeyup" password="true" right="30" autoselect="true"/>
+        <CheckBox id="chkSaveId" taborder="3" text="자동로그인" height="30" top="370" onclick="Div01_CheckBox03_onclick" cssclass="chk_LOGIN_SaveId" right="30" left="30"/>
+        <Button id="btnLogin" taborder="4" text="로그인" left="0" height="80" cssclass="btn_LOGIN" onclick="btnLogin_onclick" right="0" bottom="0"/>
+        <Static id="sta00" taborder="5" left="30" top="75" height="70" cssclass="sta_LOGIN_Logo" text="" right="30"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  Mobile 프로젝트
+*  @FileName 	frmLogin.xfdl 
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2023/10/30
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2023/10/30			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ this.objApp = nexacro.getApplication();
+ /************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnLogin = function()
+{
+	this.objApp.gvBase.divMenu.form.fnsetDsBtnMenu();
+	this.parent.parent.parent.form.divMain.set_url("frame::frmMainPage.xfdl");
+	this.objApp.gvBase.fnAction("LOGIN", true);
+}
+ /************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.btnLogin_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnLogin();
+};
+
+this.edtKeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if( e.keycode == 13){
+		this.fnLogin();
+	}
+}]]></Script>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="EMP_NO" type="STRING" size="256"/>
+          <Column id="USER_PASSWORD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsLoginResult"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="edtId" propid="value" datasetid="dsCond" columnid="EMP_NO"/>
+      <BindItem id="item1" compid="edtPw" propid="value" datasetid="dsCond" columnid="USER_PASSWORD"/>
+    </Bind>
+  </Form>
+</FDL>

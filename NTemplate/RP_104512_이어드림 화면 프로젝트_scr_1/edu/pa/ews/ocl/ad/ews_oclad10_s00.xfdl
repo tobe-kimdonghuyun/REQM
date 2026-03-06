@@ -1,0 +1,573 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ews_oclad10_s00" width="1200" height="705" titletext="일정 등록/수정" onload="fnOnload">
+    <Layouts>
+      <Layout height="705" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="일정 관리" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="137" initvalueid="ivTitleAccessibilityOn" accessibilitylabel="일정 관리"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div00" taborder="1" left="0" top="144" height="546" right="0" text="" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="sta00_00_02" taborder="5" left="0" top="42" height="43" cssclass="sta_WF_Input02" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta00" taborder="0" left="0" top="0" height="43" cssclass="sta_WF_Input02Top" right="0" initvalueid="ivStcAccessibilityOff" onclick="div00_sta00_onclick"/>
+              <Static id="sta00_00_00" taborder="8" left="0" top="84" height="403" cssclass="sta_WF_Input02" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="sta00_01" taborder="1" left="0" top="0" height="43" cssclass="sta_WF_Input01Top" initvalueid="ivStcAccessibilityOn" width="190" text="날짜" accessibilitylabel="날짜"/>
+              <Edit id="edtFxTitlNm" taborder="7" left="200" top="48" width="970" height="30" initvalueid="ivEdtNormal" text="2022-11-24" accessibilitylabel="제목 입력칸"/>
+              <Static id="sta00_00_01_00" taborder="6" left="0" top="42" height="43" cssclass="sta_WF_Input01" initvalueid="ivStcAccessibilityOn" width="190" text="제목" accessibilitylabel="제목"/>
+              <Static id="sta00_00_00_03" taborder="9" left="0" top="84" height="403" cssclass="sta_WF_Input01" initvalueid="ivStcAccessibilityOn" width="190" text="내용" accessibilitylabel="내용"/>
+              <TextArea id="txtNtcCn" taborder="10" left="200" top="89" height="389" initvalueid="ivTxtNormal" right="10" readonly="false" accessibilitylabel="내용 입력칸"/>
+              <Calendar id="calBgngYmd" taborder="2" left="200" top="6" width="118" height="30" initvalueid="ivCalReadOnly" readonly="false" dateformat="yyyy.MM.dd" editformat="yyyy.MM.dd" accessibilitylabel="시작일 입력"/>
+              <Static id="sta01_00_00_00" taborder="3" text="~" left="324" top="10" width="9" height="20" cssclass="sta_WF_Black14" initvalueid="ivStcAccessibilityOn" textAlign="center"/>
+              <Calendar id="calEndYmd" taborder="4" left="340" top="6" width="118" height="30" initvalueid="ivCalReadOnly" readonly="false" dateformat="yyyy.MM.dd" editformat="yyyy.MM.dd" accessibilitylabel="종료일 입력"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnSave" taborder="2" text="저장" top="662" height="40" width="120" cssclass="btn_WF_Action" right="130" onclick="btnSave_onclick" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="저장"/>
+        <Button id="btnList" taborder="3" text="목록" top="662" height="40" width="120" cssclass="btn_WF_Action" right="0" onclick="btnNtcList_onclick" initvalueid="ivBtnAccessibilityLink" accessibilitylabel="목록"/>
+        <Static id="Static99_00_00_00_00" taborder="4" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01" taborder="5" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_00_00_00" taborder="6" left="0" top="632" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  
+*  @MenuPath    교육비 원클릭 > 일정 등록/수정
+*  @FileName 	ews_oclad10_s00.xfdl 
+*  @Creator 	류찬욱
+*  @CreateDate 	2023.04.06
+*  @Desction    일정 등록/수정
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2023.04.06            류찬욱                   최초 생성 
+*******************************************************************************
+*/
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form, e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	var pv_params = this.smfGetFormParams();
+	
+	if (pv_params.procType == 'update'){
+		this.dsMain.loadXML(pv_params.dataset);
+		this.fnSearchList();
+	}else{
+		this.dsMain.addRow();
+		
+		this.div00.form.calBgngYmd.set_value(this.smfToday());
+		this.div00.form.calEndYmd.set_value(this.smfToday());
+	}
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function( svcid, errcd, errmsg ){
+	if( errcd == -1 ) return;
+};
+
+/**
+ * 메세지 콜백함수
+ * @param : N/A
+ * @return : N/A
+ */
+this.fnMessageCallback = function(){
+	this.btnList.click()
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+
+/**
+ * 저장서비스
+ * @param : N/A
+ * @param : N/A
+ */
+this.fnSave = function()
+{
+	// 서비스 객체 생성
+	this.smfSaveService("save")
+		// (권장) 데이터 존재 필수
+		.requireExistsData(this.dsMain)
+		// 데이터 변경 필수
+		.requireModifredData(this.dsMain)
+		// 데이터 검증
+		.validateForm(this.div00)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors){
+				this.smfAlert('PA066', ['저장 '] );
+				return;
+			}
+			
+			this.smfAlert('CM002', [], this.fnMessageCallback); // 저장이 완료되었습니다.
+			this.fnSearchList();
+			
+		});
+};
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * 저장 버튼 클릭 시
+ * @param  : obj			- [object]Button
+ * @param  : e				- [string]ClickEventInfo
+ * @return : N/A
+ */
+this.btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//var sHtml = this.div00.form.divWebEditor.form.fnGetHtml();
+	//this.dsMain.setColumn(0, 'popupCn', sHtml);
+	//this.dsMain.setColumn(0, 'mnrId', this.smfGetSessionValue("mnrId"));
+	this.fnSave();
+};
+
+/**
+ * 목록 버튼 클릭 시
+ * @param  : obj			- [object]Button
+ * @param  : e				- [string]ClickEventInfo
+ * @return : N/A
+ */
+this.btnNtcList_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var param = {
+		};
+		 
+	this.smfSetWorkPage("pa_ews_ocl_ad::ews_oclad10_m00.xfdl", param, false);
+};
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsService">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256"/>
+          <Column id="outDatasets" type="STRING" size="256"/>
+          <Column id="asynctp" type="STRING" size="256"/>
+          <Column id="callback" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">save</Col>
+            <Col id="inDatasets">dsMain=dsMain</Col>
+            <Col id="outDatasets"/>
+            <Col id="url">/ews_ocl_ad10_002.do</Col>
+            <Col id="asynctp"/>
+            <Col id="callback">fnTransCallback</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsHr">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="data" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">00</Col>
+            <Col id="data">00</Col>
+          </Row>
+          <Row>
+            <Col id="code">01</Col>
+            <Col id="data">01</Col>
+          </Row>
+          <Row>
+            <Col id="code">02</Col>
+            <Col id="data">02</Col>
+          </Row>
+          <Row>
+            <Col id="code">03</Col>
+            <Col id="data">03</Col>
+          </Row>
+          <Row>
+            <Col id="code">04</Col>
+            <Col id="data">04</Col>
+          </Row>
+          <Row>
+            <Col id="code">05</Col>
+            <Col id="data">05</Col>
+          </Row>
+          <Row>
+            <Col id="code">06</Col>
+            <Col id="data">06</Col>
+          </Row>
+          <Row>
+            <Col id="code">07</Col>
+            <Col id="data">07</Col>
+          </Row>
+          <Row>
+            <Col id="code">08</Col>
+            <Col id="data">08</Col>
+          </Row>
+          <Row>
+            <Col id="code">09</Col>
+            <Col id="data">09</Col>
+          </Row>
+          <Row>
+            <Col id="code">10</Col>
+            <Col id="data">10</Col>
+          </Row>
+          <Row>
+            <Col id="code">11</Col>
+            <Col id="data">11</Col>
+          </Row>
+          <Row>
+            <Col id="code">12</Col>
+            <Col id="data">12</Col>
+          </Row>
+          <Row>
+            <Col id="code">13</Col>
+            <Col id="data">13</Col>
+          </Row>
+          <Row>
+            <Col id="code">14</Col>
+            <Col id="data">14</Col>
+          </Row>
+          <Row>
+            <Col id="code">15</Col>
+            <Col id="data">15</Col>
+          </Row>
+          <Row>
+            <Col id="code">16</Col>
+            <Col id="data">16</Col>
+          </Row>
+          <Row>
+            <Col id="code">17</Col>
+            <Col id="data">17</Col>
+          </Row>
+          <Row>
+            <Col id="code">18</Col>
+            <Col id="data">18</Col>
+          </Row>
+          <Row>
+            <Col id="code">19</Col>
+            <Col id="data">19</Col>
+          </Row>
+          <Row>
+            <Col id="code">20</Col>
+            <Col id="data">20</Col>
+          </Row>
+          <Row>
+            <Col id="code">21</Col>
+            <Col id="data">21</Col>
+          </Row>
+          <Row>
+            <Col id="code">22</Col>
+            <Col id="data">22</Col>
+          </Row>
+          <Row>
+            <Col id="code">23</Col>
+            <Col id="data">23</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMn">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="data" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">00</Col>
+            <Col id="data">00</Col>
+          </Row>
+          <Row>
+            <Col id="code">01</Col>
+            <Col id="data">01</Col>
+          </Row>
+          <Row>
+            <Col id="code">02</Col>
+            <Col id="data">02</Col>
+          </Row>
+          <Row>
+            <Col id="code">03</Col>
+            <Col id="data">03</Col>
+          </Row>
+          <Row>
+            <Col id="code">04</Col>
+            <Col id="data">04</Col>
+          </Row>
+          <Row>
+            <Col id="code">05</Col>
+            <Col id="data">05</Col>
+          </Row>
+          <Row>
+            <Col id="code">06</Col>
+            <Col id="data">06</Col>
+          </Row>
+          <Row>
+            <Col id="code">07</Col>
+            <Col id="data">07</Col>
+          </Row>
+          <Row>
+            <Col id="code">08</Col>
+            <Col id="data">08</Col>
+          </Row>
+          <Row>
+            <Col id="code">09</Col>
+            <Col id="data">09</Col>
+          </Row>
+          <Row>
+            <Col id="code">10</Col>
+            <Col id="data">10</Col>
+          </Row>
+          <Row>
+            <Col id="code">11</Col>
+            <Col id="data">11</Col>
+          </Row>
+          <Row>
+            <Col id="code">12</Col>
+            <Col id="data">12</Col>
+          </Row>
+          <Row>
+            <Col id="code">13</Col>
+            <Col id="data">13</Col>
+          </Row>
+          <Row>
+            <Col id="code">14</Col>
+            <Col id="data">14</Col>
+          </Row>
+          <Row>
+            <Col id="code">15</Col>
+            <Col id="data">15</Col>
+          </Row>
+          <Row>
+            <Col id="code">16</Col>
+            <Col id="data">16</Col>
+          </Row>
+          <Row>
+            <Col id="code">17</Col>
+            <Col id="data">17</Col>
+          </Row>
+          <Row>
+            <Col id="code">18</Col>
+            <Col id="data">18</Col>
+          </Row>
+          <Row>
+            <Col id="code">19</Col>
+            <Col id="data">19</Col>
+          </Row>
+          <Row>
+            <Col id="code">20</Col>
+            <Col id="data">20</Col>
+          </Row>
+          <Row>
+            <Col id="code">21</Col>
+            <Col id="data">21</Col>
+          </Row>
+          <Row>
+            <Col id="code">22</Col>
+            <Col id="data">22</Col>
+          </Row>
+          <Row>
+            <Col id="code">23</Col>
+            <Col id="data">23</Col>
+          </Row>
+          <Row>
+            <Col id="code">24</Col>
+            <Col id="data">24</Col>
+          </Row>
+          <Row>
+            <Col id="code">25</Col>
+            <Col id="data">25</Col>
+          </Row>
+          <Row>
+            <Col id="code">26</Col>
+            <Col id="data">26</Col>
+          </Row>
+          <Row>
+            <Col id="code">27</Col>
+            <Col id="data">27</Col>
+          </Row>
+          <Row>
+            <Col id="code">28</Col>
+            <Col id="data">28</Col>
+          </Row>
+          <Row>
+            <Col id="code">29</Col>
+            <Col id="data">29</Col>
+          </Row>
+          <Row>
+            <Col id="code">30</Col>
+            <Col id="data">30</Col>
+          </Row>
+          <Row>
+            <Col id="code">31</Col>
+            <Col id="data">31</Col>
+          </Row>
+          <Row>
+            <Col id="code">32</Col>
+            <Col id="data">32</Col>
+          </Row>
+          <Row>
+            <Col id="code">33</Col>
+            <Col id="data">33</Col>
+          </Row>
+          <Row>
+            <Col id="code">34</Col>
+            <Col id="data">34</Col>
+          </Row>
+          <Row>
+            <Col id="code">35</Col>
+            <Col id="data">35</Col>
+          </Row>
+          <Row>
+            <Col id="code">36</Col>
+            <Col id="data">36</Col>
+          </Row>
+          <Row>
+            <Col id="code">37</Col>
+            <Col id="data">37</Col>
+          </Row>
+          <Row>
+            <Col id="code">38</Col>
+            <Col id="data">38</Col>
+          </Row>
+          <Row>
+            <Col id="code">39</Col>
+            <Col id="data">39</Col>
+          </Row>
+          <Row>
+            <Col id="code">40</Col>
+            <Col id="data">40</Col>
+          </Row>
+          <Row>
+            <Col id="code">41</Col>
+            <Col id="data">41</Col>
+          </Row>
+          <Row>
+            <Col id="code">42</Col>
+            <Col id="data">42</Col>
+          </Row>
+          <Row>
+            <Col id="code">43</Col>
+            <Col id="data">43</Col>
+          </Row>
+          <Row>
+            <Col id="code">44</Col>
+            <Col id="data">44</Col>
+          </Row>
+          <Row>
+            <Col id="code">45</Col>
+            <Col id="data">45</Col>
+          </Row>
+          <Row>
+            <Col id="code">46</Col>
+            <Col id="data">46</Col>
+          </Row>
+          <Row>
+            <Col id="code">47</Col>
+            <Col id="data">47</Col>
+          </Row>
+          <Row>
+            <Col id="code">48</Col>
+            <Col id="data">48</Col>
+          </Row>
+          <Row>
+            <Col id="code">49</Col>
+            <Col id="data">49</Col>
+          </Row>
+          <Row>
+            <Col id="code">50</Col>
+            <Col id="data">50</Col>
+          </Row>
+          <Row>
+            <Col id="code">51</Col>
+            <Col id="data">51</Col>
+          </Row>
+          <Row>
+            <Col id="code">52</Col>
+            <Col id="data">52</Col>
+          </Row>
+          <Row>
+            <Col id="code">53</Col>
+            <Col id="data">53</Col>
+          </Row>
+          <Row>
+            <Col id="code">54</Col>
+            <Col id="data">54</Col>
+          </Row>
+          <Row>
+            <Col id="code">55</Col>
+            <Col id="data">55</Col>
+          </Row>
+          <Row>
+            <Col id="code">56</Col>
+            <Col id="data">56</Col>
+          </Row>
+          <Row>
+            <Col id="code">57</Col>
+            <Col id="data">57</Col>
+          </Row>
+          <Row>
+            <Col id="code">58</Col>
+            <Col id="data">58</Col>
+          </Row>
+          <Row>
+            <Col id="code">59</Col>
+            <Col id="data">59</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="fxId" type="STRING" size="256" description="팝업ID"/>
+          <Column id="fxBgngDt" type="STRING" size="256" description="시작일자"/>
+          <Column id="fxEndDt" type="STRING" size="256" description="종료일자"/>
+          <Column id="fxTitlNm" type="STRING" size="256" description="팝업제목명"/>
+          <Column id="fxCn" type="STRING" size="256" description="팝업내용"/>
+          <Column id="rgtrId" type="STRING" size="256" description="등록자ID"/>
+          <Column id="regDt" type="STRING" size="256" description="등록일시"/>
+          <Column id="mdfrId" type="STRING" size="256" description="수정자ID"/>
+          <Column id="mdfcnDt" type="STRING" size="256" description="수정일시"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="fxId" type="STRING" size="256"/>
+          <Column id="fxId1" type="STRING" size="256"/>
+          <Column id="fxId2" type="STRING" size="256"/>
+          <Column id="fxId3" type="STRING" size="256"/>
+          <Column id="fxId4" type="STRING" size="256"/>
+          <Column id="fxId5" type="STRING" size="256"/>
+          <Column id="fxId6" type="STRING" size="256"/>
+          <Column id="fxId7" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="div00.form.calBgngYmd" propid="value" datasetid="dsMain" columnid="fxBgngDt"/>
+      <BindItem id="item1" compid="div00.form.calEndYmd" propid="value" datasetid="dsMain" columnid="fxEndDt"/>
+      <BindItem id="item2" compid="div00.form.edtFxTitlNm" propid="value" datasetid="dsMain" columnid="fxTitlNm"/>
+      <BindItem id="item3" compid="div00.form.txtNtcCn" propid="value" datasetid="dsMain" columnid="fxCn"/>
+    </Bind>
+  </Form>
+</FDL>

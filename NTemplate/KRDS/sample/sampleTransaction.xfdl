@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleTransaction" width="888" height="950" titletext="트랜잭션 샘플" onload="form_onload">
+    <Layouts>
+      <Layout height="950" mobileorientation="landscape" width="888" screenid="Desktop_screen">
+        <Static id="staH2" taborder="0" text="트랜잭션" left="0" top="0" width="140" height="60" cssclass="sta_WF_H2_pc" fittocontents="width" accessibilityrole="heading2"/>
+        <Static id="staDivider" taborder="1" left="staH2:15" top="20" width="1" height="21" cssclass="sta_WF_line" accessibilityenable="false"/>
+        <Static id="staEtit" taborder="2" text="Transaction" left="staDivider:15" top="0" width="149" height="60" cssclass="sta_WF_ParaH4_pc"/>
+        <Div id="divSearch" taborder="3" left="0" top="144" height="128" cssclass="div_WF_SchBar" text="" right="0" fittocontents="height" accessibilityenable="false">
+          <Layouts>
+            <Layout spacing="40px 40px 40px 40px" type="horizontal" flexwrap="wrap" verticalgap="16" horizontalgap="24" flexcrossaxisalign="center">
+              <Panel id="Panel02" taborder="0" left="40" top="40" width="67%" height="48" horizontalgap="24" verticalgap="16" fittocontents="height" flexgrow="1" flexwrap="wrap" type="horizontal" flexmainaxisalign="start">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="Panel00"/>
+                  <PanelItem id="PanelItem01" componentid="Panel01"/>
+                </Contents>
+              </Panel>
+              <Panel id="Panel00" taborder="1" left="40" top="40" width="240" height="48" flexgrow="0">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staSearchTitle00"/>
+                  <PanelItem id="PanelItem01" componentid="Edit00_00"/>
+                </Contents>
+              </Panel>
+              <Static id="staSearchTitle00" taborder="2" text="아이디" left="24" top="24" width="74" height="48" cssclass="sta_WF_SchDetail"/>
+              <Edit id="Edit00_00" taborder="3" left="74" top="24" width="200" height="48" accessibilitylabel="[@staSearchTitle00]"/>
+              <Panel id="Panel01" taborder="4" left="314" top="40" width="240" height="48" flexgrow="0">
+                <Contents>
+                  <PanelItem id="PanelItem00" componentid="staSearchTitle01"/>
+                  <PanelItem id="PanelItem01" componentid="Edit00"/>
+                </Contents>
+              </Panel>
+              <Static id="staSearchTitle01" taborder="5" text="성명" left="Edit00_00:24" top="24" width="74" height="48" cssclass="sta_WF_SchDetail"/>
+              <Edit id="Edit00" taborder="6" left="62" top="24" width="200" height="48" accessibilitylabel="[@staSearchTitle01]"/>
+              <Button id="btnSearch" taborder="7" text="조회" top="24" height="48" cssclass="btn_WF_Sch" onclick="divSearch_btnSearch_onclick" visible="true" width="120" left="744"/>
+            </Layout>
+            <Layout name="Layout0" spacing="24px 24px 24px 24px">
+              <Static id="staSearchTitle01" left="24" top="96" width="74" height="48"/>
+              <Edit id="Edit00" left="70.75" top="96" width="100%" height="48"/>
+              <Panel id="Panel00" flexgrow="1"/>
+              <Panel id="Panel01" flexgrow="1"/>
+              <Edit id="Edit00_00" width="100%" left="74" top="24" height="48"/>
+              <Panel id="Panel02" left="40" top="40" width="400" height="112"/>
+              <Button id="btnSearch" left="744" top="24" height="48" width="120" flexgrow="1"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00" taborder="4" left="0" top="divSearch:24" right="0" cssclass="sta_WF_Detailbox" text="" height="610"/>
+        <Static id="staTitle" taborder="5" text="사용자 정보 조회" left="40" top="divSearch:58" width="342" height="36" cssclass="sta_WF_ParaH4_pc" accessibilityrole="heading4"/>
+        <Grid id="grdList" taborder="6" left="40" top="staTitle:24" binddataset="dsList" right="40" autoenter="select" cellsizingtype="col" uFunction="filterNew,sort" autofittype="col" height="482">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="290"/>
+                <Column size="217"/>
+                <Column size="229"/>
+                <Column size="414"/>
+              </Columns>
+              <Rows>
+                <Row size="39" band="head"/>
+                <Row size="59"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="아이디"/>
+                <Cell col="1" text="성명"/>
+                <Cell col="2" text="부서"/>
+                <Cell col="3" text="비고"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:SAMPLE_ID" displaytype="expr:dataset.getRowType(currow)=='2'?'editcontrol':'normal'" edittype="expr:dataset.getRowType(currow)=='2'?'text':'none'" editautoselect="true"/>
+                <Cell col="1" text="bind:SAMPLE_NM" edittype="text" displaytype="editcontrol" editautoselect="true"/>
+                <Cell col="2" text="bind:SAMPLE_DEPT_NM" edittype="text" displaytype="editcontrol" editautoselect="true"/>
+                <Cell col="3" text="bind:SAMPLE_DESC" edittype="text" displaytype="editcontrol" editautoselect="true"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+      <Layout height="1034" mobileorientation="Landscape" name="Layout0" type="default" width="480" screenid="Desktop_screen,mobile_small">
+        <Div id="divSearch" height="224" left="0" top="staEtit:60" right="0" text=""/>
+        <Static id="staTitle" left="23" top="402" height="36" cssclass="sta_WF_ParaH4_m" right="23"/>
+        <Grid id="grdList" left="23" top="staTitle:24" height="494" right="23"/>
+        <Static id="staH2" cssclass="sta_WF_H2_m" width="100" left="0" top="0" height="60"/>
+        <Static id="staEtit" cssclass="sta_WF_ParaH4_m" right="0" left="staDivider:15" top="0" height="60"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="srchCond1" type="STRING" size="256"/>
+          <Column id="srchCond2" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" cancolumnchange="dsList_cancolumnchange">
+        <ColumnInfo>
+          <Column id="SAMPLE_ID" type="undefined" size="0"/>
+          <Column id="SAMPLE_NM" type="string" size="32"/>
+          <Column id="SAMPLE_DEPT_NM" type="string" size="32"/>
+          <Column id="SAMPLE_DESC" type="string" size="32"/>
+          <Column id="SAMPLE_FILE_ID" type="string" size="32"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.Edit00_00" propid="value" datasetid="dsSearch" columnid="srchCond1"/>
+      <BindItem id="item1" compid="divSearch.form.Edit00" propid="value" datasetid="dsSearch" columnid="srchCond2"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	sampleTransaction.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/11/25
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/11/25			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+ 
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+	
+};
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+//추가
+this.cfnAdd = function ()
+{
+	this.dsList.addRow();
+	
+	this.grdList.setCellPos(0);
+	this.grdList.showEditor(true);
+};
+
+//삭제
+this.cfnDel = function ()
+{
+	var nRow = this.dsList.rowposition;
+	if( nRow<0 ) return;
+	
+	this.dsList.deleteRow(nRow);
+};
+
+//저장
+this.cfnSave = function ()
+{
+	// 변경된 정보없으면 리턴
+	if (this.gfnDsIsUpdated(this.dsList) == false) {
+		// 저장할 데이터가 없습니다.
+		this.gfnAlert("msg.save.nochange");
+		return;
+	}
+	
+	// validation 체크 후
+	if (this.fnValidation()) {
+		// 서버 중복 체크
+		this.gfnAlert("confirm.save", [""], "save", "fnMsgCallback");
+	}
+};
+
+//조회
+this.cfnSearch = function ()
+{
+	this.fnSearch();
+};
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+//조회
+this.fnSearch = function ()
+{
+	var strSvcId 	= "searchSampleList";
+	var strSvcUrl 	= "searchSampleList.do";
+	var inData 		= "inDs=dsSearch";
+	var outData 	= "dsList=outDs";
+	var strArg 		= "";
+	this.gfnTransaction(strSvcId, strSvcUrl, inData, outData, strArg);
+};
+
+//저장
+this.fnSave = function ()
+{
+	var strSvcId 	= "saveSample";
+	var strSvcUrl 	= "saveSample.do";
+	var inData 		= "inDs=dsList:U";
+	var outData 	= "";
+	var strArg 		= "";
+	this.gfnTransaction(strSvcId, strSvcUrl, inData, outData, strArg);
+};
+
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+//transaction
+this.fnCallback = function (svcId, nErrCd, sErrMsg)
+{
+	switch(svcId) {
+		case "searchSampleList":
+			this.gfnClearUserFunction(this.grdList);
+			break;
+		case "saveSample":
+			this.fnSearch();
+			break;
+		default:break;
+	}
+};
+
+//message
+this.fnMsgCallback = function (sMsgId, sRtn)
+{
+	if(sMsgId=="save"){
+		if(sRtn){
+			this.fnSave();
+		}else{
+			return;
+		}
+	}else if( sMsgId=="validId"){
+		this.dsList.setColumn(this.dsList.rowposition, "SAMPLE_ID", "");
+		this.grdList.setCellPos(0);
+		this.grdList.showEditor(true);
+	}
+};
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+//정합성체크
+this.fnValidation = function ()
+{
+	// 정합성 체크
+	this.gfnClearValidation(this.dsList);
+	
+	this.gfnSetValidation(this.dsList, "SAMPLE_ID"	   , "아이디"	, "required");
+	this.gfnSetValidation(this.dsList, "SAMPLE_NM"  , "이름"		, "required");
+	
+ 	// Dataset의 변경된 Row Validation check
+  	if (this.gfnValidation(this.grdList, "U") == false) return false;
+
+	return true;
+};
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+//조회버튼클릭
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.cfnSearch();
+};
+
+//ID중복체크
+this.dsList_cancolumnchange = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if( e.columnid=="SAMPLE_ID"){
+		if(this.gfnIsNull(e.newvalue)) return;
+		
+		var nRow = this.dsList.findRow("SAMPLE_ID", e.newvalue);
+		if( nRow > -1){
+			this.gfnAlert("msg.exist", ["입력하신 아이디"],"validId","fnMsgCallback");
+			return;
+		}
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

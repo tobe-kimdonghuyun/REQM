@@ -1,0 +1,447 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="uds_ueudd00_m05" width="1200" height="817" titletext="전형자료생성" onload="fnOnload">
+    <Layouts>
+      <Layout height="817" width="1200" screenid="ScreenDeskTop">
+        <Div id="divSearch" taborder="0" left="0" top="0" height="101" cssclass="div_WF_Search" right="0" initvalueid="ivDivAccessibilityOn" accessibilityrole="none" accessibilitylabel="조회영역">
+          <Layouts>
+            <Layout>
+              <Static id="staCoaAyr" taborder="0" text="대입학년도" left="0" top="20" width="108" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtCoaAyr" taborder="1" left="staCoaAyr:0" width="80" height="30" top="20" initvalueid="ivEdtNormal" readonly="true"/>
+              <Static id="staCoaRcritScNm" taborder="2" text="모집구분" left="edtCoaAyr:0" top="20" width="96" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtCoaRcritScNm" taborder="3" left="staCoaRcritScNm:0" width="120" height="30" top="20" initvalueid="ivEdtNormal" readonly="true" text="수시(사전운영)"/>
+              <Static id="staCoaEvlUnitId" taborder="4" text="평가단위" left="edtCoaRcritScNm:0" top="20" width="96" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtCoaEvlUnitId" taborder="5" left="staCoaEvlUnitId:0" top="20" width="175" height="30" initvalueid="ivEdtNormal" readonly="true"/>
+              <Button id="btnEvlUnit" taborder="6" text="선택" left="edtCoaEvlUnitId:5" top="20" width="48" height="30" cssclass="btn_WF_Custom" initvalueid="ivBtnAccessibilityLink" onclick="divSearch_btnEvlUnit_onclick"/>
+              <Static id="staCddcScCd" taborder="7" text="시도" left="btnEvlUnit:0" top="20" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn" width="73"/>
+              <Combo id="cboCddcScCd" taborder="8" left="staCddcScCd:0" width="150" height="30" codecolumn="unyCdValue" index="0" text="전체" readonly="false" top="20" innerdataset="dsCddcScCd" datacolumn="unyCdValueNm" initvalueid="ivCmbNormal"/>
+              <Static id="staShlNm" taborder="9" text="학교명" left="cboCddcScCd:0" top="20" width="80" height="30" cssclass="sta_WF_Searchtxt01" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtShlNm" taborder="10" left="staShlNm:0" top="20" width="120" height="30" initvalueid="ivEdtNormal" imemode="hangul,full"/>
+              <Button id="btnSearch" taborder="11" text="조회" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="divSearch_btnSearch_onclick" initvalueid="ivBtnAccessibilityButton" top="60"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <ImageViewer id="img00_00_01_00" taborder="1" text="전형자료생성" left="0" top="121" width="140" height="30" cssclass="img_WF_SubTit04" initvalueid="ivTitleAccessibilityOn"/>
+        <Button id="btnSave" taborder="2" text="전형자료생성" top="121" height="30" width="105" cssclass="btn_WF_Crud" visible="true" right="0" initvalueid="ivBtnAccessibilityButton" onclick="btnSave_onclick"/>
+        <Grid id="grdMain" taborder="3" left="0" binddataset="dsMain" autofittype="col" top="161" width="500" initvalueid="ivGrdAccessibilityOn" oncellclick="grdMain_oncellclick" cursor="auto" selecttype="cell" accessibilitylabel="전형자료생성" bottom="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="160" band="left"/>
+                <Column size="70"/>
+                <Column size="70"/>
+                <Column size="70"/>
+                <Column size="70"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head" accessibilityrole="none" accessibilitylabel="제목영역">
+                <Cell text="시도"/>
+                <Cell col="1" text="학교수"/>
+                <Cell col="2" text="생성대상"/>
+                <Cell col="3" text="미생성"/>
+                <Cell col="4" text="생성완료" cssclass="LineNo"/>
+              </Band>
+              <Band id="body" accessibilityrole="none" accessibilitylabel="내용영역">
+                <Cell displaytype="normal" edittype="none" text="bind:cddcScNm" textDecoration="underline"/>
+                <Cell col="1" text="bind:shlCnt"/>
+                <Cell col="2" text="bind:trgtCnt"/>
+                <Cell col="3" text="bind:prcsCnt"/>
+                <Cell col="4" text="bind:cmptnCnt"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grdDetail" taborder="4" left="grdMain:30" top="161" binddataset="dsDetail" autofittype="col" right="0" initvalueid="ivGrdAccessibilityOn" selecttype="cell" onheadclick="grdMain_onheadclick" accessibilitylabel="전형자료생성 합계" bottom="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40" band="left"/>
+                <Column size="320" band="left"/>
+                <Column size="70"/>
+                <Column size="70"/>
+                <Column size="70"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+                <Row size="40" band="summ"/>
+              </Rows>
+              <Band id="head" accessibilityrole="none" accessibilitylabel="내용영역">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox" accessibilityrole="checkbox"/>
+                <Cell col="1" text="고등학교"/>
+                <Cell col="2" text="생성대상"/>
+                <Cell col="3" text="미생성"/>
+                <Cell col="4" text="생성완료" cssclass="LineNo"/>
+              </Band>
+              <Band id="body" accessibilityrole="none" accessibilitylabel="내용영역">
+                <Cell text="bind:_chk" displaytype="expr:prcsCnt == 0 ? &quot;none&quot; : &quot;checkboxcontrol&quot;" edittype="expr:prcsCnt == 0 ? &quot;none&quot; : &quot;checkbox&quot;" color="#333333" accessibilityrole="checkbox"/>
+                <Cell col="1" text="bind:shlNm"/>
+                <Cell col="2" text="bind:trgtCnt"/>
+                <Cell col="3" text="bind:prcsCnt"/>
+                <Cell col="4" text="bind:cmptnCnt" cssclass="LineNo"/>
+              </Band>
+              <Band id="summary" accessibilityrole="none" accessibilitylabel="합계영역">
+                <Cell colspan="2" text="합계" displaytype="text"/>
+                <Cell col="2" text="expr:dataset.getSum('trgtCnt')" textAlign="right" displaytype="number"/>
+                <Cell col="3" text="expr:dataset.getSum('prcsCnt')" textAlign="right" displaytype="number"/>
+                <Cell col="4" text="expr:dataset.getSum('cmptnCnt')" textAlign="right" displaytype="number"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static99_00_00_00_00_01_00" taborder="5" left="0" top="101" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01_00_00" taborder="6" left="0" top="151" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_00_00_00_00" taborder="7" left="grdMain:0" top="157" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" width="30" bottom="0" initvalueid="ivStcAccessibilityOff"/>
+        <Plugin id="objKCASE" taborder="8" left="1120" top="104" width="68" height="14" classid="{93D5247D-EBA7-4713-A8BF-448BD277E7AD}"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+ *	전형자료생성
+ *	@MenuPath	대입전형-전형자료온라인수신-전형자료생성
+ *	@FileName 	uds_ueudd00_m05.xfdl
+ *	@Creator 	김동업
+ *	@CreateDate	2022.09.30  
+ *	@Desction	
+ ************** 소스 수정 이력 ***********************************************
+ *	date			Modifier			Description
+ *******************************************************************************
+ *	2022.09.30		김동업				최초 생성
+ *******************************************************************************
+ */
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::uds_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+
+/**
+ * @description 화면 onload시 처리
+ */
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// Div 초기화
+	this.smfInitDiv(obj);
+	
+	// 대입서비스체크
+	this.udsfCoaSvcChck(function(){
+		// 초기화
+		this.fnInit(obj); 
+		
+		// 공통코드 조회
+		this.smfCodeList("code", [this.dsCddcScCd])
+			.callback(function(callbackParams){
+				if(callbackParams.errors) return;
+			})
+			.run()
+		;
+		
+		this.fnSearch(); // 조회
+		
+		// Grid Checkbox 활성화/활성화 제어
+		// this.smfUpdateRednerGridCheckbox(this.grdDetail, 0, this.fnRenderGridCheckbox);
+		
+		// 조회 입력창에서 'Ctrl' + 'Enter' 키 입력시 조회수행 이벤트 설정
+		this.smfBindEnterKeyToSearch(this.divSearch, this.divSearch.form.btnSearch);
+	});
+};
+
+/**
+ * @description 폼 닫기전 이벤트
+ */
+this.fnOnbeforeclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	// 변경내역이 발생한 경우 종료전 confirm수행
+	return this.smfCloseFormConfirm([this.dsMain, this.dsDetail]);
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg) {
+	if(errcd <= -1) return;
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/**
+ * @description 조회
+*/
+this.fnSearch = function()
+{
+	this.fnCddcSearch();
+};
+
+/**
+ * @description 시도교육청 조회
+*/
+this.fnCddcSearch = function()
+{
+	// 조회 서비스
+	this.smfSearchService("listCddc")
+		.confirmIfModifiedGrid(this.grdMain) // 데이터가 변경되었으면 확인메시지
+		.validateForm(this.divSearch) // 폼 유효성검사
+		.run() // 실행
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			this.fnShlSearch();
+		}); // 콜백
+};
+
+/**
+ * @description 학교 조회
+*/
+this.fnShlSearch = function()
+{
+	// 조회 서비스
+	this.smfSearchService("listShl")
+		.confirmIfModifiedGrid(this.grdDetail) // 데이터가 변경되었으면 확인메시지
+		.validateForm(this.divSearch) // 폼 유효성검사
+		.run() // 실행
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		}); // 콜백
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/**
+ * @description 초기화 FUNCTION
+ */
+this.fnInit = function(obj){
+	this.dsSearch.setColumn(0, "coaAyr", this.udsv_coaAyr);
+	this.dsSearch.setColumn(0, "coaRcritScCd", this.udsv_coaRcritScCd);
+	this.dsSearch.setColumn(0, "coaRcritScNm", this.udsv_coaRcritScNm);
+	
+	this.dsSearch.setColumn(0, "coaEvlUnitId", "");
+	this.dsSearch.setColumn(0, "coaEvlUnitNm", "- 전체 -");
+}
+
+/**
+ * 그리드 체크박스 enable 처리
+ * @param : ds - 데이터셋
+ * @param : nRow - rowposition
+ */
+this.fnRenderGridCheckbox = function(ds, nRow){
+	return true;
+};
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+/**
+ * @description 그리드 헤더 클릭
+*/
+this.grdMain_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var columnName = obj.getCellProperty("body",e.cell,"text");
+	if ("bind:_chk" == columnName){
+		this.smfToggleChkHeader(obj, e, this.fnRenderGridCheckbox);
+	}else{
+		// 정렬
+		this.smfCheckAndSort(obj, e);
+	}
+};
+
+/**
+ * @description 조회
+ */
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSearch();
+};
+
+/**
+ * @description 평가단위 선택
+ */
+this.divSearch_btnEvlUnit_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfAlert("평가단위 선택 구현중.");
+};
+
+/**
+ * @description 시도 선택
+ */
+this.grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var cddcScCd = this.dsMain.getColumn(this.dsMain.rowposition, "cddcScCd");
+	this.dsSearch.setColumn(0, "cddcScCd", cddcScCd);
+	
+	this.fnShlSearch();
+};
+
+/**
+ * @description 전형자료요청
+ */
+this.btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	/*
+	var info = this.objKCASE.callMethod("SelectCertKM");
+	var cert_temp = this.objKCASE.callMethod("GetCertInfoKM","").split("|");
+	var dn = cert_temp[0];
+	var sn = cert_temp[1];
+	var strCertData = cert_temp[2];
+	
+	trace(" certDtcNm : " + dn);
+	trace(" eltsCertNo : " + sn);
+	trace(" eltsDataValue : " + strCertData);
+	
+	// dn : cn=SVRZ1234567094,ou=교육부,ou=Group of Server,o=Government of Korea,c=KR
+	// sn : 00A4147670D14CADA23AD54C72BD0CE324A90473
+	// strCertData : MIIF1DCCBLygAwIBAgIUAKQUdnDRTK2iOtVMcr0M4ySpBHMwDQYJKoZIhvcNAQELBQAwUDELMAkGA1UEBhMCS1IxHDAaBgNVBAoME0dvdmVybm1lbnQgb2YgS29yZWExDTALBgNVBAsMBEdQS0kxFDASBgNVBAMMC0NBMTM0MTAwMDMxMB4XDTIxMDYxNzAxMDI1OFoXDTIzMDkxNzAxMDI1N1owcjELMAkGA1UEBhMCS1IxHDAaBgNVBAoME0dvdmVybm1lbnQgb2YgS29yZWExGDAWBgNVBAsMD0dyb3VwIG9mIFNlcnZlcjESMBAGA1UECwwJ6rWQ7Jyh67aAMRcwFQYDVQQDDA5TVlJaMTIzNDU2NzA5NDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAOfCZq9ThQfNiXsZnb5CDUmSUILWNFQq620fhsBxG8Ak4B0+h7v/niZtcCv8k6iO6NrRMqPJrlGHZjxHNz1cjTu+cmn10Wl8QcTuqETA8L9Pt7J04ftdoyX+JDvzTmjB8hZJZkpCfVEGSDdp+CJwD1OGfNNVNK5PMFNfXl7RCNcXsSd7Zz1f0SH3Yq0/A5I6abSfrEy67qv4rrWxuxUQsL1CWkjSdkdB9MnmTwbTBRv3eGXVdtRGc+d+fQ8aM0zhs5BQYWfz2rpjmgDxfXUOT6ficdygVm5GyLCmlA4mlXlMgPmdh2mZc9Oo7/RGKYPQBZDgf7DB0SZ6HnAqIRGWGS0CAwEAAaOCAoIwggJ+MDcGCCsGAQUFBwEBBCswKTAnBggrBgEFBQcwAYYbaHR0cDovL29jc3AuZXBraS5nby5rcjo4MDgwMHkGA1UdIwRyMHCAFI5G+A2eeHaizBrkD1F/UtdNnFsboVSkUjBQMQswCQYDVQQGEwJLUjEcMBoGA1UECgwTR292ZXJubWVudCBvZiBLb3JlYTENMAsGA1UECwwER1BLSTEUMBIGA1UEAwwLR1BLSVJvb3RDQTGCAicZMB0GA1UdDgQWBBRLRHYjbk/YRz7cYBt/CzyG0NDxizAOBgNVHQ8BAf8EBAMCBDAwbQYDVR0gAQH/BGMwYTBfBgoqgxqGjSEFAwEHMFEwKgYIKwYBBQUHAgEWHmh0dHA6Ly93d3cuZXBraS5nby5rci9jcHMuaHRtbDAjBggrBgEFBQcCAjAXGhVFZHVjYXRpb24gQ2VydGlmaWNhdGUwMQYDVR0SBCowKKAmBgkqgxqMmkQKAQGgGTAXDBXqtZDsnKHqs7ztlZnquLDsiKDrtoAwbAYDVR0RBGUwY6BhBgkqgxqMmkQKAQGgVDBSDA0xOTIuMTY4LjExLjEwMEEwPwYKKoMajJpECgEBATAxMAsGCWCGSAFlAwQCAaAiBCCNNc8MI9JzrvlBg8wXNBAswdHiK2gvuXOyxrE1jK+rzDCBiAYDVR0fBIGAMH4wfKB6oHiGdmxkYXA6Ly9sZGFwLmVwa2kuZ28ua3I6Mzg5L2NuPWNybDFwMWRwMTk3NTYsb3U9Q1JMLG91PUdQS0ksbz1Hb3Zlcm5tZW50IG9mIEtvcmVhLGM9a3I/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdDtiaW5hcnkwDQYJKoZIhvcNAQELBQADggEBAIwpgfzjTPmffREjRy7O/PTIaYiBKTM5IfuvrmZ+HcVQmfJr70bZCoN0PpSOo2y01A/PvGZmgBxnuhI5gAiOUNGefsO2AtfGFwyL0V7jtHQScUPouBKDp5dt17IMV2crn4J2NBwhXzs37e9XWv/75Nes6WaiuZub0UtZf6cMqpXm4JqAqxFJNGXemOz0fWS+uAjy9pb/XdyRpyO7+XTimedAC4T4Q/YAHXFJiwv3J9WGmNEV9+MpaisoAokLjoFY9sL637LG+MdyjAcYCsNdvwJVYgUSTsYAtk0DhvsGzwSZo/SdD4thlxnY/I1RSPLyKRK0tY3HfvMMJnVktNOu4LU=
+	
+	// certDtcNm
+	// eltsCertNo
+	// eltsDataValue
+	
+	// dsPopMain.setColumn(0,"autceEsntlNm",dn); 인증서고유명
+	// dsPopMain.setColumn(0,"eltrnSignAcn",sn); 전자서명인증서번호
+	// dsPopMain.setColumn(0,"eltrnSignDataValue",strCertData); 전자서명자료값
+		
+	// 
+	// 
+	*/
+	// 저장 서비스
+	this.smfExecuteService("executePrcs")
+		.messagePrefix(obj.text)
+		.validateGrid(this.grdDetail, this.dsDetailValid, {_chkOption: "required"})
+		.run() // 실행
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		}); // 콜백
+};
+
+
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsMain=dsCddc</Col>
+            <Col id="url">uds_ueu_dd00_501.do</Col>
+            <Col id="id">listCddc</Col>
+          </Row>
+          <Row>
+            <Col id="id">listShl</Col>
+            <Col id="url">uds_ueu_dd00_502.do</Col>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsDetail=dsShl</Col>
+          </Row>
+          <Row>
+            <Col id="inDatasets">dsSearch dsShl=dsDetail:U</Col>
+            <Col id="outDatasets"/>
+            <Col id="url">uds_ueu_dd00_503.do</Col>
+            <Col id="id">executePrcs</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" oncolumnchanged="dsSearch_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="coaRcritScNm" type="STRING" size="256"/>
+          <Column id="cddcScCd" type="STRING" size="256"/>
+          <Column id="shlNm" type="STRING" size="256"/>
+          <Column id="coaEvlUnitId" type="STRING" size="256"/>
+          <Column id="coaEvlUnitNm" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="cddcScCd" type="STRING" size="256"/>
+          <Column id="cddcScNm" type="STRING" size="256"/>
+          <Column id="shlCnt" type="BIGDECIMAL" size="10"/>
+          <Column id="trgtCnt" type="BIGDECIMAL" size="10"/>
+          <Column id="prcsCnt" type="BIGDECIMAL" size="10"/>
+          <Column id="errCnt" type="BIGDECIMAL" size="10"/>
+          <Column id="cmptnCnt" type="BIGDECIMAL" size="10"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDetail" useclientlayout="true" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="256"/>
+          <Column id="cddcScCd" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="shlNm" type="STRING" size="256"/>
+          <Column id="shlKndScCd" type="STRING" size="256"/>
+          <Column id="trgtCnt" type="BIGDECIMAL" size="10"/>
+          <Column id="prcsCnt" type="BIGDECIMAL" size="10"/>
+          <Column id="errCnt" type="BIGDECIMAL" size="10"/>
+          <Column id="cmptnCnt" type="BIGDECIMAL" size="10"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDetailValid" useclientlayout="true" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="shlNm" type="STRING" size="256"/>
+          <Column id="trgtCnt" type="STRING" size="10"/>
+          <Column id="prcsCnt" type="STRING" size="10"/>
+          <Column id="errCnt" type="STRING" size="10"/>
+          <Column id="cmptnCnt" type="STRING" size="10"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCddcScCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="FirstCode" type="STRING" size="30" value="ALL" datapath=""/>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value="CDDC_SC_CD"/>
+          <ConstColumn id="FilterExpr" type="STRING" size="30" value="unyCdValue != 'A00' &amp;&amp; unyCdValue != 'V10'"/>
+          <ConstColumn id="UnyCdGrpId" type="STRING" size="30" value=""/>
+          <ConstColumn id="BfrClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd1Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd2Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd3Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd4Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd5Value" type="STRING" size="30" value=""/>
+          <Column id="pgeId" type="STRING" size="256"/>
+          <Column id="clfCdValue" type="STRING" size="30"/>
+          <Column id="clfCdValueNm" type="STRING" size="120"/>
+          <Column id="clfCdUseYn" type="STRING" size="150"/>
+          <Column id="unyCdValue" type="STRING" size="10"/>
+          <Column id="unyCdValueNm" type="STRING" size="30"/>
+          <Column id="userDfnCd1Value" type="STRING" size="100"/>
+          <Column id="userDfnCd2Value" type="STRING" size="100"/>
+          <Column id="userDfnCd3Value" type="STRING" size="100"/>
+          <Column id="userDfnCd4Value" type="STRING" size="100"/>
+          <Column id="userDfnCd5Value" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtCoaAyr" propid="value" datasetid="dsSearch" columnid="coaAyr"/>
+      <BindItem id="item1" compid="divSearch.form.edtCoaRcritScNm" propid="value" datasetid="dsSearch" columnid="coaRcritScNm"/>
+      <BindItem id="item2" compid="divSearch.form.cboCddcScCd" propid="value" datasetid="dsSearch" columnid="cddcScCd"/>
+      <BindItem id="item3" compid="divSearch.form.edtShlNm" propid="value" datasetid="dsSearch" columnid="shlNm"/>
+      <BindItem id="item4" compid="divSearch.form.edtCoaEvlUnitId" propid="value" datasetid="dsSearch" columnid="coaEvlUnitNm"/>
+    </Bind>
+  </Form>
+</FDL>

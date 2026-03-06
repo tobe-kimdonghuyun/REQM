@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comp_webEditor" width="440" height="165" titletext="공통웹에디터DIV" onload="comp_webEditor_onload" mode="editor" scrollbartype="none none">
+    <Layouts>
+      <Layout height="165" width="440">
+        <WebBrowser id="webEditor" taborder="0" left="0" top="0" right="0" bottom="0" onloadcompleted="webEditor_onloadcompleted" onusernotify="webEditor_onusernotify" accessibilitylabel="webeditor 내용 끝"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  
+*  @MenuPath    webEditor
+*  @FileName 	comp_webEditor.xfdl
+*  @Creator 	
+*  @CreateDate 	2022.8.1
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.8.1     	홍길동 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_parentForm;   // 스크립트가 있는 Form
+this.fv_callbackFunc; // onloadcomplete이벤트에서 호출될 부모 callback함수오브젝트
+this.fv_callbackSetHtmlFunc; // setHtml이후 호출될 부모 callback함수오브젝트
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.comp_webEditor_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//var sUrlPath = window.location.protocol + "//" + window.location.host;
+	var sUrlPath = this.smfGetBaseUrl(); //window.location.protocol + "//" + window.location.host;
+	var sFileName = "nexacro_webeditor.html";
+	var sSubSysGb = this.smfGetSubSystemGb();
+	
+	if(this.smfIsMobile())
+	{
+		if(sSubSysGb=="SCR")
+		{
+			sFileName =  "nexacro_webeditor_scr.html";
+		}else{
+			sFileName =  "nexacro_webeditor_neismobile.html";
+		}
+	}
+	else
+	{
+		if(sSubSysGb=="PAS")
+		{
+			sFileName =  "nexacro_webeditor_pa.html";
+		}
+		else if(sSubSysGb=="SCR")
+		{
+			sFileName =  "nexacro_webeditor_scr.html";
+		}
+		else
+		{
+			sFileName =  "nexacro_webeditor.html";
+		}
+	}
+	
+	if(this.parent.mode)
+	{
+		if(this.parent.mode=="editor")
+		{
+			if(this.smfIsMobile())
+			{
+				sFileName =  "nexacro_webeditor2_neismobile.html";
+			}
+			else
+			{
+				if(sSubSysGb=="PAS")
+				{
+					sFileName =  "nexacro_webeditor2_pa.html";
+				}
+				else
+				{
+					sFileName =  "nexacro_webeditor2.html";
+				}
+			}
+		}
+	}
+	// Url세팅
+	var sUrl =  sUrlPath + "/thirdparty/toasteditor/" + sFileName;
+	this.webEditor.set_url(sUrl);
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ // 웹에디터를 초기화
+this.fnInit = function(objForm,objCallbackFunc,objSetHtmlCallbackFunc,sType)
+{
+	//sType : 에디터/viewer여부 "editor"/"viewer" 없으면 viewer;
+	// 현재 viewer만 사용
+	if(this.smfIsNull(sType)) sType="viewer";
+	
+	if(objCallbackFunc)
+	{
+		this.fv_parentForm = objForm;
+		this.fv_callbackFunc = objCallbackFunc;
+	}
+	
+	if(objSetHtmlCallbackFunc)
+	{
+		this.fv_parentForm = objForm;
+		this.fv_callbackSetHtmlFunc = objSetHtmlCallbackFunc;
+	}	
+}
+
+// Viewer에 HTML을 세팅한다
+this.fnSetHtml = function(sHtml)
+{
+	this.webEditor.callMethod("setHtml",sHtml);
+}
+
+// Viewer의 Contents의 높이를 구한다
+this.fnGetHeight = function()
+{
+	var nContentsHeight = this.webEditor.callMethod("getHeight");
+	return nContentsHeight;
+}
+
+// HTML을클리어한다.
+this.fnClearHtml = function()
+{
+	this.webEditor.callMethod("setHtml","");
+}
+
+
+// HTML을클리어한다.
+this.fnGetHtml = function()
+{
+	return this.webEditor.callMethod("getHtml");
+}
+
+// inner text 추출
+this.fnGetInnerText = function()
+{
+	return this.webEditor.callMethod("getInnerText");
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+// 웹브라우저가 로드된 이후 발생 
+this.webEditor_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+	if(this.fv_callbackFunc)
+	{
+		this.fv_callbackFunc.call(this.fv_parentForm,this.parent,"onloadcompleted","");
+	}
+};
+
+// 웹브라우저로부터 받은 데이터를 받을 때 발생 
+this.webEditor_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	var sUserData = e.userdata;
+	//trace("webEditor_onusernotify: sUserData=["+sUserData+"]");
+
+	if(sUserData.indexOf("contentHeight")>-1)
+	{
+		var nHeight = 0;
+		if(this.parent.autoHeight=="Y")
+		{
+			var arrUserData = sUserData.split(":");
+			nHeight = parseInt(arrUserData[1]);
+			this.parent.setOffsetHeight(nHeight+10);
+		}
+		else
+		{
+			nHeight = this.parent.getOffsetHeight();
+		}
+		//trace(e.data);
+		
+		if(this.fv_callbackSetHtmlFunc)
+		{
+			this.fv_callbackSetHtmlFunc.call(this.fv_parentForm,this.parent,nHeight);
+		}
+		
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

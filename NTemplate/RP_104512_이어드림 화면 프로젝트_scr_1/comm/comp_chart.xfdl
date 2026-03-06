@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comp_chart" width="370" height="285" titletext="SBChart공통" onload="comp_chart_onload">
+    <Layouts>
+      <Layout height="285" width="370">
+        <WebBrowser id="webChart" taborder="0" left="0" top="0" onloadcompleted="webChart_onloadcompleted" onusernotify="webChart_onusernotify" right="0" bottom="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    TEMPLATE
+*  @FileName 	comp_chart.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.7.14
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.7.14     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ this.comp_chart_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var sUrlPath = window.location.protocol + "//" + window.location.host;
+	var sUrl =  sUrlPath + "/thirdparty/sbchart/nexacro_chart.html";
+	
+	// Url세팅
+	this.webChart.set_url(sUrl);	
+
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnRender = function(oOption)
+{
+	this.webChart.callMethod("fnRender",JSON.stringify(oOption));
+}
+
+this.fnGetChartConfig = function(oChartConfig,dsData)
+{	
+	var arrChartData = [];
+	var arrCaregories = [];//'["서울","경기","인천","대전","세종","제주"]';
+	var arrDataKeysValue = [];
+	var arrDataTypesValue = {};
+	var arrLineWidth = [];
+	
+	var i,j;
+		
+	var nArrLen =  oChartConfig.series.length;
+	for(j=0;j<nArrLen;j++)
+	{
+		var sYColumnId        = oChartConfig.series[j].columnid;
+		var sYColumnText      = oChartConfig.series[j].text;
+		var sYColumnType      = oChartConfig.series[j].type;
+		
+		arrDataKeysValue.push(sYColumnText);
+		arrDataTypesValue[sYColumnText]=sYColumnType;
+		
+		if(sYColumnType=="line")
+		{
+			var sYColumnPoint     = oChartConfig.series[j].point;
+			var sYColumnlineWidth = oChartConfig.series[j].linewidth;
+			var oLineWidth = {key:sYColumnText,width:sYColumnlineWidth};
+			
+			arrLineWidth.push(oLineWidth);
+		}
+	}	
+	
+	// ChartData를 만든다
+	var sXColumnId   = oChartConfig.x_axis.columnid;
+	var sXColumnText = oChartConfig.x_axis.text;
+	for(i=0;i<dsData.rowcount;i++)
+	{
+		var oChartDataOne = {};
+		var sXColumnValue = dsData.getColumn(i,sXColumnId);
+		oChartDataOne[sXColumnText] = sXColumnValue;
+		arrCaregories.push(sXColumnValue);
+		
+		for(j=0;j<nArrLen;j++)
+		{
+			var sYColumnId   = oChartConfig.series[j].columnid;
+			var sYColumnText = oChartConfig.series[j].text;
+			
+			oChartDataOne[sYColumnText] = dsData.getColumn(i,sYColumnId);
+		}	
+		
+		arrChartData.push(oChartDataOne);
+	}
+	
+	
+	var chartConfig = {
+	  global :  {
+			color: {
+			  pattern: ['#2b72de', '#ce3c7a', '#aa5416', '#3a7ca2', '#186def', '#0c4688', '#a155b9', '#c3316f', '#01593a', '#852f0f']
+			},
+			accessibility: {
+			  use: true,
+			  title: oChartConfig.title
+			}			
+	  },
+      data: {
+			json: arrChartData,
+			keys: {
+			  x: oChartConfig.x_axis.text,
+			  value: arrDataKeysValue
+			},
+			types: arrDataTypesValue,		
+      },
+  	  title: {
+	        text:oChartConfig.title
+	  },
+	  grid: {
+			x: {
+				  show: false
+			   }
+	  },
+      axis:{
+	         x:{
+			     type:"category",
+				  tick: {
+					line: {
+					  show: false
+					}
+				  },				 
+				 scroll:{show:true,xSize:2000},
+				 categories:arrCaregories
+			   },
+			y: {
+				  tick: {
+					line: {
+					  show: false
+					}
+				  },				 
+				  domain: {
+					show: false
+				  }
+				}			   
+		   },	
+		extend: {
+			line: {
+				setLinesWidth: arrLineWidth
+			}
+		}
+		   
+    };
+	
+	return chartConfig;
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.webChart_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+	
+};
+
+this.webChart_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	trace("==>   this.webChart_onusernotify : e.userdata=[" + e.userdata+"]");
+};
+]]></Script>
+  </Form>
+</FDL>

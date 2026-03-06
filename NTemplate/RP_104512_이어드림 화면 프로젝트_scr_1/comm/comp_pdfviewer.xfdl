@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comp_pdfviewer" width="410" height="165" titletext="New Form" onload="comp_pdfviewer_onload">
+    <Layouts>
+      <Layout height="165" width="410">
+        <WebBrowser id="webMain" taborder="0" left="0" top="0" right="0" bottom="0" onloadcompleted="webMain_onloadcompleted" onusernotify="webMain_onusernotify" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	comp_pdfviewer.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.12.29
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.12.29     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_option={};
+this.fv_callback = null;
+this.fv_objParentForm = null;
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.comp_pdfviewer_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.smfInitDiv(this);
+	
+	// this.fninit
+	this.fv_option = this.parent.optionParam;
+	
+	if(this.fv_option)
+	{
+		this.fv_callback = this.fv_option.callback;
+		this.fv_objParentForm = this.fv_option.objForm;
+	}
+	
+	// Url을 세팅한다.
+	var sBaseUrl= window.location.protocol + "//" + window.location.host;
+	var sUrl= sBaseUrl + "/html/ezpdfviewer/ezpdfviewer_nexacro.html"
+	this.webMain.set_url(sUrl);
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnPdfSign = function(objParam)
+{
+	if(objParam)
+	{
+		this.fv_option = objParam;
+	
+		if(this.fv_option)
+		{
+			this.fv_callback      = this.fv_option.callback;
+			this.fv_objParentForm = this.fv_option.objForm ;
+		}		
+	}
+	var sOrgPath     = this.fv_option.orgPath   ;
+	var sResultPath  = this.fv_option.resultPath;
+	var sSignWidth   = this.fv_option.signWidth ;
+	var sPosText     = this.fv_option.posText   ;
+	var sPopupTitle  = this.fv_option.title     ;
+
+	var sPopupUrl = this.fnGetPopupUrl();
+
+	var objParam = {
+	                   orgPath    : sOrgPath
+	                ,  resultPath : sResultPath
+	                ,  signWidth  : sSignWidth
+	                ,  posText    : sPosText
+	                ,  title      : sPopupTitle
+					,  url        : sPopupUrl
+				   };
+
+	this.webMain.callMethod("signDoc",objParam);
+}
+
+this.fnPdfSignIframe = function(objParam)
+{
+	if(objParam)
+	{
+		this.fv_option = objParam;
+	
+		if(this.fv_option)
+		{
+			this.fv_callback      = this.fv_option.callback;
+			this.fv_objParentForm = this.fv_option.objForm ;
+		}		
+	}
+	var sOrgPath     = this.fv_option.orgPath   ;
+	var sResultPath  = this.fv_option.resultPath;
+	var sSignWidth   = this.fv_option.signWidth ;
+	var sPosText     = this.fv_option.posText   ;
+	var sPopupTitle  = this.fv_option.title     ;
+
+	var sPopupUrl = this.fnGetPopupUrl();
+
+	var objParam = {
+	                   orgPath    : sOrgPath
+	                ,  resultPath : sResultPath
+	                ,  signWidth  : sSignWidth
+	                ,  posText    : sPosText
+	                ,  title      : sPopupTitle
+					,  url        : sPopupUrl
+				   };
+
+	this.webMain.callMethod("signDocIframe",objParam);
+}
+
+
+this.fnViewdoc = function(objParam)
+{
+	if(objParam)
+	{
+		this.fv_option = objParam;
+	
+		if(this.fv_option)
+		{
+			this.fv_callback      = this.fv_option.callback;
+			this.fv_objParentForm = this.fv_option.objForm ;
+		}		
+	}
+	var sPath        = this.fv_option.path    ;
+	var sDownload    = this.smfNvl(this.fv_option.download,"false");
+	var sPrint       = this.smfNvl(this.fv_option.print   ,"false")   ;
+	var sAnnot       = this.smfNvl(this.fv_option.annot   ,"false")   ;
+	var sPopupTitle  = this.fv_option.title     ;
+
+	var sPopupUrl = this.fnGetPopupUrl("viewer");
+	
+    var sBencdata = sPath + "&" + sDownload + "&" + sPrint + "&" + sAnnot ;
+    sBencdata = nexacro.base64Encode(sBencdata);
+		
+	var objParam = {
+	                   bencdata : sBencdata
+	                ,  title    : sPopupTitle
+					,  url      : sPopupUrl
+				   };
+
+	this.webMain.callMethod("viewDoc2",objParam);
+}
+
+this.fnGetPopupUrl = function(type)
+{
+	var sRunMode = nexacro.getEnvironmentVariable("ev_runMode");
+	var sBaseUrl = "";
+	var sUrl     = "";
+	
+	if(this.smfIsNull(type)) type = "sign"; 
+	
+	sBaseUrl= window.location.protocol + "//" + window.location.host;
+	
+	if(type=="sign")
+	{
+		sUrl = sBaseUrl + "/pdfviewer/pdf/viewer.ez";
+	}
+	else
+	{
+		sUrl = sBaseUrl + "/pdfviewer/customLayout.jsp";
+	}
+	
+	return sUrl;
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.webMain_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+	//this.fnViewdoc();
+};
+
+this.webMain_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	trace("webMain_onusernotify="+e.userdata);
+	switch(e.userdata)
+	{
+		case "result" :
+			var sData = this.webMain.callMethod("getNexacroData");
+			var bResult = false;
+			trace("sData=["+sData+"]");
+			
+			if(this.fv_callback)
+			{
+				this.fv_callback.call(this.fv_objParentForm,sData);
+			}
+
+			break;
+	}	
+};
+]]></Script>
+  </Form>
+</FDL>

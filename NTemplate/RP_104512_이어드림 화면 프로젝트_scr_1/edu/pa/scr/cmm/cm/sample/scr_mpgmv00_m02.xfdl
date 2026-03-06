@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="scr_mpgmv00_m02" width="1280" height="745" titletext="API Test 페이지" onload="form_onload">
+    <Layouts>
+      <Layout height="745" mobileorientation="landscape" width="1280">
+        <Button id="btn01" taborder="0" text="Api 통신테스트" left="270" top="30" width="140" height="44" onclick="btn01_onclick"/>
+        <Grid id="grd00_00" taborder="1" left="40" top="110" width="830" height="371" binddataset="dsResult">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="121"/>
+                <Column size="332"/>
+                <Column size="289"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="svcId"/>
+                <Cell col="1" text="INVL_NO"/>
+                <Cell col="2" text="jsessionidTest"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:svcId"/>
+                <Cell col="1" text="bind:INVL_NO"/>
+                <Cell col="2" text="bind:jsessionidTest"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="sta00_00" taborder="2" text="Api 통신테스트2 결과값" left="50" top="80" width="401" height="25"/>
+        <Edit id="edt00" taborder="3" left="137" top="42" width="127" height="25" value="K108830021" text="K108830021"/>
+        <Static id="sta01" taborder="4" text="개인고유번호" left="52" top="44" width="78" height="23"/>
+        <Button id="btn00" taborder="5" text="SCR 공통모듈 사용 테스트" left="424" top="30" width="166" height="45" onclick="btn00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsService">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256"/>
+          <Column id="outDatasets" type="STRING" size="256"/>
+          <Column id="asynctp" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectApiTest</Col>
+            <Col id="url">/scr_mpg_mv00_003.do</Col>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsResult</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectApiTest2</Col>
+            <Col id="url">/scr_mpg_mv00_005.do</Col>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsResult</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="svcId" type="STRING" size="256"/>
+          <Column id="INVL_NO" type="STRING" size="256"/>
+          <Column id="jsessionidTest" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="INVL_NO" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템
+*  @MenuPath    공통
+*  @FileName 	scr_mpgmv00_m02.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    API Test 페이지
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.scrInitForm(obj);	//필수(화면초기화)
+};
+
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+this.fnSearchApi = function(obj, e)
+{
+	
+	// 서비스 객체 생성
+	this.smfSearchService("selectApiTest")		
+		.run()// 실행
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			var a = this.dsResult2.getColumn(0, "svcId");
+			var b = this.dsResult2.getColumn(0, "INVL_NO");
+			var c = this.dsResult2.getColumn(0, "jsessionidTest");
+			trace("================================================");
+			trace("API 호출 결과 Log");
+			trace(a);
+			trace(b);
+			trace(c);
+			trace("================================================");
+			//this.grd00_00.
+		});	
+};
+
+this.fnSearchApi2 = function(obj, e)
+{
+	
+	// 서비스 객체 생성
+	this.smfSearchService("selectApiTest2")		
+		.run()// 실행
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			var a = this.dsResult2.getColumn(0, "svcId");
+			var b = this.dsResult2.getColumn(0, "INVL_NO");
+			var c = this.dsResult2.getColumn(0, "jsessionidTest");
+			trace("================================================");
+			trace("API 호출 결과 Log");
+			trace(a);
+			trace(b);
+			trace(c);
+			trace("================================================");
+			//this.grd00_00.
+		});	
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+// 서비스 콜백
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+	
+};
+
+this.btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var reqValue = this.edt00.value;
+	this.dsSearch.addRow();
+	this.dsSearch.setColumn(0, "INVL_NO", reqValue);
+	
+	alert("api 통신테스트 진행합니다.");
+	this.smfInitForm(this);
+	this.fnSearchApi();
+};
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var reqValue = this.edt00.value;
+	this.dsSearch.addRow();
+	this.dsSearch.setColumn(0, "INVL_NO", reqValue);
+	
+	alert("api 통신테스트 진행합니다.");
+	this.smfInitForm(this);
+	this.fnSearchApi2();
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,841 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="faqFrm" width="1200" height="1030" onload="faqFrm_onload" titletext="자주묻는질문">
+    <Layouts>
+      <Layout height="1030" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="자주 묻는 질문" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="203" initvalueid="ivTitleAccessibilityOn"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div02" taborder="1" text="div02" left="0" top="154" height="40" width="1200" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Button id="btn01" taborder="0" text="원서접수" left="0" top="0" width="130" height="40" cssclass="btn_WF_TabS" initvalueid="ivBtnAccessibilityLink" onclick="btn01_onclick"/>
+              <Button id="btn02" taborder="1" left="140" top="0" width="170" height="40" cssclass="btn_WF_Tab" initvalueid="ivBtnAccessibilityLink" text="전자결제" onclick="btn02_onclick"/>
+              <Button id="btn03" taborder="2" text="수험표 출력" left="314" top="0" width="148" height="40" cssclass="btn_WF_Tab" initvalueid="ivBtnAccessibilityLink" onclick="btn03_onclick"/>
+              <Button id="btn04" taborder="3" text="합격자 발표" left="472" top="0" width="148" height="40" cssclass="btn_WF_Tab" initvalueid="ivBtnAccessibilityLink" onclick="btn04_onclick"/>
+              <Button id="btn05" taborder="4" text="임용(채용)후보자" left="631" top="0" width="170" height="40" cssclass="btn_WF_Tab" initvalueid="ivBtnAccessibilityLink" onclick="btn05_onclick"/>
+              <Div id="divTotal" taborder="5" top="5" width="65" height="30" url="comm::comp_pageSummary2.xfdl" initvalueid="ivDivAccessibilityOn" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divFAQ" taborder="2" left="0" top="234" height="506" right="0" divmargin="2" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divPaging" taborder="3" left="0" height="30" right="0" url="comm::comp_paginator.xfdl" dsPage="dsPage" pageViewSize="100" initvalueid="ivDivAccessibilityOff" tabstop="true" text="" top="divFAQ:40"/>
+        <Static id="Static99_00_00_00_00" taborder="4" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01" taborder="5" left="0" top="114" height="40" cssclass="sta_GD_Size" text="40" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_01_00" taborder="6" left="0" top="194" height="40" cssclass="sta_GD_Size" text="40" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_00_00" taborder="7" left="0" top="740" height="40" cssclass="sta_GD_Size" text="40" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  대국민 온라인채용/계약제교원 - 자주묻는질문 목록조회
+*  @FileName 	ore_oewbd02_m00.xfdl
+*  @Creator 	서광명
+*  @CreateDate 	2022.10.18
+*  @Desction    자주묻는질문 목록조회
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.10.18     	서광명 	        최초 생성 
+*******************************************************************************
+*/
+
+include "lib::cm_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.DivInfo = {};     // Q & A 항목 정보 
+this.fvTitleHeight = this.smfIsMobile()?104:70; // 디폴트 높이
+this.fvContentsHeight = this.smfIsMobile()?292:193; // 디폴트 높이
+this.fvContentsWidth = this.smfIsMobile()?400:747; // 디폴트 높이
+
+this.fv_prefixIdTitleDiv = "divTitle";
+this.fv_prefixIdAreaStatic = "staArea";
+this.fv_prefixIdTitleButton = "btnTitle";
+this.fv_prefixIdOpenButton = "btnOpen";
+this.fv_prefixIdHomeButton = "btnHome";
+this.fv_prefixIdContentsDiv = "divContents";
+this.fv_prefixIdContentsAnswer = "staAnswer";
+this.fv_mofile = "";
+if(this.smfIsMobile()){
+	this.fv_mofile = "_M";
+}
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.faqFrm_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	// 시스템 구분에 따른 공지 코드
+	// [HRD] 30: 원서접수안내 31: 전자결제안내 32: 수험표출력안내 33: 합격자발표안내 34: 임용(채용)후보자안내
+	// [ORE] 50: 모집분야 51: 신청서작성방법 52: 증빙서류안내 53: 표준근로계약서안내
+	
+	// 파라메터 세팅
+	this.pv_params = this.smfGetFormParams();
+	
+	// 시도 교육청 코드
+	this.dsSearch.setColumn(0,"cddcCd", this.smfGetCddcCode());
+	
+	// 선택한 임용/채용 유형으로 시스템 구분 코드 set. 
+	// 1: 유초등 2: 중등 3: 지방공무원 4: 교육공무원 => ORE | 5: 계약제교원 => HRD
+	this.dsSearch.setColumn(0,"appoExamScCd", this.smfGetAppoExamScCd());
+	
+	if (this.dsSearch.getColumn(0,"appoExamScCd") == "5") {
+			this.dsSearch.setColumn(0,"pafrSysClfCd", "HRD");
+	} else {
+			this.dsSearch.setColumn(0,"pafrSysClfCd", "ORE");
+	}
+		
+	// 계약제교원으로 세팅될 경우 상단 버튼들을 다음과 같이 변경한다.
+	if (this.dsSearch.getColumn(0,"appoExamScCd") == "5") {
+		this.div02.form.btn01.set_text("모집분야");
+		this.div02.form.btn02.set_text("신청서 작성방법");
+		this.div02.form.btn03.set_text("증빙서류");
+		this.div02.form.btn04.set_text("표준근로계약서");
+		this.div02.form.btn05.set_visible(false);
+	}
+	
+	//2023.02.20 main 링크 추가
+	if(!this.smfIsNull(this.pv_params.sIndex)){
+		if(this.pv_params.sIndex == "0"){
+			this.div02.form.btn01.click();
+		}else if(this.pv_params.sIndex == "1"){
+			this.div02.form.btn02.click();
+		}else if(this.pv_params.sIndex == "2"){
+			this.div02.form.btn03.click();
+		}else if(this.pv_params.sIndex == "3"){
+			this.div02.form.btn04.click();
+		}else if(this.pv_params.sIndex == "4"){
+			this.div02.form.btn05.click();
+		}
+	}else{
+		this.div02.form.btn01.click();
+	}
+	
+	/*
+	if (!this.smfIsNull(this.pv_params.tabGubun) && this.smfGetAppoExamScCd() != "5") {
+		if (this.pv_params.tabGubun == "30"){
+			this.div02.form.btn01.click();
+		} else if (this.pv_params.tabGubun == "31") {
+			this.div02.form.btn02.click();
+		} else if (this.pv_params.tabGubun == "32") {
+			this.div02.form.btn03.click();
+		} else if (this.pv_params.tabGubun == "33") {
+			this.div02.form.btn04.click();
+		} else if (this.pv_params.tabGubun == "34") {
+			this.div02.form.btn05.click();
+		}
+	}
+	if (!this.smfIsNull(this.pv_params.tabGubun) && this.smfGetAppoExamScCd() == "5") {	
+		if (this.pv_params.tabGubun == "50"){
+			this.div02.form.btn01.click();
+		} else if (this.pv_params.tabGubun == "51") {
+			this.div02.form.btn02.click();
+		} else if (this.pv_params.tabGubun == "52") {
+			this.div02.form.btn03.click();
+		} else if (this.pv_params.tabGubun == "53") {
+			this.div02.form.btn04.click();
+		}
+	} else {
+		this.div02.form.btn01.click();
+	} 
+	*/
+	
+	this.divFAQ.fv_DIV_MARGIN = 0;	
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnSearch = function(obj, e)
+{
+	this.fnDeleteDiv();
+ 	// 서비스 객체 생성
+	this.smfSearchService("select")
+		// 데이터 검증
+		//.validateForm(this.edtSearchKeyword)
+		// 페이징처리
+		.paginator(this.dsResult, this.divPaging, this.div02.form.divTotal ,this.dsPageInfo, obj, e)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			//console.log("this.dsResult = " + this.dsResult.saveXML());
+			
+			var objTargetDivForm =  this.divFAQ.form;
+
+			for(var i=0;i<this.dsResult.rowcount;i++)
+			{
+				this.fnAppendDiv(objTargetDivForm,this.dsResult, i);			
+			}
+			this.smfResetScroll(this.divFAQ.form);
+		});
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * 하나의 게시글을 추가한다.
+ * @param : {object}   scope  대상Form
+ * @param : {object}   objDs  추가할 데이터셋
+ * @param : {Number}   nRow   추가할 데이터셋의 row
+ */
+this.fnAppendDiv = function(scope,objDs,nRow)
+{
+	// 추가될 index를 구한다.
+	// (기본적으로는 부모 Div에 있는 _count 유저프로퍼티 사용. 없으면 0으로 초기화)
+	var nIdx = 0;
+	if(this.smfIsNull(scope.parent._count))
+	{  // 세팅이 안되어 있으면 0으로 세팅
+		nIdx = 0;
+		scope.parent._count = 0;
+	}
+	else
+	{
+		nIdx = scope.parent._count;
+	}
+	
+	// 타이틀 Div 만들기
+	var objTitleDiv = this.fnAddTitleDiv(scope,nIdx,objDs,nRow);
+	// 상세 Div만들기
+	var objContentsDiv = this.fnAddContentsDiv(scope,nIdx,objDs,nRow);
+
+	// 카운트 갯수를 증가시킨다.
+	scope.parent._count++;
+}
+
+/**
+ * TitleDiv를 추가한다.
+ * @param : {object}   scope  대상Form
+ * @param : {Number}   nIdx   추가할 div Index
+ * @param : {object}   objDs  추가할 데이터셋
+ * @param : {Number}   nRow   추가할 데이터셋의 row
+ */
+this.fnAddTitleDiv = function (scope,nIdx,objDs,nRow)
+{
+	var sDivId = this.fv_prefixIdTitleDiv + nIdx;
+	var sFaqTitlNm = objDs.getColumn(nRow,"faqTitlNm");
+	
+	//===================================================================
+	// Div 생성
+	//===================================================================
+	var nHeight = this.fvTitleHeight;
+	var sBeforeContentsId = "divContents"+(nIdx-1);
+	var sChildId = "divContents"+nIdx;
+	var sDivCssClass = "div_WF_FAQBox_Q02 div_FAQ_question"+this.fv_mofile;	// div_FAQ_question (클릭되지않은 타이틀)
+	var sDivArrow = "btn_FAQ_open"+this.fv_mofile; // 버튼 (V 열림버튼)
+	
+	var objDiv = scope[sDivId];
+	
+	if(!objDiv)
+	{
+		objDiv = new Div();
+		if( nIdx==0 )
+		{	// 최초의 오브젝트는 위의 Div의 Top을 0으로 한다
+			objDiv.init(sDivId, 0, 0, null, nHeight, 0, null);				//마지막에 높이 재조정하기 때문에 크게 상관x 
+		}
+		else
+		{   // 최초 Div이외의 것은 바로위의 오브젝트 바로아래에 생성한다. 
+			objDiv.init(sDivId, 0, sBeforeContentsId +":"+ 0, null, nHeight, 0, null);
+			//objDiv.init(sDivId, 0, (nIdx*nHeight), null, nHeight, 0, null);
+		}
+
+		// 만들어진 Div를 부모에 추가
+		// Add Object to Parent Form  
+		scope.addChild(sDivId, objDiv); 
+		
+		//첫번째행일때 css변경
+		if(nRow == 0) sDivCssClass = "div_WF_FAQBox_Q01 div_FAQ_question"+this.fv_mofile;
+		
+		//마지막행일때 css변경
+		if(nRow == this.dsResult.rowcount -1) sDivCssClass = "div_WF_FAQBox_Q03 div_FAQ_question_end"+this.fv_mofile;
+		//행이 1개일때
+		if(nRow == 0 && nRow == this.dsResult.rowcount -1 )  sDivCssClass = "div_WF_FAQBox_Q04"+this.fv_mofile;
+		
+		// Div의 속성을 세팅
+		objDiv.set_cssclass(sDivCssClass);
+		objDiv.set_initvalueid("ivDivAccessibilityOff");
+		objDiv.childId = sChildId;
+		objDiv.dirArrow = sDivArrow;
+		
+		
+		
+		// Div를 보이게 설정(addChild()하면 반드시 show()를 해주어야 실제로 화면에 보임)  
+		objDiv.show(); 
+	}
+	
+	// 질문 버튼(Q) 넣기
+	var questionButton = new Static();
+	var sQuestionButtonId = "question"+nIdx;
+	// PC일때랑 모바일일때 구분해서 생성
+	if(this.smfIsMobile()){
+		questionButton.init(sQuestionButtonId, 28, 31, 34, 34, null, 0);
+	} else {
+		questionButton.init(sQuestionButtonId, 20, 19, 35, 30, null, 0);
+	}
+	questionButton.set_cssclass("sta_WF_FAQ_Q"+this.fv_mofile);
+	questionButton.set_initvalueid("ivStcAccessibilityOn");
+	//questionButton.set_text("Q");
+	objDiv.form.addChild(sQuestionButtonId, questionButton); 
+	questionButton.show();
+	
+	//===================================================================
+	// 타이틀문장(Static) 생성
+	//===================================================================
+	// =======문장을 표시하는 Static을 생성
+	var sStaticId = this.fv_prefixIdTitleButton+nIdx;
+	
+	// 질문영역(Question) 생성
+	var objStatic = objDiv.form[sStaticId];
+	if(!objStatic)
+	{
+		objStatic = new Static();
+		
+		//right 값 btnOpen 에 참조할수 있도록 변경필요
+		if(this.smfIsMobile()){
+			objStatic.init(sStaticId, sQuestionButtonId + ":"+0, 0, null, null, 55, 0);				
+		} else {
+			objStatic.init(sStaticId, sQuestionButtonId + ":"+0, 0, null, null, 55, 0);
+		}
+		
+		// 만들어진 Static을 Div에 추가
+		objDiv.form.addChild(sStaticId, objStatic); 
+		
+		// Static의 속성 설정
+		objStatic.set_initvalueid("ivStcAccessibilityOn");
+		objStatic.set_verticalAlign("middle");
+		objStatic.set_cssclass("sta_FAQ_hang"+this.fv_mofile);
+		objStatic.dirArrow = sDivArrow;
+		objStatic.childId = sChildId;
+		
+		// Static에 클릭이벤트 추가
+		objStatic.addEventHandler("onclick",function(obj,e){
+										this.fnReDraw(scope,obj,e,nIdx);
+									}
+									,this);
+		objStatic.show();
+	}
+	objStatic.set_text(sFaqTitlNm);
+	
+	//입력값 높이 구하기
+	var expandtextHeight = this.fnGetContentsHeight(objStatic);
+
+	//TODO: PC랑 모바일이랑 나눠서 패딩값 줘야함(변수로 설정)
+	var plusHeight = this.smfIsMobile()?10:7;
+	objDiv.setOffsetHeight(expandtextHeight+plusHeight);
+
+	objDiv.set_visible(true);
+	
+	// 질문Div에 우측 화살표버튼을 추가한다.
+	this.fnCreateBtnOpen(objDiv.form,sChildId,nIdx);
+	
+	//여기 이후에 타이틀 right값 참조해야 할듯?
+	
+};
+
+/**
+ * Contents Div를 추가한다.
+ * @param : {object}   scope  대상Form
+ * @param : {Number}   nIdx   추가할 div Index
+ * @param : {object}   objDs  추가할 데이터셋
+ * @param : {Number}   nRow   추가할 데이터셋의 row
+ */
+this.fnAddContentsDiv = function (scope,nIdx,objDs,nRow)
+{
+	var sDivId = this.fv_prefixIdContentsDiv + nIdx;
+	var sFaqCn = objDs.getColumn(nRow,"faqCn");		//답변
+
+	//===================================================================
+	// Div 생성
+	//===================================================================
+	var nHeight = this.fvContentsHeight;
+	var sBeforeContentsId = this.fv_prefixIdTitleDiv + nIdx;
+	var sChildId = this.fv_prefixIdContentsDiv+nIdx;
+	var sDivCssClass = "div_WF_FAQBox_A01 div_FAQ_answer"+this.fv_mofile;	
+	var sDivArrow = "btn_FAQ_open"+this.fv_mofile;
+	
+	//마지막행일때 css변경(추후 변경필요)
+	if(nRow == this.dsResult.rowcount -1) sDivCssClass = "div_WF_FAQBoxEnd_A01 div_FAQ_answer_end"+this.fv_mofile;
+	
+	// Create Object  
+	var objDiv = scope[sDivId];
+	if(!objDiv)
+	{
+		objDiv = new Div();
+		
+		if(this.smfIsMobile()){
+			objDiv.init(sDivId, 0, sBeforeContentsId +":"+ 0, null, nHeight, 0, null);
+		} else {
+			objDiv.init(sDivId, 0, sBeforeContentsId +":"+ 0, null, nHeight, 0, null);
+		}
+		
+		// 만들어진 Div를 부모에 추가
+		// Add Object to Parent Form  
+		scope.addChild(sDivId, objDiv); 
+		
+		// Div의 속성을 세팅
+		objDiv.set_cssclass(sDivCssClass);
+		objDiv.set_initvalueid("ivDivAccessibilityOff");
+		objDiv.childId = sChildId;
+		objDiv.dirArrow = sDivArrow;
+		objDiv.divmargin = "2";
+		
+		// Div를 보이게 설정(addChild()하면 반드시 show()를 해주어야 실제로 화면에 보임)  
+		objDiv.show(); 
+	}
+	
+	//===================================================================
+	// Contents문장(Static) 생성
+	//===================================================================
+	var sStaticCssClass = "sta_FAQ_answer"+this.fv_mofile;
+	
+	// 1-1. 답변 버튼(A) 생성 
+	var sBtnQuestion = "labelQuestion"+nIdx;
+	var objButton = new Static();
+	
+	if(this.smfIsMobile()){
+		objButton.init(sBtnQuestion, 28, 20, 34, 34, null, null);
+	} else {
+		objButton.init(sBtnQuestion, 20, 19, 35, 30, null, null);
+	}
+	objButton.set_cssclass("sta_WF_FAQ_A sta_FAQ_A"+this.fv_mofile);
+	objButton.set_initvalueid("ivStcAccessibilityOn");
+	//objButton.set_text("답변");
+	objDiv.form.addChild(sBtnQuestion, objButton); 
+	objButton.show();
+	
+	// 1-2. 답변 내용 입력
+	var sStaticAnswer = this.fv_prefixIdContentsAnswer+nIdx;
+
+	var objStaticAnswer = objDiv.form[sStaticAnswer];
+	if(!objStaticAnswer)
+	{
+		objStaticAnswer = new Div();  
+		if(this.smfIsMobile()){
+			objStaticAnswer.init(sStaticAnswer, sBtnQuestion + ":" + 0, 13, null, null, 20, 31);
+		} else {
+			objStaticAnswer.init(sStaticAnswer, sBtnQuestion + ":" + 0, 19, null, null, 53, 0);		
+		}
+		
+		objDiv.form.addChild(sStaticAnswer, objStaticAnswer); 
+		
+		// Static의 속성 설정
+// 		objStaticAnswer.set_initvalueid("ivStcAccessibilityOn");
+// 		objStaticAnswer.dirArrow = sDivArrow;	
+// 		objStaticAnswer.childId = "";
+		//objStaticAnswer.show();
+
+		// Static의 속성 설정
+ 		objStaticAnswer.set_initvalueid("ivStcAccessibilityOn");
+		objStaticAnswer.set_async(false);
+ 		objStaticAnswer.set_url("comm::comp_webEditor.xfdl");
+
+ 		objStaticAnswer.form.fnInit(this, this.fnWebEditorCallback, this.fnWebEditorSetHtmlCallback);
+		
+ 		//objStaticAnswer.autoHeight = "Y";
+ 		
+ 		objStaticAnswer._html = sFaqCn;
+ 		
+ 		objStaticAnswer.dirArrow = sDivArrow;	
+ 		objStaticAnswer.childId = "";
+		
+		objStaticAnswer.show();
+	}
+	objStaticAnswer.set_cssclass(sStaticCssClass);	
+	objStaticAnswer.set_verticalAlign("top");
+	objStaticAnswer.set_text(sFaqCn);
+	
+	// 답변(Answer)은 처음에는 안보이게 처리(높이를 0, visible=false)
+	objDiv.setOffsetHeight(0);
+	objDiv.set_visible(false);
+	
+	this.smfResetScroll(objDiv);
+}
+
+/*
+*	웹에디터가 onload된 이후 호출되는 callback
+*   obj : 웹에디터 Div오브젝트
+*/
+this.fnWebEditorCallback = function(obj)
+{
+	// 일반적으로는 데이터를 세팅
+	obj.form.fnSetHtml(obj._html);
+};
+
+/*
+*	웹에디터가 text를 변경 할 경우 호출하는 callback
+*   obj : 웹에디터 Div오브젝트
+*/
+this.fnWebEditorSetHtmlCallback = function(obj,contentHeight)
+{
+	// 일반적으로는 WebEditor Div를 resetScroll해줌.
+	//  (Web Editor의 높이가 변경이 되어 있음(autoHeight="Y"인 경우))
+	//this.smfResetScroll(this.divDetail.form.divWebEditor);
+};
+
+/**
+ * open 버튼 생성
+ * @param : scope ( Div.form)
+ * @param : divInfo 
+ */
+this.fnCreateBtnOpen = function(scope,sChildId,nIdx)
+{
+	var sBtnId = this.fv_prefixIdOpenButton+nIdx;
+	var sDivArrow = "btn_WF_FAQDrop btn_FAQ_open"+this.fv_mofile;
+		
+	// 버튼을 생성
+	var objButton = scope[sBtnId];
+	if(!objButton)
+	{
+		objButton = new Button(); 
+		if(this.smfIsMobile()){
+			objButton.init(sBtnId, null, 0, 36, null, 30, 0);
+		} else {
+			objButton.init(sBtnId, null, 0, 30, null, 23, 2);
+		}
+		
+		
+		// 만들어진 Button을 Div에 추가
+		scope.addChild(sBtnId, objButton);
+		
+		// 버튼의 속성을 설정
+		objButton.set_initvalueid("ivBtnAccessibilityButton");	
+		objButton.childId = sChildId;
+		objButton.dirArrow = sDivArrow;
+		
+		// Button에 클릭이벤트 추가
+		var sStaticId = this.fv_prefixIdTitleButton+nIdx;
+		objButton.addEventHandler("onclick",function(obj,e){
+			this.fnReDraw(scope.parent.parent, scope[sStaticId], e, nIdx);
+		},this);
+		
+		// Button을 보이게 설정(addChild()하면 반드시 show()를 해주어야 실제로 화면에 보임)  
+		objButton.show();  
+	}
+	objButton.set_cssclass("btn_WF_FAQDrop btn_FAQ_open"+this.fv_mofile);
+	
+};
+
+
+/**
+ * 생성 컴포넌트 재 설정 및 reDraw 함
+ * @param : obj - Static
+ * @param : e   - Static eventInfo
+ */
+this.fnReDraw = function(scope,obj,e, nIdx)
+{
+	// 상태값 추가 //수정
+	var openFlag = true;
+	if(obj.parent.parent.form[this.fv_prefixIdOpenButton+nIdx].cssclass == "btn_WF_FAQDropup btn_FAQ_close"+this.fv_mofile){
+		openFlag = false;
+	}
+	
+	// class 초기화 
+	for(var i=0;i < scope.components.length;i++)
+	{	
+		if(scope.components[i] instanceof nexacro.Div )
+		{
+			// titleDiv 이면
+			if(scope.components[i].id.substr(0,this.fv_prefixIdTitleDiv.length) == this.fv_prefixIdTitleDiv)
+			{
+				
+				if(i == 0) {
+					scope.components[i].set_cssclass("div_WF_FAQBox_Q01 div_FAQ_question"+this.fv_mofile);
+				} else if(i == (scope.components.length-2)) {
+					scope.components[i].set_cssclass("div_WF_FAQBox_Q03 div_FAQ_question"+this.fv_mofile);
+				} else {
+					scope.components[i].set_cssclass("div_WF_FAQBox_Q02 div_FAQ_question"+this.fv_mofile);
+				}
+				
+				//행이 1개일때
+				if(i == 0 && i == (scope.components.length-2)) {
+					scope.components[i].set_cssclass("div_WF_FAQBox_Q04 div_FAQ_question"+this.fv_mofile);
+				}				
+				
+				scope.components[i].form[this.fv_prefixIdOpenButton+(scope.components[i].id.substr(scope.components[i].id.length-1, scope.components[i].id.length))].set_cssclass("btn_WF_FAQDrop btn_FAQ_open"+this.fv_mofile);
+				//다른 질문 클릭했을 때 타이틀 강조 해제
+				scope.components[i].form[this.fv_prefixIdTitleButton+(scope.components[i].id.substr(scope.components[i].id.length-1, scope.components[i].id.length))].set_cssclass("sta_FAQ_hang"+this.fv_mofile);
+			}
+			// contentsDiv 이면
+			if(scope.components[i].id.substr(0,this.fv_prefixIdContentsDiv.length) == this.fv_prefixIdContentsDiv)
+			{
+				scope.components[i].setOffsetHeight(0);
+				scope.components[i].set_visible(false);
+				if(!this.smfIsNull(scope.components[i+1])){
+					//scope.components[i+1].setOffsetHeight(79);
+				}
+			}
+		}
+	}
+	
+	//답변 열고 닫을 때, 화면 재조정
+	this.smfResetScroll(this.divFAQ.form);
+	
+
+	var objTitleDiv = obj.parent.parent;
+	var objTitleStatic = objTitleDiv.form[this.fv_prefixIdTitleButton+nIdx];
+	var objTitleButton = objTitleDiv.form[this.fv_prefixIdOpenButton+nIdx];
+	var objContentsDiv = scope[objTitleDiv.childId];
+	var objContentsStatic = objContentsDiv.form[this.fv_prefixIdContentsAnswer+nIdx];
+	
+	// 자주묻는질문 정보를 서랍형으로 오픈 
+	if(!this.smfIsNull(obj.childId) && openFlag){
+		if(nIdx == (scope.components.length / 2 - 1)) {
+			objTitleDiv.set_cssclass("div_WF_FAQBox_Q02 div_FAQ_question"+this.fv_mofile);
+		}
+		//행이 1개일때
+		if(0 == (scope.components.length / 2 - 1)) {
+			objTitleDiv.set_cssclass("div_WF_FAQBox_Q01 div_FAQ_question"+this.fv_mofile);
+		}
+		
+		//이거 왜 안되지?  여기서 부터 시작=====================================
+		if(this.smfIsMobile()){
+			objTitleDiv.set_cssclass("div_FAQ_question_M");
+		}
+		
+		//objTitleDiv.set_cssclass("div_FAQ_answer");
+		
+		//서랍형으로 오픈되었을 때 타이틀 강조
+		objTitleStatic.set_cssclass("sta_FAQ_hang_S"+this.fv_mofile);
+		
+		//objContentsDiv.setOffsetHeight(193);
+		objTitleButton.set_cssclass("btn_WF_FAQDropup btn_FAQ_close"+this.fv_mofile);
+		objContentsDiv.set_visible(true);
+		var expandtextHeight = this.fnGetContentsHeight(objContentsStatic);
+		objContentsDiv.setOffsetHeight(expandtextHeight+7);
+		
+		// 답변 div 높이 조절
+		var objStaticAnswer = objContentsDiv.form[objContentsStatic.id];
+		objContentsDiv.setOffsetHeight(objStaticAnswer.form.fnGetHeight()+38+7);
+		
+	}
+	this.smfResetScroll(scope);
+};
+
+
+//다시 조회할때, 미리 조회되어있는 값들을 지우는 함수
+this.fnDeleteDiv = function()
+{
+	var objComps = this.divFAQ.form.components;
+	var nCount = objComps.length
+	for(var i=nCount-1;i>=0;i--)
+	{
+		var objComp = objComps[i];
+		//objComp.set_visible(false);
+		var objDelete = this.divFAQ.removeChild(objComp.id);
+		if(objDelete)
+		{
+			objDelete.destroy();
+		}
+	}
+	
+	this.divFAQ._count = 0;
+}
+
+//높이 값 구하는 함수
+this.fnGetContentsHeight = function(objContentsStatic)
+{
+	var strFont = 'bold 16px/1.5 "NotoSansKR-Regular","Malgun Gothic","Arial","MS PGothic"';
+	var strMFont = '28px/1.5 "NotoSansKR-Regular","Malgun Gothic","Arial","MS PGothic"';
+	var Font = this.smfIsMobile()?strMFont:strFont;
+	var nHeightPadding = 38;		//19 X 2 (템플릿에 19px)	
+	
+	
+	var staText = objContentsStatic.text;
+	var staWidth = objContentsStatic.getOffsetWidth();
+	var nTextHeight = nexacro.getTextSize(staText,Font,staWidth,"char");
+	
+	return nTextHeight.ny+nHeightPadding ;
+};
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnDeleteDiv();
+	this.fnSearch(obj, e);
+};
+
+this.btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.dsSearch.getColumn(0,"appoExamScCd") == "5") {
+		this.dsSearch.setColumn(0,"faqClfCd" , "50"); //계약제교원 접속시 faq 코드 50으로 set (모집분야)
+	} else {
+		this.dsSearch.setColumn(0,"faqClfCd" , "30"); // 통합채용 원서접수안내faq 코드 30
+	}	
+	this.div02.form.btn01.set_cssclass("btn_WF_TabS");
+	this.div02.form.btn02.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn03.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn04.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn05.set_cssclass("btn_WF_Tab");
+	
+	this.fnSearch(obj, e);
+};
+
+this.btn02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.dsSearch.getColumn(0,"appoExamScCd") == "5") {
+		this.dsSearch.setColumn(0,"faqClfCd" , "52"); //계약제교원 접속시 faq 코드 52로 set (신청서작성방법)
+	} else {
+		this.dsSearch.setColumn(0,"faqClfCd" , "31"); //전자결제안내 faq 코드 31
+	}	
+	this.div02.form.btn02.set_cssclass("btn_WF_TabS");
+	this.div02.form.btn01.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn03.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn04.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn05.set_cssclass("btn_WF_Tab");
+	
+	this.fnSearch(obj, e);
+};
+
+this.btn03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.dsSearch.getColumn(0,"appoExamScCd") == "5") {
+		this.dsSearch.setColumn(0,"faqClfCd" , "53"); //계약제교원 접속시 faq 코드 53으로 set (증빙서류안내)
+	} else {
+		this.dsSearch.setColumn(0,"faqClfCd" , "32"); //수험표출력안내 faq 코드 32
+	}	
+	this.div02.form.btn03.set_cssclass("btn_WF_TabS");
+	this.div02.form.btn01.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn02.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn04.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn05.set_cssclass("btn_WF_Tab");
+	
+	this.fnSearch(obj, e);
+};
+
+this.btn04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.dsSearch.getColumn(0,"appoExamScCd") == "5") { 
+		this.dsSearch.setColumn(0,"faqClfCd" , "54"); //계약제교원 접속시 faq 코드 54로 set (표준근로계약서안내)
+	} else {
+		this.dsSearch.setColumn(0,"faqClfCd" , "33"); //통합채용 합격자발표 faq 코드 33
+	}
+	this.div02.form.btn04.set_cssclass("btn_WF_TabS");
+	this.div02.form.btn01.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn02.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn03.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn05.set_cssclass("btn_WF_Tab");
+	
+	this.fnSearch(obj, e);
+};
+
+this.btn05_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsSearch.setColumn(0,"faqClfCd" , "34");	//통합채용 임용후보자 faq코드 34
+	this.div02.form.btn05.set_cssclass("btn_WF_TabS");
+	this.div02.form.btn01.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn02.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn03.set_cssclass("btn_WF_Tab");
+	this.div02.form.btn04.set_cssclass("btn_WF_Tab");
+	
+	this.fnSearch(obj, e);
+};
+
+	]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">select</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsPageInfo=dsPageInfo</Col>
+            <Col id="outDatasets">dsResult=dsResult dsPageInfo=dsPageInfo</Col>
+            <Col id="svctp">R</Col>
+            <Col id="url">ore_oew_bd02_001.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="message">조회</Col>
+            <Col id="asynctp"/>
+            <Col id="service"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="faqClfCd" type="STRING" size="256"/>
+          <Column id="pafrSysClfCd" type="STRING" size="256"/>
+          <Column id="appoExamScCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCategory"/>
+      <Dataset id="dsResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="faqId" type="string" size="256"/>
+          <Column id="faqTitlNm" type="string" size="256"/>
+          <Column id="faqCn" type="string" size="256"/>
+          <Column id="faqClfCd" type="string" size="256"/>
+          <Column id="pstStsCd" type="string" size="256"/>
+          <Column id="fileRefrnId" type="string" size="256"/>
+          <Column id="faqInqCnt" type="string" size="256"/>
+          <Column id="rgtrNm" type="string" size="256"/>
+          <Column id="rgtrDptNm" type="string" size="256"/>
+          <Column id="mdfrNm" type="string" size="256"/>
+          <Column id="mdfrDptNm" type="string" size="256"/>
+          <Column id="rgtrId" type="string" size="256"/>
+          <Column id="regDt" type="string" size="256"/>
+          <Column id="mdfrId" type="string" size="256"/>
+          <Column id="mdfcnDt" type="string" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPageInfo" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="initPageIndex" type="INT" size="30" value="1"/>
+          <ConstColumn id="initPageSize" type="INT" size="30" value="10"/>
+          <Column id="pageIndex" type="INT" size="256"/>
+          <Column id="pageSize" type="INT" size="256"/>
+          <Column id="totalCount" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="pageIndex"/>
+            <Col id="pageSize"/>
+            <Col id="totalCount"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

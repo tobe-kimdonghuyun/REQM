@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sample_sm_script1" width="1280" height="100" titletext="넥사크로 기능공통 모듈 샘플 (그리드)" onload="fnOnload">
+    <Layouts>
+      <Layout height="100" mobileorientation="landscape" width="1280">
+        <Static id="staMain" taborder="0" text="넥사크로 기능공통 모듈 샘플 (그리드)" left="10" cssclass="sta_Ctitle" top="6" right="90" height="40" font="normal 20pt/normal &quot;Arial&quot;"/>
+        <Button id="btnSmfAddGridRow" taborder="1" text="smfAddGridRow 샘플" left="2" top="89" width="248" height="34" onclick="btnSmfAddGridRow_onclick"/>
+        <Button id="btnSmfValidAndAddRow" taborder="2" text="smfValidAndAddRow 샘플" left="258" top="89" width="248" height="34" onclick="btnSmfValidAndAddRow_onclick"/>
+        <Button id="btnSmfClearGridData" taborder="3" text="smfClearGridData 샘플" left="515" top="89" width="248" height="34" onclick="btnSmfClearGridData_onclick"/>
+        <Button id="btnSmfClearSort" taborder="4" text="smfClearSort 샘플" left="772" top="89" width="248" height="34" onclick="btnSmfClearSort_onclick"/>
+        <Div id="divSample" taborder="5" text="divSample" left="2" top="200" width="1278" height="300">
+          <Layouts>
+            <Layout>
+              <Grid id="grdSample" taborder="11" left="336" top="0" width="602" height="285" binddataset="dsMain" onheadclick="divSample_grdSample_onheadclick" oncellclick="divSample_grdSample_oncellclick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="50"/>
+                      <Column size="272"/>
+                      <Column size="275"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="34" band="head"/>
+                      <Row size="34"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="성명"/>
+                      <Cell col="2" text="직위"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:_chk" displaytype="checkboxcontrol" edittype="checkbox" checkboxfalsevalue="0" checkboxtruevalue="1"/>
+                      <Cell col="1" text="bind:userNameDecpt" edittype="text"/>
+                      <Cell col="2" text="bind:jikwi" edittype="text"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnSmfCopyCheckedRows" taborder="6" text="smfCopyCheckedRows 샘플" left="1029" top="89" width="248" height="34" onclick="btnSmfCopyCheckedRows_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[// 서비스 콜백
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+	
+};
+
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	trace( this.getOffsetHeight() );
+	this.smfInitForm(obj); 
+	this.dsMain.updatecontrol = false;
+
+	if(this.dsMain.rowcount > 0){
+		for(var i=0,size=this.dsMain.rowcount; i<size; i++){
+			this.dsMain.setRowType(i, Dataset.ROWTYPE_NORMAL);
+		}
+	}
+	
+	this.dsMain.updatecontrol = true;
+};
+
+this.btnSmfAddGridRow_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// grid에 Row 추가
+	// 조회가 되지 않았으면 추가되지 않고 안내메시지를 출력
+	this.smfAddGridRow(this.divSample.form.grdSample, "list");
+};
+
+this.btnSmfValidAndAddRow_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// Validation을 체크 후 Dataset.addRow 실행
+	// 조회를 먼저 했는지 검증
+	// 유효성검사를 수행후에 그리드에 row를 추가한다
+	var nRow = this.smfValidAndAddRow(this.divSample.form.grdSample, this.divSample, "list");
+	if(nRow == -1) return;
+};
+
+this.btnSmfAddRowValidate_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// Validation을 체크 후 Dataset.addRow 실행
+	this.smfValidAndAddRow(this.divSample.form.grdSample);
+	
+	alert(this.smfAddRowValidate(this.dsMain, this.divSample.form.grdSample));
+};
+
+this.btnSmfClearGridData_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 그리드 데이터 삭제
+	this.smfClearGridData(this.divSample.form.grdSample);
+};
+
+this.btnSmfClearSort_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// Sort Mark 제거(초기상태로 복원할 경우)
+	this.smfClearSort(this.divSample.form.grdSample);
+};
+
+this.divSample_btnSelect_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 서비스 객체 생성
+	this.smfSearchService("list")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+		})
+	;
+};
+
+this.divSample_grdSample_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var sColId = obj.getCellProperty("body",e.cell,"text");
+	if ("bind:_chk" == sColId){
+		this.smfSetGridCheckAll(obj, e);
+	}
+
+	var strReset = "col1,col2";
+	this.smfProcGrdSort(obj, e.cell, strReset);
+};
+
+this.btnSmfCopyCheckedRows_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 선택한 row 데이터 복사
+	//this.smfCopyCheckedRows(this.dsMain, this.dsCompare, false, "_chk1");
+	var CopyCheckedRows = this.smfCopyCheckedRows(this.dsMain, this.dsCompare);
+	// 복사된 데이터 확인은 디버그 창"ctrl + alt + shift + 1 키를 누른 후 타이틀 마우스 좌클릭"에서 확인가능
+	alert(CopyCheckedRows);
+};
+
+this.divSample_grdSample_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var sColId = obj.getCellProperty("body",e.cell,"text");
+	
+	if("bind:_chk" == sColId){
+		//alert(obj.getCellValue(e.row,e.cell));
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="userNameDecpt" type="STRING" size="256"/>
+          <Column id="jikwi" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="userNameDecpt">홍길동</Col>
+            <Col id="jikwi">부장</Col>
+            <Col id="_chk"/>
+          </Row>
+          <Row>
+            <Col id="userNameDecpt">전우치</Col>
+            <Col id="jikwi">차장</Col>
+            <Col id="_chk"/>
+          </Row>
+          <Row>
+            <Col id="userNameDecpt">견우</Col>
+            <Col id="jikwi">과장</Col>
+            <Col id="_chk"/>
+          </Row>
+          <Row>
+            <Col id="userNameDecpt">직녀</Col>
+            <Col id="jikwi">대리</Col>
+            <Col id="_chk"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCompare" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="userNameDecpt" type="STRING" size="256"/>
+          <Column id="jikwi" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">list</Col>
+            <Col id="inDatasets">main=dsMain</Col>
+            <Col id="outDatasets"/>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/sam_plecm00_m00_001.ux</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+          <Row>
+            <Col id="id">save</Col>
+            <Col id="inDatasets">main=dsMain</Col>
+            <Col id="outDatasets"/>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/sam_plecm00_m00_002.ux</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+          <Row>
+            <Col id="id">delete</Col>
+            <Col id="inDatasets">main=dsMain</Col>
+            <Col id="outDatasets"/>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="url">/sam_plecm00_m00_003.ux</Col>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" oncolumnchanged="dsSearch_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="name" type="STRING" size="150"/>
+          <Column id="genreCode" type="STRING" size="1"/>
+          <Column id="artist" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="name"/>
+            <Col id="genreCode"/>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

@@ -1,0 +1,454 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[/**
+ * @fileoverview 업무에서 import하는 스크립트 모듈
+ * @author Tobesoft
+ * @학부모소통시스템 : 함수명 생성시 scr을 prefix로 사용할 것.
+ */
+
+/**
+ * Form이 로드되면 호출하는 함수 
+ *
+ * @param  frm     호출한 객체
+ * @return void
+ */
+this.scrInitForm = function(frm)
+{
+ //trace("frm.getOwnerFrame().form.name==="+frm.getOwnerFrame().form.name);
+ //trace("frm.parent.name==="+frm.parent.name);
+	if ( frm.getOwnerFrame().form.name == "frameMain" ) {
+		//이벤트 추가
+		if ( frm.parent.name == "divWork" ) {
+			//divWork 높이 조정
+			this.scrChangeWorkHeight(frm);
+			frm.addEventHandler("onlayoutchanged", this.scrForm_onlayoutchanged, this);			
+			frm.addEventHandler("ontimer", this.scrForm_ontimer, this);
+			
+			//추가작업(로그기록)
+			this.scrAfterInitForm(frm);
+			
+			//Load시 Focus는 btnFirstFocus로 이동
+			frm.getOwnerFrame().form.divTop.form.staFirstFocus.setFocus();
+		}
+	}
+	else {
+		//trace("팝업 or QuickView 실행중 >>>>");
+		if ( frm.opener) {
+			//trace("팝업 실행중 >>>>");
+			//이벤트 추가
+			frm.addEventHandler("onlayoutchanged", this.scrFormPopup_onlayoutchanged, this);
+			frm.addEventHandler("ontimer", this.scrForm_ontimer, this);
+			
+			//ChildFrame cssclass수정
+			this.getOwnerFrame().set_cssclass("frm_POP_Bg");
+			
+			//추가작업(로그기록)
+			this.scrAfterInitForm(frm);
+		}
+	}
+	
+	var sRunMode = nexacro.getEnvironmentVariable("ev_runMode");
+	if ( sRunMode == "1" || sRunMode == "2" || sRunMode == "4" ) {
+		//trace("공지1 : localhost, dev,  tst에서는 디버그창을 이용할 수 있습니다.(Ctrl + Alt + D)");
+		//trace("공지2 : localhost, dev,  tst에서는 개발자용 로그인창을 이용할 수 있습니다.(Ctrl + Alt + L)");
+		// 폼디버거연결
+		frm.addEventHandler('onkeydown' ,function (obj, e){
+		//trace("e.keycode==="+e.keycode);
+			if(e.ctrlkey && e.altkey && e.keycode == 68 ){		//ctrl + alt + D
+				this.smfOpen("FormSpy" + Math.random() + Math.random() + Math.random(), "comm::form_spy.xfdl", {
+					noCallback: true,
+					params: {
+						procType: "none",
+					},
+				});
+			}
+			else if(e.ctrlkey && e.altkey && e.keycode == 76 ){		//ctrl + alt + L
+				//this.smfDialog("FormLogin" + Math.random() + Math.random() + Math.random(), "frame::/scr/frameLogin.xfdl", {
+				this.smfDialog("_FormLoginScrP", "frame::/scr/frameLogin.xfdl", {
+					noCallback: true,
+					params: {
+						procType: "none"
+					},
+					titlebar : false
+				   }
+				);
+			}
+		}, this);			
+	}
+	
+};
+
+/**
+ * this.scrInitForm 호출된 이후에 발생한다
+ * 
+ * @param  obj
+ */
+this.scrAfterInitForm = function(obj)
+{
+// 	// 페이지 변경 시 마다 Focus 위치 초기화
+// 	if((this.getOwnerFrame().form.divTop) && (this.getOwnerFrame().form.divTop.form["btnFirstFocus"]))
+// 	{
+// 		this.getOwnerFrame().form.divTop.form.btnFirstFocus.setFocus();
+// 	}
+
+	// 화면로그를 서버에 전송 -  quickview일때는 넣지 않음
+	if ( this.smfIsQuickView() == "N" )
+	{
+		var sMenuId = "";
+		var sUrl = "";
+		var objResult = "";
+		var sCddcCd  = "";
+	
+		if ( obj.getOwnerFrame().form.name == "frameMain" ) {  // 화면인 경우
+			
+			//trace("=============================================================================================================");
+			//trace("화면인 경우");	
+			//trace("=============================================================================================================");
+
+			obj._params = obj.smfGetFormParams();
+			sMenuId = obj._params.menu;
+			sUrl = obj.parent.url;
+			objResult = obj._smfGetFormLogInfo(sMenuId);
+			sCddcCd = this.smfGetCddcCode(); 
+			
+		}else { // 팝업인 경우
+		
+			//trace("=============================================================================================================");
+			//trace("팝업인 경우");	
+			//trace("=============================================================================================================");
+			
+			obj._params = obj.smfGetPopupParams();
+			sMenuId = "";
+			sUrl    = obj._params._url;
+			objResult = obj._smfGetFormLogInfo(sMenuId);
+			
+			// 예외 팝업의 종류를 지정
+			var arrExceptFormUrl = [ "comm::comm_alert.xfdl"      //  Alert화면
+									, "comm::comm_confirm.xfdl"    //  Confirm화면
+									, "comm::comm_alertScr.xfdl"      //  SCR Alert화면
+									, "comm::comm_confirmScr.xfdl"    //  SCR Confirm화면
+								   ];
+			if(arrExceptFormUrl.includes(sUrl)){
+				return;
+			}				
+		}
+
+		if(this.smfIsNull(objResult.menu0))
+		{
+			objResult.menu0 = obj.titletext;
+		}
+		// 화면호출로그를 서버로 전송한다.		
+		var objParam = {     pafrSysClfCd  : objResult.pafrSysClfCd    // 대국민시스템분류코드("PAS")
+						   , pafrSysSubCd  : objResult.pafrSysSubCd    // 대국민시스템서브코드("000" )
+						   , cddcCd        : sCddcCd                   // 시도교육청
+						   , menu1Lvl      : objResult.menu0           // 메뉴1레벨("2000")
+						   , menu2Lvl      : objResult.menu1           // 메뉴2레벨("2001")
+						   , menuUrlAddr   : sUrl                      // 메뉴URL주소("test::test01.xfdl" )
+			   };	
+		//trace("화면호출로그 >>>>>>>>>" + JSON.stringify(objParam));
+		//obj.smfSendScreenLog(objParam);
+	}
+};
+
+//Form Height변경시 적용
+this.scrChangeWorkHeight = function(objForm)
+{
+	var sCurrLayout, nFormHeight, nFormWidth;
+	if ( objForm.isValidObject("staFormHeightComp") ) {
+		nFormHeight = objForm.staFormHeightComp.getOffsetBottom();
+	}
+	else {
+		sCurrLayout = objForm.getCurrentLayoutID();
+		nFormHeight = objForm.getLayoutInfo(sCurrLayout,"height");
+	}
+// 	if ( this.smfIsNull(objForm.fvCurrLayoutFormHeight) ) {
+// 		nFormHeight = objForm.getLayoutInfo(sCurrLayout,"height");
+// 	} else {
+// 		nFormHeight = objForm.fvCurrLayoutFormHeight;
+// 	}
+// 	trace("nFormHeight : " + nFormHeight + ":::::::::::: scrGetMaxBottomPos : " + this.scrGetMaxBottomPos(objForm));
+	//var nFormHeight = this.scrGetMaxBottomPos(objForm);
+	//trace(objForm.name + " :::::::::: nFormHeight===="+nFormHeight);
+	this.getOwnerFrame().form.divAll.form.fv_WorkFormHeight = nFormHeight;
+	this.getOwnerFrame().form.divAll.form.divWork.setOffsetHeight(nFormHeight);
+	
+	this.getOwnerFrame().form.divAll.form.resetScroll();
+};
+
+//Form의 onlayoutchanged이벤트 추가
+this.scrForm_onlayoutchanged = function(obj,e)
+{
+	//trace("work form_onlayoutchanged >>>>" + e.newlayout);
+	obj.setTimer(900, 55);	
+};
+
+//팝업Form의 onlayoutchanged이벤트 추가
+this.scrFormPopup_onlayoutchanged = function(obj,e)
+{
+	obj.setTimer(901, 55);	
+};
+
+//Form의 ontimer이벤트 추가
+this.scrForm_ontimer = function(obj,e)
+{
+	if ( e.timerid == 900 ) {
+		obj.killTimer(e.timerid);
+		this.scrChangeWorkHeight(obj);
+
+		var oCallBackFunc = obj["fnAfter_onlayoutchanged"];
+		if(this.smfIsFunc(oCallBackFunc)) {
+			oCallBackFunc.call(obj, obj.getCurrentLayoutID());
+		}
+	}
+	else if ( e.timerid == 901 ) {
+		obj.killTimer(e.timerid);
+		
+		var oCallBackFunc = obj["fnAfter_onlayoutchanged"];
+		if(this.smfIsFunc(oCallBackFunc)) {
+			oCallBackFunc.call(obj, obj.getCurrentLayoutID());
+		}
+	}
+};
+
+/**
+ * 지정된 form 에서 부터 상위 메뉴 화면 __smfResetScroll
+ * @param {Obj} scope  - form object
+ * @return N/A
+ */
+this.scrResetScroll = function(scope)
+{
+	var obj = scope;
+	// 부모를 따라가며, 높이 조절 및 resetScroll()을 실행한다.(divAll가지만 한다.)
+	while( obj )
+	{
+		if( obj.toString() == '[object Form]' )
+		{
+			if(obj.visible)
+			{	
+				
+// 				var nMaxHeight = obj.scrGetMaxBottomPos(obj);
+// 				trace(obj.name+":  scrResetScroll : " + nMaxHeight);
+// 				if(obj.parent instanceof nexacro.Tabpage)
+// 				{
+// 					var nTabButtonHeight = obj.parent.parent.tabpages[obj.parent.parent.tabindex].getOffsetTop();
+// 					obj.parent.parent.setOffsetHeight(nMaxHeight+nTabButtonHeight);   // object(Tab) 자체에 줌
+// 				}
+// 				else
+// 				{
+// 					obj.parent.setOffsetHeight(nMaxHeight);   // object(Div) 자체에 줌
+// 				}
+				
+				obj.resetScroll();
+			}
+			
+		}
+		// divWork까지만 작업을 한다.		
+		//trace("scrResetScroll : id="+obj.id+",name="+obj.name);
+		if ( obj.name == "divAll")
+		{
+			//trace("최상위 도달: " + obj.name);
+			break;
+		}
+		
+		obj = obj.parent;
+	}
+};
+
+/**
+ * 지정된 form의 최소bottom을 구한다
+ * @param {Obj} objForm       - form object
+ * @return {Number}    최대 bottom값
+ */  
+this.scrGetMaxBottomPos = function(objForm)
+{
+	if ( !objForm.parent.visible ) return;
+	//  Form안의 component의 리스트를 구한다.
+	var objComponents = objForm.components;
+
+	var nMaxBottom=0;
+	var nBottom = 0;
+	for(var i=0;i<objComponents.length;i++)
+	{
+		// 각 Component오브젝트를 구한다.
+		var objComponent = objComponents[i];
+
+		if ( !objComponent.visible ) continue;
+
+		// 계산에 제외되는 항목
+		if ( objComponent.exceptResetScroll=="Y" ) continue;
+
+		// 해당 Component에 getOffsetBottom()함수가 있는 경우만 작업
+		if(objComponent.getOffsetBottom)
+		{
+			// Bottom을 구한다.
+			nBottom = objComponent.getOffsetBottom();
+
+			// 최대 Bottom값보다 큰 경우 최대값을 업데이트한다.
+			if(nBottom>nMaxBottom)
+			{
+				nMaxBottom = nBottom;
+			}
+		}
+	}
+	// 최대 Bottom값을 반환한다.
+	return nMaxBottom;
+};
+
+/**
+ * 알림 메시지를 출력한다
+ *
+ * @param  messageId : 메시지아이디
+ * @param  messageArguments : 메시지 arguments
+ * @param  callback : 확인버튼 클릭후 콜백함수
+ * @param  cleanupCallback : 내부용 파라메터 사용하지 말것
+ * @param  objOption : dialog를 띄울때의 조건(JOSN형태. {left:100,top:100,width:100,height:100} 생략가능)
+ * @see this.scrAlert("CM007");
+ * @return void
+ */
+this.scrAlert = function(messageId, messageArguments, callback, cleanupCallback,objOption) {
+	// var message = this.smfGetMessage(messageId, messageArguments);
+	var result = this.smfParseMessageBoxArguments(this.scrAlert.arguments);
+	
+	return this.scrLiteralAlert(result.message, result.callback, result.cleanupCallback,objOption); 
+};
+
+ /**
+ * 확인 메시지를 출력한다
+ *
+ * @param  messageId : 메시지아이디
+ * @param  messageArguments : 메시지 arguments
+ * @param  callback : 확인 또는 취소 버튼 클릭후 콜백함수
+ * @param  cleanupCallback : 내부용 파라메터 사용하지 말것
+ * @param  objOption : dialog를 띄울때의 조건(JOSN형태. {left:100,top:100,width:100,height:100} 생략가능)
+ * @see this.smfConfirm("CM003", [], function(confirmParams){
+			if(confirmParams.confirmResult){
+				alert('수행');
+			}
+		}); // 저장하시겠습니까?
+ * @return void
+ */
+this.scrConfirm = function(messageId, messageArguments, callback, cleanupCallback,objOption) {
+	var result = this.smfParseMessageBoxArguments(this.scrConfirm.arguments);
+	
+	return this.scrLiteralConfirm(result.message, result.callback, result.cleanupCallback,objOption);
+};
+
+/**
+ * 알림 메시지를 출력한다
+ *
+ * @param  message : 메시지
+ * @param  callback : 확인버튼 클릭후 콜백함수
+ * @return void
+ */
+this.scrLiteralAlert = function(message, callback, cleanupCallback,objOption) 
+{
+	if(this.isNil(callback)) callback = function(){};
+
+	var nLeft=null;
+	var nTop=null;
+	var nWidth=null;
+	var nHeight=null;
+
+	// 옵션이 있다면 값을 적용(주로 left,top,width,height)
+	if(objOption)
+	{
+		nLeft   = objOption.left;
+		nTop    = objOption.top;
+		nWidth  = objOption.width;
+		nHeight = objOption.height;
+	}
+	// 2023.07.21 메세지를 가지고 dialogID를 만들때 '' 가 포함되면 표시안되는 문제 해결
+	var sMessage = "empty";
+	if(message)
+	{
+		sMessage = message.substr(0,30);
+		sMessage = nexacro.base64Encode( sMessage ) ;
+	}	
+	
+	this.smfDialog("comm::comm_alertScr.xfdl" + new Date() + ":" + Math.random() +  ":" + Math.random() + ":" + sMessage, "comm::comm_alertScr.xfdl", {
+		callback: callback,
+		internalCallback: cleanupCallback,
+		params: {
+			procType: "notice",
+			message: message,
+		},
+		titlebar : false
+	}
+	,nLeft,nTop,nWidth,nHeight
+	);
+};
+
+/**
+ * 확인 메시지를 출력한다
+ *
+ * @param  message : 메시지
+ * @param  callback : 확인 또는 취소 버튼 클릭후 콜백함수
+ * @return void
+ */
+this.scrLiteralConfirm = function(message, callback, cleanupCallback,objOption) {
+	if(this.isNil(callback)) callback = function(){};
+
+	var nLeft=null;
+	var nTop=null;
+	var nWidth=null;
+	var nHeight=null;
+	
+	// 옵션이 있다면 값을 적용(주로 left,top,width,height)
+	if(objOption)
+	{
+		nLeft   = objOption.left;
+		nTop    = objOption.top;
+		nWidth  = objOption.width;
+		nHeight = objOption.height;
+	}
+	
+	// 2023.07.21 메세지를 가지고 dialogID를 만들때 '' 가 포함되면 표시안되는 문제 해결
+	var sMessage = "empty";
+	if(message)
+	{
+		sMessage = message.substr(0,30);
+		sMessage = nexacro.base64Encode( sMessage ) ;
+	}	
+	
+	this.smfDialog("comm::comm_confirmScr.xfdl" + new Date() + ":" + Math.random() +  ":" + Math.random() + ":" +sMessage, "comm::comm_confirmScr.xfdl", {
+		callback: callback,
+		internalCallback: cleanupCallback,
+		params: {
+			procType: "notice",
+			message: message,
+		},
+		titlebar : false
+	   }
+	,nLeft,nTop,nWidth,nHeight
+	);
+};
+
+/* 긴 문장을 "..." 을 붙인다 */
+this.scrDisplayText = function(sLongText, sSize)
+{
+	//trace("=============================================================================================================");
+	//trace("sLongText ::: " + sLongText );
+	//trace("sLongText.length ::: " + sLongText.length );
+	//trace("sSize ::: " + sSize );
+	//trace("=============================================================================================================");
+
+	var sTextTemp = "";
+
+	if((sLongText.length - 3) < sSize ){
+		sTextTemp = sLongText;
+	}else{
+		for (var i=0;i< sSize;i++){
+			sTextTemp += sLongText.charAt(i);
+		};	
+		sTextTemp += sLongText.charAt(i) + "...";		
+	}
+	
+	return sTextTemp;	
+};
+
+//어플리케이션 시작 콤포넌트로 Focus이동하기.
+this.scrFirstCompSetFocus = function()
+{
+	if ( this.smfIsQuickView() == "N" ) {
+		nexacro.getApplication().mainframe.VFrameSet.frameMain.form.divTop.form.btnFirstFocus.setFocus();
+	}
+};]]></Script>

@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[/**
+*  유틸리티 공통함수 
+*  @FileName 	Util.js 
+*  @Creator 	이노다임 개발팀
+*  @CreateDate 	2021.05
+*  @Desction   
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2021.05.27     	이노다임 개발팀 	        최초 생성 
+*  2021.05.27     	이노다임 개발팀       	    주석 정비
+*******************************************************************************
+*/
+
+//var pForm = nexacro.Form.prototype;
+
+nexacro.getApplication().changeflg = false;
+nexacro.getApplication().oldRowNum = "";
+
+// 문자열 길이 체크
+// nexacro.getTextSize로 구할수 있으므로 임시로 사용(06/03현재는 지원하고 있지 않음)
+nexacro.getApplication().chkStrLength = function (str, num)
+{
+	if (str === undefined) 
+	{
+		return;
+	}
+
+	var r = 0;
+	var i = 0;
+	for (i = 0; i < str.length; i++) 
+	{
+		var c = str.charCodeAt(i);
+		if ((c >= 0x0 && c < 0x81) || (c == 0xf8f0) || (c >= 0xff61 && c < 0xffa0) || (c >= 0xf8f1 && c < 0xf8f4)) 
+		{
+			r += 1;
+		}
+		else 
+		{
+			r += 2;
+		}
+
+		if (num < r) 
+		{
+			break;
+		}
+	}
+
+	if (num < r) 
+	{
+		str = str.substr(0, i) + "...";
+	}
+
+	return str;
+};
+
+
+// 설정 언어에 따른 언어 설정
+nexacro.getApplication().com_SetLanguage = function (strLang)
+{
+	// 한국어
+	if (nexacro.getApplication().gv_Language.toUpperCase() == "KO") 
+	{
+		// 국가코드설정[한국:001]
+		nexacro.getApplication().gv_NationCd = "001";
+		nexacro.getApplication().gv_MsgNaCol = "msg_nation1";
+		nexacro.getApplication().gds_CompLang.set_rowposition(0);
+		nexacro.getApplication().gds_CodeLang.set_rowposition(0);
+		//trace("KO");
+
+		// 영어
+	}
+	else if (nexacro.getApplication().gv_Language.toUpperCase() == "EN") 
+	{
+		// 국가코드설정[영어:002]
+		nexacro.getApplication().gv_NationCd = "002";
+		nexacro.getApplication().gv_MsgNaCol = "msg_nation2";
+		nexacro.getApplication().gds_CompLang.set_rowposition(1);
+		nexacro.getApplication().gds_CodeLang.set_rowposition(1);
+		//trace("EN");
+
+		// 일본어
+	}
+	else if (nexacro.getApplication().gv_Language.toUpperCase() == "JA") 
+	{
+		// 국가코드설정[일본:003]
+		nexacro.getApplication().gv_NationCd = "003";
+		nexacro.getApplication().gv_MsgNaCol = "msg_nation3";
+		nexacro.getApplication().gds_CompLang.set_rowposition(2);
+		nexacro.getApplication().gds_CodeLang.set_rowposition(2);
+		//trace("JA");
+
+		// 그외
+	}
+	else 
+	{
+		// 국가코드설정[영어:002]
+		nexacro.getApplication().gv_Language == "EN";
+		nexacro.getApplication().gv_NationCd = "002";
+		nexacro.getApplication().gv_MsgNaCol = "msg_nation2";
+		nexacro.getApplication().gds_CompLang.set_rowposition(1);
+		nexacro.getApplication().gds_CodeLang.set_rowposition(1);
+		//trace("EN");
+	}
+};
+
+
+nexacro.getApplication().com_SetQuote = function (argString)
+{
+	if (nexacro.getApplication().com_IsEmpty(argString)) 
+	{
+		argString = "";
+	}
+
+	var strVal = new String(argString);
+	var strRet = new String("'");
+
+	for (var i = 0; i < strVal.length; i++) 
+	{
+		if (strVal.substr(i, 1) == "'") 
+		{
+			strRet += '"';
+		}
+		else if (strVal.substr(i, 1) == '"') 
+		{
+			strRet += '"';
+		}
+		else 
+		{
+			strRet += strVal.substr(i, 1);
+		}
+	}
+
+	strRet += "'";
+	return strRet;
+};
+
+nexacro.getApplication().com_IsEmpty = function (inVal)
+{
+	if (new String(inVal).valueOf() == "undefined") 
+	{
+		return true;
+	}
+	if (inVal == null) 
+	{
+		return true;
+	}
+
+	var v_ChkStr = new String(inVal);
+	if (v_ChkStr == null) 
+	{
+		return true;
+	}
+	if (v_ChkStr.toString().length == 0) 
+	{
+		return true;
+	}
+	return false;
+};
+
+
+nexacro.getApplication().com_AddMiWizard = function (inDs, outDs, args, sqlSel, sqlIns, sqlUpd, sqlDel)
+{
+	var aRow = nexacro.getApplication().gds_MiWizard.addRow();
+	nexacro.getApplication().gds_MiWizard.setColumn(aRow, "inputDs", inDs);
+	nexacro.getApplication().gds_MiWizard.setColumn(aRow, "outDs", outDs);
+	nexacro.getApplication().gds_MiWizard.setColumn(aRow, "parameters", args);
+	nexacro.getApplication().gds_MiWizard.setColumn(aRow, "sql_select", sqlSel);
+	nexacro.getApplication().gds_MiWizard.setColumn(aRow, "sql_insert", sqlIns);
+	nexacro.getApplication().gds_MiWizard.setColumn(aRow, "sql_update", sqlUpd);
+	nexacro.getApplication().gds_MiWizard.setColumn(aRow, "sql_delete", sqlDel);
+};
+
+// 검색조건 설정
+nexacro.getApplication().com_SetParam = function (dsParamObj)
+{
+	nexacro.getApplication().gds_SearchParam.clearData();
+
+	var aRow = nexacro.getApplication().gds_SearchParam.addRow();
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "dispGubun", dsParamObj.getColumn(0, "dispGubun"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "keywordall", dsParamObj.getColumn(0, "keywordall"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "PCategory2", dsParamObj.getColumn(0, "PCategory2"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "display_cnt", dsParamObj.getColumn(0, "display_cnt"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "page", dsParamObj.getColumn(0, "page"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "searchfield", dsParamObj.getColumn(0, "searchfield"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "searchgubun", dsParamObj.getColumn(0, "searchgubun"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "keyword", dsParamObj.getColumn(0, "keyword"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "search_resort", dsParamObj.getColumn(0, "search_resort"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "BusinessSection", dsParamObj.getColumn(0, "BusinessSection"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "loginAcc", dsParamObj.getColumn(0, "loginAcc"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "statusType", dsParamObj.getColumn(0, "statusType"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "User_id", dsParamObj.getColumn(0, "User_id"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "ProjectCd", dsParamObj.getColumn(0, "ProjectCd"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "bookMark", dsParamObj.getColumn(0, "bookMark"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "period", dsParamObj.getColumn(0, "period"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "fromDate", dsParamObj.getColumn(0, "fromDate"));
+	nexacro.getApplication().gds_SearchParam.setColumn(aRow, "toDate", dsParamObj.getColumn(0, "toDate"));
+};
+
+
+nexacro.getApplication().com_OpenSubScreen = function (screenId)
+{
+	var parentObj = nexacro.getApplication().MainFrame.childFrame;
+
+	var nRow = nexacro.getApplication().gds_SubInfo.addRow();
+	nexacro.getApplication().gds_SubInfo.setColumn(nRow, "screenId", screenId);
+	nexacro.getApplication().gds_SubInfo.setColumn(nRow, "myDiv", parentObj.name + ".form.DivSub_" + screenId);
+	nexacro.getApplication().gds_SubInfo.setColumn(nRow, "mySta", parentObj.name + ".form.StaSub_" + screenId);
+
+	// Static으로 배경 설정
+	var newSta = new Static("StaSub_" + screenId, "absolute", 0, 0, null, null, 0, 0);
+	parentObj.form.addChild(newSta.name, newSta);
+
+	newSta.style.set_border_width(0);
+	newSta.style.set_background_color("#000000c0");
+
+	newSta.show();
+
+	// Div으로 화면 설정
+	var nWidth = nexacro.getApplication().gds_ScreenUrl.lookup("screenId", screenId, "width");
+	var nHeight = nexacro.getApplication().gds_ScreenUrl.lookup("screenId", screenId, "height");
+	var scrUrl = nexacro.getApplication().gds_ScreenUrl.lookup("screenId", screenId, "scrUrl");
+
+	var newDiv = new Div("DivSub_" + screenId, "absolute", 0, 0);
+	parentObj.form.addChild(newDiv.name, newDiv);
+
+	newDiv.set_width(nWidth);
+	newDiv.set_height(nHeight);
+
+	newDiv.set_url(scrUrl);
+	newDiv.set_scrollbars("none");
+	newDiv.style.set_border_width(0);
+
+	newDiv.show();
+};
+
+nexacro.getApplication().com_CloseSubScreen = function ()
+{
+	var parentFrm = nexacro.getApplication().MainFrame.childFrame.form;
+
+	var targetDiv = eval("application.mainFrame." + nexacro.getApplication().gds_SubInfo.getColumn(0, "myDiv"));
+	var targetSta = eval("application.mainFrame." + nexacro.getApplication().gds_SubInfo.getColumn(0, "mySta"));
+
+	parentFrm.removeChild(targetDiv.name);
+	parentFrm.removeChild(targetSta.name);
+
+	targetDiv.destroy();
+	targetSta.destroy();
+
+	nexacro.getApplication().gds_SubInfo.clearData();
+};
+
+// 화면 중앙에 표시
+nexacro.getApplication().com_SetScreenPos = function (frmObj)
+{
+	var leftSize = (frmObj.parent.getOffsetWidth() - frmObj.getOffsetWidth()) / 2;
+	var topSize = (frmObj.parent.getOffsetHeight() - frmObj.getOffsetHeight()) / 2;
+	frmObj.set_left(leftSize);
+	frmObj.set_top(topSize);
+};
+
+
+nexacro.getApplication().com_ExpGridDetail = function (gridObj1, gridObj2, divObj, frmObj, rowNum, plsLeft, plsTop)
+{
+	var dsData1 = gridObj1.getBindDataset();
+	var dsData2 = gridObj2.getBindDataset();
+
+	// 닫는 처리
+	if (nexacro.getApplication().oldRowNum == rowNum && nexacro.getApplication().changeflg == false) 
+	{
+		dsData2.filter("");
+
+		divObj.set_visible(false);
+		gridObj2.set_visible(false);
+
+		nexacro.getApplication().changeflg = true;
+
+		// 표시 처리
+	}
+	else 
+	{
+		var headSize = nexacro.toNumber(gridObj1.getFormatRowProperty(0, "size"));
+		var cellSize = nexacro.toNumber(gridObj1.getFormatRowProperty(1, "size"));
+
+		var grdTop = gridObj1.getOffsetTop();
+		var grdCus = headSize + cellSize;
+		var resize = 0;
+		if ((rowNum % 10) == 0) 
+		{
+			resize = (10 * cellSize) + headSize + grdTop;
+		}
+		else 
+		{
+			resize = (((rowNum % 10) - 1) * cellSize) + grdCus + grdTop;
+		}
+
+		divObj.set_left(gridObj1.getOffsetLeft() + plsLeft);
+		divObj.set_top(resize + plsTop);
+		divObj.bringToFront();
+		divObj.set_visible(true);
+
+		dsData2.filter("rowNum > '" + rowNum + "'");
+
+		gridObj2.set_left(gridObj1.getOffsetLeft());
+		gridObj2.set_top(resize + divObj.getOffsetHeight());
+		gridObj2.set_height(dsData2.rowcount * cellSize);
+		gridObj2.bringToFront();
+		gridObj2.set_visible(true);
+
+		if (!nexacro.getApplication().com_IsEmpty(dsData1.lookup("rowNum", rowNum, "rowNum"))) 
+		{
+			dsData1.set_rowposition((rowNum % 10) - 1);
+			dsData2.set_rowposition(-1);
+		}
+		else 
+		{
+			dsData1.set_rowposition(-1);
+			dsData2.set_rowposition((rowNum % 10) - 1);
+		}
+
+		nexacro.getApplication().oldRowNum = rowNum;
+		nexacro.getApplication().changeflg = false;
+	}
+
+	frmObj.resetScroll();
+};
+
+nexacro.getApplication().com_SetMessage = function (msgCd, repFlg, repMsgArr)
+{
+	// 메세지 취득
+	var expErrorMsg = nexacro.getApplication().gds_MessageCd.lookup("msg_code_id", msgCd, nexacro.getApplication().gv_MsgNaCol);
+	// 문자 변환
+	if (repFlg) 
+	{
+		for (var i = 0; i < repMsgArr.length; i++) 
+		{
+			// 문자 Replace
+			expErrorMsg = expErrorMsg.replace("XX", repMsgArr[i]);
+		}
+	}
+
+	if (expErrorMsg == null) 
+	{
+		return;
+	}
+
+	expErrorMsg = expErrorMsg.replace(/\\n/g, String.fromCharCode(10));
+
+	alert(expErrorMsg);
+};
+
+nexacro.getApplication().com_ConfirmMessage = function (msgCd, repFlg, repMsgArr)
+{
+	// 메세지 취득
+	var expErrorMsg = nexacro.getApplication().gds_MessageCd.lookup("msg_code_id", msgCd, nexacro.getApplication().gv_MsgNaCol);
+	// 문자 변환
+	if (repFlg) 
+	{
+		for (var i = 0; i < repMsgArr.length; i++) 
+		{
+			// 문자 Replace
+			expErrorMsg = expErrorMsg.replace("XX", repMsgArr[i]);
+		}
+	}
+
+	if (expErrorMsg == null) 
+	{
+		return;
+	}
+	expErrorMsg.replace(/\\n/g, String.fromCharCode(10));
+	var retVal = confirm(expErrorMsg);
+	return retVal;
+};
+
+nexacro.getApplication().com_SetGridText = function (strColNm, tarGrid, tarArr)
+{
+	var txtGridHead = nexacro.getApplication().gds_CompLang.getColumn(nexacro.getApplication().gds_CompLang.rowposition, strColNm);
+	var arrTxtHead = txtGridHead.split("/");
+
+
+	// Grid Header 설정
+	for (var i = 0; i < arrTxtHead.length; i++) 
+	{
+		// //trace("tarArr[i].value = "+tarArr[i]);
+		// //trace("tarArr[i].idx = "+arrTxtHead[i]);
+		tarGrid.setCellProperty("Head", tarArr[i], "text", arrTxtHead[i]);
+	}
+};
+
+nexacro.getApplication().com_Today = function ()
+{
+	var sToday = "";
+	var objDate = new Date();
+	var sToday = objDate.getFullYear().toString();
+	sToday += nexacro.getApplication().com_Right("0" + (objDate.getMonth() + 1), 2);
+	sToday += nexacro.getApplication().com_Right("0" + objDate.getDate(), 2);
+
+	return sToday;
+};
+
+nexacro.getApplication().com_Right = function (sOrg, nSize)
+{
+	if (sOrg == null) 
+	{
+		return "";
+	}
+	if (sOrg.length < nSize) 
+	{
+		return sOrg;
+	}
+	else 
+	{
+		return sOrg.substr(sOrg.length - nSize, nSize);
+	}
+};]]></Script>

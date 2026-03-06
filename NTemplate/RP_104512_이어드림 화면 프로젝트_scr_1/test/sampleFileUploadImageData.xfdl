@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleFileUploadImageData" width="1200" height="900" titletext="New Form" onload="sampleFileUploadImageData_onload">
+    <Layouts>
+      <Layout height="900" mobileorientation="landscape" width="1200">
+        <Static id="sta02" taborder="0" text="이미지파일을 파일업로드 솔루션(Raon KUploader)을 사용하여 파일을 업로드하기" left="20" top="17" width="631" height="33"/>
+        <ImageViewer id="imgPhoto" taborder="1" left="38" top="65" width="292" height="237" stretch="fixaspectratio"/>
+        <Button id="btnReadFile" taborder="2" text="이미지 파일 읽기" left="39" top="322" width="139" height="32" onclick="btnReadFile_onclick"/>
+        <Button id="btnFileUpload" taborder="3" text="파일업로드" left="39" top="370" width="142" height="35" onclick="btnFileUpload_onclick"/>
+        <Button id="btnImageClear" taborder="4" text="이미지 클리어" left="191" top="322" width="139" height="32" onclick="btnImageClear_onclick"/>
+        <Static id="sta04" taborder="5" text="fileRefrnId" left="41" top="426" width="72" height="33"/>
+        <Edit id="edtFileRefrnId" taborder="6" left="120" top="428" width="240" height="28" text="[avBzfFfD1CCzzV1+O4RpwITvxrUZAA/gm8OZ9a6pZ2Y="/>
+        <Div id="divFileUpload" taborder="7" text="div00" left="30" top="472" width="420" height="110" url="comm::comm_fileAdd.xfdl" Mode="upload" uploadLocation="PA.SAM.PLE" addProp="fnSetRaonProp" privInfoFiltYn="N" fileEncryptYn="N" fileSaveStg="SV" fileInfSaveYn="Y"/>
+        <Static id="sta00" taborder="8" text="* 실제 사용할 경우는 visible=false 로 하여 사용하세요" left="140" top="587" width="310" height="27"/>
+        <Button id="btnImageDown" taborder="9" text="다운로드" left="375" top="429" width="72" height="28" onclick="btnImageDown_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleFileUploadImageData.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2023.3.9
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.3.9     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.sampleFileUploadImageData_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//=======================================
+	// 업로드관련 초기설정을 한다.
+	//=======================================
+	// 업로드시 저장위치등을 판별할 정보 세팅(대문자 : 시스템코드(2)+"."+서브시스템코드(3)+"."+대분류코드(3))
+	this.divFileUpload.UPLOAD_CreateComplete = this.fnEventUploadCreateComplete;  // 필요한 경우만 세팅
+	this.divFileUpload.UPLOAD_UploadComplete = this.fnEventUploadComplete;        // 필요한 경우만 세팅(세팅권장)
+	this.divFileUpload.UPLOAD_OnError        = this.fnEventUploadError;           // 필요한 경우만 세팅(세팅권장)
+	this.divFileUpload.UPLOAD_AfterAddFile   = this.fnEventUploadAfterAddFile;     
+	this.divFileUpload.UPLOAD_Form           = this;                              // 위의 함수가 존재하는 Form (보통은 this)
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+	// 업무콜백 처리
+	//this.smfAlert("응답결과 ==>"+e.row.Column0+", "+e.row.Column1+", "+e.row.Column2+", "+e.row.Column3);
+	trace("====>fnPopupCallback");
+	var sImageType       = "";
+	var sImageFileName   = "";   // 선택된 파일이름
+	var sImageDataBase64 = "";
+	
+	if(e.imageInfo)
+	{
+		sImageType       = e.imageInfo.imageType;   // 이미지 타입(image/png)
+		sImageFileName   = e.imageInfo.imageFileName;   // 파일이름(test.png)
+		sImageDataBase64 = e.imageInfo.imageDataBase64;  // BASE64의 이미지 파일
+		
+		if(!this.smfIsNull(sImageDataBase64))
+		{
+			this.imgPhoto._imagetype = sImageType; 
+			this.imgPhoto._imagename = sImageFileName; 
+			this.imgPhoto.set_image(sImageDataBase64);
+		}
+	}
+	
+};
+
+this.fnAddBase64DataCallback = function(paramObj)
+{
+	if(paramObj)
+	{
+		trace("===> this.fnAddBase64DataCallback : paramObj=" + JSON.stringify(paramObj) );
+	}
+}
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnEventUploadCreateComplete = function(obj,paramObj)
+{
+	trace("=== Sample : fnEventUploadCreateComplete");
+	
+}
+
+this.fnEventUploadComplete = function(obj,paramObj,objResultDataset)
+{
+
+	// 신규서비스
+	trace("=== Sample : fnEventUploadComplete");	
+	trace( "objResultDataset===========================\n" 
+	     //+ objResultDataset.saveXML() 
+		 + "\n==================================");
+	
+	// 업로드 성공 후, newfile에 있는 파일들을 webfile로 옮긴다.
+	this.divFileUpload.form.fnSetUploadCompleteState(obj,paramObj);	
+	
+	// 업로드한 file을 가져오는 법(샘플 가이드)
+	if(objResultDataset)
+	{
+		trace("====업로드한 결과 데이터셋 ========== \n"+objResultDataset.saveXML());
+		
+		var sFileRefrnId = objResultDataset.getColumn(0,"fileRefrnId");
+		trace("업로드결과 데이터셋의 첫번째 row의 fileRefrnId=["+sFileRefrnId+"]");
+		
+		// 테스트를 위해 아래의 sFileRefrnId를 세팅
+		if(!this.smfIsNull(sFileRefrnId))
+		{
+			this.edtFileRefrnId.set_value(sFileRefrnId)
+		}		
+	}
+	return;
+
+}
+
+this.fnEventUploadError = function(obj,paramObj)
+{
+	trace("=== Sample : fnEventUploadError");	
+	
+}
+
+this.fnEventUploadAfterAddFile = function(obj,paramObj,sCustomValue,sFileName,nFileSize)
+{
+	trace("==========");
+}
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+// KUpload를 생성시 지정할 property값을 지정
+this.fnSetRaonProp = function()
+{
+	//  Property의 자세한 설명은 
+	//  \12 나이스개발센터\17. 도입SW\01. 나이스클라우드\분리-06.파일 업로드 관리(RAON K Upload 2018)\raonkupload\sdk\index.html 참조 
+
+	// 설정할 property
+	var objAddRaonProps = {
+								ExtensionAllowOrLimit : "1"        // 업로드 할 파일 확장자를 허용 또는 제한 설정("0":지정된 확장자를 제한(선택 금지) , "1":지정된 확장자만 허용(선택가능))
+							,   ExtensionArr          : "gif,jpg,png"  // 제한 및 허용할 확장자명을 ",(콤마)"로 구분하여 설정
+							,   AllowedZeroFileSize   : "1"        // 0byte 파일의 업로드를 허용 할지 설정합니다.(기본값은 "0" 허용안함이고, "1"로 설정시 허용입니다.)
+							, 	MaxTotalFileCount	  : "6"			//업로드 할 최대 파일 개수 제한값을 설정합니다.
+							,	MaxOneFileSize		  : "1MB"		//업로드할 때 파일당 용량제한을 설정합니다.
+						  };
+						  
+	return objAddRaonProps;
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.btnReadFile_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sBase64ImageData = "";
+
+	var objParam = {
+						type : "file"             // [필수] 이미지 전달 방식 ("data": base64형태의 데이터롤 이미지 전달, "file":팝업에서 파일선택)
+					, 	data : sBase64ImageData   // [선택] (type="data"인 경우는 필수) 팝업에 전달할 이미지 데이터
+					,   senderObj : obj
+				   };
+
+	var sPopupId = "popupImageCrop";
+	this.smfImgCropPopup(objParam,sPopupId);
+};
+
+this.btnFileUpload_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sBase64Data = this.imgPhoto.image;
+	var sFilename = "a.png";
+	this.divFileUpload.form.fnFileUploadWithBase64(sBase64Data,sFilename,this,this.fnAddBase64DataCallback);
+};
+
+this.btnImageClear_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.imgPhoto.set_image("");	
+};
+
+this.btnImageDown_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sFileRefrnId = this.edtFileRefrnId.value;
+	var sFileId = "0";
+	var sImageUrl = this.smfGetImageUrl(sFileRefrnId,sFileId);
+	this.imgPhoto.set_image(sImageUrl);	
+};
+
+]]></Script>
+  </Form>
+</FDL>

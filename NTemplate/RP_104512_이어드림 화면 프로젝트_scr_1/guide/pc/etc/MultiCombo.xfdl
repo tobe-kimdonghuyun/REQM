@@ -1,0 +1,558 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="MultiCombo" width="200" height="28" titletext="멀티콤보" onload="form_onload">
+    <Layouts>
+      <Layout height="28" width="200">
+        <PopupDiv id="pdvCbo" text="" visible="false" left="0" top="28" height="257" oncloseup="pdvCombo_oncloseup" cssclass="pdv_WF_MultiCombo" right="-2">
+          <Layouts>
+            <Layout>
+              <Grid id="grd00" taborder="0" left="0" binddataset="dc_grd" autofittype="col" top="0" width="200" height="200">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="40"/>
+                      <Column size="60"/>
+                      <Column size="80"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell text="bind:체크박스" displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="bind:NO" displaytype="text"/>
+                      <Cell col="2" text="bind:이름" displaytype="normal"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Button id="btn00" taborder="1" text="선택" top="210" height="28" cssclass="btn_POP_Confirm" width="52" fittocontents="width" left="44"/>
+              <Button id="btn01" taborder="2" text="취소" top="210" height="28" cssclass="btn_POP_Confirm" width="52" fittocontents="width" left="102"/>
+            </Layout>
+          </Layouts>
+        </PopupDiv>
+        <Edit id="edt01" taborder="1" left="0" top="0" height="28" text="선택" readonly="false" cssclass="edi_WF_Search" right="0"/>
+        <Button id="btnCbo" taborder="1" top="1" onclick="btnCombo_onclick" cssclass="btn_WF_MultiCombo" width="26" right="1" height="26"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  멀티 콤보
+*  @FileName 	MultiCombo.xfdl
+*  @Creator 	정출연
+*  @CreateDate 	2017.10.19
+*  @Desction    스크립트 표준 및 주석 표준 정의
+************** 소스 수정 이력 ***************************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2017.03.09     	정출연 	           	    최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this._objBindDs;
+this._objTarget;
+//this._sTarget;
+
+this.fv_comboinnerdataset;
+this.fv_combocodecolumn;
+this.fv_combodatacolumn;
+
+this.fv_allcheck;
+this.fv_callbackfunc;
+
+this.fv_maxcount;
+
+this.fvTerm = 3;
+this.fv_bottomTerm = 12;
+this.fv_width = 0;
+this.fv_btnWidth = 43;
+this.fv_btnHeight = 23;
+this.fv_rowHeight = 30;
+
+this.objApp	= this.gfn_getApplication();
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{	
+	this.fv_width = this.pdvCbo.getOffsetWidth();
+	this.fn_setMultiCombo();
+};
+
+/************************************************************************************************
+* TRANSACTION 서비스 호출 처리
+************************************************************************************************/
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분
+ ************************************************************************************************/
+
+ /************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * @description 콤보세팅
+*/
+this.fn_setMultiCombo = function ()
+{
+	var objTarget = this.parent;	 // div
+	this.fv_comboinnerdataset 	= objTarget.comboinnerdataset;
+	this.fv_combocodecolumn 	= objTarget.combocodecolumn;
+	this.fv_combodatacolumn		= objTarget.combodatacolumn;
+	this.fv_allcheck 			= objTarget.allcheck;
+	this.fv_callbackfunc		= objTarget.callbackfunc;
+	this.fv_maxcount			= objTarget.maxcount;
+	
+//  	this._objTarget = objTarget.parent;
+// 
+// 	if (this.gfn_isNull(this.fv_comboinnerdataset))
+// 	{
+// 		if (!this._objTarget.isValidObject(this.fv_comboinnerdataset))
+// 		{
+// 			trace("invalid comboinnerdataset");
+// 			return false;
+// 		}
+// 	}
+// 	else
+// 	{
+// 		this._objBindDs = this._objTarget.lookup(this.fv_comboinnerdataset);
+// 	}
+	
+	if( this.gfn_isNull(this.fv_combocodecolumn)) return false;
+	if( this.gfn_isNull(this.fv_combodatacolumn)) return false;
+	if( this.gfn_isNull(this.fv_allcheck)) this.fv_allcheck  = "false";
+	if( this.gfn_isNull(this.fv_maxcount)) this.fv_maxcount = 5;
+};
+
+this.fn_setDataset = function (oDs)
+{
+	this._objBindDs = oDs;
+	
+	this.dsCbo.clear();
+	this.dsCbo.addColumn("multiComboChk", "STRING");
+	this.dsCbo.addColumn(this.fv_combocodecolumn, "STRING");
+	this.dsCbo.addColumn(this.fv_combodatacolumn, "STRING");
+	
+	oDs.set_enableevent(false);
+	for( var j=0; j< oDs.getRowCount(); j++)
+	{
+		this.dsCbo.addRow();
+		this.dsCbo.setColumn(j, "multiComboChk", "0");
+		this.dsCbo.setColumn(j, this.fv_combocodecolumn, oDs.getColumn(j,this.fv_combocodecolumn));
+		this.dsCbo.setColumn(j, this.fv_combodatacolumn, oDs.getColumn(j,this.fv_combodatacolumn));
+	}
+	oDs.set_enableevent(true);
+	
+	var oCombo 	  = this.pdvCbo;
+	var nDisplayCount = this.fv_maxcount;
+	var nRowCount = this.dsCbo.getRowCount();
+	if (nDisplayCount > nRowCount) nDisplayCount = nRowCount;
+	var nHeight = nHeight = this.fv_rowHeight  * nDisplayCount + nexacro.toNumber(nDisplayCount) + 1;
+
+	if( this.fv_allcheck 	== "true") {
+		var nplusHeigth = this.fv_btnHeight + (this.fv_bottomTerm * 2);
+		 nHeight += nplusHeigth ;
+		 
+		 this.pdvCbo.set_height(nHeight);
+		 this._fn_makeAllCheck();
+	}
+	else {
+		nHeight += this.fvTerm ;
+		this.pdvCbo.set_height(nHeight);
+
+		this._fn_makeCombo(oCombo);
+	}
+};
+
+/**
+ * @description 전체선택/해제 추가
+*/
+this._fn_makeAllCheck = function ()
+{
+	var compDiv = new Div("divComboList", 0, 0, null, null, 0,  this.fv_btnHeight + (this.fv_bottomTerm * 2));
+	this.pdvCbo.addChild(compDiv.name, compDiv);
+	compDiv.set_border("1px solid blue");
+	compDiv.show();	
+	var nLeft = (nexacro.toNumber(this.fv_width) - (this.fv_btnWidth*2 + this.fvTerm)) / 2;
+	
+	var compBtnAllCheck = new Button("btnAllCheck", nLeft, null, this.fv_btnWidth, this.fv_btnHeight, null, this.fv_bottomTerm);
+	this.pdvCbo.addChild(compBtnAllCheck.name, compBtnAllCheck);
+	compBtnAllCheck.addEventHandler("onclick", this._compBtnAllCheck_onclick, this);
+	compBtnAllCheck.set_cssclass("btn_POP_Btn");
+	compBtnAllCheck.set_text("All");
+	compBtnAllCheck.show();
+	
+	var compBtnNonCheck = new Button("btnNonCheck", nLeft+this.fv_btnWidth+this.fvTerm, null, this.fv_btnWidth, this.fv_btnHeight, null, this.fv_bottomTerm);
+	this.pdvCbo.addChild(compBtnNonCheck.name, compBtnNonCheck);
+	compBtnNonCheck.set_cssclass("btn_POP_Btn");
+	compBtnNonCheck.set_text("No");
+	compBtnNonCheck.addEventHandler("onclick", this._compBtnNonCheck_onclick, this);
+	compBtnNonCheck.show();	
+	
+	this._fn_makeCombo(compDiv);
+};
+/**
+ * @description  동적 Grid Como List 생성
+*/
+this._fn_makeCombo = function(oPdv)
+{
+	trace("_fn_makeCombo> ======= 1 ");
+	if(oPdv.form.isValidObject("grdCbo")){
+		trace("_ fn_makeCombo> ======= 2 ");
+		alert(oPdv);
+		alert(oPdv.form.components);
+		
+		var oGrid = oPdv.form.components["grdCbo"];
+		trace("_ fn_makeCombo> ======= 3");
+		oPdv.removeChild("grdCbo");
+		trace("_ fn_makeCombo> ======= 4 ");
+		oGrid.destroy();
+		oGrid= null;
+	}
+	trace("_ fn_makeCombo> ======= 5 ");
+	
+	var nBotton = 0;
+	if( this.fv_allcheck =="true") nBotton = 0;
+	else nBotton = this.fvTerm;
+
+	var oGrd = new Grid("grdCbo", this.fvTerm, this.fvTerm, null, null, this.fvTerm, nBotton);
+	oGrd.set_cssclass("grd_WF_Detail");
+	oPdv.addChild(oGrd.name, oGrd); 
+	
+	oGrd.set_enableevent(false);
+	oGrd.set_enableredraw(false);
+	
+	oGrd.set_binddataset(this.dsCbo);
+	oGrd.set_autofittype("col");
+	oGrd.set_wheelscrollrow(1);
+	oGrd.createFormat();	
+	
+	oGrd.deleteContentsRow("head", 0);
+	oGrd.setFormatRowProperty(0,"size",this.fv_rowHeight);
+	oGrd.setCellProperty("Body", 0, "displaytype", "checkboxcontrol");
+	oGrd.setCellProperty("Body", 0, "edittype", "checkbox");
+	oGrd.setFormatColProperty(0, "size", 24);	
+	oGrd.setFormatColProperty(0, "band", "left");	
+	oGrd.show();
+
+	oGrd.addEventHandler("oncellclick", this._Grid_oncellclick, this);
+	
+	oGrd.set_enableevent(true);
+	oGrd.set_enableredraw(true);
+	
+	this.edtCbo.set_value("선택");
+};
+
+/**
+ * @description   Popup Div Open
+*/
+this.fn_openCombo = function()
+{
+	var nMainHeight = this.objApp.mainframe.height;
+	 
+	if (!this.gfn_isNull(this.fv_comboinnerdataset))
+ 	{
+		if (this.gfn_isNull(this._objBindDs))
+		{
+			trace("invalid comboinnerdataset");
+		}
+		else
+		{
+			var nTop = 21;
+			var nBottom = nexacro.toNumber(nMainHeight) - nexacro.toNumber(this.getOffsetBottom());
+			var nHeight = nexacro.toNumber(this.pdvCbo.height) + nexacro.toNumber(this.btnCbo.height) + 4;
+						
+			if (nHeight > nBottom) nTop = -(this.pdvCbo.height-1);
+			
+			this.pdvCbo.trackPopupByComponent(this.edtCbo, 0, nTop);	
+			this._objBindDs.set_rowposition(-1);
+		}
+	}
+};
+
+/**
+ * @description  초기화(전체해제)
+*/
+this.fn_init = function (oThis)
+{
+	this._objTarget = oThis;
+
+	var objBindDs = this.dsCbo;
+	for (var i=0; i<objBindDs.rowcount; i++)
+	{
+		objBindDs.setColumn(i, "multiComboChk", "0");			
+	}
+	this.edtCbo.set_value("선택");
+};
+
+
+/**
+ * @description  부모창에서 value 가져갈 수 있는 함수
+*/
+this.getValue = function()
+{
+	return this.edtCbo.retrunvalue;
+};
+
+/**
+ * @description  부모창에서 text 가져갈 수 있는 함수
+*/
+this.getText = function()
+{
+	return this.edtCbo.returntext;
+};
+
+/**
+ * @description  부모창에서 값 세팅하는 함수
+*/
+this.setValue = function(sValue)
+{
+	this.fn_init();
+	var arrValueList = sValue.split(",");
+	var arrTextList = [];
+	var objDs = this._objBindDs;
+	var nFindRow;
+	
+	for (var i=0; i<arrValueList.length; i++)
+	{
+		nFindRow = objDs.findRow(this.fv_combocodecolumn, arrValueList[i]);
+		if (nFindRow != -1)
+		{
+			arrTextList.push(objDs.getColumn(nFindRow, this.fv_combodatacolumn));
+			objDs.setColumn(nFindRow, "multComboChk", "1");
+		}
+	}
+	
+	this.fn_setComboText(arrTextList, arrValueList);
+};
+
+/**
+ * @description  값 세팅
+*/
+this.fn_setComboText = function(arrTextList, arrValueList)
+{
+	var sComboText = arrTextList.toString();
+	
+	this.edtCbo.retrunvalue = arrValueList.toString();
+	this.edtCbo.returntext = sComboText;
+	var objRtn = nexacro.getTextSize(sComboText, "9 Dotum");
+	var nComboTextWidth = objRtn.nx;
+	
+	var nWidth = this.edtCbo.getOffsetWidth() - this.btnCbo.width;
+	if (nComboTextWidth > nWidth)
+	{
+		this.edtCbo.set_value(arrTextList.length+"개 선택");
+		this.edtCbo.set_tooltiptext(sComboText);
+		this.edtCbo.set_tooltiptype("hover");
+	}
+	else
+	{
+		this.edtCbo.set_value(sComboText);
+	}
+		
+	if (this.gfn_isNull(arrTextList)) this.edtCbo.set_value("선택");
+};
+
+/**
+ * @description  값 세팅
+*/
+this.setValue = function(sValue)
+{
+	if( this.gfn_isNull(sValue) ) return;
+	
+	var arrValueList = sValue.split(",");
+	var arrTextList = [];
+	//var objDs = this._objBindDs;
+	var nFindRow;
+	this.fn_init();
+	for (var i=0; i<arrValueList.length; i++)
+	{
+		nFindRow = this.dsCbo.findRow(this.fv_combocodecolumn, arrValueList[i]);
+		if (nFindRow != -1)
+		{
+			arrTextList.push(this.dsCbo.getColumn(nFindRow, this.fv_combodatacolumn));
+			this.dsCbo.setColumn(nFindRow, "multiComboChk", "1");
+		}
+	}
+	
+	this.fn_setComboText(arrTextList, arrValueList);
+};
+
+/**
+ * @description  필수상태
+*/
+this.fn_setRequired = function(bValue)
+{
+	if (bValue) {
+		this.edtCbo.set_background("yellow");
+	}
+	else{
+		this.edtCbo.set_background("white");
+	}
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description ALL버튼 클릭 이벤트
+*/
+this._compBtnAllCheck_onclick = function()
+{
+	for (var i=0; i< this.dsCbo.rowcount; i++)
+	{
+		this.dsCbo.setColumn(i, "multiComboChk", "1");			
+	}
+};
+
+/**
+ * @description none버튼 클릭이벤트
+*/
+this._compBtnNonCheck_onclick = function()
+{
+	for (var i=0; i<this.dsCbo.rowcount; i++)
+	{
+		this.dsCbo.setColumn(i, "multiComboChk", "0");			
+	}
+};
+
+/**
+ * @description   button click popupdiv open
+*/
+this.btnCombo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fn_openCombo();
+};
+
+/**
+ * @description  edit click popupdiv open
+*/
+this.edtCombo_oneditclick = function(obj:nexacro.Edit,e:nexacro.EditClickEventInfo)
+{
+	this.fn_openCombo();
+};
+
+/**
+ * @description  Popup Div 닫힐때 값세팅
+*/
+this.pdvCombo_oncloseup = function(obj:nexacro.PopupDiv,e:nexacro.EventInfo)
+{
+	//var objDs = this.ds_cbo;
+	var arrTextList  = [];
+	var arrValueList = [];
+	
+	if (this.gfn_isNull(this.dsCbo.getColumnInfo(this.fv_combodatacolumn)))
+	{
+		trace("comboinnerdataset("+this.dsCbo.name + ")에 컬럼(" + this.fv_combodatacolumn + ")이 존재하지 않습니다.\ncombodatacolumn 정보를 확인하세요.");
+		return false;
+	}
+	
+	if (this.gfn_isNull(this.dsCbo.getColumnInfo(this.fv_combocodecolumn)))
+	{
+		trace("comboinnerdataset("+this.dsCbo.name + ")에 컬럼(" + this.fv_combocodecolumn + ")이 존재하지 않습니다.\combocodecolumn 정보를 확인하세요.");
+		return false;
+	}
+		
+	for (var i=0; i<this.dsCbo.getRowCount(); i++)
+	{
+		if (this.dsCbo.getColumn(i, "multiComboChk") == "1")
+		{
+			arrTextList.push(this.dsCbo.getColumn(i, this.fv_combodatacolumn));
+			arrValueList.push(this.dsCbo.getColumn(i, this.fv_combocodecolumn));
+		}
+	}
+	this.fn_setComboText(arrTextList, arrValueList);
+	
+	if (!this.gfn_isNull(this.fv_callbackfunc))
+	{	
+		this.lookupFunc(this.fv_callbackfunc).call(this.parent.name); 
+	}
+};
+
+/**
+ * @description  Combo 클릭
+*/
+this._Grid_oncellclick = function(obj:Grid, e:nexacro.GridClickEventInfo)
+{
+	var objDs = obj.getBindDataset();
+	
+	if (e.col !=0)
+	{ 
+		if (objDs.getColumn(e.row, "multiComboChk") == "1") objDs.setColumn(e.row, "multiComboChk", "0");
+		else objDs.setColumn(e.row, "multiComboChk", "1");
+	}	
+	
+	if (!this.gfn_isNull(this.fv_maxcount))
+	{
+		var nSelectCount = objDs.getCaseCount("multiComboChk == '1'");
+		if (this.fv_maxcount < nSelectCount)
+		{
+			objDs.setColumn(e.row, "multiComboChk", "0");		
+			var arr = [];
+			arr.push(this.fv_maxcount);
+			this.gfn_alert("msg.err.validator.multicombo.maxcnt", arr);		
+		}
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsCbo"/>
+      <Dataset id="dc_grd">
+        <ColumnInfo>
+          <Column id="체크박스" type="STRING" size="256"/>
+          <Column id="NO" type="STRING" size="256"/>
+          <Column id="이름" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="체크박스"/>
+            <Col id="NO">01</Col>
+            <Col id="이름">유류비 조회</Col>
+          </Row>
+          <Row>
+            <Col id="체크박스"/>
+            <Col id="NO">02</Col>
+            <Col id="이름">코드 조회</Col>
+          </Row>
+          <Row>
+            <Col id="체크박스"/>
+            <Col id="NO">03</Col>
+            <Col id="이름">도급비 조회</Col>
+          </Row>
+          <Row>
+            <Col id="체크박스"/>
+            <Col id="NO">04</Col>
+            <Col id="이름">도급장비 조회</Col>
+          </Row>
+          <Row>
+            <Col id="체크박스"/>
+            <Col id="NO">05</Col>
+            <Col id="이름">설비정보 조회</Col>
+          </Row>
+          <Row>
+            <Col id="NO">06</Col>
+            <Col id="이름">유류비 조회</Col>
+          </Row>
+          <Row>
+            <Col id="NO">07</Col>
+            <Col id="이름">코드 조회</Col>
+          </Row>
+          <Row>
+            <Col id="NO">08</Col>
+            <Col id="이름">도급비 조회</Col>
+          </Row>
+          <Row>
+            <Col id="NO">09</Col>
+            <Col id="이름">도급장비 조회</Col>
+          </Row>
+          <Row>
+            <Col id="NO">10</Col>
+            <Col id="이름">설비정보 조회</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

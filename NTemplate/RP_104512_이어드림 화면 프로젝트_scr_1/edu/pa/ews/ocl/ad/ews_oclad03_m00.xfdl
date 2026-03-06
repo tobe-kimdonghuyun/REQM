@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmTemp01" width="1200" height="750" titletext="금칙어 관리" onload="fnOnload">
+    <Layouts>
+      <Layout height="750" width="1200" screenid="ScreenDeskTop">
+        <Div id="divTitle" taborder="0" left="0" top="70" height="44" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="금칙어관리" left="0" top="0" height="44" cssclass="img_WF_SubTit01" width="430" initvalueid="ivTitleAccessibilityOn" accessibilitylabel="금칙어 관리"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div00" taborder="2" left="0" top="180" height="500" right="0" text="" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" left="0" top="0" height="500" cssclass="sta_WF_Input02Top" right="0" initvalueid="ivStcAccessibilityOff" onclick="div00_sta00_onclick"/>
+              <Static id="sta00_01" taborder="1" left="0" top="0" height="500" cssclass="sta_WF_Input01Top" initvalueid="ivStcAccessibilityOn" width="190" text="금칙어" accessibilitylabel="금칙어"/>
+              <TextArea id="txtRegDt" taborder="2" left="200" top="9" width="970" height="483" initvalueid="ivTxtNormal" wordWrap="char" accessibilitylabel="금칙어 작성 칸"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnSave" taborder="3" text="저장" top="710" height="40" width="120" cssclass="btn_WF_Action" right="0" onclick="btnSave_onclick" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="저장"/>
+        <Static id="Static99_00_00_00_00" taborder="4" left="0" top="0" height="70" cssclass="sta_GD_Size" text="70" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_01" taborder="5" left="0" top="114" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="Static99_00_00_00_00_00_00_00_00" taborder="7" left="0" top="680" height="30" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta04" taborder="1" text="* 추가입력 시 반드시 &quot;,&quot;로 구분하세요." left="0" top="143" width="321" height="26" cssclass="sta_WF_Black14" fittocontents="width" initvalueid="ivStcAccessibilityOn" accessibilitylabel="추가입력 시 반드시 &quot;,&quot;로 구분하세요."/>
+        <Static id="Static99_00_00_00_00_00_01_00" taborder="6" left="0" top="169" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="0" initvalueid="ivStcAccessibilityOff"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  
+*  @MenuPath    교육비 원클릭 > 금칙어 관리
+*  @FileName 	ews_oclad03_m00.xfdl 
+*  @Creator 	류찬욱
+*  @CreateDate 	2023.04.17
+*  @Desction    금칙어 관리
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2023.04.17            류찬욱                   최초 생성 
+*******************************************************************************
+*/
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitForm(obj);
+	
+	this.fnSearchList();
+};
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+};
+
+/**
+ * 메세지 콜백함수
+ * @param : N/A
+ * @return : N/A
+ */
+this.fnMessageCallback = function(){
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * 조회서비스
+ * @param : N/A
+ * @param : N/A
+ */
+this.fnSearchList = function()
+{
+ 	// 서비스 객체 생성
+	this.smfSearchService("list")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors){
+				this.smfAlert('PA066', ['조회 '] );
+				return;
+			}
+		});
+};
+
+/**
+ * 저장서비스
+ * @param : N/A
+ * @param : N/A
+ */
+this.fnSave = function()
+{
+	// 서비스 객체 생성
+	this.smfSaveService("save")
+		// (권장) 데이터 존재 필수
+		.requireExistsData(this.dsMain)
+		// 데이터 변경 필수
+		.requireModifredData(this.dsMain)
+		// 데이터 검증
+		//.validateGrid(this.grdMain, this.dsMainValid)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors){
+				this.smfAlert('PA066', ['저장 '] );
+				return;
+			}
+			
+			this.smfAlert('CM002', [], this.fnMessageCallback); // 저장이 완료되었습니다.
+			this.fnSearchList();
+		});
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+/**
+ * 저장 버튼 클릭 시
+ * @param  : obj			- [object]Button
+ * @param  : e				- [string]ClickEventInfo
+ * @return : N/A
+ */
+this.btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSave();
+};]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">list</Col>
+            <Col id="inDatasets"/>
+            <Col id="outDatasets">dsMain=dsMain</Col>
+            <Col id="svctp">R</Col>
+            <Col id="url">/ews_ocl_ad03_001.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+          </Row>
+          <Row>
+            <Col id="id">save</Col>
+            <Col id="inDatasets">dsMain=dsMain:U</Col>
+            <Col id="outDatasets"/>
+            <Col id="svctp">U</Col>
+            <Col id="url">/ews_ocl_ad03_002.do</Col>
+            <Col id="callback">fnTransCallback</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="fbwdCn" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256" description="수정자ID"/>
+          <Column id="rgtrId" type="STRING" size="256" description="수정자Id"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="div00.form.txtRegDt" propid="value" datasetid="dsMain" columnid="fbwdCn"/>
+    </Bind>
+  </Form>
+</FDL>

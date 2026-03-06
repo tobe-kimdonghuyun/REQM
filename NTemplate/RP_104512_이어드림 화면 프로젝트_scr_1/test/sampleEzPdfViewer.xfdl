@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sampleEzPdfViewer" width="1280" height="745" titletext="New Form" onload="sampleEzPdfViewer_onload">
+    <Layouts>
+      <Layout height="745" width="1280">
+        <Static id="sta00" taborder="0" text="ezPdfViewer를 이용한 싸인 샘플" left="3" top="2" width="417" height="60"/>
+        <Button id="btnPdfViewer" taborder="1" text="PDF파일에 싸인하기" left="20" top="347" width="154" height="33" onclick="btnPdfViewer_onclick"/>
+        <Static id="sta01" taborder="2" text="원본PDF 경로(orgPath)" left="20" top="80" width="290" height="36"/>
+        <Edit id="edtOrgPath" taborder="3" left="332" top="78" width="475" height="38" value="c:\Temp\hidden3.pdf" text="c:\Temp\hidden3.pdf"/>
+        <Static id="sta01_00" taborder="4" text="사인이 추가된 결과PDF를 저장할 경로(resultPath)" left="20" top="130" width="290" height="36"/>
+        <Edit id="edtResultPath" taborder="5" left="332" top="128" width="475" height="38" value="c:\Temp\result\result.pdf" text="c:\Temp\result\result.pdf"/>
+        <Static id="sta01_00_00" taborder="6" text="사인의 넓이(signWidth)" left="20" top="180" width="290" height="36"/>
+        <Edit id="edtSignWidth" taborder="7" left="332" top="178" width="85" height="38" value="2" text="2"/>
+        <Static id="sta01_00_00_00" taborder="8" text="서명을 날인할 위치Text(posText)" left="20" top="230" width="290" height="36"/>
+        <Edit id="edtPosText" taborder="9" left="332" top="228" width="135" height="38" rtl="" value="[##이]" text="[##이]"/>
+        <Static id="sta01_00_00_00_00" taborder="10" text="팝업의 타이틀(title)" left="20" top="280" width="290" height="36"/>
+        <Edit id="edtPopupTitle" taborder="11" left="332" top="278" width="225" height="38" value="PDF 뷰어" text="PDF 뷰어"/>
+        <Static id="sta01_00_00_01" taborder="12" text="임시로 정수를 넣을 것(단위 : cm) - 수정예정" left="430" top="180" width="300" height="36"/>
+        <TextArea id="txtResult" taborder="13" left="21" top="576" width="539" height="144"/>
+        <Static id="sta01_00_00_00_00_00" taborder="14" text="처리결과 :" left="25" top="540" width="160" height="36"/>
+        <Div id="divPdfViewer" taborder="15" left="650" top="250" width="520" height="170" url="comm::comp_pdfviewer.xfdl" visible="false"/>
+        <Static id="staPath" taborder="16" text="원본파일경로(path)" left="20" top="430" width="290" height="36"/>
+        <Edit id="edtPath" taborder="17" left="332" top="428" width="365" height="38" value="C:\Temp\a.pdf" text="C:\Temp\a.pdf"/>
+        <Button id="btnPdfViewer2" taborder="18" text="PDF파일 보기" left="20" top="477" width="154" height="33" onclick="btnPdfViewer2_onclick"/>
+        <Button id="btnPdfViewerIframe" taborder="19" text="PDF파일에 싸인하기(Iframe)" left="196" top="346" width="206" height="34" onclick="btnPdfViewerIframe_onclick"/>
+        <Button id="btnPdfViewerIframe2" taborder="20" text="PDF파일 보기(iframe)" left="200" top="477" width="154" height="33" onclick="btnPdfViewerIframe2_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	sampleEzPdfViewer.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2022.12.29
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.12.29     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+//  /edusys/ezpdfwebviewer/WEB-INF/views/ezpdf/hidden3.pdf
+//  /edusys/ezpdfwebviewer/WEB-INF/views/ezpdf/result/result.pdf
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.sampleEzPdfViewer_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+	trace("====>fnPopupCallback");
+};
+
+
+this.fnPdfCallback = function(sData)
+{
+	trace("=====>fnPdfCallback : sData=["+sData+"]");
+	
+	this.txtResult.set_value(sData);
+}
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+this.btnPdfViewer_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 결과로그 초기화(샘플용)
+	this.txtResult.set_value("");
+
+	// 넘겨줄 파라미터 
+	var objParam = {
+	                   orgPath    : this.edtOrgPath.value      // 원본PDF 경로(orgPath)
+	                ,  resultPath : this.edtResultPath.value   // 사인이 추가된 결과PDF를 저장할 경로(resultPath)
+	                ,  signWidth  : this.edtSignWidth.value    // 사인의 넓이(signWidth)
+	                ,  posText    : this.edtPosText.value      // 서명을 날인할 위치Text(posText)
+	                ,  title      : this.edtPopupTitle.value   // 팝업의 타이틀(title)
+	                ,  callback   : this.fnPdfCallback         // callback함수
+	                ,  objForm    : this                       // callback함수가 있는 form object(일반적으로 this)
+				   };
+
+
+	this.divPdfViewer.form.fnPdfSign(objParam);	
+};
+
+this.btnPdfViewer2_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 결과로그 초기화(샘플용)
+	this.txtResult.set_value("");
+
+	
+	// 넘겨줄 파라미터 
+	var objParam = {
+	                   path     : this.edtPath.value   // PDF파일경로(path)
+	                ,  download : "false"              // 다운기능 사용여부(사용:"true",미사용:"false"(default))
+	                ,  print    : "false"              // 인쇄기능 사용여부(사용:"true",미사용:"false"(default))
+	                ,  annot    : "false"              // 주석기능 사용여부(사용:"true",미사용:"false"(default))
+	                ,  title    : "PFD 뷰어"          // 팝업의 타이틀(title)
+				   };
+
+
+	this.divPdfViewer.form.fnViewdoc(objParam);
+};
+
+this.btnPdfViewerIframe_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 결과로그 초기화(샘플용)
+	this.txtResult.set_value("");
+	
+	// 팝업을 동작에 필요한 파라메터 지정
+	var popupParams = {
+		callback: this.fnPopupCallback, // 콜백함수 지정
+		sender: obj, // sender 지정
+
+		// 팝업 전달 파라메터 지정
+		params: {
+			// 처리타입 지정(필수)
+			procType: "none"  // "none","search","insert","update","delete"
+			// 파라메터 전달
+			,  viewtype   : "sign"                     // 표시 종류 ("view","sign")
+			,  orgPath    : this.edtOrgPath.value      // 원본PDF 경로(orgPath)
+			,  resultPath : this.edtResultPath.value   // 사인이 추가된 결과PDF를 저장할 경로(resultPath)
+			,  signWidth  : this.edtSignWidth.value    // 사인의 넓이(signWidth)
+			,  posText    : this.edtPosText.value      // 서명을 날인할 위치Text(posText)
+			,  title      : this.edtPopupTitle.value   // 팝업의 타이틀(title)
+			,  callback   : this.fnPdfCallback         // callback함수
+			,  objForm    : this                       // callback이 있는 Form Object
+		},
+	};
+
+	// 모달팝업 실행
+	this.smfDialog("_auto", "comm::comm_pdfviewerPopup.xfdl", popupParams,null,null,1200,900);
+};
+
+
+
+this.btnPdfViewerIframe2_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 결과로그 초기화(샘플용)
+	this.txtResult.set_value("");
+	
+	// 팝업을 동작에 필요한 파라메터 지정
+	var popupParams = {
+		callback: this.fnPopupCallback, // 콜백함수 지정
+		sender: obj, // sender 지정
+
+		// 팝업 전달 파라메터 지정
+		params: {
+			// 처리타입 지정(필수)
+			procType: "none"  // "none","search","insert","update","delete"
+			// 파라메터 전달
+			,  viewtype : "view"               // 표시 종류 ("view","sign")
+			,  path     : this.edtPath.value   // PDF파일경로(path)
+			,  download : "false"              // 다운기능 사용여부(사용:"true",미사용:"false"(default))
+			,  print    : "false"              // 인쇄기능 사용여부(사용:"true",미사용:"false"(default))
+			,  annot    : "false"              // 주석기능 사용여부(사용:"true",미사용:"false"(default))
+			,  title    : "PFD 뷰어"          // 팝업의 타이틀(title)
+		},
+	};
+
+	// 모달팝업 실행
+	this.smfDialog("_auto", "comm::comm_pdfviewerPopup.xfdl", popupParams,null,null,1200,900);
+	
+};
+
+]]></Script>
+  </Form>
+</FDL>

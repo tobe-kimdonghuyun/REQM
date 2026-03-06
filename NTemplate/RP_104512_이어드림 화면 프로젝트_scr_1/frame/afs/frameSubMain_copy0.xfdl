@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameSubMain" width="1200" height="1028" titletext="frameMain_업무지원" onload="form_onload" scrollbartype="auto auto" scrollindicatorsize="10" nHeight="950">
+    <Layouts>
+      <Layout height="1028" width="1200" screenid="ScreenDeskTop">
+        <Static id="sta00_00_00" taborder="0" text="&lt;fc v='#2b72de'&gt;업무&lt;/fc&gt;를 선택&#13;&#10;해주세요" left="1" top="523" width="187" height="100" cssclass="sta_WF_Txt34B" initvalueid="ivStcAccessibilityOn" usedecorate="true"/>
+        <Div id="div00" taborder="1" text="div00" left="386" top="530" width="772" height="316" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Button id="btnLink01" taborder="0" text="방과후학교 운영지원" top="0" width="380" height="70" cssclass="btn_WF_MainShtC02" left="0" initvalueid="ivBtnAccessibilityLink" btnValue="AFS" onclick="Button_onclick"/>
+              <Button id="btnLink05" taborder="1" text="교과용도서 주문정보조회" top="0" width="380" height="70" cssclass="btn_WF_MainShtC02" left="392" initvalueid="ivBtnAccessibilityLink" btnValue="IBM" onclick="Button_onclick"/>
+              <Button id="btnLink02" taborder="2" text="초등돌봄교실 운영지원" top="82" width="380" height="70" cssclass="btn_WF_MainShtC02" left="0" initvalueid="ivBtnAccessibilityLink" btnValue="ECC" onclick="Button_onclick"/>
+              <Button id="btnLink06" taborder="3" text="학교환경관리 위생점검등록" top="82" width="380" height="70" cssclass="btn_WF_MainShtC02" left="392" initvalueid="ivBtnAccessibilityLink" btnValue="SEM" onclick="Button_onclick"/>
+              <Button id="btnLink03" taborder="4" text="급식 위생관리지원" top="164" width="380" height="70" cssclass="btn_WF_MainShtC02" left="0" initvalueid="ivBtnAccessibilityLink" btnValue="SML" onclick="Button_onclick"/>
+              <Button id="btnLink07" taborder="5" text="교육복지 인터넷 통신비 정산" top="164" width="380" height="70" cssclass="btn_WF_MainShtC02" left="392" initvalueid="ivBtnAccessibilityLink" enable="true" btnValue="SPR" onclick="Button_onclick"/>
+              <Button id="btnLink04" taborder="6" text="체육 학교운동부 및 스포츠클럽 관리" top="246" width="380" cssclass="btn_WF_MainShtC02" left="0" initvalueid="ivBtnAccessibilityLink" height="70" btnValue="PHE" onclick="Button_onclick"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Button id="btnLink05" left="0" top="136" height="120" taborder="1" right="0"/>
+              <Button id="btnLink06" left="0" top="408" height="120" taborder="3" right="0"/>
+              <Button id="btnLink07" left="0" top="680" height="120" cssclass="btn_WF_MainShtC02" taborder="5" right="0"/>
+              <Button id="btnLink01" left="0" top="0" height="120" taborder="0" right="0"/>
+              <Button id="btnLink02" left="0" top="272" height="120" taborder="2" right="0"/>
+              <Button id="btnLink03" left="0" top="544" height="120" taborder="4" right="0"/>
+              <Button id="btnLink04" left="0" top="816" height="120" taborder="6" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTopNotice" taborder="2" text="div01" left="0" top="0" height="500" cssclass="div_WF_Main08" width="1200">
+          <Layouts>
+            <Layout>
+              <Static id="sta00_00_00" taborder="0" text="업무지원" left="360" top="182" width="207" height="75" cssclass="sta_WF_MainTxt" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta00" taborder="1" text="교직원 및 대외 사용자의 효율적인 교육(행정)기관 업무 처리를 지원합니다." left="366" top="258" width="699" height="36" cssclass="sta_WF_WhiteTxt18"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="sta00_00_00" left="233" top="112" width="192" height="85"/>
+              <Static id="sta00" visible="false" left="366" top="228" width="699" height="36"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="640" height="1440" mobileorientation="portrait" type="default">
+        <Div id="div00" formscrollbartype="none none" left="20" top="443" height="937" right="20"/>
+        <Static id="sta00_00_00" cssclass="sta_WF_Txt42B" left="20" top="348" width="377" height="70" text="업무를 선택해주세요"/>
+        <Div id="divTopNotice" left="0" top="0" height="300" cssclass="div_WF_Main08" right="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  교육디지털 원패스
+*  @MenuPath    frame > frameMain
+*  @FileName 	frameMain.xfdl 
+*  @Creator 	kmp
+*  @CreateDate 	2021.12.27
+*  @Desction    base가 되는 화면
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2021.12.27     		kmp		 	  			최초 생성 
+*******************************************************************************
+*/
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::pam_script.xjs";
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_workPageParams = {};	//화면전환시 넘길 parameter
+this.fv_isMobile;	//모바일로 접속여부
+this.fv_device;		//device 종류
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * 화면 onload시 처리내역
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{	
+	this.smfInitForm(this);
+	//pbancNtcScCd 
+	//pbancNtcDtlCd
+	this.fv_param = this.smfGetFormParams();
+	
+	if (this.smfIsMobile()){
+		for(var i = 1; i < 8; i++){
+			if (this.div00.form['btnLink0' + i].btnValue != 'AFS' && this.div00.form['btnLink0' + i].btnValue != 'SML'){
+				this.div00.form['btnLink0' + i].set_height(0);
+				this.div00.form['btnLink0' + i].set_top('btnLink0' + i-1 + ':0px');
+			}
+		}
+		this.div00.form.btnLink03.set_top('btnLink01:16px');
+		this.smfResetScroll(this.div00.form);
+	}
+
+	// 메인 페이지를 보여주기 위한 정보를 표시한다.
+	var objMainForminfo = {
+						  quickmenu : {
+										  use : "N"                      //
+										, url : ""   //
+									  }
+						, toplink : {
+										  use   : "N"                                 //
+										, link  : [ ]                                  // 링크정보(배열)
+									  }
+						, noticeband : {
+										  use   : "N"                 //
+										, serviceurl : ""    //  
+									   }
+					  }	
+	this.pamfSetMainPageInfo(objMainForminfo);
+};
+
+/**
+ * @description 사이즈 변경시 위치변경
+*/
+this.frameMain_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/ 
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+};
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+this.Button_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.smfSetSubSystemGb(obj.btnValue);
+	
+	var oParam = {};	
+	this.smfSetWorkPage("comm::comm_cddcList.xfdl",oParam,false);
+};]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

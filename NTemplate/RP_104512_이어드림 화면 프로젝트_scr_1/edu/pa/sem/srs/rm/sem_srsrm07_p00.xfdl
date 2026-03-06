@@ -1,0 +1,1999 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sem_srsrm07_p00" width="1120" height="877" titletext="공기질점검장소등록/수정" onload="fnOnload" nHeight="754">
+    <Layouts>
+      <Layout height="877" width="1120" screenid="ScreenDeskTop" stepcount="0">
+        <Static id="staPopupTitleAss" taborder="24" left="20" top="20" height="20" initvalueid="ivStcAccessibilityOn" width="20"/>
+        <Div id="divTitle" taborder="1" left="0" top="15" height="54" text="" right="0" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="imgTitle" taborder="0" text="공기질점검장소" left="20" top="0" height="54" cssclass="img_WF_SubTit01" width="340" initvalueid="ivTitleAccessibilityOn" accessibilitylabel="공기질점검장소" onclick="divTitle_imgTitle_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divInfo" taborder="6" left="20" height="206" top="150" text="" cssclass="div_WF_Detail" initvalueid="ivDivAccessibilityOff" right="20">
+          <Layouts>
+            <Layout>
+              <Static id="staAyr" taborder="0" left="0" width="150" height="42" cssclass="sta_WF_Input01Top / sta_WF_Essential01" text="*학교" top="0" onclick="Static45_onclick" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta02" taborder="1" left="150" height="42" cssclass="sta_WF_Input02Top" top="0" right="0" initvalueid="ivStcAccessibilityOn" accessibilitylabel="학년도 입력" text=""/>
+              <Static id="sta03" taborder="6" left="0" height="42" cssclass="sta_WF_Input02" top="41" right="0" initvalueid="ivStcAccessibilityOff" text="" onclick="divDetail_sta44_00_01_01_00_onclick"/>
+              <Static id="staYmd" taborder="5" left="0" width="150" height="42" cssclass="sta_WF_Input01 / sta_WF_Essential01" text="*점검구분" top="41" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staClr" taborder="3" left="515" width="190" height="42" cssclass="sta_WF_Input01Top / sta_WF_Essential01" text="*년도" top="0" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta04" taborder="9" left="0" height="42" cssclass="sta_WF_Input02" top="82" right="0" initvalueid="ivStcAccessibilityOff" text=""/>
+              <Static id="staSafeChck" taborder="8" left="0" width="150" cssclass="sta_WF_Input01" text="반기" top="82" height="42" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staShl" taborder="11" left="515" width="190" height="42" cssclass="sta_WF_Input01" text="신축점검구분" top="82" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta05" taborder="14" left="0" height="42" cssclass="sta_WF_Input02" top="123" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="staAtend" taborder="13" left="0" width="150" cssclass="sta_WF_Input01" text="특별점검구분" top="123" height="42" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="staMlsv" taborder="16" left="515" width="190" height="42" cssclass="sta_WF_Input01" text="차수" top="123" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta06" taborder="20" left="0" height="42" cssclass="sta_WF_Input02" top="164" right="0" initvalueid="ivStcAccessibilityOff" text=""/>
+              <Static id="staPtclrMte" taborder="19" left="0" width="150" cssclass="sta_WF_Input01" text="학교건축연월" top="164" height="42" initvalueid="ivStcAccessibilityOn"/>
+              <Calendar id="calShlBuYm" taborder="21" left="staPtclrMte:15" top="169" width="200" height="30" initvalueid="ivCalNormal" dateformat="yyyy.MM" editformat="yyyy.MM" readonly="false" type="normal" onchanged="divInfo_calShlBuYm_onchanged" accessibilitylabel="학교건축연월"/>
+              <Radio id="rdoChckPlaceScCd" taborder="7" left="staYmd:15" top="38" width="325" height="50" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" cssclass="essential" onitemchanged="divInfo_rdoChckPlaceScCd_onitemchanged" accessibilitylabel="점검구분" accessibilityaction="상하 방향키로 다음, 이전 value로 이동하며 선택하려면 스페이스 바를 누릅니다.">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">10</Col>
+                      <Col id="datacolumn">정기점검</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">20</Col>
+                      <Col id="datacolumn">특별점검</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">30</Col>
+                      <Col id="datacolumn">신축학교점검</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Combo id="cboShlNm" taborder="2" left="160" top="7" width="341" height="30" onitemchanged="divInfo_cboShlNm_onitemchanged" text="" innerdataset="dsShlList" datacolumn="shlNm" codecolumn="shlCd" displaynulltext="- 선택 -" accessibilitydescription="필수선택" accessibilitylabel="학교명" accessibilityaction="알트 + 아래쪽 방향키로 리스트 아이템 목록을 활성화하여 가상커서를 해제한 후 컨트롤 + 상하 방향키로 아이템을 이동합니다. 엔터 키를 이용하여 아이템을 선택합니다. 탭 키 로 다음으로 이동합니다."/>
+              <Combo id="cboAyr" taborder="4" left="staClr:15" top="6" width="264" height="30" text="" innerdataset="dsAyrList" codecolumn="ayr" datacolumn="ayr" accessibilitydescription="필수선택" accessibilitylabel="년도" displaynulltext="- 선택 -" onitemchanged="divInfo_cboAyr_onitemchanged" accessibilityaction="알트 + 아래쪽 방향키로 리스트 아이템 목록을 활성화하여 가상커서를 해제한 후 컨트롤 + 상하 방향키로 아이템을 이동합니다. 엔터 키를 이용하여 아이템을 선택합니다. 탭 키 로 다음으로 이동합니다."/>
+              <Radio id="rdoHy" taborder="10" left="staSafeChck:15" top="89" width="225" height="30" direction="vertical" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" onitemchanged="divInfo_rdoHy_onitemchanged" accessibilitylabel="반기 구분" accessibilityaction="상하 방향키로 다음, 이전 value로 이동하며 선택하려면 스페이스 바를 누릅니다.">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">1</Col>
+                      <Col id="datacolumn">상반기</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">2</Col>
+                      <Col id="datacolumn">하반기</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Radio id="rdoSpecl" taborder="15" left="staAtend:15" top="130" width="340" height="30" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" onitemchanged="divInfo_rdoSpecl_onitemchanged" accessibilitylabel="특별점검 구분" accessibilityaction="상하 방향키로 다음, 이전 value로 이동하며 선택하려면 스페이스 바를 누릅니다.">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">1</Col>
+                      <Col id="datacolumn">신축3년이내</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">2</Col>
+                      <Col id="datacolumn">증·개축</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">3</Col>
+                      <Col id="datacolumn">기타</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Radio id="rdoNwcc" taborder="12" left="staShl:15" top="90" width="301" height="28" direction="vertical" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" onitemchanged="divInfo_rdoNwcc_onitemchanged" accessibilitylabel="신축점검 구분" accessibilityaction="상하 방향키로 다음, 이전 value로 이동하며 선택하려면 스페이스 바를 누릅니다.">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">1</Col>
+                      <Col id="datacolumn">상반기개교</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">2</Col>
+                      <Col id="datacolumn">하반기개교</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Combo id="cboDgr" taborder="17" left="710" top="129" width="170" height="30" innerdataset="dsDgrList" datacolumn="cdcValueNm" codecolumn="cdcValue" onitemchanged="divInfo_cboDgr_onitemchanged" accessibilitylabel="차수" accessibilityaction="알트 + 아래쪽 방향키로 리스트 아이템 목록을 활성화하여 가상커서를 해제한 후 컨트롤 + 상하 방향키로 아이템을 이동합니다. 엔터 키를 이용하여 아이템을 선택합니다. 탭 키 로 다음으로 이동합니다."/>
+              <Button id="btnAddDgr" taborder="18" text="차수추가" left="cboDgr:15" top="129" width="175" height="30" onclick="divInfo_btnAddDgr_onclick" accessibilitylabel="차수추가"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta02" taborder="10" left="20" top="356" height="10" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta12" taborder="25" text="점검대상 장소" left="20" top="sta02:0" height="30" cssclass="sta_WF_Tit18" onclick="sta00_01_onclick" initvalueid="ivStcAccessibilityOn" accessibilitylabel="프로그램 및 활동" width="0"/>
+        <Button id="btnRowDelete" taborder="16" text="행삭제" top="sta02:0" height="30" fittocontents="width" cssclass="btn_WF_Custom" visible="true" initvalueid="ivBtnAccessibilityButton" right="280" width="65" onclick="btnRowDelete_onclick" accessibilitylabel="행삭제"/>
+        <Button id="btnRowAdd" taborder="15" text="행추가" top="366" height="30" width="65" fittocontents="width" cssclass="btn_WF_Custom" visible="true" initvalueid="ivBtnAccessibilityButton" right="btnRowDelete:10" onclick="btnRowAdd_onclick" accessibilitylabel="행추가"/>
+        <Button id="btnDownload" taborder="17" text="양식 내려받기" top="366" height="30" cssclass="btn_WF_Excel03" onclick="btnDownload_onclick" right="144" width="127" accessibilitylabel="양식 내려받기"/>
+        <Grid id="grdMain" taborder="13" left="21" autofittype="col" right="19" selecttype="cell" bottom="70" top="406" nodatatext="행추가 버튼 클릭" autoenter="select" initvalueid="ivGrdAccessibilityOn" binddataset="dsListSub" onheadclick="grdMain_onheadclick" oncellclick="grdMain_oncellclick" oninput="grdMain_oninput">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="150"/>
+                <Column size="306"/>
+                <Column size="150"/>
+                <Column size="48"/>
+                <Column size="130"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="점검장소"/>
+                <Cell col="2" text="측정장소"/>
+                <Cell col="3" colspan="3" text="건축연월" calendareditformat="yyyy-MM" calendardateformat="yyyy-MM"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:chk"/>
+                <Cell col="1" displaytype="combocontrol" edittype="combo" text="bind:retFaScCd" combodataset="dsRetFaScCd" combodatacol="cdcValueNm" combocodecol="cdcValue" cssclass="essential"/>
+                <Cell col="2" edittype="text" displaytype="editcontrol" text="bind:chckFaNm" textAlign="left" editautoselect="true" editmaxlength="100" cssclass="essential"/>
+                <Cell col="3" displaytype="calendarcontrol" text="bind:faBuYm" calendardateformat="yyyy.MM" calendareditformat="yyyy.MM" calendartype="normal" calendarautoselect="false" edittype="date" calendardisplaynulltype="nullmask"/>
+                <Cell col="4" displaytype="checkboxcontrol" readonly="expr:comp.parent.divInfo.form.rdoSpecl.value != '1'" text="bind:checkYn" edittype="checkbox"/>
+                <Cell col="5" text="학교건축연월과 동일"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <ImageViewer id="img00" taborder="11" text="점검대상 장소" left="20" top="sta02:0" width="345" height="30" cssclass="img_WF_SubTit03" onclick="img00_onclick" accessibilitylabel="점검대상 장소"/>
+        <Static id="sta05" taborder="12" left="20" top="img00:0" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff" height="10"/>
+        <Button id="btnDelete" taborder="9" text="삭제" top="110" height="30" cssclass="btn_WF_Crud" width="50" initvalueid="ivBtnAccessibilityButton" accessibilitylabel="삭제" right="19" onclick="btnDelete_onclick"/>
+        <Static id="sta01" taborder="2" left="20" top="64" height="10" cssclass="sta_GD_Size" text="30" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta03_00" taborder="5" left="20" top="140" height="10" cssclass="sta_GD_Size" text="10" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff"/>
+        <Button id="btnSave" taborder="8" text="저장" top="110" width="50" right="btnDelete:10" initvalueid="ivBtnAccessibilityButton" onclick="btnSave_onclick" accessibilitylabel="저장" bottom="sta03_00:0"/>
+        <Button id="btnClose" taborder="20" text="닫기" onclick="btn_close_onclick" cssclass="btn_WF_Custom" width="50" escapebutton="true" hotkey="ALT+C" initvalueid="ivBtnAccessibilityButton" left="535" bottom="20" accessibilitylabel="닫기" height="30"/>
+        <Static id="sta00" taborder="0" left="20" top="0" height="20" cssclass="sta_Ctitle" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff"/>
+        <Static id="sta06" taborder="19" left="20" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff" bottom="50"/>
+        <Static id="sta08" taborder="21" left="20" height="20" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" right="20" initvalueid="ivStcAccessibilityOff" bottom="0"/>
+        <Static id="sta09" taborder="22" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" initvalueid="ivStcAccessibilityOff" width="20" bottom="0" left="0"/>
+        <Static id="sta10" taborder="23" top="0" cssclass="sta_GD_Size" text="20" background="rgba(251,160,146,0.5)" textAlign="center" font="10px &quot;Tahoma&quot;" visible="false" initvalueid="ivStcAccessibilityOff" width="20" right="-1" height="100.00%"/>
+        <Button id="btnCopy" taborder="7" text="이전내역 가져오기" left="829" top="111" right="btnSave:10" bottom="sta03_00:0" onclick="btnCopy_onclick" accessibilitylabel="이전내역 가져오기"/>
+        <Static id="sta03" taborder="3" text="※ 이전내역 가져오기시 등록하고자 하는 반기의 직전 반기자료가 없을 경우, 저장되어 있는 가장 최근 반기 등록자료를 가져옵니다." left="sta09:0" top="sta01:0" width="460" height="40"/>
+        <Button id="btnUpload" taborder="18" text="파일 올리기" top="366" cssclass="btn_WF_Excel03" onclick="btnUpload_onclick" right="20" width="114" height="30" accessibilitylabel="파일 올리기"/>
+        <Static id="staDdlnMngNo" taborder="4" text="마감 되었습니다." left="20" top="sta03:0" width="460" height="25" onclick="sta03_01_onclick" color="#ff0000" font="16px/normal &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Regular&quot;,&quot;Malgun Gothic&quot;,&quot;Arial&quot;,&quot;MS PGothic&quot;" visible="false"/>
+        <Grid id="grdExcelExport" taborder="14" left="20" top="405" binddataset="dsListSub" autofittype="col" right="20" initvalueid="ivGrdAccessibilityOff" selecttype="cell" height="402" autosizingtype="none" scrollbartype="none" scrolltype="both" visible="false">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="250"/>
+                <Column size="130"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="점검장소"/>
+                <Cell col="1" text="측정장소"/>
+                <Cell col="2" text="건축연월"/>
+              </Band>
+              <Band id="body">
+                <Cell textAlign="center" autosizecol="default" autosizerow="limitmin" suppressalign="middle"/>
+                <Cell col="1"/>
+                <Cell col="2" textAlign="left" autosizecol="limitmax" autosizerow="limitmin"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    학교환경관리 > 공기질점검장소 등록/수정
+*  @FileName 	sem_srsrm07_p00.xfdl 
+*  @Creator 	whkim
+*  @CreateDate 	2025.02.20
+*  @Desction    먹는물점검장소 등록/수정
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+* 2025.02.20            whkim                   최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::sem_script.xjs"
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_param;	// 파라메터 세팅
+this.fv_cddcCd;	// 시도교육청 코드
+this.fv_brno;	// 사업자등록번호
+this.fv_bizSn;	// 사업일련번호
+this.fv_bizNm;  // 사업명
+this.fv_shlBuYm;  // 학교건축연월
+
+this.fv_procType;	//등록,수정구분
+this.FrstInspCnt;
+
+this.fv_addDgrYn;		//차수추가 여부
+this.rltDelYn; 		// 점검결과가 있는데 "행삭제" 되었는지 여부
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 폼 초기화
+	this.smfInitPopup(obj);
+	fv_addDgrYn = true;
+	
+	// 전달받은 파라메터 설정
+	fv_param = this.smfGetPopupParams();
+		
+	//팝업명 수정
+	var text = this.divTitle.form.imgTitle.text;
+	var addText = fv_param.addTitle;
+	this.divTitle.form.imgTitle.set_text(text + addText);
+	
+	//사업자등록번호
+	fv_brno = fv_param.brno;
+	fv_bizSn = fv_param.bizSn;
+	
+	//등록,수정 구분
+	fv_procType = fv_param.procType;
+	
+	// 행삭제 여부 초기화
+	rltDelYn = false;
+	
+	//학교코드 세팅
+	this.dsShlList.loadXML(fv_param.shlList);
+	this.dsShlList.filter("bizSn == " + fv_bizSn);
+	
+	//검사년도 기본 세팅
+	this.yearCmbSet();
+
+	if(fv_procType == "insert"){
+		//삭제버튼 비활성화
+		this.btnDelete.enable = false;
+		
+		this.staDdlnMngNo.set_visible(false);					// 마감문구 숨기기
+		
+		fv_cddcCd = this.smfGetCddcCode();
+		this.dsSearch.setColumn(0, "cddcCd", fv_cddcCd);		//시도교육청
+		
+		var paramAyr = fv_param.ayr;
+		this.dsSearch.setColumn(0, "ayr", paramAyr);				//검사년도
+		
+ 		this.divInfo.form.rdoHy.set_enable(false);				// 반기 
+ 		this.divInfo.form.rdoNwcc.set_enable(false);			// 신축점검구분 
+ 		this.divInfo.form.rdoSpecl.set_enable(false);			// 특별점검구분 
+ 		this.divInfo.form.cboDgr.set_enable(false);				// 차수 
+ 		this.divInfo.form.btnAddDgr.set_enable(false);			// 차수등록 
+		
+	} else if(fv_procType == "update"){
+	
+		//부모창에서 받아온 파라미터로 조회조건 세팅
+		this.dsSearch.loadXML(fv_param.dataset);
+		
+		//시도교육청
+ 		fv_cddcCd = this.smfGetCddcCode();
+ 		this.dsSearch.setColumn(0, "cddcCd", fv_cddcCd);	
+		
+		//목록 조회
+		if("20" == this.dsSearch.getColumn(0, 'chckPlaceScCd')){
+			this.fnDgrSearch();
+		} else {
+			this.fnSearch();
+		}
+	}
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+};
+
+/**
+ * 엑셀파일 import 콜백함수
+ * @param : sImportId		- import ID
+ * @param : bResult			- 결과값(true, false)
+ * @return : N/A
+ */
+this.fnImportCallback = function(sImportId,bResult)
+{
+	if(bResult){
+		var rowCnt = this.dsExcelImport.getRowCount();
+		
+		if(rowCnt < 1)return;
+						
+		var vsChckPlaceScCd = this.dsSearch.getColumn(0, "chckPlaceScCd");		//점검구분
+		if(this.isNil(vsChckPlaceScCd)){
+			this.smfAlert('PA058', ['점검구분을 체크']);
+			return false;
+		}
+		
+		// 점검장소 검증
+		for(var i=0; i<rowCnt; i++){
+			var rowChckFaNm = this.dsExcelImport.getColumn(i, 'chckFaNm');		// 측정장소
+			if(this.smfLength(rowChckFaNm, 3) > 40){
+				this.smfAlert('CM155', ['측정장소가 40Bytes를 초과하였습니다. 다시 등록하시기 바랍니다.']);
+				return;
+			}
+			
+			var vsRetFaScCd = this.smfNvl(this.dsExcelImport.getColumn(i, "retFaScCd"), "");	//점검장소
+			var vsFaBuYm = this.smfNvl(this.dsExcelImport.getColumn(i, "faBuYm"), "");			//건축연월
+			var vsChckPlaceScCd = this.dsSearch.getColumn(0, "chckPlaceScCd");				//점검구분
+			var vsSpecl = this.divInfo.form.rdoSpecl.value;									//특별점검구분
+			
+			if(this.isNotNil(vsRetFaScCd) || this.isNotNil(vsFaBuYm) || this.isNotNil(rowChckFaNm)){
+				var rowNum = this.dsListSub.addRow();
+				
+				if(this.isNotNil(vsRetFaScCd)){
+					if(this.smfTrim(vsRetFaScCd) == "교실"){
+						this.dsListSub.setColumn(rowNum, "retFaScCd", "110");
+					}else if(this.smfTrim(vsRetFaScCd) == "특별교실"){
+						this.dsListSub.setColumn(rowNum, "retFaScCd", "120");
+					}else if(this.smfTrim(vsRetFaScCd) == "급식시설"){
+						this.dsListSub.setColumn(rowNum, "retFaScCd", "130");
+					}else if(this.smfTrim(vsRetFaScCd) == "기숙사"){
+						this.dsListSub.setColumn(rowNum, "retFaScCd", "140");
+					}else if(this.smfTrim(vsRetFaScCd) == "체육관"){
+						this.dsListSub.setColumn(rowNum, "retFaScCd", "150");
+					}else if(this.smfTrim(vsRetFaScCd) == "강당"){
+						this.dsListSub.setColumn(rowNum, "retFaScCd", "160");
+					}else if(this.smfTrim(vsRetFaScCd) == "보건실"){
+						this.dsListSub.setColumn(rowNum, "retFaScCd", "170");
+					}else if(this.smfTrim(vsRetFaScCd) == "교무실"){
+						this.dsListSub.setColumn(rowNum, "retFaScCd", "180");
+					}else if(this.smfTrim(vsRetFaScCd) == "행정실"){
+						this.dsListSub.setColumn(rowNum, "retFaScCd", "190");
+					}else if(this.smfTrim(vsRetFaScCd) == "컴퓨터실"){
+						this.dsListSub.setColumn(rowNum, "retFaScCd", "191");
+					} else {
+						this.dsListSub.setColumn(rowNum, "retFaScCd", "");
+					}
+				}
+				
+				if(this.isNotNil(vsFaBuYm) && vsFaBuYm != ""){
+					if (vsChckPlaceScCd == 20 && vsSpecl == 1){
+						this.dsListSub.setColumn(rowNum, "faBuYm", vsFaBuYm);
+					}else{
+						this.dsListSub.setColumn(rowNum, "faBuYm", "");
+					}
+				}
+				
+				this.dsListSub.setColumn(rowNum, "chckFaNm", rowChckFaNm);
+			}
+			
+		}
+	}
+}
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+/**
+ * 조회서비스
+ * @param : N/A
+ * @param : N/A
+ */
+this.fnSearch = function()
+{
+ 	// 서비스 객체 생성
+	this.smfSearchService("list")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if (this.dsApiResponseList.getColumn(0, 'prcsRltCd') == 'SUCC'){
+				this.fnSetDdln();
+				//this.fnDgrSearch();
+				if(this.isNotNil(this.dsMain.getColumn(0, 'shlBuYm'))){
+					for(var i=0; i<this.dsListSub.getRowCount(); i++){
+						if(this.dsMain.getColumn(0, 'shlBuYm') == this.dsListSub.getColumn(i, 'faBuYm')){
+							this.dsListSub.setColumn(i, 'checkYn', true);
+						}
+					}
+				}
+				
+			}else{
+				if (this.smfIsNull(this.dsApiResponseList.getColumn(0, 'errCn'))){
+					this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'message')], this.fnMessageCallback);
+				}else{
+					this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'errCn')], this.fnMessageCallback);
+				}
+		}
+	});
+};
+
+/**
+ * 저장서비스
+ * @param : N/A
+ * @param : N/A
+ */
+this.fnSave = function()
+{
+	// 서비스 객체 생성
+	this.smfSaveService("save")
+		// (권장) 데이터 존재 필수
+		.requireExistsData(this.dsSearch)
+		// 데이터 변경 필수
+		.requireModifredData([this.dsSave, this.dsListSub])
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if (this.dsApiResponseList.getColumn(0, 'prcsRltCd') == 'SUCC'){
+				this.smfAlert('CM002', []); // 저장이 완료되었습니다.
+				this.close();				// 저장 후 팝업 닫음
+			}else{
+				if (this.smfIsNull(this.dsApiResponseList.getColumn(0, 'errCn'))){
+					this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'message')], this.fnMessageCallback);
+				}else{
+					this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'errCn')], this.fnMessageCallback);
+				}
+			}
+		});
+};
+
+/**
+ * 저장서비스
+ * @param : N/A
+ * @param : N/A
+ */
+this.fnNoConfirmSave = function()
+{
+	// 서비스 객체 생성
+	this.smfSaveService("save")
+		.showConfirm(false)
+		// (권장) 데이터 존재 필수
+		.requireExistsData(this.dsSearch)
+		// 데이터 변경 필수
+		.requireModifredData([this.dsSave, this.dsListSub])
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if (this.dsApiResponseList.getColumn(0, 'prcsRltCd') == 'SUCC'){
+				this.smfAlert('CM002', []); // 저장이 완료되었습니다.
+				this.close();				// 저장 후 팝업 닫음
+			}else{
+				if (this.smfIsNull(this.dsApiResponseList.getColumn(0, 'errCn'))){
+					this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'message')], this.fnMessageCallback);
+				}else{
+					this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'errCn')], this.fnMessageCallback);
+				}
+			}
+		});
+};
+
+/**
+ * 특별점검 차수조회 서비스
+ */
+this.fnDgrSearch = function ()
+{
+	this.dsDgrList.clearData();
+	
+	this.smfSearchService("listDgr")
+	.requireExistsData(this.dsSearch)
+	.run()
+	.callback(function(callbackParams){
+		if(callbackParams.errors) return;
+					
+		if (this.dsApiResponseList.getColumn(0, 'prcsRltCd') == 'SUCC'){
+			
+			//콤보박스 set
+			if(fv_procType == "insert"){
+				this.divInfo.form.cboDgr.set_index(0);
+			}
+			
+			//등록된 자료가 있을시 이전내역가져오기 비활성화, 저장, 삭제버튼 활성화
+			// 서비스 객체 생성
+			this.smfSearchService("list")
+				// 실행
+				.run()
+				.callback(function(callbackParams){
+					if(callbackParams.errors) return;
+					
+					if (this.dsApiResponseList.getColumn(0, 'prcsRltCd') == 'SUCC'){
+						var listCheck = this.dsListSub.getColumn(0, "shlCd");
+						this.fnSetDdln(listCheck);
+						
+						if(this.isNotNil(this.dsMain.getColumn(0, 'shlBuYm'))){
+							for(var i=0; i<this.dsListSub.getRowCount(); i++){
+								if(this.dsMain.getColumn(0, 'shlBuYm') == this.dsListSub.getColumn(i, 'faBuYm')){
+									this.dsListSub.setColumn(i, 'checkYn', true);
+								}	
+							}
+						}
+					}
+					
+	});
+		}else{
+			if (this.smfIsNull(this.dsApiResponseList.getColumn(0, 'errCn'))){
+				this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'message')], this.fnMessageCallback);
+			}else{
+				this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'errCn')], this.fnMessageCallback);
+			}
+		}
+	});
+};
+
+/**
+ * 이전내역 가져오기 서비스
+ */
+this.fnCopy = function ()
+{
+	this.smfSearchService("listCopy")
+	.requireExistsData(this.dsSearch)
+	.run()
+	.callback(function(callbackParams){
+		if(callbackParams.errors) return;
+		
+		if (this.dsApiResponseList.getColumn(0, 'prcsRltCd') == 'SUCC'){
+
+			// 불러온 데이터 복사
+			this.dsMain.copyData(this.dsMainPre);
+			this.dsListSub.copyData(this.dsListSubPre);
+			
+			for(var i=0; i<this.dsListSub.getRowCount(); i++){
+				this.dsListSub.setColumn(i, 'chckRetFaSn', '');
+			}
+
+		}else{
+			if (this.smfIsNull(this.dsApiResponseList.getColumn(0, 'errCn'))){
+				this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'message')], this.fnMessageCallback);
+			}else{
+				this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'errCn')], this.fnMessageCallback);
+			}
+		}
+	});
+};
+
+/**
+ * @description 삭제 Transaction
+ */
+this.fnDelete = function()
+{	
+ 	// 서비스 객체 생성
+	this.smfDeleteService("delete")
+		// (권장) 데이터 존재 필수
+		.requireExistsData(this.dsSearch)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if (this.dsApiResponseList.getColumn(0, 'prcsRltCd') == 'SUCC'){
+				this.smfAlert('PA020');	// 삭제가 완료되었습니다.
+				// 창 닫기
+				this.close();
+			}else{
+				this.smfAlert('CM000', [this.dsApiResponseList.getColumn(0, 'errCn')]);
+			}
+		});
+};
+
+this.fnNoConfirmDelete = function(){
+	// 서비스 객체 생성
+	this.smfDeleteService("delete")
+		.showConfirm(false)
+		// (권장) 데이터 존재 필수
+		.requireExistsData(this.dsSearch)
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if (this.dsApiResponseList.getColumn(0, 'prcsRltCd') == 'SUCC'){
+				this.smfAlert('PA020');	// 삭제가 완료되었습니다.
+				// 창 닫기
+				this.close();
+			}else{
+				this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'errCn')]);
+			}
+		});
+};
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+ /**
+ * 조회조건 년도 세팅 : 현재년도 ~  현재년도-2
+ * @param  : cmb			- combo 컴포넌트
+ * @return : N/A
+ */
+this.yearCmbSet = function(){
+	var today = new nexacro.Date();
+	var year = today.getFullYear();
+	
+	for(var i = 0; i < 3; i++){
+		var yearVal = year - i;
+		this.dsAyrList.addRow();
+		this.dsAyrList.setColumn(i, 'ayr', yearVal);
+	}
+};
+
+
+/**
+ * 저장 체크
+ * @param : N/A
+ * @return : true : 저장 적합, false : 저장 부적합
+ */
+this.fnSaveCheck = function(){
+
+	var vsShlNm = this.dsSearch.getColumn(0, "shlNm");						//학교
+	var vsShlCd = this.dsSearch.getColumn(0, "shlCd");						
+	var vsAyr = this.dsSearch.getColumn(0, "ayr");							//년도
+	var vsChckPlaceScCd = this.dsSearch.getColumn(0, "chckPlaceScCd");		//점검구분
+	var vsHy = this.dsSearch.getColumn(0, "hyCd");						  	//반기
+	var vsSpecl = this.dsSearch.getColumn(0, "speclChckRsnCd");				//특별점검
+	var vsNwcc = this.dsSearch.getColumn(0, "nwccChckRsnCd");				//신축점검
+	var vsDgr = this.divInfo.form.cboDgr.value;							//차수
+	var addDgr = this.divInfo.form.btnAddDgr.enable;
+	
+	if (vsChckPlaceScCd == 10){
+		var vsChckPlaceMngNo = String(vsChckPlaceScCd + vsHy + 1);
+	}else if(vsChckPlaceScCd == 20){
+		var vsChckPlaceMngNo = this.dsSearch.getColumn(0, "chckPlaceMngNo");
+	}else if(vsChckPlaceScCd == 30){
+		var vsChckPlaceMngNo =  String(vsChckPlaceScCd + vsNwcc + 1);
+	}
+
+	if(this.isNil(vsAyr)){
+		this.smfAlert('CM006', ['년도']);
+		return false;
+	}
+	
+	if(this.isNil(vsChckPlaceScCd)){
+		this.smfAlert('PA058', ['점검구분을 체크']);
+		return false;
+	}
+	
+	if(vsChckPlaceScCd == 10 && this.isNil(vsHy)){
+		this.smfAlert('PA058', ['반기구분을 체크']);
+		return false;
+	}
+	
+	if(vsChckPlaceScCd == 20 && this.isNil(vsSpecl)){
+		this.smfAlert('PA058', ['특별점검구분을 체크']);
+		return false;
+	}
+	
+	if(vsChckPlaceScCd == 30 && this.isNil(vsNwcc)){
+		this.smfAlert('PA058', ['신축점검구분을 체크']);
+		return false; 
+	}
+	if(addDgr == true){
+		this.smfAlert('PA058', ['차수 추가를 체크']);
+		return false;
+	}
+	
+	var vsRowCnt = this.dsListSub.getRowCount();
+	if(vsRowCnt == 0){
+		this.smfAlert('PA058', ['점검대상장소를 입력']);
+		return false;
+	}
+	
+	var vsShlBuYm = this.dsMain.getColumn(0, "shlBuYm");  //학교건축연월
+	var getYear = this.smfToday();
+	
+	for (var i=0; i<vsRowCnt; i++){
+		var vsRetFaScCd = this.dsListSub.getColumn(i, "retFaScCd");
+		var vsChckFaNm = this.dsListSub.getColumn(i, "chckFaNm");
+		var vsFaBuYm = this.dsListSub.getColumn(i, "faBuYm");
+
+		if(this.isNil(vsRetFaScCd)){
+			this.smfAlert('PA058', ['점검장소를 입력']);
+			return false;
+		}
+		if(this.isNil(vsChckFaNm)){
+			this.smfAlert('PA058', ['측정장소를 입력']);
+			return false;
+		}
+		
+		if(this.isNotNil(vsShlBuYm)){
+			// 현재일자 > 학교건축연월
+			if(vsShlBuYm > getYear){
+			this.smfAlert('PA003', ['학교건축연월은 현재보다 미래일을 지정하실수 ']);
+			return false;
+			}
+		}
+
+		if(this.smfLength(vsChckFaNm, 3) > 100){
+			this.smfAlert('CM155', ['측정장소가 100Bytes를 초과하였습니다. 다시 등록하시기 바랍니다.']);
+			return;
+		}
+	
+		this.dsListSub.setColumn(i, "shlCd", vsShlCd);
+		this.dsListSub.setColumn(i, "ayr", vsAyr);
+		this.dsListSub.setColumn(i, "chckPlaceScCd", vsChckPlaceScCd);
+		this.dsListSub.setColumn(i, "chckPlaceMngNo", vsChckPlaceMngNo);
+		if(this.isNil(vsFaBuYm)){
+			this.dsListSub.setColumn(i, 'faBuYm', '');
+		} else {
+			this.dsListSub.setColumn(i, 'faBuYm', vsFaBuYm.substr(0, 6));
+		}
+		
+	}
+	
+
+	return true;
+};
+
+
+/**
+ * 마감체크
+ */
+this.fnSetDdln = function(listCheck){
+	//마감확인
+	var qltaDdlnMngNm = this.dsMain.getColumn(0, 'qltaDdlnMngNm');
+	
+	//마감됨
+	if(this.isNotNil(qltaDdlnMngNm)){
+
+		this.staDdlnMngNo.set_visible(true);					// 마감문구 보이기
+		
+		this.btnCopy.set_enable(false);							// 이전내역 가져오기 
+		this.btnSave.set_enable(false);							// 저장
+		this.btnDelete.set_enable(false);						// 삭제
+		this.divInfo.form.cboShlNm.set_enable(false);			// 학교
+		this.divInfo.form.cboAyr.set_enable(false);				// 년도
+		this.divInfo.form.rdoChckPlaceScCd.set_enable(false);	// 점검구분
+		this.divInfo.form.rdoHy.set_enable(false);				// 반기
+		this.divInfo.form.rdoNwcc.set_enable(false);			// 신축점검구분
+		this.divInfo.form.rdoSpecl.set_enable(false);			// 특별점검구분
+		this.divInfo.form.cboDgr.set_enable(false);				// 차수
+		this.divInfo.form.btnAddDgr.set_enable(false);			// 차수등록
+		
+		this.btnRowAdd.set_enable(false);						// 행추가 버튼
+		this.btnRowDelete.set_enable(false);					// 행삭제 버튼
+		this.btnDownload.set_enable(false);						// 양식 내려받기
+		this.btnUpload.set_enable(false);						// 파일 올리기
+	
+		
+	// 미 마감	
+	}else{
+		this.staDdlnMngNo.set_visible(false);					// 마감문구 숨기기
+		//등록
+		if(fv_procType == "insert") {
+			this.btnCopy.set_enable(true);							// 이전내역 가져오기 
+			this.btnSave.set_enable(true);							// 저장
+			this.btnDelete.set_enable(true);						// 삭제
+			this.divInfo.form.cboShlNm.set_enable(true);			// 학교 
+			this.divInfo.form.cboAyr.set_enable(true);				// 년도 
+			this.divInfo.form.rdoChckPlaceScCd.set_enable(true);	// 점검구분 
+			
+			this.btnRowAdd.set_enable(true);						// 행추가 버튼
+			this.btnRowDelete.set_enable(true);						// 행삭제 버튼
+			this.btnDownload.set_enable(true);						// 양식 내려받기
+			this.btnUpload.set_enable(true);						// 파일 올리기
+			
+			var vsRdoChckPlaceScCd = this.divInfo.form.rdoChckPlaceScCd.value;
+			if(vsRdoChckPlaceScCd == 20 && fv_addDgrYn){
+				this.divInfo.form.btnAddDgr.set_enable(true);			// 차수등록 가능
+			}
+			
+			//등록된 자료가 있을시 이전내역가져오기,저장,삭제,행추가,행삭제 버튼 활성화
+			//메인에서 수정으로 들어와야 키값들이 매핑 됨.
+			if(listCheck == null){
+				this.btnSave.set_enable(true);							// 저장가능
+				this.btnRowAdd.set_enable(true);						// 행추가 버튼
+				this.btnRowDelete.set_enable(true);						// 행삭제 버튼
+			} else{
+				this.btnCopy.set_enable(false);							// 이전내역 가져오기 
+				this.btnSave.set_enable(false);							// 저장
+				this.btnDelete.set_enable(false);						// 삭제
+				
+				this.btnRowAdd.set_enable(false);						// 행추가 버튼
+				this.btnRowDelete.set_enable(false);					// 행삭제 버튼
+				this.btnDownload.set_enable(false);						// 양식 내려받기
+				this.btnUpload.set_enable(false);						// 파일 올리기
+			}
+			
+		}
+			
+		//수정
+		if(fv_procType == "update"){
+			this.btnCopy.set_enable(false);							// 이전내역 가져오기
+			this.btnSave.set_enable(true);							// 저장
+			this.btnDelete.set_enable(true);						// 삭제
+			this.divInfo.form.cboShlNm.set_enable(false);			// 학교
+			this.divInfo.form.cboAyr.set_enable(false);				// 년도
+			this.divInfo.form.rdoChckPlaceScCd.set_enable(false);	// 점검구분
+			this.divInfo.form.rdoHy.set_enable(false);				// 반기구분
+			this.divInfo.form.rdoNwcc.set_enable(false);			// 신축점검구분
+			this.divInfo.form.rdoSpecl.set_enable(false);			// 특별점검구분
+			this.divInfo.form.cboDgr.set_enable(false);				// 차수
+			this.divInfo.form.btnAddDgr.set_enable(false);			// 차수등록
+		}
+	}
+	
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * 양식 내려받기 버튼 클릭 시
+ * @param  : obj			- [object]Grid
+ * @param  : e				- [string]GridClickEventInfo
+ * @return : N/A
+ */
+this.btnDownload_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objOption = {
+						objGrid : this.grdExcelExport
+					,   sheetname : "Sheet1"
+					,   filename : "공기질점검장소_업로드양식" + this.smfTodayTime()
+					};
+	this.smfExcelExport(objOption);
+};
+
+/**
+ * 파일 올리기 버튼 클릭 시
+ * @param  : obj			- [object]Grid
+ * @param  : e				- [string]GridClickEventInfo
+ * @return : N/A
+ */
+this.btnUpload_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objOption = {
+						datasetname : "dsExcelImport"
+					,   sheetname   : "Sheet1"
+					,   startcell   : "A2"
+					,   callback    : "fnImportCallback"
+					,   importId    : "import"
+					,   objForm     : this
+					};
+	this.smfExcelImport(objOption);
+};
+
+/**
+ * 저장 버튼 클릭 시
+ * @param  : obj			- [object]Button
+ * @param  : e				- [string]ClickEventInfo
+ * @return : N/A
+ */
+this.btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this.fnSaveCheck()) return;
+	// 최소 1건은 입력해야함
+	if (this.dsListSub.rowcount < 1){
+		this.smfConfirm("점검대상 장소를 등록해 주시기 바랍니다.");
+		return false;
+	}
+
+	var vsAyr = this.dsSearch.getColumn(0, "ayr"); // 년도
+	var vsShlCd = this.dsSearch.getColumn(0, "shlCd");
+	var vsShlNm = this.dsSearch.getColumn(0, "shlNm");
+	var vsChckPlaceScCd = this.dsSearch.getColumn(0, "chckPlaceScCd"); // 점검구분코드 
+	var vsHyCd = this.dsSearch.getColumn(0, "hyCd"); // 반기점검코드
+	var vsSpecl = this.dsSearch.getColumn(0, "speclChckRsnCd");//특별점검코드
+	var vsNwcc = this.dsSearch.getColumn(0, "nwccChckRsnCd"); //신축점검코드
+	var vsShlBuYm = this.dsMain.getColumn(0, "shlBuYm");
+	var speclChckDgr = this.dsSearch.getColumn(0, "chckPlaceMngNo");
+	
+	var mngNo =this.dsListSub.getColumn(0, "chckPlaceMngNo");
+	
+	this.dsSave.setColumn(0, "ayr", vsAyr);
+	this.dsSave.setColumn(0, "shlCd", vsShlCd);
+	this.dsSave.setColumn(0, "shlNm", vsShlNm);
+	this.dsSave.setColumn(0, "cddcCd", this.dsSearch.getColumn(0, "cddcCd"));
+	this.dsSave.setColumn(0, "dstrtOfcdcCd", this.dsSearch.getColumn(0, "cteOrgCd"));
+	this.dsSave.setColumn(0, "chckPlaceScCd", vsChckPlaceScCd);
+	this.dsSave.setColumn(0, "chckPlaceMngNo", mngNo);
+	this.dsSave.setColumn(0, "hyCd", vsHyCd);
+	this.dsSave.setColumn(0, "speclChckRsnCd", vsSpecl);
+	this.dsSave.setColumn(0, "nwccChckRsnCd", vsNwcc);
+	if (this.isNotNil(vsShlBuYm))
+	{
+		this.dsSave.setColumn(0, "shlBuYm", vsShlBuYm.substr(0,6));
+	}else{
+		this.dsSave.setColumn(0, "shlBuYm", vsShlBuYm);
+	}
+	this.dsSave.setColumn(0, "procType", fv_procType);
+	
+	for(var i=0; i<this.dsBizSn.getRowCount(); i++){
+		if(fv_bizSn == this.dsBizSn.getColumn(i, 'bizSn')){
+			this.dsSave.setColumn(0, "qltaChckComyNm", this.dsBizSn.getColumn(i, 'inspComyNm'));
+			this.dsSave.setColumn(0, "qltaChckYmd", this.dsBizSn.getColumn(i, 'inspComyDsgnYmd'));
+			
+			break;
+		}
+	}
+	
+	
+	this.dsSave.setColumn(0, "bizSn", fv_bizSn);
+	
+	if (this.isNotNil(speclChckDgr))
+	{
+		this.dsSave.setColumn(0, "speclChckDgr", speclChckDgr.substring(4,3));
+	}else{
+		this.dsSave.setColumn(0, "speclChckDgr", speclChckDgr);
+	}
+				
+	if(rltDelYn){
+		this.smfConfirm("[행삭제]된 건 중 측정(검사)결과가 등록되어 있습니다.\n[점검대상 장소]의 내용이 삭제된 경우 측정(검사)결과도 함께 삭제됩니다.\n\n저장하시겠습니까?", function(result){
+			if(result.confirmResult){
+				//저장
+				this.fnNoConfirmSave();
+			}
+		});
+	}else{
+		//저장
+		this.fnSave();
+	}
+	
+	
+};
+
+/**
+ * 닫기 버튼 클릭 시
+ * @param  : obj			- [object]Button
+ * @param  : e				- [string]ClickEventInfo
+ * @return : N/A
+ */
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+
+/**
+ * 행추가 버튼 클릭 시
+ * @param  : obj			- [object]Button
+ * @param  : e				- [string]ClickEventInfo
+ * @return : N/A
+ */
+this.btnRowAdd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	var shlNm = this.dsSearch.getColumn(0, "shlNm");						//학교
+	var vsAyr = this.dsSearch.getColumn(0, "ayr");							//년도
+	var vsChckPlaceScCd = this.dsSearch.getColumn(0, "chckPlaceScCd");		//점검구분
+	var vsHy = this.dsSearch.getColumn(0, "hyCd");						  	//반기
+	var vsSpecl = this.dsSearch.getColumn(0, "speclChckRsnCd");				//특별점검
+	var vsNwcc = this.dsSearch.getColumn(0, "nwccChckRsnCd");				//신축점검
+	var cboDgr = this.divInfo.form.cboDgr.value;							//차수
+	var addDgr = this.divInfo.form.btnAddDgr.enable;
+
+	if(this.isNil(vsAyr)){
+		this.smfAlert('CM006', ['년도']);
+		return false;
+	}
+	
+	if(this.isNil(vsChckPlaceScCd)){
+		this.smfAlert('PA058', ['점검구분을 체크']);
+		return false;
+	}
+	
+	if(vsChckPlaceScCd == 10 && this.isNil(vsHy)){
+		this.smfAlert('PA058', ['반기구분을 체크']);
+		return false;
+	}
+	
+	if(vsChckPlaceScCd == 20 && this.isNil(vsSpecl)){
+		this.smfAlert('PA058', ['특별점검구분을 체크']);
+		return false;
+	}
+	
+	if(vsChckPlaceScCd == 30 && this.isNil(vsNwcc)){
+		this.smfAlert('PA058', ['신축점검구분을 체크']);
+		return false; 
+	}
+	if(addDgr == true){
+		this.smfAlert('PA058', ['차수 추가를 먼저']);
+		return false;
+	}
+
+	var nRow = this.dsListSub.addRow();
+
+};
+
+/**
+ * 행삭제 버튼 클릭 시
+ * @param  : obj			- [object]Button
+ * @param  : e				- [string]ClickEventInfo
+ * @return : N/A
+ */
+this.btnRowDelete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//체크박스 선택 여부 확인
+	var arrChk = this.dsListSub.extractRows('chk == 1');
+	if(arrChk == '-1' || arrChk.length < 1){
+		//선택된 {0}이(가) 없습니다. {0}을(를) 선택하여 주십시오.
+		this.smfAlert('CM013', ['행']);	  
+		return;
+	}	
+	// 삭제 시 검사결과가 있는지 체크
+	var qltaInspRltYn = "";
+    var qltaInspRltChk = false;
+	
+    for(var i = 0; i < arrChk.length; i++){
+    	qltaInspRltYn = this.dsListSub.getColumn(arrChk[i], 'qltaInspRltYn');
+		
+    	if(qltaInspRltYn == "Y"){
+    		qltaInspRltChk = true;
+    	}
+    }
+	
+	if(qltaInspRltChk){
+	    this.smfConfirm("측정(검사)결과가 입력되어 있습니다.\n[행삭제]시 측정(검사)결과도 함께 삭제됩니다.\n\n삭제하시겠습니까?",
+		function(result){
+			if(result.confirmResult){	//YES
+				rltDelYn = true; 
+				for(var i=arrChk.length - 1; i >= 0 ; i--){
+					
+					if(this.dsListSub.getColumn(arrChk[i], 'chckRetFaSn')){
+						var row = this.dsDelList.addRow();
+						this.dsDelList.copyRow(row, this.dsListSub, arrChk[i]);
+					}
+					this.dsListSub.deleteRow(arrChk[i]);
+				}
+			}
+	    });
+    } else {
+		for(var i = arrChk.length - 1; i >= 0 ; i--){
+			
+			if(this.dsListSub.getColumn(arrChk[i], 'chckRetFaSn')){
+				var row = this.dsDelList.addRow();
+				this.dsDelList.copyRow(row, this.dsListSub, arrChk[i]);
+			}
+			this.dsListSub.deleteRow(arrChk[i]);
+		}
+	}
+};
+
+/**
+ * 닫기 버튼 클릭 시
+ * @param  : N/A
+ * @return : N/A
+ */
+this.btn_close_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(false);
+};
+
+/**
+ * @description 학교선택시 호출
+*/
+this.divInfo_cboShlNm_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	//학교가 선택되어있으면
+	if(this.isNotNil(this.dsSearch.getColumn(0, "shlCd"))){
+		//조회 함
+		this.fnSearch();
+	}
+};
+
+/**
+ * @description 특별점검구분 라디오 버튼 클릭시 변경사항
+*/
+this.divInfo_rdoSpecl_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{	
+	if(this.isNil(this.dsSearch.getColumn(0, "shlCd"))){
+		this.smfAlert('PA058', ['학교를 선택 ']);
+		this.divInfo.form.rdoSpecl.set_value("-1");
+		return false;
+	}
+
+	
+	this.divInfo.form.cboDgr.set_enable(true);				//차수 콤보박스
+	this.divInfo.form.btnAddDgr.set_enable(true);			//차수 추가버튼
+	
+	//this.fnSearch();
+	if(fv_procType == "insert"){
+		this.fnDgrSearch();
+	}
+};
+
+/**
+ * @description 점검구분 라디오 버튼 클릭시 변경사항
+*/
+this.divInfo_rdoChckPlaceScCd_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	if(this.isNil(this.dsSearch.getColumn(0, "shlCd"))){
+		this.smfAlert('PA058', ["학교를 선택 "]);
+		this.divInfo.form.rdoChckPlaceScCd.set_value('-1');
+		return false;
+	}
+
+	var vsRdoChckPlaceScCd = this.divInfo.form.rdoChckPlaceScCd.value;
+
+	this.divInfo.form.rdoHy.set_enable(false);				// 반기 변경불가
+	this.divInfo.form.rdoNwcc.set_enable(false);			// 신축점검구분 변경불가
+	this.divInfo.form.rdoSpecl.set_enable(false);			// 특별점검구분 변경불가
+	this.divInfo.form.cboDgr.set_enable(false);				// 차수 변경불가
+	this.divInfo.form.btnAddDgr.set_enable(false);			// 차수등록 불가
+	
+	this.divInfo.form.rdoHy.set_value("");					// 
+	this.divInfo.form.rdoNwcc.set_value("");				// 
+	this.divInfo.form.rdoSpecl.set_value("");				//
+	this.divInfo.form.cboDgr.set_value("");					//
+		
+ 	this.dsMain.reset();
+ 	this.dsListSub.reset();
+	
+	if(vsRdoChckPlaceScCd == 10){				//정기점검
+	
+		this.divInfo.form.rdoHy.set_enable(true);				// 반기 변경가능
+		this.divInfo.form.rdoNwcc.set_enable(false);			// 신축점검구분 변경불가
+		this.divInfo.form.rdoSpecl.set_enable(false);			// 특별점검구분 변경불가
+		this.divInfo.form.cboDgr.set_enable(false);				// 차수 변경불가
+		this.divInfo.form.btnAddDgr.set_enable(false);			// 차수등록 불가
+		
+		this.divInfo.form.rdoNwcc.set_value("");				// 
+		this.divInfo.form.rdoSpecl.set_value("");				//
+		this.divInfo.form.cboDgr.set_value("");					//
+		
+	}else if (vsRdoChckPlaceScCd == 20){		//특별점검
+		
+		this.divInfo.form.rdoHy.set_enable(false);				// 반기 변경불가
+		this.divInfo.form.rdoNwcc.set_enable(false);			// 신축점검구분 변경불가
+		this.divInfo.form.rdoSpecl.set_enable(true);			// 특별점검구분 변경가능
+		
+		this.divInfo.form.rdoHy.set_value("");					//
+		this.divInfo.form.rdoNwcc.set_value("");				//
+		
+	}else if (vsRdoChckPlaceScCd == 30){		//신축학교점검
+	
+		this.divInfo.form.rdoHy.set_enable(false);				// 반기 변경불가
+		this.divInfo.form.rdoNwcc.set_enable(true);				// 신축점검구분 변경가능
+		this.divInfo.form.rdoSpecl.set_enable(false);			// 특별점검구분 변경불가
+		this.divInfo.form.cboDgr.set_enable(false);				// 차수 변경불가
+		this.divInfo.form.btnAddDgr.set_enable(false);			// 차수등록 불가
+		
+		this.divInfo.form.rdoHy.set_value("");					// 
+		this.divInfo.form.rdoSpecl.set_value("");				//
+		this.divInfo.form.cboDgr.set_value("");					//
+		
+	}
+};
+
+
+/**
+ * @description 차수추가 버튼 클릭시 
+*/
+this.divInfo_btnAddDgr_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var maxIndex = this.dsDgrList.getRowCount() - 1;
+	var temp = 0;
+	if(this.isNil(this.dsDgrList.getColumn(maxIndex, "cdcValue"))){
+		temp = 0
+	}else{
+		temp = Number(this.dsDgrList.getColumn(maxIndex, "cdcValue"));
+	}
+	
+	var addCdcValue = String(Number(temp + 1));
+
+	if(addCdcValue.substring(3) == "10"){
+		this.smfAlert('PA061', ['차수추가는 9차수까지 ']);
+		return false;
+	}
+	
+	if (addCdcValue == "1") {
+		addCdcValue = String("20" +  this.divInfo.form.rdoSpecl.value + "1");
+		
+		var rowcnt = this.dsDgrList.addRow();
+		this.dsDgrList.setColumn(rowcnt, 'cdcValue', addCdcValue);
+		this.dsDgrList.setColumn(rowcnt, 'cdcValueNm', addCdcValue.substring(3));
+	  
+	} else {
+		var rowcnt = this.dsDgrList.addRow();
+		this.dsDgrList.setColumn(rowcnt, 'cdcValue', addCdcValue);
+		this.dsDgrList.setColumn(rowcnt, 'cdcValueNm', addCdcValue.substring(3));
+	}
+	
+    this.divInfo.form.btnAddDgr.set_enable(false);
+    fv_addDgrYn = false;
+	
+	//콤보박스 set
+	this.divInfo.form.cboDgr.set_index(this.dsDgrList.getRowCount()-1);
+	
+	this.divInfo_cboDgr_onitemchanged();
+};
+
+/**
+ * @description 이전내역 가져오기 버튼 클릭시 
+*/
+this.btnCopy_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 콤보박스값 가져오기
+	var vsShlNm = this.dsSearch.getColumn(0, "shlNm");						//학교
+	var vsShlCd = this.dsSearch.getColumn(0, "shlCd");						
+	var vsAyr = this.dsSearch.getColumn(0, "ayr");							//년도
+	var vsChckPlaceScCd = this.dsSearch.getColumn(0, "chckPlaceScCd");		//점검구분
+	var vsHy = this.dsSearch.getColumn(0, "hyCd");						  	//반기
+	var vsSpecl = this.dsSearch.getColumn(0, "speclChckRsnCd");				//특별점검
+	var vsNwcc = this.dsSearch.getColumn(0, "nwccChckRsnCd");				//신축점검
+	var vsDgr = this.divInfo.form.cboDgr.value;							//차수
+	var addDgr = this.divInfo.form.btnAddDgr.enable;
+	
+	if(this.isNil(vsShlCd)){
+		this.smfAlert('PA058', ['학교를 선택 ']);
+		return false;
+	}
+
+	if(this.isNil(vsAyr)){
+		this.smfAlert('CM006', ['년도']);
+		return false;
+	}
+	
+	if(this.isNil(vsChckPlaceScCd)){
+		this.smfAlert('PA058', ['점검구분을 체크']);
+		return false;
+	}
+	
+	if(vsChckPlaceScCd == 10 && this.isNil(vsHy)){
+		this.smfAlert('PA058', ['반기구분을 체크']);
+		return false;
+	}
+	
+	if(vsChckPlaceScCd == 20 && this.isNil(vsSpecl)){
+		this.smfAlert('PA058', ['특별점검구분을 체크']);
+		return false;
+	}
+	
+	if(vsChckPlaceScCd == 30 && this.isNil(vsNwcc)){
+		this.smfAlert('PA058', ['신축점검구분을 체크']);
+		return false; 
+	}
+	if(addDgr == true){
+		this.smfAlert('PA058', ['차수 추가를 체크']);
+		return false;
+	}
+	
+//check
+	this.smfSearchService("check")
+		// 실행
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+   
+			if(this.dsApiResponseList.getColumn(0, 'prcsRltCd') == 'SUCC'){
+				var msg = "";
+				var msgAyr = this.dsSearchSub.getColumn(0, 'ayr');
+				var gubun = this.dsSearchSub.getColumn(0, 'gubun');
+				
+				if(this.isNotNil(msgAyr) && this.isNotNil(gubun)){
+					msg = "가장 최근에 등록된 자료가 " + msgAyr + "년 " + gubun + "입니다 . \n해당내역을 가져오시겠습니까?";
+				}
+				
+				if(msg.length > 0){
+					this.smfConfirm(msg, function(result){
+						if(result.confirmResult){
+							this.fnCopy();
+						}
+					});
+				} else {
+					this.smfAlert('CM155', ['이전내역이 없습니다.']);
+					return;
+				}
+			}	  	  
+		});
+		
+};
+
+/**
+ * @description 반기 라디오 버튼 클릭시 
+*/
+this.divInfo_rdoHy_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	if(this.isNil(this.dsSearch.getColumn(0, "shlCd"))){
+		this.smfAlert('PA058', ['학교를 선택 ']);
+		this.divInfo.form.rdoHy.set_value("-1");
+		return false;
+	}
+
+	var rdoHyCd = this.divInfo.form.rdoHy.value;
+	if(rdoHyCd == 1)		//상반기
+	{
+		this.dsSearch.setColumn(0, "chckPlaceMngNo", "1011");
+	}
+	else if(rdoHyCd == 2)		//하반기
+	{
+		this.dsSearch.setColumn(0, "chckPlaceMngNo", "1021");
+	}
+
+	//등록된 자료가 있을시 이전내역가져오기 비활성화, 저장, 삭제버튼 활성화
+	 // 서비스 객체 생성
+	this.smfSearchService("list")
+		// 실행
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if (this.dsApiResponseList.getColumn(0, 'prcsRltCd') == 'SUCC'){
+				var listCheck = this.dsListSub.getColumn(0, "shlCd");
+				this.fnSetDdln(listCheck);
+			}
+	});
+};
+
+this.grdMain_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	//체크박스 전체 선택 
+	this.smfToggleChkHeader(obj, e);
+};
+
+
+this.divInfo_calShlBuYm_onchanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{
+	var dateVal = obj.value;
+	if (dateVal.length === 8){
+		var dateYm = dateVal.substr(0, 6);
+		obj.set_value(dateYm);
+		this.dsMain.setColumn(0, "shlBuYm", dateYm);
+	}
+	
+	if(this.isNotNil(this.dsMain.getColumn(0, 'shlBuYm'))){
+		for(var i=0; i<this.dsListSub.getRowCount(); i++){
+			if(this.dsMain.getColumn(0, 'shlBuYm') == this.dsListSub.getColumn(i, 'faBuYm')){
+				this.dsListSub.setColumn(i, 'checkYn', true);
+			}	
+		}
+	}
+};
+
+/**
+ * @description 차수 콤보박스 선택
+*/
+this.divInfo_cboDgr_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	// 서비스 객체 생성
+	this.smfSearchService("list")
+		// 실행
+		.run()
+		// 콜백
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if (this.dsApiResponseList.getColumn(0, 'prcsRltCd') == 'SUCC'){
+				var listCheck = this.dsListSub.getColumn(0, 'shlCd');
+				this.fnSetDdln(listCheck);
+				
+			}else{
+				if (this.smfIsNull(this.dsApiResponseList.getColumn(0, 'errCn'))){
+					this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'message')], this.fnMessageCallback);
+				}else{
+					this.smfAlert('LI203', [this.dsApiResponseList.getColumn(0, 'errCn')], this.fnMessageCallback);
+				}
+		}
+	});
+};
+
+/**
+ * @description 년도 콤보박스 선택
+*/
+this.divInfo_cboAyr_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if(this.isNil(this.dsSearch.getColumn(0, "shlCd"))){
+		this.smfAlert('PA058', ['학교를 선택 ']);
+		return false;
+	}
+	
+	this.divInfo.form.rdoHy.set_enable(false);
+	this.divInfo.form.rdoSpecl.set_enable(false);
+	this.divInfo.form.rdoNwcc.set_enable(false);
+	this.divInfo.form.cboDgr.set_enable(false);
+	this.divInfo.form.btnAddDgr.set_enable(false);
+	
+	this.divInfo.form.rdoChckPlaceScCd.set_value('');
+	this.divInfo.form.rdoHy.set_value('');
+	this.divInfo.form.rdoSpecl.set_value('');
+	this.divInfo.form.rdoNwcc.set_value('');
+	this.divInfo.form.cboDgr.set_value('');
+	
+	this.dsList.clearData();
+	this.dsListSub.clearData();
+};
+
+/**
+ * @description 삭제 버튼 클릭
+*/
+this.btnDelete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 검사결과가 있는지 체크
+    var qltaInspRltYn = false;
+	
+	for(var i=0; i<this.dsListSub.getRowCount(); i++){
+		if(this.dsList.getColumn(i, 'qltaInspRltYn') == "Y"){
+			qltaInspRltYn = true;
+			break;
+		}
+	}
+	
+	if(rltDelYn || qltaInspRltYn){
+		this.smfConfirm("측정(검사)결과가 입력되어 있습니다.\n측정(검사)결과도 모두 삭제됩니다.\n\n삭제하시겠습니까?", function(result){
+			if(result.confirmResult){
+				// 삭제
+				this.fnNoConfirmDelete();
+			}
+		});
+	}else{
+		this.fnDelete();
+	}
+};
+
+/**
+ * @description 그리드 건축연월 클릭 시
+*/
+this.grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var rowCnt = e.row;
+	var checkYn = this.dsListSub.getColumn(rowCnt, "checkYn");
+	var dtiShlBuYm = this.divInfo.form.calShlBuYm.value;
+	
+	if (e.col == 3 || e.col == 4){
+		if(this.divInfo.form.rdoSpecl.value != 1){
+			this.smfAlert('CM000', ["신축3년이내 구분에서만 가능합니다. "]);
+			//this.dsListSub.setColumn(rowCnt, 'faBuYm', '');
+			//this.dsListSub.setColumn(rowCnt, "checkYn", false);
+			return false;
+		}else {
+			if (checkYn == 1){
+				this.dsListSub.setColumn(rowCnt, "faBuYm", dtiShlBuYm);
+				
+			}else {
+				this.dsListSub.setColumn(rowCnt, "faBuYm", "");
+			}
+		}
+	}
+	
+};
+
+this.divInfo_rdoNwcc_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	var rdbNwcc = this.dsSearch.getColumn(0, 'nwccChckRsnCd');
+	
+	if(rdbNwcc == 1)
+	{
+		this.dsSearch.setColumn(0, "chckPlaceMngNo", "3011");
+	}
+	else if(rdbNwcc == 2)
+	{
+		this.dsSearch.setColumn(0, "chckPlaceMngNo", "3021");
+	}
+		
+	//등록된 자료가 있을시 이전내역가져오기 비활성화, 저장, 삭제버튼 활성화
+	 // 서비스 객체 생성
+	this.smfSearchService("list")
+		// 실행
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if (this.dsApiResponseList.getColumn(0, 'prcsRltCd') == 'SUCC'){
+				var listCheck = this.dsListSub.getColumn(0, "shlCd");
+				this.fnSetDdln(listCheck);
+			}
+		});
+};
+
+/**
+ * @description 탭으로 접근해서 입력하는것 방지(건축년월)
+*/
+this.grdMain_oninput = function(obj:nexacro.Grid,e:nexacro.GridInputEventInfo)
+{
+	var rowCnt = e.row;
+	
+	if (e.col == 3){
+		if(this.divInfo.form.rdoSpecl.value != 1){
+			this.smfAlert('CM000', ["신축3년이내 구분에서만 가능합니다. "]);
+			this.dsListSub.setColumn(rowCnt, 'faBuYm', '');
+			//this.dsListSub.setColumn(rowCnt, "checkYn", false);
+			return false;
+		}
+	}
+};
+
+/**
+ * @description 탭으로 접근해서 입력하는것 방지(체크박스)
+*/
+this.dsListSub_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	var rowCnt = e.row;
+	
+	if(e.columnid == 'checkYn'){
+		if(this.divInfo.form.rdoSpecl.value != 1){
+			this.smfAlert('CM000', ["신축3년이내 구분에서만 가능합니다. "]);
+			//this.dsListSub.setColumn(rowCnt, 'faBuYm', '');
+			this.dsListSub.setColumn(rowCnt, "checkYn", false);
+			return false;
+		}
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="package" type="STRING" size="256" sumtext="vo와 service에서 사용할 패치지명"/>
+          <Column id="vo" type="STRING" size="256" sumtext="vo class full name"/>
+          <Column id="service" type="STRING" size="256" sumtext="service class full name"/>
+          <Column id="method" type="STRING" size="256" sumtext="method name"/>
+          <Column id="svctp" type="STRING" size="256" sumtext="Transaction Type 정의(Status 정보 표현:CRUD)"/>
+          <Column id="bindingControls" type="STRING" size="256" sumtext="서비스가 성공적으로 호출되면 0번째 로우에 전체,선택,삭제 로우를 추가한다."/>
+          <Column id="callback" type="STRING" size="256" sumtext="콜백함수 (Default:fnTransCallback)"/>
+          <Column id="state" type="STRING" size="256" sumtext="(공통에서사용)서비스가 호출된 상태(ready:서비스호출준비,succ:서비스호출성공,fail:서비스에러)"/>
+          <Column id="reason" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과코드"/>
+          <Column id="message" type="STRING" size="256" sumtext="(공통시스템에서사용)서비스호출후 결과메시지"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+          <Column id="bintp" type="STRING" size="256" sumtext="Binary 처리 여부(Default:false)"/>
+          <Column id="comtp" type="STRING" size="256" sumtext="Data 압축 여부(Default:false)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">list</Col>
+            <Col id="url">/sem_srs_rm07_003.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsMain=dsMain dsListSub=dsListSub dsBizSn=dsBizSn dsApiResponseList=dsApiResponseList</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+          <Row>
+            <Col id="id">save</Col>
+            <Col id="url">/sem_srs_rm07_004.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch dsSave=dsSave dsListSub=dsListSub dsDelList=dsDelList</Col>
+            <Col id="outDatasets">dsApiResponseList=dsApiResponseList</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">U</Col>
+            <Col id="bindingControls"/>
+            <Col id="callback">fnTransCallback</Col>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+          <Row>
+            <Col id="id">delete</Col>
+            <Col id="url">/sem_srs_rm07_005.do</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">D</Col>
+            <Col id="bindingControls"/>
+            <Col id="callback"/>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+            <Col id="outDatasets">dsApiResponseList=dsApiResponseList</Col>
+          </Row>
+          <Row>
+            <Col id="id">listCopy</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsMainPre=dsMainPre dsListSubPre=dsListSubPre dsApiResponseList=dsApiResponseList</Col>
+            <Col id="url">/sem_srs_rm07_006.do</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="callback"/>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+          <Row>
+            <Col id="id">check</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsSearchSub=dsSearchSub dsApiResponseList=dsApiResponseList</Col>
+            <Col id="url">/sem_srs_rm07_007.do</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="callback"/>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+          <Row>
+            <Col id="id">listDgr</Col>
+            <Col id="inDatasets">dsSearch=dsSearch</Col>
+            <Col id="outDatasets">dsDgrList=dsDgrList dsApiResponseList=dsApiResponseList</Col>
+            <Col id="url">/sem_srs_rm07_008.do</Col>
+            <Col id="package"/>
+            <Col id="vo"/>
+            <Col id="service"/>
+            <Col id="method"/>
+            <Col id="svctp">R</Col>
+            <Col id="bindingControls"/>
+            <Col id="callback"/>
+            <Col id="state"/>
+            <Col id="reason"/>
+            <Col id="message"/>
+            <Col id="asynctp"/>
+            <Col id="bintp"/>
+            <Col id="comtp"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="ayr" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="shlNm" type="STRING" size="256" sumtext="" description="학교명"/>
+          <Column id="chckPlaceScCd" type="STRING" size="256" sumtext="" description="점검장소구분코드"/>
+          <Column id="chckPlaceMngNo" type="STRING" size="256" sumtext="" description="점검장소관리번호"/>
+          <Column id="hyCd" type="STRING" size="256" sumtext="" description="반기코드"/>
+          <Column id="speclChckRsnCd" type="STRING" size="256" sumtext="" description="특별점검사유코드"/>
+          <Column id="nwccChckRsnCd" type="STRING" size="256" sumtext="" description="신축점검사유코드"/>
+          <Column id="cddcCd" type="STRING" size="256"/>
+          <Column id="cteOrgCd" type="STRING" size="256"/>
+          <Column id="bizNm" type="STRING" size="256"/>
+          <Column id="bizSn" type="STRING" size="256" description="사업일련번호"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" description="학년도"/>
+          <Column id="chckPlaceScCd" type="STRING" size="256" description="점검장소구분코드"/>
+          <Column id="chckPlaceMngNo" type="STRING" size="256" description="점검장소관리번호"/>
+          <Column id="hyCd" type="STRING" size="256" description="반기코드"/>
+          <Column id="speclChckRsnCd" type="STRING" size="256" description="특별점검사유코드"/>
+          <Column id="nwccChckRsnCd" type="STRING" size="256" description="신축점검사유코드"/>
+          <Column id="shlBuYm" type="STRING" size="256" description="학교건축연월"/>
+          <Column id="clrChcYn" type="STRING" size="256" description="교실선택여부"/>
+          <Column id="speclClrChcYn" type="STRING" size="256" description="특별교실선택여부"/>
+          <Column id="mlsvFaChcYn" type="STRING" size="256" description="급식시설선택여부"/>
+          <Column id="brhsChcYn" type="STRING" size="256" description="기숙사선택여부"/>
+          <Column id="gmnsmChcYn" type="STRING" size="256" description="체육관선택여부"/>
+          <Column id="ashChcYn" type="STRING" size="256" description="강당선택여부"/>
+          <Column id="ifrmaChcYn" type="STRING" size="256" description="보건실선택여부"/>
+          <Column id="thrmChcYn" type="STRING" size="256" description="교무실선택여부"/>
+          <Column id="adroChcYn" type="STRING" size="256" description="행정실선택여부"/>
+          <Column id="rgtrId" type="STRING" size="256" description="등록자ID"/>
+          <Column id="regDt" type="STRING" size="256" description="등록일시"/>
+          <Column id="mdfrId" type="STRING" size="256" description="수정자ID"/>
+          <Column id="mdfcnDt" type="STRING" size="256" description="수정일시"/>
+          <Column id="qltaChckComyNm" type="STRING" size="256" description="공기점검업체명"/>
+          <Column id="qltaChckYmd" type="STRING" size="256" description="공기질점검일자"/>
+          <Column id="bizSn" type="STRING" size="256" description="사업일련번호"/>
+          <Column id="speclChckDgr" type="STRING" size="256"/>
+          <Column id="qltaDdlnMngNm" type="STRING" size="256" description="진행상태"/>
+          <Column id="qltaDdlnMngYn" type="STRING" size="256" description="마감제출진행여부"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsExcelImport" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="retFaScCd" type="STRING" size="256" sumtext="" description="보유시설구분코드"/>
+          <Column id="chckFaNm" type="STRING" size="256" sumtext="" description="점검시설명"/>
+          <Column id="faBuYm" type="STRING" size="256" sumtext="" description="시설건축연월"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsApiResponseList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256" description="연계상태값"/>
+          <Column id="prcsRltCd" type="STRING" size="256" description="연계결과코드"/>
+          <Column id="errCn" type="STRING" size="256" description="연계결과내용"/>
+          <Column id="message" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsListSub" useclientlayout="true" oncolumnchanged="dsListSub_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" sumtext="" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" sumtext="" description="학년도"/>
+          <Column id="chckPlaceScCd" type="STRING" size="256" sumtext="" description="점검장소구분코드"/>
+          <Column id="chckPlaceMngNo" type="STRING" size="256" sumtext="" description="점검장소관리번호"/>
+          <Column id="chckRetFaSn" type="STRING" size="256" sumtext="" description="점검보유시설일련번호"/>
+          <Column id="retFaScCd" type="STRING" size="256" sumtext="" description="보유시설구분코드"/>
+          <Column id="chckFaNm" type="STRING" size="256" sumtext="" description="점검시설명"/>
+          <Column id="faBuYm" type="STRING" size="256" sumtext="" description="시설건축연월"/>
+          <Column id="rgtrId" type="STRING" size="256" sumtext="" description="등록자ID"/>
+          <Column id="regDt" type="STRING" size="256" sumtext="" description="등록일시"/>
+          <Column id="mdfrId" type="STRING" size="256" sumtext="" description="수정자ID"/>
+          <Column id="mdfcnDt" type="STRING" size="256" sumtext="" description="수정일시"/>
+          <Column id="retFaScNm" type="STRING" size="256" sumtext="" description="보유시설구분코드명"/>
+          <Column id="checkYn" type="STRING" size="256"/>
+          <Column id="faBuYn" type="STRING" size="256" sumtext="" description="시설건축연월체크"/>
+          <Column id="qltaInspRltYn" type="STRING" size="256" sumtext="" description="공기질 측정결과 유무"/>
+          <Column id="speclChckRsnCd" type="STRING" size="256" sumtext="" description="특별점검사유코드"/>
+          <Column id="chk" type="STRING" size="256" description="체크박스"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsAyrList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="ayr" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDgrList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cdcValueNm" type="STRING" size="256"/>
+          <Column id="cdcValue" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRetFaScCd" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="cdcValueNm" type="STRING" size="256"/>
+          <Column id="cdcValue" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cdcValue">110</Col>
+            <Col id="cdcValueNm">교실</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">120</Col>
+            <Col id="cdcValueNm">특별교실</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">130</Col>
+            <Col id="cdcValueNm">급식시설</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">140</Col>
+            <Col id="cdcValueNm">기숙사</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">150</Col>
+            <Col id="cdcValueNm">체육관</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">160</Col>
+            <Col id="cdcValueNm">강당</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">170</Col>
+            <Col id="cdcValueNm">보건실</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">180</Col>
+            <Col id="cdcValueNm">교무실</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">190</Col>
+            <Col id="cdcValueNm">행정실</Col>
+          </Row>
+          <Row>
+            <Col id="cdcValue">191</Col>
+            <Col id="cdcValueNm">컴퓨터실</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearchSub" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="ayr" type="STRING" size="256"/>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="chckPlaceScCd" type="STRING" size="256" sumtext="" description="점검장소구분코드"/>
+          <Column id="chckPlaceMngNo" type="STRING" size="256" sumtext="" description="점검장소관리번호"/>
+          <Column id="hyCd" type="STRING" size="256" sumtext="" description="반기코드"/>
+          <Column id="speclChckRsnCd" type="STRING" size="256" sumtext="" description="특별점검사유코드"/>
+          <Column id="nwccChckRsnCd" type="STRING" size="256" sumtext="" description="신축점검사유코드"/>
+          <Column id="cddcOrgCd" type="STRING" size="256"/>
+          <Column id="cteOrgCd" type="STRING" size="256"/>
+          <Column id="gubun" type="STRING" size="256" sumtext="" description="구분"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSave" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" sumtext="" description="학교코드"/>
+          <Column id="shlNm" type="STRING" size="256" sumtext="" description="학교명"/>
+          <Column id="ayr" type="STRING" size="256" sumtext="" description="학년도"/>
+          <Column id="cddcCd" type="STRING" size="256" sumtext="" description="시도교육청코드"/>
+          <Column id="dstrtOfcdcCd" type="STRING" size="256" sumtext="" description="지역교육청코드"/>
+          <Column id="chckPlaceScCd" type="STRING" size="256" sumtext="" description="점검장소구분코드"/>
+          <Column id="chckPlaceMngNo" type="STRING" size="256" sumtext="" description="점검장소관리번호"/>
+          <Column id="hyCd" type="STRING" size="256" sumtext="" description="반기코드"/>
+          <Column id="speclChckRsnCd" type="STRING" size="256" sumtext="" description="특별점검사유코드"/>
+          <Column id="nwccChckRsnCd" type="STRING" size="256" sumtext="" description="신축점검사유코드"/>
+          <Column id="shlBuYm" type="STRING" size="256" sumtext="" description="학교건축연월"/>
+          <Column id="clrChcYn" type="STRING" size="256" sumtext="" description="교실선택여부"/>
+          <Column id="speclClrChcYn" type="STRING" size="256" sumtext="" description="특별교실선택여부"/>
+          <Column id="mlsvFaChcYn" type="STRING" size="256" sumtext="" description="급식시설선택여부"/>
+          <Column id="brhsChcYn" type="STRING" size="256" sumtext="" description="기숙사선택여부"/>
+          <Column id="gmnsmChcYn" type="STRING" size="256" sumtext="" description="체육관선택여부"/>
+          <Column id="ashChcYn" type="STRING" size="256" sumtext="" description="강당선택여부"/>
+          <Column id="ifrmaChcYn" type="STRING" size="256" sumtext="" description="보건실선택여부"/>
+          <Column id="thrmChcYn" type="STRING" size="256" sumtext="" description="교무실선택여부"/>
+          <Column id="adroChcYn" type="STRING" size="256" sumtext="" description="행정실선택여부"/>
+          <Column id="rgtrId" type="STRING" size="256" sumtext="" description="등록자ID"/>
+          <Column id="regDt" type="STRING" size="256" sumtext="" description="등록일시"/>
+          <Column id="mdfrId" type="STRING" size="256" sumtext="" description="수정자ID"/>
+          <Column id="mdfcnDt" type="STRING" size="256" sumtext="" description="수정일시"/>
+          <Column id="procType" type="STRING" size="256"/>
+          <Column id="qltaChckComyNm" type="STRING" size="256" sumtext="" description="공기점검업체명"/>
+          <Column id="qltaChckYmd" type="STRING" size="256" sumtext="" description="공기질점검일자"/>
+          <Column id="bizSn" type="STRING" size="256" sumtext="" description="사업일련번호"/>
+          <Column id="speclChckDgr" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsShlList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256"/>
+          <Column id="shlNm" type="STRING" size="256"/>
+          <Column id="bizSn" type="STRING" size="256" description="사업일련번호"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" sumtext="" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" sumtext="" description="학년도"/>
+          <Column id="chckPlaceScCd" type="STRING" size="256" sumtext="" description="점검장소구분코드"/>
+          <Column id="chckPlaceMngNo" type="STRING" size="256" sumtext="" description="점검장소관리번호"/>
+          <Column id="hyCd" type="STRING" size="256" sumtext="" description="반기코드"/>
+          <Column id="speclChckRsnCd" type="STRING" size="256" sumtext="" description="특별점검사유코드"/>
+          <Column id="nwccChckRsnCd" type="STRING" size="256" sumtext="" description="신축점검사유코드"/>
+          <Column id="shlBuYm" type="STRING" size="256" sumtext="" description="학교건축연월"/>
+          <Column id="clrChcYn" type="STRING" size="256" sumtext="" description="교실선택여부"/>
+          <Column id="speclClrChcYn" type="STRING" size="256" sumtext="" description="특별교실선택여부"/>
+          <Column id="mlsvFaChcYn" type="STRING" size="256" sumtext="" description="급식시설선택여부"/>
+          <Column id="brhsChcYn" type="STRING" size="256" sumtext="" description="기숙사선택여부"/>
+          <Column id="gmnsmChcYn" type="STRING" size="256" sumtext="" description="체육관선택여부"/>
+          <Column id="ashChcYn" type="STRING" size="256" sumtext="" description="강당선택여부"/>
+          <Column id="ifrmaChcYn" type="STRING" size="256" sumtext="" description="보건실선택여부"/>
+          <Column id="thrmChcYn" type="STRING" size="256" sumtext="" description="교무실선택여부"/>
+          <Column id="adroChcYn" type="STRING" size="256" sumtext="" description="행정실선택여부"/>
+          <Column id="rgtrId" type="STRING" size="256" sumtext="" description="등록자ID"/>
+          <Column id="regDt" type="STRING" size="256" sumtext="" description="등록일시"/>
+          <Column id="mdfrId" type="STRING" size="256" sumtext="" description="수정자ID"/>
+          <Column id="mdfcnDt" type="STRING" size="256" sumtext="" description="수정일시"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDelList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" sumtext="" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" sumtext="" description="학년도"/>
+          <Column id="chckPlaceScCd" type="STRING" size="256" sumtext="" description="점검장소구분코드"/>
+          <Column id="chckPlaceMngNo" type="STRING" size="256" sumtext="" description="점검장소관리번호"/>
+          <Column id="chckRetFaSn" type="STRING" size="256" sumtext="" description="점검보유시설일련번호"/>
+          <Column id="retFaScCd" type="STRING" size="256" sumtext="" description="보유시설구분코드"/>
+          <Column id="chckFaNm" type="STRING" size="256" sumtext="" description="점검시설명"/>
+          <Column id="faBuYm" type="STRING" size="256" sumtext="" description="시설건축연월"/>
+          <Column id="rgtrId" type="STRING" size="256" sumtext="" description="등록자ID"/>
+          <Column id="regDt" type="STRING" size="256" sumtext="" description="등록일시"/>
+          <Column id="mdfrId" type="STRING" size="256" sumtext="" description="수정자ID"/>
+          <Column id="mdfcnDt" type="STRING" size="256" sumtext="" description="수정일시"/>
+          <Column id="retFaScNm" type="STRING" size="256" sumtext="" description="보유시설구분코드명"/>
+          <Column id="checkYn" type="STRING" size="256"/>
+          <Column id="faBuYn" type="STRING" size="256" sumtext="" description="시설건축연월체크"/>
+          <Column id="qltaInspRltYn" type="STRING" size="256" sumtext="" description="공기질 측정결과 유무"/>
+          <Column id="speclChckRsnCd" type="STRING" size="256" sumtext="" description="특별점검사유코드"/>
+          <Column id="chk" type="STRING" size="256" description="체크박스"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsBizSn" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="bizNm" type="STRING" size="0"/>
+          <Column id="bizSn" type="STRING" size="0"/>
+          <Column id="inspComyNm" type="STRING" size="0"/>
+          <Column id="inspComyDsgnYmd" type="STRING" size="0"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMainPre" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" description="학년도"/>
+          <Column id="chckPlaceScCd" type="STRING" size="256" description="점검장소구분코드"/>
+          <Column id="chckPlaceMngNo" type="STRING" size="256" description="점검장소관리번호"/>
+          <Column id="hyCd" type="STRING" size="256" description="반기코드"/>
+          <Column id="speclChckRsnCd" type="STRING" size="256" description="특별점검사유코드"/>
+          <Column id="nwccChckRsnCd" type="STRING" size="256" description="신축점검사유코드"/>
+          <Column id="shlBuYm" type="STRING" size="256" description="학교건축연월"/>
+          <Column id="clrChcYn" type="STRING" size="256" description="교실선택여부"/>
+          <Column id="speclClrChcYn" type="STRING" size="256" description="특별교실선택여부"/>
+          <Column id="mlsvFaChcYn" type="STRING" size="256" description="급식시설선택여부"/>
+          <Column id="brhsChcYn" type="STRING" size="256" description="기숙사선택여부"/>
+          <Column id="gmnsmChcYn" type="STRING" size="256" description="체육관선택여부"/>
+          <Column id="ashChcYn" type="STRING" size="256" description="강당선택여부"/>
+          <Column id="ifrmaChcYn" type="STRING" size="256" description="보건실선택여부"/>
+          <Column id="thrmChcYn" type="STRING" size="256" description="교무실선택여부"/>
+          <Column id="adroChcYn" type="STRING" size="256" description="행정실선택여부"/>
+          <Column id="rgtrId" type="STRING" size="256" description="등록자ID"/>
+          <Column id="regDt" type="STRING" size="256" description="등록일시"/>
+          <Column id="mdfrId" type="STRING" size="256" description="수정자ID"/>
+          <Column id="mdfcnDt" type="STRING" size="256" description="수정일시"/>
+          <Column id="qltaChckComyNm" type="STRING" size="256" description="공기점검업체명"/>
+          <Column id="qltaChckYmd" type="STRING" size="256" description="공기질점검일자"/>
+          <Column id="bizSn" type="STRING" size="256" description="사업일련번호"/>
+          <Column id="speclChckDgr" type="STRING" size="256"/>
+          <Column id="qltaDdlnMngNm" type="STRING" size="256" description="진행상태"/>
+          <Column id="qltaDdlnMngYn" type="STRING" size="256" description="마감제출진행여부"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListSubPre" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="shlCd" type="STRING" size="256" sumtext="" description="학교코드"/>
+          <Column id="ayr" type="STRING" size="256" sumtext="" description="학년도"/>
+          <Column id="chckPlaceScCd" type="STRING" size="256" sumtext="" description="점검장소구분코드"/>
+          <Column id="chckPlaceMngNo" type="STRING" size="256" sumtext="" description="점검장소관리번호"/>
+          <Column id="chckRetFaSn" type="STRING" size="256" sumtext="" description="점검보유시설일련번호"/>
+          <Column id="retFaScCd" type="STRING" size="256" sumtext="" description="보유시설구분코드"/>
+          <Column id="chckFaNm" type="STRING" size="256" sumtext="" description="점검시설명"/>
+          <Column id="faBuYm" type="STRING" size="256" sumtext="" description="시설건축연월"/>
+          <Column id="rgtrId" type="STRING" size="256" sumtext="" description="등록자ID"/>
+          <Column id="regDt" type="STRING" size="256" sumtext="" description="등록일시"/>
+          <Column id="mdfrId" type="STRING" size="256" sumtext="" description="수정자ID"/>
+          <Column id="mdfcnDt" type="STRING" size="256" sumtext="" description="수정일시"/>
+          <Column id="retFaScNm" type="STRING" size="256" sumtext="" description="보유시설구분코드명"/>
+          <Column id="checkYn" type="STRING" size="256"/>
+          <Column id="faBuYn" type="STRING" size="256" sumtext="" description="시설건축연월체크"/>
+          <Column id="qltaInspRltYn" type="STRING" size="256" sumtext="" description="공기질 측정결과 유무"/>
+          <Column id="speclChckRsnCd" type="STRING" size="256" sumtext="" description="특별점검사유코드"/>
+          <Column id="chk" type="STRING" size="256" description="체크박스"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="divInfo.form.sta02" propid="text" datasetid="dsSearch" columnid="ayr"/>
+      <BindItem id="item0" compid="divInfo.form.cboAyr" propid="value" datasetid="dsSearch" columnid="ayr"/>
+      <BindItem id="item2" compid="divInfo.form.rdoNwcc" propid="value" datasetid="dsSearch" columnid="nwccChckRsnCd"/>
+      <BindItem id="item4" compid="divInfo.form.rdoHy" propid="value" datasetid="dsSearch" columnid="hyCd"/>
+      <BindItem id="item5" compid="divInfo.form.cboShlNm" propid="value" datasetid="dsSearch" columnid="shlCd"/>
+      <BindItem id="item6" compid="divInfo.form.rdoSpecl" propid="value" datasetid="dsSearch" columnid="speclChckRsnCd"/>
+      <BindItem id="item7" compid="divInfo.form.calShlBuYm" propid="value" datasetid="dsMain" columnid="shlBuYm"/>
+      <BindItem id="item3" compid="divInfo.form.rdoChckPlaceScCd" propid="value" datasetid="dsSearch" columnid="chckPlaceScCd"/>
+      <BindItem id="item8" compid="divInfo.form.calShlBuYm" propid="innerdataset" datasetid="dsMainSub" columnid="faBuYm"/>
+      <BindItem id="item9" compid="divInfo.form.cboDgr" propid="value" datasetid="dsSearch" columnid="chckPlaceMngNo"/>
+    </Bind>
+  </Form>
+</FDL>

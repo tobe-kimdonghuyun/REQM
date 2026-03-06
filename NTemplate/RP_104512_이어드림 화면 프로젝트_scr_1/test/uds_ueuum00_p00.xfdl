@@ -1,0 +1,619 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="uds_ueudd00_p00" width="1200" height="900" titletext="원격업무신청서비스" onload="fnOnload" onbeforeclose="fnOnbeforeclose">
+    <Layouts>
+      <Layout height="900" width="1200" screenid="ScreenDeskTop">
+        <ImageViewer id="imgTitle" taborder="0" text="원격업무지원서비스(대학사용자)" left="20" top="20" width="240" height="30" cssclass="font18B" initvalueid="ivTitleAccessibilityOn"/>
+        <Div id="divSearch" taborder="1" left="20" top="60" height="70" cssclass="div_SA" right="20" initvalueid="ivDivAccessibilityOn" accessibilitylabel="조회영역">
+          <Layouts>
+            <Layout>
+              <Static id="staUserNm" taborder="0" text="사용자명" left="30" top="18" width="63" height="30" cssclass="sta_SA_label" initvalueid="ivStcAccessibilityOn"/>
+              <Edit id="edtUserNm" taborder="1" left="staUserNm:12" top="20" width="160" height="30" initvalueid="ivEdtNormal" imemode="hangul" cssclass="edi_WF_uds"/>
+              <Button id="btnSearch" taborder="2" text="조회" top="20" width="74" height="30" cssclass="btn_WF_Search03" right="20" onclick="divSearch_btnSearch_onclick" initvalueid="ivBtnAccessibilityButton"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staAplyPrd" taborder="2" text="신청기간" left="20" top="140" width="90" height="30" cssclass="font16M" initvalueid="ivStcAccessibilityOn"/>
+        <Grid id="grdMain" taborder="3" left="20" top="174" binddataset="dsMain" autoenter="none" cellcombopopuptype="center" oncellclick="grdBatchJobList_oncellclick" onheadclick="grdBatchJobList_onheadclick" autofittype="col" right="20" cellsizingtype="col" initvalueid="ivGrdAccessibilityOn" selecttype="cell" accessibilitylabel="지원학생조회" height="163" border="2px solid #222222, 0px none, 1px solid #dddddd, 0px none">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="120"/>
+                <Column size="160"/>
+                <Column size="80"/>
+                <Column size="50"/>
+              </Columns>
+              <Rows>
+                <Row size="40" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head" accessibilitylabel="제목영역">
+                <Cell text="사용자명" font="normal 700 15px/normal &quot;Noto Sans KR,NotoSansKR-Bold,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="1" text="학교명" font="normal 700 15px/normal &quot;Noto Sans KR,NotoSansKR-Bold,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="2" text="진행상태" font="normal 700 15px/normal &quot;Noto Sans KR,NotoSansKR-Bold,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="3" text="첨부" cssclass="LineNo" font="normal 700 15px/normal &quot;Noto Sans KR,NotoSansKR-Bold,Malgun Gothic,Arial,MS PGothic&quot;"/>
+              </Band>
+              <Band id="body" accessibilitylabel="내용영역">
+                <Cell text="bind:cddcScNm" edittype="none" font="normal 400 13px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="1" text="bind:shlNm" edittype="none" font="normal 400 13px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="2" displaytype="normal" edittype="none" comboautoselect="false" combocodecol="businessCode" combodatacol="businessNm" combodataset="dsBunsCd" text="bind:shlCd" textAlign="center" font="normal 400 13px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="3" text="bind:stuRrnoDec" textAlign="center" font="normal 400 13px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnDdln" taborder="4" text="마감" top="360" height="30" cssclass="btn_SA_CRUD" visible="true" initvalueid="ivBtnAccessibilityButton" right="223" width="54" onclick="btnDdln_onclick"/>
+        <Button id="btnAplyIdnty" taborder="5" text="신청확인" top="360" height="30" cssclass="btn_SA_CRUD" visible="true" initvalueid="ivBtnAccessibilityButton" right="137" width="80" onclick="btnAplyIdnty_onclick"/>
+        <Button id="btnSave" taborder="6" text="저장" top="360" height="30" cssclass="btn_SA_CRUD" visible="true" initvalueid="ivBtnAccessibilityButton" right="77" width="54" onclick="btnSave_onclick"/>
+        <Button id="btnDelete" taborder="7" text="삭제" top="360" height="30" width="54" cssclass="btn_SA_CRUD" visible="true" initvalueid="ivBtnAccessibilityButton" right="17" onclick="btnDelete_onclick"/>
+        <Div id="divCoaPrge" taborder="8" left="20" height="460" top="400" text="" cssclass="div_WF_Detail" right="20" initvalueid="ivDivAccessibilityOff" accessibilityrole="none" formscrollbartype="none none">
+          <Layouts>
+            <Layout>
+              <Static id="Static44" taborder="0" left="0" height="42" cssclass="sta_WF_Input02Top" top="0" right="0" initvalueid="ivStcAccessibilityOff" text=""/>
+              <Static id="Static07" taborder="1" left="0" height="42" cssclass="sta_WF_Input02" top="41" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="Static07_00" taborder="2" left="0" height="42" cssclass="sta_WF_Input02" top="82" right="0" initvalueid="ivStcAccessibilityOff" text=""/>
+              <Static id="Static07_00_00" taborder="3" left="0" height="42" cssclass="sta_WF_Input02" top="123" right="0" initvalueid="ivStcAccessibilityOff" text=""/>
+              <Static id="Static07_00_00_00" taborder="4" left="0" height="42" cssclass="sta_WF_Input02" top="164" right="0" initvalueid="ivStcAccessibilityOff" text=""/>
+              <Static id="Static07_00_00_00_00" taborder="5" left="0" height="42" cssclass="sta_WF_Input02" top="205" right="0" initvalueid="ivStcAccessibilityOff" text=""/>
+              <Static id="Static07_00_00_00_00_00" taborder="6" left="0" height="42" cssclass="sta_WF_Input02" top="246" right="0" initvalueid="ivStcAccessibilityOff" text=""/>
+              <Static id="Static07_00_00_00_00_00_00" taborder="7" left="0" height="42" cssclass="sta_WF_Input02" top="287" right="0" initvalueid="ivStcAccessibilityOff" text=""/>
+              <Static id="Static07_00_00_00_00_00_00_00" taborder="8" left="0" height="42" cssclass="sta_WF_Input02" top="328" right="0" initvalueid="ivStcAccessibilityOff" text=""/>
+              <Static id="Static45" taborder="9" left="0" width="140" height="42" cssclass="sta_WF_Input01Top" text="대입학년도" top="0" onclick="Static45_onclick" initvalueid="ivStcEssential"/>
+              <Edit id="edtCoaAyr" taborder="10" height="30" text="넥사크로17" left="145" width="200" top="6" readonly="true" initvalueid="ivEdtReadOnly" validate="required"/>
+              <Static id="Static45_00" taborder="11" left="400" width="140" height="42" cssclass="sta_WF_Input01Top" text="VPN 이용기간" top="0" onclick="Static45_onclick" initvalueid="ivStcEssential"/>
+              <Radio id="rdo00" taborder="12" left="545" top="3" width="195" height="37" innerdataset="dsRcritScCd" codecolumn="unyCdValue" datacolumn="unyCdValueNm" columncount="-1" rowcount="-1" value="1" text="체크" index="0" validate="required" initvalueid="ivRdoNormal"/>
+              <Static id="Static10_00_00_00_00_00_00" taborder="13" left="0" width="140" height="42" cssclass="sta_WF_Input01" text="사용자" top="41" initvalueid="ivStcEssential"/>
+              <Edit id="edtUserId" taborder="14" height="30" text="넥사크로17" left="145" width="200" top="47" readonly="false" initvalueid="ivEdtNormal" validate="required,maxlengthB:30" inputtype="normal" autoskip="false" imemode="hangul" accessibilitylabel="사용자" oninput="maxLengthB_oninput"/>
+              <Static id="Static10_00_00_00_00" taborder="15" left="400" width="140" height="42" cssclass="sta_WF_Input01" text="보안서약서" top="41" initvalueid="ivStcEssential"/>
+              <Button id="btnScrtyWpldg" taborder="16" text="보안서약서" top="47" height="30" width="103" cssclass="btn_WF_serviceLink_blue01" visible="true" initvalueid="ivBtnAccessibilityButton" onclick="btnSave_onclick" left="545"/>
+              <CheckBox id="chkScrtyWpldgAgreYn" taborder="17" text="체크" left="657" width="81" height="29" top="48" readonly="true" validate="required" accessibilitylabel="보안서약서동의" initvalueid="ivChkNormal"/>
+              <Static id="Static10_00_00_00_00_00_00_00" taborder="18" left="0" width="140" height="42" cssclass="sta_WF_Input01" text="부서" top="82" initvalueid="ivStcEssential"/>
+              <Edit id="edtDptNm" taborder="19" height="30" text="넥사크로17" left="145" width="200" top="88" readonly="false" initvalueid="ivEdtNormal" validate="required,maxlengthB:30" inputtype="normal" autoskip="false" imemode="hangul" accessibilitylabel="부서" oninput="maxLengthB_oninput"/>
+              <Static id="Static10_00_00_00_00_00" taborder="20" left="400" width="140" height="42" cssclass="sta_WF_Input01" text="직위(급)" top="82" initvalueid="ivStcEssential"/>
+              <Edit id="edtJbpsNm" taborder="21" height="30" text="넥사크로17" left="545" width="200" top="88" readonly="false" initvalueid="ivEdtNormal" validate="required,maxlengthB:30" inputtype="normal" autoskip="false" imemode="hangul" accessibilitylabel="직위(급)" oninput="maxLengthB_oninput"/>
+              <Static id="Static10_01_00" taborder="22" left="0" width="140" height="42" cssclass="sta_WF_Input01" text="사무실전화번호" top="123" initvalueid="ivStcEssential"/>
+              <Edit id="edtOffmTelno" taborder="23" height="30" text="넥사크로17" left="145" width="200" top="129" readonly="false" initvalueid="ivEdtNormal" validate="required:true,phoneno,maxlength:13" autoskip="false" inputtype="numberandenglish" inputfilter="comma,dot,alpha" imemode="alpha" accessibilitylabel="사무실전화번호"/>
+              <Static id="Static10_00_00_00" taborder="24" left="400" width="140" height="42" cssclass="sta_WF_Input01" text="휴대전화번호" top="123" initvalueid="ivStcEssential"/>
+              <Edit id="edtMblTelno" taborder="25" height="30" text="넥사크로17" left="545" width="200" top="129" readonly="false" initvalueid="ivEdtNormal" validate="required:true,mobileno:true,maxlength:13" inputtype="numberandenglish" autoskip="false" inputfilter="comma,alpha,dot" imemode="alpha" accessibilitylabel="휴대전화번호"/>
+              <Static id="Static10_00_00_00_01_00" taborder="26" left="0" width="140" height="42" cssclass="sta_WF_Input01" text="VPN패스워드" top="164" initvalueid="ivStcEssential"/>
+              <Edit id="edtVpnPswd" taborder="27" height="30" text="넥사크로17" left="145" width="160" top="170" readonly="false" initvalueid="ivEdtNormal" validate="required,maxlengthB:30" inputtype="numberandenglish,symbol,english" autoskip="false" inputfilter="comma,dot" imemode="alpha" accessibilitylabel="VPN패스워드" password="false" oninput="maxLengthB_oninput" onkillfocus="editVpnPswd_onkillfocus"/>
+              <Edit id="edtVpnPswd00" taborder="28" height="30" text="넥사크로17" left="310" width="34" top="170" readonly="true" initvalueid="ivEdtNormal" inputtype="normal" autoskip="false" imemode="none" accessibilitylabel="VPN패스워드" password="false" textAlign="center"/>
+              <Static id="staVpnPswd01" taborder="29" text="부적합" left="349" top="170" width="46" height="30" cssclass="sta_WF_Red14" textAlign="left"/>
+              <Static id="Static10_00_00_00_01" taborder="30" left="400" width="140" height="42" cssclass="sta_WF_Input01" text="VPN패스워드확인" top="164" initvalueid="ivStcEssential"/>
+              <Edit id="edtVpnPswdIdnty" taborder="31" height="30" text="넥사크로17" left="545" width="160" top="170" readonly="false" initvalueid="ivEdtNormal" validate="required,maxlengthB:30" inputtype="numberandenglish,symbol,english" autoskip="false" inputfilter="comma,dot" imemode="alpha" accessibilitylabel="VPN패스워드확인" password="false" oninput="maxLengthB_oninput" onkillfocus="editVpnPswd_onkillfocus"/>
+              <Edit id="edtVpnPswdIdnty00" taborder="32" height="30" text="넥사크로17" left="710" width="34" top="170" readonly="true" initvalueid="ivEdtNormal" inputtype="normal" autoskip="false" imemode="none" accessibilitylabel="VPN패스워드" password="false" textAlign="center"/>
+              <Static id="staVpnPswdIdnty01" taborder="33" text="불일치" left="749" top="170" width="66" height="30" cssclass="sta_WF_Red14" textAlign="left"/>
+              <Static id="Static10_00_00_00_01_00_00" taborder="34" left="0" width="140" height="42" cssclass="sta_WF_Input01" text="요청사유" top="205" initvalueid="ivStcEssential"/>
+              <Edit id="edtDmndCn" taborder="35" height="30" text="넥사크로17" left="145" width="600" top="211" readonly="false" initvalueid="ivEdtNormal" validate="required,maxlengthB:500" inputtype="normal" autoskip="false" imemode="hangul" accessibilitylabel="요청사유" oninput="maxLengthB_oninput"/>
+              <Static id="Static10_00_00_00_00_00_00_00_00" taborder="36" left="0" width="140" height="42" cssclass="sta_WF_Input01" text="서약집행자 성명" top="246" initvalueid="ivStcEssential"/>
+              <Edit id="edtDptNm00" taborder="37" height="30" text="넥사크로17" left="145" width="200" top="252" readonly="false" initvalueid="ivEdtNormal" validate="required,maxlengthB:30" inputtype="normal" autoskip="false" imemode="hangul" accessibilitylabel="부서"/>
+              <Static id="Static10_00_00_00_00_00_01" taborder="38" left="400" width="140" height="42" cssclass="sta_WF_Input01" text="서약집행자 직위(급)" top="246" initvalueid="ivStcEssential"/>
+              <Edit id="edtJbpsNm00" taborder="39" height="30" text="넥사크로17" left="545" width="200" top="252" readonly="false" initvalueid="ivEdtNormal" validate="required,maxlengthB:30" inputtype="normal" autoskip="false" imemode="hangul" accessibilitylabel="직위(급)" oninput="maxLengthB_oninput"/>
+              <Static id="Static10_00_00_00_00_00_00_00_00_00" taborder="40" left="0" width="140" height="42" cssclass="sta_WF_Input01" text="서약집행자 부서" top="287" initvalueid="ivStcEssential"/>
+              <Edit id="edtDptNm00_00" taborder="41" height="30" text="넥사크로17" left="145" width="200" top="293" readonly="false" initvalueid="ivEdtNormal" validate="required,maxlengthB:30" inputtype="normal" autoskip="false" imemode="hangul" accessibilitylabel="부서" oninput="maxLengthB_oninput"/>
+              <Static id="Static10_00_00_00_00_00_00_00_00_00_00" taborder="42" left="0" width="140" height="42" cssclass="sta_WF_Input01" text="신청서" top="328" initvalueid="ivStcAccessibilityOn"/>
+              <Button id="btnReqsInq" taborder="43" text="신청서조회" top="334" height="30" width="107" fittocontents="width" cssclass="btn_WF_serviceLink_blue01" visible="true" initvalueid="ivBtnAccessibilityButton" left="145" onclick="divCoaPrge_btnReqsInq_onclick"/>
+              <Button id="btnReqsAdd" taborder="44" text="추가" top="334" height="30" width="74" cssclass="btn_WF_Write" visible="true" right="64" initvalueid="ivBtnAccessibilityButton" onclick="divCoaPrge_btnReqsAdd_onclick"/>
+              <Button id="btnReqsDel" taborder="45" text="삭제" top="334" height="30" width="54" cssclass="btn_SA_CRUD" visible="true" initvalueid="ivBtnAccessibilityButton" right="0" onclick="divCoaPrge_btnReqsDel_onclick"/>
+              <Static id="sta00" taborder="46" text="※ 비밀번호는 숫자, 영문자, 특수문자를 조합하여 9자 이상 가능합니다.&#13;&#10;※ 신청서 파일은 'PDF' 파일만 첨부가능하며, 파일 싸이즈는 8 MBytes이하로 제한합니다.&#13;&#10;※ 저장 후 '마감'을 반드시 하시기 바랍니다. '마감'되지않은 신청서는 시도교육청으로 전송되지 않습니다.&#13;&#10;" left="10" top="391" initvalueid="ivStcAccessibilityOn" right="10" bottom="0" cssclass="font14R"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+ *	대입전형자료원격업무신청서비스
+ *	@MenuPath	대입전형-전형자료원격업무신청서비스-전형자료원격업무신청서비스신청
+ *	@FileName 	uds_ueuum00_p00.xfdl
+ *	@Creator 	김정민
+ *	@CreateDate	2023.05.03
+ *	@Desction	
+ ************** 소스 수정 이력 ***********************************************
+ *	date			Modifier			Description
+ *******************************************************************************
+ *	2023.05.03		김정민				최초 생성
+ *******************************************************************************
+ */
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+include "lib::uds_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fvIsCoaSvcAplyPsl = 'N';
+this.fvPswdOld = '';
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+
+/**
+ * @description 화면 onload시 처리
+ */
+this.fnOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// Div 초기화
+	this.smfInitForm(obj);
+	
+	// 초기화
+	this.fnInit(obj); 
+	
+	// 공통코드 조회
+	this.smfCodeList("code", [this.dsRcritScCd])
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			//수시, 정시 순서로 sort
+			this.dsRcritScCd.set_keystring('S:-unyCdValue');
+			
+			//전체 추가
+			var nRow = this.dsRcritScCd.addRow();
+			this.dsRcritScCd.setColumn(nRow, 'unyCdValue', 0);
+			this.dsRcritScCd.setColumn(nRow, 'unyCdValueNm', '전체');
+			this.dsRcritScCd.applyChange();
+			
+			// 조회
+			this.fnSearch(); 
+		});
+	
+	// 조회 입력창에서 'Ctrl' + 'Enter' 키 입력시 조회수행 이벤트 설정
+	this.smfBindEnterKeyToSearch(this.divSearch, this.divSearch.form.btnSearch);
+};
+
+/**
+ * @description 폼 닫기전 이벤트
+ */
+this.fnOnbeforeclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	// 변경내역이 발생한 경우 종료전 confirm수행
+	return this.smfCloseFormConfirm([this.dsMain]);
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg) {
+	if(errcd <= -1) return;
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/**
+ * @description 조회
+ */
+this.fnSearch = function()
+{
+
+};
+
+/**
+ * @description 대입기준 기본조회
+ */
+this.fnSelectCoaCtr = function(callback)
+{
+	this.smfSearchService('selectCoaCtr')
+		.run()
+		.callback(function(callbackParams){
+			if(callbackParams.errors) return;
+			
+			if(this.smfIsFunc(callback)) callback.call(this);
+		});
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/**
+ * @description 초기화 FUNCTION
+ */
+this.fnInit = function(obj){
+	this.dsSearch.setColumn(0, "coaAyr", this.udsv_coaAyr);
+	this.dsSearch.setColumn(0, "coaRcritScCd", this.udsv_coaRcritScCd);
+	this.dsSearch.setColumn(0, "coaRcritScNm", this.udsv_coaRcritScNm);
+	this.dsSearch.setColumn(0, "uvstOrgCd", this.udsv_instCd);
+	
+	this.fnSelectCoaCtr(function(){
+		if(this.dsCoaCtr.getRowCount() > 0){
+			var coaSvcAplyBgngYmd = this.fnYmdWithDot(this.dsCoaCtr.getColumn(0, 'coaSvcAplyBgngYmd'));
+			var coaSvcAplyEndYmd = this.fnYmdWithDot(this.dsCoaCtr.getColumn(0, 'coaSvcAplyEndYmd'));
+			
+			if(coaSvcAplyBgngYmd && coaSvcAplyBgngYmd){
+				this.fvIsCoaSvcAplyPsl = this.dsCoaCtr.getColumn(0, 'coaSvcAplyPslYn') == 'Y';
+				
+				var coaRcritScCd = this.dsCoaCtr.getColumn(0, 'coaRcritScCd');
+				if(coaRcritScCd == '1' || coaRcritScCd == '2' || coaRcritScCd == '4'){
+				
+					//TODO 테스트 대학이면 신청가능
+					//if(테스트대학) this.fvIsCoaSvcAplyPsl = 'Y'
+					
+					this.staAplyPrd.set_text('신청기간 : ' + coaSvcAplyBgngYmd + ' ~ ' + coaSvcAplyEndYmd);
+					
+				}else{
+					this.fvIsCoaSvcAplyPsl = false;
+					this.staAplyPrd.set_text('사전운영기간');
+				}
+			}else{
+				this.smfLiteralAlert('원격업무신청서비스(대학사용자)를 사용할 수 없습니다.');
+			}
+		}
+	});
+}
+
+/**
+ * @description Ymd에 점추가
+ * @param : sYmd			- 년원일 ( ex. 20230504 )
+ * @return 	: String        - YYYY.MM.DD (ex. 2023.05.04. )
+ */
+this.fnYmdWithDot = function(sYmd){
+    sYmd = this.smfStr(sYmd)
+	if(!this.smfIsNull(sYmd) && sYmd.length >= 8){
+		return [sYmd.substr(0, 4), sYmd.substr(4, 2), sYmd.substr(6, 2)].join(".") + ".";
+	}
+}
+
+/**
+ * @description 비밀번호 패턴 확인
+ * @param : password			- 비밀번호
+ * @param : bNoShowMessage		- 오류 메시지 출력 여부
+ * @return : boolean
+ */
+this.fnCheckPasswordPattern = function(password, bNoShowMessage){
+	password = this.smfStr(password);
+	if(this.smfIsNull(bNoShowMessage)) bNoShowMessage = false;
+	
+	message = "비밀번호는 숫자,영문자,특수문자 조합하여 입력하세요.";
+
+	if(!this.fnPswdFilter(password, bNoShowMessage)){
+		return false;
+	}
+	
+	//영문자찾기
+	if(!password.match(/[a-z]|[A-Z]/g)){
+		if(bNoShowMessage == false){
+			this.smfLiteralAlert(message);
+		}
+		return false;
+	}
+
+	//숫자찾기
+	if(!password.match(/[0-9]/g)){
+		if(bNoShowMessage == false){
+			this.smfLiteralAlert(message);
+		}
+		return false;
+	}
+
+	//특수문자 찾기
+	if(!password.match(/[^\w]/g)){
+		if(bNoShowMessage == false){
+			this.smfLiteralAlert(message);
+		}
+		return false;
+	}
+
+	return true;
+}
+
+/**
+ * @description 비밀번호 필터
+ * @param : password			- 비밀번호
+ * @param : bNoShowMessage		- 오류 메시지 출력 여부
+ * @return : boolean
+ */
+this.fnPswdFilter = function(password, bNoShowMessage){
+	password = this.smfStr(password);
+	if(this.smfIsNull(bNoShowMessage)) bNoShowMessage = false;
+	
+	if(password.indexOf("%") != -1){
+		if(bNoShowMessage == false){
+			this.smfLiteralAlert('비밀번호에 "%" 문자는 사용할 수 없습니다.');
+		}
+		return false;
+	}
+	
+	if(password.indexOf('\'') != -1 || password.indexOf('\"') != -1){
+		if(bNoShowMessage == false){
+			this.smfLiteralAlert('비밀번호에 작은따옴표 [\'] 또는 큰따옴표 [\"]는 사용할 수 없습니다.');
+		}
+		return false;
+	}
+	
+	return true;
+}
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+ * @description 그리드 헤더 클릭
+*/
+this.grdMain_onheadclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var columnName = obj.getCellProperty("body",e.cell,"text");
+	if ("bind:_chk" == columnName){
+		this.smfToggleChkHeader(obj, e, this.fnRenderGridCheckbox);
+	}else{
+		// 정렬
+		this.smfCheckAndSort(obj, e);
+	}
+};
+
+/**
+ * @description 조회
+ */
+this.divSearch_btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSearch();
+};
+
+/**
+ * @description User Properties의 validate maxlengthB 적용
+ */
+this.maxLengthB_oninput = function(obj:nexacro.Edit,e:nexacro.InputEventInfo)
+{
+	this.udsfCutMaxlengthB(obj);
+	
+	if(obj.id == 'edtVpnPswd'){
+		if(obj.value && obj.value.length > 0){
+			var lastChr = this.smfRight(obj.value, 1);
+			if(this.fnCheckPasswordPattern(obj.value, true)){
+				this.divCoaPrge.form.staVpnPswd01.set_text('적합');
+			}else{
+ 				if(!this.fnPswdFilter(obj.value)) obj.set_value(this.fvPswdOld);
+				this.divCoaPrge.form.staVpnPswd01.set_text('부적합');
+			}
+			this.divCoaPrge.form.edtVpnPswd00.set_value(lastChr);
+		}else{
+			this.divCoaPrge.form.edtVpnPswd00.set_value('');
+		}
+	}else if(obj.id == 'edtVpnPswdIdnty'){
+		if(obj.value && obj.value.length > 0){
+			if(this.divCoaPrge.form.edtVpnPswd.value == obj.value){
+				this.divCoaPrge.form.staVpnPswdIdnty01.set_text('일치');
+			}else{
+				this.divCoaPrge.form.staVpnPswdIdnty01.set_text('불일치');
+			}
+			this.divCoaPrge.form.edtVpnPswdIdnty00.set_value(this.smfRight(obj.value, 1));
+		}else{
+			this.divCoaPrge.form.edtVpnPswdIdnty00.set_value('');
+		}
+	}
+};
+
+/**
+ * @description 비밀번호 확인값 초기화
+ */
+this.editVpnPswd_onkillfocus = function(obj:nexacro.Edit,e:nexacro.KillFocusEventInfo)
+{
+	if(obj.id == 'edtVpnPswd'){
+		this.divCoaPrge.form.edtVpnPswd00.set_value('');
+	}else if(obj.id == 'edtVpnPswdIdnty'){
+		this.divCoaPrge.form.edtVpnPswdIdnty00.set_value('');
+	}
+};
+
+/**
+ * @description 비밀번호 이전값 저장
+ */
+this.divCoaPrge_edtVpnPswd_onkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	this.fvPswdOld = obj.value;
+};
+
+/**
+ * @description 마감 / 마감취소
+ */
+this.btnDdln_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//TODO
+};
+
+/**
+ * @description 마감 / 마감취소
+ */
+this.btnAplyIdnty_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//TODO
+};
+
+/**
+ * @description 저장
+ */
+this.btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//TODO
+};
+
+/**
+ * @description 삭제
+ */
+this.btnDelete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//TODO
+};
+
+/**
+ * @description 신청서조회
+ */
+this.divCoaPrge_btnReqsInq_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//TODO
+};
+
+/**
+ * @description 신청서추가
+ */
+this.divCoaPrge_btnReqsAdd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//TODO
+};
+
+/**
+ * @description 신청서삭제
+ */
+this.divCoaPrge_btnReqsDel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//TODO
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectCoaCtr</Col>
+            <Col id="url">/uds_ueu_um00_001.do</Col>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsCoaCtr</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSearch" oncolumnchanged="dsSearch_oncolumnchanged" useclientlayout="false">
+        <ColumnInfo>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="coaRcritScNm" type="STRING" size="256"/>
+          <Column id="uvstOrgCd" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true" onload="dsMain_onload">
+        <ColumnInfo>
+          <Column id="_chk" type="STRING" size="1"/>
+          <Column id="userDtcNo" type="STRING" size="255"/>
+          <Column id="aplySn" type="BIGDECIMAL" size="10"/>
+          <Column id="userId" type="STRING" size="256"/>
+          <Column id="usePslYn" type="STRING" size="256"/>
+          <Column id="vpnPswd" type="STRING" size="256"/>
+          <Column id="userCntnGrpCd" type="STRING" size="256"/>
+          <Column id="pswdChgCtrValue" type="STRING" size="256"/>
+          <Column id="pswdLastChgYmd" type="STRING" size="256"/>
+          <Column id="delYn" type="STRING" size="256"/>
+          <Column id="useBgngYmd" type="STRING" size="256"/>
+          <Column id="useEndYmd" type="STRING" size="256"/>
+          <Column id="userMaddr" type="STRING" size="256"/>
+          <Column id="userIpAddr" type="STRING" size="256"/>
+          <Column id="dmndRsnCn" type="STRING" size="256"/>
+          <Column id="apsDtcNo" type="STRING" size="256"/>
+          <Column id="atrzDoctIdfId" type="STRING" size="256"/>
+          <Column id="atrzStsCd" type="STRING" size="256"/>
+          <Column id="coaAyr" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="reqsTrnNo" type="STRING" size="256"/>
+          <Column id="dptNm" type="STRING" size="256"/>
+          <Column id="jbgdNm" type="STRING" size="256"/>
+          <Column id="offmTelno" type="STRING" size="256"/>
+          <Column id="mblTelno" type="STRING" size="256"/>
+          <Column id="coaRcritScCd" type="STRING" size="256"/>
+          <Column id="mnrNm" type="STRING" size="256"/>
+          <Column id="mnrJbgdNm" type="STRING" size="256"/>
+          <Column id="mnrDptNm" type="STRING" size="256"/>
+          <Column id="ddlnYn" type="STRING" size="256"/>
+          <Column id="userNm" type="STRING" size="256"/>
+          <Column id="jbpsNm" type="STRING" size="256"/>
+          <Column id="cddcOrgCd" type="STRING" size="256"/>
+          <Column id="scrtyWpldgSn" type="STRING" size="256"/>
+          <Column id="gtrnsId" type="STRING" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="rgtrDptNm" type="STRING" size="256"/>
+          <Column id="mdfrNm" type="STRING" size="256"/>
+          <Column id="mdfrDptNm" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRcritScCd" useclientlayout="true">
+        <ColumnInfo>
+          <ConstColumn id="FirstCode" type="STRING" size="30" value="" datapath=""/>
+          <ConstColumn id="ClfCdValue" type="STRING" size="30" value="COA_RCRIT_SC_CD"/>
+          <ConstColumn id="FilterExpr" type="STRING" size="30" value="unyCdValue != '3' &amp;&amp; unyCdValue != '4'"/>
+          <ConstColumn id="UnyCdGrpId" type="STRING" size="30" value=""/>
+          <ConstColumn id="BfrClfCdValue" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd1Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd2Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd3Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd4Value" type="STRING" size="30" value=""/>
+          <ConstColumn id="UserDfnCd5Value" type="STRING" size="30" value=""/>
+          <Column id="pgeId" type="STRING" size="256"/>
+          <Column id="clfCdValue" type="STRING" size="30"/>
+          <Column id="clfCdValueNm" type="STRING" size="120"/>
+          <Column id="clfCdUseYn" type="STRING" size="150"/>
+          <Column id="unyCdValue" type="STRING" size="10"/>
+          <Column id="unyCdValueNm" type="STRING" size="30"/>
+          <Column id="userDfnCd1Value" type="STRING" size="100"/>
+          <Column id="userDfnCd2Value" type="STRING" size="100"/>
+          <Column id="userDfnCd3Value" type="STRING" size="100"/>
+          <Column id="userDfnCd4Value" type="STRING" size="100"/>
+          <Column id="userDfnCd5Value" type="STRING" size="100"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="unyCdValue">2</Col>
+            <Col id="unyCdValueNm">수시</Col>
+          </Row>
+          <Row>
+            <Col id="unyCdValue">1</Col>
+            <Col id="unyCdValueNm">정시</Col>
+          </Row>
+          <Row>
+            <Col id="unyCdValue">0</Col>
+            <Col id="unyCdValueNm">전체</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCoaCtr" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="coaAyr" type="STRING" size="4"/>
+          <Column id="coaRcritScCd" type="STRING" size="1"/>
+          <Column id="rcritNm" type="STRING" size="1"/>
+          <Column id="coaSvcAplyBgngYmd" type="STRING" size="8"/>
+          <Column id="coaSvcAplyEndYmd" type="STRING" size="8"/>
+          <Column id="coaSvcAplyPslYn" type="STRING" size="1"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item2" compid="divCoaPrge.form.edtOrgCd" propid="value" datasetid="dsCoaPrge" columnid="orgCd"/>
+      <BindItem id="item3" compid="divCoaPrge.form.cboLctnScCd" propid="value" datasetid="dsCoaPrge" columnid="lctnScCd"/>
+      <BindItem id="item4" compid="divCoaPrge.form.edtCoaAyr" propid="value" datasetid="dsMain" columnid="coaAyr"/>
+      <BindItem id="item5" compid="divCoaPrge.form.edtUvstKndScNm" propid="value" datasetid="dsCoaPrge" columnid="uvstKndScNm"/>
+      <BindItem id="item6" compid="divCoaPrge.form.edtUserId" propid="value" datasetid="dsMain" columnid="userId"/>
+      <BindItem id="item7" compid="divCoaPrge.form.edtEmlAddr" propid="value" datasetid="dsCoaPrge" columnid="emlAddr"/>
+      <BindItem id="item8" compid="divCoaPrge.form.edtOffmTelno" propid="value" datasetid="dsMain" columnid="offmTelno"/>
+      <BindItem id="item9" compid="divCoaPrge.form.edtMblTelno" propid="value" datasetid="dsMain" columnid="mblTelno"/>
+      <BindItem id="item10" compid="divCoaPrge.form.edtRoadNmZip" propid="value" datasetid="dsCoaPrge" columnid="roadNmZip"/>
+      <BindItem id="item11" compid="divCoaPrge.form.edtRoadNmAddr" propid="value" datasetid="dsCoaPrge" columnid="roadNmAddr"/>
+      <BindItem id="item12" compid="divCoaPrge.form.edtRoadNmDtlAddr" propid="value" datasetid="dsCoaPrge" columnid="roadNmDtlAddr"/>
+      <BindItem id="item14" compid="divCoaPrge.form.edtAplyDt" propid="value" datasetid="dsCoaPrge" columnid="aplyDt"/>
+      <BindItem id="item0" compid="divSearch.form.edtCoaAyr" propid="value" datasetid="dsSearch" columnid="coaAyr"/>
+      <BindItem id="item1" compid="divSearch.form.edtCoaRcritScNm" propid="value" datasetid="dsSearch" columnid="coaRcritScNm"/>
+      <BindItem id="item13" compid="divSearch.form.cboCddcScCd" propid="value" datasetid="dsSearch" columnid="cddcScCd"/>
+      <BindItem id="item15" compid="divSearch.form.edtUserNm" propid="value" datasetid="dsSearch" columnid="shlNm"/>
+      <BindItem id="item16" compid="divSearch.form.edtCoaEvlUnitId" propid="value" datasetid="dsSearch" columnid="coaEvlUnitNm"/>
+      <BindItem id="item17" compid="divCoaPrge.form.edtPrgeFlnm00" propid="value" datasetid="dsCoaPrge" columnid="prgeFlnm"/>
+      <BindItem id="item19" compid="divCoaPrge.form.edtUserId00" propid="value" datasetid="dsCoaPrge" columnid="prgeFlnm"/>
+      <BindItem id="item20" compid="divCoaPrge.form.edtVpnPswd" propid="value" datasetid="dsMain" columnid="vpnPswd"/>
+      <BindItem id="item18" compid="divCoaPrge.form.edtDmndCn" propid="value" datasetid="dsMain" columnid="dmndRsnCn"/>
+      <BindItem id="item21" compid="divCoaPrge.form.edtVpnPswd00" propid="value" datasetid="dsCoaPrge" columnid="prgeTelno"/>
+      <BindItem id="item22" compid="divCoaPrge.form.edtVpnPswdIdnty00" propid="value" datasetid="dsCoaPrge" columnid="prgeTelno"/>
+      <BindItem id="item23" compid="divCoaPrge.form.rdo00" propid="value" datasetid="dsMain" columnid="coaRcritScCd"/>
+      <BindItem id="item24" compid="divCoaPrge.form.edtDptNm" propid="value" datasetid="dsMain" columnid="dptNm"/>
+      <BindItem id="item25" compid="divCoaPrge.form.edtJbpsNm" propid="value" datasetid="dsMain" columnid="jbgdNm"/>
+      <BindItem id="item26" compid="divCoaPrge.form.edtDptNm00" propid="value" datasetid="dsMain" columnid="mnrNm"/>
+      <BindItem id="item27" compid="divCoaPrge.form.edtJbpsNm00" propid="value" datasetid="dsMain" columnid="mnrJbgdNm"/>
+      <BindItem id="item28" compid="divCoaPrge.form.edtDptNm00_00" propid="value" datasetid="dsMain" columnid="mnrDptNm"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="cmmAlert" width="560" height="340" titletext="알림창" onload="form_onload">
+    <Layouts>
+      <Layout height="340" mobileorientation="landscape" width="560">
+        <ImageViewer id="imgLink" taborder="0" left="40" top="48" width="26" height="26" text="" accessibilitylabel="알림" image="url('theme::NexaKRDS/images/img_POP_Warning.png')" stretch="fit" cssclass="img_WF_Trans"/>
+        <Static id="Static00" taborder="1" text="타이틀" left="74" top="42" height="36" cssclass="sta_WF_H4" right="136"/>
+        <TextArea id="txtMsgContent" taborder="2" left="40" top="Static00:16" right="40" readonly="true" cssclass="txt_POP_Text" bottom="108"/>
+        <Button id="btnVoc" taborder="3" top="259" width="31" height="31" onclick="btnVoc_onclick" tooltiptext="VOC등록" cssclass="btn_MDI_Voc" visible="false" left="40"/>
+        <Button id="btnOk" taborder="4" text="확인" fittocontents="width" height="48" onclick="btnOk_onclick" bottom="40" cssclass="btn_WF_Crud" right="40" width="90"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  devPro
+*  @FileName 	cmmAlert.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2020/11/25
+*  @Description
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2020/11/25			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/********************************************************************************
+ * Form 변수선언 영역
+ ********************************************************************************/
+this.fvOptSize;
+
+/********************************************************************************
+ * Form Event 영역
+ ********************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnload(obj,e); //필수함수
+
+	var sMsgId    = this.getOwnerFrame().paramId;
+	var paramType = this.getOwnerFrame().paramType;
+	var sContents = this.getOwnerFrame().paramContents;
+	this.fvOptSize = this.getOwnerFrame().pOptSize;
+	
+	switch(paramType) 
+	{
+		case "ERR":
+			this.imgLink.set_image("theme://images/img_POP_Error.png");
+			break;
+		case "WAN":
+			this.imgLink.set_image("theme://images/img_POP_Warning.png");
+			//this.btnVoc.set_visible(true);
+			break;
+	}
+
+	this.fnMsgSetting(sContents);
+	
+	this.btnOk.setFocus();
+};
+
+/********************************************************************************
+ * 사용자 Function 영역
+ ********************************************************************************/ 
+/**
+* @description 메세지설정
+*/
+ this.fnMsgSetting = function (sMsgContent)
+ {
+	this.txtMsgContent.set_value(sMsgContent);
+ };
+
+//웹일경우 해당컴포넌트 이미지 파일로 다운로드
+this.fnWebImageSave = function(objComp,strFileName){
+	var ele = document.getElementById(objComp.getElement().handle.id);
+	var oForm = this;
+	if (!ele) {
+		trace('ele is not exist.');
+		return false;
+	}
+	// 캡처 작업 최적화
+	var options = {
+		  scale: 1.0 // 해상도 설정
+	};
+	// 이미지 캡처 작업
+	html2canvas(ele, options).then(function(canvas) {
+		// 이미지 데이터 생성
+		var sImageData = canvas.toDataURL('image/png');
+		// 이미지 데이터를 팝업으로 전달하여 열기
+		oForm.fnOpenBoardPopup(sImageData);
+	});
+};
+
+//20210609 VOC추가
+//게시판입력팝업오픈
+this.fnOpenBoardPopup = function (sImg)
+{
+	var sImgTag = "<p></p> <p></p>  <p></p> <img src="+nexacro.wrapQuote(sImg)+">";
+	//게시판추가
+	var popupId = "addBoard";
+	var popupUrl = "comm::board/boardPu.xfdl";
+	var oArg   = { pvApndYn		: "1"
+				  ,pvTitle 		: "VOC등록 "
+				  ,pvInputId	: nexacro.getApplication().gdsUser.getColumn(0, "USER_ID")
+				  ,pvInputEmpNo	: nexacro.getApplication().gdsUser.getColumn(0, "EMP_NO")
+				  ,pvContTitle	: ""
+				  ,pvBoardCd	: "VOC001"
+				  ,pvOpenType	: "add"
+				  ,pvHrank		: ""
+				  ,pvAnswLvl    : 0
+				  ,pvCont		: sImgTag };
+	var sPopupCallBack = "fnPopupCallback";
+	var sTitle = "게시글";
+	var oOption = {title:sTitle, titlebar:true};
+	this.gfnOpenPopup(popupId, popupUrl, oArg, sPopupCallBack, oOption);
+};
+ 
+/********************************************************************************
+ * Component Event 영역
+ ********************************************************************************/ 
+/**
+* @description OK버튼이벤트
+*/
+this.btnOk_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(true);
+};
+
+/**
+* @description VOC버튼클릭
+*/
+this.btnVoc_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//var sCur = nexacro.getApplication().gvVfrsWork.separatesize;
+	//var sStatus = sCur=="42,*,0,0"?"main":"work";
+	
+	//var oTargetFrame = sStatus=="main"? nexacro.getApplication().gvFrmMain : nexacro.getApplication().gvFrsWork.getActiveFrame();
+	//var oTarget = oTargetFrame.form;
+	//var oTarget = nexacro.getApplication().mainframe;
+	var oTarget = nexacro.getApplication().getActiveFrame();
+
+	var sFileName = oTarget.name+".png";
+	var sImg = "";
+	
+	if (system.navigatorname != "nexacro") {
+		sImg = this.fnWebImageSave(oTarget,sFileName);
+	}
+	else {
+		sImg = system.saveToImageBase64String(oTarget, false, "PNG");
+		this.fnOpenBoardPopup(sImg);
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

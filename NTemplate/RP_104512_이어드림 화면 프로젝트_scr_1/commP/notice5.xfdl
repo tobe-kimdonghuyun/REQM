@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="notice5" width="538" height="580" titletext="공지팝업02" background="transparent" onload="notice5_onload">
+    <Layouts>
+      <Layout height="580" screenid="ScreenDeskTopP" width="538">
+        <Static id="title" taborder="0" text="여러분의 의견을 들려주세요!" left="48" top="30" height="130" cssclass="font48B" initvalueid="ivStcAccessibilityOn" font="normal 700 36px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;" width="305"/>
+        <ImageViewer id="img00" taborder="1" left="356" top="40" width="130" height="116" cssclass="display" image="url('imagerc::common/img_popup_3.png')" initvalueid="ivTitleAccessibilityOff" accessibilitylabel="대국민서버점검 안내 이미지" stretch="fit"/>
+        <Static id="sta00" taborder="2" left="34" top="175" width="470" height="254" cssclass="sta_Notice_bg" initvalueid="ivStcAccessibilityOff"/>
+        <Div id="divText" taborder="3" text="**에디트영역**" left="60" top="194" height="216" width="418" initvalueid="ivDivAccessibilityOn" url="comm::comp_webEditor.xfdl"/>
+        <Button id="btnLink" taborder="4" text="설문 참여하기" left="149" width="240" height="60" cssclass="btn_Pop_yes01" initvalueid="ivBtnAccessibilityButton" padding="0px 20px 1px" top="470" onclick="btnLink_onclick"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="560" height="660" mobileorientation="portrait" type="default" titletext="설문안내팝업">
+        <Static id="title" cssclass="font50B" left="35" top="19" height="139" width="326" text="여러분의 의견을 들려주세요!" font="normal 700 38px/1.2 &quot;Noto Sans KR&quot;,&quot;NotoSansKR-Bold&quot;,&quot;Malgun Gothic&quot;"/>
+        <ImageViewer id="img00" width="110" left="405" top="40" height="100" image="url('imagerc::common_M/img_popup_3_M.png')"/>
+        <Static id="sta00" left="30" top="175" height="334" right="30"/>
+        <Div id="divText" left="55" top="195" height="286" right="55"/>
+        <Button id="btnLink" left="30" top="540" height="90" cssclass="btn_Pop_yes01_M" right="30"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.notice5_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.title.set_text(this.parent.params.eventTitlNm);		//팝업타이틀
+	this.btnLink.set_text(this.parent.params.lnkNm);			//팝업 버튼 명
+	//this.img00.set_accessibilitylabel(this.parent.params.rplcText);	//팝업 이미지 대체 텍스트
+	
+	this.divText.form.fnInit(this, this.fnWebEditorCallback, this.fnWebEditorSetHtmlCallback);
+	//this.divText.autoHeight = "Y";
+	this.divText._html = this.parent.params.popupCn; //팝업 내용
+	
+	if(this.parent.params.lnkTypCd == '0'){	//링크유형이 없을 경우 버튼 숨김
+		this.btnLink.set_visible(false);
+		//내용 높이 늘리기
+		if(this.smfIsMobile()){
+			this.sta00.set_height(455);
+			this.divText.set_height(407);
+		}else{
+			this.sta00.set_height(355);
+			this.divText.set_height(317);
+		}
+		
+	}
+	//0501 CF 일괄등록
+};
+
+
+this.btnLink_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getOwnerFrame().form.commNoticeAll.form.fnClickEvt(obj,e);	//링크 클릭시 이벤트
+};
+
+
+/*
+*	웹에디터가 onload된 이후 호출되는 callback
+*   obj : 웹에디터 Div오브젝트
+*/
+this.fnWebEditorCallback = function(obj)
+{
+	// 일반적으로는 데이터를 세팅
+	obj.form.fnSetHtml(obj._html);
+};
+
+
+/*
+*	웹에디터가 text를 변경 할 경우 호출하는 callback
+*   obj : 웹에디터 Div오브젝트
+*/
+this.fnWebEditorSetHtmlCallback = function(obj,contentHeight)
+{
+	trace("***  웹에디터에 Text를 세팅했습니다.["+obj.id+"] contentHeight[=" + contentHeight + "]");
+	
+	// 일반적으로는 WebEditor Div를 resetScroll해줌.
+	//  (Web Editor의 높이가 변경이 되어 있음(autoHeight="Y"인 경우))
+	//this.smfResetScroll(this.divDetail.form.divWebEditor);
+};
+]]></Script>
+  </Form>
+</FDL>

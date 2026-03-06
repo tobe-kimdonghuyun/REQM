@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameTopDiv" width="80" height="40" titletext="New Form" onload="frameTopDiv_onload">
+    <Layouts>
+      <Layout height="40" mobileorientation="landscape" width="80" screenid="ScreenDeskTop">
+        <Button id="btn00" taborder="0" left="41" top="5" width="30" height="30" cssclass="btn_TF_Home01" onclick="btn00_onclick"/>
+        <Button id="btn01" taborder="1" left="6" top="5" width="30" height="30" cssclass="btn_TF_alarm"/>
+        <Button id="btnNotiNew" taborder="2" left="6" top="5" width="30" height="30" cssclass="btn_TF_alarm_N" visible="false" onclick="btnNotiNew_onclick"/>
+      </Layout>
+      <Layout height="96" mobileorientation="landscape" width="110" screenid="mobile,tablet" name="default0">
+        <Button id="btn00" taborder="0" left="5" top="17" width="48" height="58" cssclass="btn_Top_home01_M"/>
+        <Button id="btn01" taborder="1" left="56" top="17" width="48" height="58" cssclass="btn_Top_alarm_M"/>
+        <Button id="btnNotiNew" left="56" top="17" width="48" height="58" cssclass="btn_Top_alarm_MN"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 유치원 학부모서비스
+*  @MenuPath    샘플
+*  @FileName 	frameTopDiv.xfdl
+*  @Creator 	문형선
+*  @CreateDate 	2022.11.9
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.11.9     	문형선 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+//this.fv_onLoad = false;
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.frameTopDiv_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	if(this.smfGetSubSystemGb()=="PAR")
+	{
+		//this.cboStuList.set_index(0);
+		//this.fnSelectStuIduzEduYn();
+		//this.fv_onLoad = true;
+	}
+}; 
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+
+this.fnPopupCallback = function(context, responseParams, sender){
+}
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.btnNotiNew_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var procType = "none";
+	
+	// 팝업을 동작에 필요한 파라메터 지정
+	var popupParams = {
+		callback : this.fnPopupCallback, // 콜백함수 지정
+		sender : obj, // sender 지정
+		// 팝업 전달 파라메터 지정
+		params : {
+			// 처리타입 지정
+			procType : procType,
+			// 파라메터 전달
+			notiScCd : "ALL",
+			dataset: this.parent.parent.divPARLink.form.dsStuIduzEduYn
+		},
+	};
+	
+	if(this.smfIsMobile()){
+		var srcInfo = this.smfCurScreenInfo();
+		var srcInfoW = srcInfo[0];
+		var srcInfoH = srcInfo[1];
+		srcInfoH = 965;
+		this.smfDialog("_auto", "pa_par_sps_sl::par_spssl05_p02.xfdl", popupParams, "", "", srcInfoW, srcInfoH);
+	}else{
+		this.smfDialog("_auto", "pa_par_sps_sl::par_spssl05_p02.xfdl", popupParams);
+	}
+};
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.getOwnerFrame().form.divTop.form.divDispArea.form.divPARLink.form.fnHome();
+};]]></Script>
+    <Objects>
+      <Dataset id="dsJwt" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="encJwt" type="STRING" size="2048"/>
+          <Column id="stuDtcNo" type="STRING" size="256"/>
+          <Column id="schpaDtcNo" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

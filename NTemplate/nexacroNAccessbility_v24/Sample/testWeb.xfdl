@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="testWebBrowser" width="730" height="360" titletext="New Form" onload="testWebBrowser_onload">
+    <Layouts>
+      <Layout height="360" mobileorientation="landscape" width="730">
+        <Div id="Div00" taborder="1" text="Div00" left="0" top="0" width="730" height="360" background="beige">
+          <Layouts>
+            <Layout>
+              <WebBrowser id="web0" taborder="0" left="5" top="5" onusernotify="Web_onusernotify" onloadcompleted="Web_onloadcompleted" bottom="5" right="5"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+
+this.testWebBrowser_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.Div00.form.web0.set_url("http://localhost:8080/npN/accessbility/html/web.html");
+};
+
+this.Web_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+	var sHtml = "<p>금주 실적(2023.03.20 ~ 2023.03.24)</p>\n\n<p>1. 새 프로젝트 프레임 구성 및 디자인 초안 커스텀 마이징</p>\n\n<p>-&nbsp; 로그인"
+				+"	, left,&nbsp;mdi, main, work 프레임 구성완료&nbsp;</p>\n\n<p>- left 메뉴 클릭 시 work프레임 호출 처리 완료</p>\n\n<p>"
+//				+"- mdi 탭 내의 즐겨찾기 기능 추가 완료"
+//				+"</p>\n\n<p>- mdi 영역에 있는 버튼 클릭시 열려있는 work프레임 화면 정렬 처리 완료(cascade, vertical, horizontal)</p>\n\n<p>"
+//				+"- mdi 영역 창떼기 버튼 클릭 시 모달리스 팝업 처리 완료</p>\n\n<p>&nbsp;</p>\n\n<p>2. devPack 프로젝트 고도화 작업</p>\n\n<p>"
+// 				+"-&nbsp;mdi 영역에 있는 버튼 클릭시 열려있는 work프레임 화면 정렬 처리 완료(cascade, vertical, horizontal)</p>\n\n<p>&nbsp;</p>\n\n<p>"
+// 				+"<span style='font-size:14px'>3.&nbsp;<span style='color:rgb(0, 0, 0); font-family:malgun gothic'>삼성 SDS&nbsp;M-QIS(구매예술화TAPS) 시스템(XP) "
+// 				+"컨버젼 분석</span></span></p>\n\n<p>&nbsp;</p>\n\n<p>차주 계획(2023.03.27 ~ 2023.03.31)</p>\n\n<p>1. devPack 프로젝트 고도화 작업 예정</p>\n"
+				+"";
+	obj.callMethod("setInnerHtml", sHtml);
+};
+
+this.Web_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	trace("WebBrowser00_onusernotify "+ e.userdata);
+};
+
+
+
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="commpop_school" classname="form" inheritanceid="" titletext="학교찾기" onload="formOnload" position="absolute" width="865" height="490">
+    <Layouts>
+      <Layout width="865" height="490" screenid="ScreenDeskTop,tablet">
+        <Div id="divSearch" taborder="0" left="20" top="20" height="108" accessibilityenable="false" right="20">
+          <Layouts>
+            <Layout>
+              <Static id="staTxt3" taborder="1" left="194" top="0" height="54" cssclass="sta_WF_DtlBg" right="0" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="staTxt4" taborder="4" left="194" top="53" height="54" cssclass="sta_WF_DtlBg" right="0" text="" initvalueid="ivStcAccessibilityOff"/>
+              <Static id="staCddc" taborder="0" text="시도교육청" left="0" top="0" width="195" height="54" cssclass="sta_WF_Input01" accessibilitydescription="필수입력" initvalueid="ivStcAccessibilityOn"/>
+              <Combo id="cboCddc" taborder="2" left="staCddc:20" top="10" width="308" height="35" innerdataset="dsCddcList" codecolumn="cddcScCd" displayrowcount="10" accessibilitylabel="시,도 교육청" initvalueid="ivCmbNormal" datacolumn="orgNm" index="0" text="" value=""/>
+              <Static id="staSchulNm" taborder="3" text="*학교명" left="0" top="53" width="195" height="54" cssclass="sta_WF_Essential" accessibilitydescription="필수입력" initvalueid="ivStcEssential"/>
+              <Edit id="edtSchulNm" taborder="5" left="staSchulNm:20" top="63" width="308" height="34" onkeydown="schulNm_onkeydown" accessibilitylabel="학교명(필수입력)" maxlength="30" initvalueid="ivEdtEssential" imemode="hangul,full" cssclass="essential" validate="required:true,maxlength:30"/>
+              <Button id="btnSearch" taborder="6" text="검색" left="edtSchulNm:10" top="63" width="84" height="34" onclick="btnSearch_onclick" initvalueid="ivBtnAccessibilityButton"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="staCddc" width="185" left="0" top="0" height="74" cssclass="sta_WF_Essential_M"/>
+              <Static id="staSchulNm" cssclass="sta_WF_Essential_M" width="185" left="0" top="73" height="140"/>
+              <Combo id="cboCddc" cssclass="essential_M" height="52" left="205" top="11" right="20" popuptype="center"/>
+              <Edit id="edtSchulNm" cssclass="essential_M" left="205" top="85" height="52" right="20"/>
+              <Static id="staTxt3" left="184" top="0" height="74" right="0"/>
+              <Static id="staTxt4" left="184" top="73" height="140" right="0"/>
+              <Button id="btnSearch" height="52" left="205" top="149" width="178" cssclass="btn_WF_btn01M"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid binddataset="dsMain" id="grdMain" left="20" top="148" height="252" taborder="1" autofittype="col" right="20" oncelldblclick="grdMain_oncelldblclick" initvalueid="ivGrdAccessibilityOn" selecttype="row" accessibilitylabel="학교목록" cellsizingtype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="35"/>
+                <Column size="120"/>
+                <Column size="220"/>
+                <Column size="220"/>
+                <Column size="90"/>
+                <Column size="60"/>
+                <Column size="60"/>
+              </Columns>
+              <Rows>
+                <Row size="36" band="head"/>
+                <Row size="40"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="순번" displaytype="normal" font="normal 15px/normal &quot;NotoSansKR-Regular&quot;"/>
+                <Cell col="1" text="시도교육청" font="normal 15px/normal &quot;NotoSansKR-Regular&quot;"/>
+                <Cell col="2" text="학교명" font="normal 15px/normal &quot;NotoSansKR-Regular&quot;"/>
+                <Cell col="3" text="변경된 교명" font="normal 15px/normal &quot;NotoSansKR-Regular&quot;"/>
+                <Cell col="4" text="학교과정구분" font="normal 15px/normal &quot;NotoSansKR-Regular&quot;"/>
+                <Cell col="5" text="폐교여부" font="normal 15px/normal &quot;NotoSansKR-Regular&quot;"/>
+                <Cell col="6" text="운영여부" font="normal 15px/normal &quot;NotoSansKR-Regular&quot;"/>
+              </Band>
+              <Band id="body">
+                <Cell text="expr:currow+1" autosizerow="default" autosizecol="limitmax" displaytype="normal" font="normal 14px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;" textAlign="center"/>
+                <Cell col="1" text="bind:cddcOrgNm" font="normal 14px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="2" text="bind:kornOrgNm" font="normal 14px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="3" text="bind:afchOrgNm" font="normal 14px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="4" text="bind:shlCrseScNm" textAlign="center" font="normal 14px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="5" text="bind:cdscYn" textAlign="center" font="normal 14px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="6" text="bind:orgUseNm" textAlign="center" font="normal 14px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+              </Band>
+            </Format>
+            <Format id="mobile">
+              <Columns>
+                <Column size="50"/>
+                <Column size="160"/>
+                <Column size="220"/>
+                <Column size="220"/>
+                <Column size="120"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="60" band="head"/>
+                <Row size="50"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="순번" displaytype="normal" font="normal 22px/normal &quot;NotoSansKR-Regular&quot;"/>
+                <Cell col="1" text="시도교육청" font="normal 22px/normal &quot;NotoSansKR-Regular&quot;"/>
+                <Cell col="2" text="학교명" font="normal 22px/normal &quot;NotoSansKR-Regular&quot;"/>
+                <Cell col="3" text="변경된 교명" font="normal 22px/normal &quot;NotoSansKR-Regular&quot;"/>
+                <Cell col="4" text="학교과정&#13;&#10;구분" font="normal 22px/normal &quot;NotoSansKR-Regular&quot;"/>
+                <Cell col="5" text="폐교&#13;&#10;여부" font="normal 22px/normal &quot;NotoSansKR-Regular&quot;"/>
+                <Cell col="6" text="운영&#13;&#10;여부" font="normal 22px/normal &quot;NotoSansKR-Regular&quot;"/>
+              </Band>
+              <Band id="body">
+                <Cell text="expr:currow+1" autosizerow="default" autosizecol="limitmax" displaytype="normal" font="normal 20px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;" textAlign="center"/>
+                <Cell col="1" text="bind:cddcOrgNm" font="normal 20px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="2" text="bind:kornOrgNm" font="normal 20px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="3" text="bind:afchOrgNm" font="normal 20px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="4" text="bind:shlCrseScNm" textAlign="center" font="normal 20px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="5" text="bind:cdscYn" textAlign="center" font="normal 20px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+                <Cell col="6" text="bind:orgUseNm" textAlign="center" font="normal 20px/normal &quot;Noto Sans KR,NotoSansKR-Regular,Malgun Gothic,Arial,MS PGothic&quot;"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnSelect" taborder="2" text="확인" left="26.59%" top="420" width="180" height="50" cssclass="btn_WF_Ok" onclick="btnSelect_onclick" accessibilitylabel="팝업닫기" initvalueid="ivBtnAccessibilityButton"/>
+        <Button id="btnClose" taborder="3" text="닫기" left="48.44%" top="420" width="179" height="50" cssclass="btn_WF_Crud" accessibilitylabel="팝업닫기" initvalueid="ivBtnAccessibilityButton" onclick="btnClose_onclick"/>
+      </Layout>
+      <Layout name="Layout0" width="640" height="880" mobileorientation="landscape" type="default" screenid="mobile,tablet">
+        <Button id="btnSelect" left="20" top="683" height="80" cssclass="btn_WF_Ok_M" right="20"/>
+        <Div id="divSearch" left="20" top="34" height="215" right="20"/>
+        <Grid id="grdMain" left="20" top="289" height="352" right="20" autofittype="none" formatid="mobile" scrollbartype="auto fixed"/>
+        <Button id="btnClose" left="20" top="775" height="80" right="20"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsSearch">
+        <ColumnInfo>
+          <Column id="cddcScCd" type="STRING" size="256" datapath="시도교육청코드" description="시도교육청코드"/>
+          <Column id="shlNm" type="STRING" size="256" datapath="학교명" description="학교명"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsService" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">selectCddcList</Col>
+            <Col id="url">/uda_uep_sc02_005.do</Col>
+            <Col id="outDatasets">dsCddcList</Col>
+          </Row>
+          <Row>
+            <Col id="id">selectShlInfoList</Col>
+            <Col id="url">/uda_uep_sc02_006.do</Col>
+            <Col id="inDatasets">dsSearch</Col>
+            <Col id="outDatasets">dsMain</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="orgCd" type="STRING" size="256" description="조직코드" datapath="조직코드"/>
+          <Column id="kornOrgNm" type="STRING" size="256" description="한글조직명" datapath="한글조직명"/>
+          <Column id="afchOrgNm" type="STRING" size="256" description="현재조직명" datapath="현재조직명"/>
+          <Column id="cteOrgCd" type="STRING" size="256" description="관할조직코드" datapath="관할조직코드"/>
+          <Column id="cteOrgNm" type="STRING" size="256" description="관할조직명" datapath="관할조직명"/>
+          <Column id="shlKndScCd" type="STRING" size="256" description="학교종류구분코드" datapath="학교종류구분코드"/>
+          <Column id="lctnScCd" type="STRING" size="256" description="소재지구분코드" datapath="소재지구분코드"/>
+          <Column id="lctnScCdNm" type="STRING" size="256" description="소재지구분명" datapath="소재지구분명"/>
+          <Column id="cddcScCd" type="STRING" size="256" datapath="시도교육청구분코드" description="시도교육청구분코드"/>
+          <Column id="cddcOrgCd" type="STRING" size="256" description="시도교육청조직코드" datapath="시도교육청조직코드"/>
+          <Column id="cddcOrgNm" type="STRING" size="256" description="시도교육청조직명" datapath="시도교육청조직명"/>
+          <Column id="shlCrseScCd" type="STRING" size="256" description="학교과정구분코드" datapath="학교과정구분코드"/>
+          <Column id="shlCrseScNm" type="STRING" size="256" description="학교과정구분명" datapath="학교과정구분명"/>
+          <Column id="cdscYn" type="STRING" size="256" description="폐교여부" datapath="폐교여부"/>
+          <Column id="orgUseNm" type="STRING" size="256" description="조직운영여부" datapath="조직운영여부"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCddcList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="orgCd" type="STRING" size="10" datapath="조직코드" description="조직코드"/>
+          <Column id="orgNm" type="STRING" size="300" datapath="기관명" description="기관명"/>
+          <Column id="cddcScCd" type="STRING" size="3" datapath="시도교육청구분코드" description="시도교육청구분코드"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @MenuPath    학교찾기
+*  @FileName 	uda_uepsc02_p00
+*  @Creator 	김유진
+*  @CreateDate 	2024.02.27
+*  @Desction    대입전형자료(학교생활기록부)-생성 및 신청-학교찾기
+*
+******************* 소스 수정 이력 ******************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2024.02.27          김유진                 최초 생성
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.formOnload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 팝업 폼 초기화
+	this.smfInitPopup(obj);
+	
+	this.smfSearchService("selectCddcList")
+		.run() // 실행
+		.callback(function(callbackParams){ // 콜백
+			if(callbackParams.errors) return;
+			
+			this.dsCddcList.insertRow(0);
+			this.dsCddcList.setColumn(0, "orgCd", "");
+			this.dsCddcList.setColumn(0, "orgNm", "전체");
+			this.dsCddcList.setColumn(0, "cddcScCd", "");
+			this.divSearch.form.cboCddc.set_index(0);
+		})
+	;
+};
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg){
+	if(errcd == -1) return;
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ /**
+ * 조회서비스
+ * @param : N/A
+ * @param : N/A
+ */
+this.fnSearchList = function(){
+	// 조회서비스 객체 생성
+	this.smfSearchService("selectShlInfoList")
+		.validateForm(this.divSearch) // 데이터 검증
+		.run() // 실행
+		.callback(function(callbackParams){ // 콜백
+			if(callbackParams.errors) return;
+			this.grdMain.selectRow(0, false); // 그리드 자동선택 해제
+		});
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+ * 학교 선택
+ */
+this.fnChoice = function(){
+	if(this.grdMain.selectendrow <= -1) {
+		this.smfAlert("CM022", ["학교"]); //{0}을(를) 선택하여 주십시오.
+		return
+	};
+	
+	this.smfSendResponseToOpener({
+		"row": this.smfRowToObject(this.dsMain)
+	});
+
+	this.close(true);
+};
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+/**
+* 입력창 입력 시
+* @param  : obj		   - [object]Edit
+* @param  : e		   - [string]KeyEventInfo
+* @return : N/A
+ */
+this.schulNm_onkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	// 엔터키 이벤트
+	if(e.keycode == "13"){
+		this.btnSearch_onclick();
+	}
+};
+
+/**
+* 검색 버튼 클릭 시
+* @param  : obj		   - [object]Button
+* @param  : e		   - [string]ClickEventInfo
+* @return : N/A
+ */
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSearchList();
+};
+
+/**
+ * 그리드 셀 더블 클릭 시
+* @param  : obj		   - [object]Grid
+* @param  : e		   - [string]GridClickEventInfo
+* @return : N/A
+ */
+this.grdMain_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.fnChoice();
+};
+
+/**
+* 확인 버튼 클릭 시
+* @param  : obj		   - [object]Button
+* @param  : e		   - [string]ClickEventInfo
+* @return : N/A
+ */
+this.btnSelect_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnChoice();
+};
+
+/**
+* 닫기 버튼 클릭 시
+* @param  : obj		   - [object]Button
+* @param  : e		   - [string]ClickEventInfo
+* @return : N/A
+ */
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close(false);
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtSchulNm" propid="value" datasetid="dsSearch" columnid="shlNm"/>
+      <BindItem id="item1" compid="divSearch.form.cboCddc" propid="value" datasetid="dsSearch" columnid="cddcScCd"/>
+    </Bind>
+  </Form>
+</FDL>

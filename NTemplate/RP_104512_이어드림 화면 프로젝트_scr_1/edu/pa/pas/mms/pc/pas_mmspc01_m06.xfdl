@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="pas_mmspc01_m06" width="1200" height="660" titletext="통합검색_교육소식마당">
+    <Layouts>
+      <Layout height="660" width="1200" screenid="ScreenDeskTopP">
+        <Div id="divEduNews" taborder="0" left="0" top="90" height="468" width="1200" initvalueid="ivDivAccessibilityOff">
+          <Layouts>
+            <Layout>
+              <Static id="staEduNewsCnt" taborder="0" text="교육소식마당&lt;fc v='#2b72de'&gt; 0&lt;/fc&gt;건" left="0" top="0" width="281" height="58" cssclass="font24B" usedecorate="true" initvalueid="ivStcAccessibilityOn"/>
+              <Static id="sta00" taborder="1" left="0" top="74" width="250" height="10" border="1px solid #222222, 0px none, 0px none, 0px none" initvalueid="ivStcAccessibilityOff"/>
+              <Div id="div01" taborder="2" left="300" top="74" right="0" bottom="0" initvalueid="ivDivAccessibilityOff">
+                <Layouts>
+                  <Layout>
+                    <Grid id="grdMain" taborder="0" left="0" top="0" height="351" binddataset="dsEduNewsList" right="0" cssclass="grd_notice" selecttype="cell" scrollbartype="none none" scrolltype="none" initvalueid="ivGrdAccessibilityOn" formatid="default" fillareatype="none" border="1px solid #eaeaea,0px none,0px none" oncellclick="divEduNews_div01_grdMain_oncellclick" nodatatext="조회된 데이터가 없습니다." accessibilitylabel="교육소식마당 조회 목록">
+                      <Formats>
+                        <Format id="default">
+                          <Columns>
+                            <Column size="774"/>
+                            <Column size="125"/>
+                          </Columns>
+                          <Rows>
+                            <Row size="70"/>
+                          </Rows>
+                          <Band id="body">
+                            <Cell text="bind:eduNewsTitlNm" textAlign="left" cursor="pointer" padding="0px 0px 0px 30px" expr="expr:comp.parent.parent.parent.parent.parent.fnDisplayText(comp,0,currow,eduNewsTitlNm)" displaytype="decoratetext"/>
+                            <Cell col="1" text="bind:regDt" displaytype="date" calendardateformat="yyyy.MM.dd." cssclass="cell_bgGray02"/>
+                          </Band>
+                        </Format>
+                        <Format id="mobile">
+                          <Columns>
+                            <Column size="185"/>
+                            <Column size="399"/>
+                          </Columns>
+                          <Rows>
+                            <Row size="82"/>
+                            <Row size="56"/>
+                          </Rows>
+                          <Band id="body">
+                            <Cell colspan="2" border="0px none" text="bind:eduNewsTitlNm" textAlign="left" padding="0px 20px 0px 10px" displaytype="decoratetext" expr="expr:comp.parent.parent.parent.parent.parent.fnDisplayText(comp,0,currow,eduNewsTitlNm)"/>
+                            <Cell row="1" colspan="2" cssclass="cell_bgGray_M02" displaytype="date" text="bind:regDt" border="2px solid #eaeaea,0px none" padding="0px 0px 0px 10px" textAlign="left" verticalAlign="top" letterSpacing="-1px" calendardateformat="yyyy.MM.dd." calendareditformat="yyyy.MM.dd."/>
+                          </Band>
+                        </Format>
+                      </Formats>
+                    </Grid>
+                  </Layout>
+                  <Layout name="Layout0">
+                    <Grid id="grdMain" left="0" top="0" height="691" right="0" formatid="mobile" cssclass="grd_notice_M" autofittype="col" border="0px solid #eaeaea,0px none,0px none"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+            <Layout name="Layout0">
+              <Static id="staEduNewsCnt" cssclass="font32B" left="0" top="0" width="281" height="58" taborder="0"/>
+              <Static id="sta00" border="2px solid #222222, 0px none, 0px none, 0px none" right="0" left="0" top="103" height="10" taborder="2"/>
+              <Div id="div01" left="0" top="105" right="0" bottom="0" taborder="1"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divPaging" taborder="1" left="0" top="divEduNews:37" height="30" right="0" url="comm::comp_paginator2.xfdl" initvalueid="ivDivAccessibilityOn" accessibilitylabel="페이징 그룹박스"/>
+      </Layout>
+      <Layout name="Layout0" screenid="mobileP,tabletP" width="640" height="1125" mobileorientation="portrait" type="default">
+        <Div id="divEduNews" text="" right="20" left="20" top="87" height="842" taborder="0"/>
+        <Div id="divPaging" height="120" left="0" top="divEduNews:43" right="0" formscrolltype="none" taborder="1"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsEduNewsList" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="eduNewsId" type="STRING" size="256"/>
+          <Column id="eduNewsTitlNm" type="STRING" size="256"/>
+          <Column id="eduNewsCn" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="eduNewsInqCnt" type="STRING" size="256"/>
+          <Column id="imptYn" type="STRING" size="256"/>
+          <Column id="editUseYn" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="rgtrDptNm" type="STRING" size="256"/>
+          <Column id="mdfrNm" type="STRING" size="256"/>
+          <Column id="mdfrDptNm" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsEduNewsListTemp" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="eduNewsId" type="STRING" size="256"/>
+          <Column id="eduNewsTitlNm" type="STRING" size="256"/>
+          <Column id="eduNewsCn" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="eduNewsInqCnt" type="STRING" size="256"/>
+          <Column id="imptYn" type="STRING" size="256"/>
+          <Column id="editUseYn" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="rgtrDptNm" type="STRING" size="256"/>
+          <Column id="mdfrNm" type="STRING" size="256"/>
+          <Column id="mdfrDptNm" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*   대국민 - 통합검색-교육소식 검색
+*  @MenuPath    pa_pas_mms_pc
+*  @FileName 	pas_mmspc01_m06.xfdl
+*  @Creator 	최영아
+*  @CreateDate 	2022.11.15
+*  @Desction    통합검색 조회
+*
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2022.11.15     	최영아 	        최초 생성 
+*******************************************************************************
+*/
+
+//0501 CF 일괄등록
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.divEduNews_div01_grdMain_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	// 클릭한 셀을 구한다
+	var nRow = e.row;
+	var nCell = e.cell;
+	
+	if(nCell == 0){ // 제목 클릭시 상세페이지로 이동
+	
+		var objDs = obj.getBindDataset();
+		var seduNewsId = objDs.getColumn(nRow,"eduNewsId");
+		var params = {"eduNewsId":seduNewsId
+			};
+			
+		this.smfSetWorkPage("pa_pas_mms_cn::pas_mmscn02_m02.xfdl", params);
+	}
+};
+
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.initForm = function(){
+	//데이터셋 세팅
+	if(this.smfIsMobile()){
+		this.dsEduNewsListTemp.copyData(this.parent.parent.dsEduNewsListTemp);
+		this.smfDataAppend(this, this.divEduNews.form.div01.form.grdMain, this.dsEduNewsListTemp);
+		this.smfResetScroll(this.divEduNews.form.div01.form);
+	}else {
+		this.dsEduNewsList.copyData(this.parent.parent.dsEduNewsList);
+	}
+
+	//조회 결과 카운트
+	var eduNewsListCnt = this.parent.parent.dsCount.getColumn(0,"ntn_eduNews");
+	
+	//5. 교육소식
+	this.divEduNews.form.staEduNewsCnt.set_text("교육소식 <fc v='#2b72de'>" + eduNewsListCnt + "</fc>건");
+
+	var vGrid = this.divEduNews.form.div01.form.grdMain;
+	var vDsPageInfo = this.parent.parent.dsPageInfo;
+	var vFunction = this.parent.parent.fnSearch;
+	
+	if(vDsPageInfo.getColumn(0, "pageIndex") == 1 && this.dsEduNewsList.getRowCount() > 0){
+		this.divPaging.form.fnInit(vGrid, vDsPageInfo, null, vFunction, this.parent.parent);
+	}
+
+	// 총 검색결과와 현재 검색 결과 수가 일치할 경우 [더보기]버튼 숨김 
+	if(this.smfIsMobile()){
+		if(this.dsEduNewsList.getRowCount() == eduNewsListCnt){	
+			this.divPaging.set_visible(false);
+		}
+	}else{
+		//검색 결과가 없는 경우 페이징 숨김
+		if(this.dsEduNewsList.getRowCount() == 0){	
+			this.divPaging.set_visible(false);
+		}
+	}
+	
+	this.smfResetScroll(this);
+};
+
+
+this.fnDisplayText = function(obj,nCell,nRow,sLongText)
+{
+	var sFont = 'normal 400 18px/normal "Noto Sans KR","NotoSansKR-Regular"';
+	//var objFont = new nexacro._PaddingObject(sFont);
+	var nPadding = 30;
+
+	if(this.smfIsMobile())
+	{
+		sFont = 'normal 400 28px/normal "Noto Sans KR","NotoSansKR-Regular"';
+		nPadding = 90;
+	}
+
+	return this.smfDispLongTextGridDecorate(obj,nCell,nRow,sLongText,sFont,nPadding);
+};
+]]></Script>
+  </Form>
+</FDL>

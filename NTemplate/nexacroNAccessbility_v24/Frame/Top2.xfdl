@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Top" width="1280" height="120" titletext="상단영역" onload="Top_onload">
+    <Layouts>
+      <Layout height="120" mobileorientation="landscape" width="1280">
+        <Button id="btnLinkCompany" taborder="0" left="0" top="-10" width="226" accessibilitylabel="넥사크로 접근성지원시스템 로고" height="68" onclick="btnLinkCompany_onclick" text="나이스대국민서비스" accessibilitydescription="메인으로 가기 링크" accessibilityrole="heading"/>
+        <Div id="divSkip" taborder="1" left="180" top="0" height="43" background="#10397c" onsetfocus="divSkip_onsetfocus" onkillfocus="divSkip_onkillfocus" accessibilityenable="false" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnGoBody" taborder="0" text="본문 바로가기" left="8" top="8" width="90" height="25" accessibilityenable="true" onclick="divSkip_btnGoBody_onclick"/>
+              <Button id="btnGoHelp" taborder="1" text="웹접근성안내 바로가기" left="106" top="8" width="158" height="25" accessibilityenable="true" onclick="divSkip_btnGoHelp_onclick"/>
+            </Layout>
+            <Layout name="Layout0"/>
+          </Layouts>
+        </Div>
+        <Div id="divTopBtn" taborder="2" text="여기도 안 읽음" left="288" top="4" width="621" height="66" accessibilityenable="false"/>
+        <Button id="btnMenu" taborder="3" text="전체메뉴" left="968" top="7" width="62" height="48" onclick="btnMenu_onclick"/>
+      </Layout>
+      <Layout height="768" mobileorientation="Landscape" name="Layout0" type="default" width="480" screenid="Mobile_screen">
+        <Div id="divSkip" visible="false"/>
+        <Div id="divTopBtn" visible="false" left="238" top="4" width="82" height="46"/>
+        <Button id="btnMenu" top="7" width="62" height="48" right="0" text="전체메뉴"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvFirstGap 		= 0;
+this.fvBtnGap 			= 10;
+this.fvBtnHeight 		= 50;
+this.fvTopBtnPrefix 	= "TOP_";
+
+
+this.Top_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.divSkip.set_height(0);
+	
+	if (system.navigatorname == "nexacro")
+	{
+		return;
+	}	
+	
+	if (!nexacro._isMobile())
+	{
+		this.fnSetTopMenu();	
+	}
+};
+
+this.divSkip_onkillfocus = function(obj:nexacro.Div,e:nexacro.KillFocusEventInfo)
+{
+	this.divSkip.set_height(0);
+	var elem = this.divSkip.getElement();
+	if(elem)
+	{
+		elem.setElementZIndex("");
+	}	
+};
+
+this.divSkip_onsetfocus = function(obj:nexacro.Div,e:nexacro.SetFocusEventInfo)
+{
+	this.divSkip.set_height(43);
+
+	//RP 95735
+	var elem = this.divSkip.getElement();
+	if(elem)
+	{
+		elem.setElementZIndex(1);
+	}	
+};
+
+this.divSkip_btnGoBody_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//RP 95883
+	var divFirstFocus = nexacroBase.divContents.form.getFirstAccessibilityComponent(true);
+	trace(divFirstFocus.name);
+	
+    divFirstFocus.setFocus();
+};
+
+this.divSkip_btnGoHelp_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+//	alert("웹접근성안내팝업");
+};
+
+this.fnSetTopMenu = function ()
+{
+	for (var i = 0; i < this.dsMenu.getRowCount(); i++) 
+	{
+		var sMenuId = this.dsMenu.getColumn(i, "MENUID");
+		var sMenuName = this.dsMenu.getColumn(i, "MENUNM");
+		
+		this.fnCreateTopMenu(sMenuId, sMenuName, i);
+	}
+};
+
+/**
+ * @description Top menu creation
+ */
+this.fnCreateTopMenu = function (sTopId, sName, index)
+{
+	// Creating page button
+	var objBtn = new Button();
+	objBtn.init(this.fvTopBtnPrefix + sTopId, this.fnGetLeft(sTopId), 0, 130, this.fvBtnHeight, null, null);
+	this.divTopBtn.form.addChild(objBtn.name, objBtn);
+
+	objBtn.set_text(sName);
+	objBtn.menuid = sTopId;
+	objBtn.show();
+	
+	// 버튼 width 셋팅
+	objBtn.set_fittocontents("width");
+	var nWidth = objBtn.getOffsetWidth();
+	objBtn.set_fittocontents("none");
+	objBtn.set_width(nWidth + 20);
+	
+	objBtn.setEventHandler("onclick", this.btnTopMenu_onclick, this);
+	
+};
+
+this.btnTopMenu_onclick = function(obj, e)
+{
+	var sid = obj.name.split("_")[1];
+
+	var sUrl  = this.dsMenu.lookupAs( "MENUID", sid, "MENUURL");
+	var sName = this.dsMenu.lookupAs( "MENUID", sid, "MENUNM");
+	
+	nexacro.getApplication().mainframe.set_titletext(sName + "|접근성지원시스템");
+	
+	nexacroMain.set_url(sUrl);
+	this.btnLinkCompany.setFocus();
+}
+
+this.fnGetLeft = function (sTopId)
+{
+	var nCurRow = this.dsMenu.findRow("MENUID", sTopId);
+	if (nCurRow == 0) return this.fvFirstGap;
+
+	var objPrevTab = this.fnFindObj(this.fvTopBtnPrefix + this.dsMenu.getColumn(nCurRow - 1, "MENUID"));
+	return objPrevTab.getOffsetRight() + this.fvBtnGap;
+};
+
+this.fnFindObj = function (sId)
+{
+	return this.divTopBtn.form.components[sId];
+};
+
+this.btnLinkCompany_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{	
+	nexacroMain.set_url("Frame::Main.xfdl");
+};
+
+this.btnMenu_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (system.navigatorname == "nexacro")
+	{
+		return;
+	}
+
+	if (nexacro._isMobile())
+	{
+		nexacroBase.fnMenuClick(true);
+	}
+	else
+	{
+		this.fn_openPopup("test","Etc::sample04_pop1.xfdl","","","");
+	}
+};
+
+this.fn_openPopup = function(sPopupId, sUrl, oArg, sOption, sPopupCallback)
+{
+	var popid = parseInt(Math.random()*10000);
+	if(sPopupId == null || sPopupId == "" ) sPopupId = "p_"+popid;
+	if(oArg == null || oArg == "" )     oArg = {};	
+	
+	//----------------------------------------------------------------
+	// 팝업 Default 설정 값
+	//----------------------------------------------------------------
+	var popupType = "modal";		
+	var nLeft   = -1;
+	var nTop    = -1;
+	var nWidth  = 0;
+	var nHeight = 0;
+	
+	var bShowTitle  = false;
+	var bAutoSize   = true;
+	var bResizable  = false;
+	var sAlign = "center middle";
+	var sModalSize = "";	// "", full, center 
+	var sTitleText  = "";
+	var sPopupEvent = "";
+	
+	for(var key in sOption)
+	{	
+		switch (key) 
+		{
+			case "top":				
+				nTop = parseInt(sOption[key]);
+				break;
+			case "left":
+				nLeft = parseInt(sOption[key]);
+				break;
+			case "width":
+				nWidth = parseInt(sOption[key]);
+				break;
+			case "height":
+				nHeight = parseInt(sOption[key]);
+				break;
+			case "title":
+			    if( sOption[key] == "false" ) bShowTitle = false;
+				break;		
+			case "titletext":
+				sTitleText = sOption[key];
+				break;			
+			case "popupType":
+				popupType = sOption[key];
+				break;
+			case "autosize":
+				bAutoSize = sOption[key];
+				break;
+			case "popupEvent":			// 팝업 이벤트 호출
+				sPopupEvent = sOption[key];
+				break;
+		}			
+	}	
+
+	popupType = popupType.toLowerCase();
+	
+	if (nWidth > 0 || nHeight > 0) 
+	{
+		bAutoSize = false;
+	}
+	
+	if(nTop > 0 || nLeft > 0 || nWidth > 0 || nHeight > 0)
+	{
+		sAlign = null;
+	}
+
+	if(bShowTitle == true) nHeight += 50;	
+	
+	if (nLeft == -1 && nTop == -1) 	
+	{
+		if ( nWidth == -1 && nHeight == -1) 	//l,t,w,h 모두 기입하지 않으면 full
+		{
+			sModalSize = "full";
+		}
+		else 
+		{
+			sModalSize = "center";
+		}
+	}
+
+	var newChild = new ChildFrame(sPopupId, nLeft, nTop, nWidth, nHeight, null, null, sUrl);
+	
+	newChild._modaltype = sModalSize;
+	newChild.set_showtitlebar(bShowTitle);   // <---- 타이틀바/statusbar는 접근성 미지원임, 타이틀용으로 화면단에서 제작필수
+	newChild.set_autosize(bAutoSize);
+	newChild.set_resizable(bResizable);
+	newChild.set_titletext(sTitleText);
+	newChild.set_showstatusbar(false);   // <---- 타이틀바/statusbar는 접근성 미지원임, 타이틀용으로 화면단에서 제작필수
+	
+	if(sAlign != null) newChild.set_openalign(sAlign);
+			
+	//newChild.set_titlebarheight(50);
+
+	newChild.showModal(sPopupId, this.getOwnerFrame(), oArg, this, function(svcid, variant) {
+		if(sPopupCallback)	
+		{
+			var p_variant = this.gfn_isNull(this._variant) ? variant : this._variant;
+			this._variant = "";
+			
+			if(typeof sPopupCallback == "function" )
+			{
+				sPopupCallback.call(this, sPopupId, p_variant);
+			}
+			else if(typeof sPopupCallback == "string")
+			{
+				if(!this.gfn_isFunction(this[sPopupCallback]))return;
+				this[sPopupCallback].call(this, sPopupId, p_variant);
+			}
+		}
+	});
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsMenu">
+        <ColumnInfo>
+          <Column id="MENUID" type="STRING" size="256"/>
+          <Column id="MENUNM" type="STRING" size="256"/>
+          <Column id="MENUURL" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="MENUID">1</Col>
+            <Col id="MENUNM">기본</Col>
+            <Col id="MENUURL">Etc::sample01.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENUID">2</Col>
+            <Col id="MENUNM">그리드</Col>
+            <Col id="MENUURL">Etc::sample03_1.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENUID">3</Col>
+            <Col id="MENUNM"> 컴포넌트</Col>
+            <Col id="MENUURL">Etc::sample07.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENUNM">트랜잭션</Col>
+            <Col id="MENUURL">Etc::sample13.xfdl</Col>
+            <Col id="MENUID">4</Col>
+          </Row>
+          <Row>
+            <Col id="MENUNM">웹브라우저</Col>
+            <Col id="MENUID">5</Col>
+            <Col id="MENUURL">Etc::sample02.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENUNM">탭</Col>
+            <Col id="MENUID">6</Col>
+            <Col id="MENUURL">Etc::sample05.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="MENUNM">트리</Col>
+            <Col id="MENUID">7</Col>
+            <Col id="MENUURL">Etc::sample09.xfdl</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameHead" width="1340" height="130" titletext="divHead Form" onload="form_onload" onlayoutchanged="form_onlayoutchanged" ontimer="form_ontimer">
+    <Layouts>
+      <Layout height="130" width="1340" screenid="desktopScr">
+        <Static id="sta00_00" taborder="0" top="0" width="20" background="antiquewhite" left="0" bottom="0" text="20" textAlign="center" visible="false"/>
+        <Button id="btnHome" taborder="1" text="HOME" top="59" width="68" height="24" left="20" cssclass="btn_WF_Home" initvalueid="iv_Button" accessibilitylabel="메인으로 바로가기" onclick="btnHome_onclick"/>
+        <Static id="staNaviLine1" taborder="2" left="btnHome:0" top="59" width="27" height="24" accessibilityenable="false"/>
+        <Static id="staMenu1" taborder="3" left="staNaviLine1:0" top="59" width="59" height="24" fittocontents="width" wordWrap="none"/>
+        <Static id="staNaviLine2" taborder="4" left="staMenu1:0" top="59" width="27" height="24" cssclass="sta_WF_Navi" accessibilityenable="false"/>
+        <Static id="staMenu2" taborder="5" left="staNaviLine2:0" top="59" width="100" height="24" fittocontents="width" wordWrap="none"/>
+      </Layout>
+      <Layout height="130" mobileorientation="Landscape" name="tablet" type="default" width="800" screenid="tabletScr,desktopScr"/>
+      <Layout height="75" mobileorientation="Landscape" name="mobile" type="default" width="480" screenid="mobileScr,desktopScr">
+        <Button id="btnHome" top="36" left="20" width="68" height="24" cssclass="btn_WF_HomeS"/>
+        <Static id="staNaviLine1" left="btnHome:0" top="36" width="0" height="24" fittocontents="none"/>
+        <Static id="staNaviLine2" left="147" top="36" width="0" height="24" fittocontents="none"/>
+        <Static id="staMenu1" top="36" left="staNaviLine1:0" width="0" height="0" fittocontents="none"/>
+        <Static id="staMenu2" top="36" left="staNaviLine2:0" width="0" height="0" fittocontents="none"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  학부모소통시스템
+*  @MenuPath    공통
+*  @FileName 	frameHead.xfdl
+*  @Creator 	tobesoft
+*  @CreateDate 	2025.03.17
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2025.03.17     	tobesoft 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "lib::scr_script.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fvShowHead = true;
+
+/***********************************************************************************************
+* FORM EVENT 영역(onload)
+/***********************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//trace("Frame Head onload >>>>>>>");
+};
+
+//Form의 onlayoutchanged이벤트
+this.form_onlayoutchanged = function(obj,e)
+{
+	obj.setTimer(900, 55);
+};
+
+//MLM 레이아웃 변경후 설정
+this.fnAfter_onlayoutchanged = function(sLayoutId)
+{
+	//trace("onlayoutchanged this.fvShowHead === "+this.fvShowHead);
+	var nFormHeight = this.getLayoutInfo(sLayoutId,"height");
+	
+	if ( this.fvShowHead == false ) {
+		nFormHeight = 0;
+	}
+
+	this.getOwnerFrame().form.divAll.form.fv_HeadFormHeight = nFormHeight;
+	this.getOwnerFrame().form.divAll.form.divHead.setOffsetHeight(nFormHeight);
+	
+	this.getOwnerFrame().form.divAll.form.resetScroll();
+};
+
+//Form의 ontimer이벤트
+this.form_ontimer = function(obj,e)
+{
+	if ( e.timerid == 900 ) {
+		obj.killTimer(e.timerid);
+		this.fnAfter_onlayoutchanged(this.getCurrentLayoutID());
+	}
+};
+
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/**
+@class fnSetTopMenu
+@description topmenu세팅
+@param N/A
+@return N/A
+*/ 
+this.fnRedrawMenuPath = function (sMenuId, bShowHead)
+{
+	//trace("======================================================================================");
+	//trace("sMenuId ::: " + sMenuId );
+	//trace("bShowHead ::: " + bShowHead );
+	//trace("======================================================================================");
+
+	if ( sMenuId == "MAIN") {
+		this.fnSetHeadHight(false);
+		return;
+	}
+	
+	//시스템 메뉴 가져오기
+	this.dsMenu.copyData(this.getOwnerFrame().form.divTop.form.dsMenu);
+
+	var nMenuRow  = this.dsMenu.findRow("menuId", sMenuId);
+	var sMenuName = this.dsMenu.getColumn( nMenuRow, "menuName");
+	var sMenuUrl  = this.dsMenu.getColumn(nMenuRow, "menuUrl");	
+	var sParentMenuId = this.dsMenu.getColumn(nMenuRow, "parentMenuId");
+	var sShowMenu = this.dsMenu.getColumn(nMenuRow, "isShow");	//Y,N
+	
+	//숨김메뉴일때는 기존 메뉴상태 유지를 위해 Return
+	if("B001" == sMenuId || "B002" == sMenuId || "B003" == sMenuId || "B004" == sMenuId || "B005" == sMenuId){
+		bShowHead = false;
+	}else{
+		if ( sShowMenu == "N" ) {
+			return;
+		}
+	}
+	
+	this.staNaviLine1.set_visible(false);
+	this.staMenu1.set_visible(false);
+
+	this.staNaviLine2.set_visible(false);
+	this.staMenu2.set_visible(false);
+
+	
+	//var nLeft = 0;
+	if ( this.smfIsNull(sParentMenuId) ) {
+		//1단계 메뉴 생성
+		this.staMenu1.set_cssclass("sta_WF_NaviTxtS");
+		var objBtn = this.fnCreateMenuPathStatic(sMenuId, sMenuName, sMenuUrl, 1);
+		
+	} else {
+		//1단계 메뉴 생성
+		this.staMenu1.set_cssclass("sta_WF_NaviTxt");
+		nMenuRow = this.dsMenu.findRow("menuId", sParentMenuId);
+		var sParentMenuName = this.dsMenu.getColumn( nMenuRow, "menuName");
+		var sParentMenuUrl  = this.dsMenu.getColumn( nMenuRow, "menuUrl");
+		this.fnCreateMenuPathStatic(sParentMenuId, sParentMenuName, sParentMenuUrl, 1);
+		//2단계 메뉴 생성
+		this.fnCreateMenuPathStatic(sMenuId, sMenuName, sMenuUrl, 2);
+	}
+	
+
+	
+	//Form Head적용
+	this.fnSetHeadHight(bShowHead);
+};
+
+this.fnSetHeadHight = function (bShowHead)
+{
+	//Form Head적용
+	this.fvShowHead = bShowHead;
+
+	if ( this.fvShowHead == false ) {
+		this.parent.setOffsetHeight(0);
+		this.btnHome.set_accessibilityenable(false);
+		this.staMenu1.set_accessibilityenable(false);
+		this.staMenu2.set_accessibilityenable(false);
+	} else {
+		var sCurrLayout = this.getCurrentLayoutID();
+		var nFormHeight = this.getLayoutInfo(sCurrLayout,"height");
+		this.parent.setOffsetHeight(nFormHeight);
+		this.btnHome.set_accessibilityenable(true);
+		this.staMenu1.set_accessibilityenable(true);
+		this.staMenu2.set_accessibilityenable(true);		
+	}
+	
+	this.resetScroll();
+	this.parent.parent.resetScroll();
+};
+
+/**
+@class fnCreateTopMenu
+@description Top menu creation
+@param  필수 {String} sMenuId - 버튼아이디
+		필수 {String} sMenuName - 버튼 text
+		필수 {String} sMenuUrl - 버튼 Url(없는 경우는 "")
+		필수 {Number} nLevel - 버튼 위치(1, 2)
+@return N/A
+*/
+this.fnCreateMenuPathStatic = function (sMenuId, sMenuName, sMenuUrl, nLevel)
+{
+	var objBtn = "";
+	if ( nLevel == 1 ) {
+		objBtn = this.staMenu1;
+		this.staNaviLine1.set_visible(true);
+	} 
+	else if ( nLevel == 2 ) {
+		objBtn = this.staMenu2;
+		this.staNaviLine2.set_visible(true);
+	} 
+	else {
+		return;
+	}
+	
+	objBtn.set_text(sMenuName);
+	
+	objBtn.umenuid   = sMenuId;
+	objBtn.umenuname = sMenuName;
+	objBtn.umenuurl  = sMenuUrl;
+	objBtn.set_visible(true);
+	
+	return objBtn;
+};
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+this.btnHome_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 메인화면을 호출한다.
+	var sUrl   = "frame::scr/frameWorkMain.xfdl";
+	var params = {menu : "MAIN",_url:sUrl};
+	this.smfSetWorkPage(sUrl, params, null, "HOME");
+};]]></Script>
+    <Objects>
+      <Dataset id="dsMenu">
+        <ColumnInfo>
+          <Column id="lvl" type="INT" size="256" description="레벨 : 0부터 시작"/>
+          <Column id="parentMenuId" type="STRING" size="256" description="부모메뉴아이디"/>
+          <Column id="menuId" type="STRING" size="256" description="메뉴아이디"/>
+          <Column id="menuName" type="STRING" size="256" description="메뉴명"/>
+          <Column id="menuUrl" type="STRING" size="256" description="메뉴URL"/>
+          <Column id="useGrade" type="STRING" size="256" description="사용자평가 사용여부(&quot;Y&quot;:사용,&quot;N&quot;:미사용(default))"/>
+          <Column id="isShow" type="STRING" size="256" description="메뉴에 표시여부(&quot;Y&quot;:표시(default),&quot;N&quot;:미표시)"/>
+          <Column id="isNeedLogin" type="STRING" size="256" description="로그인이 필요한지 여부(&quot;Y&quot;:필요,&quot;N&quot;:불필요(default))"/>
+          <Column id="formHeight" type="INT" size="256" description="연결화면 높이(default:950)"/>
+          <Column id="useHead" type="STRING" size="256" description="Work Head영역에 표시여부(&quot;Y&quot;:표시(default),&quot;N&quot;:미표시)"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <InitValue>
+      <Static id="staNaviLine1" visible="false" cssclass="sta_WF_Navi"/>
+      <Static id="staNaviLine2" visible="false"/>
+      <Static id="staMenu1" cssclass="sta_WF_NaviTxt"/>
+      <Static id="staMenu2" cssclass="sta_WF_NaviTxtS"/>
+    </InitValue>
+  </Form>
+</FDL>

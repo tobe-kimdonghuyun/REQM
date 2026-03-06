@@ -1,0 +1,1016 @@
+/* ===== ui.css (fixed, overwrite-safe) ===== */
+
+/* ---------- 0) Variables & Resets ---------- */
+:root {
+    --app-gap: 10px;
+    --header-h: 40px;
+    /* adjust in HTML/JS if your header is taller */
+    --report-width: 880px;
+    /* fallback */
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    height: 100%
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, Noto Sans, Arial, sans-serif;
+}
+
+/* ---------- 1) App Shell (header / body / footer) ---------- */
+.app {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    row-gap: var(--app-gap, 10px);
+}
+
+.app-header {
+    background: var(--surface-1);
+    border-bottom: 1px solid var(--border-strong);
+}
+
+.app-footer {
+    background: var(--surface-1);
+    /* match header */
+    border-top: 1px solid var(--border-strong);
+    /* match header */
+}
+
+.header-inner,
+.footer-inner,
+.project-wrap,
+.projects-wrap {
+    max-width: var(--container-xl, var(--report-width, 880px));
+    margin: 0 auto;
+}
+
+/* unified paddings for header/footer */
+.header-inner,
+.footer-inner {
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+
+/* title + tabs (header) */
+.header-inner .title {
+    font-weight: 700;
+    font-size: 1rem
+}
+
+.header-inner .tabs {
+    margin-left: auto;
+    display: flex;
+    gap: .5rem
+}
+
+/* Footer content look (match header, remove inner top border) */
+.footer-inner {
+    position: relative;
+    justify-content: flex-end;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--text-muted, #9fb3c8);
+    text-align: right;
+    /* removed border + margins that caused overlap */
+    margin: 0 auto;
+}
+
+.footer-inner::before {
+    content: none
+}
+
+.footer-inner p {
+    margin: 0 0 4px
+}
+
+.footer-inner .generated {
+    opacity: .8
+}
+
+.footer-inner a {
+    color: var(--link);
+    text-decoration: none
+}
+
+.footer-inner a:hover {
+    text-decoration: underline
+}
+
+/* Pages that are NOT the 3‑row .app grid can still push footer down */
+.page {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column
+}
+
+.page .main {
+    flex: 1
+}
+
+.page .app-footer {
+    margin-top: auto
+}
+
+.app-body {
+    min-height: 0
+}
+
+/* ---------- 2) Common UI ---------- */
+.chip {
+    padding: .35rem .7rem;
+    border: 1px solid var(--chip-border);
+    border-radius: 999px;
+    background: var(--chip-bg);
+    color: var(--text);
+    font-size: .82rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.chip:hover {
+    outline: 2px solid rgba(56, 189, 248, .35)
+}
+
+.chip.active {
+    outline: 2px solid var(--chip-active)
+}
+
+.badge {
+    padding: .2rem .45rem;
+    border: 1px solid var(--badge-count-border);
+    border-radius: 999px;
+    font-size: .75rem;
+    text-transform: lowercase;
+    text-align: center;
+}
+
+.filters {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filters .label {
+    opacity: .8;
+    font-size: .8rem
+}
+
+.hidden {
+    display: none !important
+}
+
+/* ---------- 3) All Projects (index) ---------- */
+.projects-wrap {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.project-card {
+    border: 1px solid var(--line2);
+    border-radius: 14px;
+    padding: 14px;
+    background: var(--surface-3);
+    color: inherit;
+    text-decoration: none;
+    display: block;
+}
+
+.project-card:hover {
+    outline: 1px solid var(--chip-active)
+}
+
+.project-card .name {
+    font-weight: 600
+}
+
+.project-card .badges {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    font-size: .82rem;
+    color: var(--muted);
+    align-items: center;
+}
+
+.project-card .chart {
+    margin-top: 10px
+}
+
+/* ---------- 4) Project Page Layout ---------- */
+.project-wrap {
+    padding: 12px 16px
+}
+
+/* Key fix:
+   - Remove fixed viewport height that caused footer overlap
+   - Use flexible minmax rows to keep 40/60 feel without forcing 100vh
+*/
+.project-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 3fr 2fr;
+    /* left:list, right:chart/overview */
+    grid-template-rows: minmax(220px, 2fr) minmax(320px, 3fr);
+    /* top: summary+donut (≈40%), bottom: lists (≈60%) */
+    min-height: 0;
+    /* allow the middle row (1fr) to shrink properly */
+}
+
+.project-summary,
+.project-chart,
+.items-list,
+.overview {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: auto;
+}
+
+.project-summary {
+    grid-row: 1/2;
+    grid-column: 1/2;
+    padding: 12px
+}
+
+.project-chart {
+    grid-row: 1/2;
+    grid-column: 2/3;
+    padding: 12px
+}
+
+.items-list {
+    grid-row: 2/3;
+    grid-column: 1/2;
+    padding: 0;
+    display: flex;
+    flex-direction: column
+}
+
+.overview {
+    grid-row: 2/3;
+    grid-column: 2/3;
+    padding: 12px
+}
+
+.items-list .section-title {
+    position: sticky;
+    top: calc(var(--header-h, 36px) + var(--app-gap, 10px));
+    /* match header height + grid gap */
+    background: var(--panel);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--line);
+    font-weight: 600;
+    z-index: 4;
+}
+
+/* ---------- 5) Items (rows) ---------- */
+.item-row {
+    display: grid;
+    grid-template-columns: 120px 120px 1fr 120px 1fr;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--c-1f2a3b);
+    align-items: center;
+    font-size: .92rem;
+}
+
+.item-row:hover {
+    background: var(--row-hover)
+}
+
+.item-row.selected {
+    background: var(--sel);
+    outline: 2px solid var(--sel-outline);
+    outline-offset: -2px;
+}
+
+.item-row .st {
+    font-weight: 700
+}
+
+.item-row .sev {
+    opacity: .95
+}
+
+.item-row .msg a {
+    color: var(--link);
+    text-decoration: none
+}
+
+.item-row .msg a:hover {
+    text-decoration: underline
+}
+
+.item-row .loc {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .82rem;
+    color: var(--muted);
+}
+
+/* ---------- 6) Status  colors ---------- */
+.st.failed {
+    background: var(--status-failed-bg);
+    border-color: var(--status-failed-border);
+    color: var(--status-failed-text)
+}
+
+.st.broken {
+    background: var(--status-broken-bg);
+    border-color: var(--status-broken-border);
+    color: var(--status-broken-text)
+}
+
+.st.passed,
+.sev.pass {
+    background: var(--status-passed-bg);
+    border-color: var(--status-passed-border);
+    color: var(--status-passed-text)
+}
+
+.st.skipped,
+.sev.skip {
+    background: var(--status-skipped-bg);
+    border-color: var(--status-skipped-border);
+    color: var(--muted)
+}
+
+.sev.critical {
+    background: var(--status-failed-bg);
+    border-color: var(--c-ef4444);
+    color: var(--status-failed-text)
+}
+
+.sev.error,
+.sev.fail {
+    background: var(--sev-error-bg);
+    border-color: var(--sev-error-border);
+    color: var(--status-failed-text)
+}
+
+.sev.warn {
+    background: var(--sev-warn-bg);
+    border-color: var(--sev-warn-border);
+    color: var(--status-broken-text)
+}
+
+.sev.info,
+.sev.unknown {
+    background: var(--tag-owner-bg);
+    border-color: var(--sel-outline);
+    color: var(--sev-info-text)
+}
+
+/* ---------- 7) Project Summary (KV + Information) ---------- */
+.kv-overview .box {
+    margin-bottom: 16px;
+    line-height: 1.9;
+    font-size: .96rem
+}
+
+.subtle,
+.info-head {
+    font-weight: 700;
+    letter-spacing: .2px;
+    opacity: .9
+}
+
+.project-summary .info-head {
+    margin: 14px 0 8px;
+    font-weight: 400;
+    font-size: .96rem;
+    line-height: 1.9;
+    opacity: 1;
+}
+
+.summary-info {
+    max-width: 90%;
+    margin: 0 auto
+}
+
+.summary-sections {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px
+}
+
+.summary-card {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--panel);
+    overflow: hidden;
+}
+
+.summary-card .section-head {
+    padding: 8px 10px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface-2);
+}
+
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed
+}
+
+.summary-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    font-weight: 600;
+    padding: .5rem .6rem;
+    color: var(--muted);
+}
+
+.summary-table tbody th {
+    width: 220px;
+    color: var(--muted);
+    text-align: left;
+    font-weight: 500;
+    border-bottom: 1px solid var(--line);
+    padding: .5rem .6rem;
+    vertical-align: top;
+    word-break: break-word;
+}
+
+.summary-table tbody td {
+    border-bottom: 1px solid var(--line);
+    padding: .5rem .6rem;
+    word-break: break-word;
+}
+
+.summary-table a {
+    color: var(--link);
+    text-decoration: none
+}
+
+.summary-table a:hover {
+    text-decoration: underline
+}
+
+/* JSON → HTML */
+.json-tree ul {
+    margin: 0;
+    padding-left: 1rem
+}
+
+.json-tree li {
+    list-style: none;
+    border-left: 1px dashed var(--json-branch);
+    padding-left: .5rem;
+    margin: .25rem 0
+}
+
+.json-tree .jt-key {
+    color: var(--json-key);
+    font-weight: 600
+}
+
+.json-tree .jt-primitive {
+    color: var(--json-primitive)
+}
+
+.json-tree details>summary {
+    cursor: pointer;
+    color: var(--link-2);
+    margin-left: .25rem
+}
+
+/* ---------- 8) Donut chart box ---------- */
+.project-chart #chart-host {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    min-height: 270px;
+    padding: 8px;
+}
+
+#donut {
+    width: 320px;
+    height: 240px;
+    max-width: 95%;
+    max-height: calc(100% - 16px)
+}
+
+/* ---------- 9) Tags (list + detail, “배지” 전용) ---------- */
+.detail-tags,
+.item-row .tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* 버튼이 아닌 배지 룩 */
+.tag-badge {
+    padding: .18rem .5rem;
+    font-size: .78rem;
+    line-height: 1;
+    border-radius: 999px;
+    border: 1px solid var(--chip-border);
+    background: var(--chip-bg);
+    color: var(--text);
+    cursor: default;
+    pointer-events: none;
+    user-select: text;
+    box-shadow: none;
+}
+
+.tag-badge:hover,
+.tag-badge:active,
+.tag-badge:focus {
+    outline: none;
+    box-shadow: none
+}
+
+/* (옵션) 접두어별 색 변형 */
+.tag-badge[data-prefix="owner"] {
+    background: var(--tag-owner-bg);
+    border-color: var(--tag-owner-border);
+    color: var(--tag-owner-text)
+}
+
+.tag-badge[data-prefix="type"] {
+    background: var(--tag-type-bg);
+    border-color: var(--tag-type-border);
+    color: var(--tag-type-text)
+}
+
+.tag-badge[data-prefix="area"] {
+    background: var(--tag-area-bg);
+    border-color: var(--tag-area-border);
+    color: var(--tag-area-text)
+}
+
+/* ---------- 10) File header (sticky + count + collapse) ---------- */
+.items-list .item-file-title.section-title {
+    position: sticky;
+    top: calc(var(--header-h, 36px) + var(--app-gap, 10px));
+    /* unified with Items section title */
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: var(--file-header-bg, var(--surface-1));
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    color: var(--file-header-text, var(--text));
+    font-weight: 600;
+    padding: 8px 12px;
+}
+
+.items-list .item-file-title .file-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px
+}
+
+.count-badge {
+    display: inline-block;
+    min-width: 1.6em;
+    padding: .1rem .5rem;
+    text-align: center;
+    border-radius: 999px;
+    border: 1px solid var(--badge-count-border);
+    background: var(--badge-count-bg);
+    font-size: .78rem;
+    color: var(--badge-count-text);
+}
+
+.collapse-btn {
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--muted);
+    border-radius: 6px;
+    padding: 0 .45rem;
+    height: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    font-size: .9rem;
+    transform: rotate(0);
+    transition: transform .15s ease;
+}
+
+.file-header.collapsed .collapse-btn {
+    transform: rotate(-90deg)
+}
+
+.item-row.row-collapsed {
+    display: none !important
+}
+
+/* ---------- 11) Responsive ---------- */
+@media (min-width:1440px) {
+    .projects-wrap {
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr))
+    }
+}
+
+@media (min-width:1200px) and (max-width:1439.98px) {
+
+    .header-inner,
+    .footer-inner,
+    .project-wrap,
+    .projects-wrap {
+        max-width: var(--container-lg, 1100px)
+    }
+
+    .projects-wrap {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr))
+    }
+
+    .project-grid {
+        grid-template-columns: 5fr 3fr;
+        grid-template-rows: minmax(220px, 2fr) minmax(320px, 3fr);
+        gap: 14px;
+    }
+
+    .item-row {
+        grid-template-columns: 120px 110px 1fr 120px .8fr
+    }
+}
+
+@media (min-width:1024px) and (max-width:1199.98px) {
+
+    .header-inner,
+    .footer-inner,
+    .project-wrap,
+    .projects-wrap {
+        max-width: 1100px
+    }
+
+    .projects-wrap {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))
+    }
+
+    .project-grid {
+        grid-template-columns: 3fr 2fr;
+        grid-template-rows: minmax(220px, 2fr) minmax(320px, 3fr);
+        gap: 12px;
+    }
+
+    .item-row {
+        grid-template-columns: 110px 110px 1fr 110px
+    }
+
+    .item-row .tags {
+        display: none
+    }
+}
+
+@media (min-width:768px) and (max-width:1023.98px) {
+
+    .header-inner,
+    .footer-inner,
+    .project-wrap,
+    .projects-wrap {
+        max-width: 92vw
+    }
+
+    .projects-wrap {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
+    }
+
+    .project-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+        gap: 12px;
+    }
+
+    .project-summary,
+    .project-chart,
+    .items-list,
+    .overview {
+        grid-column: 1/2;
+        grid-row: auto;
+    }
+
+    .item-row {
+        grid-template-columns: 120px 1fr 100px
+    }
+
+    .item-row .tags,
+    .item-row .sev {
+        display: none
+    }
+
+    .summary-info {
+        max-width: 100%
+    }
+}
+
+@media (max-width:767.98px) {
+
+    .header-inner,
+    .footer-inner,
+    .project-wrap,
+    .projects-wrap {
+        max-width: 96vw;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .projects-wrap {
+        grid-template-columns: 1fr
+    }
+
+    .project-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+        gap: 10px;
+    }
+
+    .item-row {
+        grid-template-columns: 1fr;
+        row-gap: 6px
+    }
+
+    .item-row .st,
+    .item-row .sev,
+    .item-row .loc {
+        order: 1;
+        display: inline-block;
+        margin-right: 6px;
+    }
+
+    .item-row .msg {
+        order: 0
+    }
+
+    .item-row .tags {
+        display: none
+    }
+
+    .summary-info {
+        max-width: 100%
+    }
+}
+
+/* ---------- 12) Detail overrides & normalization ---------- */
+.overview {
+    padding: 16px 18px
+}
+
+/* 기존 12px → 16~18px */
+.overview .filters {
+    margin-top: 12px;
+    gap: 10px
+}
+
+.overview #overview-sections {
+    margin-top: 12px
+}
+
+.overview .info-section {
+    margin-top: 10px
+}
+
+#detail-body {
+    display: grid;
+    row-gap: 14px;
+    font-size: .95rem
+}
+
+/* detail text size ↑ */
+#detail-body .kv {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+}
+
+#detail-body .kv>div {
+    line-height: 1.9
+}
+
+#detail-body .detail-tags {
+    margin-top: 2px
+}
+
+/* Normalize Project Summary & Detail */
+.project-summary,
+.overview {
+    font-size: .95rem;
+    line-height: 1.9
+}
+
+.project-summary .subtle,
+.project-summary .info-head,
+.overview .subtle,
+.overview .info-head,
+.overview .section-head {
+    font-weight: 500;
+    font-size: .96rem;
+    line-height: 1.9;
+    letter-spacing: .2px;
+    opacity: .95;
+    margin: 6px 0 10px;
+}
+
+.kv-overview .box,
+#detail-body .kv>div {
+    margin-bottom: 10px;
+    line-height: 1.9;
+    font-size: .96rem;
+}
+
+.project-summary .filters,
+.overview .filters {
+    margin-top: 12px;
+    gap: 10px
+}
+
+.overview #overview-sections {
+    margin-top: 12px
+}
+
+.overview .info-section {
+    margin-top: 10px
+}
+
+.project-summary .summary-table,
+.overview .summary-table {
+    font-size: .92rem
+}
+
+.project-summary .summary-table thead th,
+.overview .summary-table thead th {
+    padding: .5rem .6rem
+}
+
+.project-summary .summary-table tbody th,
+.overview .summary-table tbody th,
+.project-summary .summary-table tbody td,
+.overview .summary-table tbody td {
+    padding: .5rem .6rem
+}
+
+.overview .detail-tags,
+.item-row .tags {
+    gap: 6px
+}
+
+.overview .info-head {
+    font-weight: 500;
+    font-size: .96rem;
+    line-height: 1.9;
+    letter-spacing: .2px;
+    opacity: .95;
+    margin: 6px 0 10px;
+}
+
+.overview .summary-info {
+    max-width: 90%
+}
+
+.overview .summary-table.summary-table--compact {
+    font-size: .92rem
+}
+
+
+
+
+.app {
+    height: 100dvh;
+
+    min-height: auto;
+
+}
+
+.app-body {
+    min-height: 0;
+    overflow: hidden;
+
+}
+
+
+.project-wrap {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.project-grid {
+    flex: 1 1 auto;
+    min-height: 0;
+
+    overflow: auto;
+
+}
+
+
+.project-summary,
+.project-chart,
+.items-list,
+.overview {
+    overflow: auto;
+}
+
+
+.items-list .section-title,
+.items-list .item-file-title.section-title {
+    top: 0;
+
+}
+
+
+.app-footer {
+    background: var(--surface-1);
+    border-top: 1px solid var(--border-strong);
+}
+
+.footer-inner {
+    padding: 10px 16px;
+
+    line-height: 1.4;
+}
+
+
+:root {
+    --footer-lines: 4;
+    --footer-fs: 11px;
+    --footer-lh: 1.4;
+}
+
+
+.footer-inner {
+    font-size: var(--footer-fs);
+    line-height: var(--footer-lh);
+
+    min-height: calc(var(--footer-lines) * var(--footer-lh) * var(--footer-fs) + 20px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+
+
+
+:root {
+    --footer-lh: 1.25;
+
+}
+
+.footer-inner {
+    text-align: right;
+    align-items: flex-end;
+    gap: 2px;
+
+}
+
+.footer-inner p {
+    margin: 0 0 2px
+}
+
+/* Files table on project page */
+.items-list .files-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.items-list .files-table th,
+.items-list .files-table td {
+  padding: 4px 6px;
+  text-align: left;
+}
+
+.items-list .files-table td.num {
+  text-align: right;
+}
+
+.items-list .files-table thead {
+  border-bottom: 1px solid var(--border-subtle, #1f2933);
+}
+
+.items-list .files-table tbody tr:nth-child(odd) {
+  background: rgba(148, 163, 184, 0.05);
+}
+
+.chip-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}

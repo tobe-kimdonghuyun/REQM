@@ -1,0 +1,1876 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frameMain" width="1900" height="1382" titletext="frameMain" onload="form_onload" scrollbartype="auto auto" onsize="frameMain_onsize" scrollindicatorsize="10" nHeight="30">
+    <Layouts>
+      <Layout height="1382" mobileorientation="landscape" width="1900" screenid="ScreenDeskTop">
+        <Div id="divTop" taborder="0" left="0" top="0" async="false" tabstop="true" right="0" accessibilityrole="heading" url="frame::frameTop.xfdl" height="120" text="" initvalueid="ivDivAccessibilityOn" formscrollbartype="none none" formscrolltype="none" accessibilitylabel="Top영역"/>
+        <Div id="divNotice" taborder="1" left="0" top="divTop:0" async="false" tabstop="true" accessibilityenable="true" right="0" accessibilityrole="heading" formscrollbartype="none none" url="frame::commom/frameNotice.xfdl" height="0" text="" cssclass="div_WF_Banner" initvalueid="" accessibilitylabel="공지영역" visible="false" formscrolltype="none"/>
+        <Div id="divAll" taborder="2" left="0" top="divNotice:0" formscrollbartype="auto auto" text="" accessibilityenable="false" tabstop="true" accessibilityrole="none" formscrolltype="both" bottom="0" right="0" onvscroll="divAll_onvscroll" initvalueid="ivDivAccessibilityOff" onhscroll="divAll_onhscroll">
+          <Layouts>
+            <Layout>
+              <Div id="divHead" taborder="0" left="0" top="0" async="false" tabstop="true" accessibilityenable="true" right="0" accessibilitylabel="화면영역" accessibilityrole="heading" formscrollbartype="none none" height="0" url="frame::commom/frameHead.xfdl" text=""/>
+              <Div id="divWork" taborder="1" left="0" top="divHead:0" async="false" tabstop="true" right="0" formscrollbartype="none none" height="754" text="" initvalueid="ivDivAccessibilityOn" accessibilityrole="heading" accessibilitylabel="화면영역">
+                <Layouts>
+                  <Layout/>
+                  <Layout name="Layout0"/>
+                </Layouts>
+              </Div>
+              <Div id="divGrade" taborder="2" left="1" async="false" tabstop="true" accessibilityenable="true" right="0" accessibilitylabel="화면영역" accessibilityrole="heading" formscrollbartype="none none" top="divWork:0" height="130" url="frame::commom/frameGrade.xfdl"/>
+              <Div id="divBottom" taborder="3" left="0" async="false" tabstop="true" right="0" accessibilitylabel="Bottom영역" accessibilityrole="heading" formscrollbartype="none none" top="divGrade:0" url="frame::commom/frameBottom.xfdl" text="" height="280" initvalueid="ivDivAccessibilityOn"/>
+              <Static id="staBgImage" taborder="4" height="300" right="0" width="280" cssclass="sta_WF_Graphic07" initvalueid="ivStcAccessibilityOff" bottom="divBottom:-30"/>
+              <Div id="divQuickMenu" taborder="5" top="32" width="170" height="490" cssclass="div_WF_Quick" right="0" initvalueid="ivDivAccessibilityOff" visible="false"/>
+              <Static id="sta00" taborder="6" left="0" top="divWork:0" width="5" height="30" background="#dbfbfe" visible="false"/>
+            </Layout>
+            <Layout name="Layout0">
+              <Div id="divWork" left="0" top="divHead:0" right="0" height="654" taborder="0" minwidth="300" maxwidth="1920" formscrollbartype="autoindicator autoindicator"/>
+              <Div id="divGrade" taborder="1" height="350" left="0" top="divWork:0" right="0"/>
+              <Div id="divBottom" left="0" right="0" top="divGrade:0" taborder="2" height="580" text=""/>
+              <Static id="staBgImage" visible="false" top="divBottom:-870" width="280" height="320" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+      <Layout name="Layout0" screenid="mobile,tablet" width="640" height="1705" mobileorientation="portrait" type="default" scrollbartype="autoindicator autoindicator">
+        <Div id="divAll" left="0" top="divTop:0" formscrolltype="vertical" right="0" bottom="0" formscrollbartype="autoindicator autoindicator"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  교육디지털 원패스
+*  @MenuPath    frame > frameMain
+*  @FileName    frameMain.xfdl 
+*  @Creator     kmp
+*  @CreateDate  2021.12.27
+*  @Desction    base가 되는 화면
+************** 소스 수정 이력 ***********************************************
+*  date                 Modifier                Description
+*******************************************************************************
+*  2021.12.27           kmp                     최초 생성 
+*******************************************************************************
+*/
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+//include "lib::sm_script.xjs";
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fv_workPageParams = {};    //화면전환시 넘길 parameter
+this.fv_isMobile = false;   //모바일로 접속여부
+this.fv_device;     //device 종류
+
+// 각 Frame을 변수로 보관
+this.fvFrameTop    = this.divTop;
+this.fvFrameWork   = this.divAll.form.divWork;
+this.fvFrameGrade  = this.divAll.form.divGrade;
+this.fvFrameBottom = this.divAll.form.divBottom;
+
+
+this.fvDivHeadHeight  =  this.smfIsMobile()? 70:130;  // divHead의 높이
+this.fvDivGradeHeight =  this.smfIsMobile()? 450:130;  // divGrade의 높이
+this.fvDivNoticeHeight = 50;  // divNotice의 높이
+this.fv_workPageWidth = 1200;
+
+
+// 메인화면 구성을 위한 정보
+this.fv_mainformUrl = "";   // 메인화면 ()
+this.fv_firstformUrl = "";  // 첫화면(화면 기동시 또는 "처음으로" 클릭시)
+
+this._fvPopup;
+
+this.fvUseHistory = true;   // 뒤로가기 기능 사용여부(true:사용, false:미사용)
+
+// History
+this.param = {
+        "menu"    : "",
+        "keyword" : "",
+        "page"    : 1,
+        "postId"  : "", 
+        "params"  : {},
+        "headArea" : "",
+        "menuText" : ""
+    };
+
+// [BEGIN] 디지털정부 UI/UX 가이드 적용관련
+this.APPLY_GOV_MODE = ["1","2"];	// 적용 실행 모드(임시)
+this.APPLY_GOV_GUIDE = false;
+this.USE_LOGGER = false;
+// [ END ] 디지털정부 UI/UX 가이드 적용관련
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ 
+/**
+ * 화면 onload시 처리내역
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+    //  alert(nexacro.getApplication().getVariable("gv_isAdmin"));
+
+    // 뒤로가기 기능을 위한 초기설정
+    this.fnSetHistoryInit(); 
+    
+    // 필요한 prototype의 값을 변경한다. 
+    this.fnChangePrototypeValue();
+    // 폼을 초기화
+    //this.smfInitForm(obj);
+    
+    this.fv_isMobile = nexacro.getEnvironmentVariable("ev_isMobile") == "Y"?true:false; 
+    this.fv_device = "pc";
+    
+    //div의 사이즈를 저장한다.
+    this.divNotice._Orgheight = this.divNotice.getOffsetHeight();
+    
+    // 값을 못가져올 경우(다른 것이 먼저 높이를 변경한 경우)
+    if(this.divNotice._Orgheight==0) this.divNotice._Orgheight = this.fvDivNoticeHeight;
+
+    if (nexacro._Browser=="Runtime") {
+        this.divAll.form.sta00.set_visible(true);
+    }
+    
+// @KBR 주석처리 (20230110) 
+    //접속 기기 확인
+//  if (system.navigatorname.indexOf("nexacro")  < 0)   
+//  trace("navigator.userAgent=["+navigator.userAgent+"]");
+//  //if (system.navigatorname != "nexacro") 
+//  {
+//      var arrPhone = ['samsug-', 'sch-', 'shw-', 'sph-','sgh-','lg-', 'canu', 'iphone','nokia'
+//              , 'blackberry', 'lgtelecom', 'natebrowser', 'sonyericsson', 'mobile', 'android', 'ipad'];
+//      for(i = 0 ; i < arrPhone.length; i++ )
+//      {
+//          if(navigator.userAgent.toLowerCase().indexOf(arrPhone[i]) > -1)
+//          {
+//              this.fv_isMobile = true;
+//              this.fv_device = "mobile";
+//          }
+//      }
+//      
+//      //tablet 여부 확인
+//      if(this.fv_isMobile)    //모바일이면 tablet 체크 시작
+//      {
+//          if(navigator.userAgent.toLowerCase().indexOf('ipad') > -1 || 
+//              (navigator.userAgent.toLowerCase().indexOf('android') > -1 && navigator.userAgent.toLowerCase().indexOf('mobile') == -1))
+//          {
+//              this.fv_isMobile = false;
+//              this.fv_device = "tablet";
+//          }
+//          //갤럭시 탭만을 위한 리다이렉트. mobile이라는 단어가 안들어오면 지워도 됨.
+//          var galaxyTabModel =  new Array('shw-');
+//          for(i =0; i < galaxyTabModel.length; i++)
+//          {
+//              if(navigator.userAgent.toLowerCase().indexOf(galaxyTabModel[i]) > -1)
+//              {
+//                  this.fv_isMobile = false;
+//                  this.fv_device = "tablet";
+//              }
+//          }
+//      }
+//  }
+
+    //this.divAll.form.divWork.set_url("edu_edo_edo_mi::edo_edomi01_m10.xfdl");
+
+    // 사이즈를 조정한다.
+    //this.fnResizeProc(this);
+
+    //@KBR PC minWidth 설정(가로스크롤)
+    var sSubSystemGb = this.smfGetSubSystemGb();
+    var nMinWidth = this.fv_workPageWidth - nexacro.toNumber(this._getHScrollBarSize());//1263
+    
+	// [BEGIN] 디지털정부 UI/UX 가이드 적용
+	
+	// 로컬 모드에서만 로그 출력
+	var nRunMode = nexacro.getEnvironmentVariable("ev_runMode");		// 실행 구분
+	this.USE_LOGGER = (nRunMode == 1 && system.navigatorname.indexOf("nexacro") < 0) ? true : false;
+	
+	// 실행구분에 따른 적용여부 설정 - 운영 정식 반영전 적용 방지
+	// 운영반영 시 this.APPLY_GOV_MODE 에 실행구분값 추가 또는 this.APPLY_GOV_GUIDE = true 설정
+	this.APPLY_GOV_GUIDE = true;	// this.APPLY_GOV_MODE.includes(nRunMode);
+	
+	// Footer 전환, runtime환경 오류 발생으로 처리.
+	if(this.APPLY_GOV_GUIDE && system.navigatorname.indexOf("nexacro") < 0){
+	
+		// [BEGIN] Style 추가
+		this.logger("[BEGIN] 디지털정부 UI/UX 적용 관련 CSS 확인");
+		// Nexacro 설정 불가 Style 설정 CSS 적용 확인 및 추가(CSS 파일 배포 또는 로드 오류 대비)
+		var docStyleSheets = document.styleSheets;	// 신규 StyleSheet 생성 여부
+		var hasNxuiExt = false;	// 확장 StyleSheet 링크 여부
+		var onNxuiExt = null;	// 확장 StyleSheet
+		var doCreateStyle = false;//hasNxuiExt ? false : true;					// 확장 CSS 추가 설정 여부
+		for(var sKey in docStyleSheets){
+			var appStyle = docStyleSheets[sKey];
+			var appStyleHref = appStyle.href;
+			if(appStyleHref == null){
+				continue;
+			}else{
+				doCreateStyle = (appStyleHref.indexOf("css/nuxi_ext") > -1) ? false : true;	// 신규 StyleSheet 생성 여부(확장 StyleSheet 링크 확인)
+				onNxuiExt = doCreateStyle ? null : appStyle;								// 확장 StyleSheet
+				break;
+			}
+		}
+
+		this.logger("└ StyleSheet CSS 생성(적용) 확인 :: doCreateStyle = " + doCreateStyle);
+		
+		if(doCreateStyle){
+			this.logger("└ 신규 StyleSheet 생성");
+			// 신규추가
+			var style = document.createElement("style");
+			style.rel = "stylesheet";
+			style.type = "text/css";
+			var addStyleStr = ".btn_BF_Gov_policy.indv > div.nexacontentsbox {left: 6px !important;}";
+			addStyleStr += ".gov-dspFlex > .Form > .nexacontainer {display: flex !important;}";
+			style.innerHTML = addStyleStr;
+			document.getElementsByTagName("head")[0].appendChild(style);
+		}else{
+			// 확장 StyleSheet CSS 내용 확인 및 추가
+			var onNxuiExtRulsLeng = onNxuiExt.cssRules.length;
+			var isBlankNxuiExt = onNxuiExtRulsLeng > 0 ? false : true;	// 확장 StyleSheet CSS 내용 확인
+			if(isBlankNxuiExt){
+				this.logger("└ 빈 확장 StyleSheet > CSS 추가");
+				onNxuiExt.insertRule(".btn_BF_Gov_policy.indv > div.nexacontentsbox {left: 6px !important;}", onNxuiExt.cssRules.length);
+				onNxuiExt.insertRule(".gov-dspFlex > .Form > .nexacontainer {display: flex !important;}", onNxuiExt.cssRules.length);
+			}
+		}
+		this.logger("[ END ] 디지털정부 UI/UX 적용 관련 CSS 확인");
+		// [ END ] Style 추가
+		
+		// 디지털정부 UI/UX 가이드 적용 대상 서비스 설정
+		var applyGovUiUxSubSysGb = [
+			"SQA"	// 검정고시
+			, "ORE"	// 온라인 교직원 채용(유ㆍ초등/중등교원, 지방공무원,교육공무직)
+			, "HRD"	// 온라인 교직원 채용(계약제 교원 인력풀)
+			, "HES"	// 학원서비스
+			, "BDM"	// 비영리법인
+			, "AFS"	// 학교업무지원(방과 후 학교 운영지원)
+			, "PHE"	// 학교업무지원(체육 학교 운동부 및 스포츠 클럽 관리)
+			, "SML"	// 학교업무지원(급식 위생관리 지원)
+			, "ECC"	// 학교업무지원(초등 돌봄교실 운영지원)
+			, "IBM"	// 학교업무지원(교과용도서 주문정보 조회)
+			, "SEM"	// 학교업무지원(학교 환경관리 위생점검 등록)
+			, "EWS"	// 교육비 원클릭 신청
+			, "UDA"	// 대입전형자료(학교생활기록부)
+			//, "PAR" // 학부모서비스(유치원)
+		];
+		
+		// 디지털정부 UI/UX Footer 적용 - 시스템 확인
+		var isApplyGovFooter = applyGovUiUxSubSysGb.includes(sSubSystemGb);
+		this.logger("디지털정부 UI/UX 가이드(Footer) 적용 여부 :: " + sSubSystemGb + " [" + isApplyGovFooter + "]");
+		
+		if(isApplyGovFooter){
+			this.logger("[BEGIN] 디지털 정부 UI/UX  가이드 적용 - Footer(frame::commom/frameBottomGov) 전환");
+			
+			this.fvFrameBottom.set_height(474);
+			this.fvFrameBottom.set_url("frame::commom/frameBottomGov.xfdl");
+			//this.divAll.form.staBgImage.set_top(null);
+			this.divAll.form.staBgImage.set_bottom("divBottom:0px");
+			
+			this.logger("[ END ] 디지털 정부 UI/UX 가이드 적용");
+		}
+	}
+	// [ END ] 디지털정부 UI/UX 가이드 적용
+	
+//  if(sSubSystemGb == "EDS")  //교육설문
+//  {
+//      nMinWidth = 1920 - nexacro.toNumber(this._getHScrollBarSize());
+//  }
+
+    if( !this.smfIsMobile() ) {
+        this.divAll.form.divWork.set_minwidth(nMinWidth);
+        this.divAll.form.divHead.set_minwidth(nMinWidth);
+        this.divAll.form.divGrade.set_minwidth(nMinWidth);
+        this.divAll.form.divBottom.set_minwidth(nMinWidth);
+        
+        // Top 영역에 스크롤을 생성
+        this.divTop.set_formscrollbartype("auto auto");
+        this.divTop.set_formscrolltype("horizontal");
+        this.divTop.set_formscrollbarsize(0);
+        this.divTop.form.resetScroll(); 
+        
+        // divNotice 영역에 스크롤 생성
+        this.divNotice.set_formscrollbartype("auto auto");
+        this.divNotice.set_formscrolltype("horizontal");
+        this.divNotice.set_formscrollbarsize(0);
+        this.divNotice.form.resetScroll();          
+    }
+
+    //History - 히스토리 초기화
+    if (nexacro._Browser!="Runtime") {
+        MyHistory.init(this.onChangeHistory, this);
+
+        //최초접속시 페이지 이동 처리 함수 호출
+        this.initPage();
+    }else{
+        // @RHS - 주석 
+        this.fnSetMain("first");     // 각 시스템의 처음 화면을 띄운다. this.initPage()에서 호출 처리됨
+    }
+};
+
+/**
+ * @description 사이즈 변경시 위치변경
+*/
+this.frameMain_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+    this.fnResizeProc(obj);
+    
+    //comm_cddcList, comm_cddcList2 size조절
+    if(this._fvPopup)
+    {
+        if(this._fvPopup.form.fnOnsizeProc)
+        {
+            this._fvPopup.form.fnOnsizeProc.call(this._fvPopup.form,e);
+        }
+    }   
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+this.fnIpChk = function()
+{
+    // 서비스 객체 생성
+    this.smfSearchService("listIpChk")  //서비스 아이디 추가
+        // 페이징 처리
+        .run()  // 실행
+        // 콜백
+        .callback(function(callbackParams){
+            //this.trace("0.errors=============="+callbackParams.errors);
+            if(callbackParams.errors) return;
+
+            // TEST용
+            //this.dsIpChkResult.setColumn(0, "result","false"); // "true","false"
+
+            if(this.dsIpChkResult.getColumn(0, "result") == "false"){  // 관리자모드의 비인가PC로부터 접속
+                if(this.smfContainsStr(window.location.host, "local")){     //로컬인 경우
+                    window.location.href = "http://localhost:8081/nxui/index.html?subsys=EWS";
+                }else if (this.smfContainsStr(window.location.host, "dev")){    //개발인 경우
+                    window.location.href = "http://dev.oneclick.neis.go.kr/nxui/index.html";
+                }else if (this.smfContainsStr(window.location.host, "tst")){    //시험인 경우
+                    window.location.href = "http://tst.oneclick.neis.go.kr/nxui/index.html";
+                }else if (!this.smfContainsStr(window.location.host, "local") && 
+                          !this.smfContainsStr(window.location.host, "dev") &&
+                          !this.smfContainsStr(window.location.host, "tst")){   //운영인 경우
+                    window.location.href = "https://oneclick.neis.go.kr/nxui/index.html";
+                }else{
+                    window.location.href = "https://oneclick.neis.go.kr/nxui/index.html";
+                }
+            }
+            else
+            {   // 관리자모드이면서 인가된 PC로 부터 접속
+                var sUrl = "pa_ews_ocl_mn::ews_oclmn00_m01.xfdl";
+                
+                var sMainUrl = this.fnGetMainFormUrl();
+            
+                // Top 에 값을 세팅
+                this.fv_mainformUrl = this.fnGetMainFormUrl();
+                this.fv_firstformUrl = this.fnGetMainFormUrl("first");
+                
+                var sMainUrl = this.fv_mainformUrl;   // 메인화면으로 이동
+                
+                var objParam = {resendUrl: sMainUrl};           
+                
+                var bHead = false;
+                
+                this.fnSetWorkpage( sUrl , objParam ,bHead);
+            }
+        });
+};
+  
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/ 
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+
+/**
+ * @description 서비스 콜백
+ * @param : svcid - 서비스ID
+ * @param : errcd - 에러코드
+ * @param : errmsg - 에러메시지
+ */
+this.fnTransCallback = function(svcid,errcd,errmsg){
+    if(errcd <= -1) return;
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnChangePrototypeValue = function()
+{
+    var sSubSys = this.smfGetSubSystemGb();
+    
+    if((sSubSys=="ORE")||(sSubSys=="HRD"))
+    {
+        nexacro.Form.prototype.smvConfigurations.updateComponentCssByRules = false;
+        nexacro.Form.prototype.smvConfigurations.addRequiredLabelToAsterisk = false;
+    }
+};
+
+/**
+@class fnSetMainpage
+@description 메인화면 메뉴변경
+@param 필수 {String} MenuUrl – 체크할 값
+@param option {Object} params - 새로열릴 페이지 parameter
+@return N/A
+*/
+this.fnSetMainpage = function(MenuUrl, params)
+{
+    var bShowHead      = false;
+    //@KBR 변수명 수정.(Quickview->Toolbar) 20230110
+    var bShowToolbar = false; //bShowQuickview
+    var bShowGrade     = false;
+    this.fnSetWorkpage (MenuUrl, params, bShowHead, "", bShowToolbar,bShowGrade);
+};
+
+/**
+@class fnSetWorkpage
+@description 메뉴변경
+@param 필수 {String} MenuUrl – 체크할 값
+@param option {Object} params - 새로열릴 페이지 parameter
+@param option {boolean} bShowHead - divHead표시여부
+@param option {String} sMenuText  - 메뉴명
+@param option {boolean} bShowToolbar - divQuickMenu표시여부
+@param option {boolean} bShowGrade - divGrade표시여부
+@return N/A
+*/
+this.fnSetWorkpage = function(MenuUrl, params,bShowHead,sMenuText, bShowToolbar,bShowGrade, hisTime)
+{
+    if(this.isNil(MenuUrl)) return;
+    
+    // 뒤로가기 세팅을 한다.
+    //this.fnSetHistoryHash(MenuUrl, params,bShowHead,sMenuText, bShowToolbar,bShowGrade);
+
+    //History
+    var sUrl = "";
+    var sHash = "";
+    var sData = params;
+    var objDate = new Date();
+
+    if (MenuUrl == this.fv_mainformUrl) {
+        this.param.menu = MenuUrl;
+        //History 에 저장될 hash값 만들기
+        sHash = "menu="+ this.param.menu;
+        sUrl = "./";
+        
+        if (this.smfIsNull(sData))  sData = {};
+    }else {
+        this.param.menu = MenuUrl;
+        //sHash = "menu="+ this.param.menu;
+        if(!this.smfIsNull(hisTime)) sHash = "menu="+ this.param.menu +"&v="+ hisTime;
+        else                         sHash = "menu="+ this.param.menu +"&v="+ objDate.getTime();
+
+        sUrl = ".?" + sHash;
+    }
+    this.param.params = params;
+
+    //History Hash  생성
+    if (nexacro._Browser!="Runtime")  MyHistory.setLocationHash(sHash, sData, sUrl);
+    //trace("▶▶ fnSetWorkpage()  getData(sHash)  >> "+  sHash , sData, sUrl);
+
+    
+    // 가로,세로 스크롤 0
+    if(this.divAll.form.hscrollbar){
+        this.divAll.form.hscrollbar.set_pos(0); 
+    }
+    this.divAll.form.vscrollbar.set_pos(0);
+    
+    
+    var objMenuDs = this.divTop.form.dsMenu;
+    
+    // 로그인 여부 확인
+    var nFindRow = this.fnGetRowWithMenuUrl(objMenuDs,MenuUrl, params);
+    if(nFindRow>-1)
+    {
+        var sIsLogin = objMenuDs.getColumnNF(nFindRow,"isNeedLogin");
+        if(sIsLogin=="Y")
+        {       // 로그인했는지 체크하여 로그인으로 이동
+            if(!this.smfIsLogin()) 
+            {
+                sMenuText = "로그인";
+                this.fnRedirectLoginForm(MenuUrl,params, sMenuText);
+                return;
+            }
+        }
+        
+        // 주민등록번호가 필요한 화면인 경우(온라인채용에서의 요청사항)
+        var sIsNeedRrNo = objMenuDs.getColumnNF(nFindRow,"isNeedRrNo");
+        if(sIsNeedRrNo=="Y")
+        {
+            var sUserRrno = this.smfGetSessionValue('userRrno');  // 주민등록번호
+            var sUserNm   = this.smfGetSessionValue('userNm'  );  // 성명
+            
+            if((this.smfIsNull(sUserRrno))||(this.smfIsNull(sUserNm)))
+            {
+                this.fnRedirectLoginForm(MenuUrl,params);
+                return;
+            }
+        }
+        
+        //JSF 20240705 for 관리자모드 [[
+        var sIsUserScCd = objMenuDs.getColumnNF(nFindRow,"isUserScCd");
+        trace("▶▶ fnSetWorkpage() sIsUserScCd  >> "+  sIsUserScCd );
+        if(sIsUserScCd=="07")
+        {
+            
+            if(this.smfGetSessionValue('userScCd') != "07" && this.smfGetSessionValue('userScCd') != "06")
+            {
+                this.fnRedirectLoginForm(MenuUrl,params);
+                return;
+            }
+        }
+        //JSF 20240705 for 관리자모드 ]]
+    }
+    
+    if(this.isNil(bShowHead   )) bShowHead    = true ;
+    if(this.isNil(bShowToolbar)) bShowToolbar = false;
+    if(this.isNil(bShowGrade  )) 
+    {
+        var sMenuGradeVal = "";
+        
+        if(nFindRow>-1)
+        {
+            sMenuGradeVal = objMenuDs.getColumnNF(nFindRow,"useGrade");
+        }
+        
+        if(sMenuGradeVal=="Y")
+        {
+            bShowGrade    = true ;
+        }
+        else
+        {
+            bShowGrade    = false ;
+        }
+    }
+    
+    this.fv_workPageParams = {};
+    if(!this.smfIsNull(params)) this.fv_workPageParams = params;
+    
+    this.divAll.form.vscrollbar.set_pos(0);
+
+    // widemode를 초기화한다.
+    this.divAll.form.divWork.wildmode = "N";
+
+    // 툴바를 표시/비표시한다.
+    //@KBR 주석처리 (각 서브메인 onload 시 셋팅)
+    //this.divAll.form.divQuickMenu.set_visible(bShowToolbar);
+
+    //this.divAll.form.divWork.set_url("");
+    // 이전의 URL과 동일한 URL을 호출시에는 Reload(같은 화면을 여러 메뉴에서 사용하는 경우)
+    if(this.divAll.form.divWork.url==MenuUrl)
+    {
+        this.divAll.form.divWork.reload();
+    }
+    else    
+    {
+        this.divAll.form.divWork.set_url(MenuUrl);
+    }
+    trace("◆ fnSetWorkpage() 오픈화면 : "+ this.divAll.form.divWork.url );
+    //JSF 20240705 for 관리자모드 [[
+    if(sIsUserScCd =="07" || sIsUserScCd =="06")
+    {   trace("◆◆◆◆◆◆◆◆◆◆◆S◆◆◆◆◆◆◆◆◆◆◆◆◆" );
+        this.divAll.form.divWork.form.divContent99.set_url("frame::ore/frameHead.xfdl")
+        trace("◆◆◆◆◆◆◆◆◆◆◆T◆◆◆◆◆◆◆◆◆◆◆◆◆" );
+    }
+    //JSF 20240705 for 관리자모드 ]]
+    //@KBR 교육비원클릭 bottom 위치 수정
+    var sSubSystemGb =this.smfGetSubSystemGb();
+    if(sSubSystemGb == "EWS")
+    {
+        var nRow = this.dsMainFormInfo.findRow("subsys", "EWS");
+        var sUrl = this.dsMainFormInfo.getColumn(nRow, "url");
+        if(MenuUrl == sUrl){
+            this.divAll.form.divGrade.set_top("divWork:-33px");
+        }
+        else{
+            this.divAll.form.divGrade.set_top("divWork:0px");
+        }
+        this.divAll.form.resetScroll();
+    }
+
+
+    // 업무지원은 head를 표시안하도록 변경요청(2023.02.20)
+    if(  (sSubSystemGb=="AFS")   // 업무지원(외부강사)
+          || (sSubSystemGb=="ECC")   // 업무지원(돌봄인력서비스)
+          || (sSubSystemGb=="IBM")   // 업무지원(교과용도서)
+          || (sSubSystemGb=="SEM")   // 업무지원(학교환경관리)
+          || (sSubSystemGb=="PHE")   // 업무지원(체육)
+          || (sSubSystemGb=="SML")   // 업무지원(급식)
+          || (sSubSystemGb=="SPR")   // 업무지원(교육복지)
+          || (sSubSystemGb=="UDS")   // 대입전형
+          || (sSubSystemGb=="SQA")   // 대입전형(검정고시)
+          )
+    {
+        bShowHead    = false ;
+    }
+    
+    
+    //@KBR 전용브라우저 대입전형,검정고시 minWidth 설정
+    if(system.navigatorname.indexOf("nexacro")  > -1){
+            if (sSubSystemGb == "UDS" //대입전형
+                || sSubSystemGb == "SQA") //검정고시 
+            {
+                var nMinWidth = this.fv_workPageWidth  - nexacro.toNumber(this._getHScrollBarSize());
+
+                if((MenuUrl.indexOf("FirstMain")> -1) || (MenuUrl.indexOf("SubMain")>-1)) //메인화면 1920
+                {
+                    nMinWidth = 1920 - nexacro.toNumber(this._getHScrollBarSize());
+                }
+
+                if( !this.smfIsMobile() ) {
+                    this.divAll.form.divWork.set_minwidth(nMinWidth);
+                    this.divAll.form.divHead.set_minwidth(nMinWidth);
+                    this.divAll.form.divGrade.set_minwidth(nMinWidth);
+                    this.divAll.form.divBottom.set_minwidth(nMinWidth);
+                }
+            }   
+    }
+
+    
+    //this.divAll.form.divWork.setOffsetHeight(this.divAll.form.divWork.form.nHeight);
+    //전체 높이 >  기본높이(984) - top영역 높이 - bottom 영역 높이
+    var nHeight = this.divAll.form.divWork.form.nHeight;
+    //if(this.isNil(nHeight) ) nHeight = 950;
+    var nMainframeHeight = nexacro.getApplication().mainframe.height;
+    //if(this.isNil(nHeight) ) nHeight = 0;
+    
+    
+    if(this.isNil(nHeight) )
+    {
+        // 가장 아래에 있는 bottom값에 보전값 지정
+        var nMaxHeight = this._smfGetMaxBottomPos(this.divAll.form.divWork.form);
+        
+        //@KBR  각 form에 설정된 divmargin이 있는지 확인
+        var nMargin = this.fv_DIV_MARGIN;
+        
+        if(!this.isNil(this.divAll.form.divWork.divmargin))
+        {
+            nMargin = parseInt(this.divAll.form.divWork.divmargin);
+        }
+
+        this.divAll.form.divWork.setOffsetHeight(nMaxHeight+nMargin);       
+        
+    }else
+    {
+        if(nHeight < (nMainframeHeight ))
+        //if(nHeight < (950 - this.divAll.form.divFrameTop.getOffsetHeight() - this.divAll.form.divFrameBottom.getOffsetHeight()))
+        {
+            var nFormHeight = (nMainframeHeight );
+            this.divAll.form.divWork.setOffsetHeight(nFormHeight);  //defalut 높이 설정
+        }
+        else
+        {
+            this.divAll.form.divWork.setOffsetHeight(this.divAll.form.divWork.form.nHeight);    //업무화면의 높이 세팅
+        }           
+    }
+    
+    // divHead의 값 및 높이를 세팅한다.
+    this.divAll.form.divHead.form.fnSetMenu(MenuUrl, params);
+    if(bShowHead)
+    {
+        this.divAll.form.divHead.set_visible(true);
+        this.divAll.form.divHead.setOffsetHeight(this.fvDivHeadHeight);
+    }
+    else
+    {
+        this.divAll.form.divHead.set_visible(false);
+        this.divAll.form.divHead.setOffsetHeight(0);
+    }
+
+    // 만족도를 표시/비표시한다.
+    if(bShowGrade)
+    {
+        this.divAll.form.divGrade.setOffsetHeight(this.fvDivGradeHeight);
+        this.divAll.form.divGrade.set_visible(true);
+    }
+    else
+    {
+        this.divAll.form.divGrade.setOffsetHeight(0);
+        this.divAll.form.divGrade.set_visible(false);
+    }
+    
+    // 만족도 점수를 초기화한다
+    this.divAll.form.divGrade.form.fnClearGrade();
+    
+
+    
+    //@KBR divCenter정렬
+    this.fnResizeProc(this);    
+
+
+    //전체 영역 높이는  top영역 높이 +  bottom 영역 높이 + 업무영역높이
+    //this.divAll.setOffsetHeight( this.divAll.form.divTop.getOffsetHeight()+this.divAll.form.divWork.getOffsetHeight()+this.divAll.form.divBottom.getOffsetHeight()); 
+    //this.divAll.setOffsetHeight( this.divAll.form.divHead.getOffsetHeight()+this.divAll.form.divWork.getOffsetHeight()+this.divAll.form.divGrade.getOffsetHeight()+this.divAll.form.divBottom.getOffsetHeight()); 
+    this.divAll.form.divHead.form.resetScroll();
+    this.divAll.form.divWork.form.resetScroll();    //업무영역 resetScroll
+    this.divAll.form.resetScroll(); //전체 영역 resetScroll
+    this.resetScroll(); //form  영역 resetScroll
+    
+    
+
+    //@KBR [웹접근성] titleText 셋팅
+    if(MenuUrl == this.fv_mainformUrl)
+    {
+        sMenuText = "MAIN"; //메인화면 sMenuText="MAIN"
+    }
+    else if(MenuUrl == this.fv_firstformUrl)
+    {
+        sMenuText = "FIRST";    //메인화면 sMenuText="MAIN"
+    }
+    this.fnSetTitleText(sMenuText);
+
+
+    //this.param에 담아둔다. - 화면을 오픈하기 위한 정보
+    this.param.headArea = bShowHead;
+    this.param.sMenuText = sMenuText;
+    this.param.bShowToolbar = bShowToolbar;
+    this.param.bShowGrade = bShowGrade;
+
+};
+
+this.fnSetTitleText = function(menuText)
+{
+    if( this.isNil(menuText) ) return;
+    var sMenuText = nexacro.getApplication().gv_appTtiletext;
+    
+    // 메인 화면 또는 첫번째 화면인 경우 별도 처리를 한다.
+    switch(menuText)
+    {
+        case "MAIN"  : sMenuText += ""             ; break;
+        case "FIRST" : sMenuText += ""             ; break;
+        default      : sMenuText += ("|"+ menuText); break;     
+    }
+
+    nexacro.getApplication().mainframe.set_titletext(sMenuText);    
+}
+
+// 메뉴 URL을 가지고 데이터셋의 Row를 구한다.( 한개의 URL을 복수개의 메뉴에서 사용하는 경우 대비)
+this.fnGetRowWithMenuUrl = function(objDs,sUrl,pParam)
+{
+    // sUrl로 메뉴레벨별 메뉴아이디를 구한다.
+    // 메뉴아이디가 있으면 메뉴아이디로 검색한다.
+    // 메뉴아이디가 없으면 메뉴URL로 검색한다. (복수개인 경우 맨 처음 것)
+    var nFindRow = -1;
+    
+    var sMenuId = "";
+    if(pParam && (pParam.menu))
+    {
+        sMenuId = pParam.menu;
+    }
+    
+    if(this.smfIsNull(sMenuId))
+    {
+        nFindRow =objDs.findRowNF("menuUrl",sUrl);
+    }
+    else
+    {
+        nFindRow =objDs.findRowNF("menuId",sMenuId);
+    }
+    
+    return nFindRow;
+}
+
+// 로그인화면으로 이동한다.
+this.fnRedirectLoginForm = function(sUrl,params, menuText)
+{
+        // 로그인 화면을 구한다.
+        //var sUrl = "";
+        var sLoginUrl="";
+        
+        var objTopFrameForm = this.getOwnerFrame().form.divTop.form;
+        if(objTopFrameForm)
+        {
+            sLoginUrl = objTopFrameForm.fnGetLoginUrl();
+        }
+        
+        // 파라미터를 구한다.
+        if(!params) params={};
+        params.resendUrl = sUrl;
+        params.resendMenuId = params.menu;
+        
+        // 로그인 화면 정보
+        params.menu = "";
+        params._url = sLoginUrl;
+        
+        //@KBR  주석처리
+        //this.fnChangeDiv("B");
+        
+        // 로그인화면으로 이동한다.
+        var bHead = false;
+        this.smfSetWorkPage(sLoginUrl, params,bHead, menuText);     
+}
+
+//서브시스템에 따라 메인화면을 세팅한다.
+this.fnSetMain = function(sMainType)
+{
+    // 메인URL의 형식을 설정한다.
+    var sMainUrlType = sMainType || "main";   // "first" : 첫번째 화면 , "main" : 메인화면
+
+    var sSubSystemGb = this.smfGetSubSystemGb();
+    
+    //  특별화면 이동 처리를 한다.
+    if(sSubSystemGb=="EDS")       // 교육설문   
+    {
+        var objProjParams = this.smfGetProjectParams();
+        
+        var sEdsType = objProjParams.edstype;       // 교육설문종류
+        var sEdsData = objProjParams.edsdata;       // 교육설문데이터
+        var sEdsStartMode = objProjParams.edsstartmode; // 교육설문 시작모드 (""/"mom"/"survey"/"human")
+
+        if(!this.smfIsNull(sEdsType))
+        {
+            var sUrl = "";
+            switch(sEdsType)
+            {
+                case "AA" : // 학교폭력실태조사 - 학생
+                    sUrl = "pa_eds_vff_os::eds_vffos04_m01.xfdl";
+                    break;
+                case "BA" : // 학생정서행동특성검사 - 학생
+                    sUrl = "pa_eds_seg_oi::eds_segoi03_m01.xfdl";
+                    break;
+                case "BB" : // 학생정서행동특성검사 - 학부모
+                    sUrl = "pa_eds_seg_oi::eds_segoi05_m01.xfdl";
+                    break;
+                case "CA" : // 교원능력개발평가 - 학생
+                    sUrl = "pa_eds_tad_os::eds_tados03_m01.xfdl";
+                    break;
+                case "CB" : // 교원능력개발평가 - 학부모(학교)
+                    sUrl = "pa_eds_tad_os::eds_tados06_m01.xfdl";
+                    break;
+                case "CK" : // 교원능력개발평가 - 학부모(유치원)
+                    sUrl = "pa_ktd_tad_os::ktd_tados06_m01.xfdl";
+                    break;
+                case "DA" : // 특수교육대상자인권실태조사 - 학생
+                    sUrl = "pa_eds_shf_os::eds_shfos03_m01.xfdl";
+                    break;
+                case "DB" : // 특수교육대상자인권실태조사 - 학부모
+                    sUrl = "pa_eds_shf_os::eds_shfos04_m01.xfdl";
+                    break;
+            }
+
+            var objParam = {
+                                autoLogin : "Y"        // 교육설문 자동로그인 여부
+                            ,   edsType   : sEdsType   // 교육설문 종류
+                            ,   edsData   : sEdsData   // 교육설문데이터
+                           }
+            
+            var bHead = false;
+            
+            this.fnSetWorkpage( sUrl, objParam, bHead);
+            
+            return;
+        }   
+        else if(!this.smfIsNull(sEdsStartMode))
+        {
+            var sUrl = "frame::eds/frameMap.xfdl";
+            
+            var sStartMode = nexacro.getEnvironmentVariable("ev_edsStartMode");
+            var sPtptKndCd = (sStartMode=="survey")?"1":((sStartMode=="mom")?"2":((sStartMode=="human")?"4":""));
+            
+            
+            var objParam = {
+                                ptptKndCd : sPtptKndCd
+                           }
+            
+            var bHead = false;
+            
+            this.fnSetWorkpage( sUrl , objParam ,bHead);
+            
+            return;
+        }
+    }
+    else if(sSubSystemGb=="PAR")  // 유치원
+    {
+        var objProjParams = this.smfGetProjectParams();
+        
+        var sUserVrId  = objProjParams.userVrId   ;     // 사용자가상ID
+        var sStuDtclNo = objProjParams.stuDtclNo  ;     // 자녀 고유 번호
+        var sScrnId    = objProjParams.scrnId     ;     // 호출될 화면 ID
+        var sScrnType  = objProjParams.scrnType   ;     // 업무단화면구분여부("Y":업무화면,"N":화면관리화면)
+        
+        //나이스플러스에서 sScrnType, sScrnId가 전달되면
+        if(!this.smfIsNull(sScrnType) && !this.smfIsNull(sScrnId)){
+            if(sScrnType=="N")
+            {
+                var sUrl = sScrnId;
+                if(sUrl.indexOf(".xfdl") < 0)
+                {
+                    sUrl += ".xfdl";
+                }
+
+                var objParam = {
+                                    userVrId  : sUserVrId      // 사용자가상ID
+                                ,   stuDtclNo : sStuDtclNo     // 자녀 고유 번호
+                                ,   scrnId    : sScrnId        // 호출될 화면 ID
+                                ,   scrnType  : sScrnType      // 업무단화면구분여부("Y":업무화면,"N":화면관리화면)
+                               }
+                
+                var bHead = false;
+                
+                this.fnSetWorkpage( sUrl , objParam ,bHead);
+                
+                return;
+            }else if(sScrnType=="Y" && !this.smfIsNull(sScrnId) && sScrnId != "MAIN"){
+                this.fv_mainformUrl = this.fnGetMainFormUrl();
+                this.fv_firstformUrl = this.fnGetMainFormUrl("first");
+                
+                //임시 - 학부모서비스 메뉴 오픈 시기에 맞춰 변경 해야함. START
+                /**
+                 * 유치원 생활기록(KNDGR01)    24.3월 오픈
+                 * 건강기록(KNDGR03)            24.3월 오픈
+                 * 국민행복카드 인증(KNDGR05)   23.9월 오픈
+                 * 학부모 청구(KNDGR06)      23.9월 오픈
+                
+                if(sScrnId == "KNDGR01" || sScrnId == "KNDGR03" || sScrnId == "KNDGR05" || sScrnId == "KNDGR06"){
+                    var sMainUrl = this.fv_mainformUrl;
+                    if(sMainUrlType=="first") sMainUrl = this.fv_firstformUrl;
+                    
+                    if(!this.smfIsNull(sMainUrl))
+                    {
+                        // 메인URL로 이동한다.
+                        this.fnSetMainpage(sMainUrl);
+                    }
+                    
+                    return;
+                }
+                //임시 - 학부모서비스 메뉴 오픈 시기에 맞춰 변경 해야함. END
+                **/
+                
+                /**
+                 * 유치원 생활기록(KNDGR01)    24.3월 오픈
+                 * 건강기록(KNDGR03)            24.3월 오픈
+                 * 국민행복카드 인증(KNDGR05)   23.9월 오픈
+                 * 학부모 청구(KNDGR06)      23.9월 오픈
+                **/
+                var objParUrl = {
+                                      "KNDGR01": "pa_par_sps_ci::par_spsci00_m00.xfdl"   // 유치원 생활기록
+                                    , "KNDGR02": "pa_par_sps_sl::par_spssl00_m00.xfdl"   // 유치원 기본정보
+                                    , "KNDGR03": "pa_par_sps_ih::par_spsih00_m00.xfdl"   // 건강기록
+                                    , "KNDGR04": "pa_par_sps_se::par_spsse00_m00.xfdl"   // 유아학비란?
+                                    , "KNDGR05": "pa_par_sps_pc::par_spspc00_m00.xfdl"   // 국민행복카드 인증
+                                    , "KNDGR06": "pa_par_sps_pc::par_spspc01_m00.xfdl"   // 학부모 청구
+                                };
+    
+                var sUrl = objParUrl[sScrnId];          
+                
+                // Top 에 값을 세팅              
+                var objParam = {resendUrl: this.fv_firstformUrl};               
+                var bHead = true;
+                
+                this.fnSetWorkpage( sUrl , objParam ,bHead);
+                
+                return;
+            }
+        }
+        
+    }
+    else if(sSubSystemGb=="UDS")  // 대입전형
+    {
+        if(this.smfIsLogin()!="Y")
+        {
+            var sUrl = "pa_uds_cmm_cm::uds_cmmcm00_m00.xfdl";
+
+            // Top 에 값을 세팅
+            this.fv_mainformUrl = this.fnGetMainFormUrl();
+            this.fv_firstformUrl = this.fnGetMainFormUrl("first");
+            
+            var objParam = {resendUrl: this.fv_firstformUrl};           
+            
+            var bHead = false;
+            
+            this.fnSetWorkpage( sUrl , objParam ,bHead);
+            return;
+        }
+    }   
+    else if(sSubSystemGb=="EWS")  // 교육비 원클릭
+    {
+        //var sIsAdmin = nexacro.getEnvironmentVariable("ev_isAdmin")
+        var sIsAdmin = nexacro.getApplication().getVariable("gv_isAdmin");
+        if((this.smfIsLogin()!="Y")&&(sIsAdmin=="Y"))
+        {
+            // 
+            this.fnIpChk();
+
+            return;
+        }
+    }
+    
+    // 메인URL을 구한다.
+    //var sMainUrl = "frame::"+ sSubSystemGb.toLowerCase() + "/frameSubMain.xfdl";  
+    this.fv_mainformUrl = this.fnGetMainFormUrl("main");
+    this.fv_firstformUrl = this.fnGetMainFormUrl("first");
+
+    var sMainUrl = this.fv_mainformUrl;
+    if(sMainUrlType=="first") sMainUrl = this.fv_firstformUrl;
+    
+    if(!this.smfIsNull(sMainUrl))
+    {
+        // 메인URL로 이동한다.
+        this.fnSetMainpage(sMainUrl);
+    }
+
+};
+
+this.fnGetMainFormUrl = function(sType, sSubSysGb,sSubSysDetailGB)
+{
+    var sFindType          = sType           || "first";   // "first" : 초기화면, "main" : 메인화면
+    var sSubSystemGb       = sSubSysGb       || this.smfGetSubSystemGb();
+    var sSubSystemDetailGb = sSubSysDetailGB || this.smfGetSubSystemDetailGb();
+    
+    var sFilter = "subsys=='"+sSubSystemGb+"'";
+    
+    // 온라인 채용인 경우는 조건에서 상세구분을 없앰
+    if((sSubSystemGb=="ORE")||(sSubSystemGb=="HRD"))
+    {
+        sSubSystemDetailGb = ""; 
+    }
+    
+    if(!this.smfIsNull(sSubSystemDetailGb))
+    {
+        sFilter += "&&detailsys=='"+sSubSystemDetailGb+"'";
+    }
+    
+    var sMainUrl = "";
+    var nFindRow = this.dsMainFormInfo.findRowExprNF(sFilter);
+    if(nFindRow>-1)
+    {
+        sMainUrl = this.dsMainFormInfo.getColumnNF(nFindRow,sFindType + "url");
+    }
+    
+    return sMainUrl;
+}
+
+this.fnSetBgImage = function()
+{
+    var sSubSystemGb = this.smfGetSubSystemGb();
+    
+    var sBackground = "";
+    var sCssclass   = "";
+    
+    //staBgImage 사용여부
+    this.divAll.form.staBgImage.useYn = "Y";
+    
+    switch(sSubSystemGb)
+    {
+        case "SQA" : // 검정고시
+            //sBackground = "url('theme://images/img_WF_Graphic.png') no-repeat right bottom transparent";
+            sCssclass = "sta_WF_Graphic07";
+            this.divAll.form.staBgImage.set_cssclass(sCssclass);
+            break;
+        case "UDS" : // 대입전형자료(일반)
+            sCssclass = "sta_WF_Graphic";
+            this.divAll.form.staBgImage.set_cssclass(sCssclass);
+            break;
+        case "HES" : // 학원관련민원
+        case "BDM" : // 비영리법인민원
+            sCssclass = "sta_WF_Graphic09";
+            this.divAll.form.staBgImage.set_cssclass(sCssclass);
+            break;
+        case "ORE" : // 온라인채용(교원임용)
+        case "HRD" : // 온라인채용(계약제교원인력풀)
+            sCssclass = "sta_WF_Graphic08";
+            this.divAll.form.staBgImage.set_cssclass(sCssclass);
+            break;
+        case "AFS" : // 업무지원(외부강사)
+        case "ECC" : // 업무지원(돌봄인력서비스)
+        case "IBM" : // 업무지원(교과용도서)
+        case "SEM" : // 업무지원(학교환경관리)
+        case "PHE" : // 업무지원(체육)
+        case "SML" : // 업무지원(급식)
+        case "SPR" : // 업무지원(교육복지)
+            sCssclass = "sta_WF_Graphic";
+            this.divAll.form.staBgImage.set_cssclass(sCssclass);
+            break;
+        case "EDS" : // 교육설문
+            break;
+        case "EWS" : // 교육비 원클릭
+            this.divAll.form.staBgImage.set_visible(false);
+            this.divAll.form.staBgImage.useYn = "N";
+            break;
+    }
+}
+
+this.fnResizeProc = function()
+{
+    trace("fnResizeProc====");
+
+    var arrPopFrame = nexacro.getPopupFrames();
+
+    // divAll center 정렬
+    if(this.fv_isMobile)    //모바일일 경우
+    {
+        this.divTop.set_left(0);            
+        this.divAll.set_left(0);
+        this.divAll.set_right(0);
+        
+        // 일반팝업 가로세로회전시 위치 변경
+        var srcInfo = this.smfCurScreenInfo();
+        var srcWidth = parseInt(srcInfo[0],10);
+        var srcHeight = parseInt(srcInfo[1],10);
+        
+        for (var k=0; k<arrPopFrame.length; k++) {
+            var objPop = arrPopFrame[k];
+
+            var nPopTop = 0;
+            
+            //@orgFormHeight : 해당 팝업 form onload시 지정한 높이
+            //@orgPopHeight : 팝업 호출 시 지정한 높이
+            //팝업 호출 시 지정한 사이즈를 우선으로 함. 사이즈를 지정하지 않았다면 form 크기에 맞춤.
+            var nPopHeight = 0;
+            if(this.smfIsNull(objPop.orgPopHeight)){
+                nPopHeight = parseInt(objPop.orgFormHeight) + objPop.titlebarheight; //폼사이즈 + Titlebar 높이
+            }else{
+                nPopHeight = parseInt(objPop.orgPopHeight); //입력한 팝업 사이즈
+            }           
+            var nPopWidth =  this.smfIsNull(objPop.orgPopWidth)? parseInt(objPop.orgFormWidth):parseInt(objPop.orgPopWidth);
+            var nPopLeft = ( srcWidth - nPopWidth ) / 2;    //left는 중앙으로 위치
+            if(nPopLeft < 0) nPopLeft = 0;
+            
+            // Left,Top 이 없으면 처음오픈시 값으로 셋팅
+            if ( !this.smfIsNull(objPop.orgPopTop) && !this.smfIsNull(objPop.orgPopLeft) ) {
+                if (!this.smfIsNull(objPop.orgPopTop))  nPopTop = objPop.orgPopTop;
+
+                var nTops = parseInt(nPopTop) + nPopHeight;
+    
+                //가로전환시 화면높이가 더 크면
+                if (srcHeight <= nTops) {
+                    nPopTop = 0;
+                    objPop.setOffsetHeight(srcHeight);
+                }else{
+                    objPop.setOffsetHeight(nPopHeight);
+                }
+            }else {
+                var nTops =  parseInt((srcHeight - nPopHeight) / 2) + nPopHeight; 
+                
+
+                //가로전환시 화면높이가 더 크면
+                if (srcHeight <= nTops) {
+                    nPopTop = 0;
+                    objPop.setOffsetHeight(srcHeight);
+                }else{
+                    objPop.setOffsetHeight(nPopHeight);
+                    nPopTop = parseInt((srcHeight - nPopHeight) / 2);
+                    if(nPopTop < 0) nPopTop = 0;
+                }
+            }
+            objPop.setOffsetLeft(nPopLeft);
+            objPop.setOffsetTop(nPopTop);               
+            
+            objPop.form.resetScroll();          
+        }       
+        
+
+        this.divAll.form.divWork.form.resetScroll();
+        this.divAll.form.resetScroll();
+        this.resetScroll();     
+    }
+    else
+    {   
+        var bWildMode = false;
+        if(this.divAll.form.divWork.wildmode)
+        {
+            bWildMode = (this.divAll.form.divWork.wildmode=="Y")?true:false;
+        }
+
+        var nAllWidth = this.width - this._getHScrollBarSize();  // 전체 form의 사이즈
+        var nMaxWidth = 1200;
+        if(this.smfGetSubSystemGb() == "EDS") nMaxWidth = 1920;
+        var nLeft,nWidth;
+        
+        if((nAllWidth >= nMaxWidth)&&(!bWildMode))  //1200 사용
+        {
+            nLeft = parseInt((nAllWidth - nMaxWidth) / 2);
+            if(nLeft < 0) nLeft = 0;
+            
+            nWidth = nMaxWidth;
+        }
+        else
+        {
+            nLeft = 0;
+            nWidth = nAllWidth;
+        }
+         
+        //trace("======> nLeft="+nLeft+",nWidth="+nWidth);
+
+        // 가운데 정렬
+        this.divAll.form.divHead.setOffsetLeft(nLeft);
+        this.divAll.form.divHead.setOffsetWidth(nWidth);
+        
+        //if(this.smfGetSubSystemGb()!="EDS")  
+        this.divAll.form.divWork.setOffsetLeft(nLeft);
+        //if(this.smfGetSubSystemGb()!="EDS")   
+        this.divAll.form.divWork.setOffsetWidth(nWidth);
+        
+        this.divAll.form.divGrade.setOffsetLeft(nLeft);
+        this.divAll.form.divGrade.setOffsetWidth(nWidth);
+
+
+        // 1920이상일 때 staBgImage, divQuickMenu 고정
+        var nMaxWidth = 1920;
+        var nGap = (nAllWidth - nMaxWidth)/2;
+        var nStaLeft = nMaxWidth - this.divAll.form.staBgImage.width;
+        var nDivLeft = nMaxWidth - this.divAll.form.divQuickMenu.width;
+        if(nAllWidth >= nMaxWidth){
+            this.divAll.form.staBgImage.set_right(null);
+            this.divAll.form.divQuickMenu.set_right(null);          
+            this.divAll.form.staBgImage.set_left( nStaLeft + nGap);
+            this.divAll.form.divQuickMenu.set_left( nDivLeft + nGap);           
+        }else{
+            this.divAll.form.staBgImage.set_left(null);
+            this.divAll.form.divQuickMenu.set_left(null);   
+            this.divAll.form.staBgImage.set_right(0);
+            this.divAll.form.divQuickMenu.set_right(0);     
+        }
+
+
+        //@KBR 1600이하일 때 staBgImage, divQuickMenu숨기기
+        var bVisible = false;
+        var nWidth = 1600; 
+        if(nWidth >= nAllWidth){    
+            bVisible = false;
+        }else{  
+            bVisible = true;
+        }
+            
+        if( !this.isNil(this.divAll.form.staBgImage.useYn) && this.divAll.form.staBgImage.useYn == "Y")     this.divAll.form.staBgImage.set_visible(bVisible);
+        if( !this.isNil(this.divAll.form.divQuickMenu.useYn) && this.divAll.form.divQuickMenu.useYn == "Y") this.divAll.form.divQuickMenu.set_visible(bVisible);
+    
+        
+        //this.__smfResetScroll(this.divAll.form.divWork.form);
+        
+        this.divAll.form.divHead.form.resetScroll();
+        this.divAll.form.divWork.form.resetScroll();
+        this.divAll.form.divGrade.form.resetScroll();
+        this.divAll.form.resetScroll();
+        this.divTop.form.resetScroll();
+        this.resetScroll();
+    }
+};
+
+
+//@KBR divQuickMenu  Height 조절
+this.fnResizeQuickMenu = function()
+{
+    var divQuickMenu = this.divAll.form.divQuickMenu
+    
+    var nHeight =  this._smfGetMaxBottomPos(divQuickMenu.form) + 25; // bottomGap = 25
+    divQuickMenu.setOffsetHeight(nHeight);
+};
+
+//*****************************************
+//  history처리 - Start
+//*****************************************
+/*
+* History
+* @description  : 최초 접속시 페이지 이동 처리 함수
+* @param        : N/A
+* @return       : N/A
+*/
+this.initPage = function() {
+    if (nexacro._Browser!="Runtime") {
+        var urlParams = nexacro.urlParams;
+        //링크타고 들어올 경우
+        if (urlParams && (this.smfIsNull(urlParams.postId)==false || this.smfIsNull(urlParams.menu)==false)) 
+        {
+            // EnvironmentVariable[ev_menuType]값 체크
+            var sUdsVpnRequest = nexacro.getEnvironmentVariable("ev_vpnrequest");
+            var extReqMenu = nexacro.getEnvironmentVariable("ev_menuType");
+            if (extReqMenu) {
+                if (extReqMenu.split("___")[0]) {
+                    //nexacro.getApplication().mainframe.VFrameSet.frameMain.set_formurl();
+                }
+            }else if(sUdsVpnRequest=="Y") {
+                //nexacro.getApplication().mainframe.VFrameset.frameMain.form.divAll.divWork.set_url("test::uds_cmmcm00_m00.xfdl");
+                this.smfSetWorkPage("pa_pas_uum_cm::pas_uumcm00_m00.xfdl", {}, true);
+            }else {
+                this.fnSetMain("first");     // 각 시스템의 처음 화면을 띄운다.
+            }
+        }
+
+        // 새로고침 시
+        else {
+            var sHash = MyHistory.getLocationHash();
+
+            // History 기록이 있을 경우
+            if (!this.smfIsNull(sHash)) {
+
+                var sData = {};
+                if (!this.smfIsNull(this.fv_mainformUrl)) {
+                    sData = MyHistory.getData(sHash);
+                }
+
+                this.onChangeHistory(sHash, sData);
+            }
+            // History 기록이 없을 경우
+            else {
+                // EnvironmentVariable[ev_menuType]값 체크
+                var sUdsVpnRequest = nexacro.getEnvironmentVariable("ev_vpnrequest");
+                var extReqMenu = nexacro.getEnvironmentVariable("ev_menuType");
+                if (extReqMenu) {
+                    if (extReqMenu.split("___")[0]) {
+                        //nexacro.getApplication().mainframe.VFrameSet.frameMain.set_formurl();
+                    }               
+                //}else if(sUdsVpnRequest=="Y") {
+                //  this.smfSetWorkPage("pa_pas_uum_cm::pas_uumcm00_m00.xfdl", {}, true);
+
+                }else {
+                    this.fnSetMain("first");     // 각 시스템의 처음 화면을 띄운다.
+                }           
+            }
+        }
+    }else {
+        //this.fnSetMain("first");
+    }
+};
+
+/*
+* @description  : 브라우저 뒤로이동, 앞으로이동 호출 함수
+* @param  sHash : 브라우저에 기록된 현재 Hash 정보
+* @param  sData : 브라우저에 기록된 현재 Data 정보
+* @return       : N/A
+*/
+this.onChangeHistory = function(sHash, sData) {
+
+    // 열려있는 팝업 닫기
+    if (nexacro.getPopupFrames().length>0) {
+        var sSubSystemGb = this.smfGetSubSystemGb();
+        if (sSubSystemGb=="EWS" ||   // 교육비 원클릭
+            sSubSystemGb=="UDS" ||  // 대입전형
+            sSubSystemGb=="PAR" ||  // 유치원 
+            sSubSystemGb=="EDS") {  
+
+            var objFrames = nexacro.getPopupFrames();
+            for (var i=0; i<objFrames.length; i++) {
+                objFrames[i].form.close();
+            }
+            return;
+        }
+    }
+
+    //메뉴 창 열려있으면 닫기
+    if (this.getOwnerFrame().form["commSitemap"]) {
+        //this.getOwnerFrame().form.divTop.form.divSkip.set_visible(true);
+        var objDiv = this.getOwnerFrame().form.removeChild("commSitemap");
+        objDiv.destory();
+        objDiv = null;  
+    }
+
+    var urlParams = {};
+    
+    //Hash 값으로 파라미터 정보 가져오기
+    (function() {
+        var match,
+            pl = /\+/g,
+            search = /([^&=]+)=?([^&]*)/g,
+            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+            query = sHash;
+            while (match = search.exec(query)) { urlParams[decode(match[1])] = decode(match[2]); }
+        })();
+
+    //페이지 이동을 위한 파라미터 오브젝트에 값 추가
+    // urlParams.v : 시간, urlParams.menu : 메뉴URL
+    this.param.menu = urlParams.menu;
+    //this.param.params = urlParams.params;
+
+    //trace("♣ onChangeHistory()    ▶ urlParams.params >> "+urlParams.params , sData, sHash);
+
+    if (this.param.menu == this.fv_mainformUrl) {
+
+        // 메인메뉴인 경우
+        this.fnSetMain("first");
+
+    }else {
+
+        if (this.smfIsNull(this.fv_mainformUrl)) {      
+            this.fnSetMain("first");
+
+        }else {
+            //Hash 값을 params 에 셋팅하여 전달한다
+            /*
+            sHash 값에 "::" 구문 포함되어 있어 특수문자로 인식하여 정상 처리 안되는 문제 발생
+            해당 구문을 encoding해주는 함수 URLSearchParams 사용하여 정상처리 되도록 수정 2024.4.18
+            */
+            var oData = MyHistory.getData(new URLSearchParams(sHash));
+            this.param.params = oData;
+        
+            this.fnSetWorkpage(this.param.menu, this.param.params, this.param.headArea, this.param.sMenuText, this.param.bShowToolbar, this.param.bShowGrade, urlParams.v);
+        }
+    }       
+};
+
+
+this.fnSetHistoryInit = function()
+{
+    return;
+    
+    if(!this.fvUseHistory)  return;
+    
+    if("undefined"!=typeof MyHistory)
+    {
+        // History 기능 사용을 위해 초기화 (application 실행 시 한번만 호출)
+        // 첫번째 인자는 뒤로가기, 앞으로가기가 실행됬을때 호출될 함수
+        // 두번째 인자는 함수내에서 this 로 사용할 scope
+        MyHistory.init(this.onChangeHistory, this);
+        
+        // 새로고침을 위한 처리 ( application 실행 시 한번만 체크)
+        // 새로고침되더라도 hash 값을 그대로 남아있기에
+        // hash id 에 해당하는 처리를 하도록 한다.
+        var hash = MyHistory.getLocationHash();     
+        if ( hash )
+        {
+            // 데이터가 필수가 아니면 체크할 일이 없겠네요
+            var data = MyHistory.getData(hash);
+            if ( data )
+            {
+                this.onChangeHistory(hash, data);
+            }
+        }   
+    }
+}
+
+
+// 브라우저의 뒤로가기, 앞으로가기 실행시 호출됨
+this.onChangeHistory_X = function(hash, data)
+{
+    return;
+
+
+    if(!this.fvUseHistory)  return;
+
+    if ( hash == "" )
+    {
+        trace("=====hash없음");
+        // 맨앞으로 간 것으로 판단하여 이전 화면으로 이동한다.
+        history.go(-1);
+    }   
+    else
+    {
+        var MenuUrl = hash;
+        var params = {};
+        var bShowHead    = false;
+        var sMenuText    = "";
+        var bShowToolbar = false;
+        var bShowGrade   = false;
+        
+        // hash id 를 확인하여 필요한 처리를 진행한다.
+        var objData = JSON.parse(data);
+        if(objData) 
+        {
+            // Top영역의 높이 표시형태를 판단한다.("expand"/"collapse")
+            var objTopForm = this.divTop.form;
+            var sCurrentType      = objTopForm.fvHistoryInfo_type      ;
+            var sCurrentObjOption = objTopForm.fvHistoryInfo_objOption ;
+            
+            if(sCurrentType != objData.topFrameType)
+            {
+                objTopForm.fnRearrageTopComp (objData.subSysGb,objData.topFrameType,objData.topFrameObjOption);
+            }
+            
+            // 서브시스템등이 변경이 됐는지 판단한다.
+            var sCurrentSubSysGb       = this.smfGetSubSystemGb()       ;
+            var sCurrentSubSysDetailGb = this.smfGetSubSystemDetailGb() ;
+            
+            if((sCurrentSubSysGb!=objData.subSysGb) || (sCurrentSubSysDetailGb!=objData.subSysDetailGb))
+            {
+                // 
+                this.smfSetSubSystemGb(objData.subSysGb);
+                this.smfSetSubSystemDetailGb(objData.subSysDetailGb);
+                
+                var sSelVal1 = objData.subSysDetailGb;
+                var sSelVal2 = this.smfGetSubSysDetailGbName(sSelVal1);
+                var sSelVal3 = this.smfGetCddcCode() ;  // 교육청코드
+                var sSelVal4 = this.smfGetCddcName();  // 교육청코드명
+                objTopForm.fnChangeCddc(sSelVal1,sSelVal2,sSelVal3,sSelVal4);
+            }
+            
+            // 화면으로 이동한다.
+            params       = objData.params || {};
+            bShowHead    = objData.bShowHead;
+            sMenuText    = objData.sMenuText || "";
+            bShowToolbar = objData.bShowToolbar;
+            bShowGrade   = objData.bShowGrade;
+            
+            this.fnSetWorkpage (MenuUrl, params,bShowHead, sMenuText, bShowToolbar,bShowGrade);
+        }
+        else
+        {
+            this.fnSetWorkpage (MenuUrl, params,bShowHead, sMenuText, bShowToolbar,bShowGrade);
+        }
+    }
+}
+
+
+this.fnSetHistoryHash = function(MenuUrl, params,bShowHead, sMenuText,bShowToolbar,bShowGrade)
+{
+    return;
+    
+    
+    if(!this.fvUseHistory)  return;
+
+    if("undefined"!=typeof MyHistory)
+    {
+        var sHash ="";
+        var sData ="";
+        
+        // TopFrame을 세팅하기 위한 정보     
+        var sSubSysGb          = this.smfGetSubSystemGb();   
+        var sSubSysDetailGb    = this.smfGetSubSystemDetailGb();
+        var sTopFrameType      = this.divTop.form.fvHistoryInfo_type;   // "expand" / "collapse"
+        var sTopFrameObjOption =  this.divTop.form.fvHistoryInfo_objOption;  // 온라인채용에서 사용하는 정보
+        
+        sHash = MenuUrl;
+        var objParam = {
+                         // 화면을 열기 위한 정보 
+                            "params"             : params
+                        ,   "bShowHead"          : bShowHead    
+                        ,   "sMenuText"          : sMenuText    
+                        ,   "bShowToolbar"       : bShowToolbar 
+                        ,   "bShowGrade"         : bShowGrade   
+                        // TopFrame을 재구성하기 위한 정보
+                        ,   "subSysGb"           : sSubSysGb    
+                        ,   "subSysDetailGb"     : sSubSysDetailGb  
+                        ,   "topFrameType"       : sTopFrameType    
+                        ,   "topFrameObjOption"  : sTopFrameObjOption   
+                       };
+        sData = JSON.stringify(objParam,replacer) ;
+        MyHistory.setLocationHash(sHash, sData);
+        
+        // params의 데이터셋 오브젝트를 saveXML로 변경
+        function replacer(key,value)
+        {
+            if(value instanceof nexacro.NormalDataset)
+            {
+                return value.saveXML();
+            }
+            return value;
+        }           
+    }
+}
+//*****************************************
+//  history처리 - End
+//*****************************************
+
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+
+// @KBR 주석(20230110)
+/**
+ * 지정된 form 에서 부터 상위 메뉴 화면 resetScroll
+ * @param {Obj} scope  - form object
+ * @return N/A
+ */  
+// this.smfResetScroll1 = function(scope)
+// {
+//  var obj = scope;
+// 
+//  // 부모를 따라가며, 높이 조절 및 resetScroll()을 실행한다.(divAll가지만 한다.)
+//  while( obj )
+//  {
+//      if(obj instanceof nexacro.Form)
+//      {
+//          // visible이 true인경우만, (무조건 true일째만 호출될 것 같지만, 혹시나 해서)
+//          if(obj.visible)
+//          {   
+//              // form의 가장 마지막 object(visible=true인것만)의 bottom 값 에 여유 여백을 줌
+//              var nMaxHeight = obj._smfGetMaxBottomPos(obj) + obj.fv_DIV_MARGIN;  
+//              if(obj.parent instanceof nexacro.Tabpage)
+//              {
+//                  var nTabButtonHeight = obj.parent.parent.tabpages[obj.parent.parent.tabindex].getOffsetTop();
+//                  obj.parent.parent.setOffsetHeight(nMaxHeight+nTabButtonHeight);   // object(Tab) 자체에 줌
+//              }
+//              else
+//              {
+//                  obj.parent.setOffsetHeight(nMaxHeight);   // object(Div) 자체에 줌
+//              }
+//              
+//              obj.resetScroll();
+//          }
+//          
+//      }
+//      // divWork까지만 작업을 한다.       
+//      if ( obj.name == "divWork")
+//      {
+//          obj.parent.resetScroll();
+//          break;
+//      }
+//      
+//      obj = obj.parent;
+//  }   
+// };
+
+//세로 스크롤 (divQuickMenu 위치 이동)
+this.divAll_onvscroll = function(obj:nexacro.Div,e:nexacro.ScrollEventInfo)
+{
+    var nTopGap = 32;   // Top으로부터 떨어진 거리
+    
+    if(this.divAll.form.divQuickMenu.visible)
+    {
+        this.divAll.form.divQuickMenu.setOffsetTop(e.pos+nTopGap);
+    }
+    
+            if(typeof(mtk)=="object" && mtk!=null && mtk.now!=null){
+                mtk.setPosition();
+            }else if(typeof(tk)=="object" && tk!=null && tk.now!=null){
+                tk.setPosition();
+            }   
+};
+
+
+//가로 스크롤 (divTop 가로스크롤 이동)
+this.divAll_onhscroll = function(obj:nexacro.Div,e:nexacro.ScrollEventInfo)
+{
+    this.divTop.form.fnTopMenuOnhscroll(e.pos);
+    this.divNotice.form.fnDivNoticeOnhscroll(e.pos);
+};
+
+/**
+ * 디지털정부 UI/UX 적용 관련
+ * 로그 출력
+ */
+this.logger = function(){
+	if(this.USE_LOGGER){
+		var baseLog = this._orgurl.replace(".xfdl","") + " > ";
+		trace(baseLog, ...arguments);
+	}
+}]]></Script>
+    <Objects>
+      <Dataset id="dsService" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="id" type="STRING" size="256" sumtext="service id"/>
+          <Column id="inDatasets" type="STRING" size="256" sumtext="파라메터가 될 Dataset list(공백으로 구분)"/>
+          <Column id="outDatasets" type="STRING" size="256" sumtext="받아올 Dataset list(공백으로 구분)"/>
+          <Column id="url" type="STRING" size="256" sumtext="service url"/>
+          <Column id="asynctp" type="STRING" size="256" sumtext="동기/비동기 설정(Default:true)"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="id">listIpChk</Col>
+            <Col id="url">/ews_ocl_mn00_m00.do</Col>
+            <Col id="outDatasets">dsIpChkResult=dsIpChkResult</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMainFormInfo">
+        <ColumnInfo>
+          <Column id="subsys" type="STRING" size="256" description="(필수)서브시스탬"/>
+          <Column id="subsysname" type="STRING" size="256" description="(필수)서브시스템명"/>
+          <Column id="detailsys" type="STRING" size="256" description="(선택)서브상세시스템"/>
+          <Column id="url" type="STRING" size="256"/>
+          <Column id="firsturl" type="STRING" size="256" description="첫화면URL"/>
+          <Column id="mainurl" type="STRING" size="256" description="메인화면URL"/>
+          <Column id="desc" type="STRING" size="256" description="설명"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="subsys">PAS</Col>
+            <Col id="subsysname">대국민포털</Col>
+            <Col id="url">frame::pas/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::pas/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::pas/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsys">SQA</Col>
+            <Col id="subsysname">검정고시</Col>
+            <Col id="url">frame::sqa/frameSubMain.xfdl</Col>
+            <Col id="detailsys">101</Col>
+            <Col id="firsturl">frame::sqa/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::sqa/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">검정고시</Col>
+            <Col id="subsys">SQA</Col>
+            <Col id="url">frame::sqa/frameSubMain2.xfdl</Col>
+            <Col id="detailsys">102</Col>
+            <Col id="firsturl">frame::sqa/frameSubMain2.xfdl</Col>
+            <Col id="mainurl">frame::sqa/frameSubMain2.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">채용(교원채용)</Col>
+            <Col id="subsys">ORE</Col>
+            <Col id="url">frame::ore/frameFirstMain.xfdl</Col>
+            <Col id="firsturl">frame::ore/frameFirstMain.xfdl</Col>
+            <Col id="mainurl">frame::ore/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">채용(계약제교원인력풀)</Col>
+            <Col id="subsys">HRD</Col>
+            <Col id="url">frame::ore/frameFirstMain.xfdl</Col>
+            <Col id="firsturl">frame::ore/frameFirstMain.xfdl</Col>
+            <Col id="mainurl">frame::ore/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학원민원</Col>
+            <Col id="subsys">HES</Col>
+            <Col id="url">frame::hes/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::hes/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::hes/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">비영리법인민원</Col>
+            <Col id="subsys">BDM</Col>
+            <Col id="url">frame::bdm/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::bdm/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::bdm/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">유치원</Col>
+            <Col id="subsys">PAR</Col>
+            <Col id="url">frame::par/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::par/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::par/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsys">UDS</Col>
+            <Col id="subsysname">대입전형(학생부)</Col>
+            <Col id="url">frame::uds/frameFirstMain.xfdl</Col>
+            <Col id="detailsys">201</Col>
+            <Col id="firsturl">frame::uds/frameFirstMain.xfdl</Col>
+            <Col id="mainurl">frame::uds/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">대입전형(검정고시)</Col>
+            <Col id="subsys">SQA</Col>
+            <Col id="url">frame::sqa/frameSubMain3.xfdl</Col>
+            <Col id="detailsys">103</Col>
+            <Col id="firsturl">frame::uds/frameFirstMain.xfdl</Col>
+            <Col id="mainurl">frame::sqa/frameSubMain3.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">교육설문</Col>
+            <Col id="subsys">EDS</Col>
+            <Col id="url">frame::eds/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::eds/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::eds/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학교업무지원(방과후학교)</Col>
+            <Col id="subsys">AFS</Col>
+            <Col id="url">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::afs/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학교업무지원(초등돌봄교실)</Col>
+            <Col id="subsys">ECC</Col>
+            <Col id="url">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::afs/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학교업무지원(교과용도서)</Col>
+            <Col id="subsys">IBM</Col>
+            <Col id="url">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::afs/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학교업무지원(학교환경관리)</Col>
+            <Col id="subsys">SEM</Col>
+            <Col id="url">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::afs/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학교업무지원(체육)</Col>
+            <Col id="subsys">PHE</Col>
+            <Col id="url">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::afs/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학교업무지원(급식)</Col>
+            <Col id="subsys">SML</Col>
+            <Col id="url">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::afs/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsysname">학교업무지원(교육복지)</Col>
+            <Col id="subsys">SPR</Col>
+            <Col id="url">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::afs/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::afs/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsys">EWS</Col>
+            <Col id="subsysname">교육복지원클릭</Col>
+            <Col id="url">frame::ews/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::ews/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::ews/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsys">UDA</Col>
+            <Col id="subsysname">대입전형자료(졸업생온라인신청)</Col>
+            <Col id="url">frame::uda/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::uda/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::uda/frameSubMain.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="subsys">SCR</Col>
+            <Col id="subsysname">온라인학부모소통시스템</Col>
+            <Col id="url">frame::scr/frameSubMain.xfdl</Col>
+            <Col id="firsturl">frame::scr/frameSubMain.xfdl</Col>
+            <Col id="mainurl">frame::scr/frameSubMain.xfdl</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsListPopup" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="popupId" type="string" size="256"/>
+          <Column id="popupTitlNm" type="STRING" size="256"/>
+          <Column id="popupCn" type="string" size="256"/>
+          <Column id="comPopupYn" type="STRING" size="256"/>
+          <Column id="popupTypCd" type="string" size="256"/>
+          <Column id="popupTptCd" type="string" size="256"/>
+          <Column id="pstStsCd" type="string" size="256"/>
+          <Column id="aplcnBgngYmd" type="string" size="256"/>
+          <Column id="aplcnEndYmd" type="string" size="256"/>
+          <Column id="aplcnBgngTm" type="STRING" size="256"/>
+          <Column id="aplcnEndTm" type="STRING" size="256"/>
+          <Column id="expsrSn" type="STRING" size="256"/>
+          <Column id="lnkTypCd" type="STRING" size="256"/>
+          <Column id="pafrBbsScCd" type="STRING" size="256"/>
+          <Column id="pafrBbsId" type="STRING" size="256"/>
+          <Column id="popupUrl" type="STRING" size="256"/>
+          <Column id="lnkNm" type="STRING" size="256"/>
+          <Column id="newinYn" type="STRING" size="256"/>
+          <Column id="fileRefrnId" type="STRING" size="256"/>
+          <Column id="rplcText" type="STRING" size="256"/>
+          <Column id="eventTitlNm" type="STRING" size="256"/>
+          <Column id="eventBgngYmd" type="STRING" size="256"/>
+          <Column id="eventEndYmd" type="STRING" size="256"/>
+          <Column id="eventBgngTm" type="STRING" size="256"/>
+          <Column id="eventEndTm" type="STRING" size="256"/>
+          <Column id="emrgYn" type="STRING" size="256"/>
+          <Column id="jobCn" type="STRING" size="256"/>
+          <Column id="haltWrkCn" type="STRING" size="256"/>
+          <Column id="useYn" type="STRING" size="256"/>
+          <Column id="rgtrNm" type="STRING" size="256"/>
+          <Column id="rgtrDptNm" type="STRING" size="256"/>
+          <Column id="mdfrNm" type="STRING" size="256"/>
+          <Column id="mdfrDptNm" type="STRING" size="256"/>
+          <Column id="rgtrId" type="STRING" size="256"/>
+          <Column id="regDt" type="STRING" size="256"/>
+          <Column id="mdfrId" type="STRING" size="256"/>
+          <Column id="mdfcnDt" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="popupTptCd">01</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsIpChkResult" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="result" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

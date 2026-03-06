@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comp_login_onepass" width="700" height="600" titletext="행안부디지털원패스공통모듈" onload="comp_login_onepass_onload" cssclass="frm_Pop_bgTrsprt">
+    <Layouts>
+      <Layout height="600" width="700">
+        <WebBrowser id="webMain" taborder="0" left="0" top="0" right="0" bottom="0" onloadcompleted="webMain_onloadcompleted" onusernotify="webMain_onusernotify" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  나이스 - 대국민
+*  @MenuPath    샘플
+*  @FileName 	comp_login_onepass.xfdl
+*  @Creator 	정인혁
+*  @CreateDate 	2023.3.29
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          	Modifier            Description
+*******************************************************************************
+*  2023.3.29     	정인혁 	        최초 생성 
+*******************************************************************************
+*/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+this.fv_LoginUrl = "";
+this.fv_param= null;
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.comp_login_onepass_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	if(this.opener)
+	{
+		this.smfInitPopup(this);
+	}
+	else
+	{
+		this.smfInitDiv(this);
+	}
+	
+	this.fv_params = this.smfGetPopupParams();	
+	// Url을 세팅한다.
+	var sBaseUrl= window.location.protocol + "//" + window.location.host;
+	var sUrl= sBaseUrl + "/onepass/login_nexacro.jsp";
+
+	// 로그인 URL을 구한다(원클릭은 포털서버경유)
+	this.fnGetLoginUrl(sBaseUrl);
+	
+	this.webMain.set_url(sUrl);
+}; 
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+this.fnTransCallback = function(svcid,errcd,errmsg)
+{
+
+}
+/**
+ * 팝업의 콜백함수 지정한다
+ * @param : e - 팝업에서 전달한 파라메터
+ * @param : sender - 팝업호출시 전달한 팝업호출객체
+ */
+this.fnPopupCallback = function(e, sender){
+
+};
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+this.fnLogin = function(objParam)
+{
+	// param을 저장해 둔다.
+	this.fv_param = objParam;
+	
+	// 로그인 처리를 호출한다
+	this.webMain.callMethod("fnOpenLogin",this.fv_LoginUrl);
+}
+
+
+this.fnGetLoginUrl = function(sBaseUrl)
+{
+	var sLoginBaseUrl= sBaseUrl;
+	
+	var sSubSysGb = this.smfGetSubSystemGb();
+	
+	if(  (sSubSysGb!="SQA")   // 검정고시
+	  && (sSubSysGb!="ORE")   // 온라인채용
+	  && (sSubSysGb!="HRD")   // 온라인채용(계약직)
+	  )
+	{ 
+		var sPortalUrl = this.fnGetPortalUrl();
+		sLoginBaseUrl = window.location.protocol + "//" + sPortalUrl;
+	}
+	
+	this.fv_LoginUrl = sLoginBaseUrl + "/onepass/login.jsp?returnUrl=" + sBaseUrl + "/onepass/result_nexacro.jsp";  // 팝업으로 사용할 URL
+}
+
+this.fnGetPortalUrl = function()
+{
+	var sPortalUrl = "";
+	var sRunMode = nexacro.getEnvironmentVariable("ev_runMode");  // "1" : 로컬,
+	switch(sRunMode)
+	{
+		case "1" :  // 로컬
+		   sPortalUrl = "localhost:8080";break;
+		case "2" :  // 개발
+		   sPortalUrl = "dev.neis.go.kr";break;
+		case "3" :  // 운영
+		   //sPortalUrl = "neis.go.kr";break;
+		   sPortalUrl = "www.neis.go.kr";break;  
+		case "4" :  // 검증
+		   sPortalUrl = "tst.neis.go.kr";break;
+	}
+	
+	return sPortalUrl;
+}
+
+/************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+ ************************************************************************************************/
+ 
+this.webMain_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+	if(this.opener)
+	{
+		this.fnLogin();
+	}
+};
+
+this.webMain_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	switch(e.userdata)
+	{
+		case "cert_succ" :
+			var sData = this.webMain.callMethod("getNexacroData");
+			var bResult = true;
+		
+			this.smfSendResponseToOpener({result:bResult,data:sData});
+
+			//this.webMain.callMethod("fnClose");
+			
+			if(this.opener)
+			{
+				this.close(true);
+			}
+			break;
+		case "cert_stop" :
+			var sData = this.webMain.callMethod("getNexacroData");
+			var bResult = false;
+		
+			this.smfSendResponseToOpener({result:bResult,data:sData});
+			if(this.opener)
+			{
+				this.close(true);
+			}
+			break;
+		
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

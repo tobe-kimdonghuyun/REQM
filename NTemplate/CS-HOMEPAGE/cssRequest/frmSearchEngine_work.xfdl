@@ -1,0 +1,918 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmSearchEngine_work" width="1300" height="1110" titletext="New Form" onbeforeclose="techinquireList_onbeforeclose" scrollbarsize="0" onload="frmSearchEngine_work_onload">
+    <Layouts>
+      <Layout width="1300" height="1110">
+        <Div id="div_autoCompleteCover" taborder="0" left="12" top="137" width="980" height="332" text="" onclick="div_autoCompleteCover_onclick" onkillfocus="div_autoCompleteCover_onkillfocus" accessibilitylabel="검색어 자동완성 목록">
+          <Layouts>
+            <Layout>
+              <Static id="sta_autoCompleteResult" taborder="0" left="0" top="0" accessibilityenable="false" cssclass="sta_TF_searchBg" right="0" bottom="0"/>
+              <Div id="div_autoCompleteResult" taborder="1" left="0" top="0" text="" accessibilityenable="false" right="0" bottom="0">
+                <Layouts>
+                  <Layout>
+                    <Static id="Static00" taborder="0" text="123123123123123123123123123123" left="23" top="0" width="300" height="38"/>
+                    <Static id="Static00_00" taborder="1" text="123123123123123123123123123123" left="23" top="38" width="300" height="38"/>
+                    <Static id="Static00_00_00" taborder="2" text="123123123123123123123123123123" left="23" top="76" width="300" height="38"/>
+                    <Static id="Static00_00_00_00" taborder="3" text="123123123123123123123123123123" left="23" top="114" width="300" height="38"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Button id="Button00" taborder="2" text="이동" top="0" width="50" height="38" cssclass="btn_WF_MenuMore" right="0"/>
+              <Button id="Button00_00" taborder="3" text="이동" top="38" width="50" height="38" cssclass="btn_WF_MenuMore" right="0"/>
+              <Button id="Button00_01" taborder="4" text="이동" top="76" width="50" height="38" cssclass="btn_WF_MenuMore" right="0"/>
+              <Button id="Button00_02" taborder="5" text="이동" top="114" width="50" height="38" cssclass="btn_WF_MenuMore" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Edit id="edtSearch" taborder="1" left="12" top="60" width="980" height="75" cssclass="edt_WF_search" onkeyup="edtSearch_onkeyup" accessibilitylabel="검색어"/>
+        <Button id="btnSearch" taborder="2" text="검색" left="1007" top="60" width="155" height="75" cssclass="btn_WF_search" onclick="btnSearch_onclick"/>
+        <Button id="btnFilterResize" taborder="3" top="88" width="104" height="18" cssclass="btn_WF_filterOpen" left="1191" accessibilitylabel="상세검색" accessibilitydescription="조건영역 닫힘" onclick="btnFilterResize_onclick" text=""/>
+        <Div id="divSearch" taborder="4" left="0" top="edtSearch:20" width="1300" height="0" text="" formscrolltype="none" accessibilityenable="false" visible="false">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_totalCnt" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="totalCnt" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_SearchParam" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="loginAcc" type="STRING" size="256"/>
+          <Column id="dispGubun" type="STRING" size="256"/>
+          <Column id="PCategory2" type="STRING" size="256"/>
+          <Column id="display_cnt" type="STRING" size="256"/>
+          <Column id="page" type="STRING" size="256"/>
+          <Column id="searchfield" type="STRING" size="256"/>
+          <Column id="searchgubun" type="STRING" size="256"/>
+          <Column id="keyword" type="STRING" size="256"/>
+          <Column id="search_resort" type="STRING" size="256"/>
+          <Column id="keywordall" type="STRING" size="256"/>
+          <Column id="BusinessSection" type="STRING" size="256"/>
+          <Column id="User_id" type="STRING" size="256"/>
+          <Column id="ProjectCd" type="STRING" size="256"/>
+          <Column id="period" type="STRING" size="256"/>
+          <Column id="fromDate" type="STRING" size="256"/>
+          <Column id="toDate" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="dispGubun"/>
+            <Col id="BusinessSection">000</Col>
+            <Col id="searchgubun"/>
+            <Col id="searchfield">200</Col>
+            <Col id="search_resort">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_ReqDetail" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false" onload="ds_end_detail_onload">
+        <ColumnInfo>
+          <Column id="idx" type="STRING" size="256"/>
+          <Column id="req_dt" type="STRING" size="256"/>
+          <Column id="nation" type="STRING" size="256"/>
+          <Column id="req_comp" type="STRING" size="256"/>
+          <Column id="project_cd" type="STRING" size="256"/>
+          <Column id="site_version" type="STRING" size="256"/>
+          <Column id="req_user_pwd" type="STRING" size="256"/>
+          <Column id="req_user" type="STRING" size="256"/>
+          <Column id="req_telno" type="STRING" size="256"/>
+          <Column id="req_email" type="STRING" size="256"/>
+          <Column id="req_status" type="STRING" size="256"/>
+          <Column id="req_kind1" type="STRING" size="256"/>
+          <Column id="req_kind2" type="STRING" size="256"/>
+          <Column id="req_kind3" type="STRING" size="256"/>
+          <Column id="req_title" type="STRING" size="256"/>
+          <Column id="proc_level" type="STRING" size="256"/>
+          <Column id="pub_yn" type="STRING" size="256"/>
+          <Column id="open_yn" type="STRING" size="256"/>
+          <Column id="rep_idx" type="STRING" size="256"/>
+          <Column id="res_idx" type="STRING" size="256"/>
+          <Column id="proc_time" type="STRING" size="256"/>
+          <Column id="mip_version" type="STRING" size="256"/>
+          <Column id="next_seq" type="STRING" size="256"/>
+          <Column id="next_client" type="STRING" size="256"/>
+          <Column id="next_project" type="STRING" size="256"/>
+          <Column id="req_remark" type="STRING" size="256"/>
+          <Column id="work_time" type="STRING" size="256"/>
+          <Column id="res_remark" type="STRING" size="256"/>
+          <Column id="proc_cause" type="STRING" size="256"/>
+          <Column id="rep_level" type="STRING" size="256"/>
+          <Column id="rep_step" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_downloadfile" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="fileGubun" type="STRING" size="256"/>
+          <Column id="fileKey" type="STRING" size="256"/>
+          <Column id="fileName" type="STRING" size="256"/>
+          <Column id="saveName" type="STRING" size="256"/>
+          <Column id="writeDt" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_CustSafctData" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="idx" type="STRING" size="256"/>
+          <Column id="user_id" type="STRING" size="256"/>
+          <Column id="case" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_hotlist" firefirstcount="0" useclientlayout="true" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false" onload="ds_hotlist_onload">
+        <ColumnInfo>
+          <Column id="rowNum" type="STRING" size="256"/>
+          <Column id="QL_SEQ" type="STRING" size="256"/>
+          <Column id="INSERT_USER_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_CODE" type="STRING" size="256"/>
+          <Column id="qc_no" type="STRING" size="256"/>
+          <Column id="SUBJECT" type="STRING" size="256"/>
+          <Column id="CONTENTS" type="STRING" size="256"/>
+          <Column id="CONTENTS_TEXT" type="STRING" size="256"/>
+          <Column id="disp_SUBJECT" type="STRING" size="256"/>
+          <Column id="INSERT_DATE" type="STRING" size="256"/>
+          <Column id="gridLevelImage" type="STRING" size="256"/>
+          <Column id="STATUS_CODE" type="STRING" size="256"/>
+          <Column id="user_cnt" type="STRING" size="256"/>
+          <Column id="user_cnt1" type="STRING" size="256"/>
+          <Column id="user_cnt2" type="STRING" size="256"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="WAIT_TIME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_InParam" firefirstcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="idx" type="STRING" size="256"/>
+          <Column id="req_dt" type="STRING" size="256"/>
+          <Column id="nation" type="STRING" size="256"/>
+          <Column id="req_comp" type="STRING" size="256"/>
+          <Column id="project_cd" type="STRING" size="256"/>
+          <Column id="site_version" type="STRING" size="256"/>
+          <Column id="req_user" type="STRING" size="256"/>
+          <Column id="req_telno" type="STRING" size="256"/>
+          <Column id="req_email" type="STRING" size="256"/>
+          <Column id="req_status" type="STRING" size="256"/>
+          <Column id="req_idx" type="STRING" size="256"/>
+          <Column id="filekey" type="STRING" size="256"/>
+          <Column id="tobe_user" type="STRING" size="256"/>
+          <Column id="proc_user" type="STRING" size="256"/>
+          <Column id="req_kind1" type="STRING" size="256"/>
+          <Column id="req_kind2" type="STRING" size="256"/>
+          <Column id="req_kind3" type="STRING" size="256"/>
+          <Column id="req_title" type="STRING" size="256"/>
+          <Column id="req_title_lang" type="STRING" size="256"/>
+          <Column id="proc_level" type="STRING" size="256"/>
+          <Column id="req_user_pwd" type="STRING" size="256"/>
+          <Column id="user_cnt" type="STRING" size="256"/>
+          <Column id="pub_yn" type="STRING" size="256"/>
+          <Column id="goods_cd" type="STRING" size="256"/>
+          <Column id="open_yn" type="STRING" size="256"/>
+          <Column id="req_memo" type="STRING" size="256"/>
+          <Column id="req_ymd" type="STRING" size="256"/>
+          <Column id="mip_version" type="STRING" size="256"/>
+          <Column id="accept_userid" type="STRING" size="256"/>
+          <Column id="req_userid" type="STRING" size="256"/>
+          <Column id="next_client" type="STRING" size="256"/>
+          <Column id="next_project" type="STRING" size="256"/>
+          <Column id="next_client_code" type="STRING" size="256"/>
+          <Column id="next_project_code" type="STRING" size="256"/>
+          <Column id="rep_idx" type="STRING" size="256"/>
+          <Column id="rep_level" type="STRING" size="256"/>
+          <Column id="rep_step" type="STRING" size="256"/>
+          <Column id="open_nation" type="STRING" size="256"/>
+          <Column id="sch_dt" type="STRING" size="256"/>
+          <Column id="req_remark" type="STRING" size="256"/>
+          <Column id="req_remark_lang" type="STRING" size="256"/>
+          <Column id="black_yn" type="STRING" size="256"/>
+          <Column id="req_type" type="STRING" size="256"/>
+          <Column id="black_remark" type="STRING" size="256"/>
+          <Column id="req_telno2" type="STRING" size="256"/>
+          <Column id="tobe_yn" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="site_version"/>
+            <Col id="req_user"/>
+            <Col id="req_telno"/>
+            <Col id="req_email"/>
+            <Col id="next_client"/>
+            <Col id="next_project"/>
+            <Col id="mip_version"/>
+            <Col id="open_yn"/>
+            <Col id="req_title"/>
+            <Col id="req_kind1"/>
+            <Col id="req_remark"/>
+            <Col id="idx"/>
+            <Col id="req_dt"/>
+            <Col id="nation"/>
+            <Col id="req_comp"/>
+            <Col id="project_cd"/>
+            <Col id="req_status"/>
+            <Col id="req_idx"/>
+            <Col id="filekey"/>
+            <Col id="tobe_user"/>
+            <Col id="proc_user"/>
+            <Col id="req_kind2"/>
+            <Col id="req_kind3"/>
+            <Col id="req_title_lang"/>
+            <Col id="proc_level"/>
+            <Col id="req_user_pwd"/>
+            <Col id="user_cnt"/>
+            <Col id="pub_yn"/>
+            <Col id="goods_cd"/>
+            <Col id="req_memo"/>
+            <Col id="req_ymd"/>
+            <Col id="accept_userid"/>
+            <Col id="req_userid"/>
+            <Col id="next_client_code"/>
+            <Col id="next_project_code"/>
+            <Col id="rep_idx"/>
+            <Col id="rep_level"/>
+            <Col id="rep_step"/>
+            <Col id="open_nation"/>
+            <Col id="sch_dt"/>
+            <Col id="req_remark_lang"/>
+            <Col id="black_yn"/>
+            <Col id="req_type"/>
+            <Col id="black_remark"/>
+            <Col id="req_telno2"/>
+            <Col id="tobe_yn"/>
+          </Row>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row>
+            <Col id="idx">11</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_bookMark"/>
+      <Dataset id="ds_update">
+        <ColumnInfo>
+          <Column id="SQL_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_userInfo"/>
+      <Dataset id="ds_cnt">
+        <ColumnInfo>
+          <Column id="TOTAL" type="INT" size="11"/>
+          <Column id="NPN" type="INT" size="11"/>
+          <Column id="NP17" type="INT" size="11"/>
+          <Column id="NP14" type="INT" size="11"/>
+          <Column id="XP" type="INT" size="11"/>
+          <Column id="MP" type="INT" size="11"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_autoResult">
+        <ColumnInfo>
+          <Column id="hkeyword" type="STRING" size="256"/>
+          <Column id="keyword" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSubMenu" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="category" type="STRING" size="256"/>
+          <Column id="subCatgy" type="STRING" size="256"/>
+          <Column id="langCd" type="STRING" size="256"/>
+          <Column id="selImg" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_autoComplete">
+        <ColumnInfo>
+          <Column id="hkeyword" type="STRING" size="256"/>
+          <Column id="keyword" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_SearchCond">
+        <ColumnInfo>
+          <Column id="query" type="STRING" size="256"/>
+          <Column id="reChk" type="STRING" size="256"/>
+          <Column id="reQuery" type="STRING" size="256"/>
+          <Column id="startCount" type="STRING" size="256"/>
+          <Column id="sort" type="STRING" size="256"/>
+          <Column id="collection" type="STRING" size="256"/>
+          <Column id="range" type="STRING" size="256"/>
+          <Column id="startDate" type="STRING" size="256"/>
+          <Column id="endDate" type="STRING" size="256"/>
+          <Column id="realQuery" type="STRING" size="256"/>
+          <Column id="RANK" type="STRING" size="256"/>
+          <Column id="useSynonym" type="STRING" size="256"/>
+          <Column id="searchField" type="STRING" size="256"/>
+          <Column id="writer" type="STRING" size="256"/>
+          <Column id="employ" type="STRING" size="256"/>
+          <Column id="pub_yn" type="STRING" size="256"/>
+          <Column id="doc_id" type="STRING" size="256"/>
+          <Column id="open_yn" type="STRING" size="256"/>
+          <Column id="goods_gbn" type="STRING" size="256"/>
+          <Column id="rt" type="STRING" size="256"/>
+          <Column id="rt2" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="query"/>
+            <Col id="reQuery"/>
+            <Col id="startCount">0</Col>
+            <Col id="sort">DATE/DESC</Col>
+            <Col id="collection">ALL</Col>
+            <Col id="range">A</Col>
+            <Col id="startDate">19700101</Col>
+            <Col id="endDate">20220118</Col>
+            <Col id="realQuery"/>
+            <Col id="useSynonym">Y</Col>
+            <Col id="searchField">ALL</Col>
+            <Col id="writer"/>
+            <Col id="employ"/>
+            <Col id="pub_yn"/>
+            <Col id="doc_id"/>
+            <Col id="open_yn"/>
+            <Col id="goods_gbn"/>
+            <Col id="rt"/>
+            <Col id="rt2"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_bbsResult" firefirstcount="0" firenextcount="0" useclientlayout="true" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="COLLECTION_CODE" size="100" type="string"/>
+          <Column id="COLLECTION_NAME" size="100" type="string"/>
+          <Column id="CNT" size="100" type="INT"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_bbs_notice" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="rowNum" type="INT" size="20"/>
+          <Column id="BL_SEQ" type="BIGDECIMAL" size="19"/>
+          <Column id="user_cnt" type="INT" size="11"/>
+          <Column id="boardid" type="STRING" size="255"/>
+          <Column id="SUBJECT" type="STRING" size="255"/>
+          <Column id="INSERT_DATE" type="STRING" size="255"/>
+          <Column id="CONTENTS" type="STRING" size="255"/>
+          <Column id="goods_gbn" type="STRING" size="255"/>
+          <Column id="SUBJECT_COLOR" type="STRING" size="255"/>
+          <Column id="BOLD_FLAG" type="STRING" size="255"/>
+          <Column id="HOT_FLAG" type="STRING" size="255"/>
+          <Column id="IMPORTANT_FLAG" type="STRING" size="255"/>
+          <Column id="NOTICE_FLAG" type="STRING" size="255"/>
+          <Column id="BookMark_cnt" type="STRING" size="11"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="FILENAME" type="STRING" size="256"/>
+          <Column id="FILE_CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_bbs_tip" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="DOCID" size="100" type="string"/>
+          <Column id="Date" size="100" type="string"/>
+          <Column id="an" size="100" type="string"/>
+          <Column id="boardid" size="100" type="string"/>
+          <Column id="title" size="100" type="string"/>
+          <Column id="content" size="100" type="string"/>
+          <Column id="modifyday" size="100" type="string"/>
+          <Column id="user_id" size="100" type="string"/>
+          <Column id="user_nm" size="100" type="string"/>
+          <Column id="hotchk" size="100" type="string"/>
+          <Column id="importchk" size="100" type="string"/>
+          <Column id="open_yn" size="100" type="string"/>
+          <Column id="public_yn" size="100" type="string"/>
+          <Column id="sch_dt" size="100" type="string"/>
+          <Column id="goods_gbn" size="100" type="string"/>
+          <Column id="product_nm" size="100" type="string"/>
+          <Column id="title_color" size="100" type="string"/>
+          <Column id="title_bold" size="100" type="string"/>
+          <Column id="user_cnt" size="100" type="string"/>
+          <Column id="groupkey" size="100" type="string"/>
+          <Column id="groupkey_nm" size="100" type="string"/>
+          <Column id="file_names" size="100" type="string"/>
+          <Column id="_file" size="100" type="string"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_bbs_resouce" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="DOCID" size="100" type="string"/>
+          <Column id="Date" size="100" type="string"/>
+          <Column id="an" size="100" type="string"/>
+          <Column id="boardid" size="100" type="string"/>
+          <Column id="title" size="100" type="string"/>
+          <Column id="content" size="100" type="string"/>
+          <Column id="modifyday" size="100" type="string"/>
+          <Column id="user_id" size="100" type="string"/>
+          <Column id="user_nm" size="100" type="string"/>
+          <Column id="hotchk" size="100" type="string"/>
+          <Column id="importchk" size="100" type="string"/>
+          <Column id="open_yn" size="100" type="string"/>
+          <Column id="public_yn" size="100" type="string"/>
+          <Column id="sch_dt" size="100" type="string"/>
+          <Column id="goods_gbn" size="100" type="string"/>
+          <Column id="product_nm" size="100" type="string"/>
+          <Column id="title_color" size="100" type="string"/>
+          <Column id="title_bold" size="100" type="string"/>
+          <Column id="user_cnt" size="100" type="string"/>
+          <Column id="groupkey" size="100" type="string"/>
+          <Column id="groupkey_nm" size="100" type="string"/>
+          <Column id="file_names" size="100" type="string"/>
+          <Column id="_file" size="100" type="string"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DOCID">A09_7</Col>
+            <Col id="Date">2010042820100428</Col>
+            <Col id="an">7</Col>
+            <Col id="boardid">A09</Col>
+            <Col id="title">XPLATFORM 교육자료</Col>
+            <Col id="content">&amp;lt;BR&amp;gt;&amp;lt;br&amp;gt;&amp;lt;P style=&amp;quot;TEXT-ALIGN: left; MARGIN: 0cm 0c</Col>
+            <Col id="modifyday">2011-02-07 10:15:23.29</Col>
+            <Col id="user_id">0403180</Col>
+            <Col id="user_nm">남궁선</Col>
+            <Col id="hotchk">0</Col>
+            <Col id="importchk">0</Col>
+            <Col id="open_yn">0</Col>
+            <Col id="public_yn">0</Col>
+            <Col id="sch_dt">2010-04-28 15:42:12.487</Col>
+            <Col id="goods_gbn">002</Col>
+            <Col id="product_nm">XPLATFORM</Col>
+            <Col id="title_color">black</Col>
+            <Col id="title_bold">0</Col>
+            <Col id="user_cnt">2574</Col>
+            <Col id="groupkey">B800</Col>
+            <Col id="groupkey_nm">교육-자료실</Col>
+            <Col id="file_names">A09\201004-A09-00001-XPlatform 교육.zip</Col>
+            <Col id="_file">[{reason=null, path=/08.FILES/A09/201004-A09-00001</Col>
+          </Row>
+          <Row>
+            <Col id="DOCID">A09_25</Col>
+            <Col id="Date">2020042020200420</Col>
+            <Col id="an">25</Col>
+            <Col id="boardid">A09</Col>
+            <Col id="title">넥사크로플랫폼(17.1) 교육자료 (2020년4월21부터 진행)</Col>
+            <Col id="content">&amp;lt;p&amp;gt;안녕하세요&amp;lt;/p&amp;gt;&amp;#xa;&amp;#xa;&amp;lt;p&amp;gt;투비소프트 교육서비스팀입니다.&amp;lt;/p&amp;gt;&amp;#xa;&amp;#xa;&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/</Col>
+            <Col id="modifyday">2020-05-06 11:11:33.527</Col>
+            <Col id="user_id">0501191</Col>
+            <Col id="user_nm">김재범</Col>
+            <Col id="hotchk">0</Col>
+            <Col id="importchk">0</Col>
+            <Col id="open_yn">1</Col>
+            <Col id="public_yn">0</Col>
+            <Col id="sch_dt">2020-04-20 14:01:54.07</Col>
+            <Col id="goods_gbn">001</Col>
+            <Col id="product_nm">MiPlatform</Col>
+            <Col id="title_color">black</Col>
+            <Col id="title_bold">0</Col>
+            <Col id="user_cnt">5784</Col>
+            <Col id="groupkey">B800</Col>
+            <Col id="groupkey_nm">교육-자료실</Col>
+            <Col id="file_names">A09\202004-A09-00001-nexacro17.1_Education_Materia</Col>
+            <Col id="_file">[{reason=null, path=/08.FILES/A09/202004-A09-00001</Col>
+          </Row>
+          <Row>
+            <Col id="DOCID">A09_8</Col>
+            <Col id="Date">2011011920110119</Col>
+            <Col id="an">8</Col>
+            <Col id="boardid">A09</Col>
+            <Col id="title">XPLATFORM9.1교육자료</Col>
+            <Col id="content">&amp;lt;P&amp;gt;&amp;lt;BR&amp;gt;?XPLATFORM 기본과정 교육자료 입니다.&amp;lt;BR&amp;gt;&amp;lt;BR&amp;gt;첨부 파일을 Dow</Col>
+            <Col id="modifyday">2012-09-05 17:05:43.347</Col>
+            <Col id="user_id">0510100</Col>
+            <Col id="user_nm">윤재식</Col>
+            <Col id="hotchk">0</Col>
+            <Col id="importchk">0</Col>
+            <Col id="open_yn">1</Col>
+            <Col id="public_yn">0</Col>
+            <Col id="sch_dt">2011-01-19 17:55:31.477</Col>
+            <Col id="goods_gbn">002</Col>
+            <Col id="product_nm">XPLATFORM</Col>
+            <Col id="title_color">black</Col>
+            <Col id="title_bold">0</Col>
+            <Col id="user_cnt">16594</Col>
+            <Col id="groupkey">B800</Col>
+            <Col id="groupkey_nm">교육-자료실</Col>
+            <Col id="file_names">A09\201101-A09-00001-XPLATFORM교육자료.zip</Col>
+            <Col id="_file">[{reason=null, path=/08.FILES/A09/201101-A09-00001</Col>
+          </Row>
+          <Row>
+            <Col id="DOCID">A09_24</Col>
+            <Col id="Date">2019030420190304</Col>
+            <Col id="an">24</Col>
+            <Col id="boardid">A09</Col>
+            <Col id="title">넥사크로플랫폼 17 교육자료 (2019년 1월 정기(17.0.0.1601) 이후 버전)</Col>
+            <Col id="content">&amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;첨부파일을 다운 받기 전 버전을 확인해주시기 바랍니다.&amp;lt;/strong&amp;gt;</Col>
+            <Col id="modifyday">2020-05-07 09:53:52.977</Col>
+            <Col id="user_id">11040101</Col>
+            <Col id="user_nm">조천희</Col>
+            <Col id="hotchk">0</Col>
+            <Col id="importchk">0</Col>
+            <Col id="open_yn">1</Col>
+            <Col id="public_yn">0</Col>
+            <Col id="sch_dt">2019-03-04 16:34:35.25</Col>
+            <Col id="goods_gbn">001</Col>
+            <Col id="product_nm">MiPlatform</Col>
+            <Col id="title_color">black</Col>
+            <Col id="title_bold">0</Col>
+            <Col id="user_cnt">5975</Col>
+            <Col id="groupkey">B800</Col>
+            <Col id="groupkey_nm">교육-자료실</Col>
+            <Col id="file_names">A09\201903-A09-00001-nexacro17_Education_Materials</Col>
+            <Col id="_file">[{reason=null, path=/08.FILES/A09/201903-A09-00001</Col>
+          </Row>
+          <Row>
+            <Col id="DOCID">A09_21</Col>
+            <Col id="Date">2018033020180330</Col>
+            <Col id="an">21</Col>
+            <Col id="boardid">A09</Col>
+            <Col id="title">넥사크로플랫폼 17 교육자료 (2019년 1월 정기(17.0.0.1601) 이전 버전)</Col>
+            <Col id="content">&amp;lt;P&amp;gt;&amp;lt;STRONG&amp;gt;첨부파일을 다운 받기 전 버전을 확인해주시기 바랍니다.&amp;lt;BR&amp;gt;&amp;lt;BR&amp;gt;프</Col>
+            <Col id="modifyday">2019-03-04 16:52:39.143</Col>
+            <Col id="user_id">07100102</Col>
+            <Col id="user_nm">한정훈</Col>
+            <Col id="hotchk">0</Col>
+            <Col id="importchk">0</Col>
+            <Col id="open_yn">1</Col>
+            <Col id="public_yn">0</Col>
+            <Col id="sch_dt">2018-03-30 11:44:16.19</Col>
+            <Col id="goods_gbn">001</Col>
+            <Col id="product_nm">MiPlatform</Col>
+            <Col id="title_color">black</Col>
+            <Col id="title_bold">0</Col>
+            <Col id="user_cnt">6389</Col>
+            <Col id="groupkey">B800</Col>
+            <Col id="groupkey_nm">교육-자료실</Col>
+            <Col id="file_names">A09\201803-A09-00001-nexacro17_Education_Materials</Col>
+            <Col id="_file">[{reason=null, path=/08.FILES/A09/201803-A09-00001</Col>
+          </Row>
+          <Row>
+            <Col id="DOCID">A09_30</Col>
+            <Col id="Date">2021122220211222</Col>
+            <Col id="an">30</Col>
+            <Col id="boardid">A09</Col>
+            <Col id="title">넥사크로 N 기본 교육자료</Col>
+            <Col id="content">&amp;lt;p&amp;gt;투비소프트 교육팀 입니다.&amp;lt;/p&amp;gt;&amp;#xa;&amp;#xa;&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;&amp;#xa;&amp;#xa;&amp;lt;p&amp;gt;넥사크로 N 기본</Col>
+            <Col id="modifyday">2021-12-22 15:43:34.503</Col>
+            <Col id="user_id">07100102</Col>
+            <Col id="user_nm">한정훈</Col>
+            <Col id="hotchk">0</Col>
+            <Col id="importchk">0</Col>
+            <Col id="open_yn">1</Col>
+            <Col id="public_yn">0</Col>
+            <Col id="sch_dt">2021-12-22 15:39:56.897</Col>
+            <Col id="goods_gbn">009</Col>
+            <Col id="product_nm">NexacroN</Col>
+            <Col id="title_color">black</Col>
+            <Col id="title_bold">0</Col>
+            <Col id="user_cnt">119</Col>
+            <Col id="groupkey">B800</Col>
+            <Col id="groupkey_nm">교육-자료실</Col>
+            <Col id="file_names">A09\202112-A09-00002-Nexacro_Education_Materials.z</Col>
+            <Col id="_file">[{reason=null, path=/08.FILES/A09/202112-A09-00002</Col>
+          </Row>
+          <Row>
+            <Col id="DOCID">A09_19</Col>
+            <Col id="Date">2015040320150403</Col>
+            <Col id="an">19</Col>
+            <Col id="boardid">A09</Col>
+            <Col id="title">MiPlatform3.3  Design 교육자료</Col>
+            <Col id="content">&amp;lt;P&amp;gt;MiPlatform3.3 Design 기본과정 교육자료입니다.&amp;lt;/P&amp;gt;&amp;lt;BR&amp;gt;&amp;lt;BR&amp;gt;&amp;#xd;</Col>
+            <Col id="modifyday">2015-06-02 10:38:50.197</Col>
+            <Col id="user_id">11041805</Col>
+            <Col id="user_nm">전지영</Col>
+            <Col id="hotchk">0</Col>
+            <Col id="importchk">0</Col>
+            <Col id="open_yn">1</Col>
+            <Col id="public_yn">0</Col>
+            <Col id="sch_dt">2015-04-03 17:55:14.677</Col>
+            <Col id="goods_gbn">001</Col>
+            <Col id="product_nm">MiPlatform</Col>
+            <Col id="title_color">black</Col>
+            <Col id="title_bold">0</Col>
+            <Col id="user_cnt">4635</Col>
+            <Col id="groupkey">B800</Col>
+            <Col id="groupkey_nm">교육-자료실</Col>
+            <Col id="file_names">A09\201504-A09-00002-MiPlatform 3.3 Design EDU.zip</Col>
+            <Col id="_file">[{reason=null, path=/08.FILES/A09/201504-A09-00002</Col>
+          </Row>
+          <Row>
+            <Col id="DOCID">A09_27</Col>
+            <Col id="Date">2021041220210412</Col>
+            <Col id="an">27</Col>
+            <Col id="boardid">A09</Col>
+            <Col id="title">넥사크로플랫폼 17.1 퍼블리싱 기본 교육자료(2021년 1월 부터 진행)</Col>
+            <Col id="content">&amp;lt;p&amp;gt;안녕하세요&amp;lt;/p&amp;gt;&amp;#xa;&amp;#xa;&amp;lt;p&amp;gt;투비소프트 교육서비스팀입니다.&amp;lt;/p&amp;gt;&amp;#xa;&amp;#xa;&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/</Col>
+            <Col id="modifyday">2021-12-20 17:36:42.217</Col>
+            <Col id="user_id">11041805</Col>
+            <Col id="user_nm">전지영</Col>
+            <Col id="hotchk">0</Col>
+            <Col id="importchk">0</Col>
+            <Col id="open_yn">1</Col>
+            <Col id="public_yn">0</Col>
+            <Col id="sch_dt">2021-04-12 17:00:26.447</Col>
+            <Col id="goods_gbn">008</Col>
+            <Col id="product_nm">nexacro17</Col>
+            <Col id="title_color">black</Col>
+            <Col id="title_bold">0</Col>
+            <Col id="user_cnt">890</Col>
+            <Col id="groupkey">B800</Col>
+            <Col id="groupkey_nm">교육-자료실</Col>
+            <Col id="file_names">A09\202104-A09-00001-Nexacro17 퍼블리싱 기본과정.zip</Col>
+            <Col id="_file">[{reason=null, path=/08.FILES/A09/202104-A09-00001</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_bbs_edu_notice" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="rowNum" type="INT" size="20"/>
+          <Column id="BL_SEQ" type="BIGDECIMAL" size="19"/>
+          <Column id="user_cnt" type="INT" size="11"/>
+          <Column id="boardid" type="STRING" size="255"/>
+          <Column id="SUBJECT" type="STRING" size="255"/>
+          <Column id="INSERT_DATE" type="STRING" size="255"/>
+          <Column id="CONTENTS" type="STRING" size="255"/>
+          <Column id="goods_gbn" type="STRING" size="255"/>
+          <Column id="SUBJECT_COLOR" type="STRING" size="255"/>
+          <Column id="BOLD_FLAG" type="STRING" size="255"/>
+          <Column id="HOT_FLAG" type="STRING" size="255"/>
+          <Column id="IMPORTANT_FLAG" type="STRING" size="255"/>
+          <Column id="NOTICE_FLAG" type="STRING" size="255"/>
+          <Column id="BookMark_cnt" type="STRING" size="11"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="FILENAME" type="STRING" size="256"/>
+          <Column id="FILE_CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_bbs_edu_resource" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="rowNum" type="INT" size="20"/>
+          <Column id="BL_SEQ" type="BIGDECIMAL" size="19"/>
+          <Column id="user_cnt" type="INT" size="11"/>
+          <Column id="boardid" type="STRING" size="255"/>
+          <Column id="SUBJECT" type="STRING" size="255"/>
+          <Column id="INSERT_DATE" type="STRING" size="255"/>
+          <Column id="CONTENTS" type="STRING" size="255"/>
+          <Column id="goods_gbn" type="STRING" size="255"/>
+          <Column id="SUBJECT_COLOR" type="STRING" size="255"/>
+          <Column id="BOLD_FLAG" type="STRING" size="255"/>
+          <Column id="HOT_FLAG" type="STRING" size="255"/>
+          <Column id="IMPORTANT_FLAG" type="STRING" size="255"/>
+          <Column id="NOTICE_FLAG" type="STRING" size="255"/>
+          <Column id="BookMark_cnt" type="STRING" size="11"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="FILENAME" type="STRING" size="256"/>
+          <Column id="FILE_CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_mng_xplatform" firefirstcount="0" firenextcount="0" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="rowNum" type="STRING" size="256"/>
+          <Column id="QL_SEQ" type="STRING" size="256"/>
+          <Column id="INSERT_USER_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_CODE" type="STRING" size="256"/>
+          <Column id="qc_no" type="STRING" size="256"/>
+          <Column id="SUBJECT" type="STRING" size="256"/>
+          <Column id="CONTENTS" type="STRING" size="256"/>
+          <Column id="CONTENTS_TEXT" type="STRING" size="256"/>
+          <Column id="disp_SUBJECT" type="STRING" size="256"/>
+          <Column id="INSERT_DATE" type="STRING" size="256"/>
+          <Column id="gridLevelImage" type="STRING" size="256"/>
+          <Column id="STATUS_CODE" type="STRING" size="256"/>
+          <Column id="user_cnt" type="STRING" size="256"/>
+          <Column id="user_cnt1" type="STRING" size="256"/>
+          <Column id="user_cnt2" type="STRING" size="256"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="gridLevelImage" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_mng_nexacro14" firefirstcount="0" firenextcount="0" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="rowNum" type="STRING" size="256"/>
+          <Column id="QL_SEQ" type="STRING" size="256"/>
+          <Column id="INSERT_USER_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_CODE" type="STRING" size="256"/>
+          <Column id="qc_no" type="STRING" size="256"/>
+          <Column id="SUBJECT" type="STRING" size="256"/>
+          <Column id="CONTENTS" type="STRING" size="256"/>
+          <Column id="CONTENTS_TEXT" type="STRING" size="256"/>
+          <Column id="disp_SUBJECT" type="STRING" size="256"/>
+          <Column id="INSERT_DATE" type="STRING" size="256"/>
+          <Column id="gridLevelImage" type="STRING" size="256"/>
+          <Column id="STATUS_CODE" type="STRING" size="256"/>
+          <Column id="user_cnt" type="STRING" size="256"/>
+          <Column id="user_cnt1" type="STRING" size="256"/>
+          <Column id="user_cnt2" type="STRING" size="256"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="gridLevelImage" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_condition" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="startCount" type="STRING" size="256"/>
+          <Column id="query" type="STRING" size="256"/>
+          <Column id="collection" type="STRING" size="256"/>
+          <Column id="rt" type="STRING" size="256"/>
+          <Column id="rt2" type="STRING" size="256"/>
+          <Column id="reQuery" type="STRING" size="256"/>
+          <Column id="realQuery" type="STRING" size="256"/>
+          <Column id="sort" type="STRING" size="256"/>
+          <Column id="range" type="STRING" size="256"/>
+          <Column id="startDate" type="STRING" size="256"/>
+          <Column id="endDate" type="STRING" size="256"/>
+          <Column id="useSynonym" type="STRING" size="256"/>
+          <Column id="writer" type="STRING" size="256"/>
+          <Column id="employ" type="STRING" size="256"/>
+          <Column id="pub_yn" type="STRING" size="256"/>
+          <Column id="doc_id" type="STRING" size="256"/>
+          <Column id="open_yn" type="STRING" size="256"/>
+          <Column id="goods_gbn" type="STRING" size="256"/>
+          <Column id="searchField" type="STRING" size="256"/>
+          <Column id="paginate" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_mng_nexacro17" firefirstcount="0" firenextcount="0" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="rowNum" type="STRING" size="256"/>
+          <Column id="QL_SEQ" type="STRING" size="256"/>
+          <Column id="INSERT_USER_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_CODE" type="STRING" size="256"/>
+          <Column id="qc_no" type="STRING" size="256"/>
+          <Column id="SUBJECT" type="STRING" size="256"/>
+          <Column id="CONTENTS" type="STRING" size="256"/>
+          <Column id="CONTENTS_TEXT" type="STRING" size="256"/>
+          <Column id="disp_SUBJECT" type="STRING" size="256"/>
+          <Column id="INSERT_DATE" type="STRING" size="256"/>
+          <Column id="gridLevelImage" type="STRING" size="256"/>
+          <Column id="STATUS_CODE" type="STRING" size="256"/>
+          <Column id="user_cnt" type="STRING" size="256"/>
+          <Column id="user_cnt1" type="STRING" size="256"/>
+          <Column id="user_cnt2" type="STRING" size="256"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="gridLevelImage" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_mng_nexacroN" firefirstcount="0" firenextcount="0" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="rowNum" type="STRING" size="256"/>
+          <Column id="QL_SEQ" type="STRING" size="256"/>
+          <Column id="INSERT_USER_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_CODE" type="STRING" size="256"/>
+          <Column id="qc_no" type="STRING" size="256"/>
+          <Column id="SUBJECT" type="STRING" size="256"/>
+          <Column id="CONTENTS" type="STRING" size="256"/>
+          <Column id="CONTENTS_TEXT" type="STRING" size="256"/>
+          <Column id="disp_SUBJECT" type="STRING" size="256"/>
+          <Column id="INSERT_DATE" type="STRING" size="256"/>
+          <Column id="gridLevelImage" type="STRING" size="256"/>
+          <Column id="STATUS_CODE" type="STRING" size="256"/>
+          <Column id="user_cnt" type="STRING" size="256"/>
+          <Column id="user_cnt1" type="STRING" size="256"/>
+          <Column id="user_cnt2" type="STRING" size="256"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="gridLevelImage" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_mng_miplatform" firefirstcount="0" firenextcount="0" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="rowNum" type="STRING" size="256"/>
+          <Column id="QL_SEQ" type="STRING" size="256"/>
+          <Column id="INSERT_USER_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_CODE" type="STRING" size="256"/>
+          <Column id="qc_no" type="STRING" size="256"/>
+          <Column id="SUBJECT" type="STRING" size="256"/>
+          <Column id="CONTENTS" type="STRING" size="256"/>
+          <Column id="CONTENTS_TEXT" type="STRING" size="256"/>
+          <Column id="disp_SUBJECT" type="STRING" size="256"/>
+          <Column id="INSERT_DATE" type="STRING" size="256"/>
+          <Column id="gridLevelImage" type="STRING" size="256"/>
+          <Column id="STATUS_CODE" type="STRING" size="256"/>
+          <Column id="user_cnt" type="STRING" size="256"/>
+          <Column id="user_cnt1" type="STRING" size="256"/>
+          <Column id="user_cnt2" type="STRING" size="256"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="gridLevelImage" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_NoticeList01" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false" onload="ds_hotlist_onload">
+        <ColumnInfo>
+          <Column id="rowNum" type="INT" size="20"/>
+          <Column id="BL_SEQ" type="BIGDECIMAL" size="19"/>
+          <Column id="user_cnt" type="INT" size="11"/>
+          <Column id="boardid" type="STRING" size="255"/>
+          <Column id="SUBJECT" type="STRING" size="255"/>
+          <Column id="INSERT_DATE" type="STRING" size="255"/>
+          <Column id="CONTENTS" type="STRING" size="255"/>
+          <Column id="CONTENTS_TEXT" type="STRING" size="256"/>
+          <Column id="goods_gbn" type="STRING" size="255"/>
+          <Column id="SUBJECT_COLOR" type="STRING" size="255"/>
+          <Column id="BOLD_FLAG" type="STRING" size="255"/>
+          <Column id="HOT_FLAG" type="STRING" size="255"/>
+          <Column id="IMPORTANT_FLAG" type="STRING" size="255"/>
+          <Column id="NOTICE_FLAG" type="STRING" size="255"/>
+          <Column id="BookMark_cnt" type="STRING" size="11"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="FILENAME" type="STRING" size="256"/>
+          <Column id="FILE_CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_totalCnt00" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="totalCnt" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_SearchParam00" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="loginAcc" type="STRING" size="256"/>
+          <Column id="dispGubun" type="STRING" size="256"/>
+          <Column id="PCategory2" type="STRING" size="256"/>
+          <Column id="display_cnt" type="STRING" size="256"/>
+          <Column id="page" type="STRING" size="256"/>
+          <Column id="searchfield" type="STRING" size="256"/>
+          <Column id="searchgubun" type="STRING" size="256"/>
+          <Column id="keyword" type="STRING" size="256"/>
+          <Column id="search_resort" type="STRING" size="256"/>
+          <Column id="keywordall" type="STRING" size="256"/>
+          <Column id="BusinessSection" type="STRING" size="256"/>
+          <Column id="statusType" type="STRING" size="256"/>
+          <Column id="User_id" type="STRING" size="256"/>
+          <Column id="bookMark" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="dispGubun"/>
+            <Col id="BusinessSection">000</Col>
+            <Col id="searchgubun">OR</Col>
+            <Col id="searchfield">200</Col>
+            <Col id="search_resort">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_update00">
+        <ColumnInfo>
+          <Column id="SQL_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_bookMark00"/>
+      <Dataset id="ds_ImportantList" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false" onload="ds_hotlist_onload">
+        <ColumnInfo>
+          <Column id="rowNum" type="INT" size="20"/>
+          <Column id="BL_SEQ" type="BIGDECIMAL" size="19"/>
+          <Column id="user_cnt" type="INT" size="11"/>
+          <Column id="boardid" type="STRING" size="255"/>
+          <Column id="SUBJECT" type="STRING" size="255"/>
+          <Column id="INSERT_DATE" type="STRING" size="255"/>
+          <Column id="CONTENTS" type="STRING" size="255"/>
+          <Column id="goods_gbn" type="STRING" size="255"/>
+          <Column id="SUBJECT_COLOR" type="STRING" size="255"/>
+          <Column id="BOLD_FLAG" type="STRING" size="255"/>
+          <Column id="HOT_FLAG" type="STRING" size="255"/>
+          <Column id="IMPORTANT_FLAG" type="STRING" size="255"/>
+          <Column id="NOTICE_FLAG" type="STRING" size="255"/>
+          <Column id="BookMark_cnt" type="STRING" size="11"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="FILENAME" type="STRING" size="256"/>
+          <Column id="FILE_CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_NoticeList" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="rowNum" type="INT" size="20"/>
+          <Column id="BL_SEQ" type="BIGDECIMAL" size="19"/>
+          <Column id="user_cnt" type="INT" size="11"/>
+          <Column id="boardid" type="STRING" size="255"/>
+          <Column id="SUBJECT" type="STRING" size="255"/>
+          <Column id="INSERT_DATE" type="STRING" size="255"/>
+          <Column id="CONTENTS" type="STRING" size="255"/>
+          <Column id="CONTENTS_TEXT" type="STRING" size="256"/>
+          <Column id="goods_gbn" type="STRING" size="255"/>
+          <Column id="SUBJECT_COLOR" type="STRING" size="255"/>
+          <Column id="BOLD_FLAG" type="STRING" size="255"/>
+          <Column id="HOT_FLAG" type="STRING" size="255"/>
+          <Column id="IMPORTANT_FLAG" type="STRING" size="255"/>
+          <Column id="NOTICE_FLAG" type="STRING" size="255"/>
+          <Column id="BookMark_cnt" type="STRING" size="11"/>
+          <Column id="BookMark_FLAG" type="STRING" size="256"/>
+          <Column id="FILENAME" type="STRING" size="256"/>
+          <Column id="FILE_CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind/>
+    <Script type="xscript5.1"><![CDATA[]]></Script>
+  </Form>
+</FDL>
