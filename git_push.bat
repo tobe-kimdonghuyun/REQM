@@ -22,7 +22,7 @@ set COMMIT_ERROR=%ERRORLEVEL%
 if %COMMIT_ERROR% neq 0 (
     REM 에러 코드 1은 보통 '변경 사항 없음'을 의미할 수 있으므로 체크
     call git diff --quiet --cached
-    if %ERRORLEVEL% eq 0 (
+    if %ERRORLEVEL% EQU 0 (
         echo [알림] 커밋할 변경 사항이 없습니다. 다음 단계로 진행합니다.
     ) else (
         echo [오류] git commit 실패 (에러 코드: %COMMIT_ERROR%)
