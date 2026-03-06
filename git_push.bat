@@ -38,4 +38,3 @@ if %ERRORLEVEL% neq 0 (
 )
 
 echo [완료] Git 작업이 성공적으로 마무리되었습니다.
-pause
