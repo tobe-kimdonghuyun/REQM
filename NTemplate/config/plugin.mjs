@@ -288,8 +288,64 @@ export default
             },
             propname: "width",
 
-        }
+        },
+        "a11y-plugin/validate-comp-font-size":
+        {
+            /**
+             * @param {import('./pluginapi').DSL} dsl
+             * @param {import('./pluginapi').ObjectParseResult} node
+             * @param {import('./pluginapi').RuleValue} rv
+            */
+            api: (dsl, node, rv) =>
+            {
+                // 텍스트가 포함되는 주요 컴포넌트 대상
+                const targetTags = ["Static", "Button", "Edit", "Combo", "CheckBox", "Radio", "TextArea", "Calendar", "Grid"];
+                if (!targetTags.includes(node.tagname))
+                    return undefined;
 
+                const isignore = dsl.ignoreCond(rv);
+                if (isignore(node))
+                {
+                    return undefined;
+                }
+
+                const ispass = dsl.passCond(rv);
+                if (ispass(node))
+                {
+                    return true;
+                }
+
+                // font-size 속성 가져오기 (단위 포함 가능)
+                const fontSizeProp = dsl.get("font-size");
+                const unit = fontSizeProp.unit(node);
+                const value = Number(fontSizeProp.number(node));
+
+                if (Number.isNaN(value))
+                {
+                    return undefined;
+                }
+
+                // px 단위이거나 단위가 없는 경우(기본 px) 12px 미만 체크
+                if (unit === "px" || unit === undefined)
+                {
+                    if (value > 0 && value < 12)
+                    {
+                        MSG_CTX.set(node, { tag: node.tagname, value: value, min: 12 });
+                        return false;
+                    }
+                    return true;
+                }
+
+                return undefined;
+            },
+            message: ({ node }) =>
+            {
+                const ctx = MSG_CTX.get(node);
+                if (!ctx) return "Component의 font-size는 12px 이상이어야 합니다.";
+                return `${ctx.tag}의 font-size가 ${ctx.value}px입니다. 12px 이상으로 설정해야 합니다.`;
+            },
+            propname: "font-size",
+        }
 
 
 
