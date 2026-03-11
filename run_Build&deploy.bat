@@ -33,10 +33,9 @@ echo [3/3] 배포 관련 파일 복사 중...
 set "DEPLOY_SRC=E:\git\VSCODE_WORK900\WORK900\dist\deploy"
 set "DEPLOY_DST=%~dp0"
 
-copy /Y "%DEPLOY_SRC%\start-jar.bat"           "%DEPLOY_DST%start-jar.bat"           >nul
 copy /Y "%DEPLOY_SRC%\NexacroN_Deploy_JAVA.jar" "%DEPLOY_DST%NexacroN_Deploy_JAVA.jar" >nul
 copy /Y "%DEPLOY_SRC%\log4j2.xml"              "%DEPLOY_DST%log4j2.xml"              >nul
-echo     - start-jar.bat, NexacroN_Deploy_JAVA.jar, log4j2.xml 복사 완료
+echo     - NexacroN_Deploy_JAVA.jar, log4j2.xml 복사 완료
 
 REM ===== JAVA_HOME 설정 (상대 경로) =====
 set "JAVA_HOME=%~dp0JDK"
