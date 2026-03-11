@@ -133,7 +133,7 @@ git checkout feature-login
 
 # 생성 + 전환 동시에
 git checkout -b feature-login
-예시 : git checkout -b RELEASE/REL_25.11.25.00_24.0.0.900_AS origin/RELEASE/REL_25.11.25.00_24.0.0.900_AS
+예시 :
 ```
 
 ### 브랜치 병합 (Merge)
