@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="test" width="1280" height="720" titletext="New Form" onanimationstart="test_onanimationstart" onanimationiteration="test_onanimationiteration" onanimationend="test_onanimationend">
+    <Layouts>
+      <Layout width="1280" height="760" screenid="Desktop_screen">
+        <!-- Animation Target -->
+        <Button id="ButtonTarget" taborder="0" text="Animation Target" left="70" top="190" width="200" height="60" cssclass="energy-btn" onclick="ButtonTarget_onclick"/>
+        <!-- Animation Buttons -->
+        <Button id="Button00" taborder="1" text="Jello" left="20" top="25" width="100" height="30" onclick="Button00_onclick"/>
+        <Button id="Button01" taborder="2" text="Shake" left="130" top="25" width="100" height="30" onclick="Button01_onclick"/>
+        <Button id="Button02" taborder="3" text="Heartbeat" left="240" top="25" width="100" height="30" onclick="Button02_onclick"/>
+        <Button id="Button03" taborder="4" text="Spin" left="20" top="65" width="100" height="30" onclick="Button03_onclick"/>
+        <Button id="Button04" taborder="5" text="Gradient" left="130" top="65" width="100" height="30" onclick="Button04_onclick"/>
+        <Button id="Button05" taborder="6" text="Burst" left="240" top="65" width="100" height="30" onclick="Button05_onclick"/>
+        <Button id="Button06" taborder="7" text="Multi_1" left="20" top="105" width="100" height="30" onclick="Button06_onclick"/>
+        <!-- Control -->
+        <Button id="Button06_00" taborder="11" text="Multi_2" left="130" top="105" width="100" height="30" onclick="Button06_00_onclick"/>
+        <Button id="Button06_00_00" taborder="12" text="Multi_3" left="240" top="105" width="100" height="30" onclick="Button06_00_00_onclick"/>
+        <Button id="Button07" taborder="8" text="Pause/Resume" left="385" top="55" width="85" height="50" onclick="Button07_onclick"/>
+        <!-- Log Title -->
+        <Static id="Static00" taborder="9" text="Animation Event Log" left="20" top="350" width="200" height="30"/>
+        <!-- Log Area -->
+        <TextArea id="TextArea00" taborder="10" left="20" top="380" width="860" height="220"/>
+        <Button id="Button08" taborder="13" text="icon spin" left="571" top="37" width="120" height="50" cssclass="icon-spinner" icon="url('theme://images/refresh.png')" onclick="Button08_onclick"/>
+        <Button id="Button09" taborder="14" text="icon trans" left="571" top="110" width="120" height="50" cssclass="trans" icon="url('theme://images/up-arrow.png')"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[// this.Form_onload = function(obj,e)
+// {
+// 	this.TextArea00.value = "";
+// };
+
+this.fnLog = function(msg)
+{
+	this.TextArea00.value = this.TextArea00.value + "\n" + msg;
+};
+
+this.fnRunAnimation = function(anim, option)
+{
+	var target = this.ButtonTarget;
+	
+	target.animation = "none"; //animation 재실행 가능하도록 초기화
+	if(!option) option = "1s ease";
+	target.animation = anim + " " + option;
+
+	this.fnLog("run : " + anim);
+};
+
+/* Animation Buttons */
+
+this.Button00_onclick = function(obj,e)
+{
+	this.fnRunAnimation("jello-vertical-normal");
+};
+
+this.Button01_onclick = function(obj,e)
+{
+	this.fnRunAnimation("shake-lr-normal");
+};
+
+this.Button02_onclick = function(obj,e)
+{
+	this.fnRunAnimation("heartbeat");
+};
+
+this.Button03_onclick = function(obj,e)
+{
+	this.fnRunAnimation("spin", "1s linear infinite");
+};
+
+this.Button04_onclick = function(obj,e)
+{
+	this.fnRunAnimation("gradientFlow", "3s linear infinite");
+};
+
+this.Button05_onclick = function(obj,e)
+{
+	this.fnRunAnimation("burst");
+};
+
+this.Button06_onclick = function(obj,e)
+{
+	this.ButtonTarget.animation = "none";
+	this.ButtonTarget.animation = "jello-vertical-normal 1s ease, shake-lr-normal 1s ease";
+
+	this.fnLog("run : multi(jello + shake)");
+};
+
+this.Button06_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.ButtonTarget.animation = "none";
+	this.ButtonTarget.animation = "spin 3s linear infinite, burst 1s ease";
+
+	this.fnLog("run : multi(spin + burst)");
+};
+
+
+this.Button06_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.ButtonTarget.animation = "none";
+	this.ButtonTarget.animation = "gradientFlow 3s linear infinite, shake-lr-normal 1s ease";
+
+	this.fnLog("run : multi(gradient + shake)");
+};
+
+
+/* Control */
+
+this.Button07_onclick = function(obj,e)
+{
+	if(this.ButtonTarget.animationPlayState == "") 
+		this.ButtonTarget.animationPlayState = "paused";	
+	else
+		this.ButtonTarget.animationPlayState = ""; // running
+
+};
+
+this.test_onanimationstart = function(obj:nexacro.Component,e:nexacro.StyleAnimationEventInfo)
+{
+	this.fnLog("onanimationstart == "+"form : " + e.fromreferenceobject.name + "/" + e.eventid + "/" + e.animationname + "/" + e.elapsedtime);
+};
+
+this.test_onanimationiteration = function(obj:nexacro.Component,e:nexacro.StyleAnimationEventInfo)
+{
+	this.fnLog("onanimationiteration == "+"form : " + e.fromreferenceobject.name + "/" + e.eventid + "/" + e.animationname + "/" + e.elapsedtime);
+};
+
+this.test_onanimationend = function(obj:nexacro.Component,e:nexacro.StyleAnimationEventInfo)
+{
+	this.fnLog("onanimationend == "+"form : " + e.fromreferenceobject.name + "/" + e.eventid + "/" + e.animationname + "/" + e.elapsedtime);
+};
+
+this.Button08_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.Button08.cssclass = "";
+	this.Button08.animationPlayState = "paused";
+};
+]]></Script>
+  </Form>
+</FDL>

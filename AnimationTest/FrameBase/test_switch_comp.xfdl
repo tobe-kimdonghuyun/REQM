@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="test_switch_comp" width="1280" height="720" titletext="New Form" onkeydown="test_switch_comp_onkeydown" onkeyup="test_switch_comp_onkeyup">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Switch id="Switch00" taborder="0" text="switch_comp" left="370" top="16" width="220" height="82" canchange="Switch00_canchange" onchanged="Switch00_onchanged" onclick="Switch00_onclick" onkeydown="Switch00_onkeydown" onkeyup="Switch00_onkeyup"/>
+        <TextArea id="TextArea00" taborder="1" left="600" top="15" width="292" height="385"/>
+        <Button id="Button00" taborder="2" text="canchange-return변경" left="42" top="16" width="141" height="38" onclick="Button00_onclick"/>
+        <Button id="Button01" taborder="3" text="textposition 변경" left="185" top="16" width="97" height="38" onclick="Button01_onclick"/>
+        <Button id="Button02" taborder="4" text="bartype변경" left="283" top="16" width="74" height="38" onclick="Button02_onclick"/>
+        <Button id="Button03" taborder="5" text="switchbuttonwidth 변경" left="42" top="60" width="137" height="38" onclick="Button03_onclick"/>
+        <Button id="Button04" taborder="6" text="truevalue,falsevalue 변경" left="183" top="60" width="144" height="38" onclick="Button04_onclick"/>
+        <Button id="Button05" taborder="7" text="setSelectedStatus" left="42" top="160" width="105" height="38" onclick="Button05_onclick"/>
+        <Button id="Button06" taborder="8" text="toggleSelectedStatus" left="156" top="160" width="130" height="38" onclick="Button06_onclick"/>
+        <Button id="Button07" taborder="9" text="getSelectedStatus" left="42" top="203" width="105" height="34" onclick="Button07_onclick"/>
+        <Button id="Button08" taborder="10" text="keydown return값변경" left="44" top="110" width="134" height="35" onclick="Button08_onclick"/>
+        <Button id="Button09" taborder="11" text="keyup return값 변경" left="184" top="110" width="136" height="35" onclick="Button09_onclick"/>
+        <Button id="Button10" taborder="12" text="clear" left="902" top="17" width="69" height="37" onclick="Button10_onclick"/>
+        <Button id="Button11" taborder="13" text="readonly" left="298" top="164" width="62" height="34" onclick="Button11_onclick"/>
+        <Button id="Button12" taborder="14" text="disabled" left="369" top="165" width="68" height="33" onclick="Button12_onclick"/>
+        <Edit id="Edit00" taborder="15" left="203" top="263" width="146" height="43" readonly="true"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+var _var_canchange = true
+
+this.Switch00_canchange = function(obj:nexacro.Switch,e:nexacro.ChangeEventInfo)
+{	
+	this.TextArea00.insertText("\n event: canchange return값: " + _var_canchange)
+	return _var_canchange
+};
+
+this.Switch00_onchanged = function(obj:nexacro.Switch,e:nexacro.SwitchChangedEventInfo)
+{	
+	this.TextArea00.insertText("\n event: onchanged value: " + this.Switch00.value)
+	
+};
+
+this.Switch00_onclick = function(obj:nexacro.Switch,e:nexacro.ClickEventInfo)
+{
+	this.TextArea00.insertText("\n event: onclick")
+};
+
+this.Switch00_onkeydown = function(obj:nexacro.Switch,e:nexacro.KeyEventInfo)
+{
+	this.TextArea00.insertText("\n event: onkeydown")
+	
+	return _keydown_status
+};
+
+this.Switch00_onkeyup = function(obj:nexacro.Switch,e:nexacro.KeyEventInfo)
+{
+	this.TextArea00.insertText("\n event: onkeyup")
+	
+	return _keyup_status
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+		_var_canchange = !_var_canchange
+};
+
+var _position_idx = 0
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (_position_idx % 3 == 0)
+		this.Switch00.textposition = "left"
+	else if (_position_idx % 3 == 1)
+		this.Switch00.textposition = "right"
+	else
+	{
+		this.Switch00.textposition = "error"
+		_position_idx = 0
+	}
+		
+	_position_idx++
+	
+	this.TextArea00.insertText("\n textposition: "+this.Switch00.textposition)
+};
+
+var _bartype_idx = 0
+this.Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (_bartype_idx % 4 == 0)
+		this.Switch00.bartype = "inner"
+	else if (_bartype_idx % 4 == 1)
+		this.Switch00.bartype = "line"
+	else if (_bartype_idx % 4 == 2)
+	{
+		this.Switch00.bartype = "fit"		
+	}
+	else
+	{
+		this.Switch00.bartype = "error"		
+		_bartype_idx = 0
+	}
+	_bartype_idx++
+	
+	this.TextArea00.insertText("\n bartype:" +  this.Switch00.bartype)
+};
+
+var _button_width_idx = 0
+this.Button03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var arr_val = ['0', '-1', '100', '가', '150', '+']
+	
+	this.Switch00.switchbuttonwidth = arr_val[_button_width_idx++]
+	this.TextArea00.insertText("\n switchbuttonwidth:" +  this.Switch00.switchbuttonwidth)
+	
+	if (_button_width_idx >= arr_val.length) _button_width_idx = 0
+	
+};
+
+var _value_idx = 0
+this.Button04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+	this.Switch00.truevalue = "11"
+	this.Switch00.falsevalue = "22"
+	
+	this.TextArea00.insertText("\n truevalue:" +  this.Switch00.truevalue +" , falsevalue: "+ this.Switch00.falsevalue)
+};
+
+var _status = true
+this.Button05_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.Switch00.setSelectStatus(_status)
+	this.TextArea00.insertText("\n setSelectStatus:" +  _status)
+	_status = !_status
+};
+
+this.Button06_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var ret = this.Switch00.toggleSelectStatus()
+	this.TextArea00.insertText("\n ret: "+ret + ", getSelectStatus:" +  this.Switch00.getSelectStatus())
+};
+
+this.Button07_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.TextArea00.insertText("\n getSelectStatus:" +  this.Switch00.getSelectStatus())
+};
+
+var _keydown_status = true
+this.Button08_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	_keydown_status = !_keydown_status
+};
+
+var _keyup_status = true
+this.Button09_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	_keyup_status = !_keyup_status
+};
+
+this.test_switch_comp_onkeydown = function(obj:nexacro.Form,e:nexacro.KeyEventInfo)
+{
+	this.TextArea00.insertText("\n event: form_onkeydown:")
+};
+
+this.test_switch_comp_onkeyup = function(obj:nexacro.Form,e:nexacro.KeyEventInfo)
+{
+	this.TextArea00.insertText("\n event: form_onkeyup:")
+};
+
+this.Button10_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.TextArea00.value = ''
+};
+
+this.Button11_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.Switch00.readonly = true
+};
+
+this.Button12_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.Switch00.enable = false
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Work" width="1280" height="760" titletext="Form_Work" ontimer="Form_Work_ontimer" onanimationend="Form_Work_onanimationend" onanimationiteration="Form_Work_onanimationiteration" onanimationstart="Form_Work_onanimationstart">
+    <Layouts>
+      <Layout width="1280" height="760" screenid="Desktop_screen">
+        <Button id="Button00" taborder="0" text="Button00" left="125" top="65" width="182" height="62"/>
+        <Button id="Button00_00" taborder="1" text="Button01" left="125" top="190" width="182" height="62" onclick="Button00_00_onclick" onanimationend="Button00_00_onanimationend" onanimationiteration="Button00_00_onanimationiteration" onanimationstart="Button00_00_onanimationstart"/>
+        <Button id="Button01" taborder="2" text="탱글탱글 !!" left="359" top="176" width="101" height="40" onclick="Button01_onclick" cssclass="energy-btn" font="normal 10pt/normal &quot;Arial&quot;"/>
+        <Button id="Button01_00" taborder="3" text="좌우로 흔들 !!" left="359" top="226" width="101" height="40" onclick="Button01_00_onclick" cssclass="energy-btn" font="normal 10pt/normal &quot;Arial&quot;"/>
+        <Button id="Button00_00_00" taborder="4" text="전송" left="125" top="320" width="182" height="62" icon="url('theme://images/spinner.png')" onclick="Button00_00_00_onclick" background="white" color="black" onanimationstart="Button00_00_00_onanimationstart"/>
+        <Button id="Button02" taborder="5" left="125" top="420" width="182" height="90" icon="url('theme://images/uparrow.png')" cssclass="trans"/>
+        <Static id="Static00" taborder="6" left="359" top="113" width="479" height="53" font="16pt &quot;Arial&quot;"/>
+        <Button id="Button03" taborder="7" text="Pause/Resume" left="503" top="200" width="94" height="42" onclick="Button03_onclick"/>
+        <Combo id="Combo00" taborder="8" text="Combo00" left="125" top="554" width="182" height="56" innerdataset="Dataset00" datacolumn="Column1" codecolumn="Column0"/>
+        <Static id="Static01" taborder="9" text="Component Transition" left="131" top="34" width="140" height="34"/>
+        <Static id="Static01_00" taborder="10" text="Component Animation" left="131" top="149" width="140" height="34"/>
+        <Static id="Static01_00_00" taborder="11" text="Icon Spinner Animation" left="131" top="286" width="140" height="34"/>
+        <Static id="Static01_00_00_00" taborder="12" text="Icon Transform Transition" left="131" top="386" width="140" height="34"/>
+        <Static id="Static01_00_00_00_00" taborder="13" text="Combo Transition / SubControl(dropbutton) animation" left="131" top="523" width="339" height="34"/>
+        <Static id="Static01_00_00_00_01" taborder="13" text="Animation/Transition Complex" left="131" top="623" width="339" height="34"/>
+        <Button id="Button04" taborder="" text="CLICK ME !!" left="125" top="662" width="200" height="84" cssclass="energy-btn" onlbuttondown="Button04_onlbuttondown" onlbuttonup="Button04_onlbuttonup"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.Button00_00.animation="none"; // 기존 animation reset
+	this.Button00_00.animation="jello-vertical-normal 1s infinite";
+};
+
+this.Button01_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.Button00_00.animation="none"; // 기존 animation reset
+	this.Button00_00.animation="shake-lr-normal 1s 3";
+};
+
+this.Button00_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.Button00_00_00.cssclass = "icon-spinner"; // userClass 방식
+	// this.Button00_00_00.iconAnimation = "spin 1s infinite";  // inline style 방식
+	
+	this.killTimer(1000);
+	this.setTimer(1000, 2000);
+};
+
+this.Form_Work_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if(e.timerid == 1000)
+	{
+		this.killTimer(1000);
+		this.Button00_00_00.cssclass = ""; // userClass 방식
+		// this.Button00_00_00.iconAnimation = "none";  // inline style 방식
+		this.alert("전송 완료 !!");
+	}
+};
+
+this.Button00_00_onanimationend = function(obj:nexacro.Button,e:nexacro.StyleAnimationEventInfo)
+{
+	this.Static00.text = e.eventid + "/" + e.animationname + "/" + e.elapsedtime;
+	console.log(e.eventid + "/" + e.animationname + "/" + e.elapsedtime);
+	
+	//return true;
+};
+
+this.Button00_00_onanimationiteration = function(obj:nexacro.Button,e:nexacro.StyleAnimationEventInfo)
+{
+	this.Static00.text = e.eventid + "/" + e.animationname + "/" + e.elapsedtime;
+	console.log(e.eventid + "/" + e.animationname + "/" + e.elapsedtime);
+	
+	//return true;
+};
+
+this.Button00_00_onanimationstart = function(obj:nexacro.Button,e:nexacro.StyleAnimationEventInfo)
+{
+	this.Static00.text = e.eventid + "/" + e.animationname + "/" + e.elapsedtime;
+	console.log(e.eventid + "/" + e.animationname + "/" + e.elapsedtime);
+	
+	//return true;
+};
+
+this.Form_Work_onanimationend = function(obj:nexacro.Component,e:nexacro.StyleAnimationEventInfo)
+{
+	console.log("form : " + e.fromreferenceobject + "/" + e.eventid + "/" + e.animationname + "/" + e.elapsedtime);
+};
+
+this.Form_Work_onanimationiteration = function(obj:nexacro.Component,e:nexacro.StyleAnimationEventInfo)
+{
+	console.log("form : " + e.fromreferenceobject + "/" + e.eventid + "/" + e.animationname + "/" + e.elapsedtime);
+};
+
+this.Form_Work_onanimationstart = function(obj:nexacro.Component,e:nexacro.StyleAnimationEventInfo)
+{
+	console.log("form : " + e.fromreferenceobject + "/" + e.eventid + "/" + e.animationname + "/" + e.elapsedtime);
+};
+
+this.Button00_00_00_onanimationstart = function(obj:nexacro.Component,e:nexacro.StyleAnimationEventInfo)
+{
+	console.log("button : " + e.fromobject + "/" + e.fromreferenceobject + "/" + e.eventid + "/" + e.animationname + "/" + e.elapsedtime);
+};
+
+this.Button03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(this.Button00_00.animationPlayState == "") 
+		this.Button00_00.animationPlayState = "paused";
+	else
+		this.Button00_00.animationPlayState = ""; // running
+};
+
+this.Button04_onlbuttondown = function(obj:nexacro.Button,e:nexacro.MouseEventInfo)
+{
+	obj.text = "눌린다아~~";
+};
+
+this.Button04_onlbuttonup = function(obj:nexacro.Button,e:nexacro.MouseEventInfo)
+{
+	obj.text = "CLICK ME !!";
+};
+]]></Script>
+    <Objects>
+      <Dataset id="Dataset00">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">1</Col>
+            <Col id="Column1">A</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">2</Col>
+            <Col id="Column1">B</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">3</Col>
+            <Col id="Column1">C</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>
