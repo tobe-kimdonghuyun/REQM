@@ -1,0 +1,79 @@
+{
+  "skill_name": "dev-test-automation",
+  "iteration": 1,
+  "configs": [
+    {
+      "name": "with_skill",
+      "evals": [
+        {
+          "eval_id": 0,
+          "eval_name": "jest-login-unit-test",
+          "pass_rate": 1.0,
+          "duration_ms": 56520,
+          "total_tokens": 18392
+        },
+        {
+          "eval_id": 1,
+          "eval_name": "html-form-validation-test",
+          "pass_rate": 1.0,
+          "duration_ms": 62305,
+          "total_tokens": 18652
+        },
+        {
+          "eval_id": 2,
+          "eval_name": "pytest-fastapi-user-api-test",
+          "pass_rate": 1.0,
+          "duration_ms": 52625,
+          "total_tokens": 17385
+        }
+      ],
+      "summary": {
+        "mean_pass_rate": 1.0,
+        "mean_duration_ms": 57150,
+        "mean_tokens": 18143
+      }
+    },
+    {
+      "name": "without_skill",
+      "evals": [
+        {
+          "eval_id": 0,
+          "eval_name": "jest-login-unit-test",
+          "pass_rate": 0.8,
+          "duration_ms": 64675,
+          "total_tokens": 13305
+        },
+        {
+          "eval_id": 1,
+          "eval_name": "html-form-validation-test",
+          "pass_rate": 0.6,
+          "duration_ms": 48620,
+          "total_tokens": 12004
+        },
+        {
+          "eval_id": 2,
+          "eval_name": "pytest-fastapi-user-api-test",
+          "pass_rate": 1.0,
+          "duration_ms": 32526,
+          "total_tokens": 10511
+        }
+      ],
+      "summary": {
+        "mean_pass_rate": 0.8,
+        "mean_duration_ms": 48607,
+        "mean_tokens": 11940
+      }
+    }
+  ],
+  "delta": {
+    "pass_rate": "+0.20 (with_skill이 20%p 높음)",
+    "duration_ms": "+8543ms (with_skill이 더 오래 걸림)",
+    "tokens": "+6203 (with_skill이 토큰 더 사용)"
+  },
+  "analyst_observations": [
+    "eval-1(HTML 폼)에서 스킬 없음 결과가 DOM 테스트를 생략하고 순수 함수만 테스트하는 차이 발생 → 스킬의 jsdom 가이드가 실질적 효과를 냄",
+    "eval-0(Jest 로그인)에서 스킬 있음이 AAA 주석을 명시적으로 작성한 반면 스킬 없음은 미작성",
+    "eval-2(pytest)는 두 버전 모두 5/5 통과 → 해당 케이스는 스킬 없이도 충분히 잘 작성됨 (비변별적)",
+    "스킬 사용 시 토큰이 더 많이 사용되지만 품질 향상 효과 존재"
+  ]
+}
