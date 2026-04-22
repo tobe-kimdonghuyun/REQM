@@ -53,4 +53,4 @@ for /f "usebackq tokens=1,* delims==" %%A in ("%CONFIG%") do (
 REM OutputPath에서 REQM 이후 경로 추출 (backslash → forward slash)
 for /f "tokens=2 delims==" %%A in ('echo %OUTPUT_PATH%^| powershell -NoProfile -Command "$input | ForEach-Object { $idx = $_.IndexOf('REQM'); if ($idx -ge 0) { $_.Substring($idx + 4).TrimStart('\').Replace('\','/') } }"') do set "URL_PATH=%%A"
 powershell -NoProfile -Command ^
-    "$p = '%OUTPUT_PATH%'; $idx = $p.IndexOf('REQM'); if ($idx -ge 0) { $rel = $p.Substring($idx + 4).TrimStart('\').Replace('\','/'); $url = 'http://localhost:9091/' + $rel + '/index.html'; Write-Host '[3/3] Chrome 실행:' $url; Start-Process 'chrome.exe' $url } else { Write-Host '[경고] OutputPath에서 REQM 경로를 찾을 수 없습니다.' }"
+    "$p = '%OUTPUT_PATH%'; $idx = $p.IndexOf('REQM'); if ($idx -ge 0) { $rel = $p.Substring($idx + 4).TrimStart('\').Replace('\','/'); $url = 'http://172.10.12.45:9091/' + $rel + '/index.html'; Write-Host '[3/3] Chrome 실행:' $url; Start-Process 'chrome.exe' $url } else { Write-Host '[경고] OutputPath에서 REQM 경로를 찾을 수 없습니다.' }"

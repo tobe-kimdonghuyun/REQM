@@ -85,4 +85,4 @@ for /f "usebackq tokens=1,* delims==" %%A in ("%CONFIG%") do (
 )
 
 powershell -NoProfile -Command ^
-    "$p = '%OUTPUT_PATH%'; $idx = $p.IndexOf('REQM'); if ($idx -ge 0) { $rel = $p.Substring($idx + 4).TrimStart('\').Replace('\','/'); $url = 'http://localhost:9091/' + $rel + '/index.html'; Write-Host '[완료] Chrome 실행:' $url; Start-Process 'chrome.exe' $url } else { Write-Host '[경고] OutputPath에서 REQM 경로를 찾을 수 없습니다.' }"
+    "$p = '%OUTPUT_PATH%'; $idx = $p.IndexOf('REQM'); if ($idx -ge 0) { $rel = $p.Substring($idx + 4).TrimStart('\').Replace('\','/'); $url = 'http://172.10.12.45:9091/' + $rel + '/index.html'; Write-Host '[완료] Chrome 실행:' $url; Start-Process 'chrome.exe' $url } else { Write-Host '[경고] OutputPath에서 REQM 경로를 찾을 수 없습니다.' }"
