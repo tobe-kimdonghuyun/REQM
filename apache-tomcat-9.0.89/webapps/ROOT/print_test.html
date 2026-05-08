@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexacro Irregular Print Test</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', 'Dotum', 'Arial', sans-serif;
+            font-size: 12px;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .toolbar {
+            width: 100%;
+            background-color: #ffffff;
+            border-bottom: 1px solid #cccccc;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .nx-button {
+            background-color: #f7f7f7;
+            border: 1px solid #cccccc;
+            padding: 5px 15px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .nx-button.primary {
+            background-color: #1a73e8;
+            color: white;
+            border-color: #1a73e8;
+        }
+
+        /* Irregular Container Layout */
+        .content-wrapper {
+            width: 210mm;
+            background-color: #ffffff;
+            margin: 20px 0;
+            padding: 15mm;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            /* No fixed height or page breaks here to allow spanning */
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .nx-grid {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #cccccc;
+            table-layout: fixed;
+        }
+
+        .nx-grid th {
+            background-color: #f7f7f7;
+            border: 1px solid #cccccc;
+            padding: 6px;
+            font-weight: normal;
+            text-align: center;
+            height: 24px;
+        }
+
+        .nx-grid td {
+            border: 1px solid #cccccc;
+            padding: 4px 8px;
+            height: 24px;
+            color: #333333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Specific border colors per request */
+        .grid-red { border: 2px solid #ff0000 !important; }
+        .grid-blue { border: 2px solid #0000ff !important; width: 95%; margin-left: 5%; } /* Irregular width/margin */
+        .grid-green { border: 2px solid #008000 !important; }
+
+        .checkbox-col { width: 30px; text-align: center; }
+        
+        .page-header {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #444444;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Print Settings */
+        @media print {
+            body { background-color: #ffffff; }
+            .toolbar { display: none !important; }
+            .content-wrapper {
+                margin: 0;
+                padding: 10mm;
+                box-shadow: none;
+                width: 100%;
+            }
+            
+            /* Allow tables to break across pages */
+            .nx-grid {
+                page-break-inside: auto;
+            }
+            .nx-grid tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+            
+            @page {
+                size: A4;
+                margin: 20mm;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <button class="nx-button primary" onclick="window.print()">인쇄 (Print Preview)</button>
+        <button class="nx-button">닫기</button>
+    </div>
+
+    <div class="content-wrapper">
+        
+        <!-- Section 1: Red Grid (Approx 35 rows to likely span to page 2) -->
+        <div class="section">
+            <div class="page-header"><span style="color:#ff0000">■</span> 분석 데이터 세트 A (불규칙 크기 테스트)</div>
+            <table class="nx-grid grid-red">
+                <thead>
+                    <tr>
+                        <th class="checkbox-col"><input type="checkbox"></th>
+                        <th style="width: 80px;">코드</th>
+                        <th>항목명</th>
+                        <th style="width: 100px;">상태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script>
+                        for(let i=1; i<=35; i++) {
+                            document.write(`<tr>
+                                <td class="checkbox-col"><input type="checkbox"></td>
+                                <td align="center">RED-${i}</td>
+                                <td>빨강 그리드 데이터 항목 - 페이지 경계 테스트용 행 ${i}</td>
+                                <td align="center">운영중</td>
+                            </tr>`);
+                        }
+                    </script>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 2: Blue Grid (Small, 12 rows, slightly shifted) -->
+        <div class="section" style="margin-left: 20px;">
+            <div class="page-header"><span style="color:#0000ff">■</span> 상세 통계 정보 B (좁은 너비 레이아웃)</div>
+            <table class="nx-grid grid-blue">
+                <thead>
+                    <tr>
+                        <th class="checkbox-col"><input type="checkbox"></th>
+                        <th style="width: 60px;">순번</th>
+                        <th>지표 세부내용</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script>
+                        for(let i=1; i<=12; i++) {
+                            document.write(`<tr>
+                                <td class="checkbox-col"><input type="checkbox"></td>
+                                <td align="center">${i}</td>
+                                <td>파랑 그리드 데이터 - 불규칙한 위치 및 크기 설정 ${i}</td>
+                            </tr>`);
+                        }
+                    </script>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 3: Green Grid (Long, 60 rows to span across multiple pages) -->
+        <div class="section">
+            <div class="page-header"><span style="color:#008000">■</span> 최종 검증 리스트 C (장문 데이터)</div>
+            <table class="nx-grid grid-green">
+                <thead>
+                    <tr>
+                        <th class="checkbox-col"><input type="checkbox"></th>
+                        <th style="width: 50px;">No</th>
+                        <th>검증 항목</th>
+                        <th style="width: 120px;">담당 부서</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script>
+                        for(let i=1; i<=60; i++) {
+                            document.write(`<tr>
+                                <td class="checkbox-col"><input type="checkbox"></td>
+                                <td align="center">${i}</td>
+                                <td>초록 그리드 데이터 - 대량 행 구성을 통한 페이지 걸침 효과 ${i}</td>
+                                <td align="center">품질관리팀</td>
+                            </tr>`);
+                        }
+                    </script>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>

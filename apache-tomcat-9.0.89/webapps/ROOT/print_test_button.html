@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexacro Big Button Print Test</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', 'Dotum', 'Arial', sans-serif;
+            font-size: 12px;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Toolbar removed as per request */
+
+        /* Container Layout */
+        .content-wrapper {
+            width: 210mm;
+            background-color: #ffffff;
+            margin: 40px 0; /* Margin increased due to toolbar removal */
+            padding: 15mm;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* The Big Button */
+        #big-button {
+            width: 200px;
+            height: 2700px;
+            background-color: #f7f7f7;
+            border: 2px solid #1a73e8;
+            color: #1a73e8;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+        }
+
+        #big-button:hover {
+            background-color: #eef6ff;
+            transform: scale(1.02);
+        }
+
+        /* Print Settings */
+        @media print {
+            body {
+                background-color: #ffffff;
+                margin: 0;
+                padding: 0;
+            }
+            .content-wrapper {
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                width: 210mm;
+                height: 297mm;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                /* 정확히 A4 한 장 크기로 고정 */
+                overflow: hidden;
+                page-break-after: avoid;
+            }
+            
+            #big-button {
+                border-width: 1px;
+                /* A4 여백 제외한 최대 크기 */
+                width: 190mm;
+                height: 277mm;
+                font-size: 20px;
+                writing-mode: horizontal-tb; /* 가로 텍스트로 변경 */
+            }
+            
+            @page {
+                size: A4;
+                margin: 0; /* margin 0으로 설정하여 여백 없이 A4 꽉 채움 */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content-wrapper">
+        
+        <!-- Large button now handles window.print() -->
+        <button id="big-button" onclick="window.print()">
+            🖨️ 클릭 시 인쇄<br>(A4 1장 출력)
+        </button>
+
+    </div>
+
+</body>
+</html>
