@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ADL version="2.0">
+  <Application id="Application_Desktop" screenid="Desktop_screen,Screen0,Screen1,Screen2" csskey="SDS">
+    <Layout>
+      <MainFrame id="mainframe" showtitlebar="true" showstatusbar="true" left="0" top="0" width="1280" height="720" titletext="FullFrame" onrootcssclasschange="mainframe_onrootcssclasschange">
+        <ChildFrame id="WorkFrame" showtitlebar="false" showstatusbar="false" formurl="FrameBase::Form_Work.xfdl" onrootcssclasschange="mainframe_WorkFrame_onrootcssclasschange"/>
+      </MainFrame>
+    </Layout>
+  </Application>
+  <Script type="xscript5.1"><![CDATA[
+// this.mainframe_onrootcssclasschange = function(obj:nexacro.MainFrame,e:nexacro.RootCssClassChangeEventInfo)
+// {
+// 	console.log(obj.id + '_cssclass : ' + e.precssclass + ' ===> ' + e.postcssclass);
+// 	
+// 
+// };
+
+
+this.mainframe_onrootcssclasschange = function(obj:nexacro.MainFrame, e:nexacro.RootCssClassChangeEventInfo)
+{
+	var app = nexacro.getApplication();
+	var form = app.mainframe.WorkFrame.form;
+
+	form.TextArea01.insertText('### ' + obj.id + '_onrootcssclasschange ###\n' + '- precssclass: ' + e.precssclass + '\n- postcssclass: ' + e.postcssclass + '\n');
+};]]></Script>
+</ADL>
