@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Static_Selectable_Sample00" width="1280" height="760" titletext="New Form">
+    <Layouts>
+      <Layout height="760" mobileorientation="landscape" width="1280">
+        <TextArea id="TextArea00" taborder="0" left="105" top="440" width="400" height="310" flexshrink="0"/>
+        <Button id="Button01" taborder="1" text="Button01" left="246" top="388" width="100%" height="100%" tablecellarea="A" font="30px bold"/>
+        <Button id="Button02" taborder="2" text="Button02" left="362" top="453" width="100%" height="100%" tablecellarea="B" font="30px bold"/>
+        <Button id="Button03" taborder="3" text="Button03" left="282" top="571" width="100%" height="100%" tablecellarea="C" font="30px bold"/>
+        <Panel id="Panel00" taborder="4" left="80" top="40" width="690" height="240" background="powderblue" type="table" tabletemplate="1* 1* 1*/ 1* 1* 1*" tabletemplatearea="&quot;A B C&quot; &quot;D E F&quot;&quot;G H I&quot;" verticalgap="10" horizontalgap="10">
+          <Contents>
+            <PanelItem id="PanelItem00" componentid="Button01"/>
+            <PanelItem id="PanelItem01" componentid="Button02"/>
+            <PanelItem id="PanelItem02" componentid="Button03"/>
+          </Contents>
+        </Panel>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.btn00_onsize = function(obj:nexacro.Button,e:nexacro.SizeEventInfo)
+{
+	this.TextArea00.deleteText()
+	this.TextArea00.value= " "+this.btn00.text+"버튼 onsize이벤트 발생 width height 정보"
+		                      + "\n this.btn00.width = "+this.btn00.width
+		                      + "\n this.btn00.height = "+this.btn00.height
+                          + "\n this.btn00.getOffsetWidth() = "+this.btn00.getOffsetWidth()
+                          + "\n this.btn00.getOffsetHeight() = "+this.btn00.getOffsetHeight()
+};
+
+this.btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.btn00.setSelectStatus(true);
+};
+this.btn04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.btn00.setSelectStatus(false);
+};
+
+
+this.btn02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//this.btn00.setFocus();
+	this.btn00.enable = this.Radio00.text;
+};
+
+this.btn03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.btn00.setFocus();
+};
+
+this.btn04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.btn00.setSelectStatus(false);
+};
+
+this.Edit_onsize = function(obj:nexacro.Edit,e:nexacro.SizeEventInfo)
+{
+		this.TextArea00.deleteText();
+	this.TextArea00.value= " "+obj.text+" edit onsize이벤트 발생 width height 정보"
+		                      + "\n obj.width = "+obj.width
+		                      + "\n obj.height = "+obj.height
+                          + "\n obj.getOffsetWidth() = "+obj.getOffsetWidth()
+                          + "\n obj.getOffsetHeight() = "+obj.getOffsetHeight()
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Static_Selectable_Sample00" width="1280" height="760" titletext="New Form">
+    <Layouts>
+      <Layout height="760" mobileorientation="landscape" width="1280">
+        <TextArea id="TextArea00" taborder="0" left="105" top="440" width="400" height="310" flexshrink="0"/>
+        <Button id="btn00" taborder="1" text="Button staus테스트 " left="101" top="25" width="unset" height="unset" cssclass="btnCss04" onsize="btn00_onsize"/>
+        <Button id="btn01" taborder="2" text="setSelectStatus(true)" left="105" top="373" width="125" height="65" onclick="btn01_onclick"/>
+        <Static id="Static00" taborder="3" text=".Button.btnCss04&#13;&#10;{&#13;&#10;&#9;background : pink;&#13;&#10;&#9;-nexa-border : 1px solid pink;&#13;&#10;&#9;width:50px;&#13;&#10;&#9;height:50px;&#13;&#10;&#9;max-width:1000px;&#13;&#10;&#9;max-height:1000px;&#13;&#10;}&#13;&#10;.Button.btnCss04[status=mouseover]&#13;&#10;{&#13;&#10;&#9;background : red;&#13;&#10;&#9;-nexa-border : 1px solid red;&#13;&#10;&#9;width:100px;&#13;&#10;&#9;height:100px;&#13;&#10;}&#13;&#10;.Button.btnCss04[status=focused]&#13;&#10;{&#13;&#10;&#9;background : yellow;&#13;&#10;&#9;-nexa-border : 1px solid yellow;&#13;&#10;&#9;width:150px;&#13;&#10;&#9;height:150px;&#13;&#10;}&#13;&#10;.Button.btnCss04[status=disabled]&#13;&#10;{&#13;&#10;&#9;background : gray;&#13;&#10;&#9;-nexa-border : 1px solid gray;&#13;&#10;&#9;width:200px;&#13;&#10;&#9;height:200px;&#13;&#10;}&#13;&#10;&#13;&#10;.Button.btnCss04[userstatus=selected]&#13;&#10;{&#13;&#10;&#9;background : orange;&#13;&#10;&#9;-nexa-border : 1px solid orange;&#13;&#10;&#9;width:250px;&#13;&#10;&#9;height:250px;&#13;&#10;}&#13;&#10;.Button.btnCss04[userstatus=pushed]&#13;&#10;{&#13;&#10;&#9;background : blue;&#13;&#10;&#9;-nexa-border : 1px solid blue;&#13;&#10;&#9;width:300px;&#13;&#10;&#9;height:300px;&#13;&#10;}" left="550" top="11" width="429" height="739"/>
+        <Button id="btn02" taborder="4" text="this.btn00.enable" left="110" top="295" width="120" height="65" onclick="btn02_onclick"/>
+        <Radio id="Radio00" taborder="5" left="105" top="245" width="135" height="50" direction="vertical" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">0</Col>
+                <Col id="datacolumn">false</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">1</Col>
+                <Col id="datacolumn">true</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Button id="btn03" taborder="6" text="this.btn00.enable" left="240" top="298" width="105" height="65" onclick="btn03_onclick"/>
+        <Button id="btn04" taborder="7" text="setSelectStatus(false)" left="240" top="373" width="125" height="65" onclick="btn04_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.btn00_onsize = function(obj:nexacro.Button,e:nexacro.SizeEventInfo)
+{
+	this.TextArea00.deleteText()
+	this.TextArea00.value= " "+this.btn00.text+"버튼 onsize이벤트 발생 width height 정보"
+		                      + "\n this.btn00.width = "+this.btn00.width
+		                      + "\n this.btn00.height = "+this.btn00.height
+                          + "\n this.btn00.getOffsetWidth() = "+this.btn00.getOffsetWidth()
+                          + "\n this.btn00.getOffsetHeight() = "+this.btn00.getOffsetHeight()
+};
+
+this.btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.btn00.setSelectStatus(true);
+};
+this.btn04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.btn00.setSelectStatus(false);
+};
+
+
+this.btn02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//this.btn00.setFocus();
+	this.btn00.enable = this.Radio00.text;
+};
+
+this.btn03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.btn00.setFocus();
+};
+
+this.btn04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.btn00.setSelectStatus(false);
+};
+]]></Script>
+  </Form>
+</FDL>
