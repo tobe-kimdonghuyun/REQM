@@ -95,5 +95,38 @@ for /f "usebackq tokens=1,* delims==" %%A in ("%CONFIG%") do (
     if /i "%%A"=="OutputPath" set "OUTPUT_PATH=%%B"
 )
 
-powershell -NoProfile -Command ^
-    "$p = '%OUTPUT_PATH%'; $idx = $p.IndexOf('REQM'); if ($idx -ge 0) { $rel = $p.Substring($idx + 4).TrimStart('\').Replace('\','/'); $url = 'http://localhost:9091/' + $rel + '/index.html'; Write-Host '[완료] Chrome 실행:' $url; Start-Process 'chrome.exe' $url } else { Write-Host '[경고] OutputPath에서 REQM 경로를 찾을 수 없습니다.' }"
+for %%I in ("%SCRIPT_HOME%..\apache-tomcat-9.0.89") do set "CATALINA_HOME=%%~fI"
+set "TOMCAT_BIN=%CATALINA_HOME%\bin"
+set "WAIT_TIME=0"
+
+REM ===== 9091 포트 확인 및 Tomcat 시작 =====
+powershell -NoProfile -Command "if ((Get-NetTCPConnection -LocalPort 9091 -State Listen -ErrorAction SilentlyContinue).Count -eq 0) { exit 1 } else { exit 0 }" >nul 2>&1
+if not errorlevel 1 goto :tomcat_already_running
+
+echo [Tomcat] 9091 포트가 실행 중이지 않습니다. Tomcat을 시작합니다...
+powershell -NoProfile -Command "Start-Process 'cmd.exe' -ArgumentList '/k set CATALINA_HOME=%CATALINA_HOME%& %TOMCAT_BIN%\catalina.bat run'"
+echo [Tomcat] 포트 9091 응답 대기 중 (최대 60초)...
+
+:wait_tomcat
+ping localhost -n 4 >nul
+set /a WAIT_TIME+=3
+powershell -NoProfile -Command "if ((Get-NetTCPConnection -LocalPort 9091 -State Listen -ErrorAction SilentlyContinue).Count -eq 0) { exit 1 } else { exit 0 }" >nul 2>&1
+if not errorlevel 1 goto :tomcat_ready
+if %WAIT_TIME% geq 60 goto :tomcat_timeout
+echo   대기 중... %WAIT_TIME% 초
+goto :wait_tomcat
+
+:tomcat_timeout
+echo [경고] Tomcat이 60초 내에 시작되지 않았습니다.
+goto :chrome_launch
+
+:tomcat_ready
+echo [Tomcat] 준비 완료
+goto :chrome_launch
+
+:tomcat_already_running
+echo [Tomcat] 9091 포트 이미 실행 중
+
+:chrome_launch
+REM ===== OutputPath에서 REQM 이후 경로 추출 후 Chrome 실행 =====
+powershell -NoProfile -Command "$p = '%OUTPUT_PATH%'; $idx = $p.IndexOf('REQM'); if ($idx -ge 0) { $rel = $p.Substring($idx + 4).TrimStart('\').Replace('\', '/'); $url = 'http://localhost:9091/' + $rel + '/index.html'; Write-Host '[완료] Chrome 실행:' $url; Start-Process 'chrome.exe' $url } else { Write-Host '[경고] OutputPath에서 REQM 경로를 찾을 수 없습니다.' }"

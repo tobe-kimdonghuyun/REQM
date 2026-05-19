@@ -114,6 +114,7 @@ rem                   set TITLE=Tomcat.Cluster#1.Server#1 [%DATE% %TIME%]
 rem ---------------------------------------------------------------------------
 
 setlocal
+chcp 65001 >NUL 2>&1
 
 rem Suppress Terminate batch job on CTRL+C
 if not ""%1"" == ""run"" goto mainEntry
