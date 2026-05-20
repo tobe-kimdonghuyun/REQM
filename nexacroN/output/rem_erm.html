@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>rem / em 비교 샘플 (vs NexacroN XCSS)</title>
+  <style>
+    /* ───────────────────────────────────────────
+       루트 기준: 1rem = 16px (브라우저 기본값)
+       em은 해당 요소(또는 부모)의 font-size 기준
+    ─────────────────────────────────────────── */
+    :root {
+      --base-color: #4a6cf7;
+      --border-color: #c2c2c2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Arial", sans-serif;
+      font-size: 16px;
+      /* 1rem = 16px */
+      background: #f5f6fa;
+      margin: 0;
+      padding: 1.5rem;
+      color: #222;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.875rem;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+
+    /* 섹션 레이아웃 */
+    .section-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .section {
+      background: #fff;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    }
+
+    .section-title {
+      font-size: 0.8125rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #fff;
+      background: var(--base-color);
+      border-radius: 0.25rem;
+      padding: 0.3em 0.6em;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .tag-label {
+      font-size: 0.75rem;
+      color: #999;
+      margin: 0.75rem 0 0.25rem;
+    }
+
+    .code-hint {
+      font-family: monospace;
+      font-size: 0.7rem;
+      background: #f0f0f0;
+      border-left: 3px solid var(--base-color);
+      padding: 0.3em 0.5em;
+      margin-bottom: 0.5rem;
+      white-space: pre;
+      border-radius: 0 0.25rem 0.25rem 0;
+      color: #444;
+    }
+
+    .group-header {
+      font-size: 1.125rem;
+      font-weight: bold;
+      border-bottom: 2px solid var(--base-color);
+      padding-bottom: 0.4rem;
+      margin: 1.5rem 0 1rem;
+      color: var(--base-color);
+    }
+
+    /* NexacroN XCSS 비교 박스 */
+    .xcss-box {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      font-family: monospace;
+      font-size: 0.78rem;
+      border-radius: 0.5rem;
+      padding: 1rem 1.25rem;
+      margin-bottom: 2rem;
+      line-height: 1.8;
+      white-space: pre;
+    }
+
+    .xcss-box .comment {
+      color: #6c7086;
+    }
+
+    .xcss-box .prop {
+      color: #89b4fa;
+    }
+
+    .xcss-box .val {
+      color: #a6e3a1;
+    }
+
+    /* ═══════════════════════════════════════════
+       BUTTON 스타일
+    ═══════════════════════════════════════════ */
+
+    /* rem only */
+    .btn-rem {
+      font: normal 1rem/normal "Arial";
+      padding: 0.5rem 1rem;
+      border: 0.0625rem solid var(--border-color);
+      border-radius: 0.25rem;
+      letter-spacing: 0.05rem;
+      word-spacing: 0.1rem;
+      background: #fff;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      margin-bottom: 0.25rem;
+    }
+
+    .btn-rem:hover {
+      background: #eef0ff;
+    }
+
+    /* em only */
+    .btn-em {
+      font: normal 1em/normal "Arial";
+      padding: 0.5em 1em;
+      border: 0.1em solid var(--border-color);
+      border-radius: 0.25em;
+      letter-spacing: 0.05em;
+      word-spacing: 0.1em;
+      background: #fff;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      margin-bottom: 0.25rem;
+    }
+
+    .btn-em:hover {
+      background: #eef0ff;
+    }
+
+    /* em + rem 복합 */
+    .btn-mix {
+      font: normal 1rem/normal "Arial";
+      /* rem: 루트 기준 고정 */
+      padding: 0.5em 1rem;
+      /* em: 폰트 기준, rem: 루트 기준 */
+      border: 0.1em solid var(--border-color);
+      border-radius: 0.25rem;
+      letter-spacing: 0.05em;
+      word-spacing: 0.1rem;
+      background: #fff;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      margin-bottom: 0.25rem;
+    }
+
+    .btn-mix:hover {
+      background: #eef0ff;
+    }
+
+    /* ═══════════════════════════════════════════
+       DIV 스타일
+    ═══════════════════════════════════════════ */
+
+    .div-rem {
+      font: normal 1rem/1.6 "Arial";
+      padding: 0.5rem 1rem;
+      border: 0.0625rem solid var(--border-color);
+      border-radius: 0.25rem;
+      letter-spacing: 0.05rem;
+      word-spacing: 0.1rem;
+      background: #fafafa;
+      margin-bottom: 0.25rem;
+    }
+
+    .div-em {
+      font: normal 1em/1.6 "Arial";
+      padding: 0.5em 1em;
+      border: 0.1em solid var(--border-color);
+      border-radius: 0.25em;
+      letter-spacing: 0.05em;
+      word-spacing: 0.1em;
+      background: #fafafa;
+      margin-bottom: 0.25rem;
+    }
+
+    .div-mix {
+      font: normal 1rem/1.6 "Arial";
+      padding: 0.5em 1rem;
+      border: 0.1em solid var(--border-color);
+      border-radius: 0.25rem;
+      letter-spacing: 0.05em;
+      word-spacing: 0.1rem;
+      background: #fafafa;
+      margin-bottom: 0.25rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       INPUT (Edit) 스타일
+    ═══════════════════════════════════════════ */
+
+    .input-rem {
+      font: normal 1rem/normal "Arial";
+      padding: 0.5rem 1rem;
+      border: 0.0625rem solid var(--border-color);
+      border-radius: 0.25rem;
+      letter-spacing: 0.05rem;
+      word-spacing: 0.1rem;
+      width: 100%;
+      display: block;
+      margin-bottom: 0.25rem;
+      outline: none;
+    }
+
+    .input-rem:focus {
+      border-color: var(--base-color);
+    }
+
+    .input-em {
+      font: normal 1em/normal "Arial";
+      padding: 0.5em 1em;
+      border: 0.1em solid var(--border-color);
+      border-radius: 0.25em;
+      letter-spacing: 0.05em;
+      word-spacing: 0.1em;
+      width: 100%;
+      display: block;
+      margin-bottom: 0.25rem;
+      outline: none;
+    }
+
+    .input-em:focus {
+      border-color: var(--base-color);
+    }
+
+    .input-mix {
+      font: normal 1rem/normal "Arial";
+      padding: 0.5em 1rem;
+      border: 0.1em solid var(--border-color);
+      border-radius: 0.25rem;
+      letter-spacing: 0.05em;
+      word-spacing: 0.1rem;
+      width: 100%;
+      display: block;
+      margin-bottom: 0.25rem;
+      outline: none;
+    }
+
+    .input-mix:focus {
+      border-color: var(--base-color);
+    }
+
+    /* ═══════════════════════════════════════════
+       TEXTAREA 스타일
+    ═══════════════════════════════════════════ */
+
+    .ta-rem {
+      font: normal 1rem/1.6 "Arial";
+      padding: 0.5rem 1rem;
+      border: 0.0625rem solid var(--border-color);
+      border-radius: 0.25rem;
+      letter-spacing: 0.05rem;
+      word-spacing: 0.1rem;
+      width: 100%;
+      display: block;
+      resize: vertical;
+      margin-bottom: 0.25rem;
+      outline: none;
+      min-height: 4rem;
+    }
+
+    .ta-rem:focus {
+      border-color: var(--base-color);
+    }
+
+    .ta-em {
+      font: normal 1em/1.6 "Arial";
+      padding: 0.5em 1em;
+      border: 0.1em solid var(--border-color);
+      border-radius: 0.25em;
+      letter-spacing: 0.05em;
+      word-spacing: 0.1em;
+      width: 100%;
+      display: block;
+      resize: vertical;
+      margin-bottom: 0.25rem;
+      outline: none;
+      min-height: 4em;
+    }
+
+    .ta-em:focus {
+      border-color: var(--base-color);
+    }
+
+    .ta-mix {
+      font: normal 1rem/1.6 "Arial";
+      padding: 0.5em 1rem;
+      border: 0.1em solid var(--border-color);
+      border-radius: 0.25rem;
+      letter-spacing: 0.05em;
+      word-spacing: 0.1rem;
+      width: 100%;
+      display: block;
+      resize: vertical;
+      margin-bottom: 0.25rem;
+      outline: none;
+      min-height: 4rem;
+    }
+
+    .ta-mix:focus {
+      border-color: var(--base-color);
+    }
+
+    /* ═══════════════════════════════════════════
+       TABLE 스타일
+    ═══════════════════════════════════════════ */
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 0.25rem;
+    }
+
+    /* rem only */
+    .tbl-rem {
+      font: normal 0.875rem/1.5 "Arial";
+      letter-spacing: 0.05rem;
+    }
+
+    .tbl-rem th,
+    .tbl-rem td {
+      padding: 0.5rem 0.75rem;
+      border: 0.0625rem solid var(--border-color);
+    }
+
+    .tbl-rem th {
+      background: #eef0ff;
+      font-size: 0.875rem;
+    }
+
+    /* em only */
+    .tbl-em {
+      font: normal 0.875em/1.5 "Arial";
+      letter-spacing: 0.05em;
+    }
+
+    .tbl-em th,
+    .tbl-em td {
+      padding: 0.5em 0.75em;
+      border: 0.1em solid var(--border-color);
+    }
+
+    .tbl-em th {
+      background: #eef0ff;
+      font-size: 0.875em;
+    }
+
+    /* em + rem 복합 */
+    .tbl-mix {
+      font: normal 0.875rem/1.5 "Arial";
+      letter-spacing: 0.05em;
+    }
+
+    .tbl-mix th,
+    .tbl-mix td {
+      padding: 0.5em 0.75rem;
+      border: 0.1em solid var(--border-color);
+    }
+
+    .tbl-mix th {
+      background: #eef0ff;
+      font-size: 0.875rem;
+    }
+
+    /* 폰트 크기 조절 데모 */
+    .font-demo-wrap {
+      background: #fff;
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+      margin-bottom: 2rem;
+    }
+
+    .font-demo-wrap label {
+      font-size: 0.875rem;
+      color: #555;
+    }
+
+    .font-demo-wrap input[type=range] {
+      width: 12rem;
+      vertical-align: middle;
+    }
+
+    .font-demo-wrap output {
+      font-weight: bold;
+      color: var(--base-color);
+    }
+
+    #demo-parent {
+      font-size: 20px;
+      background: #f0f4ff;
+      padding: 1rem;
+      border-radius: 0.25rem;
+      margin-top: 0.75rem;
+      border: 1px solid #c2c2c2;
+    }
+
+    .inner-rem {
+      font-size: 1rem;
+      color: #1a56db;
+    }
+
+    .inner-em {
+      font-size: 1em;
+      color: #c03221;
+    }
+
+    .inner-mix {
+      font-size: 1rem;
+      color: #2e7d32;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>rem / em 단위 비교 샘플</h1>
+  <p class="subtitle">
+    HTML CSS (rem · em) vs NexacroN XCSS (-nexa- prefix) 비교용 페이지 &nbsp;|&nbsp;
+    브라우저 기본 font-size = <strong>16px</strong> (1rem = 16px)
+  </p>
+
+  <!-- ─── NexacroN XCSS 참조 ─── -->
+  <div class="group-header">NexacroN XCSS 참조 (비교 기준)</div>
+  <div class="xcss-box"><span class="comment">/* NexacroN XCSS 형태 — 공통 컴포넌트 스타일 */</span>
+    <span class="prop">-nexa-padding</span> : <span class="val">0.5em 1rem</span>; <span class="comment">/* em = 해당 컴포넌트
+      폰트 기준, rem = 루트 기준 */</span>
+    <span class="prop">-nexa-border</span> : <span class="val">0.1em solid #c2c2c2</span>; <span class="comment">/* 테두리
+      두께도 폰트 연동 */</span>
+    <span class="prop">border-radius</span> : <span class="val">0.25rem</span>; <span class="comment">/* 루트 기준 고정 곡률
+      */</span>
+    <span class="prop">font</span> : <span class="val">normal 1rem/normal "Arial"</span>; <span class="comment">/* 절대
+      크기, 루트 기준 */</span>
+    <span class="prop">letter-spacing</span> : <span class="val">0.05em</span>; <span class="comment">/* 폰트 크기에 비례
+      */</span>
+    <span class="prop">word-spacing</span> : <span class="val">0.1em</span>; <span class="comment">/* 폰트 크기에 비례
+      */</span>
+  </div>
+
+  <!-- ─── 인터랙티브 데모 ─── -->
+  <div class="group-header">em vs rem 핵심 차이 — 인터랙티브 데모</div>
+  <div class="font-demo-wrap">
+    <label>
+      부모 font-size 조절:
+      <input type="range" id="parentRange" min="12" max="32" value="20" step="1" oninput="document.getElementById('parentVal').value=this.value+'px';
+                    document.getElementById('demo-parent').style.fontSize=this.value+'px';" />
+      <output id="parentVal">20px</output>
+    </label>
+    <div id="demo-parent">
+      <p class="inner-rem">🔵 font-size: <strong>1rem</strong> → 항상 16px (루트 기준, 부모 무관)</p>
+      <p class="inner-em">🔴 font-size: <strong>1em</strong> → 부모 font-size에 연동 (슬라이더 변경 시 같이 변함)</p>
+      <p class="inner-mix">🟢 font-size: <strong>1rem</strong> + letter-spacing: <strong>0.05em</strong> → 폰트 고정, 자간은 폰트
+        연동</p>
+    </div>
+    <p style="font-size:0.8rem;color:#888;margin-top:0.5rem;">
+      ※ 슬라이더를 움직이면 부모 font-size가 변합니다. rem은 변하지 않고 em은 부모를 따라갑니다.
+    </p>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+     BUTTON
+════════════════════════════════════════════════════════ -->
+  <div class="group-header">BUTTON</div>
+  <div class="section-group">
+
+    <!-- rem only -->
+    <div class="section">
+      <span class="section-title">rem only</span>
+      <p class="tag-label">버튼 1</p>
+      <div class="code-hint">font: normal 1rem/normal "Arial";
+        padding: 0.5rem 1rem;
+        border: 0.0625rem solid #c2c2c2;
+        border-radius: 0.25rem;
+        letter-spacing: 0.05rem;
+        word-spacing: 0.1rem;</div>
+      <button class="btn-rem">기본 버튼 (rem)</button>
+
+      <p class="tag-label">버튼 2 — 폰트 크게 (1.25rem)</p>
+      <div class="code-hint">font-size: 1.25rem; /* 20px */</div>
+      <button class="btn-rem" style="font-size:1.25rem;">큰 버튼 (rem)</button>
+
+      <p class="tag-label">버튼 3 — 폰트 작게 (0.75rem)</p>
+      <div class="code-hint">font-size: 0.75rem; /* 12px */</div>
+      <button class="btn-rem" style="font-size:0.75rem;">작은 버튼 (rem)</button>
+    </div>
+
+    <!-- em only -->
+    <div class="section">
+      <span class="section-title">em only</span>
+      <p class="tag-label">버튼 1</p>
+      <div class="code-hint">font: normal 1em/normal "Arial";
+        padding: 0.5em 1em;
+        border: 0.1em solid #c2c2c2;
+        border-radius: 0.25em;
+        letter-spacing: 0.05em;
+        word-spacing: 0.1em;</div>
+      <button class="btn-em">기본 버튼 (em)</button>
+
+      <p class="tag-label">버튼 2 — 폰트 크게 (1.25em)</p>
+      <div class="code-hint">font-size: 1.25em; /* padding·border도 커짐 */</div>
+      <button class="btn-em" style="font-size:1.25em;">큰 버튼 (em)</button>
+
+      <p class="tag-label">버튼 3 — 폰트 작게 (0.75em)</p>
+      <div class="code-hint">font-size: 0.75em; /* padding·border도 작아짐 */</div>
+      <button class="btn-em" style="font-size:0.75em;">작은 버튼 (em)</button>
+    </div>
+
+    <!-- em + rem 복합 (NexacroN XCSS 방식) -->
+    <div class="section">
+      <span class="section-title">em &amp; rem 복합</span>
+      <p class="tag-label">버튼 1 — XCSS 동일 패턴</p>
+      <div class="code-hint">font: normal 1rem/normal "Arial";
+        padding: 0.5em 1rem; /* ← XCSS와 동일 */
+        border: 0.1em solid #c2c2c2;
+        border-radius: 0.25rem;
+        letter-spacing: 0.05em;
+        word-spacing: 0.1rem;</div>
+      <button class="btn-mix">복합 버튼</button>
+
+      <p class="tag-label">버튼 2 — 폰트만 크게 (1.25rem)</p>
+      <div class="code-hint">font-size: 1.25rem;
+        /* padding-y(em)·border(em) → 폰트 따라 커짐
+        padding-x(rem) → 고정 */</div>
+      <button class="btn-mix" style="font-size:1.25rem;">큰 복합 버튼</button>
+
+      <p class="tag-label">버튼 3 — 폰트만 작게 (0.75rem)</p>
+      <div class="code-hint">font-size: 0.75rem;
+        /* padding-y(em)·border(em) → 비례 축소
+        padding-x(rem) → 고정 */</div>
+      <button class="btn-mix" style="font-size:0.75rem;">작은 복합 버튼</button>
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+     DIV
+════════════════════════════════════════════════════════ -->
+  <div class="group-header">DIV</div>
+  <div class="section-group">
+
+    <div class="section">
+      <span class="section-title">rem only</span>
+      <p class="tag-label">div 1</p>
+      <div class="code-hint">font: normal 1rem/1.6 "Arial";
+        padding: 0.5rem 1rem;
+        border: 0.0625rem solid #c2c2c2;</div>
+      <div class="div-rem">기본 텍스트 영역 (rem)</div>
+
+      <p class="tag-label">div 2 — font-size 1.25rem</p>
+      <div class="div-rem" style="font-size:1.25rem;">큰 텍스트 영역 (rem)<br />padding·border는 rem이라 그대로</div>
+
+      <p class="tag-label">div 3 — font-size 0.75rem</p>
+      <div class="div-rem" style="font-size:0.75rem;">작은 텍스트 영역 (rem)<br />padding·border는 rem이라 그대로</div>
+    </div>
+
+    <div class="section">
+      <span class="section-title">em only</span>
+      <p class="tag-label">div 1</p>
+      <div class="code-hint">font: normal 1em/1.6 "Arial";
+        padding: 0.5em 1em;
+        border: 0.1em solid #c2c2c2;</div>
+      <div class="div-em">기본 텍스트 영역 (em)</div>
+
+      <p class="tag-label">div 2 — font-size 1.25em</p>
+      <div class="div-em" style="font-size:1.25em;">큰 텍스트 영역 (em)<br />padding·border도 같이 커짐</div>
+
+      <p class="tag-label">div 3 — font-size 0.75em</p>
+      <div class="div-em" style="font-size:0.75em;">작은 텍스트 영역 (em)<br />padding·border도 같이 작아짐</div>
+    </div>
+
+    <div class="section">
+      <span class="section-title">em &amp; rem 복합</span>
+      <p class="tag-label">div 1</p>
+      <div class="code-hint">font: normal 1rem/1.6 "Arial";
+        padding: 0.5em 1rem;
+        border: 0.1em solid #c2c2c2;</div>
+      <div class="div-mix">복합 텍스트 영역</div>
+
+      <p class="tag-label">div 2 — font-size 1.25rem</p>
+      <div class="div-mix" style="font-size:1.25rem;">큰 복합 텍스트 영역<br />padding-y·border: 비례↑ / padding-x: 고정</div>
+
+      <p class="tag-label">div 3 — font-size 0.75rem</p>
+      <div class="div-mix" style="font-size:0.75rem;">작은 복합 텍스트 영역<br />padding-y·border: 비례↓ / padding-x: 고정</div>
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+     INPUT (Edit)
+════════════════════════════════════════════════════════ -->
+  <div class="group-header">INPUT (Edit)</div>
+  <div class="section-group">
+
+    <div class="section">
+      <span class="section-title">rem only</span>
+      <p class="tag-label">input 1</p>
+      <div class="code-hint">font: normal 1rem/normal "Arial";
+        padding: 0.5rem 1rem;
+        border: 0.0625rem solid #c2c2c2;</div>
+      <input class="input-rem" type="text" placeholder="입력 (rem)" />
+
+      <p class="tag-label">input 2 — font-size 1.25rem</p>
+      <input class="input-rem" type="text" style="font-size:1.25rem;" placeholder="큰 입력 (rem)" />
+
+      <p class="tag-label">input 3 — font-size 0.75rem</p>
+      <input class="input-rem" type="text" style="font-size:0.75rem;" placeholder="작은 입력 (rem)" />
+    </div>
+
+    <div class="section">
+      <span class="section-title">em only</span>
+      <p class="tag-label">input 1</p>
+      <div class="code-hint">font: normal 1em/normal "Arial";
+        padding: 0.5em 1em;
+        border: 0.1em solid #c2c2c2;</div>
+      <input class="input-em" type="text" placeholder="입력 (em)" />
+
+      <p class="tag-label">input 2 — font-size 1.25em</p>
+      <input class="input-em" type="text" style="font-size:1.25em;" placeholder="큰 입력 (em)" />
+
+      <p class="tag-label">input 3 — font-size 0.75em</p>
+      <input class="input-em" type="text" style="font-size:0.75em;" placeholder="작은 입력 (em)" />
+    </div>
+
+    <div class="section">
+      <span class="section-title">em &amp; rem 복합</span>
+      <p class="tag-label">input 1 — XCSS 동일 패턴</p>
+      <div class="code-hint">font: normal 1rem/normal "Arial";
+        padding: 0.5em 1rem;
+        border: 0.1em solid #c2c2c2;
+        letter-spacing: 0.05em;</div>
+      <input class="input-mix" type="text" placeholder="입력 (em+rem)" />
+
+      <p class="tag-label">input 2 — font-size 1.25rem</p>
+      <input class="input-mix" type="text" style="font-size:1.25rem;" placeholder="큰 입력 (em+rem)" />
+
+      <p class="tag-label">input 3 — font-size 0.75rem</p>
+      <input class="input-mix" type="text" style="font-size:0.75rem;" placeholder="작은 입력 (em+rem)" />
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+     TEXTAREA
+════════════════════════════════════════════════════════ -->
+  <div class="group-header">TEXTAREA</div>
+  <div class="section-group">
+
+    <div class="section">
+      <span class="section-title">rem only</span>
+      <p class="tag-label">textarea 1</p>
+      <div class="code-hint">font: normal 1rem/1.6 "Arial";
+        padding: 0.5rem 1rem;
+        border: 0.0625rem solid #c2c2c2;
+        min-height: 4rem;</div>
+      <textarea class="ta-rem" placeholder="텍스트 입력 (rem)"></textarea>
+
+      <p class="tag-label">textarea 2 — font-size 1.25rem</p>
+      <textarea class="ta-rem" style="font-size:1.25rem;" placeholder="큰 textarea (rem)"></textarea>
+
+      <p class="tag-label">textarea 3 — font-size 0.75rem</p>
+      <textarea class="ta-rem" style="font-size:0.75rem;" placeholder="작은 textarea (rem)"></textarea>
+    </div>
+
+    <div class="section">
+      <span class="section-title">em only</span>
+      <p class="tag-label">textarea 1</p>
+      <div class="code-hint">font: normal 1em/1.6 "Arial";
+        padding: 0.5em 1em;
+        border: 0.1em solid #c2c2c2;
+        min-height: 4em;</div>
+      <textarea class="ta-em" placeholder="텍스트 입력 (em)"></textarea>
+
+      <p class="tag-label">textarea 2 — font-size 1.25em</p>
+      <textarea class="ta-em" style="font-size:1.25em;" placeholder="큰 textarea (em)"></textarea>
+
+      <p class="tag-label">textarea 3 — font-size 0.75em</p>
+      <textarea class="ta-em" style="font-size:0.75em;" placeholder="작은 textarea (em)"></textarea>
+    </div>
+
+    <div class="section">
+      <span class="section-title">em &amp; rem 복합</span>
+      <p class="tag-label">textarea 1</p>
+      <div class="code-hint">font: normal 1rem/1.6 "Arial";
+        padding: 0.5em 1rem;
+        border: 0.1em solid #c2c2c2;
+        min-height: 4rem;</div>
+      <textarea class="ta-mix" placeholder="텍스트 입력 (em+rem)"></textarea>
+
+      <p class="tag-label">textarea 2 — font-size 1.25rem</p>
+      <textarea class="ta-mix" style="font-size:1.25rem;" placeholder="큰 textarea (em+rem)"></textarea>
+
+      <p class="tag-label">textarea 3 — font-size 0.75rem</p>
+      <textarea class="ta-mix" style="font-size:0.75rem;" placeholder="작은 textarea (em+rem)"></textarea>
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+     TABLE
+════════════════════════════════════════════════════════ -->
+  <div class="group-header">TABLE</div>
+  <div class="section-group">
+
+    <div class="section">
+      <span class="section-title">rem only</span>
+      <p class="tag-label">table 1</p>
+      <div class="code-hint">font: normal 0.875rem/1.5 "Arial";
+        padding: 0.5rem 0.75rem;
+        border: 0.0625rem solid #c2c2c2;</div>
+      <table class="tbl-rem">
+        <tr>
+          <th>항목</th>
+          <th>값</th>
+        </tr>
+        <tr>
+          <td>이름</td>
+          <td>홍길동</td>
+        </tr>
+        <tr>
+          <td>부서</td>
+          <td>개발팀</td>
+        </tr>
+      </table>
+
+      <p class="tag-label">table 2 — font-size 1rem</p>
+      <table class="tbl-rem" style="font-size:1rem;">
+        <tr>
+          <th>항목</th>
+          <th>값</th>
+        </tr>
+        <tr>
+          <td>이름</td>
+          <td>김철수</td>
+        </tr>
+        <tr>
+          <td>부서</td>
+          <td>기획팀</td>
+        </tr>
+      </table>
+
+      <p class="tag-label">table 3 — font-size 0.75rem</p>
+      <table class="tbl-rem" style="font-size:0.75rem;">
+        <tr>
+          <th>항목</th>
+          <th>값</th>
+        </tr>
+        <tr>
+          <td>이름</td>
+          <td>이영희</td>
+        </tr>
+        <tr>
+          <td>부서</td>
+          <td>디자인팀</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <span class="section-title">em only</span>
+      <p class="tag-label">table 1</p>
+      <div class="code-hint">font: normal 0.875em/1.5 "Arial";
+        padding: 0.5em 0.75em;
+        border: 0.1em solid #c2c2c2;</div>
+      <table class="tbl-em">
+        <tr>
+          <th>항목</th>
+          <th>값</th>
+        </tr>
+        <tr>
+          <td>이름</td>
+          <td>홍길동</td>
+        </tr>
+        <tr>
+          <td>부서</td>
+          <td>개발팀</td>
+        </tr>
+      </table>
+
+      <p class="tag-label">table 2 — font-size 1em</p>
+      <table class="tbl-em" style="font-size:1em;">
+        <tr>
+          <th>항목</th>
+          <th>값</th>
+        </tr>
+        <tr>
+          <td>이름</td>
+          <td>김철수</td>
+        </tr>
+        <tr>
+          <td>부서</td>
+          <td>기획팀</td>
+        </tr>
+      </table>
+
+      <p class="tag-label">table 3 — font-size 0.75em</p>
+      <table class="tbl-em" style="font-size:0.75em;">
+        <tr>
+          <th>항목</th>
+          <th>값</th>
+        </tr>
+        <tr>
+          <td>이름</td>
+          <td>이영희</td>
+        </tr>
+        <tr>
+          <td>부서</td>
+          <td>디자인팀</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <span class="section-title">em &amp; rem 복합</span>
+      <p class="tag-label">table 1</p>
+      <div class="code-hint">font: normal 0.875rem/1.5 "Arial";
+        padding: 0.5em 0.75rem; /* ← XCSS 패턴 */
+        border: 0.1em solid #c2c2c2;
+        letter-spacing: 0.05em;</div>
+      <table class="tbl-mix">
+        <tr>
+          <th>항목</th>
+          <th>값</th>
+        </tr>
+        <tr>
+          <td>이름</td>
+          <td>홍길동</td>
+        </tr>
+        <tr>
+          <td>부서</td>
+          <td>개발팀</td>
+        </tr>
+      </table>
+
+      <p class="tag-label">table 2 — font-size 1rem</p>
+      <table class="tbl-mix" style="font-size:1rem;">
+        <tr>
+          <th>항목</th>
+          <th>값</th>
+        </tr>
+        <tr>
+          <td>이름</td>
+          <td>김철수</td>
+        </tr>
+        <tr>
+          <td>부서</td>
+          <td>기획팀</td>
+        </tr>
+      </table>
+
+      <p class="tag-label">table 3 — font-size 0.75rem</p>
+      <table class="tbl-mix" style="font-size:0.75rem;">
+        <tr>
+          <th>항목</th>
+          <th>값</th>
+        </tr>
+        <tr>
+          <td>이름</td>
+          <td>이영희</td>
+        </tr>
+        <tr>
+          <td>부서</td>
+          <td>디자인팀</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+
+  <!-- ─── 요약 비교표 ─── -->
+  <div class="group-header">단위 특성 요약 비교</div>
+  <div class="font-demo-wrap">
+    <table style="font-size:0.875rem;border-collapse:collapse;width:100%;">
+      <thead>
+        <tr style="background:#4a6cf7;color:#fff;">
+          <th style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">항목</th>
+          <th style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">rem</th>
+          <th style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">em</th>
+          <th style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">em+rem 복합 (XCSS 방식)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;font-weight:bold;">기준</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">html (root) font-size<br /><em>= 16px (기본)</em>
+          </td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">현재 요소(또는 부모) font-size</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">속성별로 선택적 적용</td>
+        </tr>
+        <tr style="background:#f8f8ff;">
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;font-weight:bold;">font-size</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">✅ 전역 일관성</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">⚠️ 중첩 시 누적 축소/확대</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">rem 권장 (전역 고정)</td>
+        </tr>
+        <tr>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;font-weight:bold;">padding</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">루트 기준 고정</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">폰트 크기에 비례</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">상하: em / 좌우: rem<br /><em>※ XCSS: -nexa-padding:
+              0.5em 1rem</em></td>
+        </tr>
+        <tr style="background:#f8f8ff;">
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;font-weight:bold;">border</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">고정 두께 (0.0625rem=1px)</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">폰트에 비례 (0.1em)</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">em 권장 (폰트와 균형 유지)<br /><em>※ XCSS: -nexa-border:
+              0.1em solid</em></td>
+        </tr>
+        <tr>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;font-weight:bold;">letter-spacing</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">고정값</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">폰트에 비례 ✅ 권장</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">em 권장<br /><em>※ XCSS: 0.05em</em></td>
+        </tr>
+        <tr style="background:#f8f8ff;">
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;font-weight:bold;">border-radius</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">✅ 고정 곡률 권장</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">폰트에 비례</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">rem 권장 (디자인 일관성)<br /><em>※ XCSS: 0.25rem</em>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;font-weight:bold;">접근성<br />(사용자 폰트 설정)</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">✅ 루트 변경 시 전체 스케일</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">✅ 부모 변경에 반응</td>
+          <td style="padding:0.5rem 0.75rem;border:1px solid #c2c2c2;">✅ 양쪽 장점 결합</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
+</html>
