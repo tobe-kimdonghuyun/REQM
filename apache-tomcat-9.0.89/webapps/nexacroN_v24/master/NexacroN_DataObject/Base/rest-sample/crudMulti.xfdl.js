@@ -37,36 +37,28 @@
             this.addChild(obj.name, obj);
             
             // UI Components Initialize
-            obj = new Button("btn_save_rowtype",null,"17","160","40","20",null,null,null,null,null,this);
-            obj.set_taborder("5");
+            obj = new Button("btn_save_rowtype","915","14","160","40",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
             obj.set_text("멀티로우 저장(_rowtype)");
             this.addChild(obj.name, obj);
 
-            obj = new Button("btn_delete",null,"17","70","40","btn_save_rowtype:10",null,null,null,null,null,this);
-            obj.set_taborder("4");
+            obj = new Button("btn_delete","835","14","70","40",null,null,null,null,null,null,this);
+            obj.set_taborder("3");
             obj.set_text("삭제");
             this.addChild(obj.name, obj);
 
-            obj = new Button("btn_add",null,"17","70","40","btn_delete:10",null,null,null,null,null,this);
+            obj = new Button("btn_add","745","17","70","40",null,null,null,null,null,null,this);
             obj.set_taborder("1");
             obj.set_text("추가");
             this.addChild(obj.name, obj);
 
-            obj = new Button("btn_search",null,"17","70","40","btn_add:10",null,null,null,null,null,this);
+            obj = new Button("btn_search","650","20","70","40",null,null,null,null,null,null,this);
             obj.set_taborder("0");
             obj.set_text("조회");
             this.addChild(obj.name, obj);
 
-            obj = new Grid("grd_list","20","70",null,null,"20","65",null,null,null,null,this);
-            obj.set_taborder("2");
-            obj.set_autofittype("col");
-            obj.set_binddataset("ds_boardList");
-            obj.set_autoenter("select");
-            obj._setContents("<Formats><Format id=\"default\"><Columns><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/><Column size=\"80\"/></Columns><Rows><Row size=\"24\" band=\"head\"/><Row size=\"24\"/></Rows><Band id=\"head\"><Cell text=\"id\"/><Cell col=\"1\" text=\"employee_name\"/><Cell col=\"2\" text=\"employee_salary\"/><Cell col=\"3\" text=\"employee_age\"/></Band><Band id=\"body\"><Cell text=\"bind:id\"/><Cell col=\"1\" text=\"bind:employee_name\" edittype=\"text\"/><Cell col=\"2\" text=\"bind:employee_salary\" edittype=\"text\"/><Cell col=\"3\" text=\"bind:employee_age\" edittype=\"text\"/></Band></Format></Formats>");
-            this.addChild(obj.name, obj);
-
             obj = new Combo("cbo_PageSize","5","16","150","40",null,null,null,null,null,null,this);
-            obj.set_taborder("3");
+            obj.set_taborder("2");
             obj.set_codecolumn("pageSize");
             obj.set_datacolumn("pageSize");
             obj.set_innerdataset("ds_cboPageSize");
@@ -76,12 +68,12 @@
             this.addChild(obj.name, obj);
 
             obj = new Div("div_paging","30.70%",null,"511","48",null,"6",null,null,null,null,this);
-            obj.set_taborder("6");
+            obj.set_taborder("5");
             obj.set_url("cmm::cmmPaging.xfdl");
             this.addChild(obj.name, obj);
 
             obj = new Combo("Combo00","160","15","150","42",null,null,null,null,null,null,this);
-            obj.set_taborder("7");
+            obj.set_taborder("6");
             obj.set_codecolumn("codecolumn");
             obj.set_datacolumn("datacolumn");
             var Combo00_innerdataset = new nexacro.NormalDataset("Combo00_innerdataset", obj);
@@ -93,18 +85,22 @@
             this.addChild(obj.name, obj);
 
             obj = new Button("Button00","320","14","80","43",null,null,null,null,null,null,this);
-            obj.set_taborder("8");
+            obj.set_taborder("7");
             obj.set_text("jsp");
             this.addChild(obj.name, obj);
 
             obj = new Button("Button01","409","12","81","49",null,null,null,null,null,null,this);
-            obj.set_taborder("9");
+            obj.set_taborder("8");
             obj.set_text("api/error.json");
             this.addChild(obj.name, obj);
 
             obj = new Button("Button02","495","13","135","49",null,null,null,null,null,null,this);
-            obj.set_taborder("10");
+            obj.set_taborder("9");
             obj.set_text("첨부파일jsp");
+            this.addChild(obj.name, obj);
+
+            obj = new ListBox("ListBox00","17","71","523","405",null,null,null,null,null,null,this);
+            obj.set_taborder("10");
             this.addChild(obj.name, obj);
             // Layout Functions
             //-- Default Layout : this.div_paging
@@ -159,7 +155,8 @@
         */
         this.SVC_SEARCH = {
         	svcId : "search"
-        	, url   : "GET::app03::/nexacroN/output/NexacroN_DataObject/json_api.jsp"
+        	, url   : "GET::app03::/KHJ/RP_105454_data_sample_dataobject_01.jsp"
+        	//, url   : "GET::app01::/service_jsp/RP_105454_data_sample_dataobject_500.jsp"
         	, inDs  : "ds_param"
         	, outDs : "ds_boardList=result ds_boardPage=pagination"
         }
@@ -335,7 +332,6 @@
             this.btn_delete.addEventHandler("onclick",this.btn_delete_onclick,this);
             this.btn_add.addEventHandler("onclick",this.btn_add_onclick,this);
             this.btn_search.addEventHandler("onclick",this.btn_search_onclick,this);
-            this.grd_list.addEventHandler("oncelldblclick",this.grd_list_oncelldblclick,this);
             this.cbo_PageSize.addEventHandler("onitemchanged",this.cbo_pageSize_onitemchanged,this);
             this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
             this.Button01.addEventHandler("onclick",this.Button01_onclick,this);
