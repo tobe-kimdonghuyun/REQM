@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="UX_Sample" width="1280" height="870" titletext="New Form" onload="UX_Sample_onload">
+    <Layouts>
+      <Layout height="870" width="1280">
+        <Panel id="Panel00" taborder="0" left="49" top="99" width="382" height="341" type="vertical" spacing="1rem" border="1px solid black">
+          <Contents>
+            <PanelItem id="PanelItem04" componentid="Static01"/>
+            <PanelItem id="PanelItem02" componentid="Button04"/>
+            <PanelItem id="PanelItem03" componentid="Button05"/>
+            <PanelItem id="PanelItem00" componentid="Button03"/>
+          </Contents>
+        </Panel>
+        <Button id="Button03" taborder="1" text="Button03" left="439" top="149" width="7.5rem" height="3.125rem" cssclass="userclass"/>
+        <Button id="Button04" taborder="2" text="Button04" left="458" top="241" width="10rem" height="3.125rem" border="0.2rem solid silver" font="normal 1rem/normal &quot;Arial Black&quot;" fittocontents="width" borderRadius="1rem" padding="0.5rem 1rem"/>
+        <Button id="Button05" taborder="3" text="Button05" left="523" top="270" width="7.5rem" height="3.125rem" boxShadow="inset 0px 0px 0px 0px aquamarine" padding="2.5px 5px"/>
+        <Spin id="Spin00" taborder="4" left="49" top="30" width="209" height="35" value="16" onspin="Spin00_onspin" onchanged="Spin00_onchanged"/>
+        <Static id="Static01" taborder="5" text="Static01" left="452" top="104" width="7.5rem" height="3.75rem"/>
+        <Static id="Static02" taborder="6" text="Panel&#13;&#10;&#13;&#10;type: &quot;vertical&quot;;&#13;&#10;Spacing : &quot;1rem&quot;;&#13;&#10;verticalgap : &quot;1rem&quot;;&#13;&#10;horizontalgap: &quot;1rem&quot;;" left="472" top="99" width="181" height="157"/>
+        <Static id="Static02_00" taborder="7" text="Button&#13;&#10;&#13;&#10;border: &quot;0.2rem solid silver&quot;;&#13;&#10;borderRadius: &quot;1rem&quot;;&#13;&#10;padding: &quot;0.5rem 1rem&quot;;&#13;&#10;font: &quot;normal 1rem/normal &quot;Arial Black&quot;&quot;;" left="472" top="277" width="237" height="157" onclick="Static02_00_onclick"/>
+        <Button id="Button00" taborder="8" text="Button00" left="50" top="475" width="120" height="50"/>
+        <ListBox id="ListBox00" taborder="9" left="52" top="580" width="170" height="100" innerdataset="Dataset00" codecolumn="Column0" datacolumn="Column0" itemheight="1rem"/>
+        <Static id="Static02_00_00" taborder="10" text="Button&#13;&#10;&#13;&#10;padding: &quot;0.5rem 1rem&quot;;" left="472" top="468" width="237" height="50" onclick="Static02_00_onclick"/>
+        <Calendar id="Calendar00" taborder="11" left="250" top="580" width="175" height="170" type="monthonly"/>
+        <Static id="Static02_00_00_00" taborder="12" text="ListBox&#13;&#10;&#13;&#10;itemheight: &quot;1rem&quot;;" left="472" top="580" width="237" height="50" onclick="Static02_00_onclick"/>
+        <Static id="Static02_00_00_00_00" taborder="13" text="Calendar&#13;&#10;&#13;&#10;headheight: &quot;1rem&quot;;" left="472" top="680" width="237" height="50" onclick="Static02_00_onclick"/>
+        <MultiCombo id="MultiCombo00" taborder="14" text="aaa,bbb,ccc,ddd" left="56" top="783" width="374" height="47" innerdataset="Dataset00" codecolumn="Column0" datacolumn="Column0" edittype="singletag" index="0,1,2,3" value="aaa,bbb,ccc,ddd"/>
+        <Static id="Static02_00_00_00_01" taborder="15" text="MultiCombo&#13;&#10;&#13;&#10;tagboxitemverticalgap: &quot;1rem&quot;;" left="472" top="781" width="237" height="50" onclick="Static02_00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.Panel00.verticalgap = "1rem";
+};
+
+this.UX_Sample_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.Panel00.verticalgap = "1rem";
+	this.Panel00.horizontalgap = "1rem";
+	this.Button04.letterSpacing = "0.5rem";
+	this.Button04.padding = "0.5rem 1rem";
+	this.Button04.boxShadow = "0.5rem 0.5rem 0.5rem 0.5rem aquamarine";
+	this.Button00.padding = "1rem";
+	this.Calendar00.headheight = "1rem";
+	this.MultiCombo00.tagboxitemhorizontalgap = "1rem";
+};
+
+this.Spin00_onchanged = function(obj:nexacro.Spin,e:nexacro.ChangeEventInfo)
+{
+	var font = this._getMainFrame()._getReferenceAbsoluteFont();
+	this._getMainFrame().font = "normal " + e.postvalue + 'px/normal "Arial"';
+	//this.Static01.text = "기준 Font : " + "normal " + e.postvalue + 'px/normal "Arial"';
+	/*this.ListBox00.on_apply_font();
+	this.Calendar00.on_apply_font();
+	this.MultiCombo00.on_apply_font();*/
+	this.resetScroll();
+	
+};
+
+this.Spin00_onspin = function(obj:nexacro.Spin,e:nexacro.SpinEventInfo)
+{
+	var font = this._getMainFrame()._getReferenceAbsoluteFont();
+	this._getMainFrame().font = "normal " + e.postvalue + 'px/normal "Arial"';
+	//this.Static01.text = "기준 Font : " + "normal " + e.postvalue + 'px/normal "Arial"';
+	/*this.ListBox00.on_apply_font();
+	this.Calendar00.on_apply_font();
+	this.MultiCombo00.on_apply_font();*/
+	this.resetScroll();	
+};
+]]></Script>
+    <Objects>
+      <Dataset id="Dataset00">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">aaa</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">bbb</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">ccc</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">ddd</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>
