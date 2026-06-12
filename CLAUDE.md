@@ -23,10 +23,15 @@
 ```
 tools/           — 배포 BAT 스크립트 및 Tomcat 제어 스크립트
 scripts/         — PowerShell 유틸리티 (Jakarta 변환, JAR 다운로드)
-nexacroK/        — nexacroN 프로젝트 소스
+nexacroK/        — nexacroK UI화면 프로젝트 소스
 NTemplate/       — nexacroN 프로젝트 템플릿
 SKILLS/          — Claude Code 커스텀 스킬 정의
 deploy/          — 배포 설정
+DOCS/            — 개발 및 운영 문서, nexacroN, nexacorK 설계문서가 있음 
+nexacroK_UI/     — nexacroK UI화면 프로젝트 소스
+nexacroN/nexacroN_UI/ — nexacroN UI화면 프로젝트 소스
+nexacroN/output/     — nexacroN UI화면 프로젝트 소스를 generate하여 나온 결과물 폴더
+nexacroN/deploy/     — nexacroN UI화면 프로젝트 소스를 generate하여 나온 결과물을 deploy한 결과물 폴던
 ```
 
 ---
@@ -67,7 +72,12 @@ deploy/          — 배포 설정
 - 공통 함수는 `gfn_` prefix 사용
 - Dataset 컬럼명은 대문자 스네이크케이스 (예: `USER_ID`)
 - 화면 스크립트는 기능 단위로 구역 주석 구분
-
+- 화면은 .xfdl로 확장자 명으로 생성되는 파일임 
+- xfdl파일은 xml와 nexacro 스크립트가 혼재되어 있음 javascript와 유사함 
+- xml은 화면의 컴포넌트와 화면의 데이터 및 레이아웃 속성등을 기술한 것이며 nexacro 스크립트는 화면의 로직을 기술한 것임 
+- script는 <script></script>태그로 감싸져 있으며 스크립트는 function으로 작성됨 
+- nexacrodeploy.exe라는 프로그램을 통하여 nexacrok와 nexacroN 모두 빌드되며 최종적으로 .js파일로 변경된다 
+- 현재는 nexacrodeploy.exe 없음 추후 추가함 
 ---
 
 # 개발 워크플로우
