@@ -19,8 +19,10 @@ git checkout %BRANCH%
 if %ERRORLEVEL% neq 0 echo [ERROR] Failed to checkout branch: %BRANCH% & popd & pause & exit /b %ERRORLEVEL%
 
 
+git stash
 git pull origin %BRANCH%
-if %ERRORLEVEL% neq 0 echo [ERROR] Git pull failed for branch: %BRANCH% & popd & pause & exit /b %ERRORLEVEL%
+if %ERRORLEVEL% neq 0 echo [ERROR] Git pull failed for branch: %BRANCH% & git stash pop & popd & pause & exit /b %ERRORLEVEL%
+git stash pop
 for /f %%H in ('git rev-parse HEAD') do set "COMMIT_HASH=%%H"
 popd
 echo [DONE] Branch: %BRANCH% / Commit: %COMMIT_HASH%
