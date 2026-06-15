@@ -3,8 +3,43 @@
   <Form id="main" width="1280" height="720" titletext="New Form">
     <Layouts>
       <Layout height="720" width="1280">
-        <Button id="Button00" taborder="0" text="Button00" left="997" top="16" width="127" height="50"/>
+        <Button id="Button00" taborder="0" text="Button00" left="770" top="24" width="127" height="50" onclick="Button00_onclick"/>
+        <Combo id="Combo00" taborder="1" text="Combo00" left="30" top="23" width="732" height="53" innerdataset="dsMenu" datacolumn="Column1" codecolumn="Column0"/>
+        <Div id="Div00" taborder="2" text="Div00" left="0" top="100" right="0" bottom="0"/>
       </Layout>
     </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+	this.Div00.set_url(this.Combo00.text);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsMenu">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+          <Column id="Column1" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">0</Col>
+            <Col id="Column1">Base::Test_Grid.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">1</Col>
+            <Col id="Column1">Base::Button.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">2</Col>
+            <Col id="Column1">Base::Test_Property.xfdl</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">3</Col>
+            <Col id="Column1">Base::UX_Sample.xfdl</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
   </Form>
 </FDL>
