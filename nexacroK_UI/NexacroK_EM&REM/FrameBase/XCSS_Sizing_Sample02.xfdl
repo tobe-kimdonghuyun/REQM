@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Static_Selectable_Sample00" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Button id="btn00" taborder="" text="default 생성 px" left="40" top="75" width="120" minwidth="70" minheight="40" maxwidth="150" maxheight="90" height="50"/>
+        <Button id="btn01" taborder="1" text="properties에서 width height 값변경" left="40" top="140" width="150" wordWrap="english" minwidth="70" minheight="40" maxwidth="300" maxheight="150" height="100"/>
+        <Button id="btn03" taborder="2" text="unset설정 후 cssclass로 지정된  값을 확인" left="335" top="140" width="unset" height="unset" wordWrap="english" cssclass="btnCss02"/>
+        <Button id="btn02" taborder="3" text="default 생성 unset" left="335" top="75" width="unset" height="unset"/>
+        <TextArea id="TextArea00" taborder="4" left="40" top="405" width="453" height="410" flexshrink="0"/>
+        <Combo id="Combo00" taborder="5" text="Combo00" left="40" top="355" width="450" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" onitemchanged="Combo00_onitemchanged" height="41">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">0</Col>
+                <Col id="datacolumn">default 생성 px</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">1</Col>
+                <Col id="datacolumn">properties에서 width height 값변경</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">2</Col>
+                <Col id="datacolumn">default 생성 unset</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">3</Col>
+                <Col id="datacolumn">unset설정 후 cssclass로 지정된  값을 확인</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">4</Col>
+                <Col id="datacolumn">defalut 생성 css없음 cssclass를 있지만 width,height없음</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Button id="minSize" taborder="6" text="minwidth,minheight 검증" left="40" top="15" width="170" height="51" onclick="Button00_onclick"/>
+        <Button id="maxSize" taborder="7" text="maxwidth, maxheight 검증" left="335" top="15" width="170" height="51" onclick="maxSize_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	/*
+		
+		minwidth, minheight,maxwidth,maxheight 
+		70,40, 150,90
+		70,40, 300,150
+
+		btn01
+
+	*/
+	this.btn00.width = "60px";
+	this.btn00.height = "30px";
+	
+	this.btn01.width = "60px";
+	this.btn01.height = "30px";
+	
+	this.btn02.width = "60px";
+	this.btn02.height = "30px";
+	
+	this.btn03.width = "60px";
+	this.btn03.height = "30px";
+	
+};
+this.maxSize_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	/*
+		minwidth, minheight,maxwidth,maxheight 
+		70,40, 150,90
+		70,40, 300,150
+	*/
+	this.btn00.width = "310px";
+	this.btn00.height = "200px";
+	
+	this.btn01.width = "310px";
+	this.btn01.height = "200px";
+	
+	this.btn02.width = "310px";
+	this.btn02.height = "200px";
+	
+	this.btn03.width = "310px";
+	this.btn03.height = "200px";
+};
+
+this.Combo00_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.TextArea00.deleteText();
+	switch(e.postindex) {
+	case 0 :
+		this.TextArea00.value= " "+this.btn00.text+"버튼 width height 정보"
+		                      + "\n this.btn00.width = "+this.btn00.width
+		                      + "\n this.btn00.height = "+this.btn00.height
+                          + "\n this.btn00.getOffsetWidth() = "+this.btn00.getOffsetWidth()
+                          + "\n this.btn00.getOffsetHeight() = "+this.btn00.getOffsetHeight()
+                          ;
+		break;
+	case 1 :
+		this.TextArea00.value= " "+this.btn01.text+"버튼 width height 정보"
+		                      + "\n this.btn01.width = "+this.btn01.width
+		                      + "\n this.btn01.height = "+this.btn01.height
+                          + "\n this.btn01.getOffsetWidth() = "+this.btn01.getOffsetWidth()
+                          + "\n this.btn01.getOffsetHeight() = "+this.btn01.getOffsetHeight()
+                          ;
+		break;
+	case 2 :
+		this.TextArea00.value= " "+this.btn02.text+"버튼 width height 정보"
+		                      + "\n this.btn02.width = "+this.btn02.width
+		                      + "\n this.btn02.height = "+this.btn02.height
+                          + "\n this.btn02.getOffsetWidth() = "+this.btn02.getOffsetWidth()
+                          + "\n this.btn02.getOffsetHeight() = "+this.btn02.getOffsetHeight();
+		break;
+	case 3 :
+		this.TextArea00.value= " "+this.btn03.text+"버튼 width height 정보"
+		                      + "\n this.btn03.width = "+this.btn03.width
+		                      + "\n this.btn03.height = "+this.btn03.height
+                          + "\n this.btn03.getOffsetWidth() = "+this.btn03.getOffsetWidth()
+                          + "\n this.btn03.getOffsetHeight() = "+this.btn03.getOffsetHeight();
+		break;
+	case4 :
+		this.TextArea00.value= " "+this.btn04.text+"버튼 width height 정보"
+		                      + "\n this.btn04.width = "+this.btn04.width
+		                      + "\n this.btn04.height = "+this.btn04.height
+                          + "\n this.btn04.getOffsetWidth() = "+this.btn04.getOffsetWidth()
+                          + "\n this.btn04.getOffsetHeight() = "+this.btn04.getOffsetHeight();
+		break;
+	default:
+	}
+};
+]]></Script>
+  </Form>
+</FDL>
