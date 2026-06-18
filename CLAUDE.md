@@ -69,12 +69,19 @@ nexacroN/deploy/     — nexacroN UI화면 프로젝트 소스를 generate하여
 ## nexacroN / nexacroK
 
 > **필독**: nexacroN 또는 nexacroK 관련 작업 시 **반드시** 아래 메뉴얼을 먼저 참조한다.
-> - 메뉴얼 경로: `D:\git_prj\REQM\nexacroN 메뉴얼\Nexacro N V24 매뉴얼  오프라인 메뉴얼\`
-> - 개발자 가이드: `developer_guide_nexacro_n_v24_ko.html`
-> - 고급 개발 가이드: `advanced_development_guide_nexacro_n_v24_ko.html`
-> - 배포 가이드: `deployment_guide_nexacro_n_v24_ko.html`
-> - 개발도구 가이드: `development_tools_guide_nexacro_n_v24_ko.html`
-> - 시작 가이드: `getting_started_nexacro_n_v24_ko.html`
+>
+> 메뉴얼 루트: `D:\git_prj\REQM\nexacroN 메뉴얼\Nexacro N V24 매뉴얼  오프라인 메뉴얼\`
+>
+> | 파일명 | 용도 |
+> |--------|------|
+> | `developer_guide_nexacro_n_v24_ko.html` | 컴포넌트, Dataset API, transaction, 이벤트 처리 |
+> | `advanced_development_guide_nexacro_n_v24_ko.html` | Grid 고급, 팝업, 탭, 모듈, 에러 처리 |
+> | `deployment_guide_nexacro_n_v24_ko.html` | 빌드/배포, 서버 파일 구조 |
+> | `development_tools_guide_nexacro_n_v24_ko.html` | Nexacro Studio, 디버거 사용법 |
+> | `getting_started_nexacro_n_v24_ko.html` | 프로젝트 구조, 파일 타입(.xprj/.xadl/.xfdl) |
+> | `server_setup_guide_nexacro_n_v24_ko.html` | Tomcat 설정, PlatformData, 인코딩 |
+> | `module_developer_guide_nexacro_n_v24_ko.html` | 모듈(.xmodule) 개발, TypeDefinition |
+> | `product_information_nexacro_n_v24_ko.html` | 지원 플랫폼/브라우저, v24 신규 기능 |
 
 ### 기본 규칙
 
@@ -309,6 +316,85 @@ application.setGlobal("USER_ID", "hong");
 var userId = application.getGlobal("USER_ID");
 ```
 
+### 서버 통신 프로토콜 — PlatformData
+
+넥사크로 N의 클라이언트-서버 통신은 **PlatformData** 객체 기반이다.
+
+```
+PlatformData
+  ├─ VariableList  → 단일 파라미터 (ErrorCode, ErrorMsg 등)
+  └─ DataSetList   → Dataset (컬럼 정의 + 행 데이터)
+```
+
+**JSP 서버 수신/응답 패턴 (Java):**
+```java
+// 수신
+HttpPlatformRequest req = new HttpPlatformRequest(request.getInputStream());
+req.receiveData();
+PlatformData reqData = req.getData();
+
+String param = reqData.getVariableList().getString("paramName");
+DataSet ds = reqData.getDataSet("dsSearch");
+
+// 응답
+PlatformData resData = new PlatformData();
+resData.getVariableList().add("ErrorCode", 0);
+resData.getVariableList().add("ErrorMsg", "SUCCESS");
+HttpPlatformResponse res = new HttpPlatformResponse(response.getOutputStream(), req);
+res.setData(resData);
+res.sendData();
+```
+
+**JSP 인코딩 선언 필수:**
+```jsp
+<%@ page contentType="text/xml; charset=UTF-8" %>
+```
+
+**Tomcat catalina.bat — 인코딩 설정:**
+```
+set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF8"
+```
+
+**Excel Export용 MIME 타입 (web.xml):**
+```xml
+<mime-mapping>
+  <extension>xlsx</extension>
+  <mime-type>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</mime-type>
+</mime-mapping>
+```
+
+### 모듈(.xmodule) 개발
+
+모듈은 재사용 가능한 복합 컴포넌트(Composite Component) 단위이다.
+
+**패키지 구성:**
+```
+MyModule.xmodule
+├── module.xml        — 타입 정의 (Property, Method, Event)
+├── MyModule.xcdl     — 컴포지트 컴포넌트 UI 레이아웃
+├── MyModule.js       — 동작 로직 (prototype 기반)
+└── resource/         — 이미지, xcss 스타일
+```
+
+**모듈 스크립트 기본 구조:**
+```javascript
+nexacro.MyModule = function(name, left, top, width, height) {
+    nexacro._CompositeComponent.call(this, name, left, top, width, height);
+    this._p_myProp = "";
+};
+nexacro.MyModule.prototype = Object.create(nexacro._CompositeComponent.prototype);
+
+// getter/setter
+nexacro.MyModule.prototype.set_myProp = function(v) {
+    if (this._p_myProp != v) { this._p_myProp = v; }
+};
+nexacro.MyModule.prototype.get_myProp = function() {
+    return this._p_myProp;
+};
+```
+
+**모듈 배포/설치:** `Deploy > Module Package` 생성 후 `File > Install Module`로 설치 → 컴포넌트 팔레트에 자동 등록.
+
 ### 주의사항
 
 - Dataset 컬럼명은 반드시 **대문자** 사용 (`USER_ID` ○, `user_id` ✕)
@@ -317,6 +403,8 @@ var userId = application.getGlobal("USER_ID");
 - 대량 데이터 루프 전 `updatecontrol = false` 설정 필수 (성능)
 - 팝업 콜백은 함수 참조가 아닌 **함수명 문자열**로 전달
 - 지원 브라우저: Chrome, Edge (최신 버전)
+- 서버 응답 콘텐츠 타입: `text/xml; charset=UTF-8` (PlatformData 포맷 사용 시)
+
 ---
 
 # 개발 워크플로우
