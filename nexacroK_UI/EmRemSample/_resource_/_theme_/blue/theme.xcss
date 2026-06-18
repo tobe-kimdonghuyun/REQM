@@ -2710,9 +2710,173 @@
 {
 	-nexa-border : 0.1rem solid red;
 	border-radius : 0.5rem;
-	letter-spacing : 0.5rem;	
+	letter-spacing : 0.5rem;
 	font : normal 0.5rem/normal "Arial";
 	-nexa-padding : 0.5rem 1rem;
+}
+
+/* ===== [TC-CSS] em/rem 단위 검증용 UserClass (기존 내용 수정 없이 추가) ===== */
+
+/* TC-CSS-01: em 패딩 — xcss 내 font=20px 고정, -nexa-padding=1em 2em → 20px 40px */
+.Button.btnCssEmPad
+{
+	font : normal 20px/normal "Malgun Gothic";
+	-nexa-padding : 1em 2em;
+	-nexa-border : 1px solid #3B82F6;
+	background : #EBF5FB;
+}
+.Button.btnCssEmPad[status=mouseover]
+{
+	-nexa-border : 2px solid #1D4ED8;
+}
+
+/* TC-CSS-02: rem 패딩 — MF font 기준, MF 변경 시 재계산 */
+.Button.btnCssRemPad
+{
+	-nexa-padding : 1rem 2rem;
+	-nexa-border : 1px solid #E74C3C;
+	background : #FDEDEC;
+}
+.Button.btnCssRemPad[status=mouseover]
+{
+	-nexa-border : 2px solid #C0392B;
+}
+
+/* TC-CSS-03: em 보더 — font=16px, 0.125em solid → 2px */
+.Button.btnCssEmBorder
+{
+	font : normal 16px/normal "Malgun Gothic";
+	-nexa-border : 0.125em solid #27AE60;
+	-nexa-padding : 0.5em;
+	background : #EAFAF1;
+}
+
+/* TC-CSS-04: rem 보더 — MF font 기준, 0.125rem solid */
+.Button.btnCssRemBorder
+{
+	-nexa-border : 0.125rem solid #8E44AD;
+	-nexa-padding : 0.5rem;
+	background : #F4ECF7;
+}
+
+/* TC-CSS-05: em textPadding — font=14px, 0.5em 1em → 7px 14px */
+.Button.btnCssEmTextPad
+{
+	font : normal 14px/normal "Malgun Gothic";
+	-nexa-text-padding : 0.5em 1em;
+	-nexa-border : 1px solid #555555;
+	background : #FEF9E7;
+}
+
+/* TC-CSS-06: rem textPadding — MF font 기준 */
+.Button.btnCssRemTextPad
+{
+	-nexa-text-padding : 0.5rem 1rem;
+	-nexa-border : 1px solid #555555;
+	background : #F2F3F4;
+}
+
+/* TC-CSS-07: em letterSpacing — font=12px, 0.1em → 1.2px */
+.Button.btnCssEmLetterSp
+{
+	font : normal 12px/normal "Malgun Gothic";
+	letter-spacing : 0.1em;
+	-nexa-border : 1px solid #1ABC9C;
+	background : #E8F8F5;
+}
+
+/* TC-CSS-08: rem letterSpacing — MF font 기준, 0.1rem */
+.Button.btnCssRemLetterSp
+{
+	letter-spacing : 0.1rem;
+	-nexa-border : 1px solid #E67E22;
+	background : #FDEBD0;
+}
+
+/* TC-CSS-09: em wordSpacing — font=12px, 0.5em → 6px */
+.Button.btnCssEmWordSp
+{
+	font : normal 12px/normal "Malgun Gothic";
+	word-spacing : 0.5em;
+	-nexa-border : 1px solid #2980B9;
+	background : #D6EAF8;
+}
+
+/* TC-CSS-10: rem wordSpacing — MF font 기준, 0.5rem */
+.Button.btnCssRemWordSp
+{
+	word-spacing : 0.5rem;
+	-nexa-border : 1px solid #C0392B;
+	background : #FADBD8;
+}
+
+/* TC-CSS-MIX-01: em padding + rem border 복합 */
+.Button.btnCssMix01
+{
+	font : normal 16px/normal "Malgun Gothic";
+	-nexa-padding : 1em 2em;
+	-nexa-border : 0.125rem solid #E67E22;
+	background : #FEF9E7;
+}
+
+/* TC-CSS-MIX-02: em textPadding + rem letterSpacing 복합 */
+.Button.btnCssMix02
+{
+	font : normal 18px/normal "Malgun Gothic";
+	-nexa-text-padding : 0.5em 1em;
+	letter-spacing : 0.1rem;
+	-nexa-border : 1px solid #2C3E50;
+	background : #ECF0F1;
+}
+
+/* ===== [TC-CHK-OV] CheckBox 중첩 테스트용 UserClass (xcss+Component 직접지정) ===== */
+
+/* OV-01: xcss em — font=20px, textPadding left=1em  +  component 직접 font=14px 중첩 */
+.CheckBox.chkCssOv01
+{
+	font               : normal 20px/normal "Malgun Gothic";
+	-nexa-text-padding : 0px 0px 0px 1em;
+	-nexa-border       : 1px solid #3B82F6;
+	background         : #EBF5FB;
+}
+.CheckBox.chkCssOv01[status=mouseover]
+{
+	-nexa-border : 2px solid #1D4ED8;
+}
+
+/* OV-02: xcss em — font=18px, textPadding left=1em, border=0.125em  +  component 직접 letterSpacing=0.1rem */
+.CheckBox.chkCssOv02
+{
+	font               : normal 18px/normal "Malgun Gothic";
+	-nexa-text-padding : 0px 0px 0px 1em;
+	-nexa-border       : 0.125em solid #27AE60;
+	background         : #EAFAF1;
+}
+
+/* OV-03: xcss rem — textPadding left=0.5rem, border=0.125rem  +  component 직접 font=16px + letterSpacing=0.1em */
+.CheckBox.chkCssOv03
+{
+	-nexa-text-padding : 0px 0px 0px 0.5rem;
+	-nexa-border       : 0.125rem solid #8E44AD;
+	background         : #F4ECF7;
+}
+
+/* OV-04: xcss rem — textPadding left=0.5rem, border=0.125rem  +  component 직접 letterSpacing=0.1rem + wordSpacing=0.5rem */
+.CheckBox.chkCssOv04
+{
+	-nexa-text-padding : 0px 0px 0px 0.5rem;
+	-nexa-border       : 0.125rem solid #E74C3C;
+	background         : #FDEDEC;
+}
+
+/* OV-05: xcss em+rem 혼합 — font=16px, textPadding left=0.5em, letterSpacing=0.1rem  +  component 직접 font=12px + wordSpacing=0.5em */
+.CheckBox.chkCssOv05
+{
+	font               : normal 16px/normal "Malgun Gothic";
+	-nexa-text-padding : 0px 0px 0px 0.5em;
+	letter-spacing     : 0.1rem;
+	-nexa-border       : 1px solid #E67E22;
+	background         : #FDEBD0;
 }
 ]]></CSSData>
   <CSSData type="desktop"><![CDATA[]]></CSSData>
