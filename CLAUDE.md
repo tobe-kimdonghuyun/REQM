@@ -82,6 +82,20 @@ nexacroN/deploy/     — nexacroN UI화면 프로젝트 소스를 generate하여
 > | `server_setup_guide_nexacro_n_v24_ko.html` | Tomcat 설정, PlatformData, 인코딩 |
 > | `module_developer_guide_nexacro_n_v24_ko.html` | 모듈(.xmodule) 개발, TypeDefinition |
 > | `product_information_nexacro_n_v24_ko.html` | 지원 플랫폼/브라우저, v24 신규 기능 |
+>
+> **xapi (서버 서비스 개발 Java API)**
+> 메뉴얼 루트: `D:\git_prj\REQM\nexacroN 메뉴얼\xapi\korean\`
+>
+> | 경로 | 용도 |
+> |------|------|
+> | `com/nexacro/java/xapi/data/PlatformData.html` | 최상위 데이터 컨테이너 API |
+> | `com/nexacro/java/xapi/data/DataSet.html` | 2차원 테이블 데이터 API |
+> | `com/nexacro/java/xapi/data/VariableList.html` | 단일 변수 목록 API |
+> | `com/nexacro/java/xapi/data/DataTypes.html` | 데이터 타입 상수 목록 |
+> | `com/nexacro/java/xapi/data/ColumnHeader.html` | 컬럼 헤더 정의 API |
+> | `com/nexacro/java/xapi/tx/HttpPlatformRequest.html` | HTTP 요청 수신 API |
+> | `com/nexacro/java/xapi/tx/HttpPlatformResponse.html` | HTTP 응답 송신 API |
+> | `com/nexacro/java/xapi/tx/PlatformException.html` | 예외 처리 |
 
 ### 기본 규칙
 
@@ -316,52 +330,184 @@ application.setGlobal("USER_ID", "hong");
 var userId = application.getGlobal("USER_ID");
 ```
 
-### 서버 통신 프로토콜 — PlatformData
+### xapi 서버 서비스 개발 (Java)
 
-넥사크로 N의 클라이언트-서버 통신은 **PlatformData** 객체 기반이다.
+transaction() 호출 시 서버에서 처리하는 Java 서비스는 **nexacro xapi** 라이브러리로 구현한다.
 
-```
-PlatformData
-  ├─ VariableList  → 단일 파라미터 (ErrorCode, ErrorMsg 등)
-  └─ DataSetList   → Dataset (컬럼 정의 + 행 데이터)
-```
+#### 패키지 구조 및 import
 
-**JSP 서버 수신/응답 패턴 (Java):**
 ```java
-// 수신
-HttpPlatformRequest req = new HttpPlatformRequest(request.getInputStream());
-req.receiveData();
-PlatformData reqData = req.getData();
-
-String param = reqData.getVariableList().getString("paramName");
-DataSet ds = reqData.getDataSet("dsSearch");
-
-// 응답
-PlatformData resData = new PlatformData();
-resData.getVariableList().add("ErrorCode", 0);
-resData.getVariableList().add("ErrorMsg", "SUCCESS");
-HttpPlatformResponse res = new HttpPlatformResponse(response.getOutputStream(), req);
-res.setData(resData);
-res.sendData();
+import com.nexacro.java.xapi.data.*;            // PlatformData, DataSet, VariableList, DataTypes, ColumnHeader
+import com.nexacro.java.xapi.data.datatype.*;   // PlatformDataType
+import com.nexacro.java.xapi.tx.*;              // HttpPlatformRequest, HttpPlatformResponse, PlatformException, PlatformType
 ```
 
-**JSP 인코딩 선언 필수:**
+#### PlatformData 구조
+
+```
+PlatformData (최상위 컨테이너)
+  ├─ VariableList  — 단일 파라미터 (ErrorCode, ErrorMsg, 검색조건 등)
+  └─ DataSetList   — DataSet 목록 (2차원 테이블 데이터)
+       └─ DataSet  — ColumnHeader 목록 + 행 데이터
+```
+
+#### DataTypes 상수 (컬럼 타입 지정 시 사용)
+
+| 상수 | Java 타입 | 포맷 |
+|------|---------|------|
+| `DataTypes.STRING` | `String` | - |
+| `DataTypes.INT` | `int` | - |
+| `DataTypes.LONG` | `long` | - |
+| `DataTypes.DOUBLE` | `double` | - |
+| `DataTypes.FLOAT` | `float` | - |
+| `DataTypes.BIG_DECIMAL` | `BigDecimal` | - |
+| `DataTypes.BOOLEAN` | `boolean` | - |
+| `DataTypes.DATE` | `Date` | yyyyMMdd |
+| `DataTypes.DATE_TIME` | `Date` | yyyyMMddHHmmssSSS |
+| `DataTypes.BLOB` | `byte[]` | - |
+
+#### DataSet API
+
+```java
+// 컬럼 정의
+DataSet ds = new DataSet("dsResult");
+ds.addColumn(new ColumnHeader("USER_ID",   DataTypes.STRING, 20));
+ds.addColumn(new ColumnHeader("USER_NM",   DataTypes.STRING, 50));
+ds.addColumn(new ColumnHeader("REG_DT",    DataTypes.DATE));
+ds.addColumn(new ColumnHeader("AMT",       DataTypes.BIG_DECIMAL));
+
+// 행 추가 및 값 설정
+int row = ds.newRow();
+ds.setValue(row, "USER_ID", "hong");
+ds.setValue(row, "USER_NM", "홍길동");
+ds.setValue(row, "AMT",     new BigDecimal("50000.00"));
+
+// 값 읽기 (타입별)
+String  userId = ds.getString(i,  "USER_ID");
+int     cnt    = ds.getInt(i,     "CNT");
+double  amt    = ds.getDouble(i,  "AMT");
+Date    dt     = ds.getDateTime(i,"REG_DT");
+Object  val    = ds.getObject(i,  "COL");
+
+// 행 상태 확인 — 클라이언트가 변경한 행 처리 시 필수
+int rowType = ds.getRowType(i);
+// ROW_TYPE_NORMAL=0, ROW_TYPE_INSERT=1, ROW_TYPE_UPDATE=2, ROW_TYPE_DELETE=3
+```
+
+#### VariableList API
+
+```java
+VariableList varList = resData.getVariableList();
+varList.add("ErrorCode", 0);          // int
+varList.add("ErrorMsg",  "SUCCESS");  // String
+varList.add("TotalCnt",  100);
+
+// 요청 Variable 읽기
+VariableList inVar = reqData.getVariableList();
+String searchNm = inVar.getString("SEARCH_NM");
+int    pageNo   = inVar.getInt("PAGE_NO");
+```
+
+#### 완전한 JSP 서비스 패턴
+
 ```jsp
+<%@ page import="com.nexacro.java.xapi.data.*, com.nexacro.java.xapi.tx.*" %>
 <%@ page contentType="text/xml; charset=UTF-8" %>
+<%
+    out.clearBuffer();  // 필수 — 앞선 출력 제거
+    
+    // 1. 요청 수신
+    HttpPlatformRequest req = new HttpPlatformRequest(request);
+    req.receiveData();
+    PlatformData reqData = req.getData();
+    
+    // 2. 입력값 추출
+    VariableList inVar = reqData.getVariableList();
+    String searchNm = inVar.getString("SEARCH_NM");
+    DataSet dsIn = reqData.getDataSet("dsSearch");
+    
+    // 3. 응답 생성
+    PlatformData resData = new PlatformData();
+    
+    // 4. 결과 Dataset 구성
+    DataSet dsOut = new DataSet("dsResult");
+    dsOut.addColumn(new ColumnHeader("USER_ID", DataTypes.STRING, 20));
+    dsOut.addColumn(new ColumnHeader("USER_NM", DataTypes.STRING, 50));
+    // ... DB 조회 후 행 추가 ...
+    resData.addDataSet(dsOut);
+    
+    // 5. 처리 결과 Variable
+    resData.getVariableList().add("ErrorCode", 0);
+    resData.getVariableList().add("ErrorMsg",  "SUCCESS");
+    
+    // 6. 응답 송신
+    HttpPlatformResponse res = new HttpPlatformResponse(response, req);
+    res.setData(resData);
+    res.sendData();
+%>
 ```
 
-**Tomcat catalina.bat — 인코딩 설정:**
-```
-set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF8"
+#### Servlet 패턴 (복잡한 비즈니스 로직 시)
+
+```java
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    try {
+        HttpPlatformRequest  req     = new HttpPlatformRequest(request);
+        req.receiveData();
+        PlatformData         reqData = req.getData();
+        PlatformData         resData = processService(reqData);
+        HttpPlatformResponse res     = new HttpPlatformResponse(response, req);
+        res.setData(resData);
+        res.sendData();
+    } catch (PlatformException e) {
+        sendError(response, -1, e.getMessage());
+    } catch (Exception e) {
+        sendError(response, -999, "서버 오류: " + e.getMessage());
+    }
+}
 ```
 
-**Excel Export용 MIME 타입 (web.xml):**
+#### 행 상태(RowType)별 CRUD 처리 패턴
+
+```java
+DataSet dsIn = reqData.getDataSet("dsSave");
+for (int i = 0; i < dsIn.getRowCount(); i++) {
+    int rowType = dsIn.getRowType(i);
+    if (rowType == DataSet.ROW_TYPE_INSERT) {
+        // INSERT
+    } else if (rowType == DataSet.ROW_TYPE_UPDATE) {
+        // UPDATE
+    } else if (rowType == DataSet.ROW_TYPE_DELETE) {
+        // DELETE
+    }
+}
+```
+
+#### ContentType / 인코딩 설정
+
+| 항목 | 설정값 |
+|------|--------|
+| JSP contentType | `text/xml; charset=UTF-8` |
+| Binary 응답 | `PlatformType.CONTENT_TYPE_BINARY` |
+| ZLIB 압축 | `res.addProtocolType(PlatformType.PROTOCOL_TYPE_ZLIB)` |
+| Tomcat JVM 옵션 | `-Dfile.encoding=UTF8` |
+
+**Excel MIME 타입 (web.xml):**
 ```xml
 <mime-mapping>
   <extension>xlsx</extension>
   <mime-type>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</mime-type>
 </mime-mapping>
 ```
+
+#### xapi 서비스 개발 체크리스트
+
+- `out.clearBuffer()` 호출 (JSP에서 필수)
+- `receiveData()` / `sendData()` 는 반드시 `try-catch(PlatformException)` 으로 감쌀 것
+- 응답에 `ErrorCode` (0=성공, 음수=오류) + `ErrorMsg` 포함 필수
+- 저장 서비스는 `getRowType()` 으로 INSERT/UPDATE/DELETE 분기 처리
+- 컬럼명은 **대문자** 사용 (클라이언트 Dataset과 일치해야 함)
 
 ### 모듈(.xmodule) 개발
 
