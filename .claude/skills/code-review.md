@@ -117,13 +117,11 @@ function fn_searchCallback(svcId, errCode, errMsg) {
     // 성공 처리만
 }
 
-// ✅ 좋은 예 — 에러 처리 포함
+// ✅ 좋은 예 — errCode 음수(시스템)/양수(업무) 분기
 function fn_searchCallback(svcId, errCode, errMsg) {
-    if (errCode != 0) {
-        gfn_alert("오류: " + errMsg);
-        return;
-    }
-    // 성공 처리
+    if (errCode < 0) { gfn_alert("시스템 오류: " + errMsg); return; }
+    if (errCode > 0) { gfn_alert("업무 오류: " + errMsg);   return; }
+    // 성공 처리 (errCode == 0)
 }
 
 // ❌ 나쁜 예 — 하드코딩된 URL
@@ -131,7 +129,52 @@ this.transaction("svc", "http://192.168.1.10:8080/service.do", ...);
 
 // ✅ 좋은 예 — 설정 파일 또는 상수 사용
 this.transaction("svc", "svc::UserService.do", ...);
+
+// ❌ 나쁜 예 — 팝업 콜백을 함수 참조로 전달
+this.openPopup("pop", "Popup.xfdl", {}, fn_callback);
+
+// ✅ 좋은 예 — 반드시 문자열로 전달
+this.openPopup("pop", "Popup.xfdl", {}, "fn_callback");
+
+// ❌ 나쁜 예 — 대량 루프에서 updatecontrol 미설정 (느림)
+for (var i = 0; i < 1000; i++) {
+    var n = this.dsResult.addRow();
+    this.dsResult.setColumn(n, "USER_ID", data[i]);
+}
+
+// ✅ 좋은 예 — updatecontrol 비활성화로 성능 향상
+this.dsResult.updatecontrol = false;
+for (var i = 0; i < 1000; i++) {
+    var n = this.dsResult.addRow();
+    this.dsResult.setColumn(n, "USER_ID", data[i]);
+}
+this.dsResult.updatecontrol = true;
+
+// ❌ 나쁜 예 — Dataset 컬럼명 소문자
+this.dsResult.setColumn(0, "user_id", "hong");
+
+// ✅ 좋은 예 — 반드시 대문자
+this.dsResult.setColumn(0, "USER_ID", "hong");
 ```
+
+### nexacroN 리뷰 체크리스트
+
+- [ ] 모든 transaction 콜백에서 `errCode` 분기 처리 확인
+- [ ] Dataset 컬럼명 대문자 스네이크케이스 사용 여부
+- [ ] 팝업 `openPopup` 콜백이 **문자열**로 전달되는지 확인
+- [ ] 대량 데이터 루프 전 `updatecontrol = false` 설정 여부
+- [ ] `this` 스코프: 이벤트 핸들러 외부 함수에서 `this` 직접 접근 금지
+- [ ] Grid `binddataset` 속성이 올바른 Dataset을 가리키는지 확인
+- [ ] 하드코딩 URL 대신 `svc::서비스명.do` 패턴 사용 여부
+
+### xapi 서버 서비스 리뷰 체크리스트
+
+- [ ] JSP 첫 줄 `out.clearBuffer()` 호출 여부
+- [ ] `receiveData()` / `sendData()` 가 `try-catch(PlatformException)` 안에 있는지 확인
+- [ ] 응답 Variable에 `ErrorCode`(int) + `ErrorMsg`(String) 포함 여부
+- [ ] 저장 서비스에서 `getRowType()` 으로 INSERT/UPDATE/DELETE 분기 처리 여부
+- [ ] 서버 DataSet 이름이 클라이언트 outDatasets 이름과 일치하는지 확인
+- [ ] `nexacro_server_license.xml` 파일 WEB-INF/lib 배치 여부
 
 ---
 

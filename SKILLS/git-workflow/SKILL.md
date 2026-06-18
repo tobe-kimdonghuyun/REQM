@@ -175,13 +175,20 @@ git push origin --delete feature/완료된기능  # 원격 삭제
 nexacroN 프로젝트에서 commit 하면 안 되는 파일:
 
 ```gitignore
-# 배포 출력물
+# 배포 출력물 (로컬 경로 포함)
 apache-tomcat-9.0.89/webapps/*/
 *.war
 
-# 환경 설정 (로컬 경로 포함)
+# nexacroN 빌드 결과물 (generate 산출물)
+nexacroN/output/
+nexacroN/deploy/
+
+# 환경 설정 (로컬 절대경로 포함 — 공유 불가)
 tools/deploy_config.json
 tools/run_nexacroK_config.json
+
+# xapi 라이선스 (서버 배포 환경별 별도 발급)
+nexacro_server_license.xml
 
 # 빌드 캐시
 __pycache__/
@@ -198,6 +205,21 @@ build/
 .env
 *.key
 *.pem
+```
+
+### xfdl 파일 충돌 해결 팁
+
+`.xfdl` 파일은 XML 형식이므로 일반 텍스트 머지가 가능하다.
+단, `<Script>` 내 스크립트 블록과 컴포넌트 속성이 섞이므로 주의:
+
+```bash
+# 충돌 시 XML 구조 기준으로 수동 머지
+# 1. <Script> 블록 내 함수 충돌 → 양쪽 함수 모두 유지
+# 2. 컴포넌트 속성 충돌 → 최신 버전 기준으로 선택
+# 3. Dataset ColumnInfo 충돌 → 양쪽 Column 병합
+
+# 머지 후 유효성 검사
+tools/Validate.bat
 ```
 
 ---

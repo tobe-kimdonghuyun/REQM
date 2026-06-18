@@ -293,3 +293,114 @@ pytest --cov=app
 | 최소 | 60% | 핵심 로직만 테스트 |
 | 권장 | 80% | 대부분의 팀 표준 |
 | 엄격 | 90%+ | 금융/의료 등 고신뢰 시스템 |
+
+---
+
+## 10. nexacroN 화면 테스트
+
+nexacroN xfdl 화면은 런타임 엔진 의존성이 강해 직접 단위 테스트가 어렵다.
+아래 전략을 조합하여 테스트한다.
+
+### 공통 함수(gfn_) 단위 테스트 (Jest)
+
+gfn_ 함수는 nexacro 런타임에 의존하지 않으면 Jest로 분리 테스트 가능하다.
+
+```javascript
+// gfn_utils.js (공통 함수 추출)
+function gfn_nvl(val, defaultVal) {
+    return (val == null || val == undefined || val == "") ? defaultVal : val;
+}
+function gfn_lpad(str, len, padChar) {
+    while (String(str).length < len) str = padChar + str;
+    return str;
+}
+module.exports = { gfn_nvl, gfn_lpad };
+
+// gfn_utils.test.js
+const { gfn_nvl, gfn_lpad } = require('./gfn_utils');
+
+test('gfn_nvl: null이면 기본값 반환', () => {
+    expect(gfn_nvl(null, "기본")).toBe("기본");
+    expect(gfn_nvl("",   "기본")).toBe("기본");
+    expect(gfn_nvl("값", "기본")).toBe("값");
+});
+
+test('gfn_lpad: 좌측 패딩', () => {
+    expect(gfn_lpad("1", 4, "0")).toBe("0001");
+    expect(gfn_lpad("12", 4, "0")).toBe("0012");
+});
+```
+
+### xapi 서버 서비스 테스트 (JUnit 5)
+
+```java
+@SpringBootTest
+class UserServiceTest {
+
+    @Test
+    void selectUserList_정상조회() throws Exception {
+        // Arrange: 요청 PlatformData 구성
+        PlatformData reqData = new PlatformData();
+        reqData.getVariableList().add("SEARCH_NM", "홍");
+
+        // Act: 서비스 직접 호출
+        PlatformData resData = userService.selectUserList(reqData);
+
+        // Assert
+        assertThat(resData.getVariableList().getInt("ErrorCode")).isEqualTo(0);
+        DataSet ds = resData.getDataSet("dsResult");
+        assertThat(ds.getRowCount()).isGreaterThan(0);
+        assertThat(ds.getString(0, "USER_NM")).contains("홍");
+    }
+
+    @Test
+    void saveUser_INSERT_정상저장() throws Exception {
+        PlatformData reqData = new PlatformData();
+        DataSet dsSave = new DataSet("dsSave");
+        dsSave.addColumn(new ColumnHeader("USER_ID", DataTypes.STRING, 20));
+        dsSave.addColumn(new ColumnHeader("USER_NM", DataTypes.STRING, 50));
+        int row = dsSave.newRow();
+        dsSave.setValue(row, "USER_ID", "testUser");
+        dsSave.setValue(row, "USER_NM", "테스트");
+        dsSave.setRowType(row, DataSet.ROW_TYPE_INSERT);
+        reqData.addDataSet(dsSave);
+
+        PlatformData resData = userService.saveUser(reqData);
+
+        assertThat(resData.getVariableList().getInt("ErrorCode")).isEqualTo(0);
+    }
+}
+```
+
+### E2E 테스트 (Playwright — nexacroN 화면)
+
+nexacroN 화면은 브라우저에서 렌더링되므로 Playwright로 E2E 테스트 가능하다.
+
+```typescript
+import { test, expect } from '@playwright/test';
+
+test('사용자 조회 화면 — 조회 버튼 클릭 시 결과 표시', async ({ page }) => {
+    await page.goto('http://localhost:8080/launch.html');
+
+    // nexacroN 앱 로드 대기
+    await page.waitForSelector('.nexacro-app', { timeout: 10000 });
+
+    // 검색어 입력 (Edit 컴포넌트)
+    await page.fill('#edtUserId', 'hong');
+
+    // 조회 버튼 클릭
+    await page.click('#btnSearch');
+
+    // Grid에 결과 표시 확인
+    await expect(page.locator('.grid-row')).toHaveCount({ minimum: 1 });
+});
+```
+
+### nexacroN 화면 테스트 전략 요약
+
+| 테스트 유형 | 대상 | 도구 |
+|-----------|------|------|
+| 단위 테스트 | gfn_ 공통 함수 | Jest |
+| 서버 서비스 테스트 | xapi JSP/Servlet | JUnit 5 |
+| E2E 테스트 | 전체 화면 시나리오 | Playwright |
+| 수동 테스트 | 화면 UI/UX, 엣지 케이스 | Nexacro Studio QuickView (Ctrl+F6) |

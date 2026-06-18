@@ -55,6 +55,27 @@ function fn_callback(svcId, errCode, errMsg) {
 }
 ```
 
+### Nexacro Studio 디버거 단축키
+
+| 단축키 | 기능 |
+|--------|------|
+| `F5` | 전체 디버깅 시작 (Start Debugging) |
+| `F6` | 현재 Form만 디버깅 (Start Form Debugging) |
+| `Shift+F5` | 디버깅 중단 (Stop Debugging) |
+| `F9` | 중단점 설정/해제 (Toggle Breakpoint) |
+| `Ctrl+Shift+F9` | 모든 중단점 삭제 |
+| `F10` | 현재 라인 실행 (Step Over) |
+| `F11` | 함수 내부 진입 (Step Into) |
+| `Shift+F11` | 함수에서 탈출 (Step Out) |
+| `Shift+F10` | 커서 위치까지 실행 (Run to Cursor) |
+| `Ctrl+F6` | QuickView (실시간 미리보기) |
+
+### QuickView 사용법
+```
+Ctrl+F6 → 현재 Form을 별도 창에서 실시간 미리보기
+디버거 없이 UI 레이아웃/컴포넌트 확인 시 사용
+```
+
 ### 자주 발생하는 nexacroN 오류
 
 | 증상 | 확인 포인트 |
@@ -64,6 +85,29 @@ function fn_callback(svcId, errCode, errMsg) {
 | Dataset 컬럼 null | 컬럼명 대소문자, typedefinition.xml 일치 여부 |
 | 팝업 안 열림 | openPopup 경로, .xfdl 파일 존재 여부 |
 | 버튼 클릭 무반응 | 이벤트 핸들러 이름 오타 (`btnSave_onclick` 등) |
+| Div 내 화면 안 뜸 | `divContent.form` null 여부, set_url 경로 확인 |
+| 팝업 콜백 미실행 | 콜백이 문자열이 아닌 함수 참조로 전달됨 — 반드시 `"fn_callback"` 문자열로 전달 |
+
+### xapi 서버 서비스 디버깅
+
+```java
+// xapi 로깅 활성화 (log4j.properties)
+log4j.logger.com.nexacro.java.xapi.tx=DEBUG, xapi
+log4j.logger.com.nexacro.java.xapi.data=DEBUG, xapi
+log4j.appender.xapi=org.apache.log4j.FileAppender
+log4j.appender.xapi.File=${catalina.home}/logs/xapi.log
+
+// PlatformData 내용 XML로 덤프 (개발 시 디버깅용)
+String xmlDump = reqData.saveXml();
+System.out.println("[DEBUG] reqData: " + xmlDump);
+```
+
+| xapi 증상 | 원인 | 해결 |
+|-----------|------|------|
+| `receiveData()` 무한 대기 | ContentType 불일치 | JSP `contentType="text/xml; charset=UTF-8"` 확인 |
+| Dataset 비어서 응답 | DataSet 이름 불일치 | 클라이언트 outDatasets 이름과 서버 `new DataSet("이름")` 일치 확인 |
+| PlatformException 발생 | 라이선스 파일 없음 | `nexacro_server_license.xml` WEB-INF/lib 위치 확인 |
+| Variable null | 이름 대소문자 불일치 | `getVariableList().getString("PARAM_NM")` 대문자 확인 |
 
 ---
 
