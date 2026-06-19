@@ -86,3 +86,30 @@ for /f "usebackq tokens=1,* delims==" %%A in ("%CONFIG%") do (
 
 powershell -NoProfile -Command ^
     "$p = '%OUTPUT_PATH%'; $idx = $p.IndexOf('REQM'); if ($idx -ge 0) { $rel = $p.Substring($idx + 4).TrimStart('\').Replace('\','/'); $url = 'http://172.10.12.45:9091/' + $rel + '/index.html'; Write-Host '[완료] Chrome 실행:' $url; Start-Process 'chrome.exe' $url } else { Write-Host '[경고] OutputPath에서 REQM 경로를 찾을 수 없습니다.' }"
+
+REM ===== [마지막] NexacroLibPath / GenerateRule → engine\nexacroK 복사 =====
+set "NEXACRO_LIB="
+set "GENERATE_RULE="
+for /f "usebackq tokens=1,* delims==" %%A in ("%CONFIG%") do (
+    if /i "%%A"=="NexacroLibPath" set "NEXACRO_LIB=%%B"
+    if /i "%%A"=="GenerateRule"   set "GENERATE_RULE=%%B"
+)
+set "ENGINE_BASE=D:\git_prj\REQM\engine\nexacroK"
+
+if exist "%ENGINE_BASE%\nexacrolib" (
+    echo [엔진] 기존 nexacrolib 폴더 삭제 중...
+    rmdir /s /q "%ENGINE_BASE%\nexacrolib"
+)
+echo [엔진] NexacroLibPath 복사 중: %NEXACRO_LIB% -^> %ENGINE_BASE%\nexacrolib
+robocopy "%NEXACRO_LIB%" "%ENGINE_BASE%\nexacrolib" /E /NP /NFL /NDL /XD node_modules > nul
+if %errorlevel% leq 7 set errorlevel=0
+
+if exist "%ENGINE_BASE%\generate" (
+    echo [엔진] 기존 generate 폴더 삭제 중...
+    rmdir /s /q "%ENGINE_BASE%\generate"
+)
+echo [엔진] GenerateRule 복사 중: %GENERATE_RULE% -^> %ENGINE_BASE%\generate
+robocopy "%GENERATE_RULE%" "%ENGINE_BASE%\generate" /E /NP /NFL /NDL > nul
+if %errorlevel% leq 7 set errorlevel=0
+
+echo [엔진] engine\nexacroK 업데이트 완료
