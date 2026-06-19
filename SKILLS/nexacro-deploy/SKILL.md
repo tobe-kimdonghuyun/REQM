@@ -139,7 +139,89 @@ curl http://서버IP:포트/앱경로/start.json
 
 ---
 
-## 9. log4j2 설정 (log4j2.xml)
+## 9. 프로젝트 파일 확장자 역할
+
+| 확장자 | 역할 |
+|--------|------|
+| `.xprj` | 프로젝트 파일 — 전체 구조 정의 |
+| `.xadl` | Application Definition — 앱 진입점, 전역 Dataset, 글로벌 설정 |
+| `.xfdl` | Form Definition — 화면 단위 UI + 스크립트 혼합 |
+| `.xjs` | 외부 공통 스크립트 모듈 |
+| `.xtheme` | 테마/스타일 정의 |
+| `.xmodule` | 재사용 가능한 복합 컴포넌트 패키지 |
+
+**빌드 실행 흐름:**
+```
+launch.html → nexacro.js 로드 → application.xadl 초기화 → startup Form 표시
+```
+
+---
+
+## 10. 서버 배포 파일 구조
+
+```
+WebRoot/
+├── launch.html              — 앱 로더 진입점
+├── index.html               — 웹 진입점
+├── start.json               — nexacroK 실행 설정
+├── nexacro/                 — nexacro 런타임 라이브러리
+├── FrameBase/               — 공통 프레임 화면 (.xfdl → .js)
+└── _resource_/
+    └── _theme_/             — 테마 CSS + 이미지
+```
+
+---
+
+## 11. 서버 필수 설정
+
+### Tomcat — 인코딩 설정 (catalina.bat)
+```bat
+set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF8"
+```
+
+### Tomcat — URIEncoding (server.xml)
+```xml
+<Connector port="8080" protocol="HTTP/1.1"
+           URIEncoding="UTF-8"
+           connectionTimeout="20000" redirectPort="8443" />
+```
+
+### Excel MIME 타입 (web.xml)
+```xml
+<mime-mapping>
+  <extension>xlsx</extension>
+  <mime-type>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</mime-type>
+</mime-mapping>
+<mime-mapping>
+  <extension>xls</extension>
+  <mime-type>application/vnd.ms-excel</mime-type>
+</mime-mapping>
+```
+
+### JSP 서비스 — 인코딩 선언 필수
+```jsp
+<%@ page contentType="text/xml; charset=UTF-8" %>
+```
+
+---
+
+## 12. xapi 라이브러리 배포
+
+서버 서비스(JSP/Servlet)에서 PlatformData 통신 시 아래 JAR이 WEB-INF/lib에 있어야 한다.
+
+```
+WEB-INF/lib/
+├── nexacro-xapi-java-x.x.x.jar   — 넥사크로 xapi 라이브러리
+├── nexacro_server_license.xml     — 라이선스 파일 (jar와 같은 위치)
+├── commons-logging-x.x.x.jar     — xapi 내부 로깅
+└── json-simple-x.x.x.jar         — xapi 내부 사용
+```
+
+> `nexacro_server_license.xml` 파일이 없으면 서버 서비스가 정상 작동하지 않는다.
+
+---
+
+## 13. log4j2 설정 (log4j2.xml)
 
 ```xml
 <!-- 로그 레벨: TRACE > DEBUG > INFO > WARN > ERROR -->

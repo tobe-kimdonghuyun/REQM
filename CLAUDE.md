@@ -66,18 +66,491 @@ nexacroN/deploy/     — nexacroN UI화면 프로젝트 소스를 generate하여
 - `companion object` 내 상수 정의
 - 함수명은 camelCase, 클래스명은 PascalCase
 
-## nexacroN
+## nexacroN / nexacroK
+
+> **필독**: nexacroN 또는 nexacroK 관련 작업 시 **반드시** 아래 메뉴얼을 먼저 참조한다.
+>
+> 메뉴얼 루트: `D:\git_prj\REQM\nexacroN 메뉴얼\Nexacro N V24 매뉴얼  오프라인 메뉴얼\`
+>
+> | 파일명 | 용도 |
+> |--------|------|
+> | `developer_guide_nexacro_n_v24_ko.html` | 컴포넌트, Dataset API, transaction, 이벤트 처리 |
+> | `advanced_development_guide_nexacro_n_v24_ko.html` | Grid 고급, 팝업, 탭, 모듈, 에러 처리 |
+> | `deployment_guide_nexacro_n_v24_ko.html` | 빌드/배포, 서버 파일 구조 |
+> | `development_tools_guide_nexacro_n_v24_ko.html` | Nexacro Studio, 디버거 사용법 |
+> | `getting_started_nexacro_n_v24_ko.html` | 프로젝트 구조, 파일 타입(.xprj/.xadl/.xfdl) |
+> | `server_setup_guide_nexacro_n_v24_ko.html` | Tomcat 설정, PlatformData, 인코딩 |
+> | `module_developer_guide_nexacro_n_v24_ko.html` | 모듈(.xmodule) 개발, TypeDefinition |
+> | `product_information_nexacro_n_v24_ko.html` | 지원 플랫폼/브라우저, v24 신규 기능 |
+>
+> **xapi (서버 서비스 개발 Java API)**
+> 메뉴얼 루트: `D:\git_prj\REQM\nexacroN 메뉴얼\xapi\korean\`
+>
+> | 경로 | 용도 |
+> |------|------|
+> | `com/nexacro/java/xapi/data/PlatformData.html` | 최상위 데이터 컨테이너 API |
+> | `com/nexacro/java/xapi/data/DataSet.html` | 2차원 테이블 데이터 API |
+> | `com/nexacro/java/xapi/data/VariableList.html` | 단일 변수 목록 API |
+> | `com/nexacro/java/xapi/data/DataTypes.html` | 데이터 타입 상수 목록 |
+> | `com/nexacro/java/xapi/data/ColumnHeader.html` | 컬럼 헤더 정의 API |
+> | `com/nexacro/java/xapi/tx/HttpPlatformRequest.html` | HTTP 요청 수신 API |
+> | `com/nexacro/java/xapi/tx/HttpPlatformResponse.html` | HTTP 응답 송신 API |
+> | `com/nexacro/java/xapi/tx/PlatformException.html` | 예외 처리 |
+
+### 기본 규칙
 
 - 이벤트 핸들러명: `컴포넌트명_이벤트명` (예: `btnSave_onclick`)
 - 공통 함수는 `gfn_` prefix 사용
 - Dataset 컬럼명은 대문자 스네이크케이스 (예: `USER_ID`)
 - 화면 스크립트는 기능 단위로 구역 주석 구분
-- 화면은 .xfdl로 확장자 명으로 생성되는 파일임 
-- xfdl파일은 xml와 nexacro 스크립트가 혼재되어 있음 javascript와 유사함 
-- xml은 화면의 컴포넌트와 화면의 데이터 및 레이아웃 속성등을 기술한 것이며 nexacro 스크립트는 화면의 로직을 기술한 것임 
-- script는 <script></script>태그로 감싸져 있으며 스크립트는 function으로 작성됨 
-- nexacrodeploy.exe라는 프로그램을 통하여 nexacrok와 nexacroN 모두 빌드되며 최종적으로 .js파일로 변경된다 
-- 현재는 nexacrodeploy.exe 없음 추후 추가함 
+- 화면은 `.xfdl` 확장자 파일 — XML(컴포넌트/레이아웃) + nexacro 스크립트(로직) 혼합
+- 스크립트는 `<Script><![CDATA[ ... ]]></Script>` 태그 내부에 function으로 작성
+- `nexacrodeploy.exe`를 통해 nexacroK, nexacroN 모두 빌드 → 최종 `.js` 파일 생성 (현재 미설치, 추후 추가 예정)
+
+### 프로젝트 파일 구조
+
+| 확장자 | 역할 |
+|--------|------|
+| `.xprj` | 프로젝트 파일 (전체 프로젝트 설정) |
+| `.xadl` | Application Definition — 앱 진입점, 전역 변수, 글로벌 Dataset 설정 |
+| `.xfdl` | Form Definition — 화면 단위 UI + 스크립트 |
+| `.xjs` | 외부 스크립트 파일 (공통 함수 모듈) |
+| `.xtheme` | 테마/스타일 정의 |
+
+**빌드 실행 흐름**: `launch.html` → `nexacro.js` 로드 → `application.xadl` 초기화 → startup Form 표시
+
+### 주요 컴포넌트 목록
+
+| 분류 | 컴포넌트 |
+|------|---------|
+| 입력 | `Edit`, `TextArea`, `Combo`, `CheckBox`, `Radio`, `Calendar`, `DateField` |
+| 버튼 | `Button`, `ImageButton`, `CheckButton` |
+| 표시 | `Static`, `Image`, `Grid`, `ListBox`, `ProgressBar` |
+| 컨테이너 | `Div`, `Panel`, `PopupDiv`, `Tab` |
+| 기타 | `FileUpload`, `FileDownload`, `WebBrowser`, `Menu`, `PopupMenu` |
+
+**컴포넌트 ID 네이밍 prefix 권장**: `btn_`, `edt_`, `grd_`, `ds_`, `cmb_`, `chk_`, `div_`, `tab_`, `lst_`
+
+### Dataset API
+
+```javascript
+// 행 추가
+var nRow = this.dsMain.addRow();
+
+// 값 설정/조회
+this.dsMain.setColumn(nRow, "USER_ID", "hong");
+var val = this.dsMain.getColumn(nRow, "USER_ID");
+
+// 행 삭제
+this.dsMain.deleteRow(nRow);
+
+// 행 검색
+var foundRow = this.dsMain.findRow("USER_ID", "hong");
+
+// 전체 행 수
+var cnt = this.dsMain.rowcount;
+
+// 대량 데이터 처리 시 화면 갱신 비활성화 (성능)
+this.dsMain.updatecontrol = false;
+// ... 반복 처리 ...
+this.dsMain.updatecontrol = true;
+
+// Dataset 필터 적용
+this.dsMain.setFilter("STATUS == 'Y'");
+this.dsMain.setFilter("");  // 필터 해제
+
+// 행 타입 (ROWTYPE_NORMAL, ROWTYPE_INSERT, ROWTYPE_UPDATE, ROWTYPE_DELETE)
+this.dsMain.setRowType(nRow, Dataset.ROWTYPE_NORMAL);
+```
+
+### 서비스 통신 (transaction)
+
+```javascript
+// 기본 패턴
+this.transaction(
+    "svcId",             // 서비스 식별자
+    "/api/endpoint",     // URL
+    "dsSearch:dsSearch", // 입력 Dataset (로컬명:서버명)
+    "dsResult:dsResult", // 출력 Dataset
+    "",                  // 추가 파라미터
+    "fn_callback"        // 콜백 함수명 (문자열)
+);
+
+// 콜백 패턴 — errCode 반드시 확인
+this.fn_callback = function(svcId, errCode, errMsg) {
+    if (errCode < 0) {   // 시스템 오류
+        alert("시스템 오류: " + errMsg);
+        return;
+    }
+    if (errCode > 0) {   // 업무 오류
+        alert("업무 오류: " + errMsg);
+        return;
+    }
+    // 성공 처리
+};
+```
+
+### 이벤트 처리 패턴
+
+```javascript
+// 버튼 클릭
+this.btnSearch_onclick = function(obj, e) { };
+
+// Combo 항목 변경
+this.cmbStatus_onitemchanged = function(obj, e) {
+    var val = obj.value;
+};
+
+// Grid 셀 클릭
+this.grdMain_oncellclick = function(obj, e) {
+    var rowIdx = e.row;
+    var colIdx = e.cell;
+};
+
+// Grid 헤더 클릭 (정렬/전체선택)
+this.grdMain_onheadclick = function(obj, e) { };
+
+// 키보드 단축키 (Form 레벨)
+this.Form_onkeydown = function(obj, e) {
+    if (e.ctrlKey && e.keycode == 83) { fn_save(); return false; }  // Ctrl+S
+    if (e.keycode == 13) { fn_search(); return false; }              // Enter
+    if (e.keycode == 27) { this.close(); return false; }             // Esc
+};
+```
+
+### Form 생명주기 이벤트
+
+```javascript
+// 화면 최초 로드 (1회 실행) — 초기화 로직
+this.Form_onload = function(obj, e) {
+    fn_initForm();
+    fn_loadInitData();
+};
+
+// 화면 활성화 시마다 실행 — 데이터 갱신
+this.Form_onactivate = function(obj, e) { };
+
+// 화면 비활성화 시
+this.Form_ondeactivate = function(obj, e) { };
+
+// 화면 종료 전 — return false 시 종료 취소
+this.Form_onclose = function(obj, e) {
+    if (!fn_validateBeforeClose()) return false;
+};
+```
+
+### 팝업(Popup) 패턴
+
+```javascript
+// 팝업 열기
+this.openPopup("popUser", "xfdl/UserPopup.xfdl",
+    { p_userId: this.edtUserId.value, p_mode: "edit" },
+    "fn_popupCallback");
+
+// 팝업 내부 — argument로 전달된 데이터 수신
+this.Form_onload = function(obj, e) {
+    var userId = this.argument.p_userId;
+    var mode   = this.argument.p_mode;
+};
+
+// 팝업 닫기 + 데이터 반환
+this.btnConfirm_onclick = function(obj, e) {
+    this.close({ resultCode: "OK", userId: this.edtUserId.value });
+};
+
+// 팝업 콜백 처리
+this.fn_popupCallback = function(popupObj, returnValue) {
+    if (returnValue && returnValue.resultCode == "OK") {
+        this.edtUserId.set_value(returnValue.userId);
+    }
+};
+```
+
+### Div 동적 폼 로드
+
+```javascript
+// Div에 xfdl 로드
+this.divContent.set_url("Form::SubForm.xfdl");
+
+// Div 내부 컴포넌트 접근
+var innerValue = this.divContent.form.dsMain.getColumn(0, "USER_ID");
+var innerGrid  = this.divContent.form.grdMain;
+```
+
+### 공통 함수(gfn_) 필수 패턴
+
+```javascript
+// Null/빈값 처리
+function gfn_nvl(val, defaultVal) {
+    return (val == null || val == undefined || val == "") ? defaultVal : val;
+}
+
+// 날짜 조회 — "YYYYMMDD" 형식
+function gfn_getToday() { /* 오늘 날짜 반환 */ }
+
+// 문자열 좌우 패딩
+function gfn_lpad(str, len, padChar) { /* "1" → "0001" */ }
+function gfn_rpad(str, len, padChar) { /* "1" → "1000" */ }
+
+// 숫자 포맷
+function gfn_numFormat(num) { return Number(num).toLocaleString(); }
+
+// 유효성 검증 (이메일, 전화번호 등)
+function gfn_isEmail(email) { /* regex 검증 */ }
+function gfn_isPhone(phone) { /* regex 검증 */ }
+```
+
+### Grid 주요 패턴
+
+```javascript
+// 그리드 선택 행 배열 가져오기
+var aRows = this.grdMain.getSelectRowArray();
+
+// 셀 스타일 동적 변경
+this.grdMain_ongetcellstyle = function(obj, e) {
+    if (this.dsMain.getColumn(e.row, "STATUS") == "ERROR") {
+        e.style.background = "#ffcccc";
+    }
+};
+
+// 컬럼 표시/숨김
+this.grdMain.setColHidden(colIndex, true);
+
+// 전체 선택 체크박스 (헤더 클릭 시)
+this.grdMain_onheadclick = function(obj, e) {
+    if (e.cell == 0) obj.setAll("select", !obj.getCheckOldValue(0));
+};
+```
+
+### Application 전역 변수
+
+```javascript
+// 전역 변수 저장/조회
+application.setGlobal("USER_ID", "hong");
+var userId = application.getGlobal("USER_ID");
+```
+
+### xapi 서버 서비스 개발 (Java)
+
+transaction() 호출 시 서버에서 처리하는 Java 서비스는 **nexacro xapi** 라이브러리로 구현한다.
+
+#### 패키지 구조 및 import
+
+```java
+import com.nexacro.java.xapi.data.*;            // PlatformData, DataSet, VariableList, DataTypes, ColumnHeader
+import com.nexacro.java.xapi.data.datatype.*;   // PlatformDataType
+import com.nexacro.java.xapi.tx.*;              // HttpPlatformRequest, HttpPlatformResponse, PlatformException, PlatformType
+```
+
+#### PlatformData 구조
+
+```
+PlatformData (최상위 컨테이너)
+  ├─ VariableList  — 단일 파라미터 (ErrorCode, ErrorMsg, 검색조건 등)
+  └─ DataSetList   — DataSet 목록 (2차원 테이블 데이터)
+       └─ DataSet  — ColumnHeader 목록 + 행 데이터
+```
+
+#### DataTypes 상수 (컬럼 타입 지정 시 사용)
+
+| 상수 | Java 타입 | 포맷 |
+|------|---------|------|
+| `DataTypes.STRING` | `String` | - |
+| `DataTypes.INT` | `int` | - |
+| `DataTypes.LONG` | `long` | - |
+| `DataTypes.DOUBLE` | `double` | - |
+| `DataTypes.FLOAT` | `float` | - |
+| `DataTypes.BIG_DECIMAL` | `BigDecimal` | - |
+| `DataTypes.BOOLEAN` | `boolean` | - |
+| `DataTypes.DATE` | `Date` | yyyyMMdd |
+| `DataTypes.DATE_TIME` | `Date` | yyyyMMddHHmmssSSS |
+| `DataTypes.BLOB` | `byte[]` | - |
+
+#### DataSet API
+
+```java
+// 컬럼 정의
+DataSet ds = new DataSet("dsResult");
+ds.addColumn(new ColumnHeader("USER_ID",   DataTypes.STRING, 20));
+ds.addColumn(new ColumnHeader("USER_NM",   DataTypes.STRING, 50));
+ds.addColumn(new ColumnHeader("REG_DT",    DataTypes.DATE));
+ds.addColumn(new ColumnHeader("AMT",       DataTypes.BIG_DECIMAL));
+
+// 행 추가 및 값 설정
+int row = ds.newRow();
+ds.setValue(row, "USER_ID", "hong");
+ds.setValue(row, "USER_NM", "홍길동");
+ds.setValue(row, "AMT",     new BigDecimal("50000.00"));
+
+// 값 읽기 (타입별)
+String  userId = ds.getString(i,  "USER_ID");
+int     cnt    = ds.getInt(i,     "CNT");
+double  amt    = ds.getDouble(i,  "AMT");
+Date    dt     = ds.getDateTime(i,"REG_DT");
+Object  val    = ds.getObject(i,  "COL");
+
+// 행 상태 확인 — 클라이언트가 변경한 행 처리 시 필수
+int rowType = ds.getRowType(i);
+// ROW_TYPE_NORMAL=0, ROW_TYPE_INSERT=1, ROW_TYPE_UPDATE=2, ROW_TYPE_DELETE=3
+```
+
+#### VariableList API
+
+```java
+VariableList varList = resData.getVariableList();
+varList.add("ErrorCode", 0);          // int
+varList.add("ErrorMsg",  "SUCCESS");  // String
+varList.add("TotalCnt",  100);
+
+// 요청 Variable 읽기
+VariableList inVar = reqData.getVariableList();
+String searchNm = inVar.getString("SEARCH_NM");
+int    pageNo   = inVar.getInt("PAGE_NO");
+```
+
+#### 완전한 JSP 서비스 패턴
+
+```jsp
+<%@ page import="com.nexacro.java.xapi.data.*, com.nexacro.java.xapi.tx.*" %>
+<%@ page contentType="text/xml; charset=UTF-8" %>
+<%
+    out.clearBuffer();  // 필수 — 앞선 출력 제거
+    
+    // 1. 요청 수신
+    HttpPlatformRequest req = new HttpPlatformRequest(request);
+    req.receiveData();
+    PlatformData reqData = req.getData();
+    
+    // 2. 입력값 추출
+    VariableList inVar = reqData.getVariableList();
+    String searchNm = inVar.getString("SEARCH_NM");
+    DataSet dsIn = reqData.getDataSet("dsSearch");
+    
+    // 3. 응답 생성
+    PlatformData resData = new PlatformData();
+    
+    // 4. 결과 Dataset 구성
+    DataSet dsOut = new DataSet("dsResult");
+    dsOut.addColumn(new ColumnHeader("USER_ID", DataTypes.STRING, 20));
+    dsOut.addColumn(new ColumnHeader("USER_NM", DataTypes.STRING, 50));
+    // ... DB 조회 후 행 추가 ...
+    resData.addDataSet(dsOut);
+    
+    // 5. 처리 결과 Variable
+    resData.getVariableList().add("ErrorCode", 0);
+    resData.getVariableList().add("ErrorMsg",  "SUCCESS");
+    
+    // 6. 응답 송신
+    HttpPlatformResponse res = new HttpPlatformResponse(response, req);
+    res.setData(resData);
+    res.sendData();
+%>
+```
+
+#### Servlet 패턴 (복잡한 비즈니스 로직 시)
+
+```java
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    try {
+        HttpPlatformRequest  req     = new HttpPlatformRequest(request);
+        req.receiveData();
+        PlatformData         reqData = req.getData();
+        PlatformData         resData = processService(reqData);
+        HttpPlatformResponse res     = new HttpPlatformResponse(response, req);
+        res.setData(resData);
+        res.sendData();
+    } catch (PlatformException e) {
+        sendError(response, -1, e.getMessage());
+    } catch (Exception e) {
+        sendError(response, -999, "서버 오류: " + e.getMessage());
+    }
+}
+```
+
+#### 행 상태(RowType)별 CRUD 처리 패턴
+
+```java
+DataSet dsIn = reqData.getDataSet("dsSave");
+for (int i = 0; i < dsIn.getRowCount(); i++) {
+    int rowType = dsIn.getRowType(i);
+    if (rowType == DataSet.ROW_TYPE_INSERT) {
+        // INSERT
+    } else if (rowType == DataSet.ROW_TYPE_UPDATE) {
+        // UPDATE
+    } else if (rowType == DataSet.ROW_TYPE_DELETE) {
+        // DELETE
+    }
+}
+```
+
+#### ContentType / 인코딩 설정
+
+| 항목 | 설정값 |
+|------|--------|
+| JSP contentType | `text/xml; charset=UTF-8` |
+| Binary 응답 | `PlatformType.CONTENT_TYPE_BINARY` |
+| ZLIB 압축 | `res.addProtocolType(PlatformType.PROTOCOL_TYPE_ZLIB)` |
+| Tomcat JVM 옵션 | `-Dfile.encoding=UTF8` |
+
+**Excel MIME 타입 (web.xml):**
+```xml
+<mime-mapping>
+  <extension>xlsx</extension>
+  <mime-type>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</mime-type>
+</mime-mapping>
+```
+
+#### xapi 서비스 개발 체크리스트
+
+- `out.clearBuffer()` 호출 (JSP에서 필수)
+- `receiveData()` / `sendData()` 는 반드시 `try-catch(PlatformException)` 으로 감쌀 것
+- 응답에 `ErrorCode` (0=성공, 음수=오류) + `ErrorMsg` 포함 필수
+- 저장 서비스는 `getRowType()` 으로 INSERT/UPDATE/DELETE 분기 처리
+- 컬럼명은 **대문자** 사용 (클라이언트 Dataset과 일치해야 함)
+
+### 모듈(.xmodule) 개발
+
+모듈은 재사용 가능한 복합 컴포넌트(Composite Component) 단위이다.
+
+**패키지 구성:**
+```
+MyModule.xmodule
+├── module.xml        — 타입 정의 (Property, Method, Event)
+├── MyModule.xcdl     — 컴포지트 컴포넌트 UI 레이아웃
+├── MyModule.js       — 동작 로직 (prototype 기반)
+└── resource/         — 이미지, xcss 스타일
+```
+
+**모듈 스크립트 기본 구조:**
+```javascript
+nexacro.MyModule = function(name, left, top, width, height) {
+    nexacro._CompositeComponent.call(this, name, left, top, width, height);
+    this._p_myProp = "";
+};
+nexacro.MyModule.prototype = Object.create(nexacro._CompositeComponent.prototype);
+
+// getter/setter
+nexacro.MyModule.prototype.set_myProp = function(v) {
+    if (this._p_myProp != v) { this._p_myProp = v; }
+};
+nexacro.MyModule.prototype.get_myProp = function() {
+    return this._p_myProp;
+};
+```
+
+**모듈 배포/설치:** `Deploy > Module Package` 생성 후 `File > Install Module`로 설치 → 컴포넌트 팔레트에 자동 등록.
+
+### 주의사항
+
+- Dataset 컬럼명은 반드시 **대문자** 사용 (`USER_ID` ○, `user_id` ✕)
+- `this` 스코프: 이벤트 핸들러 내부에서는 Form을 가리킴. 일반 함수 내에서 this 사용 시 Form 참조를 전역 변수에 저장하여 사용
+- Grid 정렬 후 행 인덱스가 변경되므로 Dataset 직접 접근으로 값 추적
+- 대량 데이터 루프 전 `updatecontrol = false` 설정 필수 (성능)
+- 팝업 콜백은 함수 참조가 아닌 **함수명 문자열**로 전달
+- 지원 브라우저: Chrome, Edge (최신 버전)
+- 서버 응답 콘텐츠 타입: `text/xml; charset=UTF-8` (PlatformData 포맷 사용 시)
+
 ---
 
 # 개발 워크플로우
