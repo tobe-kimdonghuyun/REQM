@@ -1,78 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="EmRemSample03" width="1280" height="720" titletext="[TC-R 비교] em vs rem 비교 + Calendar rem" font="30px/normal &quot;Malgun Gothic&quot;">
+  <Form id="EmRemSample03" width="1280" height="720" titletext="[TC-CAL] Calendar em/rem 속성 검증 — headheight/daysize/buttonsize/popupsize" font="30px/normal &quot;Malgun Gothic&quot;">
     <Layouts>
       <Layout height="720" width="1280">
-        <Static id="Static00" taborder="0" text="[TC-R 비교] em vs rem 시각 비교  |  [TC-CAL-01] Calendar rem 접근성 테스트" left="10" top="20" width="700" height="36" font="13px &quot;Malgun Gothic&quot;"/>
+        <Static id="Static00" taborder="0" text="[TC-CAL] Calendar — headheight/daysize/buttonsize/popupsize  em vs rem  |  XML 정적 vs Script 동적(onload) 동일값 비교" left="10" top="20" width="950" height="36" font="13px &quot;Malgun Gothic&quot;"/>
 
         <!-- MainFrame font 변경 버튼 -->
         <Button id="btnMF12" taborder="1" text="MF=12px" left="10" top="62" width="72" height="34" onclick="btnMF12_onclick" font="12px &quot;Malgun Gothic&quot;" border="2px solid #555"/>
         <Button id="btnMF16" taborder="2" text="MF=16px" left="90" top="62" width="72" height="34" onclick="btnMF16_onclick" font="12px &quot;Malgun Gothic&quot;" border="2px solid #555"/>
         <Button id="btnMF20" taborder="3" text="MF=20px" left="170" top="62" width="72" height="34" onclick="btnMF20_onclick" font="12px &quot;Malgun Gothic&quot;" border="2px solid #555"/>
         <Button id="btnMF24" taborder="4" text="MF=24px" left="250" top="62" width="72" height="34" onclick="btnMF24_onclick" font="12px &quot;Malgun Gothic&quot;" border="2px solid #555"/>
-        <Static id="lbl_mf" taborder="5" text="↑ MF font 변경 → rem 컴포넌트만 변화 / em 컴포넌트는 self font 기준 유지" left="335" top="71" width="420" height="15" font="9px Malgun Gothic"/>
+        <Static id="lbl_mf" taborder="5" text="↑ MF font 변경 → rem 캘린더만 재계산 / em 캘린더는 calendar font(12px) 기준 불변" left="335" top="71" width="530" height="15" font="9px Malgun Gothic"/>
 
-        <!-- em 섹션 (left=10, width=170) -->
-        <Static id="lbl_em_title" taborder="6" text="【 em — self font(10px) 기준 】  MF 변경 불변" left="10" top="110" width="170" height="28" font="10px &quot;Malgun Gothic&quot;" forecolor="#1A5276"/>
+        <!-- 섹션 헤더 -->
+        <Static id="lbl_xml_title" taborder="6" text="【 XML 정적 설정 】" left="10" top="104" width="574" height="16" font="11px &quot;Malgun Gothic&quot;" forecolor="#1A5276"/>
+        <Static id="lbl_scr_title" taborder="7" text="【 Script 동적 설정 (Form_onload) 】" left="610" top="104" width="560" height="16" font="11px &quot;Malgun Gothic&quot;" forecolor="#922B21"/>
 
-        <Static id="lbl_em_pad" taborder="7" text="padding=1em (=10px @ font10px)" left="10" top="144" width="170" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_em_pad" taborder="8" text="padding 1em" left="10" top="160" height="72" width="170" onclick="btn_em_pad_onclick" font="10px/normal &quot;Malgun Gothic&quot;" padding="1em" border="1px solid #3498db"/>
+        <!-- 섹션 구분선 -->
+        <Static id="lbl_sec_div" taborder="8" text="" left="593" top="104" width="4" height="282" border="1px solid #AAAAAA"/>
 
-        <Static id="lbl_em_border" taborder="9" text="border=0.2em solid (=2px @ font10px)" left="10" top="248" width="170" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_em_border" taborder="10" text="border 0.2em" left="10" top="264" height="72" width="170" onclick="btn_em_border_onclick" font="10px/normal &quot;Malgun Gothic&quot;" border="0.2em solid #3498db"/>
+        <!-- em/rem 서브 헤더 -->
+        <Static id="lbl_em_xml_hdr" taborder="9" text="[em 방식]  calendar font=12px 기준" left="10" top="122" width="280" height="14" font="9px Malgun Gothic" forecolor="#1A5276"/>
+        <Static id="lbl_rem_xml_hdr" taborder="10" text="[rem 방식]  MainFrame font 기준" left="300" top="122" width="280" height="14" font="9px Malgun Gothic" forecolor="#922B21"/>
+        <Static id="lbl_em_scr_hdr" taborder="11" text="[em 방식]  calendar font=12px 기준" left="610" top="122" width="280" height="14" font="9px Malgun Gothic" forecolor="#1A5276"/>
+        <Static id="lbl_rem_scr_hdr" taborder="12" text="[rem 방식]  MainFrame font 기준" left="900" top="122" width="280" height="14" font="9px Malgun Gothic" forecolor="#922B21"/>
 
-        <Static id="lbl_em_radius" taborder="11" text="borderRadius=0.8em (=8px @ font10px)" left="10" top="352" width="170" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_em_radius" taborder="12" text="borderRadius 0.8em" left="10" top="368" height="72" width="170" onclick="btn_em_radius_onclick" font="10px/normal &quot;Malgun Gothic&quot;" borderRadius="0.8em" border="1px solid #3498db"/>
+        <!-- 속성값 안내 라벨 -->
+        <Static id="lbl_em_xml_p1" taborder="13" text="headheight=2em  daysize=2em  buttonsize=1.5em 1.5em  popupsize=22em 20em" left="10" top="138" width="280" height="26" font="8px Malgun Gothic"/>
+        <Static id="lbl_rem_xml_p1" taborder="14" text="headheight=2rem  daysize=2rem  buttonsize=1.5rem 1.5rem  popupsize=22rem 20rem" left="300" top="138" width="280" height="26" font="8px Malgun Gothic"/>
+        <Static id="lbl_em_scr_p1" taborder="15" text="headheight=2em  daysize=2em  buttonsize=1.5em 1.5em  popupsize=22em 20em" left="610" top="138" width="280" height="26" font="8px Malgun Gothic"/>
+        <Static id="lbl_rem_scr_p1" taborder="16" text="headheight=2rem  daysize=2rem  buttonsize=1.5rem 1.5rem  popupsize=22rem 20rem" left="900" top="138" width="280" height="26" font="8px Malgun Gothic"/>
 
-        <Static id="lbl_em_combo" taborder="13" text="Combo itemheight=2em (=20px @ font10px)" left="10" top="456" width="170" height="14" font="9px Malgun Gothic"/>
-        <Combo id="comp_em" taborder="14" left="10" top="472" width="170" height="56" font="10px/normal &quot;Malgun Gothic&quot;" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" itemheight="2em">
-          <Dataset id="innerdataset">
-            <ColumnInfo><Column id="codecolumn" size="256"/><Column id="datacolumn" size="256"/></ColumnInfo>
-            <Rows>
-              <Row><Col id="codecolumn">1</Col><Col id="datacolumn">em 항목1</Col></Row>
-              <Row><Col id="codecolumn">2</Col><Col id="datacolumn">em 항목2</Col></Row>
-              <Row><Col id="codecolumn">3</Col><Col id="datacolumn">em 항목3</Col></Row>
-            </Rows>
-          </Dataset>
-        </Combo>
+        <!-- Calendar: XML 정적 em (속성 XML에 직접 선언) -->
+        <Calendar id="cal_em_xml" taborder="17" left="10" top="166" width="280" height="218"
+          font="12px/normal &quot;Malgun Gothic&quot;"
+          headheight="2em" daysize="2em" buttonsize="1.5em 1.5em" popupsize="22em 20em"/>
 
-        <!-- 구분 표시 -->
-        <Static id="lbl_divider" taborder="15" text="←em (self)   rem (MF)→" left="188" top="360" width="170" height="36" font="10px &quot;Malgun Gothic&quot;"/>
+        <!-- Calendar: XML 정적 rem (속성 XML에 직접 선언) -->
+        <Calendar id="cal_rem_xml" taborder="18" left="300" top="166" width="280" height="218"
+          font="12px/normal &quot;Malgun Gothic&quot;"
+          headheight="2rem" daysize="2rem" buttonsize="1.5rem 1.5rem" popupsize="22rem 20rem"/>
 
-        <!-- rem 섹션 (left=366, width=170) -->
-        <Static id="lbl_rem_title" taborder="16" text="【 rem — MainFrame font 기준 】  MF 변경 시 재계산" left="366" top="110" width="170" height="28" font="10px &quot;Malgun Gothic&quot;" forecolor="#922B21"/>
+        <!-- Calendar: Script 동적 em (Form_onload에서 설정 — 위 cal_em_xml과 동일값) -->
+        <Calendar id="cal_em_scr" taborder="19" left="610" top="166" width="280" height="218"
+          font="12px/normal &quot;Malgun Gothic&quot;"/>
 
-        <Static id="lbl_rem_pad" taborder="17" text="padding=1rem (=MF font-size)" left="366" top="144" width="170" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_rem_pad" taborder="18" text="padding 1rem" left="366" top="160" height="72" width="170" onclick="btn_rem_pad_onclick" font="10px/normal &quot;Malgun Gothic&quot;" padding="1rem" border="1px solid #e74c3c"/>
+        <!-- Calendar: Script 동적 rem (Form_onload에서 설정 — 위 cal_rem_xml과 동일값) -->
+        <Calendar id="cal_rem_scr" taborder="20" left="900" top="166" width="280" height="218"
+          font="12px/normal &quot;Malgun Gothic&quot;"/>
 
-        <Static id="lbl_rem_border" taborder="19" text="border=0.2rem solid (=MF×0.2)" left="366" top="248" width="170" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_rem_border" taborder="20" text="border 0.2rem" left="366" top="264" height="72" width="170" onclick="btn_rem_border_onclick" font="10px/normal &quot;Malgun Gothic&quot;" border="0.2rem solid #e74c3c"/>
-
-        <Static id="lbl_rem_radius" taborder="21" text="borderRadius=0.8rem (=MF×0.8)" left="366" top="352" width="170" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_rem_radius" taborder="22" text="borderRadius 0.8rem" left="366" top="368" height="72" width="170" onclick="btn_rem_radius_onclick" font="10px/normal &quot;Malgun Gothic&quot;" borderRadius="0.8rem" border="1px solid #e74c3c"/>
-
-        <Static id="lbl_rem_combo" taborder="23" text="Combo itemheight=2rem (=MF×2)" left="366" top="456" width="170" height="14" font="9px Malgun Gothic"/>
-        <Combo id="comp_rem" taborder="24" left="366" top="472" width="170" height="56" font="10px/normal &quot;Malgun Gothic&quot;" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" itemheight="2rem">
-          <Dataset id="innerdataset">
-            <ColumnInfo><Column id="codecolumn" size="256"/><Column id="datacolumn" size="256"/></ColumnInfo>
-            <Rows>
-              <Row><Col id="codecolumn">1</Col><Col id="datacolumn">rem 항목1</Col></Row>
-              <Row><Col id="codecolumn">2</Col><Col id="datacolumn">rem 항목2</Col></Row>
-              <Row><Col id="codecolumn">3</Col><Col id="datacolumn">rem 항목3</Col></Row>
-            </Rows>
-          </Dataset>
-        </Combo>
-
-        <!-- TC-CAL-01 Calendar (left=552) -->
-        <Static id="lbl_cal" taborder="25" text="[TC-CAL-01] Calendar rem — MF font 변경 시 캘린더 전체 크기 재계산" left="552" top="110" width="400" height="16" font="11px &quot;Malgun Gothic&quot;"/>
-        <Static id="lbl_cal_info" taborder="26" text="headheight=2.5rem / daysize=2rem / buttonsize=1.5rem 1.5rem" left="552" top="132" width="380" height="14" font="9px Malgun Gothic"/>
-        <Calendar id="cal00" taborder="27" left="552" top="152" width="410" height="360" headheight="2.5rem" daysize="2rem" buttonsize="1.5rem 1.5rem" font="10px/normal &quot;Malgun Gothic&quot;"/>
-        <Static id="lbl_cal_expect" taborder="28" text="MF=12px: head=30px, day=24px / MF=16px: head=40px, day=32px / MF=20px: head=50px, day=40px" left="552" top="520" width="410" height="28" font="9px Malgun Gothic"/>
-
-        <!-- 결과 영역 (우측) -->
-        <Combo id="Combo01" taborder="29" left="980" top="152" width="232" height="50" innerdataset="Dataset00" datacolumn="datacolumn" codecolumn="codecolumn" font="12px &quot;Malgun Gothic&quot;"/>
-        <Button id="Button01" taborder="30" text="값 확인" left="1220" top="152" width="52" height="50" onclick="Button01_onclick" font="12px &quot;Malgun Gothic&quot;"/>
-        <TextArea id="TextArea00" taborder="31" left="980" top="214" width="292" height="490" font="12px &quot;Malgun Gothic&quot;"/>
+        <!-- 결과 영역 -->
+        <Combo id="Combo01" taborder="21" left="10" top="396" width="350" height="40" innerdataset="Dataset00" datacolumn="datacolumn" codecolumn="codecolumn" font="12px &quot;Malgun Gothic&quot;"/>
+        <Button id="Button01" taborder="22" text="값 확인" left="370" top="396" width="80" height="40" onclick="Button01_onclick" font="12px &quot;Malgun Gothic&quot;"/>
+        <TextArea id="TextArea00" taborder="23" left="10" top="446" width="1250" height="256" font="12px &quot;Malgun Gothic&quot;"/>
+        <Button id="btn_reload" taborder="24" text="[초기화]" left="1165" top="8" width="100" height="30" onclick="btn_reload_onclick" font="11px &quot;Malgun Gothic&quot;" border="1px solid #CC0000"/>
       </Layout>
     </Layouts>
     <Objects>
@@ -82,26 +63,45 @@
           <Column id="datacolumn" size="256"/>
         </ColumnInfo>
         <Rows>
-          <Row><Col id="codecolumn">0</Col><Col id="datacolumn">비교: padding em vs rem</Col></Row>
-          <Row><Col id="codecolumn">1</Col><Col id="datacolumn">비교: border em vs rem</Col></Row>
-          <Row><Col id="codecolumn">2</Col><Col id="datacolumn">비교: borderRadius em vs rem</Col></Row>
-          <Row><Col id="codecolumn">3</Col><Col id="datacolumn">비교: Combo itemheight em vs rem</Col></Row>
-          <Row><Col id="codecolumn">4</Col><Col id="datacolumn">TC-CAL-01 Calendar rem 속성</Col></Row>
+          <Row><Col id="codecolumn">0</Col><Col id="datacolumn">cal_em_xml — XML 정적 em 속성값</Col></Row>
+          <Row><Col id="codecolumn">1</Col><Col id="datacolumn">cal_rem_xml — XML 정적 rem 속성값</Col></Row>
+          <Row><Col id="codecolumn">2</Col><Col id="datacolumn">cal_em_scr — Script 동적 em 속성값</Col></Row>
+          <Row><Col id="codecolumn">3</Col><Col id="datacolumn">cal_rem_scr — Script 동적 rem 속성값</Col></Row>
         </Rows>
       </Dataset>
     </Objects>
     <Script type="xscript5.1"><![CDATA[
+/* em/rem 속성을 Script 동적으로 설정 (cal_em_xml / cal_rem_xml의 XML 선언값과 동일) */
+this.Form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// cal_em_scr: em 방식 동적 설정 — cal_em_xml과 동일한 값
+	this.cal_em_scr.headheight = "2em";
+	this.cal_em_scr.daysize    = "2em";
+	this.cal_em_scr.buttonsize = "1.5em 1.5em";
+	this.cal_em_scr.popupsize  = "22em 20em";
+
+	// cal_rem_scr: rem 방식 동적 설정 — cal_rem_xml과 동일한 값
+	this.cal_rem_scr.headheight = "2rem";
+	this.cal_rem_scr.daysize    = "2rem";
+	this.cal_rem_scr.buttonsize = "1.5rem 1.5rem";
+	this.cal_rem_scr.popupsize  = "22rem 20rem";
+};
+
 this.btnMF12_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
 	this._getMainFrame().font = "normal 12px/normal \"Malgun Gothic\"";
 	this.resetScroll();
 	this.TextArea00.deleteText();
-	this.TextArea00.value = "MF font = 12px (1rem = 12px)\n\n"
-	    + "[em 버튼] font=10px 고정\n"
-	    + "padding=1em → 기대: 10px (self font 기준, 불변)\n\n"
-	    + "[rem 버튼] MF font 변경됨\n"
-	    + "padding=1rem → 기대: 12px (변경됨)\n\n"
-	    + "[CAL] headheight=2.5rem → 30px, daysize=2rem → 24px";
+	this.TextArea00.value = "MF font = 12px  (1rem = 12px)\n\n"
+	    + "[em 캘린더]  calendar font=12px 고정 — MF 변경 무관\n"
+	    + "  headheight=2em   → 24px  (12 × 2)\n"
+	    + "  daysize=2em      → 24px\n"
+	    + "  buttonsize=1.5em → 18px\n\n"
+	    + "[rem 캘린더]  MF=12px 기준으로 계산\n"
+	    + "  headheight=2rem   → 24px  (12 × 2)\n"
+	    + "  daysize=2rem      → 24px\n"
+	    + "  buttonsize=1.5rem → 18px\n\n"
+	    + "※ MF font = calendar font = 12px 이므로 em ≈ rem (동일 결과)";
 };
 
 this.btnMF16_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
@@ -109,12 +109,15 @@ this.btnMF16_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 	this._getMainFrame().font = "normal 16px/normal \"Malgun Gothic\"";
 	this.resetScroll();
 	this.TextArea00.deleteText();
-	this.TextArea00.value = "MF font = 16px (1rem = 16px)\n\n"
-	    + "[em 버튼] font=10px 고정\n"
-	    + "padding=1em → 기대: 10px (self font 기준, 불변)\n\n"
-	    + "[rem 버튼] MF font 변경됨\n"
-	    + "padding=1rem → 기대: 16px (변경됨)\n\n"
-	    + "[CAL] headheight=2.5rem → 40px, daysize=2rem → 32px";
+	this.TextArea00.value = "MF font = 16px  (1rem = 16px)\n\n"
+	    + "[em 캘린더]  calendar font=12px 고정 — 변화 없음\n"
+	    + "  headheight=2em   → 여전히 24px\n"
+	    + "  daysize=2em      → 여전히 24px\n"
+	    + "  buttonsize=1.5em → 여전히 18px\n\n"
+	    + "[rem 캘린더]  MF=16px → rem 재계산됨\n"
+	    + "  headheight=2rem   → 32px  (16 × 2)\n"
+	    + "  daysize=2rem      → 32px\n"
+	    + "  buttonsize=1.5rem → 24px  (16 × 1.5)";
 };
 
 this.btnMF20_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
@@ -122,12 +125,15 @@ this.btnMF20_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 	this._getMainFrame().font = "normal 20px/normal \"Malgun Gothic\"";
 	this.resetScroll();
 	this.TextArea00.deleteText();
-	this.TextArea00.value = "MF font = 20px (1rem = 20px)\n\n"
-	    + "[em 버튼] font=10px 고정\n"
-	    + "padding=1em → 기대: 10px (self font 기준, 불변)\n\n"
-	    + "[rem 버튼] MF font 변경됨\n"
-	    + "padding=1rem → 기대: 20px (변경됨)\n\n"
-	    + "[CAL] headheight=2.5rem → 50px, daysize=2rem → 40px";
+	this.TextArea00.value = "MF font = 20px  (1rem = 20px)\n\n"
+	    + "[em 캘린더]  calendar font=12px 고정 — 변화 없음\n"
+	    + "  headheight=2em   → 여전히 24px\n"
+	    + "  daysize=2em      → 여전히 24px\n"
+	    + "  buttonsize=1.5em → 여전히 18px\n\n"
+	    + "[rem 캘린더]  MF=20px → rem 재계산됨\n"
+	    + "  headheight=2rem   → 40px  (20 × 2)\n"
+	    + "  daysize=2rem      → 40px\n"
+	    + "  buttonsize=1.5rem → 30px  (20 × 1.5)";
 };
 
 this.btnMF24_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
@@ -135,133 +141,44 @@ this.btnMF24_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 	this._getMainFrame().font = "normal 24px/normal \"Malgun Gothic\"";
 	this.resetScroll();
 	this.TextArea00.deleteText();
-	this.TextArea00.value = "MF font = 24px (1rem = 24px)\n\n"
-	    + "[em 버튼] font=10px 고정\n"
-	    + "padding=1em → 기대: 10px (self font 기준, 불변)\n\n"
-	    + "[rem 버튼] MF font 변경됨\n"
-	    + "padding=1rem → 기대: 24px (변경됨)\n\n"
-	    + "[CAL] headheight=2.5rem → 60px, daysize=2rem → 48px";
+	this.TextArea00.value = "MF font = 24px  (1rem = 24px)\n\n"
+	    + "[em 캘린더]  calendar font=12px 고정 — 변화 없음\n"
+	    + "  headheight=2em   → 여전히 24px\n"
+	    + "  daysize=2em      → 여전히 24px\n"
+	    + "  buttonsize=1.5em → 여전히 18px\n\n"
+	    + "[rem 캘린더]  MF=24px → rem 재계산됨\n"
+	    + "  headheight=2rem   → 48px  (24 × 2)\n"
+	    + "  daysize=2rem      → 48px\n"
+	    + "  buttonsize=1.5rem → 36px  (24 × 1.5)";
 };
 
 this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	var base = "mainframe.WorkFrame.form.Div00.form.";
-	var elEm, elRem, msg;
+	var cal, label;
 	switch(this.Combo01.index) {
-	case 0:
-		elEm  = document.getElementById(base + "btn_em_pad");
-		elRem = document.getElementById(base + "btn_rem_pad");
-		msg = "[비교] padding em vs rem\n\n"
-		    + "em (self font=10px 기준):\n"
-		    + "  설정: padding=1em\n"
-		    + "  DOM: " + window.getComputedStyle(elEm).padding + "\n"
-		    + "  → MF font 변경해도 이 값은 변하지 않음\n\n"
-		    + "rem (MainFrame 기준):\n"
-		    + "  설정: padding=1rem\n"
-		    + "  DOM: " + window.getComputedStyle(elRem).padding + "\n"
-		    + "  → MF font 변경 시 이 값이 재계산됨";
-		break;
-	case 1:
-		elEm  = document.getElementById(base + "btn_em_border");
-		elRem = document.getElementById(base + "btn_rem_border");
-		msg = "[비교] border em vs rem\n\n"
-		    + "em (self font=10px 기준):\n"
-		    + "  설정: border=0.2em → 기대: 2px\n"
-		    + "  DOM borderTopWidth: " + window.getComputedStyle(elEm).borderTopWidth + "\n\n"
-		    + "rem (MainFrame 기준):\n"
-		    + "  설정: border=0.2rem → 기대: MF×0.2\n"
-		    + "  DOM borderTopWidth: " + window.getComputedStyle(elRem).borderTopWidth;
-		break;
-	case 2:
-		elEm  = document.getElementById(base + "btn_em_radius");
-		elRem = document.getElementById(base + "btn_rem_radius");
-		msg = "[비교] borderRadius em vs rem\n\n"
-		    + "em (self font=10px 기준):\n"
-		    + "  설정: borderRadius=0.8em → 기대: 8px\n"
-		    + "  DOM: " + window.getComputedStyle(elEm).borderStartStartRadius + "\n\n"
-		    + "rem (MainFrame 기준):\n"
-		    + "  설정: borderRadius=0.8rem → 기대: MF×0.8\n"
-		    + "  DOM: " + window.getComputedStyle(elRem).borderStartStartRadius;
-		break;
-	case 3:
-		msg = "[비교] Combo itemheight em vs rem\n\n"
-		    + "em (self font=10px 기준):\n"
-		    + "  설정: itemheight=2em → 기대: 20px\n"
-		    + "  comp_em.itemheight = " + this.comp_em.itemheight + "\n\n"
-		    + "rem (MainFrame 기준):\n"
-		    + "  설정: itemheight=2rem → 기대: MF×2\n"
-		    + "  comp_rem.itemheight = " + this.comp_rem.itemheight + "\n\n"
-		    + "MF font 변경 후 rem 드롭다운 행 높이 변화 확인";
-		break;
-	case 4:
-		msg = "[TC-CAL-01] Calendar rem 속성\n\n"
-		    + "설정:\n"
-		    + "  headheight = 2.5rem\n"
-		    + "  daysize    = 2rem\n"
-		    + "  buttonsize = 1.5rem 1.5rem\n\n"
-		    + "cal00.headheight = " + this.cal00.headheight + "\n"
-		    + "cal00.daysize    = " + this.cal00.daysize + "\n"
-		    + "cal00.buttonsize = " + this.cal00.buttonsize + "\n\n"
-		    + "MF font 변경 후 캘린더 크기 변화 확인:\n"
-		    + "  12px → head=30px, day=24px\n"
-		    + "  16px → head=40px, day=32px\n"
-		    + "  20px → head=50px, day=40px\n"
-		    + "  24px → head=60px, day=48px";
-		break;
+	case 0:  cal = this.cal_em_xml;  label = "[cal_em_xml]  XML 정적 em";    break;
+	case 1:  cal = this.cal_rem_xml; label = "[cal_rem_xml]  XML 정적 rem";   break;
+	case 2:  cal = this.cal_em_scr;  label = "[cal_em_scr]  Script 동적 em";  break;
+	case 3:  cal = this.cal_rem_scr; label = "[cal_rem_scr]  Script 동적 rem"; break;
 	default:
-		msg = "Combo에서 항목을 선택한 후 [값 확인]을 클릭하세요.";
+		this.TextArea00.deleteText();
+		this.TextArea00.value = "Combo에서 캘린더를 선택한 후 [값 확인]을 클릭하세요.";
+		return;
 	}
 	this.TextArea00.deleteText();
-	this.TextArea00.value = msg;
+	this.TextArea00.value = label + "\n\n"
+	    + "headheight = " + cal.headheight + "\n"
+	    + "daysize    = " + cal.daysize + "\n"
+	    + "buttonsize = " + cal.buttonsize + "\n"
+	    + "popupsize  = " + cal.popupsize + "\n\n"
+	    + "Pass 기준:\n"
+	    + "  em 계열 → 단위 문자열(em) 그대로 보존 확인\n"
+	    + "  rem 계열 → 단위 문자열(rem) 그대로 보존 확인\n"
+	    + "  XML 정적값 == Script 동적값 (동일 문자열)";
 };
-
-this.btn_em_pad_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+this.btn_reload_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
 {
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_em_pad");
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[em] padding=1em\nself font=10px 기준 → 기대: 10px\n"
-	    + "MF font 변경해도 이 값은 변하지 않음\n\n"
-	    + "DOM: " + window.getComputedStyle(el).padding;
-};
-
-this.btn_rem_pad_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_rem_pad");
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[rem] padding=1rem\nMainFrame font 기준 → MF font 변경 시 재계산\n\n"
-	    + "DOM: " + window.getComputedStyle(el).padding;
-};
-
-this.btn_em_border_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_em_border");
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[em] border=0.2em\nself font=10px → 기대: 2px (불변)\n\n"
-	    + "DOM borderTopWidth: " + window.getComputedStyle(el).borderTopWidth;
-};
-
-this.btn_rem_border_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_rem_border");
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[rem] border=0.2rem\nMF font 기준 → MF 변경 시 재계산\n\n"
-	    + "DOM borderTopWidth: " + window.getComputedStyle(el).borderTopWidth;
-};
-
-this.btn_em_radius_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_em_radius");
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[em] borderRadius=0.8em\nself font=10px → 기대: 8px (불변)\n\n"
-	    + "DOM: " + window.getComputedStyle(el).borderStartStartRadius;
-};
-
-this.btn_rem_radius_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_rem_radius");
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[rem] borderRadius=0.8rem\nMF font 기준 → MF 변경 시 재계산\n\n"
-	    + "DOM: " + window.getComputedStyle(el).borderStartStartRadius;
+	this.reload();
 };
 ]]></Script>
   </Form>
