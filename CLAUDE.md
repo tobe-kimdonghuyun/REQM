@@ -21,17 +21,33 @@
 ## 프로젝트 주요 디렉토리
 
 ```
-tools/           — 배포 BAT 스크립트 및 Tomcat 제어 스크립트
-scripts/         — PowerShell 유틸리티 (Jakarta 변환, JAR 다운로드)
-nexacroK/        — nexacroK UI화면 프로젝트 소스
-NTemplate/       — nexacroN 프로젝트 템플릿
-SKILLS/          — Claude Code 커스텀 스킬 정의
-deploy/          — 배포 설정
-DOCS/            — 개발 및 운영 문서, nexacroN, nexacorK 설계문서가 있음 
-nexacroK_UI/     — nexacroK UI화면 프로젝트 소스
-nexacroN/nexacroN_UI/ — nexacroN UI화면 프로젝트 소스
-nexacroN/output/     — nexacroN UI화면 프로젝트 소스를 generate하여 나온 결과물 폴더
-nexacroN/deploy/     — nexacroN UI화면 프로젝트 소스를 generate하여 나온 결과물을 deploy한 결과물 폴던
+.claude/                   — Claude Code 프로젝트 설정
+  ├── commands/            — 커스텀 슬래시 커맨드 정의 (/.md → /커맨드명)
+  ├── skills/              — 스킬 참조 문서 (nexacro-dev, nexacro-deploy 등)
+  └── settings.local.json  — 로컬 권한·hooks·language 설정
+
+SKILLS/                    — Claude Code 스킬 상세 가이드 (nexacro-dev, nexacro-deploy 등)
+tools/                     — 배포 BAT 스크립트 및 Tomcat 제어 스크립트
+scripts/                   — PowerShell 유틸리티 (Jakarta 변환, JAR 다운로드)
+deploy/                    — 배포 설정 파일
+DOC/                       — 개발·운영 문서, nexacroN/nexacroK 설계 문서
+  ├── EM&REM/              — em/rem 단위 관련 문서
+  ├── Frameset/            — Frameset 관련 문서
+  ├── nexacroN v24/        — nexacroN v24 관련 문서
+  └── XCSS_SIZEING/        — XCSS Sizing 관련 문서
+nexacroN 메뉴얼/            — nexacroN V24 오프라인 매뉴얼 HTML (developer_guide 등)
+NTemplate/                 — nexacroN 프로젝트 템플릿
+apache-tomcat-9.0.89/      — 로컬 Tomcat 9 서버 (conf/, webapps/ 등)
+
+nexacroK_UI/               — nexacroK UI 화면 프로젝트 모음
+  └── EmRemSample/         — em/rem 단위 검증 샘플 프로젝트
+        ├── Base/          — 기본 기능 화면 (Button, Grid, DynamicDataset 등)
+        ├── FrameBase/     — 메인 프레임 (main.xfdl — Combo 메뉴 진입점)
+        └── TestCase/      — em/rem 테스트 케이스 화면 (EmRemSample00~10, TestCase00~02)
+
+nexacroN/                  — nexacroN 관련 폴더
+  ├── output/              — nexacroN Studio Generate 결과물
+  └── deploy/              — nexacroN 최종 배포 결과물
 ```
 
 ---
