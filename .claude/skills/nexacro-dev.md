@@ -54,7 +54,10 @@ NTemplate/
 - 결과 Dataset: `ds`+`Result` or `ds`+`List` → `dsResult`, `dsList`
 
 ---
-
+### Dataset을 Grid에 연결방법
+ - 2가지 방법이 있음 
+   - 생성된 Grid의 binddataset에 텍스트로 바로 설정한다 
+   - script통해서 동적으로 등록한다 예시로:  this.grd_main.binddataset  = "동적생성된 dataset id"
 ## 3. 화면 스크립트 기본 구조
 
 ```javascript
@@ -314,7 +317,8 @@ function gfn_numFormat(num) {
 | `is not defined` | 함수/변수 스코프 문제 | `this.` 또는 `gfn_` prefix 확인 |
 | Transaction 응답 없음 | URL 오류 또는 서버 미기동 | URL 확인, Tomcat 상태 확인 |
 | Dataset 컬럼 null | 컬럼명 대소문자 불일치 | typedefinition.xml 컬럼명과 일치 확인 |
-| Grid 표시 안 됨 | Dataset 바인딩 미설정 | Grid의 `binddataset` 속성 확인 |
+| Grid 데이터 표시 안 됨 | `innerdataset` 속성 사용 오류 | `binddataset` 속성으로 교체 (`innerdataset`은 Grid 내부 전용, 외부 Dataset 연결 불가) |
+| 일반 함수에서 컴포넌트 접근 안 됨 | `this`가 Form이 아닌 컨텍스트 | `nexacro.getForm()` 사용 금지 — 이벤트 핸들러에서 `fn_xxx(this)` 로 oForm 전달, 일반 함수는 `function fn_xxx(oForm)` 패턴 사용 |
 | 팝업 안 열림 | 경로 오류 | xprj 기준 상대경로 확인 |
 
 ---

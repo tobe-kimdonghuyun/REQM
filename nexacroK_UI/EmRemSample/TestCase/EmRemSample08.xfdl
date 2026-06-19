@@ -1,302 +1,410 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="EmRemSample08" width="1280" height="720" titletext="[TC-B] Button em/rem 속성 검증 (Script 동적 설정)" font="30px/normal &quot;Malgun Gothic&quot;">
+  <Form id="EmRemSample08" width="1280" height="720" titletext="[TC-CHK-DYN] xcss+Component직접+Script동적 중첩 (CheckBox)" font="30px/normal &quot;Malgun Gothic&quot;" onload="EmRemSample08_onload">
     <Layouts>
       <Layout height="720" width="1280">
-        <Static id="Static00" taborder="0" text="[TC-B] Button 계열 em/rem 핵심 속성 검증  (기본 font = 10px/normal Malgun Gothic)" left="10" top="20" width="700" height="40" font="13px &quot;Malgun Gothic&quot;"/>
-        <Radio id="Radio00" taborder="1" left="10" top="66" width="680" height="68" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" rowcount="2" onitemchanged="Radio00_onitemchanged" font="12px &quot;Malgun Gothic&quot;">
-          <Dataset id="innerdataset">
-            <ColumnInfo>
-              <Column id="codecolumn" size="256"/>
-              <Column id="datacolumn" size="256"/>
-            </ColumnInfo>
-            <Rows>
-              <Row><Col id="datacolumn">5px/normal "Malgun Gothic"</Col></Row>
-              <Row><Col id="datacolumn">10px/normal "Malgun Gothic"</Col></Row>
-              <Row><Col id="datacolumn">16px/normal "Malgun Gothic"</Col></Row>
-              <Row><Col id="datacolumn">20px/normal "Malgun Gothic"</Col></Row>
-            </Rows>
-          </Dataset>
-        </Radio>
 
-        <!-- 행1: TC-B-01~03 -->
-        <Static id="lbl_b01" taborder="2" text="[TC-B-01] padding em (self font 연동)" left="10" top="152" width="185" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_b01" taborder="3" text="padding=1em / font=20px" left="10" top="168" height="72" width="185" onclick="btn_b01_onclick" font="20px/normal &quot;Malgun Gothic&quot;" border="1px solid #999"/>
+        <!-- MF font 변경 버튼 -->
+        <Button id="btnMF12" taborder="0" text="MF=12px" left="10" top="8" width="62" height="30" onclick="btnMF12_onclick" font="11px &quot;Malgun Gothic&quot;" border="2px solid #555"/>
+        <Button id="btnMF16" taborder="1" text="MF=16px" left="78" top="8" width="62" height="30" onclick="btnMF16_onclick" font="11px &quot;Malgun Gothic&quot;" border="2px solid #555"/>
+        <Button id="btnMF20" taborder="2" text="MF=20px" left="146" top="8" width="62" height="30" onclick="btnMF20_onclick" font="11px &quot;Malgun Gothic&quot;" border="2px solid #555"/>
+        <Button id="btnMF24" taborder="3" text="MF=24px" left="214" top="8" width="62" height="30" onclick="btnMF24_onclick" font="11px &quot;Malgun Gothic&quot;" border="2px solid #555"/>
+        <Static id="lbl_mf_note" taborder="4" text="↑ rem만 재계산" left="282" top="14" width="108" height="16" font="9px Malgun Gothic" forecolor="#999"/>
 
-        <Static id="lbl_b02" taborder="4" text="[TC-B-02] padding 4방향 혼합 단위" left="205" top="152" width="185" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_b02" taborder="5" text="1em 2rem 0.5em 1rem" left="205" top="168" height="72" width="185" onclick="btn_b02_onclick" font="10px/normal &quot;Malgun Gothic&quot;" border="1px solid #999"/>
+        <!-- 타이틀 -->
+        <Static id="lbl_title" taborder="5" text="[TC-CHK-DYN] xcss + Component 직접지정 + Script 동적 설정 3단계 중첩 — CheckBox" left="10" top="46" width="384" height="16" font="9px Malgun Gothic" forecolor="#2C3E50"/>
 
-        <Static id="lbl_b03" taborder="6" text="[TC-B-03] border em (font=16px)" left="400" top="152" width="185" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_b03" taborder="7" text="border=0.125em solid blue" left="400" top="168" height="72" width="185" onclick="btn_b03_onclick" font="16px/normal &quot;Malgun Gothic&quot;"/>
+        <!-- TC-CHK-DYN-01: xcss em + comp em + script em(font 변경) -->
+        <Button id="btnDyn01" taborder="6" text="TC-CHK-DYN-01&#13;&#10;xcss em&#13;&#10;+comp em&#13;&#10;+script em" left="10" top="68" width="120" height="74" onclick="btnDyn01_onclick" font="9px &quot;Malgun Gothic&quot;" border="1px solid #3B82F6" background="#EBF5FB"/>
+        <CheckBox id="chk_dyn01" taborder="7" text="DYN-01 (xcss font=20px em / comp font=14px / script font=22px)" left="135" top="68" width="254" height="74" cssclass="chkCssOv01" font="14px/normal &quot;Malgun Gothic&quot;"/>
 
-        <!-- 행2: TC-B-04~06 -->
-        <Static id="lbl_b04" taborder="8" text="[TC-B-04] textPadding em" left="10" top="262" width="185" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_b04" taborder="9" text="textPadding=0.5em 1rem" left="10" top="278" height="72" width="185" onclick="btn_b04_onclick" font="10px/normal &quot;Malgun Gothic&quot;" border="1px solid #999" icon="url('theme://images/btn_TF_Close_O.png')"/>
+        <!-- TC-CHK-DYN-02: xcss em + comp rem + script rem(override) -->
+        <Button id="btnDyn02" taborder="8" text="TC-CHK-DYN-02&#13;&#10;xcss em&#13;&#10;+comp rem&#13;&#10;+script rem" left="10" top="152" width="120" height="74" onclick="btnDyn02_onclick" font="9px &quot;Malgun Gothic&quot;" border="1px solid #27AE60" background="#EAFAF1"/>
+        <CheckBox id="chk_dyn02" taborder="9" text="DYN-02 (xcss em / comp letterSpacing=0.1rem / script letterSpacing=0.2rem)" left="135" top="152" width="254" height="74" cssclass="chkCssOv02" letterSpacing="0.1rem"/>
 
-        <Static id="lbl_b05" taborder="10" text="[TC-B-05] minwidth/maxwidth em(신규)" left="205" top="262" width="185" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_b05" taborder="11" text="min=6rem max=16rem" left="205" top="278" height="72" width="90" onclick="btn_b05_onclick" font="10px/normal &quot;Malgun Gothic&quot;" border="1px solid #999"/>
+        <!-- TC-CHK-DYN-03: xcss rem + comp em + script em(font+letterSpacing 변경) -->
+        <Button id="btnDyn03" taborder="10" text="TC-CHK-DYN-03&#13;&#10;xcss rem&#13;&#10;+comp em&#13;&#10;+script em" left="10" top="236" width="120" height="74" onclick="btnDyn03_onclick" font="9px &quot;Malgun Gothic&quot;" border="1px solid #8E44AD" background="#F4ECF7"/>
+        <CheckBox id="chk_dyn03" taborder="11" text="DYN-03 (xcss rem / comp font=16px+letterSp=0.1em / script font=20px+letterSp=0.15em)" left="135" top="236" width="254" height="74" cssclass="chkCssOv03" font="16px/normal &quot;Malgun Gothic&quot;" letterSpacing="0.1em"/>
 
-        <Static id="lbl_b06" taborder="12" text="[TC-B-06] letterSpacing 양수 em" left="400" top="262" width="185" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_b06" taborder="13" text="letterSpacing=0.05em" left="400" top="278" height="72" width="185" onclick="btn_b06_onclick" font="10px/normal &quot;Malgun Gothic&quot;" border="1px solid #999"/>
+        <!-- TC-CHK-DYN-04: xcss rem + comp rem + script em(wordSpacing em 추가) -->
+        <Button id="btnDyn04" taborder="12" text="TC-CHK-DYN-04&#13;&#10;xcss rem&#13;&#10;+comp rem&#13;&#10;+script em" left="10" top="320" width="120" height="74" onclick="btnDyn04_onclick" font="9px &quot;Malgun Gothic&quot;" border="1px solid #E74C3C" background="#FDEDEC"/>
+        <CheckBox id="chk_dyn04" taborder="13" text="DYN-04 (xcss rem / comp letterSp=0.1rem+wordSp=0.5rem / script wordSp=1em)" left="135" top="320" width="254" height="74" cssclass="chkCssOv04" letterSpacing="0.1rem" wordSpacing="0.5rem"/>
 
-        <!-- 행3: TC-B-07~09 -->
-        <Static id="lbl_b07" taborder="14" text="[TC-B-07] letterSpacing 음수 em(허용)" left="10" top="372" width="185" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_b07" taborder="15" text="letterSpacing=-0.02em" left="10" top="388" height="72" width="185" onclick="btn_b07_onclick" font="10px/normal &quot;Malgun Gothic&quot;" border="1px solid #999"/>
+        <!-- TC-CHK-DYN-05: xcss em+rem + comp em+rem + script em+rem 복합 -->
+        <Button id="btnDyn05" taborder="14" text="TC-CHK-DYN-05&#13;&#10;xcss em+rem&#13;&#10;+comp em+rem&#13;&#10;+script em+rem" left="10" top="404" width="120" height="74" onclick="btnDyn05_onclick" font="9px &quot;Malgun Gothic&quot;" border="1px solid #E67E22" background="#FDEBD0"/>
+        <CheckBox id="chk_dyn05" taborder="15" text="DYN-05 (xcss em+rem / comp font=12px+wordSp=0.5em / script font=18px+letterSp=0.2rem)" left="135" top="404" width="254" height="74" cssclass="chkCssOv05" font="12px/normal &quot;Malgun Gothic&quot;" wordSpacing="0.5em"/>
 
-        <Static id="lbl_b08" taborder="16" text="[TC-B-08] wordSpacing em" left="205" top="372" width="185" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_b08" taborder="17" text="word spacing 0.1em" left="205" top="388" height="72" width="185" onclick="btn_b08_onclick" font="10px/normal &quot;Malgun Gothic&quot;" border="1px solid #999"/>
+        <!-- 전체 DOM 확인 & 초기화 -->
+        <Button id="btn_all" taborder="16" text="전체 CheckBox DOM 확인" left="10" top="490" width="185" height="30" onclick="btn_all_onclick" font="11px &quot;Malgun Gothic&quot;" border="1px solid #555"/>
+        <Button id="btn_reset_all" taborder="17" text="MF+전체 초기화" left="205" top="490" width="185" height="30" onclick="btn_reset_all_onclick" font="11px &quot;Malgun Gothic&quot;" border="1px solid #999"/>
+        <TextArea id="ta_result" taborder="18" left="10" top="526" width="380" height="190" font="10px &quot;Malgun Gothic&quot;"/>
 
-        <Static id="lbl_b09" taborder="18" text="[TC-B-09] boxShadow em/rem(신규)" left="400" top="372" width="185" height="14" font="9px Malgun Gothic"/>
-        <Button id="btn_b09" taborder="19" text="0.2em 0.2em 0.5rem rgba" left="400" top="388" height="72" width="185" onclick="btn_b09_onclick" font="10px/normal &quot;Malgun Gothic&quot;" border="1px solid #999"/>
+        <!-- 구분선 -->
+        <Static id="lbl_divider" taborder="19" text="" left="396" top="0" width="4" height="720" background="#CCCCCC"/>
 
-        <!-- 결과 영역 (우측) -->
-        <Combo id="Combo01" taborder="20" left="600" top="152" width="380" height="50" innerdataset="Dataset00" datacolumn="datacolumn" codecolumn="codecolumn" font="12px &quot;Malgun Gothic&quot;"/>
-        <Button id="Button01" taborder="21" text="값 확인" left="990" top="152" width="80" height="50" onclick="Button01_onclick" font="12px &quot;Malgun Gothic&quot;"/>
-        <TextArea id="TextArea00" taborder="22" left="600" top="214" width="670" height="490" font="12px &quot;Malgun Gothic&quot;"/>
-        <Button id="btn_reload" taborder="23" text="[초기화]" left="1165" top="8" width="100" height="30" onclick="btn_reload_onclick" font="11px &quot;Malgun Gothic&quot;" border="1px solid #CC0000"/>
+        <!-- 우측 패널 -->
+        <Static id="lbl_rp_title" taborder="20" text="xcss · Component 직접설정 · Script 동적설정 3단계  ( TC 버튼 클릭 → 표시 )" left="402" top="8" width="870" height="30" font="bold 12px &quot;Malgun Gothic&quot;" forecolor="#2C3E50"/>
+        <Static id="lbl_cls_name" taborder="21" text="← 좌측 TC 버튼을 클릭하세요" left="402" top="42" width="870" height="22" font="bold 11px &quot;Malgun Gothic&quot;" forecolor="#1A5276"/>
+
+        <!-- xcss 코드 블록 -->
+        <Static id="lbl_xcss_hdr" taborder="22" text="[ 1단계: xcss cssclass 코드 ]" left="402" top="68" width="870" height="16" font="bold 9px Malgun Gothic" forecolor="#1A3A5C"/>
+        <Static id="lbl_xcss_bg" taborder="23" text="" left="402" top="86" width="870" height="100" background="#F0F4F8"/>
+        <Static id="lbl_xcss" taborder="24" text="TC 버튼 클릭 → xcss 코드 표시" left="406" top="90" width="862" height="92" font="11px/normal &quot;Courier New&quot;" forecolor="#1A3A5C" wordwrap="true"/>
+
+        <!-- 컴포넌트 직접 설정 블록 -->
+        <Static id="lbl_comp_hdr" taborder="25" text="[ 2단계: Component 직접 설정 (XML 속성) ]" left="402" top="190" width="870" height="16" font="bold 9px Malgun Gothic" forecolor="#1E8449"/>
+        <Static id="lbl_comp_bg" taborder="26" text="" left="402" top="210" width="870" height="66" background="#EAFAF1"/>
+        <Static id="lbl_comp" taborder="27" text="TC 버튼 클릭 → 컴포넌트 직접 설정 코드 표시" left="406" top="214" width="862" height="58" font="11px/normal &quot;Courier New&quot;" forecolor="#1E8449" wordwrap="true"/>
+
+        <!-- 스크립트 동적 설정 블록 -->
+        <Static id="lbl_script_hdr" taborder="28" text="[ 3단계: Script 동적 설정 ]" left="402" top="280" width="640" height="16" font="bold 9px Malgun Gothic" forecolor="#922B21"/>
+        <Static id="lbl_script_bg" taborder="29" text="" left="402" top="300" width="870" height="60" background="#FDEDEC"/>
+        <Static id="lbl_script" taborder="30" text="TC 버튼 클릭 → script 동적 설정 코드 표시" left="406" top="304" width="862" height="52" font="11px/normal &quot;Courier New&quot;" forecolor="#922B21" wordwrap="true"/>
+
+        <!-- 스크립트 적용 / 직접설정 복원 버튼 -->
+        <Button id="btn_apply" taborder="31" text="▶ 스크립트 적용" left="402" top="364" width="180" height="30" onclick="btn_apply_onclick" font="11px &quot;Malgun Gothic&quot;" border="2px solid #922B21" background="#FDEDEC"/>
+        <Button id="btn_restore" taborder="32" text="↩ 직접설정으로 복원" left="590" top="364" width="180" height="30" onclick="btn_restore_onclick" font="11px &quot;Malgun Gothic&quot;" border="1px solid #27AE60" background="#EAFAF1"/>
+
+        <!-- 기대값 블록 -->
+        <Static id="lbl_exp_hdr" taborder="33" text="[ 기대값 ]" left="402" top="398" width="870" height="18" font="bold 10px Malgun Gothic" forecolor="#7D6608"/>
+        <Static id="lbl_exp_bg" taborder="34" text="" left="402" top="420" width="870" height="80" background="#FFFDE7"/>
+        <Static id="lbl_expect" taborder="35" text="기대값이 여기 표시됩니다." left="406" top="424" width="862" height="72" font="11px/normal &quot;Malgun Gothic&quot;" forecolor="#7D6608" wordwrap="true"/>
+
+        <!-- DOM 확인 버튼 -->
+        <Button id="btn_dom" taborder="36" text="DOM computed style 확인 (실측값 조회)" left="402" top="504" width="300" height="32" onclick="btn_dom_onclick" font="11px &quot;Malgun Gothic&quot;" border="1px solid #27AE60"/>
+        <Static id="lbl_dom_note" taborder="37" text="※ 스크립트 적용 후 클릭하여 변화 확인" left="710" top="510" width="562" height="18" font="9px Malgun Gothic" forecolor="#999"/>
+
+        <!-- 실측값 블록 -->
+        <Static id="lbl_act_bg" taborder="38" text="" left="402" top="540" width="870" height="176" background="#F0FFF4"/>
+        <Static id="lbl_actual" taborder="39" text="← [DOM 확인] 버튼을 클릭하면 실측값이 표시됩니다." left="406" top="544" width="862" height="168" font="11px/normal &quot;Malgun Gothic&quot;" forecolor="#1E8449" wordwrap="true"/>
+
+        <Button id="btn_reload" taborder="40" text="[초기화]" left="1165" top="8" width="100" height="30" onclick="btn_reload_onclick" font="11px &quot;Malgun Gothic&quot;" border="1px solid #CC0000"/>
       </Layout>
     </Layouts>
-    <Objects>
-      <Dataset id="Dataset00">
-        <ColumnInfo>
-          <Column id="codecolumn" size="256"/>
-          <Column id="datacolumn" size="256"/>
-        </ColumnInfo>
-        <Rows>
-          <Row><Col id="codecolumn">0</Col><Col id="datacolumn">TC-B-01 padding em (self font 연동)</Col></Row>
-          <Row><Col id="codecolumn">1</Col><Col id="datacolumn">TC-B-02 padding 4방향 혼합</Col></Row>
-          <Row><Col id="codecolumn">2</Col><Col id="datacolumn">TC-B-03 border em</Col></Row>
-          <Row><Col id="codecolumn">3</Col><Col id="datacolumn">TC-B-04 textPadding em</Col></Row>
-          <Row><Col id="codecolumn">4</Col><Col id="datacolumn">TC-B-05 minwidth/maxwidth em(신규)</Col></Row>
-          <Row><Col id="codecolumn">5</Col><Col id="datacolumn">TC-B-06 letterSpacing 양수 em</Col></Row>
-          <Row><Col id="codecolumn">6</Col><Col id="datacolumn">TC-B-07 letterSpacing 음수 em</Col></Row>
-          <Row><Col id="codecolumn">7</Col><Col id="datacolumn">TC-B-08 wordSpacing em</Col></Row>
-          <Row><Col id="codecolumn">8</Col><Col id="datacolumn">TC-B-09 boxShadow em/rem(신규)</Col></Row>
-        </Rows>
-      </Dataset>
-    </Objects>
     <Script type="xscript5.1"><![CDATA[
-/* em/rem 속성을 XML 선언 없이 onload에서 스크립트로 동적 설정 */
-this.Form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+/* ================================================================
+   EmRemSample08 — xcss cssclass + Component 직접지정 + Script 동적설정
+   TC-CHK-DYN-01 ~ 05
+   3단계 중첩: xcss cssclass → XML 직접 속성 → script set_ 호출
+================================================================ */
+
+this.EmRemSample08_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
 {
-	// TC-B-01: padding em (self font=20px 기준)
-	this.btn_b01.padding = "1em";
-
-	// TC-B-02: padding 4방향 혼합 단위
-	this.btn_b02.padding = "1em 2rem 0.5em 1rem";
-
-	// TC-B-03: border em (font=16px 기준 → 0.125em = 2px)
-	this.btn_b03.border = "0.125em solid #3B82F6";
-
-	// TC-B-04: textPadding em
-	this.btn_b04.textPadding = "0.5em 1rem";
-
-	// TC-B-05: minwidth/maxwidth/minheight/maxheight rem
-	this.btn_b05.minwidth  = "6rem";
-	this.btn_b05.maxwidth  = "16rem";
-	this.btn_b05.minheight = "2rem";
-	this.btn_b05.maxheight = "4rem";
-
-	// TC-B-06: letterSpacing 양수 em
-	this.btn_b06.letterSpacing = "0.05em";
-
-	// TC-B-07: letterSpacing 음수 em
-	this.btn_b07.letterSpacing = "-0.02em";
-
-	// TC-B-08: wordSpacing em
-	this.btn_b08.wordSpacing = "0.1em";
-
-	// TC-B-09: boxShadow em/rem
-	this.btn_b09.boxShadow = "0.2em 0.2em 0.5rem rgba(0,0,0,0.3)";
+	this._curDomId = "";
+	this._curProps = [];
+	this._curTcNum = 0;
 };
 
-this.Radio00_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+/* ----------------------------------------------------------------
+   우측 패널 공통 업데이트
+---------------------------------------------------------------- */
+this._showInfo = function(tcName, xcssCode, compCode, scriptCode, expected, domId, propArr, tcNum)
 {
-	Object.keys(this.all)
-	.filter(key => key.startsWith('btn_b'))
-	.sort()
-	.forEach(key => {
-		this.all[key].font = obj.text;
-	});
-	this.resetScroll();
+	this.lbl_cls_name.set_text(tcName);
+	this.lbl_xcss.set_text(xcssCode);
+	this.lbl_comp.set_text(compCode);
+	this.lbl_script.set_text(scriptCode);
+	this.lbl_expect.set_text(expected);
+	this.lbl_actual.set_text("← [DOM 확인] 버튼을 클릭하면 실측값이 표시됩니다.");
+	this._curDomId = "mainframe.WorkFrame.form.Div00.form." + domId;
+	this._curProps = propArr;
+	this._curTcNum = tcNum;
 };
 
-this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+/* ----------------------------------------------------------------
+   MF font 변경
+---------------------------------------------------------------- */
+this.btnMF12_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this._getMainFrame().font = "normal 12px/normal \"Malgun Gothic\"";
+	this.lbl_actual.set_text("MF font = 12px (1rem = 12px)\nrem 기반 속성들이 재계산됩니다.\n[DOM 확인]을 다시 클릭하면 갱신된 실측값을 확인할 수 있습니다.");
+	this.ta_result.deleteText();
+};
+this.btnMF16_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this._getMainFrame().font = "normal 16px/normal \"Malgun Gothic\"";
+	this.lbl_actual.set_text("MF font = 16px (1rem = 16px)\n[DOM 확인]을 다시 클릭하면 갱신된 실측값을 확인할 수 있습니다.");
+	this.ta_result.deleteText();
+};
+this.btnMF20_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this._getMainFrame().font = "normal 20px/normal \"Malgun Gothic\"";
+	this.lbl_actual.set_text("MF font = 20px (1rem = 20px)\n[DOM 확인]을 다시 클릭하면 갱신된 실측값을 확인할 수 있습니다.");
+	this.ta_result.deleteText();
+};
+this.btnMF24_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this._getMainFrame().font = "normal 24px/normal \"Malgun Gothic\"";
+	this.lbl_actual.set_text("MF font = 24px (1rem = 24px)\n[DOM 확인]을 다시 클릭하면 갱신된 실측값을 확인할 수 있습니다.");
+	this.ta_result.deleteText();
+};
+
+/* ----------------------------------------------------------------
+   TC-CHK-DYN-01: xcss em + comp em + script em (font 3단계 변경)
+---------------------------------------------------------------- */
+this.btnDyn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var xcss = ".CheckBox.chkCssOv01 { font:20px; -nexa-text-padding:0px 0px 0px 1em; }";
+
+	var comp = "font=\"14px/normal \\\"Malgun Gothic\\\"\"   (초기: xcss font=20px → 14px 오버라이드)";
+
+	var script = "this.chk_dyn01.set_font(\"22px/normal \\\"Malgun Gothic\\\"\");";
+
+	var exp = "초기(xcss+comp): textPad left = 1em × ?px (14px or 20px?)\n\n";
+	exp += "스크립트 적용 후 (font=22px):\n";
+	exp += "  Pass:  textPad = 1em × 22px = 22px  (resolved font 추적)\n";
+	exp += "  Check: textPad = 1em × 20px = 20px  (xcss font 고정)\n\n";
+	exp += "→ [▶ 스크립트 적용] 후 [DOM 확인]으로 변화 확인\n";
+	exp += "  복원: [↩ 직접설정으로 복원] 클릭 → font=14px 복귀";
+
+	this._showInfo(
+		"TC-CHK-DYN-01  chkCssOv01  [ xcss em + comp em + script em (font 3단계 변경) ]",
+		xcss, comp, script, exp, "chk_dyn01", ["paddingLeft","borderTopWidth"], 1);
+};
+
+/* ----------------------------------------------------------------
+   TC-CHK-DYN-02: xcss em + comp rem + script rem (letterSpacing override)
+---------------------------------------------------------------- */
+this.btnDyn02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var xcss = ".CheckBox.chkCssOv02 { font:18px; -nexa-text-padding:0px 0px 0px 1em; -nexa-border:0.125em; }";
+
+	var comp = "letterSpacing=\"0.1rem\"   (초기 comp rem)";
+
+	var script = "this.chk_dyn02.set_letterSpacing(\"0.2rem\");  // 0.1rem → 0.2rem 으로 2배";
+
+	var exp = "초기(xcss+comp): letterSpacing = 0.1rem × MF\n";
+	exp += "  MF=12px: 1.2px  MF=16px: 1.6px  MF=20px: 2.0px\n\n";
+	exp += "스크립트 적용 후 (letterSpacing=0.2rem):\n";
+	exp += "  MF=12px: 2.4px  MF=16px: 3.2px  MF=20px: 4.0px  (2배)\n\n";
+	exp += "xcss em 속성(textPad, border): 변화 없이 고정\n";
+	exp += "→ script set_letterSpacing이 comp XML 값을 덮어쓰는지 확인";
+
+	this._showInfo(
+		"TC-CHK-DYN-02  chkCssOv02  [ xcss em + comp rem + script rem(override) ]",
+		xcss, comp, script, exp, "chk_dyn02", ["paddingLeft","borderTopWidth","letterSpacing"], 2);
+};
+
+/* ----------------------------------------------------------------
+   TC-CHK-DYN-03: xcss rem + comp em + script em (font+letterSpacing 변경)
+---------------------------------------------------------------- */
+this.btnDyn03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var xcss = ".CheckBox.chkCssOv03 { -nexa-text-padding:0px 0px 0px 0.5rem; -nexa-border:0.125rem; }";
+
+	var comp = "font=\"16px\" letterSpacing=\"0.1em\"   (comp em base=16px)";
+
+	var script = "this.chk_dyn03.set_font(\"20px/normal \\\"Malgun Gothic\\\"\");\n";
+	script += "this.chk_dyn03.set_letterSpacing(\"0.15em\");";
+
+	var exp = "초기(xcss+comp): letterSpacing = 0.1em × 16px = 1.6px(고정)\n\n";
+	exp += "스크립트 적용 후 (font=20px, letterSpacing=0.15em):\n";
+	exp += "  Pass:  0.15em × 20px = 3px  (script font=20px 기준)\n";
+	exp += "  Check: 0.15em × 16px = 2.4px  (comp XML font 유지)\n\n";
+	exp += "xcss rem(textPad, border): MF 기준 유지 — 변화 없음\n";
+	exp += "→ script font 변경이 em 재계산에 반영되는지가 핵심";
+
+	this._showInfo(
+		"TC-CHK-DYN-03  chkCssOv03  [ xcss rem + comp em + script em(font변경) ]",
+		xcss, comp, script, exp, "chk_dyn03", ["paddingLeft","borderTopWidth","letterSpacing"], 3);
+};
+
+/* ----------------------------------------------------------------
+   TC-CHK-DYN-04: xcss rem + comp rem + script em (rem→em 전환)
+---------------------------------------------------------------- */
+this.btnDyn04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var xcss = ".CheckBox.chkCssOv04 { -nexa-text-padding:0px 0px 0px 0.5rem; -nexa-border:0.125rem; }";
+
+	var comp = "letterSpacing=\"0.1rem\" wordSpacing=\"0.5rem\"   (all rem 초기)";
+
+	var script = "this.chk_dyn04.set_wordSpacing(\"1em\");  // rem → em 으로 단위 전환";
+
+	var exp = "초기(xcss+comp): all rem → 모두 MF 기준\n";
+	exp += "  MF=16px: textPad=8px, border=2px, ls=1.6px, ws=8px\n\n";
+	exp += "스크립트 적용 후 (wordSpacing=1em):\n";
+	exp += "  wordSpacing: rem → em 전환\n";
+	exp += "  Pass:  1em × resolved_font = ? (comp font 미설정 → MF/xcss 기준)\n";
+	exp += "  MF 변경 후: wordSpacing이 rem처럼 재계산되는지 확인\n\n";
+	exp += "→ 단위를 rem에서 em으로 script 교체 시 동작 확인";
+
+	this._showInfo(
+		"TC-CHK-DYN-04  chkCssOv04  [ xcss rem + comp rem + script em(단위전환) ]",
+		xcss, comp, script, exp, "chk_dyn04", ["paddingLeft","borderTopWidth","letterSpacing","wordSpacing"], 4);
+};
+
+/* ----------------------------------------------------------------
+   TC-CHK-DYN-05: xcss em+rem + comp em+rem + script em+rem (복합 3단계)
+---------------------------------------------------------------- */
+this.btnDyn05_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var xcss = ".CheckBox.chkCssOv05 { font:16px; -nexa-text-padding:0px 0px 0px 0.5em; letter-spacing:0.1rem; }";
+
+	var comp = "font=\"12px\" wordSpacing=\"0.5em\"   (comp: xcss font 오버라이드 + em wordSp)";
+
+	var script = "this.chk_dyn05.set_font(\"18px/normal \\\"Malgun Gothic\\\"\");\n";
+	script += "this.chk_dyn05.set_letterSpacing(\"0.2rem\");  // xcss rem 값 교체";
+
+	var exp = "초기(xcss+comp):\n";
+	exp += "  textPad: 0.5em × ? (xcss=16px vs comp=12px)\n";
+	exp += "  letterSp(xcss): 0.1rem × MF\n";
+	exp += "  wordSp(comp em): 0.5em × 12px = 6px\n\n";
+	exp += "스크립트 적용 후 (font=18px, letterSpacing=0.2rem):\n";
+	exp += "  textPad: 0.5em × 18px = 9px  (script font 반영 시)\n";
+	exp += "  letterSp: 0.2rem × MF  (2배)\n";
+	exp += "  wordSp: 0.5em × 18px = 9px  (script font 반영 시)\n\n";
+	exp += "→ 3단계 em 기준 추적이 핵심 검증 포인트";
+
+	this._showInfo(
+		"TC-CHK-DYN-05  chkCssOv05  [ xcss em+rem + comp em+rem + script em+rem 복합 3단계 ]",
+		xcss, comp, script, exp, "chk_dyn05", ["paddingLeft","letterSpacing","wordSpacing"], 5);
+};
+
+/* ----------------------------------------------------------------
+   스크립트 적용 버튼
+---------------------------------------------------------------- */
+this.btn_apply_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this._curTcNum === 0) {
+		this.lbl_actual.set_text("먼저 좌측 TC 버튼을 클릭하여 케이스를 선택하세요.");
+		return;
+	}
+	var msg = "";
+	if (this._curTcNum === 1) {
+		this.chk_dyn01.set_font("22px/normal \"Malgun Gothic\"");
+		msg = "[DYN-01] script 적용: font = 22px\n→ textPadding em 재계산 여부 확인";
+	} else if (this._curTcNum === 2) {
+		this.chk_dyn02.set_letterSpacing("0.2rem");
+		msg = "[DYN-02] script 적용: letterSpacing = 0.2rem\n→ 기존 0.1rem의 2배로 변경";
+	} else if (this._curTcNum === 3) {
+		this.chk_dyn03.set_font("20px/normal \"Malgun Gothic\"");
+		this.chk_dyn03.set_letterSpacing("0.15em");
+		msg = "[DYN-03] script 적용: font=20px, letterSpacing=0.15em\n→ 0.15em × 20px = 3px (Pass)";
+	} else if (this._curTcNum === 4) {
+		this.chk_dyn04.set_wordSpacing("1em");
+		msg = "[DYN-04] script 적용: wordSpacing = 1em (rem → em 전환)\n→ em 기준 확인";
+	} else if (this._curTcNum === 5) {
+		this.chk_dyn05.set_font("18px/normal \"Malgun Gothic\"");
+		this.chk_dyn05.set_letterSpacing("0.2rem");
+		msg = "[DYN-05] script 적용: font=18px, letterSpacing=0.2rem\n→ textPad·wordSp em 재계산 + letterSp rem 2배";
+	}
+	this.lbl_actual.set_text(msg + "\n\n[DOM 확인] 버튼으로 실측값을 확인하세요.");
+};
+
+/* ----------------------------------------------------------------
+   직접설정 복원 버튼 (XML 직접 설정 값으로 되돌리기)
+---------------------------------------------------------------- */
+this.btn_restore_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this._curTcNum === 0) {
+		this.lbl_actual.set_text("먼저 좌측 TC 버튼을 클릭하여 케이스를 선택하세요.");
+		return;
+	}
+	var msg = "";
+	if (this._curTcNum === 1) {
+		this.chk_dyn01.set_font("14px/normal \"Malgun Gothic\"");
+		msg = "[DYN-01] 복원: font = 14px (XML 직접 설정 값)";
+	} else if (this._curTcNum === 2) {
+		this.chk_dyn02.set_letterSpacing("0.1rem");
+		msg = "[DYN-02] 복원: letterSpacing = 0.1rem (XML 직접 설정 값)";
+	} else if (this._curTcNum === 3) {
+		this.chk_dyn03.set_font("16px/normal \"Malgun Gothic\"");
+		this.chk_dyn03.set_letterSpacing("0.1em");
+		msg = "[DYN-03] 복원: font=16px, letterSpacing=0.1em (XML 직접 설정 값)";
+	} else if (this._curTcNum === 4) {
+		this.chk_dyn04.set_wordSpacing("0.5rem");
+		msg = "[DYN-04] 복원: wordSpacing = 0.5rem (XML 직접 설정 값)";
+	} else if (this._curTcNum === 5) {
+		this.chk_dyn05.set_font("12px/normal \"Malgun Gothic\"");
+		this.chk_dyn05.set_letterSpacing("0.1rem");
+		msg = "[DYN-05] 복원: font=12px, letterSpacing=0.1rem (XML 직접 설정 값)";
+	}
+	this.lbl_actual.set_text(msg + "\n\n[DOM 확인] 버튼으로 실측값을 확인하세요.");
+};
+
+/* ----------------------------------------------------------------
+   DOM computed style 확인
+---------------------------------------------------------------- */
+this.btn_dom_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (!this._curDomId) {
+		this.lbl_actual.set_text("먼저 좌측 TC 버튼을 클릭하여 케이스를 선택하세요.");
+		return;
+	}
+	try {
+		var el = window.document.getElementById(this._curDomId);
+		if (!el) {
+			this.lbl_actual.set_text("DOM 요소를 찾을 수 없습니다.\n경로: " + this._curDomId);
+			return;
+		}
+		var cs = window.getComputedStyle(el);
+		var out = "DOM 경로: " + this._curDomId + "\n\n";
+		for (var i = 0; i < this._curProps.length; i++) {
+			var prop = this._curProps[i];
+			out += "  " + prop + " : " + cs[prop] + "\n";
+		}
+		out += "\n※ textPadding이 paddingLeft에 없으면 DevTools에서 하위 요소를 확인하세요.";
+		this.lbl_actual.set_text(out);
+	} catch(ex) {
+		this.lbl_actual.set_text("오류: " + ex.message);
+	}
+};
+
+/* ----------------------------------------------------------------
+   전체 CheckBox DOM 실측값 일괄 확인
+---------------------------------------------------------------- */
+this.btn_all_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
 	var base = "mainframe.WorkFrame.form.Div00.form.";
-	var el, msg;
-	switch(this.Combo01.index) {
-	case 0:
-		el = document.getElementById(base + "btn_b01");
-		msg = "[TC-B-01] padding em — self font-size 연동 핵심\n"
-		    + "설정: padding=1em, font=20px\n"
-		    + "Pass: computed padding = 20px (self font 기준)\n"
-		    + "NG  : computed padding = 12px (MainFrame 고정 버그)\n\n"
-		    + "DOM computed:\n"
-		    + "padding = " + window.getComputedStyle(el).padding;
-		break;
-	case 1:
-		el = document.getElementById(base + "btn_b02");
-		msg = "[TC-B-02] padding 4방향 혼합 단위\n"
-		    + "설정: padding=1em 2rem 0.5em 1rem\n"
-		    + "Pass: 각 방향 단위 독립 유지\n"
-		    + "NG  : 한 방향 변경 시 전체 px 변환\n\n"
-		    + "DOM computed:\n"
-		    + "top    = " + window.getComputedStyle(el).paddingTop + "\n"
-		    + "right  = " + window.getComputedStyle(el).paddingRight + "\n"
-		    + "bottom = " + window.getComputedStyle(el).paddingBottom + "\n"
-		    + "left   = " + window.getComputedStyle(el).paddingLeft;
-		break;
-	case 2:
-		el = document.getElementById(base + "btn_b03");
-		msg = "[TC-B-03] border em\n"
-		    + "설정: border=0.125em solid #3B82F6, font=16px\n"
-		    + "Pass: borderTopWidth = 2px (16px × 0.125)\n\n"
-		    + "DOM computed:\n"
-		    + "borderTopWidth = " + window.getComputedStyle(el).borderTopWidth;
-		break;
-	case 3:
-		el = document.getElementById(base + "btn_b04:text");
-		msg = "[TC-B-04] textPadding em\n"
-		    + "설정: textPadding=0.5em 1rem\n\n"
-		    + "DOM computed (:text 영역):\n"
-		    + "paddingBlock   = " + window.getComputedStyle(el).paddingBlock + "\n"
-		    + "paddingInline  = " + window.getComputedStyle(el).paddingInline;
-		break;
-	case 4:
-		msg = "[TC-B-05] minwidth/maxwidth em/rem — 신규 지원\n"
-		    + "설정: width=80px, minwidth=6rem, maxwidth=16rem\n"
-		    + "설정: minheight=2rem, maxheight=4rem\n"
-		    + "Pass: rem × MainFrame font-size로 레이아웃 반영\n"
-		    + "NG  : 0 처리 또는 무시됨 (NexacroN 동작)\n\n"
-		    + "속성값:\n"
-		    + "minwidth      = " + this.btn_b05.minwidth + "\n"
-		    + "maxwidth      = " + this.btn_b05.maxwidth + "\n"
-		    + "minheight     = " + this.btn_b05.minheight + "\n"
-		    + "maxheight     = " + this.btn_b05.maxheight + "\n"
-		    + "getOffsetWidth  = " + this.btn_b05.getOffsetWidth() + "\n"
-		    + "getOffsetHeight = " + this.btn_b05.getOffsetHeight();
-		break;
-	case 5:
-		el = document.getElementById(base + "btn_b06");
-		msg = "[TC-B-06] letterSpacing 양수 em\n"
-		    + "설정: letterSpacing=0.05em\n"
-		    + "Pass: XML에 '0.05em' 문자열 그대로 보존\n"
-		    + "NG  : '0.05' 숫자만 저장 (edittype=Number 미변경 시)\n\n"
-		    + "DOM computed:\n"
-		    + "letterSpacing = " + window.getComputedStyle(el).letterSpacing;
-		break;
-	case 6:
-		el = document.getElementById(base + "btn_b07");
-		msg = "[TC-B-07] letterSpacing 음수 em — 허용 확인\n"
-		    + "설정: letterSpacing=-0.02em\n"
-		    + "Pass: 음수 em 값 적용 (PixelNegativeBase 변경 확인)\n\n"
-		    + "DOM computed:\n"
-		    + "letterSpacing = " + window.getComputedStyle(el).letterSpacing;
-		break;
-	case 7:
-		el = document.getElementById(base + "btn_b08");
-		msg = "[TC-B-08] wordSpacing em\n"
-		    + "설정: wordSpacing=0.1em\n\n"
-		    + "DOM computed:\n"
-		    + "wordSpacing = " + window.getComputedStyle(el).wordSpacing;
-		break;
-	case 8:
-		el = document.getElementById(base + "btn_b09");
-		msg = "[TC-B-09] boxShadow em/rem — 신규 지원\n"
-		    + "설정: boxShadow=0.2em 0.2em 0.5rem rgba(0,0,0,0.3)\n"
-		    + "offset-x/y: em(self font 기준), blur: rem(MainFrame 기준)\n\n"
-		    + "DOM computed:\n"
-		    + "boxShadow = " + window.getComputedStyle(el).boxShadow;
-		break;
-	default:
-		msg = "Combo에서 항목을 선택한 후 [값 확인]을 클릭하세요.";
-	}
-	this.TextArea00.deleteText();
-	this.TextArea00.value = msg;
+	var getSt = function(id, prop) {
+		try {
+			var el = window.document.getElementById(base + id);
+			return el ? window.getComputedStyle(el)[prop] : "(없음)";
+		} catch(ex) { return "(오류)"; }
+	};
+	var out = "=== 전체 CheckBox DOM 실측값 ===\n";
+	out += "DYN-01: paddingLeft=" + getSt("chk_dyn01","paddingLeft") +
+	       "  borderTop=" + getSt("chk_dyn01","borderTopWidth") + "\n";
+	out += "DYN-02: paddingLeft=" + getSt("chk_dyn02","paddingLeft") +
+	       "  borderTop=" + getSt("chk_dyn02","borderTopWidth") +
+	       "  letterSp=" + getSt("chk_dyn02","letterSpacing") + "\n";
+	out += "DYN-03: paddingLeft=" + getSt("chk_dyn03","paddingLeft") +
+	       "  borderTop=" + getSt("chk_dyn03","borderTopWidth") +
+	       "  letterSp=" + getSt("chk_dyn03","letterSpacing") + "\n";
+	out += "DYN-04: paddingLeft=" + getSt("chk_dyn04","paddingLeft") +
+	       "  borderTop=" + getSt("chk_dyn04","borderTopWidth") +
+	       "  letterSp=" + getSt("chk_dyn04","letterSpacing") +
+	       "  wordSp=" + getSt("chk_dyn04","wordSpacing") + "\n";
+	out += "DYN-05: paddingLeft=" + getSt("chk_dyn05","paddingLeft") +
+	       "  letterSp=" + getSt("chk_dyn05","letterSpacing") +
+	       "  wordSp=" + getSt("chk_dyn05","wordSpacing");
+	this.ta_result.deleteText();
+	this.ta_result.value = out;
 };
 
-this.btn_b01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+/* ----------------------------------------------------------------
+   전체 초기화 (MF + 모든 CheckBox 복원)
+---------------------------------------------------------------- */
+this.btn_reset_all_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_b01");
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[TC-B-01] padding em — self font-size 연동\n"
-	    + "설정: padding=1em, font=20px\n"
-	    + "Pass: 20px / NG: 12px (MainFrame 12px 고정)\n\n"
-	    + "DOM: " + window.getComputedStyle(el).padding;
-};
-
-this.btn_b02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_b02");
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[TC-B-02] padding 4방향 혼합\n"
-	    + "top    = " + window.getComputedStyle(el).paddingTop + "\n"
-	    + "right  = " + window.getComputedStyle(el).paddingRight + "\n"
-	    + "bottom = " + window.getComputedStyle(el).paddingBottom + "\n"
-	    + "left   = " + window.getComputedStyle(el).paddingLeft;
-};
-
-this.btn_b03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_b03");
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[TC-B-03] border em\n"
-	    + "font=16px, border=0.125em → 기대: 2px\n"
-	    + "DOM borderTopWidth: " + window.getComputedStyle(el).borderTopWidth;
-};
-
-this.btn_b04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_b04:text");
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[TC-B-04] textPadding em\n"
-	    + "paddingBlock   = " + window.getComputedStyle(el).paddingBlock + "\n"
-	    + "paddingInline  = " + window.getComputedStyle(el).paddingInline;
-};
-
-this.btn_b05_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[TC-B-05] minwidth/maxwidth em\n"
-	    + "minwidth      = " + this.btn_b05.minwidth + "\n"
-	    + "maxwidth      = " + this.btn_b05.maxwidth + "\n"
-	    + "minheight     = " + this.btn_b05.minheight + "\n"
-	    + "maxheight     = " + this.btn_b05.maxheight + "\n"
-	    + "getOffsetWidth  = " + this.btn_b05.getOffsetWidth() + "\n"
-	    + "getOffsetHeight = " + this.btn_b05.getOffsetHeight();
-};
-
-this.btn_b06_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_b06");
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[TC-B-06] letterSpacing 양수 em\n"
-	    + "DOM: " + window.getComputedStyle(el).letterSpacing;
-};
-
-this.btn_b07_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_b07");
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[TC-B-07] letterSpacing 음수 em\n"
-	    + "DOM: " + window.getComputedStyle(el).letterSpacing;
-};
-
-this.btn_b08_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_b08");
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[TC-B-08] wordSpacing em\n"
-	    + "DOM: " + window.getComputedStyle(el).wordSpacing;
-};
-
-this.btn_b09_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
-{
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_b09");
-	this.TextArea00.deleteText();
-	this.TextArea00.value = "[TC-B-09] boxShadow em/rem\n"
-	    + "DOM: " + window.getComputedStyle(el).boxShadow;
+	this._getMainFrame().font = "normal 30px/normal \"Malgun Gothic\"";
+	this.chk_dyn01.set_font("14px/normal \"Malgun Gothic\"");
+	this.chk_dyn02.set_letterSpacing("0.1rem");
+	this.chk_dyn03.set_font("16px/normal \"Malgun Gothic\"");
+	this.chk_dyn03.set_letterSpacing("0.1em");
+	this.chk_dyn04.set_wordSpacing("0.5rem");
+	this.chk_dyn05.set_font("12px/normal \"Malgun Gothic\"");
+	this.chk_dyn05.set_letterSpacing("0.1rem");
+	this._curTcNum = 0;
+	this._curDomId = "";
+	this._curProps = [];
+	this.lbl_cls_name.set_text("← 좌측 TC 버튼을 클릭하세요");
+	this.lbl_xcss.set_text("TC 버튼 클릭 → xcss 코드 표시");
+	this.lbl_comp.set_text("TC 버튼 클릭 → 컴포넌트 직접 설정 코드 표시");
+	this.lbl_script.set_text("TC 버튼 클릭 → script 동적 설정 코드 표시");
+	this.lbl_expect.set_text("기대값이 여기 표시됩니다.");
+	this.lbl_actual.set_text("← [DOM 확인] 버튼을 클릭하면 실측값이 표시됩니다.");
+	this.ta_result.deleteText();
 };
 this.btn_reload_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
 {

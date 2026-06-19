@@ -131,6 +131,13 @@ nexacroN/deploy/     — nexacroN UI화면 프로젝트 소스를 generate하여
 
 **컴포넌트 ID 네이밍 prefix 권장**: `btn_`, `edt_`, `grd_`, `ds_`, `cmb_`, `chk_`, `div_`, `tab_`, `lst_`
 
+### Dataset을 Grid에 연결방법
+ - 2가지 방법이 있음 
+   - 생성된 Grid의 binddataset에 텍스트로 바로 설정한다 
+   - script통해서 동적으로 등록한다 예시로:  this.grd_main.binddataset  = "동적생성된 dataset id"
+### nexacro grid의 엑셀처럼 내보내기 기능
+- 기본적으로 제공되는 grid의 saveXLS로직을 가져와서 사용하면됨
+- 기본제공되는 saveXLS를 사용하면 엑셀로 내보내기기능을 구현할수 있음.  
 ### Dataset API
 
 ```javascript
@@ -541,10 +548,80 @@ nexacro.MyModule.prototype.get_myProp = function() {
 
 **모듈 배포/설치:** `Deploy > Module Package` 생성 후 `File > Install Module`로 설치 → 컴포넌트 팔레트에 자동 등록.
 
+### em/rem 단위 지원 속성
+
+nexacroK/nexacroN에서 em/rem 단위를 사용할 수 있는 속성 목록:
+
+| 속성 | em 기준 | 비고 |
+|------|---------|------|
+| `width`, `height` | self font | |
+| `minwidth`, `maxwidth`, `minheight`, `maxheight` | MainFrame font | rem 사용 권장 |
+| `padding` | self font | 1~4방향 모두 가능 |
+| `border` | self font | 두께 부분만 |
+| `borderRadius` | self font | |
+| `font` | 부모 font | font-size 부분 |
+| `letterSpacing` | self font | 음수도 허용 |
+| `wordSpacing` | self font | |
+| `textPadding` | self font | |
+| `background` | self font | size/position 부분 |
+| `boxShadow` | self font | offset/blur/spread |
+
+- **em** = 해당 컴포넌트 자신의 font-size 기준
+- **rem** = MainFrame의 font-size 기준
+- **규칙: em/rem 속성은 XML에 직접 쓰지 않고, `FormId_onload` 스크립트에서 설정한다**
+
+```javascript
+// Form 태그: <Form id="MyForm" ... onload="MyForm_onload">
+this.MyForm_onload = function(obj:nexacro.Form, e:nexacro.LoadEventInfo)
+{
+    this.btn01.padding       = "1em";
+    this.btn01.border        = "0.5em solid #3B82F6";
+    this.btn02.letterSpacing = "0.1em";
+    this.btn02.wordSpacing   = "0.2em";
+    this.btn03.font          = "0.8em/normal \"Malgun Gothic\"";
+    this.btn04.boxShadow     = "0.2em 0.2em 0.5rem rgba(0,0,0,0.3)";
+};
+```
+
+- `text` 속성 값에 em/rem 문자열이 포함되어도 제거 대상 아님 (설명 텍스트)
+- 화면 초기화 버튼 패턴: `this.reload()` — taborder 마지막+1, left=1165, top=8
+
+### xfdl 파일 복사·리네임 체크리스트
+
+xfdl 파일을 복사하거나 파일명을 변경할 때 반드시 내부를 함께 수정한다:
+
+1. `<Form id="...">` — 새 파일명과 동일하게 수정 (`MyForm01.xfdl` → `id="MyForm01"`)
+2. `onload="..."` — 새 Form id에 맞게 수정 (`onload="MyForm01_onload"`)
+3. 스크립트 내 `this.OldName_onload = function(...)` — 새 이름으로 수정
+4. `$Geninfo$.geninfo` — 빌드 시 자동 재생성이므로 별도 수정 불필요
+
+> xfdl 파일 인코딩: **UTF-8 without BOM** (첫 3바이트 `3C 3F 78` = `<?x`)  
+> PowerShell 수정 시: `New-Object System.Text.UTF8Encoding($false)` 사용
+
+연속 리네임 시 충돌 방지: 임시 파일명을 경유한다 (10→tmp, 09→10, …, 01→02, tmp→01).
+
+### main.xfdl dsMenu 관리
+
+`FrameBase/main.xfdl`의 `dsMenu` Dataset에서 Combo 메뉴 항목을 관리한다:
+
+```xml
+<!-- Column0 = 순서 코드(정수), Column1 = Namespace::파일명.xfdl -->
+<Row>
+  <Col id="Column1">TestCase::MyNewForm.xfdl</Col>
+  <Col id="Column0">17</Col>
+</Row>
+```
+
+- Namespace: `TestCase::` (TestCase 폴더), `Base::` (Base 폴더)
+- **새 xfdl 파일 생성 시 반드시 dsMenu에 Row 추가**
+- Div에 로드되는 서브 폼(예: `EmRemChild.xfdl`)은 추가 여부를 별도 판단
+
 ### 주의사항
 
 - Dataset 컬럼명은 반드시 **대문자** 사용 (`USER_ID` ○, `user_id` ✕)
-- `this` 스코프: 이벤트 핸들러 내부에서는 Form을 가리킴. 일반 함수 내에서 this 사용 시 Form 참조를 전역 변수에 저장하여 사용
+- `this` 스코프: 이벤트 핸들러(`this.btn_onclick = function(...)`) 내부에서는 `this` = Form. 일반 함수(`function fn_xxx()`)에서는 `this`가 Form이 아니므로 호출 시 `oForm` 파라미터로 전달받아 사용
+- `nexacro.getForm("FormId")` **사용 금지** — 이벤트 핸들러에서는 `this`를, 일반 함수에서는 `oForm` 파라미터를 사용할 것
+- Grid-Dataset 연결은 반드시 **`binddataset`** 속성 사용 (`innerdataset`은 Grid 내부 전용으로 외부 Dataset 바인딩에 사용하면 데이터가 표시되지 않음)
 - Grid 정렬 후 행 인덱스가 변경되므로 Dataset 직접 접근으로 값 추적
 - 대량 데이터 루프 전 `updatecontrol = false` 설정 필수 (성능)
 - 팝업 콜백은 함수 참조가 아닌 **함수명 문자열**로 전달

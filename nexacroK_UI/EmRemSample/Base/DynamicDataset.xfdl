@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="DynamicDataset" width="1280" height="720" titletext="Dynamic Dataset Test" onload="DynamicDataset_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="btn_create" taborder="0" text="Dataset 생성" left="30" top="20" width="150" height="40" onclick="btn_create_onclick"/>
+        <Button id="btn_addrow" taborder="1" text="행 추가" left="190" top="20" width="120" height="40" onclick="btn_addrow_onclick"/>
+        <Button id="btn_delrow" taborder="2" text="행 삭제" left="320" top="20" width="120" height="40" onclick="btn_delrow_onclick"/>
+        <Button id="btn_clear" taborder="3" text="Dataset 초기화" left="450" top="20" width="150" height="40" onclick="btn_clear_onclick"/>
+        <Static id="stc_info" taborder="4" text="버튼을 클릭하여 Dataset을 동적으로 생성하세요." left="30" top="75" width="600" height="30"/>
+        <Grid id="grd_main" taborder="5" left="30" top="115" width="1220" height="570" binddataset="ds_dynamic">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="60"/>
+                <Column size="200"/>
+                <Column size="150"/>
+                <Column size="120"/>
+                <Column size="200"/>
+              </Columns>
+              <Rows>
+                <Row size="30" band="head"/>
+                <Row size="30" band="body"/>
+              </Rows>
+              <Band id="head">
+                <Cell col="0" text="번호"/>
+                <Cell col="1" text="이름"/>
+                <Cell col="2" text="나이"/>
+                <Cell col="3" text="부서코드"/>
+                <Cell col="4" text="입사일"/>
+              </Band>
+              <Band id="body">
+                <Cell col="0" text="bind:ROW_NO"/>
+                <Cell col="1" text="bind:USER_NM" edittype="text"/>
+                <Cell col="2" text="bind:AGE" edittype="number"/>
+                <Cell col="3" text="bind:DEPT_CD" edittype="text"/>
+                <Cell col="4" text="bind:JOIN_DT" edittype="text"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.DynamicDataset_onload = function(obj:nexacro.Form, e:nexacro.LoadEventInfo)
+{
+    fn_initDataset(this);
+};
+
+/* =====================================================
+   Dataset 초기화 — 전체 행 삭제
+   oForm: 이벤트 핸들러에서 this를 전달받음
+   ===================================================== */
+function fn_initDataset(oForm)
+{
+    oForm.ds_dynamic.clearData();
+    fn_updateInfo(oForm, "Dataset 초기화 완료 — 행 0건");
+}
+
+/* =====================================================
+   버튼: Dataset 생성 (샘플 데이터 5건 채우기)
+   ===================================================== */
+this.btn_create_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    var ds = this.ds_dynamic;
+
+    ds.clearData();
+    ds.updatecontrol = false;
+
+    var sampleData = [
+        ["1", "홍길동", 32, "DEV01", "20200301"],
+        ["2", "김영희", 28, "QA02",  "20210715"],
+        ["3", "이철수", 45, "PM03",  "20150601"],
+        ["4", "박지수", 35, "DEV01", "20181120"],
+        ["5", "최민준", 30, "INFRA", "20220401"]
+    ];
+	
+    for (var i = 0; i < sampleData.length; i++)
+    {
+        var nRow = ds.addRow();
+        ds.setColumn(nRow, "ROW_NO",  sampleData[i][0]);
+        ds.setColumn(nRow, "USER_NM", sampleData[i][1]);
+        ds.setColumn(nRow, "AGE",     sampleData[i][2]);
+        ds.setColumn(nRow, "DEPT_CD", sampleData[i][3]);
+        ds.setColumn(nRow, "JOIN_DT", sampleData[i][4]);
+    }
+
+    ds.updatecontrol = true;
+    fn_updateInfo(this, "Dataset 생성 완료 — 총 " + ds.rowcount + "행");
+};
+
+/* =====================================================
+   버튼: 행 1건 추가
+   ===================================================== */
+this.btn_addrow_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    var ds   = this.ds_dynamic;
+    var nRow = ds.addRow();
+    var newNo = String(ds.rowcount);
+
+    ds.setColumn(nRow, "ROW_NO",  newNo);
+    ds.setColumn(nRow, "USER_NM", "신규_" + newNo);
+    ds.setColumn(nRow, "AGE",     0);
+    ds.setColumn(nRow, "DEPT_CD", "");
+    ds.setColumn(nRow, "JOIN_DT", "");
+
+    fn_updateInfo(this, "행 추가 완료 — 현재 총 " + ds.rowcount + "행");
+};
+
+/* =====================================================
+   버튼: Grid 선택 행 삭제
+   ===================================================== */
+this.btn_delrow_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    var nRow = this.grd_main.currentrow;
+    if (nRow < 0)
+    {
+        alert("삭제할 행을 선택하세요.");
+        return;
+    }
+
+    this.ds_dynamic.deleteRow(nRow);
+    fn_updateInfo(this, "행 삭제 완료 — 현재 총 " + this.ds_dynamic.rowcount + "행");
+};
+
+/* =====================================================
+   버튼: Dataset 전체 초기화
+   ===================================================== */
+this.btn_clear_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    fn_initDataset(this);
+};
+
+/* =====================================================
+   상태 메시지 표시
+   oForm: 호출 측에서 this를 전달받음
+   ===================================================== */
+function fn_updateInfo(oForm, msg)
+{
+    oForm.stc_info.set_text(msg);
+}
+]]></Script>
+    <Objects>
+      <Dataset id="ds_dynamic">
+        <ColumnInfo>
+          <Column id="ROW_NO" type="STRING" size="10"/>
+          <Column id="USER_NM" type="STRING" size="50"/>
+          <Column id="AGE" type="INT" size="3"/>
+          <Column id="DEPT_CD" type="STRING" size="10"/>
+          <Column id="JOIN_DT" type="STRING" size="8"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

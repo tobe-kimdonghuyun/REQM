@@ -587,3 +587,155 @@ for (int i = 0; i < dsSave.getRowCount(); i++) {
     else if (rowType == DataSet.ROW_TYPE_DELETE) { /* DELETE */ }
 }
 ```
+
+---
+
+## 18. em/rem 속성 — onload 스크립트 설정 패턴
+
+em/rem 단위는 **XML에 직접 쓰지 않고** 반드시 `FormId_onload` 함수에서 설정한다.
+
+### 지원 속성 목록
+
+| 속성 | em 기준 |
+|------|---------|
+| `width`, `height` | self font |
+| `minwidth`, `maxwidth`, `minheight`, `maxheight` | MainFrame (rem 권장) |
+| `padding` | self font |
+| `border` (두께 부분) | self font |
+| `borderRadius` | self font |
+| `font` (size 부분) | 부모 font |
+| `letterSpacing` | self font (음수 허용) |
+| `wordSpacing` | self font |
+| `textPadding` | self font |
+| `background` (size/position) | self font |
+| `boxShadow` (offset/blur) | self font |
+
+### xfdl 구현 패턴
+
+```xml
+<!-- Form 태그에 onload 속성 추가 -->
+<Form id="MyForm01" width="1280" height="720" onload="MyForm01_onload">
+  <Layouts>
+    <Layout>
+      <!-- em/rem 속성은 XML에서 제거 — 기본값만 유지 -->
+      <Button id="btn01" text="padding em" width="150" height="62" font="10px/normal &quot;Malgun Gothic&quot;"/>
+      <Button id="btn02" text="border em"  width="150" height="62" font="16px/normal &quot;Malgun Gothic&quot;"/>
+      <!-- 초기화 버튼 — taborder는 마지막+1 -->
+      <Button id="btn_reload" taborder="99" text="[초기화]" left="1165" top="8" width="100" height="30"
+              onclick="btn_reload_onclick" font="11px &quot;Malgun Gothic&quot;" border="1px solid #CC0000"/>
+    </Layout>
+  </Layouts>
+  <Script type="xscript5.1"><![CDATA[
+this.btn_reload_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
+{
+    this.reload();
+};
+
+// onload 함수는 Script 블록 최하단에 배치
+this.MyForm01_onload = function(obj:nexacro.Form, e:nexacro.LoadEventInfo)
+{
+    // padding em
+    this.btn01.padding = "1em";
+    // border em (font 기반)
+    this.btn02.border = "0.5em solid #3B82F6";
+    // 혼합 단위
+    this.btn03.padding = "1em 2rem 0.5em 1rem";
+    // letterSpacing (음수 포함)
+    this.btn04.letterSpacing = "0.1em";
+    this.btn05.letterSpacing = "-0.05em";
+    // minwidth/maxwidth — rem 권장
+    this.btn06.minwidth  = "6rem";
+    this.btn06.maxwidth  = "16rem";
+    this.btn06.minheight = "2rem";
+    this.btn06.maxheight = "4rem";
+    // font-size em — 따옴표 이스케이프 주의
+    this.btn07.font = "0.8em/normal \"Malgun Gothic\"";
+    // background em
+    this.btn08.background = "url('imagerc::img.png') no-repeat center /4em 4em";
+    // boxShadow em/rem 혼합
+    this.btn09.boxShadow = "0.2em 0.2em 0.5rem rgba(0,0,0,0.3)";
+};
+  ]]></Script>
+</Form>
+```
+
+### 주의사항
+
+- `text` 속성 값에 "1em" 같은 문자열이 포함되어도 **제거 대상 아님** (설명 텍스트)
+- font 속성에 `"Malgun Gothic"` 내장 시 `\"` 이스케이프 사용
+- `background`의 url() 내부 싱글쿼트는 더블쿼트 문자열 안에서 그대로 사용 가능
+
+---
+
+## 19. xfdl 파일 복사·리네임 완전 가이드
+
+### 수동 수정 체크리스트
+
+xfdl 파일명을 변경하거나 복사 후 이름을 바꿀 때:
+
+| 항목 | 위치 | 예시 |
+|------|------|------|
+| Form id | `<Form id="...">` | `id="NewForm01"` |
+| onload 속성 | `<Form ... onload="...">` | `onload="NewForm01_onload"` |
+| onload 함수명 | Script 내부 | `this.NewForm01_onload = function(...)` |
+| $Geninfo$.geninfo | 자동 재생성 | **수정 불필요** |
+
+### PowerShell 일괄 리네임 (체인 충돌 방지)
+
+```powershell
+$base = "D:\git_prj\REQM\nexacroK_UI\...\TestCase\"
+# 충돌 방지: 임시명 경유
+Rename-Item "${base}Sample10.xfdl" "${base}Sample_tmp.xfdl"
+Rename-Item "${base}Sample09.xfdl" "${base}Sample10.xfdl"
+# ... 역순으로 진행 ...
+Rename-Item "${base}Sample01.xfdl" "${base}Sample02.xfdl"
+Rename-Item "${base}Sample_tmp.xfdl" "${base}Sample01.xfdl"
+```
+
+### PowerShell Form id 일괄 교체 (UTF-8 without BOM 유지)
+
+```powershell
+$enc = New-Object System.Text.UTF8Encoding($false)
+$p   = "D:\path\to\MyForm01.xfdl"
+$content    = [System.IO.File]::ReadAllText($p, $enc)
+$newContent = $content.Replace("OldFormId", "NewFormId")
+[System.IO.File]::WriteAllText($p, $newContent, $enc)
+```
+
+> xfdl 파일은 **UTF-8 without BOM** (첫 3바이트 `3C 3F 78` = `<?x`).  
+> `Set-Content -Encoding UTF8`은 BOM을 추가하므로 사용 금지.
+
+---
+
+## 20. main.xfdl dsMenu 관리
+
+`FrameBase/main.xfdl`의 `dsMenu` Dataset이 Combo 메뉴를 구성한다.
+
+### dsMenu Row 추가
+
+```xml
+<Dataset id="dsMenu">
+  <ColumnInfo>
+    <Column id="Column0" type="STRING" size="256"/>  <!-- 코드(정수) -->
+    <Column id="Column1" type="STRING" size="256"/>  <!-- xfdl 경로 -->
+  </ColumnInfo>
+  <Rows>
+    <!-- ... 기존 항목 ... -->
+    <Row>
+      <Col id="Column1">TestCase::MyNewForm.xfdl</Col>
+      <Col id="Column0">17</Col>  <!-- 다음 순번 -->
+    </Row>
+  </Rows>
+</Dataset>
+```
+
+### Namespace 규칙
+
+| 폴더 | Namespace |
+|------|-----------|
+| `TestCase/` | `TestCase::` |
+| `Base/` | `Base::` |
+| `FrameBase/` | `FrameBase::` |
+
+- **새 xfdl 파일 생성 시 dsMenu Row 추가 필수**
+- Div에 삽입되는 서브 폼(child form)은 메뉴 추가 여부를 별도 판단
