@@ -1,16 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="EmRemSample05" width="1280" height="720" titletext="[TC-F] FrameSet TabBar em/rem 검증" font="30px/normal &quot;Malgun Gothic&quot;">
+  <Form id="EmRemSample05" width="1280" height="720" titletext="[TC-F] FrameSet TabBar em/rem 검증" font="30px/normal &quot;Malgun Gothic&quot;" onload="EmRemSample05_onload">
     <Layouts>
       <Layout height="720" width="1280">
-
         <!-- MF font 변경 버튼 — rem 일괄 재계산 확인 -->
         <Button id="btnMF12" taborder="0" text="MF=12px" left="10" top="8" width="62" height="30" onclick="btnMF12_onclick" font="11px &quot;Malgun Gothic&quot;" border="2px solid #555"/>
         <Button id="btnMF16" taborder="1" text="MF=16px" left="77" top="8" width="62" height="30" onclick="btnMF16_onclick" font="11px &quot;Malgun Gothic&quot;" border="2px solid #555"/>
         <Button id="btnMF20" taborder="2" text="MF=20px" left="144" top="8" width="62" height="30" onclick="btnMF20_onclick" font="11px &quot;Malgun Gothic&quot;" border="2px solid #555"/>
         <Button id="btnMF24" taborder="3" text="MF=24px" left="211" top="8" width="62" height="30" onclick="btnMF24_onclick" font="11px &quot;Malgun Gothic&quot;" border="2px solid #555"/>
         <Static id="lbl_mf" taborder="4" text="↑ MF font 변경 → rem 탭바 속성 일괄 재계산  |  [TC-F] FrameSet TabBar em / rem / em+rem복합 검증" left="285" top="11" width="680" height="18" font="10px Malgun Gothic"/>
-
+        <Static id="lbl_typeinfo" taborder="99" text="[테스트유형] 동적설정 — Form_onload 스크립트에서 em/rem 설정  |  [사용 컴포넌트] FrameSet · ChildFrame · Button · Static · TextArea" left="10" top="29" width="1260" height="14" font="9px Malgun Gothic" forecolor="#7D4E0A" background="url('') #FFF4E5"/>
         <!-- FrameSet — TabBar 포함, ChildFrame 3개 -->
         <FrameSet id="FrameSet00" taborder="5" left="10" top="44" width="678" height="629" showtabbar="true" tabbarposition="top" tabbaritemusepinbutton="true" font="12px/normal &quot;Malgun Gothic&quot;">
           <Layouts>
@@ -21,62 +20,51 @@
             </Layout>
           </Layouts>
         </FrameSet>
-
         <!-- 일괄 적용 버튼 (TC 시나리오) -->
         <Button id="btn_tc_em" taborder="6" text="[TC-F-01]&#13;&#10;em 전체 적용" left="698" top="44" width="128" height="40" onclick="btn_tc_em_onclick" font="11px &quot;Malgun Gothic&quot;" border="2px solid #3498db" background="url('') #EBF5FB"/>
         <Button id="btn_tc_rem" taborder="7" text="[TC-F-02]&#13;&#10;rem 전체 적용" left="831" top="44" width="128" height="40" onclick="btn_tc_rem_onclick" font="11px &quot;Malgun Gothic&quot;" border="2px solid #e74c3c" background="url('') #FDEDEC"/>
         <Button id="btn_tc_mix" taborder="8" text="[TC-F-03]&#13;&#10;em+rem 복합" left="964" top="44" width="128" height="40" onclick="btn_tc_mix_onclick" font="11px &quot;Malgun Gothic&quot;" border="2px solid #27ae60" background="url('') #EAFAF1"/>
         <Button id="btn_reset" taborder="9" text="초기화" left="1097" top="44" width="68" height="40" onclick="btn_reset_onclick" font="11px &quot;Malgun Gothic&quot;" border="1px solid #888"/>
-
         <!-- 개별 속성 설정 헤더 -->
         <Static id="lbl_col_em" taborder="10" text="em 단독 설정" left="698" top="90" width="128" height="14" font="9px Malgun Gothic"/>
         <Static id="lbl_col_rem" taborder="11" text="rem 단독 설정" left="831" top="90" width="128" height="14" font="9px Malgun Gothic"/>
         <Static id="lbl_col_mix" taborder="12" text="em+rem 복합" left="964" top="90" width="128" height="14" font="9px Malgun Gothic"/>
-
         <!-- tabbarsize -->
         <Static id="lbl_p01" taborder="13" text="tabbarsize" left="698" top="108" width="128" height="12" font="8px Malgun Gothic"/>
         <Button id="btn_p01_em" taborder="14" text="3em" left="698" top="122" width="128" height="26" onclick="btn_p01_em_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #3498db"/>
         <Button id="btn_p01_rem" taborder="15" text="3rem" left="831" top="122" width="128" height="26" onclick="btn_p01_rem_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #e74c3c"/>
-
         <!-- tabbaritemheight -->
         <Static id="lbl_p02" taborder="16" text="tabbaritemheight" left="698" top="152" width="128" height="12" font="8px Malgun Gothic"/>
         <Button id="btn_p02_em" taborder="17" text="2.5em" left="698" top="166" width="128" height="26" onclick="btn_p02_em_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #3498db"/>
         <Button id="btn_p02_rem" taborder="18" text="2.5rem" left="831" top="166" width="128" height="26" onclick="btn_p02_rem_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #e74c3c"/>
-
         <!-- tabbaritemminheight / tabbaritemmaxheight -->
         <Static id="lbl_p03" taborder="19" text="tabbaritemminheight / maxheight" left="698" top="196" width="260" height="12" font="8px Malgun Gothic"/>
         <Button id="btn_p03a_em" taborder="20" text="min=2em" left="698" top="210" width="60" height="26" onclick="btn_p03a_em_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #3498db"/>
         <Button id="btn_p03b_em" taborder="21" text="max=4em" left="763" top="210" width="60" height="26" onclick="btn_p03b_em_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #3498db"/>
         <Button id="btn_p03a_rem" taborder="22" text="min=2rem" left="831" top="210" width="60" height="26" onclick="btn_p03a_rem_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #e74c3c"/>
         <Button id="btn_p03b_rem" taborder="23" text="max=4rem" left="896" top="210" width="60" height="26" onclick="btn_p03b_rem_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #e74c3c"/>
-
         <!-- tabbaritemwidth -->
         <Static id="lbl_p04" taborder="24" text="tabbaritemwidth" left="698" top="240" width="128" height="12" font="8px Malgun Gothic"/>
         <Button id="btn_p04_em" taborder="25" text="8em" left="698" top="254" width="128" height="26" onclick="btn_p04_em_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #3498db"/>
         <Button id="btn_p04_rem" taborder="26" text="8rem" left="831" top="254" width="128" height="26" onclick="btn_p04_rem_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #e74c3c"/>
-
         <!-- tabbaritemgap -->
         <Static id="lbl_p05" taborder="27" text="tabbaritemgap" left="698" top="284" width="128" height="12" font="8px Malgun Gothic"/>
         <Button id="btn_p05_em" taborder="28" text="0.25em" left="698" top="298" width="128" height="26" onclick="btn_p05_em_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #3498db"/>
         <Button id="btn_p05_rem" taborder="29" text="0.25rem" left="831" top="298" width="128" height="26" onclick="btn_p05_rem_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #e74c3c"/>
-
         <!-- tabbarbuttongap -->
         <Static id="lbl_p06" taborder="30" text="tabbarbuttongap" left="698" top="328" width="128" height="12" font="8px Malgun Gothic"/>
         <Button id="btn_p06_em" taborder="31" text="0.5em" left="698" top="342" width="128" height="26" onclick="btn_p06_em_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #3498db"/>
         <Button id="btn_p06_rem" taborder="32" text="0.5rem" left="831" top="342" width="128" height="26" onclick="btn_p06_rem_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #e74c3c"/>
-
         <!-- tabbaritempinbuttonsize (Number2 — em/rem/복합) -->
         <Static id="lbl_p07" taborder="33" text="tabbaritempinbuttonsize  (Number2 형식)" left="698" top="372" width="360" height="12" font="8px Malgun Gothic"/>
         <Button id="btn_p07_em" taborder="34" text="1em 1em" left="698" top="386" width="84" height="26" onclick="btn_p07_em_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #3498db"/>
         <Button id="btn_p07_rem" taborder="35" text="1rem 1rem" left="787" top="386" width="84" height="26" onclick="btn_p07_rem_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #e74c3c"/>
         <Button id="btn_p07_mix" taborder="36" text="1em 1rem" left="876" top="386" width="84" height="26" onclick="btn_p07_mix_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #27ae60"/>
-
         <!-- tabbaritemclosebuttonsize (Number2) -->
         <Static id="lbl_p08" taborder="37" text="tabbaritemclosebuttonsize  (Number2 형식)" left="698" top="416" width="360" height="12" font="8px Malgun Gothic"/>
         <Button id="btn_p08_em" taborder="38" text="1em 1em" left="698" top="430" width="84" height="26" onclick="btn_p08_em_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #3498db"/>
         <Button id="btn_p08_rem" taborder="39" text="1rem 1rem" left="787" top="430" width="84" height="26" onclick="btn_p08_rem_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #e74c3c"/>
         <Button id="btn_p08_mix" taborder="40" text="1em 1rem" left="876" top="430" width="84" height="26" onclick="btn_p08_mix_onclick" font="10px &quot;Malgun Gothic&quot;" border="1px solid #27ae60"/>
-
         <!-- 결과 확인 영역 -->
         <Button id="btn_show" taborder="41" text="현재 속성값 확인" left="698" top="462" width="180" height="34" onclick="btn_show_onclick" font="12px &quot;Malgun Gothic&quot;" border="1px solid #555"/>
         <TextArea id="TextArea00" taborder="42" left="698" top="502" width="575" height="210" font="12px &quot;Malgun Gothic&quot;"/>
@@ -387,6 +375,11 @@ this.showTabBarProps = function()
 this.btn_reload_onclick = function(obj:nexacro.Button, e:nexacro.ClickEventInfo)
 {
 	this.reload();
+};
+
+this.EmRemSample05_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	
 };
 ]]></Script>
   </Form>

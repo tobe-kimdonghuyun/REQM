@@ -122,7 +122,7 @@ nexacroN_generate/         — nexacroN Studio Generate/Deploy 결과물
 - Dataset 컬럼명은 대문자 스네이크케이스 (예: `USER_ID`)
 - 화면 스크립트는 기능 단위로 구역 주석 구분
 - 화면은 `.xfdl` 확장자 파일 — XML(컴포넌트/레이아웃) + nexacro 스크립트(로직) 혼합
-- 스크립트는 `<Script><![CDATA[ ... ]]></Script>` 태그 내부에 function으로 작성
+- 스크립트는 `<Script><![CDATA[ ... ]]></Script>` 태그 내부에 function으로 작성 javascript문법을 사용하고 있다 
 - `nexacrodeploy.exe`를 통해 nexacroK, nexacroN 모두 빌드 → 최종 `.js` 파일 생성 (현재 미설치, 추후 추가 예정)
 
 ### 프로젝트 파일 구조

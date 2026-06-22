@@ -3,6 +3,7 @@
   <Form id="EmRemSample03" width="1280" height="720" titletext="[TC-R] Button rem 속성 검증" font="30px/normal &quot;Malgun Gothic&quot;">
     <Layouts>
       <Layout height="720" width="1280">
+        <Static id="lbl_typeinfo" taborder="99" text="[테스트유형] 정적설정 — XML 속성에 rem 직접 지정  |  [사용 컴포넌트] Button · Static" left="10" top="4" width="1260" height="14" font="9px Malgun Gothic" forecolor="#1A3A5C" background="url('') #EBF3FF"/>
         <Static id="Static00" taborder="0" text="[TC-R] Button rem 속성 검증 — rem 기준: MainFrame font-size  ↓ MF font 변경 버튼으로 rem 일괄 재계산 확인" left="10" top="20" width="700" height="36" font="13px &quot;Malgun Gothic&quot;"/>
 
         <!-- MainFrame font 변경 버튼 -->
@@ -236,19 +237,29 @@ this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 
 this.btn_r01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
+	var mf   = this._getMainFrame();
+	var mfEl = document.getElementById("mainframe");
+	var mfFs = mfEl ? window.getComputedStyle(mfEl).fontSize : "알수없음";
 	this.TextArea00.deleteText();
 	this.TextArea00.value = "[TC-R-01] width/height rem\n"
 	    + "설정: width=8rem, height=3rem\n"
 	    + "MF font 변경 버튼으로 rem 기준 변경 후 크기 변화 확인\n\n"
+	    + "현재 MF font     = " + mf.font + "\n"
+	    + "현재 MF fontSize = " + mfFs + "\n\n"
 	    + "getOffsetWidth  = " + this.btn_r01.getOffsetWidth() + "\n"
 	    + "getOffsetHeight = " + this.btn_r01.getOffsetHeight();
 };
 
 this.btn_r02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r02");
+	var mf   = this._getMainFrame();
+	var mfEl = document.getElementById("mainframe");
+	var mfFs = mfEl ? window.getComputedStyle(mfEl).fontSize : "알수없음";
+	var el   = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r02");
 	this.TextArea00.deleteText();
 	this.TextArea00.value = "[TC-R-02] padding rem 4방향\n"
+	    + "현재 MF font     = " + mf.font + "\n"
+	    + "현재 MF fontSize = " + mfFs + "\n\n"
 	    + "top    = " + window.getComputedStyle(el).paddingTop + "\n"
 	    + "right  = " + window.getComputedStyle(el).paddingRight + "\n"
 	    + "bottom = " + window.getComputedStyle(el).paddingBottom + "\n"
@@ -257,17 +268,27 @@ this.btn_r02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 
 this.btn_r03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r03");
+	var mf   = this._getMainFrame();
+	var mfEl = document.getElementById("mainframe");
+	var mfFs = mfEl ? window.getComputedStyle(mfEl).fontSize : "알수없음";
+	var el   = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r03");
 	this.TextArea00.deleteText();
 	this.TextArea00.value = "[TC-R-03] border rem\n"
+	    + "현재 MF font     = " + mf.font + "\n"
+	    + "현재 MF fontSize = " + mfFs + "\n\n"
 	    + "DOM borderTopWidth = " + window.getComputedStyle(el).borderTopWidth;
 };
 
 this.btn_r04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r04");
+	var mf   = this._getMainFrame();
+	var mfEl = document.getElementById("mainframe");
+	var mfFs = mfEl ? window.getComputedStyle(mfEl).fontSize : "알수없음";
+	var el   = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r04");
 	this.TextArea00.deleteText();
 	this.TextArea00.value = "[TC-R-04] borderRadius rem\n"
+	    + "현재 MF font     = " + mf.font + "\n"
+	    + "현재 MF fontSize = " + mfFs + "\n\n"
 	    + "borderStartStartRadius = " + window.getComputedStyle(el).borderStartStartRadius + "\n"
 	    + "borderStartEndRadius   = " + window.getComputedStyle(el).borderStartEndRadius + "\n"
 	    + "borderEndStartRadius   = " + window.getComputedStyle(el).borderEndStartRadius + "\n"
@@ -276,8 +297,13 @@ this.btn_r04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 
 this.btn_r05_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
+	var mf   = this._getMainFrame();
+	var mfEl = document.getElementById("mainframe");
+	var mfFs = mfEl ? window.getComputedStyle(mfEl).fontSize : "알수없음";
 	this.TextArea00.deleteText();
 	this.TextArea00.value = "[TC-R-05] minwidth/maxwidth rem\n"
+	    + "현재 MF font     = " + mf.font + "\n"
+	    + "현재 MF fontSize = " + mfFs + "\n\n"
 	    + "minwidth      = " + this.btn_r05.minwidth + "\n"
 	    + "maxwidth      = " + this.btn_r05.maxwidth + "\n"
 	    + "getOffsetWidth  = " + this.btn_r05.getOffsetWidth() + "\n"
@@ -286,41 +312,66 @@ this.btn_r05_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 
 this.btn_r06_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r06");
+	var mf   = this._getMainFrame();
+	var mfEl = document.getElementById("mainframe");
+	var mfFs = mfEl ? window.getComputedStyle(mfEl).fontSize : "알수없음";
+	var el   = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r06");
 	this.TextArea00.deleteText();
 	this.TextArea00.value = "[TC-R-06] letterSpacing rem\n"
+	    + "현재 MF font     = " + mf.font + "\n"
+	    + "현재 MF fontSize = " + mfFs + "\n\n"
 	    + "DOM: " + window.getComputedStyle(el).letterSpacing;
 };
 
 this.btn_r07_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r07");
+	var mf   = this._getMainFrame();
+	var mfEl = document.getElementById("mainframe");
+	var mfFs = mfEl ? window.getComputedStyle(mfEl).fontSize : "알수없음";
+	var el   = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r07");
 	this.TextArea00.deleteText();
 	this.TextArea00.value = "[TC-R-07] wordSpacing rem\n"
+	    + "현재 MF font     = " + mf.font + "\n"
+	    + "현재 MF fontSize = " + mfFs + "\n\n"
 	    + "DOM: " + window.getComputedStyle(el).wordSpacing;
 };
 
 this.btn_r08_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r08");
+	var mf   = this._getMainFrame();
+	var mfEl = document.getElementById("mainframe");
+	var mfFs = mfEl ? window.getComputedStyle(mfEl).fontSize : "알수없음";
+	var el   = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r08");
 	this.TextArea00.deleteText();
 	this.TextArea00.value = "[TC-R-08] boxShadow rem\n"
+	    + "현재 MF font     = " + mf.font + "\n"
+	    + "현재 MF fontSize = " + mfFs + "\n\n"
 	    + "DOM: " + window.getComputedStyle(el).boxShadow;
 };
 
 this.btn_r09_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r09");
+	var mf   = this._getMainFrame();
+	var mfEl = document.getElementById("mainframe");
+	var mfFs = mfEl ? window.getComputedStyle(mfEl).fontSize : "알수없음";
+	var el   = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r09");
 	this.TextArea00.deleteText();
 	this.TextArea00.value = "[TC-R-09] background-size rem\n"
+	    + "현재 MF font     = " + mf.font + "\n"
+	    + "현재 MF fontSize = " + mfFs + "\n\n"
 	    + "DOM: " + window.getComputedStyle(el).backgroundSize;
 };
 
 this.btn_r10_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	var el = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r10:text");
+	var mf   = this._getMainFrame();
+	var mfEl = document.getElementById("mainframe");
+	var mfFs = mfEl ? window.getComputedStyle(mfEl).fontSize : "알수없음";
+	var el   = document.getElementById("mainframe.WorkFrame.form.Div00.form.btn_r10:text");
 	this.TextArea00.deleteText();
 	this.TextArea00.value = "[TC-R-10] textPadding rem\n"
+	    + "현재 MF font     = " + mf.font + "\n"
+	    + "현재 MF fontSize = " + mfFs + "\n\n"
 	    + "paddingBlock  = " + window.getComputedStyle(el).paddingBlock + "\n"
 	    + "paddingInline = " + window.getComputedStyle(el).paddingInline;
 };
