@@ -5,8 +5,8 @@ REM Update the paths below if your Tomcat or JDK are installed elsewhere.
 setlocal
 set "CATALINA_HOME=%~dp0..\apache-tomcat-9.0.89"
 REM ===== 자바 경로 설정 (시스템 변수 기반 명시적 설정) =====
-set "JAVA_HOME=C:\openlogic-openjdk-21.0.4+7-windows-x64"
-set "JRE_HOME=C:\openlogic-openjdk-21.0.4+7-windows-x64"
+set "JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot"
+set "JRE_HOME=C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot"
 
 set "PATH=%JAVA_HOME%\bin;%PATH%"
 

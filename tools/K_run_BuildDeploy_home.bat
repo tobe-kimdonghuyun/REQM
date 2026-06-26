@@ -45,7 +45,7 @@ echo     - NexacroN_Deploy_JAVA.jar, log4j2.xml 복사 완료 (기존 파일 삭
 
 REM ===== 자바 경로 설정 (시스템 변수 JAVA_HOME 우선 사용) =====
 if not defined JAVA_HOME (
-   set "JAVA_HOME=C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10"
+    set "JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot"
 )
 REM JAVA_HOME 끝의 \ 여부와 무관하게 java.exe 경로를 직접 고정
 
