@@ -27,7 +27,7 @@ if not exist "%JAVA_EXE%" (
 )
 
 REM ===== deploy_config.txt 읽기 (PowerShell UTF-8 방식) =====
-set "CONFIG=%~dp0deploy_config.txt"
+set "CONFIG=%~dp0deploy_config_home.txt"
 if not exist "%CONFIG%" (
     echo [오류] 설정 파일을 찾을 수 없습니다: %CONFIG%
     exit /b 1

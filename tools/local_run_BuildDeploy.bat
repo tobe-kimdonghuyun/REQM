@@ -69,7 +69,7 @@ if not exist "%JAVA_EXE%" (
     exit /b 1
 )
 REM ===== deploy_config.txt 읽기 (Batch 전용 방식) =====
-set "CONFIG=%SCRIPT_HOME%deploy_config.txt"
+set "CONFIG=%SCRIPT_HOME%deploy_config_home.txt"
 if not exist "%CONFIG%" (
     echo [오류] 설정 파일을 찾을 수 없습니다.
     echo        확인된 경로: "%CONFIG%"
