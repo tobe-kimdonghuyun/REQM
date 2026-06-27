@@ -7,12 +7,12 @@ set "SCRIPT_NAME=%~nx0"
 
 REM ===== [1단계] Git master 브랜치 최신화 =====
 echo [1/3] Git pull - master 브랜치 최신화 시작...
-if not exist "E:\git\VSCODE_WORK900\WORK900\" (
+if not exist "G:\git\VSCODE_WORK900\WORK900\" (
     echo [오류] 소스 디렉토리를 찾을 수 없습니다: E:\git\VSCODE_WORK900\WORK900
     pause
     exit /b 1
 )
-cd /d "E:\git\VSCODE_WORK900\WORK900"
+cd /d "G:\git\VSCODE_WORK900\WORK900"
 git fetch origin
 if errorlevel 1 (
     echo [오류] git fetch 실패
