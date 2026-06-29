@@ -17,6 +17,7 @@
 
 1. [저장소 설정](#1-저장소-설정-및-초기화)
 2. [기본 작업 흐름](#2-기본-작업-흐름-add--commit--push)
+   - [Rebase 사용법](#-원격-변경사항을-내-브랜치에-깔끔하게-가져오기-rebase)
 3. [브랜치 관리](#3-브랜치-관리)
 4. [Cherry-pick](#4-cherry-pick-특정-커밋-가져오기)
 5. [파일 단위 가져오기](#5-다른-브랜치에서-특정-파일만-가져오기)
@@ -105,6 +106,49 @@ git pull origin main
 # 원격 정보만 가져오기 (병합 안함)
 git fetch origin
 ```
+
+### 💡 원격 변경사항을 내 브랜치에 깔끔하게 가져오기 (Rebase)
+
+`git rebase`는 현재 브랜치의 기반 커밋(Base)을 다른 최신 커밋으로 재배치하여 커밋 히스토리를 깨끗한 한 줄(선형)로 정리해 줍니다.
+`git merge`와 달리 불필요한 병합 커밋(Merge Commit)을 남기지 않고, 마치 원격의 최신 코드 위에서 내가 처음부터 작업했던 것처럼 이력을 정렬합니다.
+
+#### 1. 일반적인 Rebase 사용법 (원격 최신 코드 반영)
+
+로컬에서 작업 중인데 원격 저장소(`main` 브랜치)에 다른 사람의 변경 사항이 업데이트되었을 때, 내 작업 내역을 원격 최신 코드 위로 이어 붙이고자 할 때 주로 사용합니다.
+
+```bash
+# ① 원격 저장소의 최신 이력 가져오기 (병합은 안 함)
+git fetch origin
+
+# ② 내 작업 브랜치에서 원격 main 브랜치를 기준으로 Rebase 진행
+git rebase origin/main
+```
+
+* **만약 Rebase 중 충돌(Conflict)이 발생하면:**
+  1. 충돌이 발생한 파일을 열어 충돌 부분을 수정합니다.
+  2. 수정 완료 후 `git add <파일명>`으로 스테이징합니다. (커밋은 하지 않음)
+  3. `git rebase --continue` 명령어를 입력하여 Rebase를 이어서 진행합니다.
+  * *Rebase 과정을 완전히 취소하고 Rebase 시작 이전 상태로 되돌리려면:* `git rebase --abort`
+  * *Rebase 진행을 멈추고 현재 상태(충돌 해결 중이던 시점)를 그대로 유지한 채 Rebase 상태만 빠져나오려면:* `git rebase --quit`
+
+> ⚠️ **중요 (골든 룰):** 이미 원격 저장소(GitHub 등)에 Push하여 다른 사람들과 공유된 커밋은 절대로 Rebase하지 마십시오. 커밋의 고유 해시(ID)가 변경되므로 동료들의 히스토리가 꼬이게 됩니다.
+
+#### 2. 대화형 Rebase (Interactive Rebase) - 로컬 커밋 이력 정리
+
+원격에 Push하기 전에 여러 개의 잘디잔 커밋을 하나로 합치거나(Squash), 커밋 메시지를 일괄 변경하거나, 불필요한 커밋을 삭제하고 싶을 때 유용합니다.
+
+```bash
+# 최근 3개의 커밋에 대해 대화형 리베이스 시작
+git rebase -i HEAD~3
+```
+
+명령을 실행하면 에디터가 열리며 각 커밋 목록 앞에 지정할 수 있는 옵션이 나타납니다.
+* **`pick`** (기본값): 커밋을 그대로 사용합니다.
+* **`reword`** (또는 `r`): 커밋 내용은 그대로 두고 메시지만 수정합니다.
+* **`squash`** (또는 `s`): 해당 커밋을 바로 이전(위쪽) 커밋과 하나로 합칩니다.
+* **`drop`** (또는 `d`): 해당 커밋을 목록에서 삭제합니다.
+
+원하는 대로 텍스트를 편집한 후 저장하고 닫으면 설정한 옵션에 맞춰 순차적으로 이력이 재구성됩니다.
 
 ---
 
@@ -729,6 +773,39 @@ git fetch origin
 
 ---
 
+### 🔴 에러 11: "cannot switch branch while rebasing" (Rebase 중 브랜치 전환 차단)
+
+**에러 메시지:**
+
+```
+fatal: cannot switch branch while rebasing
+Consider "git rebase --quit" or "git worktree add".
+```
+
+**원인:** Rebase 진행(충돌 발생 또는 대기) 중에 완료나 취소를 하지 않고 다른 브랜치로 전환을 시도할 때 발생합니다.
+
+**해결 방법:**
+
+* **상황 A: 현재 Rebase를 완전히 취소하고 리베이스 시작 전 상태로 되돌아가서 브랜치를 전환하고 싶을 때 (일반적인 해결책/권장)**
+  ```bash
+  # 1. 진행 중인 Rebase를 안전하게 취소 (원래 상태로 복원)
+  git rebase --abort
+
+  # 2. 브랜치 전환
+  git switch master
+  ```
+* **상황 B: Rebase를 중단하되, 현재까지 진행된 변경/충돌 파일들을 원복하지 않고 그대로 둔 채 빠져나오고 싶을 때**
+  ```bash
+  # 1. Rebase 진행 상태만 강제 종료 (워킹 트리는 충돌 상태 그대로 보존됨)
+  git rebase --quit
+
+  # 2. 변경된 파일 임시 저장 및 브랜치 전환
+  git stash
+  git switch master
+  ```
+
+---
+
 ### 📋 에러 해결 요약표
 
 | 에러 유형                    | 빠른 해결                                   |
@@ -743,6 +820,7 @@ git fetch origin
 | pathspec did not match       | `git fetch origin` 먼저 실행                |
 | origin does not exist        | `git remote add origin <URL>`               |
 | cannot lock ref              | `git remote prune origin`                   |
+| cannot switch while rebasing | `git rebase --abort` 후 브랜치 전환         |
 
 ---
 
