@@ -5,7 +5,7 @@ set "BRANCH=%~1"
 if "%BRANCH%"=="" set /p BRANCH="branch 명을 입력하세요: "
 if "%BRANCH%"=="" echo [ERROR] No branch name provided. & pause & exit /b 1
 
-set "SOURCE_DIR=E:\git\VSCODE_WORK900\WORK900"
+set "SOURCE_DIR=G:\git\VSCODE_WORK900\WORK900"
 set "FRAMEWORK_SRC=%SOURCE_DIR%\Lib\FrameworkJS"
 set "PROJECT_ROOT=%~dp0.."
 set "DEST_DIR=%PROJECT_ROOT%\nexacrolib\nexacrolib"

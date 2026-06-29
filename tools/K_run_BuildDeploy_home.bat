@@ -7,27 +7,16 @@ set "SCRIPT_NAME=%~nx0"
 
 REM ===== [1단계] Git master 브랜치 최신화 =====
 echo [1/3] Git pull - master 브랜치 최신화 시작...
-if not exist "G:\git\VSCODE_WORK900\WORK900\" (
-    echo [오류] 소스 디렉토리를 찾을 수 없습니다: E:\git\VSCODE_WORK900\WORK900
-    pause
-    exit /b 1
-)
-cd /d "G:\git\VSCODE_WORK900\WORK900"
-git fetch origin
-if errorlevel 1 (
-    echo [오류] git fetch 실패
-    pause
-    exit /b 1
-)
+cd /d "E:\git\VSCODE_WORK900\WORK900"
 git checkout master
 if errorlevel 1 (
     echo [오류] git checkout master 실패
     pause
     exit /b 1
 )
-git reset --hard origin/master
+git pull origin master
 if errorlevel 1 (
-    echo [오류] git reset 실패
+    echo [오류] git pull 실패
     pause
     exit /b 1
 )
@@ -56,7 +45,7 @@ echo     - NexacroN_Deploy_JAVA.jar, log4j2.xml 복사 완료 (기존 파일 삭
 
 REM ===== 자바 경로 설정 (시스템 변수 JAVA_HOME 우선 사용) =====
 if not defined JAVA_HOME (
-    set "JAVA_HOME=C:\microsoft-jdk-21.0.9-windows-x64\jdk-21.0.9+10"
+    set "JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot"
 )
 REM JAVA_HOME 끝의 \ 여부와 무관하게 java.exe 경로를 직접 고정
 
@@ -69,7 +58,7 @@ if not exist "%JAVA_EXE%" (
     exit /b 1
 )
 REM ===== deploy_config.txt 읽기 (Batch 전용 방식) =====
-set "CONFIG=%SCRIPT_HOME%deploy_config_home.txt"
+set "CONFIG=%SCRIPT_HOME%deploy_config.txt"
 if not exist "%CONFIG%" (
     echo [오류] 설정 파일을 찾을 수 없습니다.
     echo        확인된 경로: "%CONFIG%"
@@ -95,38 +84,32 @@ for /f "usebackq tokens=1,* delims==" %%A in ("%CONFIG%") do (
     if /i "%%A"=="OutputPath" set "OUTPUT_PATH=%%B"
 )
 
-for %%I in ("%SCRIPT_HOME%..\apache-tomcat-9.0.89") do set "CATALINA_HOME=%%~fI"
-set "TOMCAT_BIN=%CATALINA_HOME%\bin"
-set "WAIT_TIME=0"
+powershell -NoProfile -Command ^
+    "$p = '%OUTPUT_PATH%'; $idx = $p.IndexOf('REQM'); if ($idx -ge 0) { $rel = $p.Substring($idx + 4).TrimStart('\').Replace('\','/'); $url = 'http://172.10.12.45:9091/' + $rel + '/index.html'; Write-Host '[완료] Chrome 실행:' $url; Start-Process 'chrome.exe' $url } else { Write-Host '[경고] OutputPath에서 REQM 경로를 찾을 수 없습니다.' }"
 
-REM ===== 9091 포트 확인 및 Tomcat 시작 =====
-powershell -NoProfile -Command "if ((Get-NetTCPConnection -LocalPort 9091 -State Listen -ErrorAction SilentlyContinue).Count -eq 0) { exit 1 } else { exit 0 }" >nul 2>&1
-if not errorlevel 1 goto :tomcat_already_running
+REM ===== [마지막] NexacroLibPath / GenerateRule → engine\nexacroK 복사 =====
+set "NEXACRO_LIB="
+set "GENERATE_RULE="
+for /f "usebackq tokens=1,* delims==" %%A in ("%CONFIG%") do (
+    if /i "%%A"=="NexacroLibPath" set "NEXACRO_LIB=%%B"
+    if /i "%%A"=="GenerateRule"   set "GENERATE_RULE=%%B"
+)
+set "ENGINE_BASE=D:\git_prj\REQM\engine\nexacroK"
 
-echo [Tomcat] 9091 포트가 실행 중이지 않습니다. Tomcat을 시작합니다...
-powershell -NoProfile -Command "Start-Process 'cmd.exe' -ArgumentList '/k set CATALINA_HOME=%CATALINA_HOME%& %TOMCAT_BIN%\catalina.bat run'"
-echo [Tomcat] 포트 9091 응답 대기 중 (최대 60초)...
+if exist "%ENGINE_BASE%\nexacrolib" (
+    echo [엔진] 기존 nexacrolib 폴더 삭제 중...
+    rmdir /s /q "%ENGINE_BASE%\nexacrolib"
+)
+echo [엔진] NexacroLibPath 복사 중: %NEXACRO_LIB% -^> %ENGINE_BASE%\nexacrolib
+robocopy "%NEXACRO_LIB%" "%ENGINE_BASE%\nexacrolib" /E /NP /NFL /NDL /XD node_modules > nul
+if %errorlevel% leq 7 set errorlevel=0
 
-:wait_tomcat
-ping localhost -n 4 >nul
-set /a WAIT_TIME+=3
-powershell -NoProfile -Command "if ((Get-NetTCPConnection -LocalPort 9091 -State Listen -ErrorAction SilentlyContinue).Count -eq 0) { exit 1 } else { exit 0 }" >nul 2>&1
-if not errorlevel 1 goto :tomcat_ready
-if %WAIT_TIME% geq 60 goto :tomcat_timeout
-echo   대기 중... %WAIT_TIME% 초
-goto :wait_tomcat
+if exist "%ENGINE_BASE%\generate" (
+    echo [엔진] 기존 generate 폴더 삭제 중...
+    rmdir /s /q "%ENGINE_BASE%\generate"
+)
+echo [엔진] GenerateRule 복사 중: %GENERATE_RULE% -^> %ENGINE_BASE%\generate
+robocopy "%GENERATE_RULE%" "%ENGINE_BASE%\generate" /E /NP /NFL /NDL > nul
+if %errorlevel% leq 7 set errorlevel=0
 
-:tomcat_timeout
-echo [경고] Tomcat이 60초 내에 시작되지 않았습니다.
-goto :chrome_launch
-
-:tomcat_ready
-echo [Tomcat] 준비 완료
-goto :chrome_launch
-
-:tomcat_already_running
-echo [Tomcat] 9091 포트 이미 실행 중
-
-:chrome_launch
-REM ===== OutputPath에서 REQM 이후 경로 추출 후 Chrome 실행 =====
-powershell -NoProfile -Command "$p = '%OUTPUT_PATH%'; $idx = $p.IndexOf('REQM'); if ($idx -ge 0) { $rel = $p.Substring($idx + 4).TrimStart('\').Replace('\', '/'); $url = 'http://localhost:9091/' + $rel + '/index.html'; Write-Host '[완료] Chrome 실행:' $url; Start-Process 'chrome.exe' $url } else { Write-Host '[경고] OutputPath에서 REQM 경로를 찾을 수 없습니다.' }"
+echo [엔진] engine\nexacroK 업데이트 완료

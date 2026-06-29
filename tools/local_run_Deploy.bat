@@ -3,7 +3,7 @@ chcp 65001
 
 REM ===== 배포 파일 REQM 폴더로 복사 후 Nexacro 배포 =====
 echo [1/2] 배포 관련 파일 복사 중...
-set "DEPLOY_SRC=E:\git\VSCODE_WORK900\WORK900\dist\deploy"
+set "DEPLOY_SRC=G:\git\VSCODE_WORK900\WORK900\dist\deploy"
 set "DEPLOY_DST=%~dp0"
 
 if exist "%DEPLOY_DST%NexacroN_Deploy_JAVA.jar" del /Q "%DEPLOY_DST%NexacroN_Deploy_JAVA.jar"
@@ -27,7 +27,7 @@ if not exist "%JAVA_EXE%" (
 )
 
 REM ===== deploy_config.txt 읽기 (PowerShell UTF-8 방식) =====
-set "CONFIG=%~dp0deploy_config.txt"
+set "CONFIG=%~dp0deploy_config_home.txt"
 if not exist "%CONFIG%" (
     echo [오류] 설정 파일을 찾을 수 없습니다: %CONFIG%
     exit /b 1
