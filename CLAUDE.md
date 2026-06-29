@@ -530,7 +530,7 @@ for (int i = 0; i < dsIn.getRowCount(); i++) {
 #### xapi 서비스 개발 체크리스트
 
 - `out.clearBuffer()` 호출 (JSP에서 필수)
-- `receiveData()` / `sendData()` 는 반드시 `try-catch(PlatformException)` 으로 감쌀 것
+- `receiveData()` / `sendData()` 는 반드시 `try-catch(PlatformException)` 으로 감쌀 것 
 - 응답에 `ErrorCode` (0=성공, 음수=오류) + `ErrorMsg` 포함 필수
 - 저장 서비스는 `getRowType()` 으로 INSERT/UPDATE/DELETE 분기 처리
 - 컬럼명은 **대문자** 사용 (클라이언트 Dataset과 일치해야 함)
