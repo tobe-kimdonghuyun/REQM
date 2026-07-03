@@ -1029,6 +1029,225 @@ SimpleActionTest.xmodule (ZIP)
 - `.xmodel` — transaction 입출력 스키마 정의 (`iotype="input|output"`)
 - `.xpackage` — 프로젝트 일괄 가져오기 ZIP (`File > Import Package`)
 
+### QuickView vs Launch 실행 방식 구분
+
+| 방식 | 단축키 | 용도 |
+|------|--------|------|
+| **QuickView** | `Ctrl+F6` / 돋보기 아이콘 | 현재 편집 중인 Form만 단독 실행 — 빠른 컴포넌트/레이아웃 테스트 |
+| **Launch** | `Ctrl+F5` | 전체 앱(application.xadl 기준) 실행 — 화면 전환·팝업·메뉴 흐름 테스트 |
+
+> QuickView로 실행 시 Form 단독 구동이므로 `Form_onload` 에서 transaction 호출 시 서버가 필요하다.
+
+---
+
+### Div 레이아웃 (type 속성)
+
+```xml
+<!-- 가로 순차 배치 -->
+<Div type="horizontal" horizontalgap="10" ...>
+  <Button .../> <Button .../> <Button .../>
+</Div>
+
+<!-- 세로 순차 배치 -->
+<Div type="vertical" verticalgap="8" ...>
+  <Edit .../> <Edit .../>
+</Div>
+```
+
+| 속성 | 설명 |
+|------|------|
+| `type="horizontal"` | 왼쪽부터 순서대로 가로 배치 |
+| `type="vertical"` | 위에서부터 순서대로 세로 배치 |
+| `horizontalgap` | 컴포넌트 간 가로 간격(px) |
+| `verticalgap` | 컴포넌트 간 세로 간격(px) |
+
+---
+
+### 반응형 컴포넌트 배치 (right / bottom 속성)
+
+```xml
+<!-- Edit은 오른쪽 버튼과 거리 유지, 버튼은 오른쪽 고정 -->
+<Edit  left="30" top="30" height="50" right="160"/>   <!-- right = 버튼left + 여백 -->
+<Button right="30" top="30" height="50" width="120"/> <!-- left 제거, right만 사용 -->
+```
+
+- `left` 속성 대신 `right` 속성 지정 → 화면 너비 변경 시 컴포넌트가 오른쪽 기준으로 고정
+- Edit의 `+` 핸들을 Button으로 드래그 → 상대 거리 자동 연결
+- `bottom` 속성도 동일 원리 (화면 높이 기준 하단 고정)
+
+---
+
+### Grid autofittype (컬럼 너비 자동 조정)
+
+| 값 | 동작 |
+|----|------|
+| `none` | 지정된 컬럼 너비 고정 (기본) |
+| `col` | Grid 전체 너비에 맞게 모든 컬럼 너비 자동 조정 |
+| `row` | 행 높이 자동 조정 |
+
+```javascript
+// 스크립트에서 동적 변경
+this.grdMain.autofittype = "col";
+this.grdMain.autofittype = "none";
+```
+
+---
+
+### X-PUSH 실시간 메시지 처리
+
+nexacro N은 XPush 오브젝트를 통해 X-PUSH 서버의 실시간 메시지를 수신할 수 있다.
+
+```javascript
+// Form_onload: X-PUSH 서버 연결
+this.Form_onload = function(obj, e) {
+    this.XPush00.connect("user00", "password");
+};
+
+// onsuccess: 연결 성공 시 구독 등록
+this.XPush00_onsuccess = function(obj, e) {
+    if (e.action == nexacro.XPushAction.AUTH) {  // AUTH=0
+        // Dataset에 실시간으로 append
+        this.XPush00.subscribe("OPDT", "ALL", this, this.Dataset00, "append", "fn_PushCallback");
+    }
+};
+
+// 메시지 수신 콜백
+this.fn_PushCallback = function(Row, ChangeColumn, AllColumn, Type, ActionType) {
+    trace(Row, ChangeColumn, AllColumn, Type, ActionType);
+};
+
+// onerror: 연결 실패 원인 확인
+this.XPush00_onerror = function(obj, e) {
+    trace(e.errormsg, e.statuscode);
+};
+```
+
+**XPush 오브젝트 필수 속성:**
+- `layouturl` — 메시지 레이아웃 XML 파일 URL
+- `iplist` — X-PUSH 서버 IP/PORT (TCP: 10081, HTTP: 10080)
+  - `iplist="http://localhost:10080,localhost:10081"` (웹·NRE 동시 지원)
+
+**신뢰성 메시지(Reliable):** `registerTopic` → `requestMessage` → `sendResponse` 순서
+
+---
+
+### 프로토콜 어댑터 (Protocol Adaptor)
+
+HTTP 통신 데이터를 암호화하거나 특정 형식으로 변환할 때 사용하는 모듈.
+
+```javascript
+// 암호화: 전송 전 호출
+nexacro.MyPtAdp.prototype.encrypt = function(strUrl, strData) {
+    // strData를 암호화하여 return
+    return strData;
+};
+
+// 복호화: 수신 후 호출
+nexacro.MyPtAdp.prototype.decrypt = function(strUrl, strData) {
+    // strData를 복호화하여 return
+    return strData;
+};
+
+// 사용: transaction URL에 프로토콜 어댑터 스킴 적용
+this.transaction("svcId", "myPtAdp://server:8080/api/endpoint", ...);
+```
+
+**배포 절차:** 넥사크로 모듈 디벨로퍼 → `[Deploy > ModulePackage]` → Type: `protocoladaptor` → Studio에서 Install → TypeDefinition에 Protocol 등록
+
+---
+
+### 런처 서비스 (Launcher Service / TPLSvc)
+
+액티브X/플러그인 없이 웹 브라우저에서 nexacro NRE를 실행하는 Windows 서비스.
+
+**통신 방식:** JSON 형식 → `http://127.0.0.1:7895/launcher/nexacro/<timestamp>`
+
+```javascript
+// 1. create: ID 할당 받기
+var obj = { platform: "nexacro", action: "create" };
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        var result = JSON.parse(xhr.responseText);
+        if (result.result == "success") {
+            nexacroId = result.id;
+            doSetProperty();
+        }
+    }
+};
+xhr.open("POST", "http://127.0.0.1:7895/launcher/nexacro/" + new Date().getTime(), true);
+xhr.send(JSON.stringify(obj));
+
+// 2. setproperty: 필수 속성 설정
+var setPropObj = {
+    platform: "nexacro",
+    id: nexacroId,
+    action: "setproperty",
+    value: {
+        key: "myApp",            // start.json 내 유일 키
+        bjson: "http://server/start.json",   // 넥사크로 부트스트랩 URL
+        version: "24",           // "21" 또는 "24"
+        onlyone: true            // 동일 앱 중복 실행 방지
+    }
+};
+
+// 3. method: launch — NRE 실행
+var launchObj = {
+    platform: "nexacro",
+    id: nexacroId,
+    action: "method",
+    value: { launch: null }
+};
+```
+
+**런처 서비스 포트:**
+
+| 통신 | 기본 포트 |
+|------|---------|
+| HTTP | 7895~7935 |
+| HTTPS | 7936~7966 |
+| WebSocket | 7970~7981 |
+
+**주요 에러 코드:**
+- 102: key 미설정
+- 103: bjson(start.json) 미설정
+- 104: 이미지 파일 다운로드 실패
+- 105: nexacro.xml 파일 읽기 실패
+
+---
+
+### eGovFrame(전자정부 프레임워크) 연동 개요
+
+기존 eGovFrame Template Project(Enterprise Business)에 nexacroN 화면을 연동하는 방법.
+
+**핵심 원칙:**
+- 기존 Service / DAO / SQL Mapper는 **그대로 재사용**
+- nexacro 전용 **Controller만 새로 작성** (JSON 응답 처리)
+- `pom.xml`에 Jackson 라이브러리 추가 (JSON 통신 지원)
+
+**JSP 화면 전환 (iframe 삽입):**
+```jsp
+<%-- EgovNoticeList.jsp — c:choose 문으로 공지사항 화면을 nexacro로 전환 --%>
+<c:choose>
+  <c:when test="${param.menu == 'notice'}">
+    <iframe src="/nexa_ui/launch.html" width="100%" height="600px" frameborder="0"/>
+  </c:when>
+  <c:otherwise>
+    <%-- 기존 eGovFrame 뷰 --%>
+  </c:otherwise>
+</c:choose>
+```
+
+**nexacro Generate Path:** Nexacro Studio → `src/main/webapp/nexa_ui`
+
+**연동 파일 복사 순서:**
+1. `egov_nexacroN.zip` 압축 해제
+2. 넥사크로 프로젝트 소스 → 기존 eGovFrame 프로젝트에 병합
+3. Controller 파일 → `src/main/java/.../web/` 에 복사
+4. Generate 산출물 → `src/main/webapp/nexa_ui/` 에 복사
+
+---
+
 ### 주의사항
 
 - Dataset 컬럼명은 반드시 **대문자** 사용 (`USER_ID` ○, `user_id` ✕)
