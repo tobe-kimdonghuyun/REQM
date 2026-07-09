@@ -22,7 +22,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | UI 라이브러리 | framer-motion, lucide-react, tailwind-merge, clsx |
 | 백엔드 | Kotlin (Spring Boot), Python (FastAPI) |
 | 빌드/배포 | NexacroN_Deploy_JAVA.jar, Apache Tomcat 10.1.55 (Jakarta EE), BAT 스크립트 |
-| 런타임 | JDK 21 (Microsoft Build), Tomcat 포트 7070 |
+| 런타임 | JDK 21 (Microsoft Build), Tomcat 포트 9091 |
 | 마이그레이션 | Jakarta 마이그레이션 (javax → jakarta 패키지) |
 
 ## 프로젝트 주요 디렉토리
