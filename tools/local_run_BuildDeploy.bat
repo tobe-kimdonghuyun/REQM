@@ -45,7 +45,7 @@ echo [2/3] npm build:dev 완료
 
 REM ===== [3단계] 배포 파일 REQM 폴더로 복사 후 Nexacro 배포 =====
 echo [3/3] 배포 관련 파일 복사 중...
-set "DEPLOY_SRC=E:\git\VSCODE_WORK900\WORK900\dist\deploy"
+set "DEPLOY_SRC=G:\git\VSCODE_WORK900\WORK900\dist\deploy"
 set "DEPLOY_DST=%SCRIPT_HOME%"
 
 if exist "%DEPLOY_DST%NexacroN_Deploy_JAVA.jar" del /Q "%DEPLOY_DST%NexacroN_Deploy_JAVA.jar"
