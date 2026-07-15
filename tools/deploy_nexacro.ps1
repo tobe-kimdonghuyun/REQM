@@ -93,6 +93,11 @@ if ($logFile) {
 if ($props.ContainsKey('DeployPath')) {
     $javaArgs += @("-D", $props.DeployPath)
 }
+if ($props.ContainsKey('Route') -and -not [string]::IsNullOrWhiteSpace($props['Route'])) {
+    $routeVal = $props.Route.Trim('"').Trim("'")
+    Write-Host "    - Route          : $routeVal"
+    $javaArgs += @("-ROUTE", $routeVal)
+}
 if ($configFlags.Count -gt 0) {
     $javaArgs += $configFlags
 }

@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="select_setrealrowsize" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="Button00" taborder="0" text="Legacy Form TR" left="54" top="100" width="166" height="60" onclick="Button00_onclick"/>
+        <Grid id="Grid00" taborder="1" left="236" top="93" width="344" height="311" binddataset="Dataset03">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="DOMAIN"/>
+                <Cell col="1" text="MODEL"/>
+                <Cell col="2" text="DESCRIPTION"/>
+                <Cell col="3" text="DATASOURCE"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:DOMAIN"/>
+                <Cell col="1" text="bind:MODEL"/>
+                <Cell col="2" text="bind:DESCRIPTION"/>
+                <Cell col="3" text="bind:DATASOURCE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="Button02" taborder="2" text="transactionpromise" left="50" top="232" width="170" height="56" onclick="Button02_onclick"/>
+        <Button id="Button03" taborder="3" text="await / async " left="50" top="298" width="170" height="68" onclick="Button03_onclick"/>
+        <Button id="Button06" taborder="4" text="application tr" left="53" top="172" width="165" height="52" onclick="Button06_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.callbackFunction = function(svrid, err, msg)
+{
+	trace("callbackFunction : svrid ",svrid,", err : ", err,", msg : "+msg)
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let sArgs = "userid="+ "blue ";
+	sArgs += " username="+ "테스트";
+	trace("check sync");
+	this.transaction( "MyService01","https://support.tobesoft.co.kr/Next_JSP/Test/EduServiceList.jsp","input1=Dataset02","Dataset03=output",sArgs,"callbackFunction",true);
+	trace("check sync2");
+};
+
+this.Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let sArgs = "userid="+ "blue ";
+	sArgs += " username="+ "테스트";
+	var svrid = "MyService01"
+	const req = this.transaction(svrid,"http://172.10.12.45:9090/service_jsp/RP_103514_dummyXML.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
+	trace(req);
+	// 결과 처리
+	if(req) 
+	{
+		req.then(res => { //message
+			this.callbackFunction(svrid, res[0],res[1]);
+		})
+			.catch(err => trace("실패:", err.errorMsg));
+	}
+};
+
+async function loadData(form) 
+{
+    try {
+	let sArgs = "userid="+ "blue";
+	sArgs += " username="+ "테스트";
+        // transaction 호출 후 결과가 반환될 때까지 기다림
+        const res = await form.transaction("MyService01","https://support.tobesoft.co.kr/Next_JSP/Test/EduServiceList.jsp","input1=Dataset02","Dataset03=output",sArgs, "", true,0, true);
+        // 절차적으로 순서대로 실행됨
+        trace("✅ 사용자 조회 완료:", res.serviceId, res.errorCode, res.errorMsg);
+		return res;
+    } catch (err) {
+        trace("❌ 사용자 조회 실패");
+    }
+}
+
+this.Button03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var res = loadData(this);
+	trace("1111111 callbackFunction : code ",code,", msg : ", msg);
+};
+
+this.Button06_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let sArgs = "userid="+ "blue";
+	sArgs += " username="+ "테스트";
+	const req = nexacro.getApplication().transaction("MyService01","https://support.tobesoft.co.kr/Next_JSP/Test/EduServiceList.jsp","input1=Dataset02","Dataset03=output",sArgs, "", true,0, true);
+	
+	// 결과 처리
+	req.promise.then(res => { //message
+        this.callbackFunction(res.svcid, res.errstatus, res.message);
+    })
+		.catch(err => trace("실패:", err.message));
+};
+
+
+]]></Script>
+    <Objects>
+      <Dataset id="Dataset02"/>
+      <Dataset id="Dataset03">
+        <ColumnInfo>
+          <Column id="DOMAIN" type="string" size="255"/>
+          <Column id="MODEL" type="string" size="255"/>
+          <Column id="DESCRIPTION" type="string" size="255"/>
+          <Column id="DATASOURCE" type="string" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>
