@@ -79,7 +79,7 @@ const envLoader = function(nexacro, system, trace)
             this._addService("lib", "js", "./lib/", "session", null, "", "0", "0");
             this._addService("libstyle", "js", "./lib/style/", "session", null, "", "0", "0");
             this._addService("libevent", "js", "./lib/event/", "session", null, "", "0", "0");
-            this._addService("sample_nav", "form", ["./sample_nav/", "http://127.0.0.1:40981/"], "session", null, "", "0", "0");
+            this._addService("sample_nav", "form", ["./sample_nav/", "http://172.10.12.45:9091/sample_nav/"], "session", null, "", "0", "0");
             this._addService("nexaviewlib", "js", "http://172.10.12.23:8080/nexacro/XP17_Master/", "session", null, "", "0", "0");
     
             // External

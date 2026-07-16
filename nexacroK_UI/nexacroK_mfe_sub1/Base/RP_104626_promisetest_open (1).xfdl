@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="promisetest_open" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="Button00" taborder="0" text="promise open method1" left="30" top="31" width="161" height="38" onclick="Button00_onclick" background="red"/>
+        <Button id="Button00_00" taborder="1" text="promise open method2" left="30" top="90" width="161" height="38" onclick="Button00_00_onclick"/>
+        <Button id="Button00_00_00" taborder="2" text="promise open method3" left="30" top="150" width="161" height="38" onclick="Button00_00_00_onclick"/>
+        <Button id="Button00_00_00_00" taborder="3" text="legacy open" left="29" top="202" width="161" height="38" onclick="Button00_00_00_00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let ret1 = nexacro.open("promise_open_test1","Base::RP_104626_Form_Work1 (1).xfdl", this.getOwnerFrame(), { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 150, "promise")
+	.then((result1) => {
+	  trace("Closed popup with args: "+ " return1 = " + ret1 + ", result1 = " + result1);
+	  /*
+	  let ret2 = nexacro.open("promise_open_test2","FrameBase::Form_Work2.xfdl", this.getOwnerFrame(), { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 300, 500,"promise").then((result2) => {
+		  trace("Closed popup with args: "  + " return2 = " + ret2 + ", result2 = " + result2);
+		  
+		  let ret3 = nexacro.open("promise_open_test3","FrameBase::Form_Work3.xfdl", this.getOwnerFrame(), { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 500, 500, 400, "promise").then((result3) => {
+			  trace("Closed popup with args: "  + " return3 = " + ret3 + ", result3 = " + result3);
+			  
+			  let ret4 = nexacro.open("promise_open_test4","FrameBase::Form_Work4.xfdl", this.getOwnerFrame(), { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 700, 500, 400, this, "promise").then((result4) => {
+			      trace("Closed popup with args: "  + " return4 = " + ret4 + ", result4 = " + result4);	  
+			  }).catch((err) => {
+			      trace("Failed to open promise_open_test4 popup: " + err.message + " return4 = " + ret4);
+			  });
+			  
+		  }).catch((err) => {
+			  trace("Failed to open promise_open_test3 popup: " + err.message + " return3 = " + ret3);
+		  });
+	
+		}).catch((err) => {
+		  trace("Failed to open promise_open_test2 popup: " + err.message + " return2 = " + ret2);
+		});
+		*/
+	}).catch((err) => {
+		trace("Failed to open popup promise_open_test1 : " + err.message + " return = " + ret1);
+	});
+};
+
+this.Button00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace("start~");
+	let ret = nexacro.open("promise_open_test1","FrameBase::Form_Work1.xfdl", this.getOwnerFrame(), { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 150, "promise").then((result) => {
+	  trace("Closed popup with args: "+ " return1 = " + ret);
+	}).catch((err) => {
+	  trace("Failed to open popup: " + err.message + " return = " + ret);
+	});
+	trace("ret - "+ret);
+	
+	let ret2 = nexacro.open("promise_open_test2","FrameBase::Form_Work2.xfdl", this.getOwnerFrame(), { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 300, 500,"promise").then((result) => {
+	  trace("Closed popup with args: "  + " return2 = " + ret2);	  
+	}).catch((err) => {
+	  trace("Failed to open popup: " + err.message + " return2 = " + ret2);
+	});
+	trace("ret - "+ret);
+	
+	let ret3 = nexacro.open("promise_open_test3","FrameBase::Form_Work3.xfdl", this.getOwnerFrame(), { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 500, 500, 400, "promise").then((result) => {
+	  trace("Closed popup with args: "  + " return3 = " + ret3);
+	}).catch((err) => {
+	  trace("Failed to open popup: " + err.message + " return3 = " + ret3);
+	});
+	trace("ret - "+ret);
+
+	let ret4 = nexacro.open("promise_open_test4","FrameBase::Form_Work4.xfdl", this.getOwnerFrame(), { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 700, 500, 400, this, "promise").then((result) => {
+	  trace("Closed popup with args: "  + " return4 = " + ret4);	  
+	}).catch((err) => {
+	  trace("Failed to open popup: " + err.message + " return4 = " + ret4);
+	});
+	trace("ret - "+ret);
+	trace("end~");
+};
+
+this.Button00_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace("start~");
+	showModeless(this.getOwnerFrame());
+	trace("end~");
+};
+async function showModeless(frame) 
+{
+    try {
+		let ret = await nexacro.open("promise_open_test1","FrameBase::Form_Work1.xfdl", frame, { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 500, 500, 400, "promise");
+		trace("return : "+ret);
+    } catch (err) {
+        trace("❌ 팝업에러 :"+err);
+    }
+}
+
+this.Button00_00_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var bSucc = nexacro.open("modeless", "FrameBase::Form_Work1.xfdl",  this.getOwnerFrame(), {a:'aaa', b:'bbb'}, "showtitlebar=true showstatusbar=false", 0, 0);
+	trace("open - "+bSucc);
+};
+]]></Script>
+  </Form>
+</FDL>

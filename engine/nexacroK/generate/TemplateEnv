@@ -1,0 +1,89 @@
+const envLoader = function(nexacro, system, trace) 
+{ 	
+    if (nexacro.Environment)
+    {
+        var env = new nexacro.Environment();
+        env._importurl = import.meta.url;
+        env.on_getAllScreenInfo = function ()
+        {
+            return [
+    #{ENV_SCREENINFO}
+            ];
+        };
+
+        env.on_getUserFontInfo = function()
+        {
+            return [
+    #{ENV_USERFONTINFO}
+            ];
+        };
+
+        env.on_init = function ()
+        {
+    #{ENV_INIT}
+        };
+
+        env.on_initEvent = function ()
+        {
+            // add event handler
+    #{ENV_EVENT}
+        };
+
+        env.loadTypeDefinition = function ()
+        {
+    #{TYPEDEFINITION_SERVICE}
+    
+            // External
+    #{TYPEDEFINITION_EXTERNAL}
+
+            this._component_uri = (nexacro._arg_compurl ? nexacro._arg_compurl : "#{TYPEDEF_COMPLIB_PATH}");
+            this._theme_uri = "#{THEME_RESOURCE_PATH}";
+
+            // load components
+    #{TYPEDEFINITION_COMPONENT}
+            this._addClasses(registerclass);
+        };
+
+        env.on_loadVariables = function ()
+        {
+            // Variables
+    #{ENV_VARIABLES}
+
+            // Cookies
+    #{ENV_COOKIES}
+
+            // HTTP Header
+    #{ENV_HTTPHEADERS}
+        };
+
+        env.on_loadDeviceAdaptors = function ()
+        {
+            // load device adatpor
+    #{TYPEDEFINITION_DEVICE_ADAPTOR}
+        };
+
+    #{ENV_STRINGREOURCE}
+
+        env.loadTypeDefinition();
+
+        // User Script
+    #{ENV_COMPILED_SCRIPT}
+
+        env.loadIncludeScript("environment.xml");
+        
+      //  env = null;
+
+        nexacro._getExtUserCssScreenType = nexacro._echoFn;
+        return env;
+    }
+}
+
+;(function () {								
+    const { nexacro, system, trace } = globalThis;								
+    if (nexacro && !nexacro._environment) {								
+      envLoader(nexacro, system, trace);								
+    }								
+    })();								
+                                    
+export default envLoader;								
+    

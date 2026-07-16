@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="promisetest_trackpopup" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <PopupDiv id="PopupDiv00" visible="false" left="15" top="734" width="335" height="236" background="red" url="FrameBase::Form_Work.xfdl"/>
+        <PopupDateRangePicker id="PopupDateRangePicker00" left="360" top="734" width="338" height="396"/>
+        <Static id="Static00" taborder="0" text="PopupDiv" left="73" top="130" width="207" height="60" border="1px solid" padding="0px 0px 0px 10px" background="aqua" onclick="Static00_onclick"/>
+        <Static id="Static00_00" taborder="1" text="PopupDateRangePicker" left="72" top="350" width="207" height="60" border="1px solid" padding="0px 0px 0px 10px" background="aqua"/>
+        <Button id="Button00" taborder="2" text="trackPopup - no callback" left="72" top="206" width="209" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_onclick"/>
+        <Button id="Button00_04" taborder="20" text="closePopup" left="784" top="264" width="209" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_04_onclick"/>
+        <Button id="Button00_00" taborder="3" text="trackPopup - callback" left="310" top="207" width="209" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_00_onclick"/>
+        <Button id="Button00_01" taborder="4" text="trackPopupByComponent - no callback" left="72" top="264" width="228" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_01_onclick"/>
+        <Button id="Button00_01_00" taborder="5" text="trackPopupByComponent - callback" left="310" top="264" width="230" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_01_00_onclick"/>
+        <Button id="Button00_01_01" taborder="6" text="trackPopup - no callback" left="72" top="423" width="228" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_01_01_onclick"/>
+        <Button id="Button00_01_01_01" taborder="18" text="trackPopup - await" left="784" top="423" width="228" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_01_01_01_onclick"/>
+        <Button id="Button00_01_01_00" taborder="15" text="trackPopup - promise" left="546" top="423" width="228" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_01_01_00_onclick"/>
+        <Button id="Button00_01_00_00" taborder="7" text="trackPopup- callback" left="310" top="423" width="230" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_01_00_00_onclick"/>
+        <Button id="Button00_01_02" taborder="8" text="trackPopupByComponent - no callback" left="72" top="480" width="228" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_01_02_onclick"/>
+        <Button id="Button00_01_00_01" taborder="9" text="trackPopupByComponent - callback" left="310" top="480" width="230" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_01_00_01_onclick"/>
+        <Button id="Button00_01_02_00" taborder="10" text="trackPopupCenter - no callback" left="73" top="537" width="228" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_01_02_00_onclick"/>
+        <Button id="Button00_01_00_01_00" taborder="11" text="trackPopupCenter - callback" left="311" top="537" width="230" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_01_00_01_00_onclick"/>
+        <Button id="Button04" taborder="12" text="PopupBase Position" left="425" top="16" width="291" height="169" enable="true" onclick="Button04_onclick"/>
+        <Button id="Button00_02" taborder="13" text="trackPopup - promise" left="556" top="207" width="209" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_02_onclick"/>
+        <Button id="Button00_01_03" taborder="14" text="trackPopupByComponent - promise" left="556" top="264" width="217" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_01_03_onclick"/>
+        <Button id="Button00_01_02_01" taborder="16" text="trackPopupByComponent - promise" left="546" top="480" width="228" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_01_02_01_onclick"/>
+        <Button id="Button00_01_02_00_00" taborder="17" text="trackPopupCenter - promise" left="546" top="537" width="228" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_01_02_00_00_onclick"/>
+        <Button id="Button00_03" taborder="19" text="trackPopup - await" left="783" top="206" width="209" height="47" textAlign="left" padding="0px 0px 0px 10px" onclick="Button00_03_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fn_Callback = function(id, rtnVal)
+{
+	trace("trackPopup-"+ id +", rtnVal-"+rtnVal);
+}
+
+//trackPopup - no callback
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let ret = this.PopupDiv00.trackPopup( 10,10 );
+	trace("return-"+ret);
+};
+
+//trackPopup - callback
+this.Button00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let ret = this.PopupDiv00.trackPopup( 10,10, 200, 200, "fn_Callback", false );
+	trace("return-"+ret);
+};
+
+//trackPopupByComponent - no callback
+this.Button00_01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let ret = this.PopupDiv00.trackPopupByComponent( this.Button04, 10,10);
+	trace("return-"+ret);
+};
+
+//trackPopupByComponent - callback
+this.Button00_01_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let ret = this.PopupDiv00.trackPopupByComponent( this.Button04, 10,10, 200, 200, "fn_Callback", false );
+	trace("return-"+ret);
+};
+
+//PopupDateRangePicker - no callback
+this.Button00_01_01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let ret = this.PopupDateRangePicker00.trackPopup( "start", 10,10, 200, 200);
+	trace("return-"+ret);
+};
+
+//PopupDateRangePicker - callback
+this.Button00_01_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let ret = this.PopupDateRangePicker00.trackPopup( "start", 10,10, 200, 200, "fn_Callback", false );
+	trace("return-"+ret);
+};
+
+//trackPopupByComponent - no callback
+this.Button00_01_02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let ret = this.PopupDateRangePicker00.trackPopupByComponent( "start", this.Button04, 10,10, 200, 200);
+	trace("return-"+ret);
+};
+
+//trackPopupByComponent - callback
+this.Button00_01_00_01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let ret = this.PopupDateRangePicker00.trackPopupByComponent( "start", this.Button04, 10,10, 200, 200, "fn_Callback", false );
+	trace("return-"+ret);
+};
+
+//trackPopupCenter - no callback
+this.Button00_01_02_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let ret = this.PopupDateRangePicker00.trackPopupCenter( "start");
+	trace("return-"+ret);
+};
+
+//trackPopupCenter - callback
+this.Button00_01_00_01_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let ret = this.PopupDateRangePicker00.trackPopupCenter( "start", 340, 400, "fn_Callback", false );
+	trace("return-"+ret);
+};
+
+//trackPopup - promise
+this.Button00_02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let req1 = this.PopupDiv00.trackPopup( 10,10, 200, 200);
+	req1.then(function(rtn) {
+        trace('PopupDiv00 closed, rtn-'+rtn);})
+		.catch(function(error){console.log("error")});
+};
+
+//trackPopupByComponent - promise
+this.Button00_01_03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let req2 = this.PopupDiv00.trackPopupByComponent( this.Button04, 10,10, 200, 200);
+	req2.then(function(rtn) {
+        trace('PopupDiv00 closed, rtn-'+rtn);})
+		.catch(function(error){console.log("error")});
+};
+
+//trackPopup - promise
+this.Button00_01_01_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let req3 = this.PopupDateRangePicker00.trackPopup( "start", 10,10, 200, 200); 
+	req3.then(function() {
+        trace('PopupDateRangePicker00 closed');})
+		.catch(function(error){console.log("error")});
+};
+
+//trackPopupByComponent - promise
+this.Button00_01_02_01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let req4 = this.PopupDateRangePicker00.trackPopupByComponent("start", this.Button04, 10,10, 200, 200);
+	req4.then(function() {
+        trace('PopupDateRangePicker00 closed');})
+		.catch(function(error){console.log("error")});
+};
+
+//trackPopupCenter - promise
+this.Button00_01_02_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{			
+	let req5 = this.PopupDateRangePicker00.trackPopupCenter("start");
+	req5.then(function() {
+        trace('PopupDateRangePicker00 closed');})
+		.catch(function(error){console.log("error")});
+};
+
+this.Button00_03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace("start~");
+	showModeless1(this);
+	trace("end~");
+};
+async function showModeless1(thisP) 
+{
+    try {
+		await thisP.PopupDiv00.trackPopup( 10,10 );
+		trace("return : "+ret);
+    } catch (err) {
+        trace("❌ 팝업에러 :"+err);
+    }
+}
+
+this.Button00_01_01_01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace("start~");
+	showModeless2(this);
+	trace("end~");
+};
+async function showModeless2(thisP) 
+{
+    try {
+		await thisP.PopupDateRangePicker00.trackPopup( "start", 10,10, 200, 200);
+		trace("return : "+ret);
+    } catch (err) {
+        trace("❌ 팝업에러 :"+err);
+    }
+}
+
+this.Button00_04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.PopupDiv00.closePopup("PopupDiv Closed!!");
+};
+]]></Script>
+  </Form>
+</FDL>

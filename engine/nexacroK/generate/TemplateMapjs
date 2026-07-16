@@ -1,0 +1,34 @@
+(function()
+{
+	const fn = function(nexacro, system, trace, environment, application)
+	{
+		environment._setCSSPredefineMaps (
+		{
+			#{PREDEFINES_MAP}
+		}
+		);
+
+		#{CSS_VARIABLES}
+		environment._setCSSMaps(
+		{
+			#{CSS_MAPS}
+		},
+		{
+			#{CSS_OPTIONS_STATUSMAP}
+		}
+		);
+
+		environment._updateImageCacheMaps (
+		#{CSS_IMAGES}
+		);
+		
+		environment._setCSSPredefineGroupAutoSelectInfo (
+		#{PREDEFINES_AUTOSELECT}
+		);
+	};
+	if (document.currentScript)
+        document.currentScript.dispatchEvent(new CustomEvent("loadModule", { detail: fn }));
+
+    return fn;
+}
+)();

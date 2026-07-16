@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\..\default_typedef.xml"/>
+  <Form id="main" classname="main" left="0" top="0" width="760" height="430" titletext="New Form">
+    <Layouts>
+      <Layout width="760" height="430">
+        <Button id="Button00" taborder="0" text="load XML" left="1.97%" top="82" right="80.66%" height="46" onclick="Button00_onclick" style="background:URL('theme://Images/btn_WF_common_N.png') stretch 5,5;"/>
+        <Button id="Button01" taborder="1" text="Show saveXML" left="22.89%" top="82" right="59.74%" height="46" onclick="Button01_onclick" style="background:URL('theme://Images/btn_WF_common_N.png') stretch 5,5;"/>
+        <Static id="Static05" taborder="2" text="Load XML file in Dataset using Dataset's url, serverdatasetid property" cssclass="sta_WF_subtitP" left="15" top="13" width="598" height="22" class="sta_WF_subtitle" verticalAlign="top"/>
+        <TextArea id="TextArea00" taborder="3" left="1.97%" top="144" right="1.97%" height="274" enable="true" readonly="true"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_form"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[
+this.Button00_onclick = function(obj:Button,  e:nexacro.ClickEventInfo)
+{
+    this.ds_form.set_url("xml::eng.xml");
+	this.ds_form.set_serverdatasetid("datasetXML"); 
+	this.ds_form.load();	
+};
+
+// Dataset's SaveXML data will be displayed on the TextArea
+this.Button01_onclick = function(obj:Button,  e:nexacro.ClickEventInfo)
+{
+	this.TextArea00.set_value(this.ds_form.saveXML());
+};]]></Script>
+  </Form>
+</FDL>

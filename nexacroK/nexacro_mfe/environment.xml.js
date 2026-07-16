@@ -1,0 +1,140 @@
+const envLoader = function(nexacro, system, trace) 
+{ 	
+    if (nexacro.Environment)
+    {
+        var env = new nexacro.Environment();
+        env._importurl = import.meta.url;
+        env.on_getAllScreenInfo = function ()
+        {
+            return [
+            {"id":"Desktop_screen","type":"desktop","themeid":"theme::blue","xadl":"Application_Desktop.xadl.js"}
+            ];
+        };
+
+        env.on_getUserFontInfo = function()
+        {
+            return [
+
+            ];
+        };
+
+        env.on_init = function ()
+        {
+            this.set_appkey("first_app");
+            this.set_datatyperule("2.0");
+            this.set_themeid("theme::blue");
+        };
+
+        env.on_initEvent = function ()
+        {
+            // add event handler
+
+        };
+
+        env.loadTypeDefinition = function ()
+        {
+            this._setTypeDefinitionURL("typedefinition.xml");
+            this._addService("theme", "resource", "./_resource_/_theme_/", "session", null, "", "0", "");
+            this._addService("initvalue", "resource", "./_resource_/_initvalue_/", "session", null, "", "0", "");
+            this._addService("xcssrc", "resource", "./_resource_/_xcss_/", "session", null, "", "0", "");
+            this._addService("imagerc", "resource", "./_resource_/_images_/", "session", null, "", "0", "");
+            this._addService("font", "resource", "./_resource_/_font_/", "session", null, "", "0", "");
+            this._addService("stringrc", "resource", "./_resource_/_stringrc_/", "session", null, "", "0", "");
+            this._addService("extlib", "resource", "./_extlib_/", "session", null, "", "0", "");
+            this._addService("Base", "form", "./Base/", "session", null, "", "0", "0");
+            this._addService("FrameBase", "form", "./FrameBase/", "session", null, "", "0", "0");
+            this._addService("url", "file", ["./url/", "http://localhost:9090/nexacroK/url"], "session", null, "", "0", "0");
+            this._addService("cs_url", "form", ["./cs_url/", "http://172.10.12.45:9090/nexacroK/url2"], "session", null, "", "0", "0");
+    
+            // External
+            this._addExternal("jquery3", "https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js", "js", "preload", "", "", "");
+            this._addExternal("stylesheet_external", "https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js", "style", "preload", "", "", "");
+            this._addExternal("d3", "https://esm.run/d3", "module", "preload", "", "", "");
+
+            this._component_uri = (nexacro._arg_compurl ? nexacro._arg_compurl : "./nexacrolib/component/");
+            this._theme_uri = "./_resource_/_theme_/";
+
+            // load components
+            var registerclass = [
+            		{"id":"Button", "classname":"nexacro.Button", "type":"JavaScript", "width":"120", "height":"50"},
+            		{"id":"Combo", "classname":"nexacro.Combo", "type":"JavaScript", "width":"150", "height":"20"},
+            		{"id":"Edit", "classname":"nexacro.Edit", "type":"JavaScript", "width":"140", "height":"20"},
+            		{"id":"MaskEdit", "classname":"nexacro.MaskEdit", "type":"JavaScript", "width":"90", "height":"20"},
+            		{"id":"TextArea", "classname":"nexacro.TextArea", "type":"JavaScript", "width":"90", "height":"20"},
+            		{"id":"Static", "classname":"nexacro.Static", "type":"JavaScript", "width":"120", "height":"60"},
+            		{"id":"Div", "classname":"nexacro.Div", "type":"JavaScript", "width":"200", "height":"150"},
+            		{"id":"PopupDiv", "classname":"nexacro.PopupDiv", "type":"JavaScript", "width":"220", "height":"100"},
+            		{"id":"Radio", "classname":"nexacro.Radio", "type":"JavaScript", "width":"280", "height":"50"},
+            		{"id":"CheckBox", "classname":"nexacro.CheckBox", "type":"JavaScript", "width":"150", "height":"20"},
+            		{"id":"ListBox", "classname":"nexacro.ListBox", "type":"JavaScript", "width":"170", "height":"100"},
+            		{"id":"Grid", "classname":"nexacro.Grid", "type":"JavaScript", "width":"375", "height":"270"},
+            		{"id":"Spin", "classname":"nexacro.Spin", "type":"JavaScript", "width":"150", "height":"20"},
+            		{"id":"Menu", "classname":"nexacro.Menu", "type":"JavaScript", "width":"685", "height":"25"},
+            		{"id":"PopupMenu", "classname":"nexacro.PopupMenu", "type":"JavaScript", "width":"220", "height":"100"},
+            		{"id":"Tab", "classname":"nexacro.Tab", "type":"JavaScript", "width":"150", "height":"100"},
+            		{"id":"GroupBox", "classname":"nexacro.GroupBox", "type":"JavaScript", "width":"300", "height":"200"},
+            		{"id":"Calendar", "classname":"nexacro.Calendar", "type":"JavaScript", "width":"150", "height":"20"},
+            		{"id":"ImageViewer", "classname":"nexacro.ImageViewer", "type":"JavaScript", "width":"90", "height":"100"},
+            		{"id":"ProgressBar", "classname":"nexacro.ProgressBar", "type":"JavaScript", "width":"200", "height":"15"},
+            		{"id":"Plugin", "classname":"nexacro.Plugin", "type":"JavaScript", "width":"false", "height":"false"},
+            		{"id":"Dataset", "classname":"nexacro.NormalDataset", "type":"JavaScript", "width":"", "height":""},
+            		{"id":"ListView", "classname":"nexacro.ListView", "type":"JavaScript", "width":"270", "height":"180"},
+            		{"id":"DataObject", "classname":"nexacro.DataObject", "type":"JavaScript", "width":"", "height":""},
+            		{"id":"CheckBoxSet", "classname":"nexacro.CheckBoxSet", "type":"JavaScript", "width":"170", "height":"100"},
+            		{"id":"MultiCombo", "classname":"nexacro.MultiCombo", "type":"JavaScript", "width":"200", "height":"50"},
+            		{"id":"Panel", "classname":"nexacro.Panel", "type":"JavaScript", "width":"120", "height":"50"},
+            		{"id":"TextField", "classname":"nexacro.TextField", "type":"JavaScript", "width":"250", "height":"60"},
+            		{"id":"MultiLineTextField", "classname":"nexacro.MultiLineTextField", "type":"JavaScript", "width":"250", "height":"60"},
+            		{"id":"DateField", "classname":"nexacro.DateField", "type":"JavaScript", "width":"250", "height":"60"},
+            		{"id":"DateRangePicker", "classname":"nexacro.DateRangePicker", "type":"JavaScript", "width":"250", "height":"330"},
+            		{"id":"PopupDateRangePicker", "classname":"nexacro.PopupDateRangePicker", "type":"JavaScript", "width":"250", "height":"330"},
+            		{"id":"SpinField", "classname":"nexacro.SpinField", "type":"JavaScript", "width":"250", "height":"60"},
+            		{"id":"SelectField", "classname":"nexacro.SelectField", "type":"JavaScript", "width":"250", "height":"60"},
+            		{"id":"Splitter", "classname":"nexacro.Splitter", "type":"JavaScript", "width":"200", "height":"150"}
+            ];
+            this._addClasses(registerclass);
+        };
+
+        env.on_loadVariables = function ()
+        {
+            // Variables
+
+
+            // Cookies
+
+
+            // HTTP Header
+
+        };
+
+        env.on_loadDeviceAdaptors = function ()
+        {
+            // load device adatpor
+
+        };
+
+
+
+        env.loadTypeDefinition();
+
+        // User Script
+
+
+        env.loadIncludeScript("environment.xml");
+        
+      //  env = null;
+
+        nexacro._getExtUserCssScreenType = nexacro._echoFn;
+        return env;
+    }
+}
+
+;(function () {								
+    const { nexacro, system, trace } = globalThis;								
+    if (nexacro && !nexacro._environment) {								
+      envLoader(nexacro, system, trace);								
+    }								
+    })();								
+                                    
+export default envLoader;								
+    

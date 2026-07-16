@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="select_setrealrowsize" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="Button00" taborder="0" text="Legacy Form TR" left="54" top="100" width="166" height="60" onclick="Button00_onclick"/>
+        <Grid id="Grid00" taborder="1" left="236" top="93" width="344" height="211" binddataset="Dataset03">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="DOMAIN"/>
+                <Cell col="1" text="MODEL"/>
+                <Cell col="2" text="DESCRIPTION"/>
+                <Cell col="3" text="DATASOURCE"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:DOMAIN"/>
+                <Cell col="1" text="bind:MODEL"/>
+                <Cell col="2" text="bind:DESCRIPTION"/>
+                <Cell col="3" text="bind:DATASOURCE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="Button02" taborder="2" text="transactionpromise" left="50" top="172" width="170" height="56" onclick="Button02_onclick"/>
+        <Button id="Button03" taborder="3" text="await / async " left="50" top="238" width="170" height="68" onclick="Button03_onclick"/>
+        
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let sArgs = "userid="+ "blue ";
+	sArgs += " username="+ "테스트";
+	trace("check sync");
+	this.transaction( "MyService01","https://support.tobesoft.co.kr/Next_JSP/Test/EduServiceList.jsp","input1=Dataset02","Dataset03=output",sArgs,"callbackFunction");
+	trace("check sync2");
+};
+
+this.Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let sArgs = "userid="+ "blue ";
+	sArgs += " username="+ "테스트";
+	var svrid = "MyService01"
+	const req = this.transaction(svrid,"https://support.tobesoft.co.kr/Next_JSP/Test/EduServiceList.jsp","input1=Dataset02","Dataset03=output",sArgs, "");
+	// 결과 처리
+	if(req) 
+	{
+		req.then(([code,msg]) => { //message
+			//this.callbackFunction(svrid, res[0],res[1]);
+			this.callbackFunction(svrid, code, msg);
+		})
+			.catch(([code,msg]) => trace("실패:", code, msg));
+	}
+};
+
+this.Button03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var res = loadData(this);
+};
+
+async function loadData(form) 
+{
+    try {
+		let sArgs = "userid="+ "blue";
+		sArgs += " username="+ "테스트";
+        // transaction 호출 후 결과가 반환될 때까지 기다림
+        const [code,msg] = await form.transaction("MyService01","https://support.tobesoft.co.kr/Next_JSP/Test/EduServiceList.jsp","input1=Dataset02","Dataset03=output",sArgs, "");
+        // 절차적으로 순서대로 실행됨
+        trace("✅ 사용자 조회 완료:", code, msg);
+    } catch (err) {
+        trace("❌ 사용자 조회 실패:");
+    }
+}
+
+this.callbackFunction = function(svrid, err, msg)
+{
+	trace("callbackFunction > svrid :",svrid,", err : ", err,", msg : "+msg);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="Dataset02"/>
+      <Dataset id="Dataset03">
+        <ColumnInfo>
+          <Column id="DOMAIN" type="string" size="255"/>
+          <Column id="MODEL" type="string" size="255"/>
+          <Column id="DESCRIPTION" type="string" size="255"/>
+          <Column id="DATASOURCE" type="string" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

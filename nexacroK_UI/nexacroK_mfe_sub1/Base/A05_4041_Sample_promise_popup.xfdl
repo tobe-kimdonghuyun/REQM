@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="promisetest_modal" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="Button00" taborder="0" text="showModal" left="23" top="20" width="235" height="60" onclick="Button00_onclick"/>
+        <Button id="Button02" taborder="1" text="showModalWindow" left="23" top="316" width="235" height="60" onclick="Button02_onclick"/>
+        <Button id="Button03" taborder="2" text="showModal nocallback" left="23" top="94" width="235" height="60" onclick="Button03_onclick"/>
+        <Button id="Button04" taborder="3" text="await showModal" left="23" top="168" width="235" height="60" onclick="Button04_onclick"/>
+        <Button id="Button05" taborder="4" text="await showModalWindow" left="23" top="390" width="235" height="60" onclick="Button05_onclick"/>
+        <Button id="Button01_00" taborder="5" text="await showModalSync" left="23" top="242" width="235" height="60" onclick="Button01_00_onclick"/>
+        <Button id="Button01" taborder="6" text="regarcy open method" left="280" top="20" width="235" height="60" onclick="Button01_onclick"/>
+        <Button id="Button02_00" taborder="7" text="promise open method" left="280" top="94" width="235" height="60" onclick="Button02_00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objFrame = new ChildFrame();
+	var objParentFrame = this.getOwnerFrame();
+
+	objFrame.init( "modal00", 0, 0, 500, 500 );
+	objFrame.formurl = "Base::popup_p.xfdl";
+
+	var vRtn = objFrame.showModal( objParentFrame, {a:'aaa', b:'bbb'}, this, this.fn_callback );
+	trace("async showModal");
+
+};
+
+this.fn_callback = function( strID, vArgu ) 
+{ 
+	trace("callbak Function"); 
+};
+
+this.Button03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+/*
+	let objFrame = new ChildFrame();
+	let objParentFrame = this.getOwnerFrame();
+
+	objFrame.init( "modal00", 0, 0, 500, 500 );
+	objFrame.formurl = "Base::popup_p.xfdl";
+
+	let req = objFrame.showModal( objParentFrame, {a:'aaa', b:'bbb'}, this);
+	
+	req.then(function() {
+        trace('showModal closed');})
+		.catch(function(error){console.log("error")});			
+*/		
+
+	let objFrame = new ChildFrame();
+	let objParentFrame = this.getOwnerFrame();
+	objFrame.init( "modal00", 0, 0, 200, 200 );
+	objFrame.formurl = "Base::popup_p.xfdl";
+
+	objFrame.showModal( objParentFrame
+		, {a:'aaa', b:'bbb'}
+		, this)
+	.then(returnvalue => {		
+		trace(returnvalue.arg);
+		let userObj = JSON.parse(returnvalue.arg);
+		trace(userObj.name + " / " + userObj.age);		
+	}).catch((err) => { 
+		console.log("Failed to open popup: ", err);
+	});
+};
+
+this.Button04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fn_sync_showModal();
+};
+
+this.fn_sync_showModal = async function( strID, vArgu ) 
+{ 
+	let objFrame = new ChildFrame();
+	let objParentFrame = this.getOwnerFrame();
+
+	objFrame.init( "modal00", 0, 0, 500, 500 );
+	objFrame.formurl = "Base::popup_p.xfdl";
+
+	await objFrame.showModal( objParentFrame, {a:'aaa', b:'bbb'}, this); 
+	trace("sync showmodal");
+};
+
+this.Button01_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.ModalSync();
+};
+
+this.ModalSync = async function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objFrame = new ChildFrame();
+	var objParentFrame = this.getOwnerFrame();
+
+	objFrame.init( "modalsync00", 0, 0, 500, 500 );
+	objFrame.formurl = "Base::popup_p.xfdl";
+	let aaa = await system.showModalSync(objFrame, "test", objParentFrame, {a:'aaa', b:'bbb'}, this );
+	trace("aaa ", aaa);
+};
+
+this.Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objCFrame = new ChildFrame();
+	objCFrame.init( "moda00", 0, 0, 500, 500 );
+	objCFrame.formurl = "Base::popup_p.xfdl";
+	var ret = system.showModalWindow( objCFrame, "modal01", this.getOwnerFrame(), {a:'aaa', b:'bbb'}, this );
+	trace("aaaa", ret);
+};
+
+this.Button05_onclick = async function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.syncShowModalWindow();
+};
+
+this.syncShowModalWindow = async function()
+{
+	var objCFrame = new ChildFrame();
+
+	objCFrame.init( "moda00", 0, 0, 500, 500 );
+	objCFrame.formurl = "Base::popup_p.xfdl";
+	var ret = await system.showModalWindow( objCFrame, "modal01", this.getOwnerFrame(), {a:'aaa', b:'bbb'}, this );
+	trace("aaaa", ret);
+};
+
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace(nexacro.open("regarcy_open_test1","Base::popup_p.xfdl", this.getOwnerFrame(), { user:"이몽룡1" }, "resizable=false showstatusbar=true", 150, 150));	
+};
+
+
+this.Button02_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let ret = nexacro.open("promise_open_test","Base::popup_p.xfdl", this.getOwnerFrame(), { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 150, "promise").then((result) => {
+	  trace("1 Closed popup with args: "+ " return = " + ret );
+	}).catch((err) => {
+	  trace("Failed to open popup: " + err.message + " return = " + ret);
+	});		
+};
+]]></Script>
+  </Form>
+</FDL>

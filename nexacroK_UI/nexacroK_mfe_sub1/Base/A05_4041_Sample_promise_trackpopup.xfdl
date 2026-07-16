@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="promisetest_popup" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <PopupDiv id="PopupDiv00" text="PopupDiv00" visible="false" left="47" top="454" width="277" height="193" background="red">
+          <Layouts>
+            <Layout>
+              <Button id="Button00" taborder="0" text="Button00" left="56" top="36" width="120" height="50"/>
+            </Layout>
+          </Layouts>
+        </PopupDiv>
+        <Button id="Button00" taborder="0" text="trackPopup callbackFn" left="47" top="127" width="286" height="58" onclick="Button00_onclick"/>
+        <Button id="Button01" taborder="1" text="trackPopup Promise" left="47" top="211" width="286" height="58" onclick="Button01_onclick"/>
+        <Button id="Button02" taborder="2" text="Button02" left="59" top="2698" width="104" height="195"/>
+        <Button id="Button03" taborder="3" text="trackPopupByComponent callbackFn" left="347" top="127" width="286" height="58" onclick="trackpopuBycomponentCallbackFn_onclick"/>
+        <Button id="Button04" taborder="4" text="trackPopupByComponent Promise" left="349" top="211" width="286" height="58" onclick="trackpopupBycomponentPromise_onclick"/>
+        <PopupDateRangePicker id="PopupDateRangePicker00" left="337" top="449" width="318" height="256"/>
+        <Button id="Button05" taborder="6" text="popupcalendar trackpopup callbackFn" left="47" top="295" width="286" height="58" onclick="Button05_onclick"/>
+        <Button id="Button06" taborder="7" text="popupcalendar trackpopup promise" left="47" top="379" width="286" height="58" onclick="Button06_onclick"/>
+        <Button id="Button07" taborder="8" text="popupcalendar trackpopupByComponent" left="349" top="295" width="286" height="58" onclick="Button07_onclick"/>
+        <Button id="Button08" taborder="9" text="popupcalendar trackpopupByComponent promise" left="348" top="379" width="286" height="58" onclick="Button08_onclick"/>
+        <Button id="Button09" taborder="10" text="trackPopup no callback" left="47" top="35" width="286" height="58" onclick="Button09_onclick"/>
+        <Button id="Button10" taborder="11" text="trackPopupByComponent no callback" left="350" top="35" width="286" height="58" onclick="Button10_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fn_Callback = function(id)
+{
+	trace("trackPopup   "+ id);
+}
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.PopupDiv00.trackPopup( 10,10, 200, 200, "fn_Callback", false );
+};
+
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let req = this.PopupDiv00.trackPopup( 10,10, 200, 200);
+	req.then(function() {
+        trace('First popup closed');})
+		.catch(function(error){console.log("error")});
+};
+
+this.trackpopuBycomponentCallbackFn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.PopupDiv00.trackPopupByComponent( this.Button04, 10,10, 200, 200, "fn_Callback", false );
+};
+
+this.trackpopupBycomponentPromise_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let req = this.PopupDiv00.trackPopupByComponent( this.Button04, 10,10, 200, 200);
+	req.then(function() {
+        trace('popupbycomponent closed');})
+		.catch(function(error){console.log("error")});
+};
+
+this.Button05_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.PopupDateRangePicker00.trackPopup( "start", 10,10, 200, 200, "fn_Callback", false );
+};
+
+this.Button06_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let req = this.PopupDateRangePicker00.trackPopup( "start", 10,10, 200, 200); 
+	req.then(function() {
+        trace('popupbycomponent closed');})
+		.catch(function(error){console.log("error")});
+};
+
+this.Button07_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.PopupDateRangePicker00.trackPopupByComponent( "start", this.Button04, 10,10, 200, 200, "fn_Callback", false );
+};
+
+this.Button08_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let req = this.PopupDateRangePicker00.trackPopupByComponent("start", this.Button04, 10,10, 200, 200);
+	req.then(function() {
+        trace('popupbycomponent closed');})
+		.catch(function(error){console.log("error")});
+};
+
+this.Button09_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.PopupDiv00.trackPopup( 10,10 );
+};
+
+this.Button10_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.PopupDiv00.trackPopupByComponent( this.Button04, 10,10);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="Dataset00">
+        <ColumnInfo>
+          <Column id="Column0" type="DATE" size="256"/>
+          <Column id="Column1" type="DATE" size="256"/>
+          <Column id="Column2" type="STRING" size="256"/>
+          <Column id="Column3" type="DATETIME" size="256"/>
+          <Column id="Column4" type="TIME" size="256"/>
+          <Column id="Column5" type="TIME" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">20230615</Col>
+            <Col id="Column1">20230924</Col>
+            <Col id="Column2">20230615153059000</Col>
+            <Col id="Column3">20230924163030000</Col>
+            <Col id="Column4">153059000</Col>
+            <Col id="Column5">163059000</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="PopupDateRangePicker00" propid="enddate" datasetid="Dataset00" columnid="Column1"/>
+      <BindItem id="item1" compid="PopupDateRangePicker00" propid="startdate" datasetid="Dataset00" columnid="Column0"/>
+    </Bind>
+  </Form>
+</FDL>
