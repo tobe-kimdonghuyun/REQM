@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Work" width="700" height="720" titletext="Form_Work">
+    <Layouts>
+      <Layout width="700" height="720" screenid="Desktop_screen">
+        <Static id="Static00" taborder="3" text="nexacroK_mfe_sub2" left="36" top="4" width="518" height="70" font="36px/normal &quot;Malgun Gothic&quot;"/>
+        <Button id="Button00" taborder="1" text=" nexacro.getEnvironment().property" left="55" top="84" width="250" height="56" onclick="Button00_onclick"/>
+        <TextArea id="TextArea00" taborder="2" left="52" top="221" width="396" height="298"/>
+        <Button id="Button01" taborder="3" text=" nexacro.getApplication().property" left="314" top="81" width="252" height="62" onclick="Button01_onclick"/>
+        <Button id="Button02" taborder="4" text="nexacro.setTimer" left="56" top="148" width="250" height="59" onclick="Button02_onclick"/>
+        <Button id="btn_showmodal" taborder="5" text="showmodal" left="322" top="148" width="178" height="59" onclick="btn_showmodal_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let env_all = nexacro.getEnvironment();
+	/*for( i in env_all)
+	{
+		if (typeof env_all[i] === "function") continue;
+		trace(i + " :: " + env_all[i]);
+	}
+	*/
+	this.TextArea00.value="";
+	this.TextArea00.insertText(" enableinspector  = "+env_all.enableinspector+
+								"\n enabletouchevent = "+env_all.enabletouchevent+
+								"\n tabkeycirculation = "+env_all.tabkeycirculation+
+								"\n filesecurelevel = "+env_all.filesecurelevel+
+								"\n networksecurelevel = "+env_all.networksecurelevel+
+								"\n datatyperule = "+env_all.datatyperule)
+};
+ 
+ 
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let app_all = nexacro.getApplication();
+
+	this.TextArea00.value="";
+	this.TextArea00.insertText(" id = "+app_all.id+
+								"\n screenid = "+app_all.screenid+
+								"\n app_variables = "+app_all.app_variable);
+};
+
+this.Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	nexacro.setTimeout(obj, this.onceCallback, 200);
+
+};
+cnt = 0;
+this.onceCallback = function()
+{
+	
+	this.parent.TextArea00.insertText(this.id+"_" + cnt++); // Button00
+}
+
+this.btn_showmodal_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objFrame = new nexacro.ChildFrame();
+	var objParentFrame = this.getOwnerFrame();
+
+	objFrame.init( "modal00", 0, 0, 500, 500 );
+	objFrame.formurl = "FrameBase::sub_form.xfdl";
+	this.TextArea00.value="";
+	var ret1 = objFrame.showModal( objParentFrame, {a:'aaa', b:'bbb'}, this )
+	.then((result1) => {
+	  trace("Closed showmodal with args: "+ " return1 = " + ret1 + ", result1 = " + result1.arg);
+	  this.TextArea00.insertText("showmodal :" +result1.arg);
+	 
+	}).catch((err) => {
+		trace("Failed to open popup promise_open_test1 : " + err.message + " return = " + ret1);
+	});
+};
+]]></Script>
+  </Form>
+</FDL>

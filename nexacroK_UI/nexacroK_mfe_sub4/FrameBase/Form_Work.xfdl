@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Work" width="1160" height="640" titletext="Form_Work" background="greenyellow" onload="Form_Work_onload" text="nexacroK_mfe_sub4">
+    <Layouts>
+      <Layout width="1160" height="640" screenid="Desktop_screen">
+        <Static id="Static00" taborder="0" text="nexacroK_mfe_sub4" left="36" top="4" width="334" height="70" font="36px/normal &quot;Malgun Gothic&quot;"/>
+        <Static id="Static00_00" taborder="1" text="nexacroK_mfe_sub3" left="390" top="4" width="750" height="70" font="36px/normal &quot;Malgun Gothic&quot;"/>
+        <Button id="Button00" taborder="2" text="sub_00.xfdl" left="15" top="99" width="205" height="81"/>
+        <Button id="Button01" taborder="3" text="sub_00.xfdl" left="230" top="100" width="200" height="80"/>
+        <Button id="btn_loadstyle" taborder="4" text="nexacro.loadStyle( &quot;xcssrc::test_234.xcss&quot; ); " left="440" top="100" width="250" height="80" onclick="btn_loadstyle_onclick"/>
+        <Button id="btn_showmodal" taborder="5" text="showmodal" left="36" top="227" width="178" height="75" onclick="btn_showmodal_onclick"/>
+        <Button id="btn_open2" taborder="6" text="nexacro.open" left="236" top="225" width="178" height="75" onclick="btn_open2_onclick"/>
+        <Button id="Button02" taborder="7" text="nexacro.setWheelZoom( objFrame, 200 );" left="440" top="217" width="236" height="88" onclick="Button02_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Form_Work_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.Static00_00.text ="tabkeycirculation = "+ nexacro.getEnvironment().tabkeycirculation;
+};
+
+this.btn_loadstyle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	nexacro.loadStyle( "xcssrc::test_234.xcss" ); 
+	//this.reload();
+};
+
+this.btn_showmodal_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objFrame = new nexacro.ChildFrame();
+	var objParentFrame = this.getOwnerFrame();
+
+	objFrame.init( "modal00", 0, 0, 500, 500 );
+	objFrame.formurl = "FrameBase::sub_form_00.xfdl";
+
+	var ret1 = objFrame.showModal( objParentFrame, {a:'aaa', b:'bbb'}, this )
+	.then((result1) => {
+	  trace("Closed showmodal with args: "+ " return1 = " + ret1 + ", result1 = " + result1.arg);
+	
+	 
+	}).catch((err) => {
+		trace("Failed to open popup promise_open_test1 : " + err.message + " return = " + ret1);
+	});
+};
+
+this.btn_open2_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let ret1 = nexacro.open("promise_open_test1","FrameBase::sub_form_00.xfdl", this.getOwnerFrame(), { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 150, "promise")
+	.then((result1) => {
+	  trace("Closed popup with args: "+ " return1 = " + ret1 + ", result1 = " + result1);
+	 trace("nexacro.open  : "+result1);
+	 
+	}).catch((err) => {
+		trace("Failed to open popup promise_open_test1 : " + err.message + " return = " + ret1);
+	});
+};
+
+this.Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+	var objFrame = this.getOwnerFrame();
+	nexacro.setWheelZoom( objFrame, 200 );
+};
+]]></Script>
+  </Form>
+</FDL>

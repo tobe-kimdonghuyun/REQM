@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Work" width="700" height="720" titletext="Form_Work" ontimer="Form_Work_ontimer">
+    <Layouts>
+      <Layout width="700" height="720" screenid="Desktop_screen">
+        <Button id="btn_open" taborder="0" text="this.setTimer" left="24" top="92" width="178" height="75" onclick="Button00_onclick"/>
+        <Button id="btn_alert" taborder="1" text="this.alert" left="212" top="92" width="178" height="75" onclick="btn_alert_onclick"/>
+        <Button id="btn_transaction" taborder="2" text="this.transaction" left="410" top="92" width="178" height="75" onclick="btn_transaction_onclick"/>
+        <Static id="Static00" taborder="3" text="nexacroK_mfe_sub1" left="36" top="4" width="518" height="70" font="36px/normal &quot;Malgun Gothic&quot;"/>
+        <TextArea id="TextArea00" taborder="4" left="29" top="432" width="545" height="218" wordWrap="char"/>
+        <Button id="btn_trackpopup" taborder="5" text="trackpopup" left="24" top="177" width="178" height="75" onclick="btn_trackpopup_onclick"/>
+        <PopupDiv id="PopupDiv00" text="PopupDiv00" visible="false" left="696" top="168" width="284" height="212" background="red" oncloseup="PopupDiv00_oncloseup">
+          <Layouts>
+            <Layout>
+              <Button id="Button00" taborder="0" text="Button00" left="67" top="64" width="110" height="71" onclick="PopupDiv00_Button00_onclick"/>
+            </Layout>
+          </Layouts>
+        </PopupDiv>
+        <Button id="btn_open2" taborder="6" text="nexacro.open" left="212" top="177" width="178" height="75" onclick="btn_open2_onclick"/>
+        <Button id="btn_showmodal" taborder="7" text="showmodal" left="410" top="177" width="178" height="75" onclick="btn_showmodal_onclick"/>
+        <Button id="btn_trackpopupByComponent" taborder="8" text="trackpopupByComponent" left="24" top="260" width="178" height="75" onclick="btn_trackpopupByComponent_onclick"/>
+        <Button id="btn_awaitTR" taborder="9" text="await transaction" left="212" top="259" width="176" height="75" onclick="btn_awaitTR_onclick"/>
+        <Button id="btn_confirm" taborder="10" text="this.confirm" left="410" top="259" width="176" height="75" onclick="btn_confirm_onclick"/>
+        <Button id="btn_print" taborder="11" text="this.print" left="24" top="343" width="178" height="75" onclick="btn_print_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.setTimer("0","5000");
+};
+
+
+this.Form_Work_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if(e.timerid == "0")
+	{	
+		this.killTimer(0);
+		this.TextArea00.value="";
+		this.TextArea00.insertText("nexacroK_mfe_sub1 form ontimer이벤트");
+	}
+};
+
+this.btn_alert_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.alert("nexacroK_mfe_sub1 form alert 테스트");
+	
+};
+
+this.btn_transaction_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	let sArgs = "userid="+ "blue ";
+	sArgs += " username="+ "테스트";
+	var svrid = "MyService01"
+	//const req = this.transaction(svrid,"http://172.10.12.45:9090/service_jsp/test_100_XML.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
+	const req = this.transaction(svrid,"http://172.10.12.45:9090/REQM/test_100_XML.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
+	trace(req);
+	// 결과 처리
+	this.TextArea00.value="";
+	if(req) 
+	{
+		req.then(res => { //message
+			this.callbackFunction(svrid, res[0],res[1]);
+		})
+			.catch(err => this.TextArea00.insertText("실패:", err.errorMsg));
+	}
+};
+this.callbackFunction = function(svrid, errorcode, errormsg)
+{
+	this.TextArea00.value="";
+	this.TextArea00.insertText("nexacroK_mfe_sub1 transaction promise 테스트 svrid = ["+svrid+"], errorcode = ["+errorcode+", errormsg = ["+errormsg+"]");
+}
+
+this.btn_trackpopup_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+	this.TextArea00.value="";
+	let _this = this;
+	let req = this.PopupDiv00.trackPopup( 10,10, 200, 200)
+	.then((result1) =>{
+		//alert('First popup closed');
+			this.TextArea00.insertText("PopupDiv00.trackPopup : "+result1);
+		})
+		.catch(function(error){console.log("error")});
+};
+
+this.strCallBackFunc = function(id, returnValue)
+{
+	trace(id,req.returnValue);
+}
+
+this.btn_open2_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.TextArea00.value="";
+	let ret1 = nexacro.open("promise_open_test1","FrameBase::sub_form.xfdl", this.getOwnerFrame(), { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 150, "promise")
+	.then((result1) => {
+	  trace("Closed popup with args: "+ " return1 = " + ret1 + ", result1 = " + result1);
+	  this.TextArea00.insertText("nexacro.open  : "+result1);
+	 
+	}).catch((err) => {
+		trace("Failed to open popup promise_open_test1 : " + err.message + " return = " + ret1);
+	});
+};
+
+this.btn_showmodal_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objFrame = new nexacro.ChildFrame();
+	var objParentFrame = this.getOwnerFrame();
+
+	objFrame.init( "modal00", 0, 0, 500, 500 );
+	objFrame.formurl = "FrameBase::sub_form.xfdl";
+	this.TextArea00.value="";
+	var ret1 = objFrame.showModal( objParentFrame, {a:'aaa', b:'bbb'}, this )
+	.then((result1) => {
+	  trace("Closed showmodal with args: "+ " return1 = " + ret1 + ", result1 = " + result1.arg);
+	  this.TextArea00.insertText("showmodal :" +result1.arg);
+	 
+	}).catch((err) => {
+		trace("Failed to open popup promise_open_test1 : " + err.message + " return = " + ret1);
+	});
+};
+
+this.btn_trackpopupByComponent_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.TextArea00.value="";
+	
+	trace(this.PopupDiv00.isPopup())
+
+	let req = this.PopupDiv00.trackPopupByComponent(obj,10,10)
+	.then((result1) =>{
+		//alert('First popup closed');
+			this.TextArea00.insertText("PopupDiv00.trackPopupByComponent : "+result1);
+		})
+		.catch(function(error){console.log("error")});
+};
+
+this.PopupDiv00_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.PopupDiv00.closePopup("PopupDiv00.closePopup");
+};
+
+this.btn_awaitTR_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	loadData(this); 
+
+};
+async function loadData(app) 
+{
+	try {
+		app.TextArea00.value="";
+		let sArgs = "userid="+ "blue";
+		sArgs += " username="+ "테스트";
+		// transaction 호출 후 결과가 반환될 때까지 기다림
+		const [errorcode,errormsg] = await app.transaction("AA","http://172.10.12.45:9090/service_jsp/test_100_XML_await.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
+		// 절차적으로 순서대로 실행됨
+		trace("✅ 사용자 조회 완료:", errorcode, errormsg);
+		app.TextArea00.insertText("nexacroK_mfe_sub1 transaction promise 테스트 code = "+errorcode+"  msg = "+errormsg);
+	} catch (err) {
+		trace("❌ 사용자 조회 실패:");
+	}
+};
+this.btn_confirm_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.confirm("confirm");
+};
+
+this.btn_print_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	system.print( obj); 
+};
+]]></Script>
+  </Form>
+</FDL>
