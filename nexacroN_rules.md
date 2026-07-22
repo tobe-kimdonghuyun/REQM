@@ -28,7 +28,7 @@
 - nexacro 화면은 `.xfdl` 확장자 파일 — XML(컴포넌트/레이아웃) + nexacro 스크립트(로직) 혼합
 - 스크립트는 `<Script><![CDATA[ ... ]]></Script>` 태그 내부에 function으로 작성 javascript문법을 사용하고 있다
 - `nexacrodeploy.exe` 를 통해 nexacroK, nexacroN 모두 빌드 → 최종 `.js` 파일 생성
-
+- 넥사크로 엔진은 js로 되어 있고 D:\git_prj\cursor_project\nexacrolib\nexacrolib 폴더이다  
 ---
 
 ## 프로젝트 파일 구조
@@ -3342,3 +3342,432 @@ trace(sum.toString());
 // 비교
 var cmp = d1.compareTo(d2);  // -1: d1<d2, 0: 같음, 1: d1>d2
 ```
+
+---
+
+## 상세 컴포넌트 레퍼런스 (`nexacro_reference/`)
+
+> `nexacro_reference/` 폴더에는 `nexacro_manual.chm`에서 자동 추출된 **컴포넌트별 상세 속성·메서드·이벤트 레퍼런스**가 있다.
+
+### 활용 규칙
+
+1. 특정 컴포넌트의 속성·메서드·이벤트 상세 사양이 필요한 경우 → 해당 MD 파일을 **Read 도구로 직접 읽어서** 확인한다.
+2. 아래 표에서 컴포넌트명으로 파일을 찾은 뒤 `nexacro_reference/<파일명>`을 읽는다.
+3. 이 rules 파일의 내용과 레퍼런스가 충돌할 경우 → **레퍼런스 파일 우선** (CHM 원문 기준).
+
+### 파일 인덱스
+
+| 파일 | 항목 수 | 주요 컴포넌트/대상 |
+|------|---------|------------------|
+| [Animation.md](nexacro_reference/Animation.md) | 31개 | Animation 오브젝트 |
+| [AnimationTimeline.md](nexacro_reference/AnimationTimeline.md) | 24개 | AnimationTimeline 오브젝트 |
+| [Appendix.md](nexacro_reference/Appendix.md) | 27개 | 상수·부록 |
+| [Application.md](nexacro_reference/Application.md) | 80개 | Application 오브젝트 |
+| [Button.md](nexacro_reference/Button.md) | 136개 | Button |
+| [Calendar.md](nexacro_reference/Calendar.md) | 176개 | Calendar |
+| [CheckBox.md](nexacro_reference/CheckBox.md) | 135개 | CheckBox |
+| [CheckBoxSet.md](nexacro_reference/CheckBoxSet.md) | 140개 | CheckBoxSet |
+| [Combo.md](nexacro_reference/Combo.md) | 166개 | Combo |
+| [Communication_Objects.md](nexacro_reference/Communication_Objects.md) | 93개 | DataObject, XAgent 등 |
+| [Dataset.md](nexacro_reference/Dataset.md) | 171개 | Dataset, VariableList, ColumnInfo |
+| [DataObject.md](nexacro_reference/DataObject.md) | 40개 | DataObject (REST/JSON 통신 오브젝트) |
+| [DateField.md](nexacro_reference/DateField.md) | 178개 | DateField |
+| [DateRangePicker.md](nexacro_reference/DateRangePicker.md) | 147개 | DateRangePicker |
+| [DeviceAPI.md](nexacro_reference/DeviceAPI.md) | 272개 | 모바일 디바이스 API |
+| [Div.md](nexacro_reference/Div.md) | 141개 | Div |
+| [Edit.md](nexacro_reference/Edit.md) | 145개 | Edit |
+| [Environment.md](nexacro_reference/Environment.md) | 92개 | Environment 오브젝트 |
+| [EventInfo_Objects.md](nexacro_reference/EventInfo_Objects.md) | 1317개 | 이벤트 파라미터 오브젝트 전체 |
+| [Event_Objects.md](nexacro_reference/Event_Objects.md) | 5개 | 이벤트 오브젝트 |
+| [FileDialog.md](nexacro_reference/FileDialog.md) | 11개 | FileDialog |
+| [FileDownTransfer.md](nexacro_reference/FileDownTransfer.md) | 26개 | FileDownTransfer |
+| [FileDownload.md](nexacro_reference/FileDownload.md) | 129개 | FileDownload |
+| [FileUpTransfer.md](nexacro_reference/FileUpTransfer.md) | 35개 | FileUpTransfer |
+| [FileUpload.md](nexacro_reference/FileUpload.md) | 166개 | FileUpload |
+| [Form.md](nexacro_reference/Form.md) | 183개 | Form |
+| [Frames.md](nexacro_reference/Frames.md) | 535개 | MainFrame, ChildFrame, FrameSet 계열 |
+| [GoogleMap.md](nexacro_reference/GoogleMap.md) | 104개 | GoogleMap |
+| [Graphics.md](nexacro_reference/Graphics.md) | 396개 | Graphics, 도형 오브젝트 |
+| [Grid.md](nexacro_reference/Grid.md) | 690개 | Grid (가장 많은 API) |
+| [GroupBox.md](nexacro_reference/GroupBox.md) | 106개 | GroupBox |
+| [ImageViewer.md](nexacro_reference/ImageViewer.md) | 137개 | ImageViewer |
+| [ListBox.md](nexacro_reference/ListBox.md) | 177개 | ListBox |
+| [ListView.md](nexacro_reference/ListView.md) | 429개 | ListView |
+| [MaskEdit.md](nexacro_reference/MaskEdit.md) | 148개 | MaskEdit |
+| [Menu.md](nexacro_reference/Menu.md) | 157개 | Menu |
+| [Misc_Objects.md](nexacro_reference/Misc_Objects.md) | 168개 | 기타 오브젝트 (Timer, VirtualFile 등) |
+| [MultiCombo.md](nexacro_reference/MultiCombo.md) | 242개 | MultiCombo |
+| [MultiLineTextField.md](nexacro_reference/MultiLineTextField.md) | 165개 | MultiLineTextField |
+| [NexacroAPI.md](nexacro_reference/NexacroAPI.md) | 55개 | nexacro 정적 API |
+| [Panel.md](nexacro_reference/Panel.md) | 132개 | Panel |
+| [Plugin.md](nexacro_reference/Plugin.md) | 72개 | Plugin |
+| [PopupDateRangePicker.md](nexacro_reference/PopupDateRangePicker.md) | 147개 | PopupDateRangePicker |
+| [PopupDiv.md](nexacro_reference/PopupDiv.md) | 125개 | PopupDiv |
+| [PopupMenu.md](nexacro_reference/PopupMenu.md) | 132개 | PopupMenu |
+| [ProgressBar.md](nexacro_reference/ProgressBar.md) | 127개 | ProgressBar |
+| [Radio.md](nexacro_reference/Radio.md) | 158개 | Radio |
+| [Script.md](nexacro_reference/Script.md) | 131개 | Script 오브젝트 |
+| [SelectField.md](nexacro_reference/SelectField.md) | 165개 | SelectField |
+| [Sketch.md](nexacro_reference/Sketch.md) | 144개 | Sketch |
+| [Spin.md](nexacro_reference/Spin.md) | 147개 | Spin |
+| [SpinField.md](nexacro_reference/SpinField.md) | 151개 | SpinField |
+| [Static.md](nexacro_reference/Static.md) | 113개 | Static |
+| [System_Component.md](nexacro_reference/System_Component.md) | 550개 | System, Screen, Geolocation 등 |
+| [Tab.md](nexacro_reference/Tab.md) | 277개 | Tab |
+| [TextArea.md](nexacro_reference/TextArea.md) | 167개 | TextArea |
+| [TextField.md](nexacro_reference/TextField.md) | 154개 | TextField |
+| [VideoPlayer.md](nexacro_reference/VideoPlayer.md) | 86개 | VideoPlayer |
+| [View.md](nexacro_reference/View.md) | 141개 | View |
+| [VirtualFile.md](nexacro_reference/VirtualFile.md) | 35개 | VirtualFile |
+| [WebBrowser.md](nexacro_reference/WebBrowser.md) | 85개 | WebBrowser |
+| [WebView.md](nexacro_reference/WebView.md) | 86개 | WebView |
+
+### 주요 사용 시나리오
+
+```
+Grid 속성 확인       → nexacro_reference/Grid.md 읽기
+Dataset API          → nexacro_reference/Dataset.md 읽기
+DataObject API       → nexacro_reference/DataObject.md 읽기
+이벤트 파라미터      → nexacro_reference/EventInfo_Objects.md 읽기
+환경 설정            → nexacro_reference/Environment.md 읽기
+NexacroAPI           → nexacro_reference/NexacroAPI.md 읽기
+Frame 구조           → nexacro_reference/Frames.md 읽기
+```
+
+---
+
+## nexacrolib 엔진 구조 (`nexacrolib/nexacrolib/`)
+
+> **위치**: `D:\git_prj\cursor_project\nexacrolib\nexacrolib\`
+>
+> nexacro N v24 엔진 자체를 구성하는 JS 라이브러리 소스. 컴포넌트 내부 동작 원리 파악, 커스텀 모듈 개발, 디버깅 시 참조한다.
+
+### 최상위 구조
+
+```
+nexacrolib/nexacrolib/
+├── nexacrolib.json         — 라이브러리 메타정보 (버전, 폴더 목록)
+├── framework/              — 시스템 코어 (초기화, 플랫폼 추상화, 암호화)
+├── component/              — UI 컴포넌트 라이브러리 (Button, Grid, Dataset 등)
+└── resources/              — 공통 리소스 (이미지 등)
+```
+
+**nexacrolib.json 핵심 정보**:
+```json
+{
+  "Nexacro N": {
+    "version": "24.0.0.9999",
+    "type": "framework",
+    "cssruleversion": "1.3",
+    "resources": [
+      { "folder": "component" },
+      { "folder": "framework" },
+      { "folder": "resources" }
+    ]
+  }
+}
+```
+
+---
+
+### framework/ — 시스템 코어
+
+| 파일명 | 크기 | 역할 |
+|--------|------|------|
+| `SystemBase.js` | 143KB | 시스템 초기화, 프로토타입 생성 엔진(`_createPrototype`) |
+| `SystemBase_HTML5.js` | 671KB | WRE(웹 브라우저) + iOS_NRE 런타임 구현 |
+| `SystemBase_Runtime.js` | 349KB | NRE(Native Runtime) 구현 |
+| `Platform.js` | 728KB | **최대 파일** — 전역 객체 등록, 컴포넌트 glue code |
+| `Platform_HTML5.js` | 188KB | HTML5 플랫폼 특화 |
+| `Platform_Runtime.js` | 84KB | Runtime 플랫폼 특화 |
+| `BasicObjs.js` | 143KB | 기본 객체 정의 (Point, Rect, Size, Decimal, Date, Image) |
+| `CssObjs.js` | 56KB | CSS 객체 및 스타일 관리 |
+| `ErrorDefine.js` | 56KB | 에러 코드 및 메시지 정의 |
+| `Crypto.js` | 157KB | 암호화 기능 (MD5, SHA, AES 등) |
+| `LocaleSupport.js` | 94KB | 다국어/지역 지원 |
+| `Device.js` | 34KB | Device API 기본 인터페이스 |
+| `Device_Android.js` | 5.7KB | Android 특화 기능 |
+| `Device_iOS.js` | 12KB | iOS 특화 기능 |
+| `Device_Windows.js` | 2.1KB | Windows 특화 기능 |
+| `makeLocaleInfo.js` | 604KB | 다국어 정보 생성/컴파일 |
+
+**파일명 패턴**:
+- `*_HTML5.js` → WRE (웹 브라우저), iOS_NRE 대상
+- `*_Runtime.js` → NRE (Windows/Android 네이티브) 대상
+- `Device_<OS>.js` → OS별 특화 구현
+
+**로딩 순서 (Framework.json 기준)**:
+```
+SystemBase.js → LocaleSupport.js → SystemBase_HTML5/Runtime.js
+→ BasicObjs.js → ErrorDefine.js → Platform_HTML5/Runtime.js
+→ Platform.js → CssObjs.js → Device*.js → Crypto.js
+```
+
+---
+
+### component/ — UI 컴포넌트 라이브러리
+
+#### CompBase/ — 컴포넌트 기본 클래스
+
+| 파일명 | 역할 |
+|--------|------|
+| `CompBase.js` | 모든 컴포넌트의 최상위 기본 클래스 |
+| `CompEventBase.js` | 이벤트 처리 기반 |
+| `FormBase.js` | Form 기본 클래스 |
+| `FrameBase.js` | Frame 기본 클래스 |
+| `EditBase.js` | 편집 컴포넌트 기본 클래스 |
+| `Element_HTML5.js` | HTML5 환경 DOM 요소 추상화 |
+| `Element_Runtime.js` | NRE 환경 DOM 요소 추상화 |
+| `Animation.js` | 애니메이션 기본 |
+| `ScrollBar.js` | 스크롤바 |
+| `TitleBar.js`, `StatusBar.js` | 타이틀바/상태바 |
+| `Data.js` | 데이터 기반 추상화 |
+| `ViewTransition.js` | 화면 전환 효과 |
+
+#### ComComp/ — 일반 UI 컴포넌트 (44개 JS)
+
+```
+Button.js, Edit.js, MaskEdit.js, TextArea.js
+CheckBox.js, Radio.js, CheckBoxSet.js
+Combo.js, MultiCombo.js, ListBox.js
+Calendar.js, DatePicker.js, Spin.js
+Static.js, ImageViewer.js, ProgressBar.js
+Div.js, Panel.js, PopupDiv.js, Tab.js, GroupBox.js
+Grid 관련: Dataset.js, DataObject.js, DomObject.js, Cell.js
+Menu.js, PopupMenu.js
+FileDialog.js, FileUpload.js, FileDownload.js
+FileUpTransfer.js, FileDownTransfer.js, VirtualFile.js
+WebBrowser.js, WebView.js, VideoPlayer.js
+GoogleMap.js, Sketch.js, View.js
+ExportObject.js, ImportObject.js
+Action.js, Plugin.js, Tray.js
+```
+
+#### Grid/ — 데이터 그리드 (2개 JS)
+
+```
+Grid.js      — 메인 그리드 구현 (복잡한 이벤트/셀/밴드 처리)
+GridInfo.js  — 그리드 컬럼/포맷 메타정보
+```
+
+#### MobileComp/ — 모바일 최적화 컴포넌트 (13개 JS)
+
+```
+MobileCompBase.js
+MobileElement_HTML5.js, MobileElement_Runtime.js
+TextField.js, MultiLineTextField.js
+DateField.js, SpinField.js, SelectField.js
+DateRangePicker.js, PopupDateRangePicker.js
+DateRangeCalendar.js, TimePickerControl.js, SpinnerControl.js
+```
+
+#### DevPackLib/ — 개발 팩 유틸리티 (12개 JS)
+
+```
+Frame.js        — 프레임 관리 유틸
+Util.js         — 공통 유틸리티
+Comp.js         — 컴포넌트 유틸리티
+Transaction.js  — 서버 통신
+Validation.js   — 유효성 검증
+Grid.js         — 그리드 관련 유틸
+Excel.js        — 엑셀 Import/Export
+Message.js      — 메시지 박스
+Popup.js        — 팝업 창
+File.js         — 파일 처리
+ExtLib.js       — 확장 라이브러리
+CompOverride.js — 컴포넌트 오버라이드
+```
+
+#### DeviceAPI/ — 디바이스 API (7개 JS)
+
+```
+DeviceObjs.js, DeviceObjs_Runtime.js
+SQLite.js, SQLite_Runtime.js
+Mobile.js                    — Camera, Geolocation, Contact, SMS 등
+BluetoothLE.js               — Bluetooth Low Energy
+TCPClientSocket.js           — TCP 소켓 통신
+```
+
+#### 기타 component 모듈
+
+| 폴더 | 파일 수 | 용도 |
+|------|--------|------|
+| `Chart/` | 119개 | 차트 엔진 (BasicChart, PieChart, BubbleChart, GaugeChart, RadarChart 등) |
+| `Accessibility/` | 4개 | 접근성(WAI-ARIA) |
+| `Graphics/` | 2개 | 캔버스 벡터 그래픽 |
+| `ListView/` | 2개 | 리스트뷰 |
+| `Push/` | 6개 | X-PUSH (sockjs.js 포함) |
+| `Splitter/` | 2개 | 분할 컨테이너 |
+| `XAgent/` | 1개 | XAgent 서버 통신 |
+| `VoiceRecognition/` | 1개 | 음성 인식 |
+| `Cordova/` | 1개 | Cordova 플러그인 |
+| `CompBaseEx/` | 2개 | SimpleComp, ComplexComp 확장 |
+
+---
+
+### 엔진 JS 코딩 패턴 (내부 구현 규칙)
+
+> 엔진 소스 분석 또는 커스텀 모듈 개발 시 아래 패턴을 이해하고 활용한다.
+
+#### 1. 전역 namespace 및 조건부 정의
+
+```javascript
+// nexacro 전역 namespace 초기화
+if (!this.nexacro) { this.nexacro = {}; }
+
+// 중복 로드 방지 — 컴포넌트 정의 전 반드시 체크
+if (!nexacro.Button) {
+    // 컴포넌트 정의...
+}
+```
+
+#### 2. 프로토타입 기반 상속
+
+```javascript
+// 컴포넌트 생성자 함수 — 인자: id, left, top, width, height, right, bottom, ...parent
+nexacro.Button = function (id, left, top, width, height, right, bottom,
+                           minwidth, maxwidth, minheight, maxheight, parent) {
+    nexacro._IconText.call(this, id, left, top, width, height,
+                           right, bottom, minwidth, maxwidth, minheight, maxheight, parent);
+};
+
+// 상속 체인 설정
+var _pButton = nexacro._createPrototype(nexacro._IconText, nexacro.Button);
+nexacro.Button.prototype = _pButton;
+_pButton._type_name = "Button";   // 타입명 등록 (필수)
+```
+
+#### 3. 내부 속성 네이밍 규칙
+
+| 접두어 | 의미 | 예시 |
+|--------|------|------|
+| `_p_` | property (외부 노출 속성) | `_p_tabstop`, `_p_text` |
+| `_is_` | boolean flag | `_is_focus_accept`, `_is_alive` |
+| `_cur_` | current state | `_cur_ldown_elem` |
+| `_use_` | feature flag | `_use_pushed_status` |
+| `_v_` | 내부 변수 | `_v_value` |
+
+```javascript
+_pButton._p_tabstop     = true;
+_pButton._p_defaultbutton = false;
+_pButton._is_focus_accept = true;
+_pButton._cur_ldown_elem  = null;
+_pButton._use_pushed_status = true;
+```
+
+#### 4. setter/getter 패턴
+
+```javascript
+// setter: set_<속성명>
+_pButton.set_text = function (v) {
+    if (this._p_text != v) {
+        this._p_text = v;
+        this._updateText();
+    }
+};
+
+// getter: get_<속성명>
+_pButton.get_text = function () {
+    return this._p_text;
+};
+```
+
+#### 5. EventInfo 클래스 패턴
+
+```javascript
+// 이벤트 파라미터 객체 — 이벤트별로 전용 클래스 정의
+nexacro.GridCellClickEventInfo = function (obj, id, cell, col, row, subrow, ...) {
+    nexacro.ClickEventInfo.call(this, obj, id, ...);
+    this.cell   = cell;
+    this.col    = col;
+    this.row    = row;
+    this.subrow = subrow;
+};
+var _p = nexacro._createPrototype(nexacro.ClickEventInfo, nexacro.GridCellClickEventInfo);
+nexacro.GridCellClickEventInfo.prototype = _p;
+_p._type_name = "GridCellClickEventInfo";
+delete _p;   // 임시 변수 정리
+```
+
+#### 6. 플랫폼 분기 패턴
+
+```javascript
+// scriptfilter로 환경별 파일 선택적 로드 (Framework.json/Component.json)
+// target: "WRE,iOS_NRE"  → 웹 + iOS 네이티브에서만 로드
+// target: "NRE"           → 모든 네이티브 환경
+// target: "NRE,iOS_NRE"  → 네이티브 환경 전체
+
+// 런타임 환경 분기 (파일 내부)
+if (nexacro._isWRE) {
+    // 웹 브라우저 환경 처리
+} else {
+    // NRE 환경 처리
+}
+```
+
+#### 7. 컴포넌트 라이프사이클 오버라이드
+
+```javascript
+// 생성/초기화
+_pButton.on_created = function () { /* ... */ };
+
+// 표시
+_pButton.on_show = function () { /* ... */ };
+
+// 크기/위치 변경
+_pButton.on_resize = function () { /* ... */ };
+
+// 포커스
+_pButton.on_focus_in = function (focused_comp) { /* ... */ };
+_pButton.on_focus_out = function (focus_comp)  { /* ... */ };
+
+// 제거
+_pButton.destroyComponent = function () {
+    // 정리 로직
+    return nexacro.Component.prototype.destroyComponent.call(this);
+};
+```
+
+---
+
+### 컴포넌트 상속 계층 (클래스 트리)
+
+```
+nexacro.Object
+└── nexacro.Component                         (CompBase.js)
+    ├── nexacro._Text / nexacro._IconText      (공통 텍스트/아이콘)
+    │   ├── nexacro.Button
+    │   ├── nexacro.Static
+    │   └── nexacro.CheckBox, Radio ...
+    ├── nexacro._EditBase                      (EditBase.js)
+    │   ├── nexacro.Edit
+    │   ├── nexacro.MaskEdit
+    │   └── nexacro.TextArea
+    ├── nexacro.Div                            (컨테이너)
+    │   ├── nexacro.Panel, GroupBox
+    │   └── nexacro.PopupDiv
+    ├── nexacro.Grid                           (Grid.js)
+    └── nexacro.Dataset                        (ComComp/Dataset.js)
+
+nexacro._Form (FormBase.js)
+└── nexacro.Form
+    └── nexacro.ChildFrame, MainFrame 등
+```
+
+---
+
+### 규모 요약
+
+| 모듈 | JS 파일 수 | 비고 |
+|------|-----------|------|
+| framework | 16 | 시스템 코어 (~3.5MB) |
+| CompBase | 14 | 컴포넌트 기반 클래스 |
+| ComComp | 44 | 기본 UI 컴포넌트 |
+| Grid | 2 | 그리드 (가장 복잡한 단일 컴포넌트) |
+| Chart | ~6 | 차트 엔진 |
+| MobileComp | 13 | 모바일 최적화 컴포넌트 |
+| DeviceAPI | 7 | 디바이스 API |
+| DevPackLib | 12 | 개발 유틸리티 라이브러리 |
+| metainfo | 1,000+ | 다국어 API 메타정보 (CHN/ENG/JPN/KOR) |
+
+> **Design/ 폴더**: 각 컴포넌트 하위에 Design 스크립트가 존재하며, Nexacro Studio 디자이너 실행 시에만 로드됨. 프로덕션 빌드에는 포함되지 않음.

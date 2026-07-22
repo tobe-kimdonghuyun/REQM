@@ -3,7 +3,6 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ---
-
 # 언어 응답 규칙
 
 - 설명, 피드백, 질문 답변, 진행상황 등 모든 텍스트 응답은 **한글**로 작성한다.
