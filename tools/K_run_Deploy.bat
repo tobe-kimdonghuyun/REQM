@@ -46,14 +46,14 @@ if errorlevel 1 (
 echo [2/2] Nexacro 배포 완료
 
 REM ===== deploy_config.txt에서 OutputPath 읽어 Chrome 실행 =====
-for /f "usebackq tokens=1,* delims==" %%A in ("%CONFIG%") do (
-    if /i "%%A"=="OutputPath" set "OUTPUT_PATH=%%B"
-)
-
-REM OutputPath에서 REQM 이후 경로 추출 (backslash → forward slash)
-for /f "tokens=2 delims==" %%A in ('echo %OUTPUT_PATH%^| powershell -NoProfile -Command "$input | ForEach-Object { $idx = $_.IndexOf('REQM'); if ($idx -ge 0) { $_.Substring($idx + 4).TrimStart('\').Replace('\','/') } }"') do set "URL_PATH=%%A"
-powershell -NoProfile -Command ^
-    "$p = '%OUTPUT_PATH%'; $idx = $p.IndexOf('REQM'); if ($idx -ge 0) { $rel = $p.Substring($idx + 4).TrimStart('\').Replace('\','/'); $url = 'http://172.10.12.45:9091/' + $rel + '/index.html'; Write-Host '[3/3] Chrome 실행:' $url; Start-Process 'chrome.exe' $url } else { Write-Host '[경고] OutputPath에서 REQM 경로를 찾을 수 없습니다.' }"
+REM for /f "usebackq tokens=1,* delims==" %%A in ("%CONFIG%") do (
+REM     if /i "%%A"=="OutputPath" set "OUTPUT_PATH=%%B"
+REM )
+REM
+REM REM OutputPath에서 REQM 이후 경로 추출 (backslash → forward slash)
+REM for /f "tokens=2 delims==" %%A in ('echo %OUTPUT_PATH%^| powershell -NoProfile -Command "$input | ForEach-Object { $idx = $_.IndexOf('REQM'); if ($idx -ge 0) { $_.Substring($idx + 4).TrimStart('\').Replace('\','/') } }"') do set "URL_PATH=%%A"
+REM powershell -NoProfile -Command ^
+REM     "$p = '%OUTPUT_PATH%'; $idx = $p.IndexOf('REQM'); if ($idx -ge 0) { $rel = $p.Substring($idx + 4).TrimStart('\').Replace('\','/'); $url = 'http://172.10.12.45:9091/' + $rel + '/index.html'; Write-Host '[3/3] Chrome 실행:' $url; Start-Process 'chrome.exe' $url } else { Write-Host '[경고] OutputPath에서 REQM 경로를 찾을 수 없습니다.' }"
 
 REM ===== [마지막] NexacroLibPath / GenerateRule → engine\nexacroK 복사 =====
 set "NEXACRO_LIB="
