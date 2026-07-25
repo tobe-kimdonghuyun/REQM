@@ -297,6 +297,58 @@ this.DataObject00_onsuccess = function(obj, e) {
 // twoway 바인딩 지원 — Dataset 변경 시 DataObject에 자동 반영
 ```
 
+### 실전 사례 — 성공: 버튼 클릭 → REST API → Dataset → Grid 출력
+
+`DataObjectRestSample` 프로젝트(`nexacroK_UI/DataObjectRestSample`)에서 검증된 패턴. 공개 REST API(`https://jsonplaceholder.typicode.com/users`, 응답이 `{...}` 래핑 없이 **루트가 바로 배열**인 형태)를 버튼 클릭으로 조회해 Grid에 출력.
+
+```xml
+<Objects>
+  <DataObject id="doUserList" onsuccess="doUserList_onsuccess" onerror="doUserList_onerror"/>
+  <!-- 루트가 배열인 응답은 dataobjectpath="$[*]" (하위 키로 감싸져 있으면 "$.data[*]" 등) -->
+  <Dataset id="dsUserList" binddataobject="doUserList" dataobjectbindmode="twoway" dataobjectpath="$[*]" onload="dsUserList_onload">
+    <ColumnInfo>
+      <Column id="USER_ID" datapath="@.id" type="STRING" size="256"/>
+      <Column id="USER_NM" datapath="@.name" type="STRING" size="256"/>
+      <!-- 중첩 객체도 점(.) 표기로 바로 접근 가능 -->
+      <Column id="CITY" datapath="@.address.city" type="STRING" size="256"/>
+    </ColumnInfo>
+  </Dataset>
+</Objects>
+```
+
+```javascript
+// 버튼 클릭에서만 통신 시작
+this.btnLoad_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.doUserList.request("SEARCH", "GET", "https://jsonplaceholder.typicode.com/users", null);
+};
+```
+
+- Grid는 평소대로 `binddataset="dsUserList"` + `bind:컬럼명` 셀만 구성하면 별도 갱신 코드 없이 자동 출력됨.
+- `dataobjectbindmode`는 실전 예제(레퍼런스 포함) 전부 `"twoway"`만 사용— 읽기 전용(GET) 화면이라도 그냥 `"twoway"`로 두면 됨.
+
+### 실전 사례 — 실패: DataObject.onload에서 Dataset rowcount를 읽으면 0건으로 표시됨
+
+공식 이벤트 순서는 `DataObject.onsuccess → DataObject.onload → Dataset.onload` 이다. 즉 **DataObject의 onload 시점에는 아직 Dataset에 데이터가 반영되지 않은 상태**이므로, 여기서 바인딩된 Dataset의 `rowcount`를 읽으면 항상 0(또는 이전 값)이 나온다.
+
+```javascript
+// 실패 — "조회 완료 (0건)"으로 항상 잘못 표시됨
+this.doUserList_onload = function(obj:nexacro.DataObject,e:nexacro.DataObjectLoadEventInfo)
+{
+	this.staStatus.set_text("조회 완료 (" + this.dsUserList.rowcount + "건)");
+};
+```
+
+```javascript
+// 성공 — rowcount가 필요한 로직은 반드시 Dataset의 onload에서 처리
+this.dsUserList_onload = function(obj:nexacro.NormalDataset,e:nexacro.DatasetLoadEventInfo)
+{
+	this.staStatus.set_text("조회 완료 (" + obj.rowcount + "건)");
+};
+```
+
+**How to apply**: DataObject와 바인딩된 Dataset을 함께 쓸 때, 로딩 완료 후 건수·후처리 로직은 항상 **Dataset의 onload 핸들러**에 작성한다. DataObject의 onload/onsuccess는 통신 성공 여부(`e.statuscode`) 판별 용도로만 사용한다.
+
 ---
 
 ## FileUpTransfer — 파일 업로드 (드래그앤드롭 포함)
@@ -1586,6 +1638,94 @@ nexacrodeploy.exe -P "C:\Test.xprj" -O "E:\Gen" -B "C:\nexacrolib" \
 | `-COMPILE` | NRE 전용 암호화 |
 
 > Generate Rule 경로: `[SDK]/{24.x}/generate` 폴더. 구 `-CSSRULE`는 폐지됨.
+
+### 자동 배포 판단 규칙 (사용자가 "배포해줘"라고만 말해도 파라미터를 묻지 말고 자동 구성)
+
+사용자가 nexacro 프로젝트 폴더/`.xprj` 경로를 주거나, 대화 중 방금 만든 프로젝트를 가리키며 "배포해줘"라고 하면 아래 순서로 **자동으로** 판단하고 실행한다(각 파라미터를 하나씩 되묻지 않는다).
+
+**1단계 — 배포 경로 판별 (npm 빌드 필요 여부로 분기)**
+
+| 조건 | 사용할 방식 |
+|------|------------|
+| 프로젝트 폴더에 `package.json`/`node_modules`(npm build 스크립트) 없음 — `.xprj` 단독 구조 | **`deploy/start-jar.bat` 직접 실행** (기본, 안전) |
+| 프로젝트 폴더에 `package.json` + `build:dev` 등 npm 스크립트 존재 | `Tools/*_run_BuildDeploy.bat` 계열 — 단, 아래 "주의" 참고, **반드시 사용자 확인 후 실행** |
+
+**2단계 — (start-jar.bat 방식) 파라미터 자동 구성**
+
+- `-P` : 프로젝트 폴더 안에서 `*.xprj` 파일을 탐색해 절대경로 사용 (폴더명=xprj명이 보통 규칙)
+- `-B` : 프로젝트가 참조하는 엔진에 맞는 nexacrolib 경로. 현재 확인된 값: `E:\git_prj\REQM\engine\nexacroN v24\nexacrolib`
+- `-GENERATERULE` : 위 `-B`와 짝을 이루는 generate 폴더. 현재 확인된 값: `E:\git_prj\REQM\engine\nexacroN v24\generate`
+- `-O` : `E:\git_prj\REQM\nexacroK\<프로젝트명>` (프로젝트명 = xprj 파일명, 확장자 제외)
+- 실행 전 반드시 `deploy/` 폴더로 `cd`(또는 `Set-Location`) 후 실행 — `start-jar.bat`이 `.\log4j2.xml`, `NexacroN_Deploy_JAVA.jar`를 상대경로로 참조하기 때문
+- 실행 후 로그의 `Fail 0` 여부로 성공 판정. 실패 시 위/아래 "실전 사례" 항목(특히 `nexacrolib.json` 누락)과 대조
+
+**3단계 — jar/bat 목록은 그때그때 다시 스캔할 것 (하드코딩 금지)**
+
+지금은 `deploy/` 폴더에 `NexacroN_Deploy_JAVA.jar` + `start-jar.bat` 한 세트만 있지만, **이 파일 목록은 고정이 아니다.** 향후 다른 jar(예: nexacroK 전용 배포 jar, SDK 버전별 jar 등)나 그에 대응하는 bat 파일이 `deploy/` 폴더에 추가될 수 있다. 자동 배포를 실행하기 전에 **매번 `deploy/` 폴더를 다시 나열해서 그 시점에 실제로 존재하는 jar/bat 목록을 확인**하고, 프로젝트가 참조하는 엔진(`typedefinition.xml`의 nexacrolib 경로, xadl 등)과 이름이 맞는 것을 선택한다. 후보가 2개 이상이고 이름만으로 판단이 애매하면 사용자에게 어떤 것을 쓸지 확인한다.
+
+**주의 — `Tools/K_run_BuildDeploy.bat`, `Tools/N_run_Deploy.bat` 등은 기본 자동 실행 대상이 아님**
+
+이 스크립트들은 다음을 수행하므로 **절대 되묻지 않고 자동 실행해서는 안 된다**:
+- 이 저장소가 아닌 **외부 경로**(`E:\git\VSCODE_WORK900\WORK900`)에서 `git checkout master` + `git pull` 수행
+- `engine\nexacroK\nexacrolib`, `engine\nexacroK\generate` 폴더를 **통째로 삭제 후 robocopy로 재생성**(파괴적 작업)
+- 고정된 원격 IP(`172.10.12.45:9091`)로 Chrome을 실행 — 현재 로컬 환경(`localhost:9091`)과 다름
+- `deploy_config.txt`/`deploy_config_home.txt`에 이미 들어있는 경로도 `D:\`, `G:\` 등 이 세션의 실제 드라이브 구성과 다른 경우가 많음(다른 PC/환경 기준으로 작성된 설정)
+
+**How to apply**: npm 빌드가 필요한 프로젝트를 배포해야 하는 상황이 오면, 이 Tools bat들을 그대로 실행하지 말고 — 외부 저장소 경로·엔진 폴더 삭제·Chrome 접속 URL을 현재 환경에 맞게 수정해도 되는지 사용자에게 먼저 확인한다. 반대로 `.xprj` 단독 구조의 단순 프로젝트(이번 `DataObjectRestSample` 같은 경우)는 `deploy/start-jar.bat` 경로가 안전하게 검증되었으므로 확인 없이 자동 실행한다.
+
+---
+
+### 실전 사례 — 신규 프로젝트 스캐폴딩 체크리스트
+
+`nexacroK_UI/` 밑에 완전히 새 프로젝트를 만들 때 최소 구성(성공 확인됨):
+
+```
+프로젝트명/
+  프로젝트명.xprj          -- <EnvironmentDefinition>/<TypeDefinition>/<AppVariables>/<AppInfos> 참조
+  environment.xml          -- themeid, ScreenDefinition
+  typedefinition.xml        -- Modules/Components(DataObject 포함)/Services(Base,FrameBase 등 실제 존재하는 폴더만!)
+  appvariables.xml          -- 빈 골격이면 <Datasets/><Variables/> 만으로 충분
+  Application_Desktop.xadl  -- MainFrame > ChildFrame formurl="FrameBase::main.xfdl"
+  FrameBase/main.xfdl
+  _resource_/_theme_/blue/  -- 버튼·그리드 기본 이미지 (Nexacro Studio가 프로젝트 생성 시 자동으로 넣어주는 것과 동일한 세트)
+```
+
+- `_resource_/_theme_` 폴더는 기존 프로젝트(예: `Field_Component_HelperText_Test`)에서 그대로 복사해서 재사용 가능. **단, 복사한 폴더에 원본 프로젝트 전용 리소스(예: 특정 화면만 쓰는 `.xcss` 파일)가 같이 딸려올 수 있으니, 내 프로젝트의 xadl/xfdl에서 실제로 참조하지 않는 파일은 지워야 한다.** 안 지우면 generate 시 `-CSSRULE version does not match` 류의 무관한 에러가 같이 뜨거나 불필요한 실패 로그가 남는다.
+- `typedefinition.xml`의 `<Services>`는 실제 존재하는 폴더(`Base`, `FrameBase` 등)만 등록한다. 존재하지 않는 폴더를 가리키는 Service를 넣으면 generate 시 `Cannot find the path` 경고가 발생한다(치명적이진 않지만 로그 정리 차원에서 피할 것).
+
+### 실전 사례 — 실패: `nexacrolib.json` 누락으로 테마(CSS) 생성 실패
+
+로컬 SDK 설치 경로(`engine/nexacroN v24/nexacrolib/`)에 `nexacrolib.json` 매니페스트가 없으면 다음과 같은 증상이 나타난다:
+
+```
+[ERROR]  Failed to load file : ...\nexacrolib\nexacrolib.json
+...
+[ERROR]  -CSSRULE version does not match the base library version.(1.3)
+[ERROR]  Failed to generate theme : "...\_resource_\_theme_\blue"
+```
+
+- xfdl/xadl 생성 자체는 대부분 성공하지만(Success N, Fail 2), **테마 CSS와 xcss가 생성되지 않아 화면이 스타일 없이 배포**된다.
+- 원인: `nexacrolib/` 폴더는 `.gitignore`(`nexacrolib/`)로 제외되는 로컬 SDK 설치물이라, 설치가 불완전하면 매니페스트 파일이 빠질 수 있다.
+- 해결: `nexacrolib/` 폴더 최상위에 아래 내용으로 `nexacrolib.json`을 생성하면 즉시 해결됨(버전은 실제 사용 중인 SDK 버전에 맞출 것).
+
+```json
+{
+  "Nexacro N": {
+    "version": "24.0.0.9999",
+    "type": "framework",
+    "cssruleversion": "1.3",
+    "resources": [
+      { "folder": "component" },
+      { "folder": "framework" },
+      { "folder": "resources" }
+    ]
+  }
+}
+```
+
+**Why**: `nexacrolib.json`이 `cssruleversion`을 선언하지 못하면 deploy 툴이 generate 규칙 폴더의 CSS 룰 버전과 대조할 기준이 없어져 버전 불일치로 처리한다. `engine/nexacroK/nexacrolib/nexacrolib.json`(K용, cssruleversion 1.4)과 **혼동하지 말 것** — N v24와 K는 서로 다른 엔진이라 파일을 그대로 복사해서 쓰면 안 되고, 위 N 전용 포맷을 써야 한다.
+
+**How to apply**: `nexacroN v24` 엔진 경로로 배포했는데 테마/CSS 관련 에러만 나고 나머지는 정상 생성된다면, 가장 먼저 `nexacrolib/nexacrolib.json` 존재 여부부터 확인한다.
 
 ---
 

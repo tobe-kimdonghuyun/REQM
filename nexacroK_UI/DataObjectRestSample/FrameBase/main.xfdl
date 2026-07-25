@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="main" width="1000" height="700" titletext="New Form" onload="main_onload">
+    <Layouts>
+      <Layout height="700" width="1000">
+        <Static id="staTitle" taborder="0" text="DataObject REST API 샘플 (JSONPlaceholder)" left="20" top="20" width="600" height="30"/>
+        <Button id="btnLoad" taborder="1" text="사용자 목록 조회" left="20" top="60" width="160" height="36" onclick="btnLoad_onclick"/>
+        <Static id="staStatus" taborder="2" text="" left="200" top="60" width="500" height="36"/>
+        <Grid id="grdUserList" taborder="3" left="20" top="110" right="20" bottom="20" binddataset="dsUserList">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="60"/>
+                <Column size="150"/>
+                <Column size="120"/>
+                <Column size="220"/>
+                <Column size="170"/>
+                <Column size="150"/>
+                <Column size="140"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="30"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="ID"/>
+                <Cell col="1" text="이름"/>
+                <Cell col="2" text="사용자ID"/>
+                <Cell col="3" text="이메일"/>
+                <Cell col="4" text="전화번호"/>
+                <Cell col="5" text="웹사이트"/>
+                <Cell col="6" text="도시"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:USER_ID"/>
+                <Cell col="1" text="bind:USER_NM"/>
+                <Cell col="2" text="bind:USER_LOGIN_ID"/>
+                <Cell col="3" text="bind:EMAIL"/>
+                <Cell col="4" text="bind:PHONE"/>
+                <Cell col="5" text="bind:WEBSITE"/>
+                <Cell col="6" text="bind:CITY"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+/*******************************************************************************
+ * FORM EVENT
+*******************************************************************************/
+this.main_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.staStatus.set_text("");
+};
+
+/*******************************************************************************
+ * COMPONENT EVENT
+*******************************************************************************/
+this.btnLoad_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.staStatus.set_text("조회 중...");
+	this.doUserList.request("SEARCH", "GET", "https://jsonplaceholder.typicode.com/users", null);
+};
+
+this.doUserList_onsuccess = function(obj:nexacro.DataObject,e:nexacro.DataObjectEventInfo)
+{
+	if (e.statuscode != 200)
+	{
+		e.preventDefault();
+		this.staStatus.set_text("통신 실패: " + e.statuscode);
+	}
+};
+
+this.doUserList_onerror = function(obj:nexacro.DataObject,e:nexacro.DataObjectErrorEventInfo)
+{
+	this.staStatus.set_text("오류: " + e.errormsg);
+};
+
+this.dsUserList_onload = function(obj:nexacro.NormalDataset,e:nexacro.DatasetLoadEventInfo)
+{
+	this.staStatus.set_text("조회 완료 (" + obj.rowcount + "건)");
+};
+]]></Script>
+    <Objects>
+      <DataObject id="doUserList" onsuccess="doUserList_onsuccess" onerror="doUserList_onerror"/>
+      <Dataset id="dsUserList" binddataobject="doUserList" dataobjectbindmode="twoway" dataobjectpath="$[*]" onload="dsUserList_onload">
+        <ColumnInfo>
+          <Column id="USER_ID" datapath="@.id" type="STRING" size="256"/>
+          <Column id="USER_NM" datapath="@.name" type="STRING" size="256"/>
+          <Column id="USER_LOGIN_ID" datapath="@.username" type="STRING" size="256"/>
+          <Column id="EMAIL" datapath="@.email" type="STRING" size="256"/>
+          <Column id="PHONE" datapath="@.phone" type="STRING" size="256"/>
+          <Column id="WEBSITE" datapath="@.website" type="STRING" size="256"/>
+          <Column id="CITY" datapath="@.address.city" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>
