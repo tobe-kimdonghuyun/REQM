@@ -83,5 +83,5 @@ goto :chrome_launch
 echo [Tomcat] 9091 포트 이미 실행 중
 
 :chrome_launch
-REM ===== OutputPath에서 REQM 이후 경로 추출 후 Chrome 실행 =====
-powershell -NoProfile -Command "$p = '%OUTPUT_PATH%'; $idx = $p.IndexOf('REQM'); if ($idx -ge 0) { $rel = $p.Substring($idx + 4).TrimStart('\').Replace('\', '/'); $url = 'http://localhost:9091/' + $rel + '/index.html'; Write-Host '[3/3] Chrome 실행:' $url; Start-Process 'chrome.exe' $url } else { Write-Host '[경고] OutputPath에서 REQM 경로를 찾을 수 없습니다.' }"
+REM ===== Chrome 자동 실행 비활성화 =====
+REM powershell -NoProfile -Command "$p = '%OUTPUT_PATH%'; $idx = $p.IndexOf('REQM'); if ($idx -ge 0) { $rel = $p.Substring($idx + 4).TrimStart('\').Replace('\', '/'); $url = 'http://localhost:9091/' + $rel + '/index.html'; Write-Host '[3/3] Chrome 실행:' $url; Start-Process 'chrome.exe' $url } else { Write-Host '[경고] OutputPath에서 REQM 경로를 찾을 수 없습니다.' }"

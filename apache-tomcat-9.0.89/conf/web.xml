@@ -530,6 +530,39 @@
 -->
 
 
+  <!-- CORS filter - allows this Tomcat instance to be called cross-origin  -->
+  <!-- from other servers/ports (e.g. nexacro frontend on a different port) -->
+    <filter>
+        <filter-name>CorsFilter</filter-name>
+        <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+        <init-param>
+            <param-name>cors.allowed.origins</param-name>
+            <param-value>*</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cors.allowed.methods</param-name>
+            <param-value>GET,POST,PUT,DELETE,HEAD,OPTIONS</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cors.allowed.headers</param-name>
+            <param-value>Content-Type,X-Requested-With,accept,Origin,Authorization,Access-Control-Request-Method,Access-Control-Request-Headers</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cors.exposed.headers</param-name>
+            <param-value>Access-Control-Allow-Origin,Access-Control-Allow-Credentials</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cors.support.credentials</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cors.preflight.maxage</param-name>
+            <param-value>1800</param-value>
+        </init-param>
+        <async-supported>true</async-supported>
+    </filter>
+
+
   <!-- NOTE: An SSI Servlet is also available as an alternative SSI         -->
   <!-- implementation. Use either the Servlet or the Filter but NOT both.   -->
   <!--                                                                      -->
@@ -589,6 +622,12 @@
 
 
   <!-- ==================== Built In Filter Mappings ====================== -->
+
+  <!-- The mapping for the CORS Filter -->
+    <filter-mapping>
+        <filter-name>CorsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
   <!-- The mapping for the HTTP header security Filter -->
 <!--
