@@ -1,0 +1,56 @@
+if (nexacro.Environment)
+{
+    var env = nexacro._environment = new nexacro.Environment();
+
+    env.on_init = function ()
+    {
+#{ENV_INIT}
+    };
+
+    env.on_initEvent = function ()
+    {
+        // add event handler
+#{ENV_EVENT}
+    };
+
+    env.loadTypeDefinition = function ()
+    {
+#{TYPEDEFINITION_SERVICE}
+
+    	nexacro._component_uri = (nexacro._arg_compurl ? nexacro._arg_compurl : "#{TYPEDEF_COMPLIB_PATH}");
+    	nexacro._theme_uri = "#{THEME_RESOURCE_PATH}";
+
+    	// load components
+#{TYPEDEFINITION_COMPONENT}
+    	nexacro._addClasses(registerclass);
+    };
+
+    env.on_loadVariables = function ()
+    {
+        // Variables
+#{ENV_VARIABLES}
+
+        // Cookies
+#{ENV_COOKIES}
+
+        // HTTP Header
+#{ENV_HTTPHEADERS}
+    };
+
+	env.on_loadDeviceAdaptors = function ()
+	{
+        // load device adatpor
+#{TYPEDEFINITION_DEVICE_ADAPTOR}
+	};
+	
+    // StringResource Information
+#{ENV_STRINGREOURCE}
+	
+    // User Script
+#{ENV_COMPILED_SCRIPT}
+					
+    env = null;
+
+    nexacro._getExtUserCssScreenType = nexacro._getCurrentScreenType;
+}
+
