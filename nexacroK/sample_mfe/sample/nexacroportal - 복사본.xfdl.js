@@ -119,9 +119,9 @@
             this.addChild(obj.name, obj);
 
             obj = new nexacro.NexacroPortal("nexacaportal02","475","290","430","248",null,null,null,null,null,null,this);
-            obj.set_appkey("WWWW");
-            obj.set_apppath("http://172.10.12.23:8080/nexacro/XP17_Master/NKNAV_sample");
-            obj.set_formurl("Contents::contents_Div.xfdl");
+            obj.set_appkey("nexacroK_mfe_sub2");
+            obj.set_apppath("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub2");
+            obj.set_formurl("FrameBase::Form_Work_00.xfdl");
             obj.set_taborder("11");
             obj.getSetter("text").set("Button00");
             this.addChild(obj.name, obj);

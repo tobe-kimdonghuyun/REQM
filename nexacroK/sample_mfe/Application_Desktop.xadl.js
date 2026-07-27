@@ -45,7 +45,7 @@
             // properties
             this.set_id("Application_Desktop");
             this.set_screenid("desktop");
-
+            this.set_licenseurl("http://172.10.12.45:9090/NexacroN_client_license.xml");
             if (this._is_attach_childframe)
             	return;
         
