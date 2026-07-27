@@ -3,7 +3,7 @@
   <Form id="Form_Work" width="700" height="720" titletext="Form_Work" ontimer="Form_Work_ontimer" background="darkseagreen">
     <Layouts>
       <Layout width="700" height="720" screenid="Desktop_screen">
-        <Button id="btn_open" taborder="0" text="this.setTimer" left="24" top="92" width="178" height="75" onclick="Button00_onclick"/>
+        <Button id="btn_open" taborder="0" text="this.setTimer" left="24" top="92" width="178" height="75" onclick="btn_open_onclick"/>
         <Button id="btn_alert" taborder="1" text="this.alert" left="212" top="92" width="178" height="75" onclick="btn_alert_onclick"/>
         <Button id="btn_transaction" taborder="2" text="this.transaction" left="410" top="92" width="178" height="75" onclick="btn_transaction_onclick"/>
         <Static id="Static00" taborder="3" text="nexacroK_mfe_sub1" left="36" top="4" width="518" height="70" font="36px/normal &quot;Malgun Gothic&quot;"/>
@@ -22,12 +22,14 @@
         <Button id="btn_awaitTR" taborder="9" text="await transaction" left="212" top="259" width="176" height="75" onclick="btn_awaitTR_onclick"/>
         <Button id="btn_confirm" taborder="10" text="this.confirm" left="410" top="259" width="176" height="75" onclick="btn_confirm_onclick"/>
         <Button id="btn_print" taborder="11" text="this.print" left="24" top="343" width="178" height="75" onclick="btn_print_onclick"/>
+        <Button id="Button00" taborder="12" text="setWheelZoom" left="214" top="346" width="171" height="73" onclick="Button00_onclick"/>
       </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[
 this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	this.setTimer("0","5000");
+		var objFrame = this.getOwnerFrame();
+	nexacro.setWheelZoom( objFrame, 150 );
 };
 
 
@@ -53,7 +55,7 @@ this.btn_transaction_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventI
 	sArgs += " username="+ "테스트";
 	var svrid = "MyService01"
 	//const req = this.transaction(svrid,"http://172.10.12.45:9090/service_jsp/test_100_XML.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
-	const req = this.transaction(svrid,"http://172.10.12.45:9090/REQM/test_100_XML.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
+	const req = this.transaction(svrid,"http://172.10.12.45:7070/jsp/test_100_XML.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
 	trace(req);
 	// 결과 처리
 	this.TextArea00.value="";
@@ -151,7 +153,7 @@ async function loadData(app)
 		let sArgs = "userid="+ "blue";
 		sArgs += " username="+ "테스트";
 		// transaction 호출 후 결과가 반환될 때까지 기다림
-		const [errorcode,errormsg] = await app.transaction("AA","http://172.10.12.45:9090/service_jsp/test_100_XML_await.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
+		const [errorcode,errormsg] = await app.transaction("AA","http://172.10.12.45:7070/jsp/test_100_XML_await.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
 		// 절차적으로 순서대로 실행됨
 		trace("✅ 사용자 조회 완료:", errorcode, errormsg);
 		app.TextArea00.insertText("nexacroK_mfe_sub1 transaction promise 테스트 code = "+errorcode+"  msg = "+errormsg);
@@ -167,6 +169,11 @@ this.btn_confirm_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 this.btn_print_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
 	system.print( obj); 
+};
+
+this.btn_open_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.setTimer("0","5000");
 };
 ]]></Script>
   </Form>

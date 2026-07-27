@@ -5,24 +5,30 @@
       <Layout width="700" height="720" screenid="Desktop_screen">
         <Static id="Static00" taborder="3" text="nexacroK_mfe_sub2" left="36" top="4" width="518" height="70" font="36px/normal &quot;Malgun Gothic&quot;"/>
         <Button id="Button00" taborder="0" text=" nexacro.getEnvironment().property" left="55" top="84" width="215" height="56" onclick="Button00_onclick"/>
-        <TextArea id="TextArea00" taborder="1" left="52" top="221" width="396" height="298"/>
+        <TextArea id="TextArea00" taborder="1" left="55" top="272" width="396" height="298"/>
         <Button id="Button01" taborder="2" text=" nexacro.getApplication().property" left="274" top="81" width="206" height="62" onclick="Button01_onclick"/>
         <Button id="Button02" taborder="4" text="nexacro.setTimer" left="56" top="148" width="124" height="59" onclick="Button02_onclick"/>
         <Button id="btn_showmodal" taborder="5" text="showmodal" left="192" top="148" width="98" height="59" onclick="btn_showmodal_onclick"/>
         <Button id="Button03" taborder="6" text="document.getElementByID()" left="297" top="149" width="173" height="58" onclick="Button03_onclick"/>
+        <Button id="Button04" taborder="7" text="nexacro.open" left="60" top="213" width="129" height="55" onclick="Button04_onclick"/>
       </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[
 this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
+	this.TextArea00.value="";
 	let env_all = nexacro.getEnvironment();
-	/*for( i in env_all)
+	if(env_all == null){
+		this.TextArea00.insertText("env_all = null");
+		return false;
+	}
+/*for( i in env_all)
 	{
 		if (typeof env_all[i] === "function") continue;
 		trace(i + " :: " + env_all[i]);
 	}
 	*/
-	this.TextArea00.value="";
+	
 	this.TextArea00.insertText(" enableinspector  = "+env_all.enableinspector+
 								"\n enabletouchevent = "+env_all.enabletouchevent+
 								"\n tabkeycirculation = "+env_all.tabkeycirculation+
@@ -34,9 +40,13 @@ this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
  
 this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
+	this.TextArea00.value="";
 	let app_all = nexacro.getApplication();
 
-	this.TextArea00.value="";
+	if(app_all == null){
+		this.TextArea00.insertText("app_all = null");
+		return false;
+	}
 	this.TextArea00.insertText(" id = "+app_all.id+
 								"\n screenid = "+app_all.screenid+
 								"\n app_variables = "+app_all.app_variable);
@@ -44,14 +54,14 @@ this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 
 this.Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-	nexacro.setTimeout(obj, this.onceCallback, 200);
+	nexacro.setTimeout(obj, this.onceCallback, 1000);
 
 };
 cnt = 0;
 this.onceCallback = function()
 {
 	
-	this.parent.TextArea00.insertText(this.id+"_" + cnt++); // Button00
+	alert("onceCallback");
 }
 
 this.btn_showmodal_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
@@ -77,6 +87,19 @@ this.Button03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 	document.getElementById("txt1").value = "넥사크로에서 세팅";
 	window.myData = "myData 저장할 값";
 	window.myObj  = { name: "홍길동", age: 30 };
+};
+
+this.Button04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.TextArea00.value="";
+	let ret1 = nexacro.open("promise_open_test1","FrameBase::sub_form.xfdl", this.getOwnerFrame(), { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 150, "promise")
+	.then((result1) => {
+	  trace("Closed popup with args: "+ " return1 = " + ret1 + ", result1 = " + result1);
+	  this.TextArea00.insertText("nexacro.open  : "+result1);
+	 
+	}).catch((err) => {
+		trace("Failed to open popup promise_open_test1 : " + err.message + " return = " + ret1);
+	});
 };
 ]]></Script>
   </Form>

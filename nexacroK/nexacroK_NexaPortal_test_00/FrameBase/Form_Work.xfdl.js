@@ -265,6 +265,11 @@
         	objPortal.get_form().customFunction();
         };
 
+        this.customFunction = function()
+        {
+        	alert("nexacroK_NexaPortal_test_00 alert");
+        }
+
         });
         
         // Regist UI Components Event

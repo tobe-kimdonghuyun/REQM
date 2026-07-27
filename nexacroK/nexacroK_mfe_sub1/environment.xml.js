@@ -20,6 +20,7 @@ const envLoader = function(nexacro, system, trace)
 
         env.on_init = function ()
         {
+            this.set_appkey("nexacroK_mfe_sub1");
             this.set_datatyperule("2.0");
             this.set_themeid("theme::blue");
         };
@@ -42,6 +43,7 @@ const envLoader = function(nexacro, system, trace)
             this._addService("extlib", "resource", "./_extlib_/", "session", null, "", "0", "");
             this._addService("Base", "form", "./Base/", "session", null, "", "0", "0");
             this._addService("FrameBase", "form", "./FrameBase/", "session", null, "", "0", "0");
+            this._addService("xmlData", "file", "./xmlData/", "session", null, "", "0", "0");
     
             // External
 
@@ -85,7 +87,9 @@ const envLoader = function(nexacro, system, trace)
             		{"id":"PopupDateRangePicker", "classname":"nexacro.PopupDateRangePicker", "type":"JavaScript", "width":"250", "height":"330"},
             		{"id":"SpinField", "classname":"nexacro.SpinField", "type":"JavaScript", "width":"250", "height":"60"},
             		{"id":"SelectField", "classname":"nexacro.SelectField", "type":"JavaScript", "width":"250", "height":"60"},
-            		{"id":"NexacroPortal", "classname":"nexacro.NexacroPortal", "type":"JavaScript", "width":"false", "height":"false"}
+            		{"id":"FileDownTransfer", "classname":"nexacro.FileDownTransfer", "type":"JavaScript", "width":"", "height":""},
+            		{"id":"FileUpTransfer", "classname":"nexacro.FileUpTransfer", "type":"JavaScript", "width":"", "height":""},
+            		{"id":"FileDialog", "classname":"nexacro.FileDialog", "type":"JavaScript", "width":"false", "height":"false"}
             ];
             this._addClasses(registerclass);
         };

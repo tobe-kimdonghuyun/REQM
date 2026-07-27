@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html> 
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="user-scalable=1, initial-scale=1, width=device-width">
+	<!-- META_CHECKVERSION : Add if value of checkversion property in Envrionment is true -->
+	
+	
+	<!-- FAVICON : favion setting (value of icon property in Environment. add to value of icon property in Environment) -->
+	
+	
+	<!-- USERFONT_STYLE : userfont style setting (value of userfontid property in Environment. crate contents contained in xfont file specified userfontid property in Environment) -->
+	
+		
+	<!-- COMPONENTS_LIBRARY : commonent lodaing path (list of script file in json file specified in the TypeDefinition module) -->
+    
+	<!--script src="http://172.10.12.23:8080/nexacro/XP17_Master/NKNAV_sample/nexacro.js" type="module"></script>
+	<script src="http://172.10.12.23:8080/nexacro/XP17_Master/NKNAV_sample/app.js" type="module"></script-->
+		<script src="http://172.10.12.45:7070/nexacroK/nexacroK_mfe_sub1/nexacro.js" type="module"></script>
+		<script src="http://172.10.12.45:7070/nexacroK/nexacroK_mfe_sub1/app.js" type="module"></script>
+		<!--script src="http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub4/nexacro.js" type="module"></script>
+		<script src="http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub4/app.js" type="module"></script-->
+    <style>
+    	.fullArea {
+    		position: absolute;
+    		inset: 0;
+    		background: rgba(255, 255, 255, 0.1);
+    		z-index: 0;
+    		border: 1px solid gray;
+    	}
+    	.cssTop {
+    		position: absolute;
+    		background: rgba(255, 255, 255, 0.1);
+    		z-index: 1;
+    		border: 1px solid gray;
+    	}
+    	.left {
+    		position: absolute;
+    		z-index: 0;
+    		box-sizing: border-box;
+    		background: linear-gradient(180deg, #2b3648 0%, #1f2836 100%);
+    		border: none;
+    		border-right: 1px solid #101720;
+    		padding: 16px 12px;
+    		display: flex;
+    		flex-direction: column;
+    		gap: 8px;
+    		font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+    	}
+    	.left button {
+    		width: 100%;
+    		box-sizing: border-box;
+    		padding: 12px 14px;
+    		background: rgba(255, 255, 255, 0.06);
+    		color: #e8ecf1;
+    		border: 1px solid rgba(255, 255, 255, 0.12);
+    		border-radius: 8px;
+    		font-size: 14px;
+    		text-align: left;
+    		cursor: pointer;
+    		transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    	}
+    	.left button:hover {
+    		background: rgba(255, 255, 255, 0.14);
+    		border-color: rgba(255, 255, 255, 0.28);
+    	}
+    	.left button:active {
+    		transform: scale(0.98);
+    		background: rgba(255, 255, 255, 0.2);
+    	}
+    	.left button:focus {
+    		outline: none;
+    	}
+    	.left button:focus-visible {
+    		outline: none;
+    		border-color: #5b9cf6;
+    		background: rgba(91, 156, 246, 0.15);
+    		box-shadow: 0 0 0 3px rgba(91, 156, 246, 0.35);
+    	}
+    	[tabindex="0"]:focus-visible {
+    		outline: 2px solid #5b9cf6;
+    		outline-offset: 2px;
+    	}
+    </style>
+	
+	<title></title>
+</head>
+<body style="margin:0;border:none;-ms-touch-action:none;" >
+
+<!--div id="nexacroContainerTop" class="cssTop" data-fdl="" data-appkey="nexacroK_mfe_sub3"
+	role="region" aria-label="상단 영역" tabindex="0"
+	style="position: absolute; top: 0px; left: 0px; width: 100%; height: 200px;"></div-->
+
+<nav id="webleft" class="left"
+	role="navigation" aria-label="좌측 메뉴" tabindex="0"
+	style="position: absolute; top: 0; left: 0px; width: 300px; height: 100%;">
+	<button type="button" id="btn1">📄 버튼</button>
+	<button type="button" id="btn2">📄 버튼</button>
+</nav>
+
+<div id="nexacroContainerMain" class="fullArea" data-fdl="" data-appkey="nexacroK_mfe_sub1"
+	role="main" aria-label="메인 콘텐츠" tabindex="0"
+	style="position: absolute; top: 0px; left: 300px; width: calc(100% - 300px); height: 100%;"></div>
+
+
+	<script>
+		var urlParams = {};
+		(function () {
+			var match,
+			pl     = /\+/g,
+			search = /([^&=]+)=?([^&]*)/g,
+			decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+			query  = window.location.search.substring(1);
+			while (match = search.exec(query)) { urlParams[decode(match[1])] = decode(match[2]); }
+			})();
+			
+			let nexacroApp = document.getElementById('nexacroContainerTop');
+			if (nexacroApp && urlParams.formname) nexacroApp.setAttribute('data-fdl', urlParams.formname);
+
+			nexacroApp = document.getElementById('nexacroContainerMain');			
+			if (urlParams.formname) nexacroApp.setAttribute('data-fdl', urlParams.formname);
+	</script>
+	<script>
+		/*유저 정의 필수 아님
+		이 시점은 Environment의 screenID를 반영하지 않은 상태, 즉 ._initHTMLSysEvent, ._initEnvironment 처리 이전이므로 강제 screenid 제어
+
+		*/
+		var DEBUG = true;
+		var Logger = {
+		    _tag  : '[NexacroMFE]',
+		    _style: 'color:#5b9cf6; font-weight:bold; font-size:11px;',
+		    log  : function (msg) { if (DEBUG) console.log  ('%c' + this._tag, this._style, msg); },
+		    info : function (msg) { if (DEBUG) console.info ('%c' + this._tag, this._style, msg); },
+		    warn : function (msg) { if (DEBUG) console.warn ('%c' + this._tag, this._style, msg); },
+		    error: function (msg) {             console.error('%c' + this._tag, this._style, msg); },
+		    group: function (label) { if (DEBUG) console.group   ('%c' + this._tag + ' ' + label, this._style); },
+		    groupEnd: function ()   { if (DEBUG) console.groupEnd(); },
+		};
+
+		let nexacroObj = null;
+		document.addEventListener("onnexacroinit", function init(evt)
+		{
+			Logger.group("onnexacroinit");
+			Logger.log("html onnexacroinit " + evt.detail);
+			Logger.groupEnd();
+
+		});
+		let container_MAIN= document.getElementById("nexacroContainerMain");
+		if (container_MAIN) {
+			container_MAIN.addEventListener("oncomplate", function complate(evt)
+			{
+				Logger.group("oncomplate");
+				Logger.log("html oncomplate");
+				Logger.log("container_MAIN evt :: " + evt);
+				Logger.groupEnd();
+				nexacroObj = evt;
+			});
+		}
+		document.getElementById("btn1").addEventListener("click", function () {
+			Logger.log("nexacroObj: " + nexacroObj);
+			nexacroObj.detail.from.WorkFrame.form.TextArea00.insertText("html에서 nexacro MFE쪽으로 접근해서 form에 있는 textarea의insertText함수 호출로 세팅됨 \n nexacroObj.detail.from.WorkFrame.form.TextArea00.insertText");
+		});
+
+		document.getElementById("btn2").addEventListener("click", function () {
+			Logger.log("container_MAIN: " + document.getElementById('container_MAIN'));
+		});
+	</script>
+</body>
+</html>
