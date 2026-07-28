@@ -35,12 +35,12 @@
 
             obj = new nexacro.Button("Button00","15","99","125","81",null,null,null,null,null,null,this);
             obj.set_taborder("2");
-            obj.set_text("main_00.xfdl");
+            obj.set_text("Form_Work_copy1");
             this.addChild(obj.name, obj);
 
-            obj = new nexacro.Button("Button01","150","100","120","80",null,null,null,null,null,null,this);
+            obj = new nexacro.Button("Button01","150","100","150","80",null,null,null,null,null,null,this);
             obj.set_taborder("3");
-            obj.set_text("main_01.xfdl");
+            obj.set_text("Form_Work_copy1_copy0");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Button("btn_showmodal","540","102","110","75",null,null,null,null,null,null,this);
@@ -56,6 +56,12 @@
             obj = new nexacro.Button("btn_open2_00","790","100","260","75",null,null,null,null,null,null,this);
             obj.set_taborder("6");
             obj.set_text("nexacro.setWheelZoom( objFrame, 150 )");
+            this.addChild(obj.name, obj);
+
+            obj = new nexacro.Button("Button02","310","100","217","80",null,null,null,null,null,null,this);
+            obj.set_hotkey("ALT+SHIFT+S");
+            obj.set_taborder("7");
+            obj.set_text("ALT+SHIFT+S");
             this.addChild(obj.name, obj);
 
             // Layout Functions
@@ -125,15 +131,33 @@
         	nexacro.setWheelZoom( objFrame, 150 );
         };
 
+        this.Button00_onclick = function(obj,e)
+        {
+        	nexacro.getApplication().mainframe.VFrameSet00.WorkFrame.formurl ="FrameBase::Form_Work_copy1.xfdl";
+        };
+
+        this.Button02_onclick = function(obj,e)
+        {
+        	obj.setSelectStatus(true);
+        };
+
+        this.Button01_onclick = function(obj,e)
+        {
+        	nexacro.getApplication().mainframe.VFrameSet00.WorkFrame.formurl ="FrameBase::Form_Work_copy1_copy0.xfdl";
+        };
+
         });
         
         // Regist UI Components Event
         this.on_initEvent = function()
         {
             this.addEventHandler("onload",this.Form_Work_onload,this);
+            this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
+            this.Button01.addEventHandler("onclick",this.Button01_onclick,this);
             this.btn_showmodal.addEventHandler("onclick",this.btn_showmodal_onclick,this);
             this.btn_open2.addEventHandler("onclick",this.btn_open2_onclick,this);
             this.btn_open2_00.addEventHandler("onclick",this.btn_open2_00_onclick,this);
+            this.Button02.addEventHandler("onclick",this.Button02_onclick,this);
         };
 
         this.loadIncludeScript("Form_Top.xfdl");

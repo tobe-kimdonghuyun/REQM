@@ -627,11 +627,11 @@
 				{
 					"mouseover" : 
 					{
-						"border" : BorderObject("1px solid #a0a0a0")
+						"border" : BorderObject("3px solid red")
 					},
 					"focused" : 
 					{
-						"border" : BorderObject("1px solid #a0a0a0")
+						"border" : BorderObject("3px solid red")
 					},
 					"disabled" : 
 					{
@@ -640,6 +640,7 @@
 					},
 					"pushed" : 
 					{
+						"border" : BorderObject("3px double green")
 					},
 					"enabled" : 
 					{
@@ -647,6 +648,7 @@
 					},
 					"selected" : 
 					{
+						"border" : BorderObject("3px double green")
 					}
 				}
 			},
@@ -656,11 +658,11 @@
 				{
 					"mouseover" : 
 					{
-						"border" : BorderObject("1px solid #a0a0a0")
+						"border" : BorderObject("3px solid red")
 					},
 					"focused" : 
 					{
-						"border" : BorderObject("1px solid #a0a0a0")
+						"border" : BorderObject("3px solid red")
 					},
 					"disabled" : 
 					{
@@ -669,6 +671,7 @@
 					},
 					"pushed" : 
 					{
+						"border" : BorderObject("3px double green")
 					},
 					"enabled" : 
 					{
@@ -1846,11 +1849,11 @@
 								{
 									"mouseover" : 
 									{
-										"border" : BorderObject("1px solid #a0a0a0")
+										"border" : BorderObject("3px solid red")
 									},
 									"focused" : 
 									{
-										"border" : BorderObject("1px solid #a0a0a0")
+										"border" : BorderObject("3px solid red")
 									},
 									"disabled" : 
 									{
@@ -1859,6 +1862,7 @@
 									},
 									"pushed" : 
 									{
+										"border" : BorderObject("3px double green")
 									},
 									"enabled" : 
 									{
@@ -1867,6 +1871,7 @@
 									},
 									"selected" : 
 									{
+										"border" : BorderObject("3px double green")
 									}
 								}
 							}

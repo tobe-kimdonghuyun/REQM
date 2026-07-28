@@ -21,26 +21,20 @@
             
             // UI Components Initialize
             obj = new nexacro.NexacroPortal("NexacroPortal00","15","30","619","523",null,null,null,null,null,null,this);
-            obj.getSetter("appkey").set("nexacroK_mfe_sub2");
-            obj.getSetter("apppath").set("http://172.10.12.45:7070/nexacroK/nexacroK_mfe_sub2");
-            obj.getSetter("automount").set("true");
-            obj.getSetter("formurl").set("");
-            obj.getSetter("onerror").set("NexacroPortal00_onerror");
-            obj.getSetter("onmount").set("NexacroPortal00_onmount");
-            obj.getSetter("onunmount").set("NexacroPortal00_onunmount");
-            obj.getSetter("taborder").set("0");
+            obj.set_appkey("DataObjectSample");
+            obj.set_apppath("http://172.10.12.45:7070/nexacroK/DataObjectSample");
+            obj.set_automount("true");
+            obj.set_formurl("");
+            obj.set_taborder("0");
             obj.getSetter("text").set("NexacroPortal00");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.NexacroPortal("NexacroPortal01","640","30","619","523",null,null,null,null,null,null,this);
-            obj.getSetter("appkey").set("nexacroK_mfe_sub1");
-            obj.getSetter("apppath").set("http://172.10.12.45:7070/nexacroK/nexacroK_mfe_sub1");
-            obj.getSetter("automount").set("true");
-            obj.getSetter("formurl").set("");
-            obj.getSetter("onerror").set("NexacroPortal01_onerror");
-            obj.getSetter("onmount").set("NexacroPortal01_onmount");
-            obj.getSetter("onunmount").set("NexacroPortal01_onunmount");
-            obj.getSetter("taborder").set("1");
+            obj.set_appkey("DataObjectRestSample");
+            obj.set_apppath("http://172.10.12.45:9090/nexacroK/DataObjectRestSample");
+            obj.set_automount("true");
+            obj.set_formurl("");
+            obj.set_taborder("1");
             obj.getSetter("text").set("NexacroPortal01");
             this.addChild(obj.name, obj);
 
@@ -379,6 +373,12 @@
         // Regist UI Components Event
         this.on_initEvent = function()
         {
+            this.NexacroPortal00.addEventHandler("onerror",this.NexacroPortal00_onerror,this);
+            this.NexacroPortal00.addEventHandler("onmount",this.NexacroPortal00_onmount,this);
+            this.NexacroPortal00.addEventHandler("onunmount",this.NexacroPortal00_onunmount,this);
+            this.NexacroPortal01.addEventHandler("onerror",this.NexacroPortal01_onerror,this);
+            this.NexacroPortal01.addEventHandler("onmount",this.NexacroPortal01_onmount,this);
+            this.NexacroPortal01.addEventHandler("onunmount",this.NexacroPortal01_onunmount,this);
             this.Button01.addEventHandler("onclick",this.Button01_onclick,this);
             this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
             this.Button00_00.addEventHandler("onclick",this.Button00_00_onclick,this);

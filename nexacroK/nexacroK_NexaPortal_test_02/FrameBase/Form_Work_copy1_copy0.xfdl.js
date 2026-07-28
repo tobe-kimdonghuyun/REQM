@@ -21,74 +21,56 @@
             
             // UI Components Initialize
             obj = new nexacro.NexacroPortal("NexacroPortal00","41","30","150","100",null,null,null,null,null,null,this);
-            obj.getSetter("appkey").set("nexacroK_mfe_sub1");
-            obj.getSetter("apppath").set("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub1");
-            obj.getSetter("automount").set("true");
-            obj.getSetter("formurl").set("");
-            obj.getSetter("onerror").set("NexacroPortal00_onerror");
-            obj.getSetter("onmount").set("NexacroPortal00_onmount");
-            obj.getSetter("onunmount").set("NexacroPortal00_onunmount");
-            obj.getSetter("taborder").set("0");
+            obj.set_appkey("nexacroK_mfe_sub1");
+            obj.set_apppath("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub1");
+            obj.set_automount("true");
+            obj.set_formurl("");
+            obj.set_taborder("0");
             obj.getSetter("text").set("NexacroPortal00");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.NexacroPortal("NexacroPortal01","205","30","150","100",null,null,null,null,null,null,this);
-            obj.getSetter("appkey").set("nexacroK_mfe_sub2");
-            obj.getSetter("apppath").set("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub2");
-            obj.getSetter("automount").set("true");
-            obj.getSetter("formurl").set("");
-            obj.getSetter("onerror").set("NexacroPortal01_onerror");
-            obj.getSetter("onmount").set("NexacroPortal01_onmount");
-            obj.getSetter("onunmount").set("NexacroPortal01_onunmount");
-            obj.getSetter("taborder").set("1");
+            obj.set_appkey("nexacroK_mfe_sub2");
+            obj.set_apppath("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub2");
+            obj.set_automount("true");
+            obj.set_formurl("");
+            obj.set_taborder("1");
             obj.getSetter("text").set("NexacroPortal01");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.NexacroPortal("NexacroPortal02","375","30","150","100",null,null,null,null,null,null,this);
-            obj.getSetter("appkey").set("nexacroK_mfe_sub3");
-            obj.getSetter("apppath").set("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub3");
-            obj.getSetter("automount").set("true");
-            obj.getSetter("formurl").set("");
-            obj.getSetter("onerror").set("NexacroPortal02_onerror");
-            obj.getSetter("onmount").set("NexacroPortal02_onmount");
-            obj.getSetter("onunmount").set("NexacroPortal02_onunmount");
-            obj.getSetter("taborder").set("2");
+            obj.set_appkey("nexacroK_mfe_sub3");
+            obj.set_apppath("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub3");
+            obj.set_automount("true");
+            obj.set_formurl("");
+            obj.set_taborder("2");
             obj.getSetter("text").set("NexacroPortal02");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.NexacroPortal("NexacroPortal03","535","30","150","100",null,null,null,null,null,null,this);
-            obj.getSetter("appkey").set("nexacroK_mfe_sub4");
-            obj.getSetter("apppath").set("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub4");
-            obj.getSetter("automount").set("true");
-            obj.getSetter("formurl").set("");
-            obj.getSetter("onerror").set("NexacroPortal03_onerror");
-            obj.getSetter("onmount").set("NexacroPortal03_onmount");
-            obj.getSetter("onunmount").set("NexacroPortal03_onunmount");
-            obj.getSetter("taborder").set("2");
+            obj.set_appkey("nexacroK_mfe_sub4");
+            obj.set_apppath("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub4");
+            obj.set_automount("true");
+            obj.set_formurl("");
+            obj.set_taborder("2");
             obj.getSetter("text").set("NexacroPortal03");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.NexacroPortal("NexacroPortal04","700","30","150","100",null,null,null,null,null,null,this);
-            obj.getSetter("appkey").set("nexacroK_mfe_sub5");
-            obj.getSetter("apppath").set("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub5");
-            obj.getSetter("automount").set("true");
-            obj.getSetter("formurl").set("");
-            obj.getSetter("onerror").set("NexacroPortal04_onerror");
-            obj.getSetter("onmount").set("NexacroPortal04_onmount");
-            obj.getSetter("onunmount").set("NexacroPortal04_onunmount");
-            obj.getSetter("taborder").set("3");
+            obj.set_appkey("nexacroK_mfe_sub5");
+            obj.set_apppath("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub5");
+            obj.set_automount("true");
+            obj.set_formurl("");
+            obj.set_taborder("3");
             obj.getSetter("text").set("NexacroPortal04");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.NexacroPortal("NexacroPortal05","865","30","150","100",null,null,null,null,null,null,this);
-            obj.getSetter("appkey").set("nexacroK_mfe_sub6");
-            obj.getSetter("apppath").set("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub6");
-            obj.getSetter("automount").set("true");
-            obj.getSetter("formurl").set("");
-            obj.getSetter("onerror").set("NexacroPortal05_onerror");
-            obj.getSetter("onmount").set("NexacroPortal05_onmount");
-            obj.getSetter("onunmount").set("NexacroPortal05_onunmount");
-            obj.getSetter("taborder").set("4");
+            obj.set_appkey("nexacroK_mfe_sub6");
+            obj.set_apppath("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub6");
+            obj.set_automount("true");
+            obj.set_formurl("");
+            obj.set_taborder("4");
             obj.getSetter("text").set("NexacroPortal05");
             this.addChild(obj.name, obj);
 
@@ -265,6 +247,24 @@
         // Regist UI Components Event
         this.on_initEvent = function()
         {
+            this.NexacroPortal00.addEventHandler("onerror",this.NexacroPortal00_onerror,this);
+            this.NexacroPortal00.addEventHandler("onmount",this.NexacroPortal00_onmount,this);
+            this.NexacroPortal00.addEventHandler("onunmount",this.NexacroPortal00_onunmount,this);
+            this.NexacroPortal01.addEventHandler("onerror",this.NexacroPortal01_onerror,this);
+            this.NexacroPortal01.addEventHandler("onmount",this.NexacroPortal01_onmount,this);
+            this.NexacroPortal01.addEventHandler("onunmount",this.NexacroPortal01_onunmount,this);
+            this.NexacroPortal02.addEventHandler("onerror",this.NexacroPortal02_onerror,this);
+            this.NexacroPortal02.addEventHandler("onmount",this.NexacroPortal02_onmount,this);
+            this.NexacroPortal02.addEventHandler("onunmount",this.NexacroPortal02_onunmount,this);
+            this.NexacroPortal03.addEventHandler("onerror",this.NexacroPortal03_onerror,this);
+            this.NexacroPortal03.addEventHandler("onmount",this.NexacroPortal03_onmount,this);
+            this.NexacroPortal03.addEventHandler("onunmount",this.NexacroPortal03_onunmount,this);
+            this.NexacroPortal04.addEventHandler("onerror",this.NexacroPortal04_onerror,this);
+            this.NexacroPortal04.addEventHandler("onmount",this.NexacroPortal04_onmount,this);
+            this.NexacroPortal04.addEventHandler("onunmount",this.NexacroPortal04_onunmount,this);
+            this.NexacroPortal05.addEventHandler("onerror",this.NexacroPortal05_onerror,this);
+            this.NexacroPortal05.addEventHandler("onmount",this.NexacroPortal05_onmount,this);
+            this.NexacroPortal05.addEventHandler("onunmount",this.NexacroPortal05_onunmount,this);
             this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
         };
 

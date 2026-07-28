@@ -9,6 +9,7 @@ for /f "usebackq tokens=1,* delims==" %%A in ("%CONFIG_FILE%") do (
     if /i "%%A"=="NexacroLibPath" set "NexacroLibPath=%%B"
     if /i "%%A"=="GenerateRule"   set "GenerateRule=%%B"
     if /i "%%A"=="RoutePath"      set "RoutePath=%%B"
+    if /i "%%A"=="-deleteMAP"     set "deleteMAP=%%B"
 )
 
 echo [deployK] Starting deploy...
@@ -19,10 +20,27 @@ echo   GenerateRule  : %GenerateRule%
 echo   RoutePath     : %RoutePath%
 echo.
 
+if exist "%OutputPath%" (
+    echo [deployK] Deleting output folder: %OutputPath%
+    rmdir /s /q "%OutputPath%"
+    echo [deployK] Output folder deleted.
+    echo.
+)
+
 if defined RoutePath (
-    echo. | call "%~dp0start-jar.bat" -P "%ProjectPath%" -B "%NexacroLibPath%" -O "%OutputPath%" -GENERATERULE "%GenerateRule%" -ROUTE "%RoutePath%"
+    echo. | call "%~dp0start-jar.bat" -P "%ProjectPath%" -B "%NexacroLibPath%" -O "%OutputPath%" -GENERATERULE "%GenerateRule%" -ROUTE "%RoutePath%" -REGENERATE
 ) else (
-    echo. | call "%~dp0start-jar.bat" -P "%ProjectPath%" -B "%NexacroLibPath%" -O "%OutputPath%" -GENERATERULE "%GenerateRule%"
+    echo. | call "%~dp0start-jar.bat" -P "%ProjectPath%" -B "%NexacroLibPath%" -O "%OutputPath%" -GENERATERULE "%GenerateRule%" -REGENERATE
+)
+
+if /i "%deleteMAP%"=="true" (
+    echo.
+    echo [deployK] Deleting .map files in: %OutputPath%
+    for /r "%OutputPath%" %%F in (*.map) do (
+        del /q "%%F"
+        echo [deployK] Deleted: %%F
+    )
+    echo [deployK] .map files deleted.
 )
 
 endlocal

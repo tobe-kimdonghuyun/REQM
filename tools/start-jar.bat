@@ -6,8 +6,8 @@ if not "%JAVA_HOME%" == "" goto java_home_checked
 :java_home_checked
 
 set JAVA="%JAVA_HOME%\bin\java.exe"
-set JAVA_OPTS="-Dlog4j.configurationFile=.\log4j2.xml"
-set LIB="NexacroN_Deploy_JAVA_20260727(0.0.58)_0.jar"
+set JAVA_OPTS="-Dlog4j.configurationFile=%~dp0log4j2.xml"
+set LIB="%~dp0NexacroN_Deploy_JAVA_20260727(0.0.58)_0.jar"
 
 echo %JAVA% %JAVA_OPTS% -jar %LIB% %*
 %JAVA% %JAVA_OPTS% -jar %LIB% %*
@@ -15,5 +15,3 @@ goto end
 
 :end
 endlocal
-
-pause

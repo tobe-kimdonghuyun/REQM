@@ -21,6 +21,7 @@ const envLoader = function(nexacro, system, trace)
         env.on_init = function ()
         {
             this.set_datatyperule("2.0");
+            this.set_tabkeycirculation("frame,nocycle");
             this.set_themeid("theme::blue");
         };
 
@@ -84,7 +85,8 @@ const envLoader = function(nexacro, system, trace)
             		{"id":"DateRangePicker", "classname":"nexacro.DateRangePicker", "type":"JavaScript", "width":"250", "height":"330"},
             		{"id":"PopupDateRangePicker", "classname":"nexacro.PopupDateRangePicker", "type":"JavaScript", "width":"250", "height":"330"},
             		{"id":"SpinField", "classname":"nexacro.SpinField", "type":"JavaScript", "width":"250", "height":"60"},
-            		{"id":"SelectField", "classname":"nexacro.SelectField", "type":"JavaScript", "width":"250", "height":"60"}
+            		{"id":"SelectField", "classname":"nexacro.SelectField", "type":"JavaScript", "width":"250", "height":"60"},
+            		{"id":"NexacroPortal", "classname":"nexacro.NexacroPortal", "type":"JavaScript", "width":"false", "height":"false"}
             ];
             this._addClasses(registerclass);
         };

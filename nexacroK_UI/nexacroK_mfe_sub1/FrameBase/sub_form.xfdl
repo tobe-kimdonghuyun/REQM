@@ -4,6 +4,9 @@
     <Layouts>
       <Layout height="720" width="1280">
         <Button id="Button00" taborder="0" text="this.close" left="47" top="40" width="307" height="106" onclick="Button00_onclick"/>
+        <Button id="Button01" taborder="1" text="getEnvironment" left="47" top="153" width="213" height="70" onclick="Button01_onclick"/>
+        <Button id="Button02" taborder="2" text="getApplication" left="277" top="156" width="222" height="65" onclick="Button02_onclick"/>
+        <TextArea id="TextArea00" taborder="3" left="46" top="233" width="628" height="229"/>
       </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[
@@ -15,6 +18,43 @@ this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 this.sub_form_onclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
 {
 	
+};
+
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+		this.TextArea00.value="";
+	let env_all = nexacro.getEnvironment();
+	if(env_all == null){
+		this.TextArea00.insertText("env_all = null");
+		return false;
+	}
+/*for( i in env_all)
+	{
+		if (typeof env_all[i] === "function") continue;
+		trace(i + " :: " + env_all[i]);
+	}
+	*/
+	
+	this.TextArea00.insertText(" enableinspector  = "+env_all.enableinspector+
+								"\n enabletouchevent = "+env_all.enabletouchevent+
+								"\n tabkeycirculation = "+env_all.tabkeycirculation+
+								"\n filesecurelevel = "+env_all.filesecurelevel+
+								"\n networksecurelevel = "+env_all.networksecurelevel+
+								"\n datatyperule = "+env_all.datatyperule)
+};
+
+this.Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+		this.TextArea00.value="";
+	let app_all = nexacro.getApplication();
+
+	if(app_all == null){
+		this.TextArea00.insertText("app_all = null");
+		return false;
+	}
+	this.TextArea00.insertText(" id = "+app_all.id+
+								"\n screenid = "+app_all.screenid+
+								"\n app_variables = "+app_all.app_variable);
 };
 ]]></Script>
   </Form>

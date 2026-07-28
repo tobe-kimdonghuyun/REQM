@@ -46,7 +46,7 @@
         };
         
         // User Script
-        this.registerScript("Form_Work_copy0.xfdl", function(nexacro, system, trace, environment, application) {
+        this.registerScript("Form_Work_copy0_copy0.xfdl", function(nexacro, system, trace, environment, application) {
 
         this.Button01_onclick = function(obj,e)
         {
@@ -116,21 +116,22 @@
         };//onmount="NexacroPortal_00_onmount" onunmount="NexacroPortal_00_onunmount" onerror="NexacroPortal_00_onerror"/>
         this.NexacroPortal_00_onmount = function(obj, e)
         {
-        	;
-        	trace("NexacroPortal_00_onmount obj = "+ obj
+        	this.TextArea00.deleteText();;
+        	this.TextArea00.insertText("NexacroPortal_00_onmount obj = "+ obj
         								+" NexacroPortal_00_onmount e = "+e);
         }
 
         this.NexacroPortal_00_onunmount = function(obj, e)
         {
-
-        	trace("NexacroPortal_00_onunmount obj = "+ obj
+        	this.TextArea00.deleteText();
+        	this.TextArea00.insertText("NexacroPortal_00_onunmount obj = "+ obj
         								+" NexacroPortal_00_onmount e = "+e);
         }
 
         this.NexacroPortal_00_onerror = function(obj, e)
         {
-        trace("NexacroPortal_00_onerror obj = "+ obj
+        	this.TextArea00.deleteText();
+        	this.TextArea00.insertText("NexacroPortal_00_onerror obj = "+ obj
         								+" NexacroPortal_00_onerror e = "+e);
         }
         this.Button10_onclick = function(obj,e)
@@ -148,7 +149,7 @@
             this.NexacroPortal_00.addEventHandler("onunmount",this.NexacroPortal_00_onunmount,this);
         };
 
-        this.loadIncludeScript("Form_Work_copy0.xfdl");
+        this.loadIncludeScript("Form_Work_copy0_copy0.xfdl");
         this.loadPreloadList();
         
         // Remove Reference
@@ -161,4 +162,4 @@
 }
 )();
 
-//# sourceMappingURL=Form_Work_copy0.xfdl.js.map
+//# sourceMappingURL=Form_Work_copy0_copy0.xfdl.js.map

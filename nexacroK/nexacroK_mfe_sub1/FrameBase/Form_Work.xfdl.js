@@ -93,6 +93,11 @@
             obj.set_text("this.print");
             this.addChild(obj.name, obj);
 
+            obj = new nexacro.Button("Button00","214","346","171","73",null,null,null,null,null,null,this);
+            obj.set_taborder("12");
+            obj.set_text("setWheelZoom");
+            this.addChild(obj.name, obj);
+
             // Layout Functions
             //-- Default Layout : this.PopupDiv00.form
             obj = new nexacro.Layout("default","",0,0,this.PopupDiv00.form,function(p){});
@@ -119,7 +124,8 @@
 
         this.Button00_onclick = function(obj,e)
         {
-        	this.setTimer("0","5000");
+        		var objFrame = this.getOwnerFrame();
+        	nexacro.setWheelZoom( objFrame, 150 );
         };
 
 
@@ -145,7 +151,7 @@
         	sArgs += " username="+ "테스트";
         	var svrid = "MyService01"
         	//const req = this.transaction(svrid,"http://172.10.12.45:9090/service_jsp/test_100_XML.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
-        	const req = this.transaction(svrid,"http://172.10.12.45:9090/REQM/service_jsp/test_100_XML.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
+        	const req = this.transaction(svrid,"http://172.10.12.45:7070/jsp/test_100_XML.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
         	trace(req);
         	// 결과 처리
         	this.TextArea00.value="";
@@ -243,7 +249,7 @@
         		let sArgs = "userid="+ "blue";
         		sArgs += " username="+ "테스트";
         		// transaction 호출 후 결과가 반환될 때까지 기다림
-        		const [errorcode,errormsg] = await app.transaction("AA","http://172.10.12.45:9090/REQM/service_jsp/test_100_XML_await.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
+        		const [errorcode,errormsg] = await app.transaction("AA","http://172.10.12.45:7070/jsp/test_100_XML_await.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
         		// 절차적으로 순서대로 실행됨
         		trace("✅ 사용자 조회 완료:", errorcode, errormsg);
         		app.TextArea00.insertText("nexacroK_mfe_sub1 transaction promise 테스트 code = "+errorcode+"  msg = "+errormsg);
@@ -261,13 +267,18 @@
         	system.print( obj);
         };
 
+        this.btn_open_onclick = function(obj,e)
+        {
+        	this.setTimer("0","5000");
+        };
+
         });
         
         // Regist UI Components Event
         this.on_initEvent = function()
         {
             this.addEventHandler("ontimer",this.Form_Work_ontimer,this);
-            this.btn_open.addEventHandler("onclick",this.Button00_onclick,this);
+            this.btn_open.addEventHandler("onclick",this.btn_open_onclick,this);
             this.btn_alert.addEventHandler("onclick",this.btn_alert_onclick,this);
             this.btn_transaction.addEventHandler("onclick",this.btn_transaction_onclick,this);
             this.btn_trackpopup.addEventHandler("onclick",this.btn_trackpopup_onclick,this);
@@ -279,6 +290,7 @@
             this.btn_awaitTR.addEventHandler("onclick",this.btn_awaitTR_onclick,this);
             this.btn_confirm.addEventHandler("onclick",this.btn_confirm_onclick,this);
             this.btn_print.addEventHandler("onclick",this.btn_print_onclick,this);
+            this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
         };
 
         this.loadIncludeScript("Form_Work.xfdl");

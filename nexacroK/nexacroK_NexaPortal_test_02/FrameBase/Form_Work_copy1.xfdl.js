@@ -21,14 +21,11 @@
             
             // UI Components Initialize
             obj = new nexacro.NexacroPortal("NexacroPortal00","41","30","619","523",null,null,null,null,null,null,this);
-            obj.getSetter("appkey").set("nexacroK_mfe_sub2");
-            obj.getSetter("apppath").set("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub2");
-            obj.getSetter("automount").set("true");
-            obj.getSetter("formurl").set("");
-            obj.getSetter("onerror").set("NexacroPortal00_onerror");
-            obj.getSetter("onmount").set("NexacroPortal00_onmount");
-            obj.getSetter("onunmount").set("NexacroPortal00_onunmount");
-            obj.getSetter("taborder").set("0");
+            obj.set_appkey("nexacroK_mfe_sub2");
+            obj.set_apppath("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub2");
+            obj.set_automount("true");
+            obj.set_formurl("");
+            obj.set_taborder("0");
             obj.getSetter("text").set("Button00");
             this.addChild(obj.name, obj);
 
@@ -278,6 +275,9 @@
         // Regist UI Components Event
         this.on_initEvent = function()
         {
+            this.NexacroPortal00.addEventHandler("onerror",this.NexacroPortal00_onerror,this);
+            this.NexacroPortal00.addEventHandler("onmount",this.NexacroPortal00_onmount,this);
+            this.NexacroPortal00.addEventHandler("onunmount",this.NexacroPortal00_onunmount,this);
             this.Button01.addEventHandler("onclick",this.Button01_onclick,this);
             this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
             this.Button00_00.addEventHandler("onclick",this.Button00_00_onclick,this);
