@@ -21,10 +21,10 @@
             
             // UI Components Initialize
             obj = new nexacro.NexacroPortal("NexacroPortal00","41","30","619","523",null,null,null,null,null,null,this);
-            obj.set_appkey("nexacroK_mfe_sub2");
-            obj.set_apppath("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub2");
+            obj.set_appkey("DynamicSample");
+            obj.set_apppath("http://172.10.12.45:7070/nexacroK/DynamicSample");
             obj.set_automount("true");
-            obj.set_formurl("");
+            obj.set_formurl("VisibleComp::ButtonSample.xfdl");
             obj.set_taborder("0");
             obj.getSetter("text").set("Button00");
             this.addChild(obj.name, obj);

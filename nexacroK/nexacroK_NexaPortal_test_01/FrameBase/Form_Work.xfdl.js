@@ -21,8 +21,8 @@
             
             // UI Components Initialize
             obj = new nexacro.NexacroPortal("NexacroPortal00","15","30","619","523",null,null,null,null,null,null,this);
-            obj.set_appkey("nexacroK_mfe_sub1");
-            obj.set_apppath("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub1");
+            obj.set_appkey("DynamicSample");
+            obj.set_apppath("http://172.10.12.45:7070/nexacroK/DynamicSample");
             obj.set_automount("true");
             obj.set_formurl("");
             obj.set_taborder("0");
@@ -30,8 +30,8 @@
             this.addChild(obj.name, obj);
 
             obj = new nexacro.NexacroPortal("NexacroPortal01","640","30","619","523",null,null,null,null,null,null,this);
-            obj.set_appkey("nexacroK_mfe_sub2");
-            obj.set_apppath("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub2");
+            obj.set_appkey("DynamicSample_sub");
+            obj.set_apppath("http://172.10.12.45:7070/nexacroK/DynamicSample_sub");
             obj.set_automount("true");
             obj.set_formurl("");
             obj.set_taborder("1");

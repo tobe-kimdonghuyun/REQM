@@ -7,7 +7,7 @@ const envLoader = function(nexacro, system, trace)
         env.on_getAllScreenInfo = function ()
         {
             return [
-            {"id":"Desktop_screen","type":"desktop","filesecurelevel":"all","networksecurelevel":"all","themeid":"theme::blue","xadl":"Application_Desktop.xadl.js"}
+            {"id":"Desktop_screen","type":"desktop","filesecurelevel":"all","networksecurelevel":"all","themeid":"theme::blue","initvaluefileid":"initvalue::test.xiv","xadl":"Application_Desktop.xadl.js"}
             ];
         };
 
@@ -22,6 +22,7 @@ const envLoader = function(nexacro, system, trace)
         {
             this.set_datatyperule("2.0");
             this.set_filesecurelevel("all");
+            this.set_initvaluefileid("initvalue::test.xiv");
             this.set_networksecurelevel("all");
             this.set_themeid("theme::blue");
         };
