@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ComboSample_sub" width="1280" height="670" onload="ComboSample_sub_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="Combo 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" color="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.Combo() + new nexacro.Dataset() 으로 Combo와 이너 Dataset을 동적 생성합니다." left="10" top="44" width="900" height="22" color="#555555"/>
+        <Button id="btn_create" taborder="2" text="Combo 생성" left="10" top="74" width="110" height="32" onclick="btn_create_onclick"/>
+        <Button id="btn_getValue" taborder="3" text="선택값 확인" left="130" top="74" width="110" height="32" onclick="btn_getValue_onclick"/>
+        <Button id="btn_clear" taborder="4" text="전체 삭제" left="250" top="74" width="90" height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_count" taborder="5" text="생성 수: 0" left="354" top="80" width="120" height="22" color="#1a56db"/>
+        <Static id="stc_result" taborder="6" text="" left="10" top="114" width="1240" height="22" color="#cc0000"/>
+        <Static id="stc_area_label" taborder="7" text="▼ 동적 생성 영역" left="10" top="140" width="300" height="20" color="#888888"/>
+        <Div id="div_area" left="10" top="164" width="1250" height="486">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.ComboSample_sub_onload = function(obj, e)
+{
+    this.nCmbCount = 0;
+};
+
+this.btn_create_onclick = function(obj, e)
+{
+    this.nCmbCount++;
+    var nRow  = Math.floor((this.nCmbCount - 1) / 3);
+    var nCol  = (this.nCmbCount - 1) % 3;
+    var nLeft = nCol * 420 + 5;
+    var nTop  = nRow * 90 + 5;
+
+    // 이너 Dataset 동적 생성
+    var dsId = "ds_cmb_" + this.nCmbCount;
+    var ds   = new nexacro.Dataset(dsId, this);
+    this.addChild(dsId, ds);
+    ds.addColumn("CODE", "String", 10);
+    ds.addColumn("NAME", "String", 40);
+    var aData = [["A","항목A-"+this.nCmbCount],["B","항목B-"+this.nCmbCount],["C","항목C-"+this.nCmbCount],["D","항목D-"+this.nCmbCount]];
+    for (var i = 0; i < aData.length; i++) {
+        var r = ds.addRow();
+        ds.setColumn(r, "CODE", aData[i][0]);
+        ds.setColumn(r, "NAME", aData[i][1]);
+    }
+
+    // 레이블
+    var objStc = new nexacro.Static("stc_cmb_lbl_" + this.nCmbCount, nLeft, nTop, 400, 22, null, null);
+    objStc.set_text("Combo " + this.nCmbCount + " (new nexacro.Combo + new nexacro.Dataset)");
+    this.div_area.addChild("stc_cmb_lbl_" + this.nCmbCount, objStc);
+    objStc.show();
+
+    // Combo 동적 생성
+    var objCmb = new nexacro.Combo("cmb_dyn_" + this.nCmbCount, nLeft, nTop + 26, 400, 32, null, null);
+    objCmb.set_innerdataset(dsId);
+    objCmb.set_codecolumn("CODE");
+    objCmb.set_datacolumn("NAME");
+    this.div_area.addChild("cmb_dyn_" + this.nCmbCount, objCmb);
+    objCmb.show();
+    objCmb.addEventHandler("onitemchanged", this.dynCmb_onitemchanged, this);
+
+    this.stc_count.set_text("생성 수: " + this.nCmbCount);
+    this.stc_result.set_text("cmb_dyn_" + this.nCmbCount + " 생성 완료");
+};
+
+this.dynCmb_onitemchanged = function(obj, e)
+{
+    this.stc_result.set_text("[" + obj.id + "] 선택 변경 → CODE: " + obj.value + " / NAME: " + obj.text);
+};
+
+this.btn_getValue_onclick = function(obj, e)
+{
+    var sResult = "";
+    for (var i = 1; i <= this.nCmbCount; i++) {
+        var comp = this.div_area.form.all["cmb_dyn_" + i];
+        if (comp) sResult += "[cmb_dyn_" + i + "] = " + comp.value + "(" + comp.text + ")\n";
+    }
+    if (sResult == "") { this.stc_result.set_text("생성된 Combo가 없습니다."); return; }
+    this.stc_result.set_text("값 읽기 완료 (alert 확인)");
+    this.alert("선택 값:\n" + sResult);
+};
+
+this.btn_clear_onclick = function(obj, e)
+{
+    for (var i = 1; i <= this.nCmbCount; i++) {
+        var cId = "cmb_dyn_" + i; var sId = "stc_cmb_lbl_" + i; var dId = "ds_cmb_" + i;
+        var c = this.div_area.form.all[cId]; var s = this.div_area.form.all[sId]; var d = this[dId];
+        if (c) { this.div_area.removeChild(cId); c.destroy(); }
+        if (s) { this.div_area.removeChild(sId); s.destroy(); }
+        if (d) { this.removeChild(dId); d.destroy(); }
+    }
+    this.nCmbCount = 0;
+    this.stc_count.set_text("생성 수: 0");
+    this.stc_result.set_text("전체 삭제 완료");
+};
+    ]]></Script>
+  </Form>
+</FDL>

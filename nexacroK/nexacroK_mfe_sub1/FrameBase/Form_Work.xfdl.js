@@ -104,7 +104,7 @@
             this.PopupDiv00.form.addLayout(obj.name, obj);
 
             //-- Default Layout : this
-            obj = new nexacro.Layout("default","Desktop_screen",700,720,this,function(p){});
+            obj = new nexacro.Layout("default","Desktop_screen_sub1",700,720,this,function(p){});
             this.addLayout(obj.name, obj);
             
             // BindItem Information
@@ -150,8 +150,8 @@
         	let sArgs = "userid="+ "blue ";
         	sArgs += " username="+ "테스트";
         	var svrid = "MyService01"
-        	//const req = this.transaction(svrid,"http://172.10.12.45:9090/service_jsp/test_100_XML.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
-        	const req = this.transaction(svrid,"http://172.10.12.45:7070/jsp/test_100_XML.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
+        	const req = this.transaction(svrid,"http://172.10.12.45:9090/service_jsp/test_100_XML.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
+        	//const req = this.transaction(svrid,"http://172.10.12.45:7070/jsp/test_100_XML.jsp","input1=Dataset02","Dataset03=output",sArgs, "", false);
         	trace(req);
         	// 결과 처리
         	this.TextArea00.value="";

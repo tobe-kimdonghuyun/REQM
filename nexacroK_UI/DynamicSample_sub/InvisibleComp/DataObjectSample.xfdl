@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="DataObjectSample_sub" width="1280" height="670" onload="DataObjectSample_sub_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="[비가시적] DataObject 동적 생성 샘플" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" color="#065f46"/>
+        <Static id="stc_api_url" taborder="1" text="API: GET https://jsonplaceholder.typicode.com/posts" left="10" top="44" width="800" height="22" color="#1a56db"/>
+        <Static id="stc_desc2" taborder="2" text="new nexacro.DataObject() + new nexacro.Dataset() + new nexacro.Grid() 를 모두 동적으로 생성하고 REST API를 호출합니다." left="10" top="66" width="1200" height="22" color="#555555"/>
+        <Button id="btn_create" taborder="3" text="DataObject 동적 생성" left="10" top="96" width="170" height="32" onclick="btn_create_onclick"/>
+        <Button id="btn_search" taborder="4" text="게시글 조회 (GET)" left="190" top="96" width="150" height="32" onclick="btn_search_onclick"/>
+        <Button id="btn_users" taborder="5" text="사용자 조회 (GET)" left="350" top="96" width="150" height="32" onclick="btn_users_onclick"/>
+        <Button id="btn_clear" taborder="6" text="전체 삭제" left="510" top="96" width="90" height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_status" taborder="7" text="DataObject 미생성" left="614" top="102" width="600" height="22" color="#cc0000"/>
+        <Static id="stc_result" taborder="8" text="" left="10" top="136" width="1240" height="22" color="#333333"/>
+        <Div id="div_grid" left="10" top="164" width="1250" height="496"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// this.bCreated (Form 속성) 으로 관리 — var 클로저 변수 사용 금지
+// Div 내 동적 생성 컴포넌트 접근: this.div_grid.form.all["grd_result"]
+
+this.DataObjectSample_sub_onload = function(obj, e)
+{
+    this.bCreated = false;
+    this.stc_status.set_text("① [DataObject 동적 생성] 버튼 클릭 → ② [게시글 조회] 클릭 순서로 실행하세요.");
+};
+
+this.btn_create_onclick = function(obj, e)
+{
+    if (this.bCreated) { this.stc_status.set_text("이미 생성되어 있습니다. 삭제 후 다시 시도하세요."); return; }
+
+    // ────── DataObject 동적 생성 ──────────────────────────
+    var dobj = new nexacro.DataObject("dobj_api", this);
+    this.addChild("dobj_api", dobj);
+    dobj.addEventHandler("onsuccess", this.dobj_api_onsuccess, this);
+    dobj.addEventHandler("onload",    this.dobj_api_onload,    this);
+    dobj.addEventHandler("onerror",   this.dobj_api_onerror,   this);
+
+    // ────── Dataset 동적 생성 ─────────────────────────────
+    var ds = new nexacro.Dataset("ds_result", this);
+    this.addChild("ds_result", ds);
+
+    // ────── Grid 동적 생성 ────────────────────────────────
+    var grd = new nexacro.Grid("grd_result", 5, 5, 1230, 480, null, null);
+    this.div_grid.addChild("grd_result", grd);
+    grd.show();
+
+    this.bCreated = true;
+    this.stc_status.set_text("✔ new nexacro.DataObject() + new nexacro.Dataset() + new nexacro.Grid() 동적 생성 완료!");
+    this.stc_result.set_text("이제 [게시글 조회] 또는 [사용자 조회] 버튼을 클릭하세요.");
+};
+
+this.btn_search_onclick = function(obj, e)
+{
+    var dobj = this["dobj_api"];
+    if (!dobj) { this.stc_status.set_text("먼저 DataObject를 동적 생성하세요."); return; }
+    this.stc_status.set_text("조회 중... (GET /posts)");
+    dobj.request("SEARCH", "GET", "https://jsonplaceholder.typicode.com/posts");
+};
+
+this.btn_users_onclick = function(obj, e)
+{
+    var dobj = this["dobj_api"];
+    if (!dobj) { this.stc_status.set_text("먼저 DataObject를 동적 생성하세요."); return; }
+    this.stc_status.set_text("조회 중... (GET /users)");
+    dobj.request("SEARCH_USERS", "GET", "https://jsonplaceholder.typicode.com/users");
+};
+
+this.dobj_api_onsuccess = function(obj, e)
+{
+    trace("[onsuccess] serviceid=" + e.serviceid + " / statuscode=" + e.statuscode);
+    if (e.statuscode > 200)
+    {
+        e.preventDefault();
+        this.stc_status.set_text("통신 오류: HTTP " + e.statuscode);
+    }
+};
+
+this.dobj_api_onload = function(obj, e)
+{
+    // DataObject.REASON_REQUEST 는 동적 생성 환경에서 undefined가 되므로 nexacro 전체 경로 사용
+    if (e.reason != nexacro.DataObject.REASON_REQUEST) return;
+
+    var ds  = this["ds_result"];
+    // Div 내 동적 생성 컴포넌트는 div.form.all[id] 로 접근
+    var grd = this.div_grid.form.all["grd_result"];
+    if (!ds || !grd) return;
+
+    if (!(obj.data instanceof Array) || obj.data.length == 0)
+    {
+        this.stc_status.set_text("조회된 데이터가 없습니다.");
+        return;
+    }
+
+    // 컬럼·행 전체 초기화 (엔드포인트 전환 시 컬럼 중복 방지)
+    ds.clear();
+    var objSample = obj.data[0];
+    for (var key in objSample)
+    {
+        var objColInfo = new ColumnInfo();
+        objColInfo.type     = "String";
+        objColInfo.datapath = "@." + key;
+        ds.addColumnInfo(key.toUpperCase(), objColInfo);
+    }
+    this.ds_result.binddataobject = obj.id;
+    this.ds_result.dataobjectpath = "$.[*]";
+    grd.binddataset = this.ds_result.name;
+    grd.createFormat();
+	grd.autofittype = "col";
+
+    this.stc_status.set_text("✔ 조회 완료: " + ds.rowcount + "건 / 컬럼 수: " + ds.getColCount());
+    this.stc_result.set_text("serviceid=" + e.serviceid + " | 첫 번째 컬럼: " + ds.getColumn(0, 0));
+};
+
+this.dobj_api_onerror = function(obj, e)
+{
+    trace("[onerror] " + e.statuscode + ":" + e.errormsg);
+    this.stc_status.set_text("통신 오류: " + e.statuscode + " / " + e.errormsg);
+};
+
+this.btn_clear_onclick = function(obj, e)
+{
+    // Div 내 동적 생성 컴포넌트는 div.form.all[id] 로 접근
+    var grd  = this.div_grid.form.all["grd_result"];
+    var ds   = this["ds_result"];
+    var dobj = this["dobj_api"];
+    if (grd)  { this.div_grid.removeChild("grd_result"); grd.destroy(); }
+    if (ds)   { this.removeChild("ds_result"); ds.destroy(); }
+    if (dobj) { this.removeChild("dobj_api");  dobj.destroy(); }
+    this.bCreated = false;
+    this.stc_status.set_text("DataObject / Dataset / Grid 삭제 완료");
+    this.stc_result.set_text("");
+};
+    ]]></Script>
+  </Form>
+</FDL>

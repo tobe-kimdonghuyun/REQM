@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="TextAreaSample_sub" width="1280" height="670" onload="TextAreaSample_sub_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="TextArea 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" color="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.TextArea() 로 여러 줄 텍스트 입력 컴포넌트를 동적 생성합니다." left="10" top="44" width="900" height="22" color="#555555"/>
+        <Button id="btn_create" taborder="2" text="TextArea 생성" left="10" top="74" width="120" height="32" onclick="btn_create_onclick"/>
+        <Button id="btn_getValue" taborder="3" text="값 읽기" left="140" top="74" width="90" height="32" onclick="btn_getValue_onclick"/>
+        <Button id="btn_clear" taborder="4" text="전체 삭제" left="240" top="74" width="90" height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_count" taborder="5" text="생성 수: 0" left="344" top="80" width="120" height="22" color="#1a56db"/>
+        <Static id="stc_result" taborder="6" text="" left="10" top="114" width="1240" height="22" color="#cc0000"/>
+        <Static id="stc_area_label" taborder="7" text="▼ 동적 생성 영역" left="10" top="140" width="300" height="20" color="#888888"/>
+        <Div id="div_area" left="10" top="164" width="1250" height="486"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// this.nTxaCount (Form 속성) 으로 관리 — var 클로저 변수 사용 금지
+
+this.TextAreaSample_sub_onload = function(obj, e)
+{
+    this.nTxaCount = 0;
+};
+
+this.btn_create_onclick = function(obj, e)
+{
+    this.nTxaCount++;
+    var nCol  = (this.nTxaCount - 1) % 3;
+    var nRow  = Math.floor((this.nTxaCount - 1) / 3);
+    var nLeft = nCol * 416 + 5;
+    var nTop  = nRow * 180 + 5;
+
+    // 레이블
+    var objStc = new nexacro.Static("stc_txa_lbl_" + this.nTxaCount, nLeft, nTop, 400, 22, null, null);
+    objStc.set_text("TextArea " + this.nTxaCount + " (new nexacro.TextArea)");
+    this.div_area.addChild("stc_txa_lbl_" + this.nTxaCount, objStc);
+    objStc.show();
+
+    // TextArea 동적 생성
+    var objTxa = new nexacro.TextArea("txa_dyn_" + this.nTxaCount, nLeft, nTop + 26, 400, 140, null, null);
+    objTxa.wordWrap = "char";
+ 
+    objTxa.set_value("TextArea " + this.nTxaCount + " 초기 내용입니다.\nnew nexacro.TextArea()로 동적 생성.\nEnter 키로 줄바꿈 가능합니다.");
+    this.div_area.addChild("txa_dyn_" + this.nTxaCount, objTxa);
+    objTxa.show();
+
+    this.stc_count.set_text("생성 수: " + this.nTxaCount);
+    this.stc_result.set_text("txa_dyn_" + this.nTxaCount + " 생성 완료");
+};
+
+this.btn_getValue_onclick = function(obj, e)
+{
+    var sResult = "";
+    for (var i = 1; i <= this.nTxaCount; i++) {
+        var comp = this.div_area.form.all["txa_dyn_" + i];
+        if (comp) {
+            var lines = comp.value.split("\n").length;
+            sResult += "[txa_dyn_" + i + "] " + lines + "줄  ";
+        }
+    }
+    if (sResult == "") { this.stc_result.set_text("생성된 TextArea가 없습니다."); return; }
+    this.stc_result.set_text(sResult);
+    var sFull = "";
+    for (var j = 1; j <= this.nTxaCount; j++) {
+        var c = this.div_area.form.all["txa_dyn_" + j];
+        if (c) sFull += "=== txa_dyn_" + j + " ===\n" + c.value + "\n\n";
+    }
+    this.alert(sFull);
+};
+
+this.btn_clear_onclick = function(obj, e)
+{
+    for (var i = 1; i <= this.nTxaCount; i++) {
+        var tId = "txa_dyn_" + i; var sId = "stc_txa_lbl_" + i;
+        var t = this.div_area.form.all[tId]; var s = this.div_area.form.all[sId];
+        if (t) { this.div_area.removeChild(tId); t.destroy(); }
+        if (s) { this.div_area.removeChild(sId); s.destroy(); }
+    }
+    this.nTxaCount = 0;
+    this.stc_count.set_text("생성 수: 0");
+    this.stc_result.set_text("전체 삭제 완료");
+};
+    ]]></Script>
+  </Form>
+</FDL>

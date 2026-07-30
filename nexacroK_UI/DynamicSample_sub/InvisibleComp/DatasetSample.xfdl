@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="DatasetSample_sub" width="1280" height="670" onload="DatasetSample_sub_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="[비가시적] Dataset 동적 생성 샘플" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" color="#065f46"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.Dataset() 으로 Dataset을 동적 생성하고 컬럼/행을 추가한 뒤 new nexacro.Grid()와 바인딩합니다." left="10" top="44" width="1200" height="22" color="#555555"/>
+
+        <Button id="btn_createDs" taborder="2" text="Dataset + Grid 생성" left="10"  top="74" width="160" height="32" onclick="btn_createDs_onclick"/>
+        <Button id="btn_addRow"   taborder="3" text="행 추가"               left="180" top="74" width="80"  height="32" onclick="btn_addRow_onclick"/>
+        <Button id="btn_delRow"   taborder="4" text="선택행 삭제"           left="270" top="74" width="100" height="32" onclick="btn_delRow_onclick"/>
+        <Button id="btn_editRow"  taborder="5" text="첫행 수정"             left="380" top="74" width="90"  height="32" onclick="btn_editRow_onclick"/>
+        <Button id="btn_filter"   taborder="6" text="점수 80↑ 필터"         left="480" top="74" width="120" height="32" onclick="btn_filter_onclick"/>
+        <Button id="btn_clearFilter" taborder="7" text="필터 해제"          left="610" top="74" width="90"  height="32" onclick="btn_clearFilter_onclick"/>
+        <Button id="btn_clear"    taborder="8" text="전체 삭제"              left="710" top="74" width="90"  height="32" onclick="btn_clear_onclick"/>
+
+        <Static id="stc_info" taborder="9" text="" left="10" top="114" width="1240" height="22" color="#1a56db"/>
+        <Static id="stc_result" taborder="10" text="" left="10" top="138" width="1240" height="22" color="#cc0000"/>
+
+        <Static id="stc_log_label" taborder="11" text="▼ Dataset 상태" left="10" top="166" width="200" height="20" color="#888888"/>
+        <Static id="stc_log" taborder="12" text="" left="10" top="186" width="1240" height="22" color="#333333"/>
+        <Div id="div_grid" left="10" top="214" width="1250" height="446"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// this.bCreated, this.nRowNum (Form 속성) 으로 관리 — var 클로저 변수 사용 금지
+// Div 내 동적 생성 컴포넌트 접근: this.div_grid.form.all["grd_emp"]
+var aNamesAll = ["김민준","이서연","박지훈","최수아","정도윤","홍길동","이영희","박철수","김영수","최지영"];
+var aDeptAll  = ["개발팀","기획팀","디자인팀","QA팀","운영팀","영업팀","인사팀","총무팀","재무팀","마케팅팀"];
+
+this.DatasetSample_sub_onload = function(obj, e)
+{
+    this.bCreated = false;
+    this.nRowNum  = 0;
+    this.stc_info.set_text("버튼을 클릭하여 new nexacro.Dataset()과 new nexacro.Grid()를 동적 생성하세요.");
+};
+
+this.btn_createDs_onclick = function(obj, e)
+{
+    if (this.bCreated) { this.stc_result.set_text("이미 생성되어 있습니다. 삭제 후 다시 시도하세요."); return; }
+
+    // ────── Dataset 동적 생성 ──────────────────────────────
+    var ds = new nexacro.Dataset("ds_emp", this);
+    this.addChild("ds_emp", ds);
+    ds.addColumn("NO",    "String", 5);
+    ds.addColumn("NAME",  "String", 20);
+    ds.addColumn("DEPT",  "String", 20);
+    ds.addColumn("SCORE", "String", 5);
+    ds.addColumn("GRADE", "String", 2);
+
+    ds.updatecontrol = false;
+    for (var i = 0; i < 10; i++) {
+        this.nRowNum++;
+        var r     = ds.addRow();
+        var score = Math.floor(Math.random() * 40 + 60);
+        ds.setColumn(r, "NO",    this.nRowNum);
+        ds.setColumn(r, "NAME",  aNamesAll[i % aNamesAll.length]);
+        ds.setColumn(r, "DEPT",  aDeptAll[i % aDeptAll.length]);
+        ds.setColumn(r, "SCORE", score);
+        ds.setColumn(r, "GRADE", score >= 90 ? "A" : (score >= 80 ? "B" : (score >= 70 ? "C" : "D")));
+    }
+    ds.updatecontrol = true;
+
+    // ────── Grid 동적 생성 + Dataset 바인딩 ───────────────
+    var grd = new nexacro.Grid("grd_emp", 5, 5, 1230, 430, null, null);
+    this.div_grid.addChild("grd_emp", grd);
+    grd.show();
+    grd.set_binddataset("ds_emp");
+    grd.createFormat();
+
+    this.bCreated = true;
+    this.fn_updateInfo();
+    this.stc_result.set_text("new nexacro.Dataset() + new nexacro.Grid() 생성 완료! 컬럼: NO/NAME/DEPT/SCORE/GRADE");
+};
+
+this.btn_addRow_onclick = function(obj, e)
+{
+    var ds = this["ds_emp"];
+    if (!ds) { this.stc_result.set_text("먼저 Dataset을 생성하세요."); return; }
+    this.nRowNum++;
+    var score = Math.floor(Math.random() * 40 + 60);
+    var r = ds.addRow();
+    ds.setColumn(r, "NO",    this.nRowNum);
+    ds.setColumn(r, "NAME",  aNamesAll[(this.nRowNum - 1) % aNamesAll.length]);
+    ds.setColumn(r, "DEPT",  aDeptAll[(this.nRowNum - 1) % aDeptAll.length]);
+    ds.setColumn(r, "SCORE", score);
+    ds.setColumn(r, "GRADE", score >= 90 ? "A" : (score >= 80 ? "B" : (score >= 70 ? "C" : "D")));
+    this.fn_updateInfo();
+    this.stc_result.set_text("행 추가 완료 (rowType=INSERT). 전체 행 수: " + ds.rowcount);
+};
+
+this.btn_delRow_onclick = function(obj, e)
+{
+    var ds  = this["ds_emp"];
+    // Div 내 동적 생성 컴포넌트는 div.form.all[id] 로 접근
+    var grd = this.div_grid.form.all["grd_emp"];
+    if (!ds || !grd) { this.stc_result.set_text("먼저 Dataset을 생성하세요."); return; }
+    var nSel = grd.currentrow;
+    if (nSel < 0) { this.stc_result.set_text("삭제할 행을 Grid에서 선택하세요."); return; }
+    var sName = ds.getColumn(nSel, "NAME");
+    ds.deleteRow(nSel);
+    this.fn_updateInfo();
+    this.stc_result.set_text("[" + sName + "] 행 삭제 완료. 남은 행 수: " + ds.rowcount);
+};
+
+this.btn_editRow_onclick = function(obj, e)
+{
+    var ds = this["ds_emp"];
+    if (!ds || ds.rowcount == 0) { this.stc_result.set_text("수정할 행이 없습니다."); return; }
+    var score = Math.floor(Math.random() * 40 + 60);
+    ds.setColumn(0, "SCORE", score);
+    ds.setColumn(0, "GRADE", score >= 90 ? "A" : (score >= 80 ? "B" : (score >= 70 ? "C" : "D")));
+    ds.setColumn(0, "NAME",  ds.getColumn(0, "NAME") + "*");
+    this.fn_updateInfo();
+    this.stc_result.set_text("첫 번째 행 수정 완료 (rowType=UPDATE). SCORE=" + score);
+};
+
+this.btn_filter_onclick = function(obj, e)
+{
+    var ds = this["ds_emp"];
+    if (!ds) { this.stc_result.set_text("먼저 Dataset을 생성하세요."); return; }
+    ds.setFilter("SCORE >= '80'");
+    this.fn_updateInfo();
+    this.stc_result.set_text("필터 적용: SCORE >= 80 → 표시 행 수: " + ds.rowcount);
+};
+
+this.btn_clearFilter_onclick = function(obj, e)
+{
+    var ds = this["ds_emp"];
+    if (!ds) { this.stc_result.set_text("먼저 Dataset을 생성하세요."); return; }
+    ds.setFilter("");
+    this.fn_updateInfo();
+    this.stc_result.set_text("필터 해제. 전체 행 수: " + ds.rowcount);
+};
+
+this.btn_clear_onclick = function(obj, e)
+{
+    // Div 내 동적 생성 컴포넌트는 div.form.all[id] 로 접근
+    var grd = this.div_grid.form.all["grd_emp"];
+    var ds  = this["ds_emp"];
+    if (grd) { this.div_grid.removeChild("grd_emp"); grd.destroy(); }
+    if (ds)  { this.removeChild("ds_emp"); ds.destroy(); }
+    this.bCreated = false;
+    this.nRowNum  = 0;
+    this.stc_info.set_text("");
+    this.stc_log.set_text("");
+    this.stc_result.set_text("Dataset / Grid 삭제 완료");
+};
+
+// Form 메서드로 정의 — 전역 함수(function fn_xxx) 사용 금지
+this.fn_updateInfo = function()
+{
+    var ds = this["ds_emp"];
+    if (!ds) return;
+    var nI = 0, nU = 0, nD = 0, nN = 0;
+    for (var i = 0; i < ds.rowcount; i++) {
+        var rt = ds.getRowType(i);
+        if (rt == Dataset.ROWTYPE_INSERT)      nI++;
+        else if (rt == Dataset.ROWTYPE_UPDATE)  nU++;
+        else if (rt == Dataset.ROWTYPE_DELETE)  nD++;
+        else                                    nN++;
+    }
+    this.stc_info.set_text("전체 행: " + ds.rowcount + " | 합계: " + ds.getSum("SCORE") + " | 평균: " + Math.round(ds.getAvg("SCORE") * 10) / 10);
+    this.stc_log.set_text("rowType ▶ NORMAL=" + nN + " / INSERT=" + nI + " / UPDATE=" + nU + " / DELETE=" + nD);
+};
+    ]]></Script>
+  </Form>
+</FDL>

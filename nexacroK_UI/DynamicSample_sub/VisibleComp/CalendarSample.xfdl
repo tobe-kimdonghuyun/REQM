@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="CalendarSample_sub" width="1280" height="670" onload="CalendarSample_sub_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="Calendar 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" color="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.Calendar() 로 Calendar를 동적 생성하고 날짜 선택 이벤트를 연결합니다." left="10" top="44" width="900" height="22" color="#555555"/>
+        <Button id="btn_normal" taborder="2" text="일반(팝업) Calendar" left="10" top="74" width="160" height="32" onclick="btn_normal_onclick"/>
+        <Button id="btn_spin" taborder="3" text="스핀 Calendar" left="180" top="74" width="130" height="32" onclick="btn_spin_onclick"/>
+        <Button id="btn_clear" taborder="4" text="전체 삭제" left="320" top="74" width="90" height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_count" taborder="5" text="생성 수: 0" left="424" top="80" width="120" height="22" color="#1a56db"/>
+        <Static id="stc_result" taborder="6" text="" left="10" top="114" width="1240" height="22" color="#cc0000"/>
+        <Static id="stc_area_label" taborder="7" text="▼ 동적 생성 영역" left="10" top="140" width="300" height="20" color="#888888"/>
+        <Div id="div_area" left="10" top="164" width="1250" height="486"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// this.nCalCount (Form 속성) 으로 관리 — var 클로저 변수 사용 금지
+// fn_createCal 도 this.fn_createCal (Form 메서드) 로 정의
+
+this.CalendarSample_sub_onload = function(obj, e)
+{
+    this.nCalCount = 0;
+};
+
+this.fn_createCal = function(sType)
+{
+    this.nCalCount++;
+    var nCol  = (this.nCalCount - 1) % 4;
+    var nRow  = Math.floor((this.nCalCount - 1) / 4);
+    var nLeft = nCol * 312 + 5;
+    var nTop  = nRow * 90 + 5;
+
+    // 레이블
+    var sLabel = sType == "spin" ? "스핀 Calendar " : "일반(팝업) Calendar ";
+    var objStc = new nexacro.Static("stc_cal_lbl_" + this.nCalCount, nLeft, nTop, 295, 22, null, null);
+    objStc.set_text(sLabel + this.nCalCount + " (new nexacro.Calendar)");
+    this.div_area.addChild("stc_cal_lbl_" + this.nCalCount, objStc);
+    objStc.show();
+
+    // Calendar 동적 생성
+    var objCal = new nexacro.Calendar("cal_dyn_" + this.nCalCount, nLeft, nTop + 26, 295, 36, null, null);
+    objCal.set_type(sType == "spin" ? "spin" : "normal");
+    objCal.set_dateformat("yyyy-MM-dd");
+    objCal.set_editformat("yyyy-MM-dd ddd");
+	var objDate = new nexacro.Date();
+    objCal.value="20260729";
+	
+    this.div_area.addChild("cal_dyn_" + this.nCalCount, objCal);
+    objCal.show();
+    objCal.addEventHandler("oncloseup", this.dynCal_oncloseup, this);
+
+    this.stc_count.set_text("생성 수: " + this.nCalCount);
+    this.stc_result.set_text("cal_dyn_" + this.nCalCount + " (" + sLabel.trim() + ") 생성 완료");
+};
+
+this.btn_normal_onclick = function(obj, e) { this.fn_createCal("normal"); };
+this.btn_spin_onclick   = function(obj, e) { this.fn_createCal("spin"); };
+
+this.dynCal_oncloseup = function(obj, e)
+{
+    this.stc_result.set_text("[" + obj.id + "] 날짜 선택: " + obj.value);
+};
+
+this.btn_clear_onclick = function(obj, e)
+{
+    for (var i = 1; i <= this.nCalCount; i++) {
+        var cId = "cal_dyn_" + i; var sId = "stc_cal_lbl_" + i;
+        var c = this.div_area.form.all[cId]; var s = this.div_area.form.all[sId];
+        if (c) { this.div_area.removeChild(cId); c.destroy(); }
+        if (s) { this.div_area.removeChild(sId); s.destroy(); }
+    }
+    this.nCalCount = 0;
+    this.stc_count.set_text("생성 수: 0");
+    this.stc_result.set_text("전체 삭제 완료");
+};
+    ]]></Script>
+  </Form>
+</FDL>

@@ -7,7 +7,7 @@ const envLoader = function(nexacro, system, trace)
         env.on_getAllScreenInfo = function ()
         {
             return [
-            {"id":"Desktop_screen","type":"desktop","filesecurelevel":"all","networksecurelevel":"all","themeid":"theme::blue","xadl":"Application_Desktop.xadl.js"}
+            {"id":"Desktop_screen_sub1","type":"desktop","filesecurelevel":"all","networksecurelevel":"all","themeid":"theme::blue","xadl":"Application_Desktop.xadl.js"}
             ];
         };
 

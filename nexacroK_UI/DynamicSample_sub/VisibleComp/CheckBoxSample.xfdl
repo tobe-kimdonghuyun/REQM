@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="CheckBoxSample_sub" width="1280" height="670" onload="CheckBoxSample_sub_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="CheckBox 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" color="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.CheckBox() 으로 동적 생성합니다. truevalue/falsevalue를 다양하게 설정할 수 있습니다." left="10" top="44" width="900" height="22" color="#555555"/>
+        <Button id="btn_create" taborder="2" text="CheckBox 생성" left="10" top="74" width="130" height="32" onclick="btn_create_onclick"/>
+        <Button id="btn_getValue" taborder="3" text="선택값 확인" left="150" top="74" width="110" height="32" onclick="btn_getValue_onclick"/>
+        <Button id="btn_clear" taborder="4" text="전체 삭제" left="270" top="74" width="90" height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_count" taborder="5" text="생성 수: 0" left="374" top="80" width="120" height="22" color="#1a56db"/>
+        <Static id="stc_result" taborder="6" text="" left="10" top="114" width="1240" height="22" color="#cc0000"/>
+        <Static id="stc_area_label" taborder="7" text="▼ 동적 생성 영역" left="10" top="140" width="300" height="20" color="#888888"/>
+        <Div id="div_area" left="10" top="164" width="1250" height="486"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// this.nChkCount (Form 속성) 으로 관리 — var 클로저 변수 사용 금지
+var aChkTypes = [
+    { text:"동의 여부 (Y/N)",       tv:"Y",    fv:"N"    },
+    { text:"사용 여부 (1/0)",        tv:"1",    fv:"0"    },
+    { text:"선택 여부 (true/false)", tv:"true", fv:"false"},
+    { text:"활성화 (ON/OFF)",        tv:"ON",   fv:"OFF"  }
+];
+
+this.CheckBoxSample_sub_onload = function(obj, e)
+{
+    this.nChkCount = 0;
+};
+
+this.btn_create_onclick = function(obj, e)
+{
+    this.nChkCount++;
+    var nRow  = Math.floor((this.nChkCount - 1) / 4);
+    var nCol  = (this.nChkCount - 1) % 4;
+    var nLeft = nCol * 310 + 5;
+    var nTop  = nRow * 80 + 5;
+    var tInfo = aChkTypes[(this.nChkCount - 1) % 4];
+
+    // 레이블
+    var objStc = new nexacro.Static("stc_chk_lbl_" + this.nChkCount, nLeft, nTop, 290, 22, null, null);
+    objStc.set_text("truevalue=\"" + tInfo.tv + "\" falsevalue=\"" + tInfo.fv + "\"");
+    objStc.set_color("#555555");
+    this.div_area.addChild("stc_chk_lbl_" + this.nChkCount, objStc);
+    objStc.show();
+
+    // CheckBox 동적 생성
+    var objChk = new nexacro.CheckBox("chk_dyn_" + this.nChkCount, nLeft, nTop + 26, 290, 30, null, null);
+    objChk.set_text(tInfo.text + " [" + this.nChkCount + "]");
+    objChk.set_truevalue(tInfo.tv);
+    objChk.set_falsevalue(tInfo.fv);
+    objChk.set_value(tInfo.fv);
+    this.div_area.addChild("chk_dyn_" + this.nChkCount, objChk);
+    objChk.show();
+    objChk.addEventHandler("onclick", this.dynChk_onclick, this);
+
+    this.stc_count.set_text("생성 수: " + this.nChkCount);
+    this.stc_result.set_text("chk_dyn_" + this.nChkCount + " 생성 완료 (truevalue=" + tInfo.tv + ")");
+};
+
+this.dynChk_onclick = function(obj, e)
+{
+    this.stc_result.set_text("[" + obj.id + "] 현재 값: " + obj.value + " (truevalue=" + obj.truevalue + " / falsevalue=" + obj.falsevalue + ")");
+};
+
+this.btn_getValue_onclick = function(obj, e)
+{
+    var sResult = "";
+    for (var i = 1; i <= this.nChkCount; i++) {
+        var comp = this.div_area.form.all["chk_dyn_" + i];
+        if (comp) sResult += "[chk_dyn_" + i + "] = " + comp.value + "  ";
+    }
+    if (sResult == "") sResult = "생성된 CheckBox가 없습니다.";
+    this.stc_result.set_text(sResult);
+    this.alert("CheckBox 값:\n" + sResult.split("  ").join("\n"));
+};
+
+this.btn_clear_onclick = function(obj, e)
+{
+    for (var i = 1; i <= this.nChkCount; i++) {
+        var cId = "chk_dyn_" + i; var sId = "stc_chk_lbl_" + i;
+        var c = this.div_area.form.all[cId]; var s = this.div_area.form.all[sId];
+        if (c) { this.div_area.removeChild(cId); c.destroy(); }
+        if (s) { this.div_area.removeChild(sId); s.destroy(); }
+    }
+    this.nChkCount = 0;
+    this.stc_count.set_text("생성 수: 0");
+    this.stc_result.set_text("전체 삭제 완료");
+};
+    ]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="TransactionSample02_sub" width="1280" height="670" onload="TransactionSample02_sub_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="[비가시적] transaction — async/await 방식" left="10" top="10" width="900" height="28" font="bold 14 'Malgun Gothic'" color="#065f46"/>
+        <Static id="stc_url" taborder="1" text="JSP: http://172.10.12.45:7070/jsp/test_100_XML.jsp  |  출력 Dataset: output (SAMPLE_NM, SAMPLE_ID, SAMPLE_DESC, SAMPLE_DEPT_NM)" left="10" top="42" width="1240" height="22" color="#1a56db"/>
+        <Static id="stc_desc" taborder="2" text="async function 내에서 const [errCode, errMsg] = await this.transaction(...)으로 호출하면 절차적으로 결과를 처리할 수 있습니다." left="10" top="66" width="1240" height="22" color="#555555"/>
+        <Button id="btn_create" taborder="3" text="Dataset + Grid 생성" left="10"  top="96" width="160" height="32" onclick="btn_create_onclick"/>
+        <Button id="btn_search" taborder="4" text="조회 (await)"         left="180" top="96" width="130" height="32" onclick="btn_search_onclick"/>
+        <Button id="btn_clear"  taborder="5" text="초기화"               left="320" top="96" width="80"  height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_status" taborder="6" text="① [Dataset+Grid 생성] → ② [조회 (await)] 순서로 실행하세요." left="10" top="138" width="1240" height="22" color="#cc0000"/>
+        <Static id="stc_log_label" taborder="7" text="▼ 결과 로그 (ErrorCode / ErrorMsg / 건수)" left="10" top="166" width="400" height="20" color="#888888"/>
+        <TextArea id="txt_log" taborder="8" left="10" top="188" width="1240" height="80" wordWrap="char"/>
+        <Div id="div_grid" left="10" top="276" width="1250" height="384"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.TransactionSample02_sub_onload = function(obj, e)
+{
+    this.bCreated = false;
+    this.stc_status.set_text("① [Dataset+Grid 생성] → ② [조회 (await)] 순서로 실행하세요.");
+};
+
+this.btn_create_onclick = function(obj, e)
+{
+    if (this.bCreated) { this.stc_status.set_text("이미 생성되어 있습니다. [초기화] 후 다시 시도하세요."); return; }
+
+    // Dataset 동적 생성 — JSP output Dataset 컬럼과 동일하게 정의
+    var ds = new nexacro.Dataset("ds_output", this);
+    this.addChild("ds_output", ds);
+    ds.addColumn("SAMPLE_NM",      "String", 255);
+    ds.addColumn("SAMPLE_ID",      "String", 255);
+    ds.addColumn("SAMPLE_DESC",    "String", 255);
+    ds.addColumn("SAMPLE_DEPT_NM", "String", 255);
+
+    // Grid 동적 생성 + Dataset 바인딩
+    var grd = new nexacro.Grid("grd_result", 5, 5, 1230, 365, null, null);
+    this.div_grid.addChild("grd_result", grd);
+    grd.show();
+    grd.set_binddataset("ds_output");
+    grd.createFormat();
+
+    this.bCreated = true;
+    this.stc_status.set_text("✔ new nexacro.Dataset() + new nexacro.Grid() 생성 완료! [조회 (await)] 버튼을 클릭하세요.");
+    this.txt_log.set_value("Dataset 컬럼: SAMPLE_NM / SAMPLE_ID / SAMPLE_DESC / SAMPLE_DEPT_NM");
+};
+
+this.btn_search_onclick = function(obj, e)
+{
+    var ds = this["ds_output"];
+    if (!ds) { this.stc_status.set_text("먼저 [Dataset+Grid 생성] 버튼을 클릭하세요."); return; }
+    // async 함수를 별도로 호출 — 이벤트 핸들러 자체를 async로 쓰지 않음
+    this.fn_loadData();
+};
+
+this.fn_loadData = async function()
+{
+    this.txt_log.set_value("조회 중...");
+    this.stc_status.set_text("서버 요청 중 (await)...");
+
+    try
+    {
+        var sArgs = "ag1=1 userid=sample";
+
+        // await로 결과가 반환될 때까지 대기 — [errCode, errMsg] 구조분해 할당
+        const [errCode, errMsg] = await this.transaction(
+            "TR_AWAIT",
+            "http://172.10.12.45:7070/jsp/test_100_XML.jsp",
+            "",                  // inDs: 없음
+            "ds_output=output",  // outDs: 서버 output → 로컬 ds_output
+            sArgs,
+            "",                  // 콜백 없음 → Promise 반환(await 가능)
+            true                 // bAsync: 비동기
+        );
+
+        // await 이후 절차적으로 실행됨 — ds_output에 데이터가 채워진 상태
+        var ds    = this["ds_output"];
+        var nRows = ds ? ds.rowcount : 0;
+
+        // JSP 반환: ErrorCode=1 성공 / ErrorCode=-2 실패
+        if (errCode < 0)
+        {
+            this.stc_status.set_text("시스템 오류 [" + errCode + "]: " + errMsg);
+        }
+        else
+        {
+            this.stc_status.set_text("✔ 조회 완료: " + nRows + "건");
+        }
+
+        this.txt_log.set_value(
+            "errCode  = " + errCode + "\n" +
+            "errMsg   = " + errMsg  + "\n" +
+            "조회건수 = " + nRows   + "\n" +
+            "(await 이후 ds_output.rowcount를 즉시 참조 가능)\n" +
+            "(JSP 기준: ErrorCode=1 성공 / ErrorCode=-2 실패)"
+        );
+    }
+    catch(err)
+    {
+        this.stc_status.set_text("통신 실패");
+        this.txt_log.set_value("catch 발생: " + err);
+    }
+};
+
+this.btn_clear_onclick = function(obj, e)
+{
+    var grd = this.div_grid.form.all["grd_result"];
+    var ds  = this["ds_output"];
+    if (grd) { this.div_grid.removeChild("grd_result"); grd.destroy(); }
+    if (ds)  { this.removeChild("ds_output"); ds.destroy(); }
+    this.bCreated = false;
+    this.stc_status.set_text("초기화 완료. ① [Dataset+Grid 생성] → ② [조회 (await)] 순서로 실행하세요.");
+    this.txt_log.set_value("");
+};
+    ]]></Script>
+  </Form>
+</FDL>

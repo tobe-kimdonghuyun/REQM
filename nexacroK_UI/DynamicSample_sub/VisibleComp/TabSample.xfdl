@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="TabSample_sub" width="1280" height="670" onload="TabSample_sub_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="Tab 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" color="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.Tab() 으로 Tab을 동적 생성하고 insertTabpage()로 탭 페이지를 추가합니다." left="10" top="44" width="900" height="22" color="#555555"/>
+        <Button id="btn_create"  taborder="2" text="Tab 생성"      left="10"  top="74" width="100" height="32" onclick="btn_create_onclick"/>
+        <Button id="btn_addPage" taborder="3" text="탭 페이지 추가" left="120" top="74" width="120" height="32" onclick="btn_addPage_onclick"/>
+        <Button id="btn_delPage" taborder="4" text="탭 페이지 삭제" left="250" top="74" width="120" height="32" onclick="btn_delPage_onclick"/>
+        <Button id="btn_clear"   taborder="5" text="Tab 삭제"       left="380" top="74" width="90"  height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_result" taborder="6" text="" left="484" top="80" width="760" height="22" color="#cc0000"/>
+        <Div id="div_area" left="10" top="116" width="1250" height="534"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// this.bCreated, this.nPageCount (Form 속성) 으로 관리 — var 클로저 변수 사용 금지
+
+this.TabSample_sub_onload = function(obj, e)
+{
+    this.bCreated   = false;
+    this.nPageCount = 0;
+};
+
+this.btn_create_onclick = function(obj, e)
+{
+    if (this.bCreated) { this.stc_result.set_text("이미 생성되어 있습니다. 먼저 삭제하세요."); return; }
+
+    // Tab 동적 생성
+    var objTab = new nexacro.Tab("tab_dyn", 5, 5, 1230, 510, null, null);
+    this.div_area.addChild("tab_dyn", objTab);
+    objTab.show();
+
+    // 초기 탭 페이지 3개 추가
+    for (var i = 1; i <= 3; i++)
+    {
+        this.nPageCount++;
+        var pageId = "TabPage" + this.nPageCount;
+        objTab.insertTabpage(pageId, -1);
+        var page = objTab.tabpages[this.nPageCount - 1];
+        if (page)
+        {
+            page.set_text("탭 " + this.nPageCount);
+            var stc = new nexacro.Static("stc_page_" + this.nPageCount, 20, 20, 600, 40, null, null);
+            stc.set_text("탭 " + this.nPageCount + " 의 내용입니다. (new nexacro.Tab + insertTabpage로 동적 생성)");
+            stc.set_font("14 'Malgun Gothic'");
+            page.form.addChild("stc_page_" + this.nPageCount, stc);
+            stc.show();
+        }
+    }
+    objTab.addEventHandler("onchanged", this.dynTab_onchanged, this);
+
+    this.bCreated = true;
+    this.stc_result.set_text("new nexacro.Tab() 생성 완료! 초기 탭 수: " + this.nPageCount);
+};
+
+this.btn_addPage_onclick = function(obj, e)
+{
+    var objTab = this.div_area.form.all["tab_dyn"];
+    if (!objTab) { this.stc_result.set_text("먼저 Tab을 생성하세요."); return; }
+
+    this.nPageCount++;
+    var pageId = "TabPage" + this.nPageCount;
+    objTab.insertTabpage(pageId, -1);
+    var page = objTab.tabpages[objTab.getTabpageCount() - 1];
+    if (page)
+    {
+        page.set_text("탭 " + this.nPageCount);
+        var stc = new nexacro.Static("stc_page_" + this.nPageCount, 20, 20, 600, 40, null, null);
+        stc.set_text("탭 " + this.nPageCount + " 동적 추가 (insertTabpage)");
+        stc.set_font("14 'Malgun Gothic'");
+        page.form.addChild("stc_page_" + this.nPageCount, stc);
+        stc.show();
+    }
+    this.stc_result.set_text("탭 페이지 추가 완료. 전체 탭 수: " + objTab.getTabpageCount());
+};
+
+this.btn_delPage_onclick = function(obj, e)
+{
+    var objTab = this.div_area.form.all["tab_dyn"];
+    if (!objTab || objTab.getTabpageCount() == 0) { this.stc_result.set_text("삭제할 탭이 없습니다."); return; }
+    var nLast = objTab.getTabpageCount() - 1;
+    objTab.deleteTabpage(nLast);
+    this.stc_result.set_text("마지막 탭 삭제 완료. 남은 탭 수: " + objTab.getTabpageCount());
+};
+
+this.dynTab_onchanged = function(obj, e)
+{
+    this.stc_result.set_text("탭 전환: " + e.preindex + " → " + e.postindex);
+};
+
+this.btn_clear_onclick = function(obj, e)
+{
+    var objTab = this.div_area.form.all["tab_dyn"];
+    if (objTab) { this.div_area.removeChild("tab_dyn"); objTab.destroy(); }
+    this.bCreated   = false;
+    this.nPageCount = 0;
+    this.stc_result.set_text("Tab 삭제 완료");
+};
+    ]]></Script>
+  </Form>
+</FDL>

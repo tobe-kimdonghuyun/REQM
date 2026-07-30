@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="TransactionSample01_sub" width="1280" height="670" onload="TransactionSample01_sub_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="[비가시적] transaction — Promise (.then/.catch) 방식" left="10" top="10" width="900" height="28" font="bold 14 'Malgun Gothic'" color="#065f46"/>
+        <Static id="stc_url" taborder="1" text="JSP: http://172.10.12.45:7070/jsp/test_100_XML.jsp  |  출력 Dataset: output (SAMPLE_NM, SAMPLE_ID, SAMPLE_DESC, SAMPLE_DEPT_NM)" left="10" top="42" width="1240" height="22" color="#1a56db"/>
+        <Static id="stc_desc" taborder="2" text="this.transaction() 반환값(Promise)에 .then(res =&gt; ...).catch(err =&gt; ...)를 체이닝합니다. 콜백 인수를 빈 문자열로 전달하면 Promise가 반환됩니다." left="10" top="66" width="1240" height="22" color="#555555"/>
+        <Button id="btn_create" taborder="3" text="Dataset + Grid 생성" left="10" top="96" width="160" height="32" onclick="btn_create_onclick"/>
+        <Button id="btn_search" taborder="4" text="조회 (Promise)" left="180" top="96" width="140" height="32" onclick="btn_search_onclick"/>
+        <Button id="btn_clear" taborder="5" text="초기화" left="330" top="96" width="80" height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_status" taborder="6" text="① [Dataset+Grid 생성] → ② [조회 (Promise)] 순서로 실행하세요." left="10" top="138" width="1240" height="22" color="#cc0000"/>
+        <Static id="stc_log_label" taborder="7" text="▼ 결과 로그 (ErrorCode / ErrorMsg / 건수)" left="10" top="166" width="400" height="20" color="#888888"/>
+        <TextArea id="txt_log" taborder="8" left="10" top="188" width="1240" height="80" wordWrap="char"/>
+        <Div id="div_grid" left="10" top="276" width="1250" height="384"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.TransactionSample01_sub_onload = function(obj, e)
+{
+    this.bCreated = false;
+    this.stc_status.set_text("① [Dataset+Grid 생성] → ② [조회 (Promise)] 순서로 실행하세요.");
+};
+
+this.btn_create_onclick = function(obj, e)
+{
+    if (this.bCreated) { this.stc_status.set_text("이미 생성되어 있습니다. [초기화] 후 다시 시도하세요."); return; }
+
+    // Dataset 동적 생성 — JSP output Dataset 컬럼과 동일하게 정의
+    var ds = new nexacro.Dataset("ds_output", this);
+    this.addChild("ds_output", ds);
+    ds.addColumn("SAMPLE_NM",      "String", 255);
+    ds.addColumn("SAMPLE_ID",      "String", 255);
+    ds.addColumn("SAMPLE_DESC",    "String", 255);
+    ds.addColumn("SAMPLE_DEPT_NM", "String", 255);
+
+    // Grid 동적 생성 + Dataset 바인딩
+    var grd = new nexacro.Grid("grd_result", 5, 5, 1230, 365, null, null);
+    this.div_grid.addChild("grd_result", grd);
+    grd.show();
+    grd.set_binddataset("ds_output");
+    grd.createFormat();
+
+    this.bCreated = true;
+    this.stc_status.set_text("✔ new nexacro.Dataset() + new nexacro.Grid() 생성 완료! [조회 (Promise)] 버튼을 클릭하세요.");
+    this.txt_log.set_value("Dataset 컬럼: SAMPLE_NM / SAMPLE_ID / SAMPLE_DESC / SAMPLE_DEPT_NM");
+};
+
+this.btn_search_onclick = function(obj, e)
+{
+    var ds = this["ds_output"];
+    if (!ds) { this.stc_status.set_text("먼저 [Dataset+Grid 생성] 버튼을 클릭하세요."); return; }
+
+    this.txt_log.set_value("조회 중...");
+    this.stc_status.set_text("서버 요청 중...");
+
+    var sArgs = "ag1=1 userid=sample";
+    var svrid = "TR_PROMISE";
+
+    // 콜백 인수를 빈 문자열로 전달하면 Promise가 반환됨
+    var req = this.transaction(
+        svrid,
+        "http://172.10.12.45:7070/jsp/test_100_XML.jsp",
+        "",                  // inDs: 없음
+        "ds_output=output",  // outDs: 서버 output → 로컬 ds_output
+        sArgs,
+        "",                  // 콜백 없음 → Promise 반환
+        false                 // bAsync: 비동기
+    );
+
+    if (req)
+    {
+        req.then(res => {
+            // res[0]=ErrorCode, res[1]=ErrorMsg
+            this.fn_afterSearch(svrid, res[0], res[1]);
+        })
+        .catch(err => {
+            this.stc_status.set_text("통신 실패");
+            this.txt_log.set_value("catch 발생: " + err);
+        });
+    }
+};
+
+this.fn_afterSearch = function(svrid, errCode, errMsg)
+{
+    var ds    = this["ds_output"];
+    var nRows = ds ? ds.rowcount : 0;
+
+    // JSP 반환: ErrorCode=1 성공 / ErrorCode=-2 실패 (nexacro 표준: 0=성공, 음수=오류)
+    if (errCode < 0)
+    {
+        this.stc_status.set_text("시스템 오류 [" + errCode + "]: " + errMsg);
+    }
+    else
+    {
+        this.stc_status.set_text("✔ 조회 완료: " + nRows + "건");
+    }
+
+    this.txt_log.set_value(
+        "svrid    = " + svrid   + "\n" +
+        "errCode  = " + errCode + "\n" +
+        "errMsg   = " + errMsg  + "\n" +
+        "조회건수 = " + nRows   + "\n" +
+        "(JSP 기준: ErrorCode=1 성공 / ErrorCode=-2 실패)"
+    );
+};
+
+this.btn_clear_onclick = function(obj, e)
+{
+    var grd = this.div_grid.form.all["grd_result"];
+    var ds  = this["ds_output"];
+    if (grd) { this.div_grid.removeChild("grd_result"); grd.destroy(); }
+    if (ds)  { this.removeChild("ds_output"); ds.destroy(); }
+    this.bCreated = false;
+    this.stc_status.set_text("초기화 완료. ① [Dataset+Grid 생성] → ② [조회 (Promise)] 순서로 실행하세요.");
+    this.txt_log.set_value("");
+};
+    ]]></Script>
+  </Form>
+</FDL>

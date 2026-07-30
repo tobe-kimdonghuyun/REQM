@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DevPro WebBrowser Call Sample</title>
+</head>
+<body>
+<script type="text/javascript">
+
+// HTML -> Nexacro 전송
+function fnToNexacro(v) {
+    var sMsg = "[HTML -> Nexacro]toValue:" + String(v);
+	console.log("======[HTML -> Nexacro]:toValue:" + String(v)+ "======");
+    window.parent.postMessage(sMsg, "*");  
+	//window.postMessage(sMsg, "*");
+}
+// Nexacro -> HTML 수신
+window.addEventListener("message", function(e) {
+    document.getElementById("fromNexacro").value = e.data;
+});
+
+</script>
+<form id="sample">
+    <table width='100%' border='0' cellpadding='1' cellspacing='1'>
+        <tr>
+            <td height='15' align=center bgcolor=#ededed> to nexacro </td>
+            <td>
+                <input type="text" id="toNexacro">
+                <input type="button" value="to nexacro" onclick="fnToNexacro(toNexacro.value)">
+            </td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td height='25' align=center bgcolor=#ededed> from nexacro </td>
+            <td><textarea id="fromNexacro" cols="70" rows="30" style="background-color: yellow;"></textarea></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

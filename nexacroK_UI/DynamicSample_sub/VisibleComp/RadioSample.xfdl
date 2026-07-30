@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="RadioSample_sub" width="1280" height="670" onload="RadioSample_sub_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="Radio 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" color="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.Radio() + new nexacro.Dataset() 으로 Radio와 이너 Dataset을 동적 생성합니다." left="10" top="44" width="900" height="22" color="#555555"/>
+        <Button id="btn_create_h" taborder="2" text="가로배치 Radio 생성" left="10" top="74" width="160" height="32" onclick="btn_create_h_onclick"/>
+        <Button id="btn_create_v" taborder="3" text="세로배치 Radio 생성" left="180" top="74" width="160" height="32" onclick="btn_create_v_onclick"/>
+        <Button id="btn_getValue" taborder="4" text="선택값 확인" left="350" top="74" width="110" height="32" onclick="btn_getValue_onclick"/>
+        <Button id="btn_clear" taborder="5" text="전체 삭제" left="470" top="74" width="90" height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_count" taborder="6" text="생성 수: 0" left="574" top="80" width="120" height="22" color="#1a56db"/>
+        <Static id="stc_result" taborder="7" text="" left="10" top="114" width="1240" height="22" color="#cc0000"/>
+        <Static id="stc_area_label" taborder="8" text="▼ 동적 생성 영역" left="10" top="140" width="300" height="20" color="#888888"/>
+        <Div id="div_area" left="10" top="164" width="1250" height="486">
+          <Layouts>
+            <Layout>
+              <Button id="Button00" taborder="0" text="Button00" left="633" top="190" width="120" height="50" onclick="div_area_Button00_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Radio id="Radio00" taborder="10" left="717" top="149" width="280" height="50" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row/>
+              <Row/>
+              <Row/>
+            </Rows>
+          </Dataset>
+        </Radio>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// this.nRadCount (Form 속성) 으로 관리 — var 클로저 변수 사용 금지
+
+this.RadioSample_sub_onload = function(obj, e)
+{
+    this.nRadCount = 0;
+};
+
+this.fn_createRadio = function(sDir)
+{
+    this.nRadCount++;
+    var nRow  = Math.floor((this.nRadCount - 1) / 2);
+    var nCol  = (this.nRadCount - 1) % 2;
+    var nLeft = nCol * 620 + 5;
+    var nTop  = nRow * 120 + 5;
+
+    // 이너 Dataset 동적 생성
+    var dsId = "ds_rad_" + this.nRadCount;
+    var ds   = new nexacro.Dataset(dsId, this);
+    this.addChild(dsId, ds);
+    ds.addColumn("CODE", "String", 10);
+    ds.addColumn("NAME", "String", 40);
+    var aItems = [["M","남성"],["F","여성"],["N","미선택"]];
+    if (this.nRadCount % 2 == 0) aItems = [["A","매우만족"],["B","만족"],["C","보통"],["D","불만족"]];
+    for (var i = 0; i < aItems.length; i++) {
+        var r = ds.addRow();
+        ds.setColumn(r, "CODE", aItems[i][0]);
+        ds.setColumn(r, "NAME", aItems[i][1]);
+    }
+
+    // 레이블
+    var objStc = new nexacro.Static("stc_rad_lbl_" + this.nRadCount, nLeft, nTop, 600, 22, null, null);
+    objStc.set_text("Radio " + this.nRadCount + " [" + (sDir == "H" ? "가로" : "세로") + " 배치] (new nexacro.Radio + new nexacro.Dataset)");
+    this.div_area.addChild("stc_rad_lbl_" + this.nRadCount, objStc);
+    objStc.show();
+
+    // Radio 동적 생성
+    var nHeight = sDir == "H" ? 30 : (aItems.length * 28 + 5);
+    var objRad  = new nexacro.Radio("rad_dyn_" + this.nRadCount, nLeft, nTop + 26, 600, nHeight, null, null);
+  
+    this.div_area.addChild("rad_dyn_" + this.nRadCount, objRad);
+    objRad.show();
+    objRad.addEventHandler("onitemchanged", this.dynRad_onitemchanged, this);
+	objRad.set_innerdataset(dsId);
+    objRad.set_codecolumn("CODE");
+    objRad.set_datacolumn("NAME");
+    if (sDir == "H") {
+        objRad.set_rowcount(1);
+    } else {
+        objRad.set_columncount(1);
+    }
+    this.stc_count.set_text("생성 수: " + this.nRadCount);
+    this.stc_result.set_text("rad_dyn_" + this.nRadCount + " 생성 완료 (" + (sDir == "H" ? "가로" : "세로") + " 배치)");
+};
+
+this.btn_create_h_onclick = function(obj, e) { this.fn_createRadio("H"); };
+this.btn_create_v_onclick = function(obj, e) { this.fn_createRadio("V"); };
+
+this.dynRad_onitemchanged = function(obj, e)
+{
+    this.stc_result.set_text("[" + obj.id + "] 선택: CODE=" + obj.value + " / NAME=" + obj.text);
+};
+
+this.btn_getValue_onclick = function(obj, e)
+{
+    var sResult = "";
+    for (var i = 1; i <= this.nRadCount; i++) {
+        var comp = this.div_area.form.all["rad_dyn_" + i];
+        if (comp) sResult += "[rad_dyn_" + i + "] = " + comp.value + "  ";
+    }
+    if (sResult == "") sResult = "생성된 Radio가 없습니다.";
+    this.stc_result.set_text(sResult);
+    this.alert("Radio 값:\n" + sResult.split("  ").join("\n"));
+};
+
+this.btn_clear_onclick = function(obj, e)
+{
+    for (var i = 1; i <= this.nRadCount; i++) {
+        var rId = "rad_dyn_" + i; var sId = "stc_rad_lbl_" + i; var dId = "ds_rad_" + i;
+        var r = this.div_area.form.all[rId]; var s = this.div_area.form.all[sId]; var d = this[dId];
+        if (r) { this.div_area.removeChild(rId); r.destroy(); }
+        if (s) { this.div_area.removeChild(sId); s.destroy(); }
+        if (d) { this.removeChild(dId); d.destroy(); }
+    }
+    this.nRadCount = 0;
+    this.stc_count.set_text("생성 수: 0");
+    this.stc_result.set_text("전체 삭제 완료");
+};
+    ]]></Script>
+  </Form>
+</FDL>

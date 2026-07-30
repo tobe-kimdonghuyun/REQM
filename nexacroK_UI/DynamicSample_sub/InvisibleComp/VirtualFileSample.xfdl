@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="VirtualFileSample_sub" width="1280" height="670" onload="VirtualFileSample_sub_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="[비가시적] VirtualFile 동적 생성 샘플" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" color="#065f46"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.VirtualFile() — WRE: 파일 드래그앤드롭으로 VirtualFile 획득 / NRE: 독립 생성 후 파일 R/W 가능" left="10" top="44" width="1200" height="22" color="#555555"/>
+
+        <Static id="stc_env_label" taborder="2" text="실행 환경:" left="10" top="74" width="80" height="28"/>
+        <Static id="stc_env"       taborder="3" text="" left="95" top="74" width="300" height="28" color="#1a56db" font="bold 13 'Malgun Gothic'"/>
+
+        <Button id="btn_createVF" taborder="4" text="VirtualFile 동적 생성"  left="10"  top="110" width="170" height="32" onclick="btn_createVF_onclick"/>
+        <Button id="btn_writeFile" taborder="5" text="파일 쓰기 (NRE)"        left="190" top="110" width="130" height="32" onclick="btn_writeFile_onclick"/>
+        <Button id="btn_readFile"  taborder="6" text="파일 읽기 (NRE)"        left="330" top="110" width="130" height="32" onclick="btn_readFile_onclick"/>
+        <Button id="btn_clear"     taborder="7" text="VirtualFile 삭제"       left="470" top="110" width="130" height="32" onclick="btn_clear_onclick"/>
+
+        <Static id="stc_result" taborder="8" text="" left="614" top="116" width="630" height="22" color="#cc0000"/>
+
+        <!-- 드래그앤드롭 영역 (WRE) -->
+        <Static id="stc_dnd_title" taborder="9" text="▼ 드래그앤드롭 영역 (파일을 여기에 놓으면 VirtualFile 동적 생성)" left="10" top="152" width="700" height="20" color="#888888"/>
+        <Static id="stc_dnd_area" taborder="10" text="파일을 여기에 드래그앤드롭 하세요" left="10" top="176" width="620" height="120"
+                background="color:#f0f9ff" color="#1a56db"
+                ondragenter="stc_dnd_area_ondragenter" ondragleave="stc_dnd_area_ondragleave" ondrop="stc_dnd_area_ondrop"/>
+
+        <Static id="stc_list_title" taborder="11" text="▼ 획득된 VirtualFile 목록" left="10" top="310" width="400" height="20" color="#888888"/>
+        <Grid id="grd_vflist" taborder="12" left="10" top="334" width="1250" height="300" autofittype="col"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_vflist">
+        <ColumnInfo>
+          <Column id="NO"        type="string" size="5"/>
+          <Column id="FILENAME"  type="string" size="100"/>
+          <Column id="FILESIZE"  type="string" size="20"/>
+          <Column id="TYPE"      type="string" size="20"/>
+          <Column id="CONTENT"   type="string" size="500"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[
+var bVFCreated = false;
+var nVFCount   = 0;
+var sFilePath  = "C:\\Temp\\nexacro_vf_sample.txt";
+
+this.VirtualFileSample_sub_onload = function(obj, e)
+{
+    this.grd_vflist.set_binddataset("ds_vflist");
+    this.grd_vflist.createFormat();
+
+    // 실행 환경 감지
+    var sEnv = (typeof system != "undefined" && system.osversion != "") ? "NRE (네이티브 런타임)" : "WRE (웹 브라우저)";
+    this.stc_env.set_text(sEnv);
+    if (sEnv.indexOf("NRE") >= 0) {
+        this.stc_result.set_text("NRE 환경: new nexacro.VirtualFile()로 독립 생성 가능. 파일 쓰기/읽기 사용 가능.");
+    } else {
+        this.stc_result.set_text("WRE 환경: 드래그앤드롭으로만 VirtualFile 획득 가능. 파일 쓰기/읽기는 NRE 전용.");
+    }
+};
+
+// ── VirtualFile 동적 생성 (NRE 전용 독립 생성) ─────────────────
+this.btn_createVF_onclick = function(obj, e)
+{
+    if (bVFCreated) { this.stc_result.set_text("이미 VirtualFile이 생성되어 있습니다."); return; }
+
+    // new nexacro.VirtualFile() 동적 생성
+    var vf = new nexacro.VirtualFile("vf_sample", this);
+    this.addChild("vf_sample", vf);
+    vf.addEventHandler("onsuccess", this.vf_sample_onsuccess, this);
+    vf.addEventHandler("onerror",   this.vf_sample_onerror,   this);
+
+    bVFCreated = true;
+    this.stc_result.set_text("✔ new nexacro.VirtualFile() 동적 생성 완료! id=vf_sample");
+};
+
+// ── 파일 쓰기 (NRE 전용) ──────────────────────────────────────
+this.btn_writeFile_onclick = function(obj, e)
+{
+    var vf = this["vf_sample"];
+    if (!vf) { this.stc_result.set_text("먼저 VirtualFile을 생성하세요."); return; }
+
+    try {
+        // NRE에서 텍스트 파일 쓰기
+        var sContent = "nexacro VirtualFile 쓰기 테스트\n생성일시: " + nexacro.getDate("YYYY-MM-DD") + " " + nexacro.getTime("HH:MM:SS") + "\nnew nexacro.VirtualFile()으로 동적 생성됨";
+        vf.open(sFilePath, "w");
+        vf.write(sContent);
+        vf.close();
+        this.stc_result.set_text("✔ 파일 쓰기 완료: " + sFilePath);
+
+        var r = this.ds_vflist.addRow();
+        this.ds_vflist.setColumn(r, "NO",       ++nVFCount);
+        this.ds_vflist.setColumn(r, "FILENAME",  sFilePath);
+        this.ds_vflist.setColumn(r, "FILESIZE",  sContent.length + " bytes");
+        this.ds_vflist.setColumn(r, "TYPE",      "쓰기");
+        this.ds_vflist.setColumn(r, "CONTENT",   sContent.split("\n")[0]);
+    } catch(ex) {
+        this.stc_result.set_text("파일 쓰기 실패 (WRE에서는 지원하지 않음): " + ex);
+    }
+};
+
+// ── 파일 읽기 (NRE 전용) ──────────────────────────────────────
+this.btn_readFile_onclick = function(obj, e)
+{
+    var vf = this["vf_sample"];
+    if (!vf) { this.stc_result.set_text("먼저 VirtualFile을 생성하세요."); return; }
+
+    try {
+        vf.open(sFilePath, "r");
+        var sContent = vf.read();
+        vf.close();
+        this.stc_result.set_text("✔ 파일 읽기 완료: " + sContent.split("\n").length + "줄");
+
+        var r = this.ds_vflist.addRow();
+        this.ds_vflist.setColumn(r, "NO",       ++nVFCount);
+        this.ds_vflist.setColumn(r, "FILENAME",  sFilePath);
+        this.ds_vflist.setColumn(r, "FILESIZE",  sContent.length + " bytes");
+        this.ds_vflist.setColumn(r, "TYPE",      "읽기");
+        this.ds_vflist.setColumn(r, "CONTENT",   sContent.split("\n")[0]);
+        this.alert("읽은 내용:\n" + sContent);
+    } catch(ex) {
+        this.stc_result.set_text("파일 읽기 실패 (WRE에서는 지원하지 않음): " + ex);
+    }
+};
+
+// ── 드래그앤드롭 이벤트 (WRE에서 VirtualFile 획득) ───────────────
+this.stc_dnd_area_ondragenter = function(obj, e)
+{
+    if (e.datatype == "file") {
+        obj.set_background("color:#bfdbfe");
+        obj.set_text("파일을 놓으세요!");
+    }
+};
+
+this.stc_dnd_area_ondragleave = function(obj, e)
+{
+    obj.set_background("color:#f0f9ff");
+    obj.set_text("파일을 여기에 드래그앤드롭 하세요");
+};
+
+this.stc_dnd_area_ondrop = function(obj, e)
+{
+    obj.set_background("color:#f0f9ff");
+    obj.set_text("파일을 여기에 드래그앤드롭 하세요");
+
+    if (e.datatype != "file") return;
+
+    for (var i = 0; i < e.filelist.length; i++)
+    {
+        var vf = e.filelist[i];
+        // VirtualFile 이벤트 핸들러 등록 후 파일 정보 조회
+        vf.addEventHandler("onsuccess", this.dropVF_onsuccess, this);
+        vf.getFileInfo();  // reason=9 에서 완료
+    }
+};
+
+// 드래그앤드롭으로 획득한 VirtualFile 정보 표시
+this.dropVF_onsuccess = function(obj, e)
+{
+    // reason == 9: 파일 정보 조회 완료
+    if (e.reason != 9) return;
+
+    nVFCount++;
+    var r = this.ds_vflist.addRow();
+    this.ds_vflist.setColumn(r, "NO",       nVFCount);
+    this.ds_vflist.setColumn(r, "FILENAME",  obj.filename);
+    this.ds_vflist.setColumn(r, "FILESIZE",  obj.filesize + " bytes");
+    this.ds_vflist.setColumn(r, "TYPE",      "드래그앤드롭");
+    this.ds_vflist.setColumn(r, "CONTENT",   "파일 획득 완료 (VirtualFile 동적 생성)");
+
+    this.stc_result.set_text("✔ 드래그앤드롭으로 VirtualFile 획득: " + obj.filename + " (" + obj.filesize + " bytes)");
+};
+
+this.vf_sample_onsuccess = function(obj, e) { trace("[VF onsuccess] reason=" + e.reason); };
+this.vf_sample_onerror   = function(obj, e) { this.stc_result.set_text("VirtualFile 오류: " + e.errormsg); };
+
+this.btn_clear_onclick = function(obj, e)
+{
+    var vf = this["vf_sample"];
+    if (vf) { this.removeChild("vf_sample"); vf.destroy(); }
+    this.ds_vflist.clearData();
+    bVFCreated = false;
+    nVFCount   = 0;
+    this.stc_result.set_text("VirtualFile 삭제 완료. 목록 초기화.");
+};
+    ]]></Script>
+  </Form>
+</FDL>

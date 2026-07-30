@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="GridSample_sub" width="1280" height="670" onload="GridSample_sub_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="Grid 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" color="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.Grid() + new nexacro.Dataset() 동적 생성 후 바인딩. 행 추가/삭제 가능." left="10" top="44" width="900" height="22" color="#555555"/>
+        <Button id="btn_create"  taborder="2" text="Grid+Dataset 생성" left="10"  top="74" width="150" height="32" onclick="btn_create_onclick"/>
+        <Button id="btn_addRow"  taborder="3" text="행 추가"            left="170" top="74" width="90"  height="32" onclick="btn_addRow_onclick"/>
+        <Button id="btn_delRow"  taborder="4" text="선택행 삭제"        left="270" top="74" width="100" height="32" onclick="btn_delRow_onclick"/>
+        <Button id="btn_clear"   taborder="5" text="Grid 삭제"          left="380" top="74" width="90"  height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_result" taborder="6" text="" left="484" top="80" width="760" height="22" color="#cc0000"/>
+        <Div id="div_area" left="10" top="116" width="1250" height="534"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.GridSample_sub_onload = function(obj, e)
+{
+    this.bCreated = false;
+    this.nRowNum  = 0;
+};
+
+this.btn_create_onclick = function(obj, e)
+{
+    if (this.bCreated) {
+        this.stc_result.set_text("이미 생성되어 있습니다. 먼저 삭제하세요.");
+        return;
+    }
+
+    // ── Dataset 동적 생성 ──────────────────────────────────
+    var ds = new nexacro.Dataset("ds_grid", this);
+    this.addChild("ds_grid", ds);
+    ds.addColumn("NO",    "String", 10);
+    ds.addColumn("NAME",  "String", 50);
+    ds.addColumn("DEPT",  "String", 30);
+    ds.addColumn("SCORE", "String", 10);
+
+    var aNames = ["김민준","이서연","박지훈","최수아","정도윤"];
+    var aDepts = ["개발팀","기획팀","디자인팀","QA팀","운영팀"];
+    for (var i = 0; i < 5; i++) {
+        this.nRowNum++;
+        var r = ds.addRow();
+        ds.setColumn(r, "NO",    this.nRowNum);
+        ds.setColumn(r, "NAME",  aNames[i]);
+        ds.setColumn(r, "DEPT",  aDepts[i]);
+        ds.setColumn(r, "SCORE", Math.floor(Math.random() * 40 + 60));
+    }
+
+    // ── Grid 동적 생성 ──────────────────────────────────────
+    var grd = new nexacro.Grid("grd_dyn", 5, 5, 1230, 490, null, null);
+    this.div_area.addChild("grd_dyn", grd);
+    grd.show();
+    grd.set_binddataset("ds_grid");
+    grd.createFormat();
+
+    this.bCreated = true;
+    this.stc_result.set_text("new nexacro.Grid() + new nexacro.Dataset() 생성 완료! 행 수: " + ds.rowcount);
+};
+
+this.btn_addRow_onclick = function(obj, e)
+{
+    var ds = this["ds_grid"];
+    if (!ds) { this.stc_result.set_text("먼저 Grid를 생성하세요."); return; }
+
+    this.nRowNum++;
+    var aNames = ["홍길동","임꺽정","장길산","일지매","전우치"];
+    var aDepts = ["신규팀","파견팀","외주팀","협력팀","지원팀"];
+    var idx = (this.nRowNum - 1) % 5;
+    var r = ds.addRow();
+    ds.setColumn(r, "NO",    this.nRowNum);
+    ds.setColumn(r, "NAME",  aNames[idx]);
+    ds.setColumn(r, "DEPT",  aDepts[idx]);
+    ds.setColumn(r, "SCORE", Math.floor(Math.random() * 40 + 60));
+    this.stc_result.set_text("행 추가 완료. 전체 행 수: " + ds.rowcount);
+};
+
+this.btn_delRow_onclick = function(obj, e)
+{
+    var ds  = this["ds_grid"];
+    var grd = this.div_area.form.all["grd_dyn"];
+    if (!ds || !grd) { this.stc_result.set_text("먼저 Grid를 생성하세요."); return; }
+
+    var nSel = grd.currentrow;
+    if (nSel < 0) { this.stc_result.set_text("삭제할 행을 선택하세요."); return; }
+    ds.deleteRow(nSel);
+    this.stc_result.set_text("행 삭제 완료. 전체 행 수: " + ds.rowcount);
+};
+
+this.btn_clear_onclick = function(obj, e)
+{
+    var grd = this.div_area.form.all["grd_dyn"];
+    var ds  = this["ds_grid"];
+    if (grd) { this.div_area.removeChild("grd_dyn"); grd.destroy(); }
+    if (ds)  { this.removeChild("ds_grid"); ds.destroy(); }
+    this.bCreated = false;
+    this.nRowNum  = 0;
+    this.stc_result.set_text("Grid / Dataset 삭제 완료");
+};
+    ]]></Script>
+  </Form>
+</FDL>

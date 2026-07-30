@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="EditSample_sub" width="1280" height="670" onload="EditSample_sub_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="Edit 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" color="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="버튼 클릭 시 new nexacro.Edit()으로 다양한 유형의 Edit 컴포넌트를 동적 생성합니다." left="10" top="44" width="900" height="22" color="#555555"/>
+        <Button id="btn_normal"   taborder="2" text="일반 Edit 생성"      left="10"  top="74" width="140" height="32" onclick="btn_normal_onclick"/>
+        <Button id="btn_password" taborder="3" text="패스워드 Edit 생성"  left="160" top="74" width="140" height="32" onclick="btn_password_onclick"/>
+        <Button id="btn_readonly" taborder="4" text="읽기전용 Edit 생성"  left="310" top="74" width="140" height="32" onclick="btn_readonly_onclick"/>
+        <Button id="btn_getValue" taborder="5" text="값 모두 읽기"        left="460" top="74" width="110" height="32" onclick="btn_getValue_onclick"/>
+        <Button id="btn_clear"    taborder="6" text="전체 삭제"           left="580" top="74" width="90"  height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_count"  taborder="7" text="생성 수: 0" left="684" top="80" width="120" height="22" color="#1a56db"/>
+        <Static id="stc_result" taborder="8" text="" left="10" top="114" width="1240" height="22" color="#cc0000"/>
+        <Static id="stc_area_label" taborder="9" text="▼ 동적 생성 영역" left="10" top="140" width="300" height="20" color="#888888"/>
+        <Div id="div_area" left="10" top="164" width="1250" height="486"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.EditSample_sub_onload = function(obj, e)
+{
+    this.nEditCount = 0;
+};
+
+this.btn_normal_onclick = function(obj, e)
+{
+    this.fn_createEdit("normal");
+};
+
+this.btn_password_onclick = function(obj, e)
+{
+    this.fn_createEdit("password");
+};
+
+this.btn_readonly_onclick = function(obj, e)
+{
+    this.fn_createEdit("readonly");
+};
+
+this.fn_createEdit = function(sType)
+{
+    this.nEditCount++;
+    var nRow  = Math.floor((this.nEditCount - 1) / 3);
+    var nCol  = (this.nEditCount - 1) % 3;
+    var nLeft = nCol * 420 + 5;
+    var nTop  = nRow * 80 + 5;
+
+    var sLabel = sType == "normal" ? "일반 Edit " : (sType == "password" ? "패스워드 Edit " : "읽기전용 Edit ");
+
+    // 레이블 생성
+    var objStc = new nexacro.Static("stc_lbl_" + this.nEditCount, nLeft, nTop, 400, 22, null, null);
+    objStc.set_text(sLabel + this.nEditCount + " (new nexacro.Edit)");
+    this.div_area.addChild("stc_lbl_" + this.nEditCount, objStc);
+    objStc.show();
+
+    // Edit 동적 생성
+    var objEdit = new nexacro.Edit("edt_dyn_" + this.nEditCount, nLeft, nTop + 26, 400, 32, null, null);
+    if (sType == "password") {
+        objEdit.set_password(true);
+        objEdit.set_value("password123");
+    } else if (sType == "readonly") {
+        objEdit.set_readonly(true);
+        objEdit.set_value("읽기전용 값 " + this.nEditCount);
+    } else {
+        objEdit.set_value("입력값 " + this.nEditCount);
+    }
+    this.div_area.addChild("edt_dyn_" + this.nEditCount, objEdit);
+    objEdit.show();
+
+    this.stc_count.set_text("생성 수: " + this.nEditCount);
+    this.stc_result.set_text("edt_dyn_" + this.nEditCount + " (" + sLabel.trim() + ") 생성 완료");
+};
+
+this.btn_getValue_onclick = function(obj, e)
+{
+    var sResult = "";
+    for (var i = 1; i <= this.nEditCount; i++) {
+        var comp = this.div_area.form.all["edt_dyn_" + i];
+        if (comp) sResult += "[edt_dyn_" + i + "] = " + comp.value + "\n";
+    }
+    if (sResult == "") { this.stc_result.set_text("생성된 Edit이 없습니다."); return; }
+    this.stc_result.set_text("값 읽기 완료 (alert 확인)");
+    this.alert("읽은 값:\n" + sResult);
+};
+
+this.btn_clear_onclick = function(obj, e)
+{
+    for (var i = 1; i <= this.nEditCount; i++) {
+        var sEId = "edt_dyn_" + i;
+        var sSId = "stc_lbl_" + i;
+        var edt  = this.div_area.form.all[sEId];
+        var stc  = this.div_area.form.all[sSId];
+        if (edt) { this.div_area.removeChild(sEId); edt.destroy(); }
+        if (stc) { this.div_area.removeChild(sSId); stc.destroy(); }
+    }
+    this.nEditCount = 0;
+    this.stc_count.set_text("생성 수: 0");
+    this.stc_result.set_text("전체 삭제 완료");
+};
+    ]]></Script>
+  </Form>
+</FDL>

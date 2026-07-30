@@ -21,10 +21,10 @@
             
             // UI Components Initialize
             obj = new nexacro.NexacroPortal("NexacroPortal00","41","30","619","523",null,null,null,null,null,null,this);
-            obj.set_appkey("nexacroK_mfe_sub2");
-            obj.set_apppath("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub2");
+            obj.set_appkey("nexacroK_mfe_sub6");
+            obj.set_apppath("http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub6");
             obj.set_automount("false");
-            obj.set_formurl("");
+            obj.set_formurl("FrameBase::Form_Work.xfdl");
             obj.set_taborder("0");
             obj.getSetter("text").set("Button00");
             this.addChild(obj.name, obj);
@@ -153,6 +153,7 @@
         	this.NexacroPortal00.appkey="nexacroK_mfe_sub6";
         	this.TextArea00.deleteText();
         	this.TextArea00.insertText("NexacroPortal00.appkey set" + this.NexacroPortal00.appkey);
+        	trace("NexacroPortal00.appkey set" + this.NexacroPortal00.appkey);
         };
 
         this.Button00_00_onclick = function(obj,e)

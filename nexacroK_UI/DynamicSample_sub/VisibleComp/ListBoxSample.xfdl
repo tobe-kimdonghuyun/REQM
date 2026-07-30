@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ListBoxSample_sub" width="1280" height="670" onload="ListBoxSample_sub_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="ListBox 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" color="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="new nexacro.ListBox() + new nexacro.Dataset() 으로 ListBox와 이너 Dataset을 동적 생성합니다." left="10" top="44" width="900" height="22" color="#555555"/>
+        <Button id="btn_create"   taborder="2" text="ListBox 생성"  left="10"  top="74" width="120" height="32" onclick="btn_create_onclick"/>
+        <Button id="btn_getValue" taborder="3" text="선택값 확인"    left="140" top="74" width="110" height="32" onclick="btn_getValue_onclick"/>
+        <Button id="btn_clear"    taborder="4" text="전체 삭제"      left="260" top="74" width="90"  height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_count"  taborder="5" text="생성 수: 0" left="364" top="80" width="120" height="22" color="#1a56db"/>
+        <Static id="stc_result" taborder="6" text="" left="10" top="114" width="1240" height="22" color="#cc0000"/>
+        <Static id="stc_area_label" taborder="7" text="▼ 동적 생성 영역" left="10" top="140" width="300" height="20" color="#888888"/>
+        <Div id="div_area" left="10" top="164" width="1250" height="486"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// this.nLstCount (Form 속성) 으로 관리 — var 클로저 변수 사용 금지
+var aListData = [
+    ["Seoul","서울"],["Busan","부산"],["Daegu","대구"],
+    ["Incheon","인천"],["Gwangju","광주"],["Daejeon","대전"],["Ulsan","울산"]
+];
+
+this.ListBoxSample_sub_onload = function(obj, e)
+{
+    this.nLstCount = 0;
+};
+
+this.btn_create_onclick = function(obj, e)
+{
+    this.nLstCount++;
+    var nCol  = (this.nLstCount - 1) % 4;
+    var nRow  = Math.floor((this.nLstCount - 1) / 4);
+    var nLeft = nCol * 312 + 5;
+    var nTop  = nRow * 220 + 5;
+
+    // 이너 Dataset 동적 생성
+    var dsId = "ds_lst_" + this.nLstCount;
+    var ds   = new nexacro.Dataset(dsId, this);
+    this.addChild(dsId, ds);
+    ds.addColumn("CODE", "String", 20);
+    ds.addColumn("NAME", "String", 40);
+    for (var i = 0; i < aListData.length; i++) {
+        var r = ds.addRow();
+        ds.setColumn(r, "CODE", aListData[i][0]);
+        ds.setColumn(r, "NAME", aListData[(i + this.nLstCount - 1) % aListData.length][1]);
+    }
+
+    // 레이블
+    var objStc = new nexacro.Static("stc_lst_lbl_" + this.nLstCount, nLeft, nTop, 295, 22, null, null);
+    objStc.set_text("ListBox " + this.nLstCount + " (new nexacro.ListBox)");
+    this.div_area.addChild("stc_lst_lbl_" + this.nLstCount, objStc);
+    objStc.show();
+
+    // ListBox 동적 생성
+    var objLst = new nexacro.ListBox("lst_dyn_" + this.nLstCount, nLeft, nTop + 26, 295, 180, null, null);
+    objLst.set_innerdataset(dsId);
+    objLst.set_codecolumn("CODE");
+    objLst.set_datacolumn("NAME");
+    this.div_area.addChild("lst_dyn_" + this.nLstCount, objLst);
+    objLst.show();
+    objLst.addEventHandler("onitemchanged", this.dynLst_onitemchanged, this);
+
+    this.stc_count.set_text("생성 수: " + this.nLstCount);
+    this.stc_result.set_text("lst_dyn_" + this.nLstCount + " 생성 완료 (" + aListData.length + "개 항목)");
+};
+
+this.dynLst_onitemchanged = function(obj, e)
+{
+    this.stc_result.set_text("[" + obj.id + "] 선택: CODE=" + obj.value + " / NAME=" + obj.text);
+};
+
+this.btn_getValue_onclick = function(obj, e)
+{
+    var sResult = "";
+    for (var i = 1; i <= this.nLstCount; i++) {
+        var comp = this.div_area.form.all["lst_dyn_" + i];
+        if (comp) sResult += "[lst_dyn_" + i + "] = " + comp.value + "(" + comp.text + ")  ";
+    }
+    if (sResult == "") sResult = "생성된 ListBox가 없습니다.";
+    this.stc_result.set_text(sResult);
+    this.alert("ListBox 선택값:\n" + sResult.split("  ").join("\n"));
+};
+
+this.btn_clear_onclick = function(obj, e)
+{
+    for (var i = 1; i <= this.nLstCount; i++) {
+        var lId = "lst_dyn_" + i; var sId = "stc_lst_lbl_" + i; var dId = "ds_lst_" + i;
+        var l = this.div_area.form.all[lId]; var s = this.div_area.form.all[sId]; var d = this[dId];
+        if (l) { this.div_area.removeChild(lId); l.destroy(); }
+        if (s) { this.div_area.removeChild(sId); s.destroy(); }
+        if (d) { this.removeChild(dId); d.destroy(); }
+    }
+    this.nLstCount = 0;
+    this.stc_count.set_text("생성 수: 0");
+    this.stc_result.set_text("전체 삭제 완료");
+};
+    ]]></Script>
+  </Form>
+</FDL>

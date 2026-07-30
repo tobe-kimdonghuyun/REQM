@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ButtonSample" width="1280" height="670" onload="ButtonSample_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="Button 동적 생성 샘플" left="10" top="10" width="500" height="28" font="bold 14 'Malgun Gothic'" color="#1a56db"/>
+        <Static id="stc_desc" taborder="1" text="[Button 생성] 클릭 → new nexacro.Button()으로 동적 생성. 생성된 버튼 클릭 시 동작 확인." left="10" top="44" width="900" height="22" color="#555555"/>
+        <Button id="btn_create" taborder="2" text="Button 생성" left="10" top="74" width="110" height="32" onclick="btn_create_onclick"/>
+        <Button id="btn_clear" taborder="3" text="전체 삭제" left="130" top="74" width="90" height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_count" taborder="4" text="생성 수: 0" left="234" top="80" width="120" height="22" color="#1a56db"/>
+        <Static id="stc_result" taborder="5" text="" left="370" top="80" width="700" height="22" color="#cc0000"/>
+        <Static id="stc_area_label" taborder="6" text="▼ 동적 생성 영역 (버튼 클릭 시 알림 발생)" left="10" top="116" width="400" height="20" color="#888888"/>
+        <Div id="div_area" left="10" top="140" width="1250" height="510"/>
+        <Button id="Button00" taborder="8" text="iv_Button0" left="540" top="21" width="133" height="39" initvalueid="iv_Button0" onclick="Button00_onclick"/>
+        <Button id="Button01" taborder="9" text="iv_Button1" left="690" top="20" width="128" height="37" initvalueid="iv_Button1" onclick="Button01_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// var 선언 대신 this.nBtnCount (Form 속성)으로 관리
+// 이유: nexacro 이벤트 핸들러는 this=Form 컨텍스트로 실행되므로
+//       var 클로저 변수는 핸들러 간 공유가 보장되지 않음
+
+this.ButtonSample_onload = function(obj, e)
+{
+    this.nBtnCount = 0;
+    this.stc_count.set_text("생성 수: 0");
+    this.stc_result.set_text("");
+};
+
+this.btn_create_onclick = function(obj, e)
+{
+    this.nBtnCount++;
+    var nCol  = (this.nBtnCount - 1) % 6;
+    var nRow  = Math.floor((this.nBtnCount - 1) / 6);
+    var nLeft = nCol * 205 + 5;
+    var nTop  = nRow * 50 + 5;
+
+    // new nexacro.Button() 으로 동적 생성
+    var objBtn = new nexacro.Button("btn_dyn_" + this.nBtnCount, nLeft, nTop, 190, 38, null, null);
+    objBtn.set_text("동적버튼 " + this.nBtnCount);
+    this.div_area.addChild("btn_dyn_" + this.nBtnCount, objBtn);
+	if((this.nBtnCount % 2)==0)
+		objBtn.initvalueid = "iv_Button0";
+	else
+		objBtn.initvalueid = "iv_Button1";
+    objBtn.show();
+    objBtn.addEventHandler("onclick", this.dynBtn_onclick, this);
+	
+	
+
+    this.stc_count.set_text("생성 수: " + this.nBtnCount);
+    this.stc_result.set_text("btn_dyn_" + this.nBtnCount + " 생성 완료 (new nexacro.Button)");
+};
+
+this.dynBtn_onclick = function(obj, e)
+{
+    this.stc_result.set_text("[" + obj.id + "] 클릭! — new nexacro.Button()으로 동적 생성된 버튼");
+    this.alert("[" + obj.id + "] 클릭!\n\nnew nexacro.Button()으로 동적 생성된 버튼입니다.");
+};
+
+this.btn_clear_onclick = function(obj, e)
+{
+    for (var i = 1; i <= this.nBtnCount; i++)
+    {
+        var sId  = "btn_dyn_" + i;
+        var comp = this.div_area.form.all[sId];
+        if (comp)
+        {
+            this.div_area.removeChild(sId);
+            comp.destroy();
+        }
+    }
+    this.nBtnCount = 0;
+    this.stc_count.set_text("생성 수: 0");
+    this.stc_result.set_text("전체 삭제 완료");
+};
+    
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.stc_result.text ="";
+	this.stc_result.text ="initvaleu에서 설정된 defaultbutton속성으로 클릭동작생성 showmodal 실행 ";
+	var objFrame = new nexacro.ChildFrame();
+	var objParentFrame = this.getOwnerFrame();
+
+	objFrame.init( "modal0012312312", 0, 0, 500, 500 );
+	objFrame.formurl = "VisibleComp::etc.xfdl";
+	objFrame.showModal( objParentFrame, {a:'aaa', b:'bbb'}, this,this.fn_callback  )
+};
+
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	 nexacro.open("promise_open_test1","VisibleComp::etc.xfdl", this.getOwnerFrame(),"", "resizable=false showstatusbar=true", 150, 150)
+};
+]]></Script>
+  </Form>
+</FDL>
