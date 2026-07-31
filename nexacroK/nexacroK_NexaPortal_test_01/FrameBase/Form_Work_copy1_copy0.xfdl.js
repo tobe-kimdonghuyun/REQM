@@ -83,6 +83,11 @@
             obj.set_text("all unmout()");
             this.addChild(obj.name, obj);
 
+            obj = new nexacro.Button("Button01","1102","84","121","45",null,null,null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_text("mount");
+            this.addChild(obj.name, obj);
+
             // Layout Functions
             //-- Default Layout : this
             obj = new nexacro.Layout("default","Desktop_screen",1280,720,this,function(p){});
@@ -241,6 +246,17 @@
 
         };
 
+        this.Button01_onclick = function(obj,e)
+        {
+        	this.TextArea00.deleteText();
+        	this.NexacroPortal00.mount();
+        	this.NexacroPortal01.mount();
+        	this.NexacroPortal02.mount();
+        	this.NexacroPortal03.mount();
+        	this.NexacroPortal04.mount();
+        	this.NexacroPortal05.mount();
+        };
+
         });
         
         // Regist UI Components Event
@@ -265,6 +281,7 @@
             this.NexacroPortal05.addEventHandler("onmount",this.NexacroPortal05_onmount,this);
             this.NexacroPortal05.addEventHandler("onunmount",this.NexacroPortal05_onunmount,this);
             this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
+            this.Button01.addEventHandler("onclick",this.Button01_onclick,this);
         };
 
         this.loadIncludeScript("Form_Work_copy1_copy0.xfdl");

@@ -30,13 +30,18 @@
             obj.set_text("getEnvironment");
             this.addChild(obj.name, obj);
 
-            obj = new nexacro.TextArea("TextArea00","24","280","628","229",null,null,null,null,null,null,this);
+            obj = new nexacro.TextArea("TextArea00","514","17","366","229",null,null,null,null,null,null,this);
             obj.set_taborder("2");
             this.addChild(obj.name, obj);
 
             obj = new nexacro.Button("Button02","260","108","222","65",null,null,null,null,null,null,this);
             obj.set_taborder("3");
             obj.set_text("getApplication");
+            this.addChild(obj.name, obj);
+
+            obj = new nexacro.Button("Button03","29","181","214","65",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_text("getPopupFrames");
             this.addChild(obj.name, obj);
 
             // Layout Functions
@@ -73,6 +78,7 @@
         {
         	this.TextArea00.value="";
         	let env_all = nexacro.getEnvironment();
+
         	if(env_all == null){
         		this.TextArea00.insertText("env_all = null");
         		return false;
@@ -89,7 +95,26 @@
         								"\n tabkeycirculation = "+env_all.tabkeycirculation+
         								"\n filesecurelevel = "+env_all.filesecurelevel+
         								"\n networksecurelevel = "+env_all.networksecurelevel+
-        								"\n datatyperule = "+env_all.datatyperule)
+        								"\n datatyperule = "+env_all.datatyperule+
+        								"\n Variables = "+ nexacro.getEnvironmentVariable('Variable0')+
+        								"\n Cookies = "+ nexacro.getCookieVariable('Cookie0')+
+        								"\n HeaderVariable = "+ nexacro.getHTTPHeaderVariable('header0'));
+
+
+        };
+        this.Button03_onclick = function(obj,e)
+        {
+        	this.TextArea00.deleteText()
+        	trace(nexacro.getPopupFrames().length);
+        	if(nexacro.getPopupFrames().length >0) {
+        		this.TextArea00.insertText("nexacro.getPopupFrames()[0].id+ = "+nexacro.getPopupFrames()[0].id+"\n");
+        		this.TextArea00.insertText("nexacro.getPopupFrames()[0].a+ = "+nexacro.getPopupFrames()[0].a+"\n");
+        		this.TextArea00.insertText("nexacro.getPopupFrames()[0].b+ = "+nexacro.getPopupFrames()[0].b+"\n");
+        		this.TextArea00.insertText("nexacro.getPopupFrames(this.getOwnerFrame()[0]) = "+nexacro.getPopupFrames(this.getOwnerFrame()[0])+"\n");
+        	}else{
+        		this.TextArea00.insertText("nexacro.getPopupFrames() is null");
+        	}
+
         };
 
         this.Button02_onclick = function(obj,e)
@@ -103,8 +128,12 @@
         	}
         	this.TextArea00.insertText(" id = "+app_all.id+
         								"\n screenid = "+app_all.screenid+
+        								"\n Dataset = "+app_all.gds_nexacroK_mfe_sub2.id+", rowcount = "+app_all.gds_nexacroK_mfe_sub2.getRowCount()+
         								"\n app_variables = "+app_all.app_variable);
+
+
         };
+
 
         });
         
@@ -115,6 +144,7 @@
             this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
             this.Button01.addEventHandler("onclick",this.Button01_onclick,this);
             this.Button02.addEventHandler("onclick",this.Button02_onclick,this);
+            this.Button03.addEventHandler("onclick",this.Button03_onclick,this);
         };
 
         this.loadIncludeScript("sub_form.xfdl");

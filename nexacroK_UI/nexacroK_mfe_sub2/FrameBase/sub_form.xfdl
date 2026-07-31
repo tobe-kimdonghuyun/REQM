@@ -5,8 +5,9 @@
       <Layout height="720" width="1280">
         <Button id="Button00" taborder="0" text="this.close" left="24" top="10" width="213" height="60" onclick="Button00_onclick"/>
         <Button id="Button01" taborder="1" text="getEnvironment" left="30" top="105" width="213" height="70" onclick="Button01_onclick"/>
-        <TextArea id="TextArea00" taborder="2" left="24" top="280" width="628" height="229"/>
+        <TextArea id="TextArea00" taborder="2" left="514" top="17" width="366" height="229"/>
         <Button id="Button02" taborder="3" text="getApplication" left="260" top="108" width="222" height="65" onclick="Button02_onclick"/>
+        <Button id="Button03" taborder="4" text="getPopupFrames" left="29" top="181" width="214" height="65" onclick="Button03_onclick"/>
       </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[
@@ -24,6 +25,7 @@ this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
 	this.TextArea00.value="";
 	let env_all = nexacro.getEnvironment();
+	
 	if(env_all == null){
 		this.TextArea00.insertText("env_all = null");
 		return false;
@@ -40,7 +42,26 @@ this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 								"\n tabkeycirculation = "+env_all.tabkeycirculation+
 								"\n filesecurelevel = "+env_all.filesecurelevel+
 								"\n networksecurelevel = "+env_all.networksecurelevel+
-								"\n datatyperule = "+env_all.datatyperule)
+								"\n datatyperule = "+env_all.datatyperule+
+								"\n Variables = "+ nexacro.getEnvironmentVariable('Variable0')+
+								"\n Cookies = "+ nexacro.getCookieVariable('Cookie0')+
+								"\n HeaderVariable = "+ nexacro.getHTTPHeaderVariable('header0'));
+	
+								
+};
+this.Button03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.TextArea00.deleteText()
+	trace(nexacro.getPopupFrames().length);
+	if(nexacro.getPopupFrames().length >0) {
+		this.TextArea00.insertText("nexacro.getPopupFrames()[0].id+ = "+nexacro.getPopupFrames()[0].id+"\n");
+		this.TextArea00.insertText("nexacro.getPopupFrames()[0].a+ = "+nexacro.getPopupFrames()[0].a+"\n");
+		this.TextArea00.insertText("nexacro.getPopupFrames()[0].b+ = "+nexacro.getPopupFrames()[0].b+"\n");
+		this.TextArea00.insertText("nexacro.getPopupFrames(this.getOwnerFrame()[0]) = "+nexacro.getPopupFrames(this.getOwnerFrame()[0])+"\n");
+	}else{
+		this.TextArea00.insertText("nexacro.getPopupFrames() is null");
+	}
+		
 };
 
 this.Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
@@ -54,8 +75,12 @@ this.Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 	}
 	this.TextArea00.insertText(" id = "+app_all.id+
 								"\n screenid = "+app_all.screenid+
+								"\n Dataset = "+app_all.gds_nexacroK_mfe_sub2.id+", rowcount = "+app_all.gds_nexacroK_mfe_sub2.getRowCount()+
 								"\n app_variables = "+app_all.app_variable);
+	
+	
 };
+
 ]]></Script>
   </Form>
 </FDL>

@@ -20,23 +20,28 @@
 
             
             // UI Components Initialize
-            obj = new nexacro.Button("Button00","47","40","307","106",null,null,null,null,null,null,this);
+            obj = new nexacro.Button("Button00","24","10","213","60",null,null,null,null,null,null,this);
             obj.set_taborder("0");
             obj.set_text("this.close");
             this.addChild(obj.name, obj);
 
-            obj = new nexacro.Button("Button01","47","153","213","70",null,null,null,null,null,null,this);
+            obj = new nexacro.Button("Button01","30","105","213","70",null,null,null,null,null,null,this);
             obj.set_taborder("1");
             obj.set_text("getEnvironment");
             this.addChild(obj.name, obj);
 
-            obj = new nexacro.Button("Button02","277","156","222","65",null,null,null,null,null,null,this);
+            obj = new nexacro.TextArea("TextArea00","514","17","366","229",null,null,null,null,null,null,this);
             obj.set_taborder("2");
+            this.addChild(obj.name, obj);
+
+            obj = new nexacro.Button("Button02","260","108","222","65",null,null,null,null,null,null,this);
+            obj.set_taborder("3");
             obj.set_text("getApplication");
             this.addChild(obj.name, obj);
 
-            obj = new nexacro.TextArea("TextArea00","46","233","628","229",null,null,null,null,null,null,this);
-            obj.set_taborder("3");
+            obj = new nexacro.Button("Button03","29","181","214","65",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_text("getPopupFrames");
             this.addChild(obj.name, obj);
 
             // Layout Functions
@@ -71,8 +76,9 @@
 
         this.Button01_onclick = function(obj,e)
         {
-        		this.TextArea00.value="";
+        	this.TextArea00.value="";
         	let env_all = nexacro.getEnvironment();
+
         	if(env_all == null){
         		this.TextArea00.insertText("env_all = null");
         		return false;
@@ -89,12 +95,31 @@
         								"\n tabkeycirculation = "+env_all.tabkeycirculation+
         								"\n filesecurelevel = "+env_all.filesecurelevel+
         								"\n networksecurelevel = "+env_all.networksecurelevel+
-        								"\n datatyperule = "+env_all.datatyperule)
+        								"\n datatyperule = "+env_all.datatyperule+
+        								"\n Variables = "+ nexacro.getEnvironmentVariable('Variable0')+
+        								"\n Cookies = "+ nexacro.getCookieVariable('Cookie0')+
+        								"\n HeaderVariable = "+ nexacro.getHTTPHeaderVariable('header0'));
+
+
+        };
+        this.Button03_onclick = function(obj,e)
+        {
+        	this.TextArea00.deleteText()
+        	trace(nexacro.getPopupFrames().length);
+        	if(nexacro.getPopupFrames().length >0) {
+        		this.TextArea00.insertText("nexacro.getPopupFrames()[0].id+ = "+nexacro.getPopupFrames()[0].id+"\n");
+        		this.TextArea00.insertText("nexacro.getPopupFrames()[0].a+ = "+nexacro.getPopupFrames()[0].a+"\n");
+        		this.TextArea00.insertText("nexacro.getPopupFrames()[0].b+ = "+nexacro.getPopupFrames()[0].b+"\n");
+        		this.TextArea00.insertText("nexacro.getPopupFrames(this.getOwnerFrame()[0]) = "+nexacro.getPopupFrames(this.getOwnerFrame()[0])+"\n");
+        	}else{
+        		this.TextArea00.insertText("nexacro.getPopupFrames() is null");
+        	}
+
         };
 
         this.Button02_onclick = function(obj,e)
         {
-        		this.TextArea00.value="";
+        	this.TextArea00.value="";
         	let app_all = nexacro.getApplication();
 
         	if(app_all == null){
@@ -103,8 +128,12 @@
         	}
         	this.TextArea00.insertText(" id = "+app_all.id+
         								"\n screenid = "+app_all.screenid+
+        								"\n Dataset = "+app_all.gds_nexacroK_mfe_sub1.id+", rowcount = "+app_all.gds_nexacroK_mfe_sub1.getRowCount()+
         								"\n app_variables = "+app_all.app_variable);
+
+
         };
+
 
         });
         
@@ -115,6 +144,7 @@
             this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
             this.Button01.addEventHandler("onclick",this.Button01_onclick,this);
             this.Button02.addEventHandler("onclick",this.Button02_onclick,this);
+            this.Button03.addEventHandler("onclick",this.Button03_onclick,this);
         };
 
         this.loadIncludeScript("sub_form.xfdl");

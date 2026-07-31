@@ -10,10 +10,12 @@
 		
 
             // global dataset
-
+            obj = new nexacro.Dataset("gds_nexacroK_mfe_sub2", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [{"id" : "Column0","size" : "256","type" : "STRING"},{"id" : "Column1","size" : "256","type" : "STRING"}]},"Rows" : [{"Column0" : "1","Column1" : "2"},{"Column0" : "a","Column1" : "b"}]});
+            this._addDataset(obj.name, obj);
             
             // global variable
-            this._addVariable("app_variable","app_variable");
+            this._addVariable("app_variable","nexacroK_mfe_sub2_application");
             
 			// global object
 

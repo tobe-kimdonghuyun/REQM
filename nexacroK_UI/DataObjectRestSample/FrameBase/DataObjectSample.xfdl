@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="DataObjectSample" width="1000" height="700" titletext="DataObject 동적 생성 샘플" onload="DataObjectSample_onload">
+    <Layouts>
+      <Layout height="700" width="1000">
+        <Static id="staTitle" taborder="0" text="DataObject/Dataset/Grid 동적 생성 - 게시글 조회 (GET /posts)" left="20" top="20" width="800" height="30"/>
+        <Static id="staDesc" taborder="1" text="Form_onload 시 DataObject / Dataset / Grid 를 동적으로 생성합니다." left="20" top="50" width="800" height="22" color="#555555"/>
+        <Button id="btnLoad" taborder="2" text="게시글 조회" left="20" top="82" width="140" height="36" onclick="btnLoad_onclick"/>
+        <Static id="staStatus" taborder="3" text="" left="170" top="82" width="600" height="36"/>
+        <Div id="divGrid" left="20" top="130" right="20" bottom="20"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+/*******************************************************************************
+ * FORM EVENT
+*******************************************************************************/
+this.DataObjectSample_onload = function(obj, e)
+{
+	this.fn_createComponents();
+};
+
+/*******************************************************************************
+ * COMPONENT INIT
+*******************************************************************************/
+this.fn_createComponents = function()
+{
+	// ── DataObject 동적 생성 ─────────────────────────────────
+	var dobj = new nexacro.DataObject("doPostList", this);
+	this.addChild("doPostList", dobj);
+	dobj.addEventHandler("onsuccess", this.doPostList_onsuccess, this);
+	dobj.addEventHandler("onload",    this.doPostList_onload,    this);
+	dobj.addEventHandler("onerror",   this.doPostList_onerror,   this);
+
+	// ── Dataset 동적 생성 ────────────────────────────────────
+	var ds = new nexacro.Dataset("dsPostList", this);
+	this.addChild("dsPostList", ds);
+	// /posts 응답 컬럼: id, userId, title, body
+	ds.addColumn("POST_ID", "String", 256);
+	ds.addColumn("USER_ID", "String", 256);
+	ds.addColumn("TITLE",   "String", 1000);
+	ds.addColumn("BODY",    "String", 2000);
+
+	// ── Grid 동적 생성 ──────────────────────────────────────
+	var grd = new nexacro.Grid("grdPostList", 0, 0, null, null, 0, 0);
+	this.divGrid.addChild("grdPostList", grd);
+	grd.set_binddataset("dsPostList");
+	grd.createFormat();
+	grd.set_autofittype("col");
+	grd.show();
+
+	this.staStatus.set_text("DataObject / Dataset / Grid 생성 완료. [게시글 조회] 버튼을 클릭하세요.");
+};
+
+/*******************************************************************************
+ * COMPONENT EVENT
+*******************************************************************************/
+this.btnLoad_onclick = function(obj, e)
+{
+	var dobj = this["doPostList"];
+	if (!dobj)
+	{
+		this.staStatus.set_text("DataObject 가 생성되지 않았습니다.");
+		return;
+	}
+	this.staStatus.set_text("조회 중...");
+	dobj.request("SEARCH", "GET", "https://jsonplaceholder.typicode.com/posts");
+};
+
+this.doPostList_onsuccess = function(obj, e)
+{
+	if (e.statuscode != 200)
+	{
+		e.preventDefault();
+		this.staStatus.set_text("통신 실패: HTTP " + e.statuscode);
+	}
+};
+
+this.doPostList_onload = function(obj, e)
+{
+	var ds = this["dsPostList"];
+	if (!ds) return;
+
+	var aData = obj.data;
+	if (!(aData instanceof Array) || aData.length == 0)
+	{
+		this.staStatus.set_text("조회된 데이터가 없습니다.");
+		return;
+	}
+
+	// Dataset 초기화 후 데이터 채우기
+	ds.clearData();
+	ds.updatecontrol = false;
+	for (var i = 0; i < aData.length; i++)
+	{
+		var item = aData[i];
+		var r = ds.addRow();
+		ds.setColumn(r, "POST_ID", item.id);
+		ds.setColumn(r, "USER_ID", item.userId);
+		ds.setColumn(r, "TITLE",   item.title);
+		ds.setColumn(r, "BODY",    item.body);
+	}
+	ds.updatecontrol = true;
+
+	this.staStatus.set_text("조회 완료 (" + ds.rowcount + "건)");
+};
+
+this.doPostList_onerror = function(obj, e)
+{
+	this.staStatus.set_text("오류: " + e.errormsg);
+};
+    ]]></Script>
+  </Form>
+</FDL>

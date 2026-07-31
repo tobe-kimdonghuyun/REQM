@@ -60,6 +60,11 @@
             obj.set_text("nexacro.open");
             this.addChild(obj.name, obj);
 
+            obj = new nexacro.Button("Button05","215","216","140","53",null,null,null,null,null,null,this);
+            obj.set_taborder("8");
+            obj.set_text("getPopupFrames");
+            this.addChild(obj.name, obj);
+
             // Layout Functions
             //-- Default Layout : this
             obj = new nexacro.Layout("default","Desktop_screen_sub2",700,720,this,function(p){});
@@ -84,6 +89,7 @@
         {
         	this.TextArea00.value="";
         	let env_all = nexacro.getEnvironment();
+
         	if(env_all == null){
         		this.TextArea00.insertText("env_all = null");
         		return false;
@@ -100,10 +106,12 @@
         								"\n tabkeycirculation = "+env_all.tabkeycirculation+
         								"\n filesecurelevel = "+env_all.filesecurelevel+
         								"\n networksecurelevel = "+env_all.networksecurelevel+
-        								"\n datatyperule = "+env_all.datatyperule)
-        };
+        								"\n datatyperule = "+env_all.datatyperule+
+        								"\n Variables = "+ nexacro.getEnvironmentVariable('Variable0')+
+        								"\n Cookies = "+ nexacro.getCookieVariable('Cookie0')+
+        								"\n HeaderVariable = "+ nexacro.getHTTPHeaderVariable('header0'));
 
-
+         };
         this.Button01_onclick = function(obj,e)
         {
         	this.TextArea00.value="";
@@ -115,6 +123,7 @@
         	}
         	this.TextArea00.insertText(" id = "+app_all.id+
         								"\n screenid = "+app_all.screenid+
+        								"\n Dataset = "+app_all.gds_nexacroK_mfe_sub2.id+", rowcount = "+app_all.gds_nexacroK_mfe_sub2.getRowCount()+
         								"\n app_variables = "+app_all.app_variable);
         };
 
@@ -168,6 +177,13 @@
         	});
         };
 
+        this.Button05_onclick = function(obj,e)
+        {
+        		this.TextArea00.deleteText();
+        	this.TextArea00.insertText("nexacro.getPopupFrames() = "+nexacro.getPopupFrames()+"\n");
+        	this.TextArea00.insertText("nexacro.getPopupFrames(this.getOwnerFrame()) = "+nexacro.getPopupFrames(this.getOwnerFrame())+"\n");
+        };
+
         });
         
         // Regist UI Components Event
@@ -179,6 +195,7 @@
             this.btn_showmodal.addEventHandler("onclick",this.btn_showmodal_onclick,this);
             this.Button03.addEventHandler("onclick",this.Button03_onclick,this);
             this.Button04.addEventHandler("onclick",this.Button04_onclick,this);
+            this.Button05.addEventHandler("onclick",this.Button05_onclick,this);
         };
 
         this.loadIncludeScript("Form_Work.xfdl");

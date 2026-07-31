@@ -102,13 +102,13 @@ const envLoader = function(nexacro, system, trace)
         env.on_loadVariables = function ()
         {
             // Variables
-
+            this.setEnvironmentVariable("Variable0", "nexacroK_mfe_sub2");
 
             // Cookies
-
+            this.setCookieVariable("Cookie0", "nexacroK_mfe_sub2_Cookies0", "false");
 
             // HTTP Header
-
+            this.setHTTPHeaderVariable("header0", "nexacroK_mfe_sub2_header0");
         };
 
         env.on_loadDeviceAdaptors = function ()

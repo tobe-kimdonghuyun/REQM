@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="DataObjectSample_auto" width="1280" height="670" onload="DataObjectSample_auto_onload">
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title" taborder="0" text="[비가시적] DataObject 자동 채우기 (binddataobject + addColumn datapath)" left="10" top="10" width="900" height="28" font="bold 14 'Consolas'" color="#0f766e"/>
+        <Static id="stc_api_url" taborder="1" text="API: GET /todos  |  /albums  —  addColumn 4번째 인수로 @.필드명 지정 후 binddataobject 설정" left="10" top="44" width="1200" height="22" font="12 'Consolas'" color="#0369a1"/>
+        <Static id="stc_desc2" taborder="2" text="binddataobject 설정 순간 DataObject.onload 이벤트 연결 → request() 응답 시 Dataset.onload 자동 발화 → Grid 자동 갱신" left="10" top="66" width="1200" height="22" font="11 'Consolas'" color="#0891b2"/>
+        <Button id="btn_create" taborder="3" text="DataObject 동적 생성" left="10" top="96" width="170" height="32" onclick="btn_create_onclick"/>
+        <Button id="btn_todos" taborder="4" text="할일 조회 (GET)" left="190" top="96" width="150" height="32" onclick="btn_todos_onclick"/>
+        <Button id="btn_albums" taborder="5" text="앨범 조회 (GET)" left="350" top="96" width="150" height="32" onclick="btn_albums_onclick"/>
+        <Button id="btn_clear" taborder="6" text="전체 삭제" left="510" top="96" width="90" height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_status" taborder="7" text="DataObject 미생성" left="614" top="102" width="600" height="22" font="11 'Consolas'" color="#b91c1c"/>
+        <Static id="stc_result" taborder="8" text="" left="10" top="136" width="1240" height="22" font="11 'Consolas'" color="#134e4a"/>
+        <Div id="div_grid" left="10" top="164" width="1250" height="496"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// ──────────────────────────────────────────────────────────────────────────────
+// 진짜 자동 채우기: binddataobject + addColumn(id, type, size, datapath) 방식
+// ① addColumn(id, type, size, "@.필드명") — 4번째 인수로 JSON 매핑 경로 직접 지정
+//    ※ new ColumnInfo().datapath 방식은 내부적으로 _p_datapath 에 반영 안 됨 — 사용 금지
+// ② dataobjectpath → dataobjectbindmode → binddataobject 순서로 설정 (순서 필수!)
+//    binddataobject setter 호출 시 DataObject.onload 이벤트 연결이 자동 수행됨
+// ③ request() → 응답 수신 → DataObject.onload 발화
+//    → 엔진 Dataset.on_notify_onload_dataobject 경유 → _loadDataObject(true, 0)
+//    → dataobjectpath("$[*]") 로 배열 추출 → 각 컬럼 datapath 로 JSON 필드 매핑
+//    → Dataset row 자동 생성
+// ④ Dataset.onload 에서 완료 처리 (DataObject.onload 시점에는 아직 Dataset 미채움)
+// ──────────────────────────────────────────────────────────────────────────────
+
+this.DataObjectSample_auto_onload = function(obj, e)
+{
+    this.bCreated = false;
+    this.stc_status.set_text("① [DataObject 동적 생성] 버튼 클릭 → ② [할일 조회] 또는 [앨범 조회] 순서로 실행하세요.");
+};
+
+/*******************************************************************************
+ * 동적 생성
+*******************************************************************************/
+this.btn_create_onclick = function(obj, e)
+{
+    if (this.bCreated) { this.stc_status.set_text("이미 생성되어 있습니다. 삭제 후 다시 시도하세요."); return; }
+
+    // ── DataObject 생성
+    var dobj = new nexacro.DataObject("doAutoList", this);
+    this.addChild("doAutoList", dobj);
+    dobj.addEventHandler("onsuccess", this.dobj_onsuccess, this);
+    dobj.addEventHandler("onerror",   this.dobj_onerror,   this);
+
+    // ── Dataset 생성 — 완료 처리는 Dataset.onload 에서
+    var ds = new nexacro.Dataset("ds_auto", this);
+    this.addChild("ds_auto", ds);
+    ds.addEventHandler("onload", this.ds_auto_onload, this);
+
+    // ── Grid 생성
+    var grd = new nexacro.Grid("grd_auto", 5, 5, 1230, 480, null, null);
+    this.div_grid.addChild("grd_auto", grd);
+    grd.show();
+
+    this.bCreated = true;
+    this.stc_status.set_text("✔ 생성 완료. [할일 조회] 또는 [앨범 조회] 버튼을 클릭하세요.");
+};
+
+/*******************************************************************************
+ * 엔드포인트별 컬럼 정의 + binddataobject 바인딩 확립
+ * ※ 설정 순서: addColumn(datapath) → dataobjectpath → dataobjectbindmode → binddataobject
+*******************************************************************************/
+this.fn_setupDataset = function(sEndpoint)
+{
+    var ds  = this["ds_auto"];
+    var grd = this.div_grid.form.all["grd_auto"];
+    if (!ds || !grd) return false;
+
+    // 이전 바인딩 해제 후 컬럼·데이터 초기화
+    ds.binddataobject = "";
+    ds.clear();
+
+    // addColumn(id, type, size, datapath) — 4번째 인수가 JSON 필드 매핑 경로
+    if (sEndpoint == "todos")
+    {
+        // GET /todos → [{userId, id, title, completed}, ...]
+        ds.addColumn("USER_ID",   "String", 256, "@.userId");
+        ds.addColumn("ID",        "String", 256, "@.id");
+        ds.addColumn("TITLE",     "String", 256, "@.title");
+        ds.addColumn("COMPLETED", "String", 256, "@.completed");
+    }
+    else if (sEndpoint == "albums")
+    {
+        // GET /albums → [{userId, id, title}, ...]
+        ds.addColumn("USER_ID", "String", 256, "@.userId");
+        ds.addColumn("ID",      "String", 256, "@.id");
+        ds.addColumn("TITLE",   "String", 256, "@.title");
+    }
+
+    // ★ 순서 필수: dataobjectpath / dataobjectbindmode 먼저 → binddataobject 마지막
+    // binddataobject setter 내부에서 DataObject를 탐색하고 onload 이벤트 핸들러를 등록함
+    // DataObject.request() 응답 후 onload 발화 → Dataset 자동 채우기
+    ds.dataobjectpath     = "$[*]";
+    ds.dataobjectbindmode = "twoway";
+    ds.binddataobject     = "doAutoList";
+
+    // Grid 포맷 재생성
+    grd.set_binddataset("ds_auto");
+    grd.createFormat();
+    grd.set_autofittype("col");
+
+    return true;
+};
+
+/*******************************************************************************
+ * 조회 버튼
+*******************************************************************************/
+this.btn_todos_onclick = function(obj, e)
+{
+    var dobj = this["doAutoList"];
+    if (!dobj) { this.stc_status.set_text("먼저 DataObject를 동적 생성하세요."); return; }
+    if (!this.fn_setupDataset("todos")) return;
+    this.stc_status.set_text("조회 중... (GET /todos)");
+    dobj.request("SEARCH_TODOS", "GET", "https://jsonplaceholder.typicode.com/todos");
+};
+
+this.btn_albums_onclick = function(obj, e)
+{
+    var dobj = this["doAutoList"];
+    if (!dobj) { this.stc_status.set_text("먼저 DataObject를 동적 생성하세요."); return; }
+    if (!this.fn_setupDataset("albums")) return;
+    this.stc_status.set_text("조회 중... (GET /albums)");
+    dobj.request("SEARCH_ALBUMS", "GET", "https://jsonplaceholder.typicode.com/albums");
+};
+
+/*******************************************************************************
+ * Dataset.onload — 엔진이 Dataset 자동 채운 후 발생 (rowcount 여기서만 정확)
+*******************************************************************************/
+this.ds_auto_onload = function(obj, e)
+{
+    this.stc_status.set_text("✔ 조회 완료: " + obj.rowcount + "건 / 컬럼 수: " + obj.getColCount());
+    this.stc_result.set_text("첫 번째 행 ID=" + obj.getColumn(0, "ID") + " / TITLE=" + obj.getColumn(0, "TITLE"));
+};
+
+/*******************************************************************************
+ * DataObject 이벤트
+*******************************************************************************/
+this.dobj_onsuccess = function(obj, e)
+{
+    trace("[onsuccess] serviceid=" + e.serviceid + " / statuscode=" + e.statuscode);
+    if (e.statuscode > 200)
+    {
+        e.preventDefault();
+        this.stc_status.set_text("통신 오류: HTTP " + e.statuscode);
+    }
+};
+
+this.dobj_onerror = function(obj, e)
+{
+    trace("[onerror] " + e.statuscode + ":" + e.errormsg);
+    this.stc_status.set_text("통신 오류: " + e.statuscode + " / " + e.errormsg);
+};
+
+/*******************************************************************************
+ * 전체 삭제
+*******************************************************************************/
+this.btn_clear_onclick = function(obj, e)
+{
+    var grd  = this.div_grid.form.all["grd_auto"];
+    var ds   = this["ds_auto"];
+    var dobj = this["doAutoList"];
+    if (grd)  { this.div_grid.removeChild("grd_auto"); grd.destroy(); }
+    if (ds)   { this.removeChild("ds_auto"); ds.destroy(); }
+    if (dobj) { this.removeChild("doAutoList"); dobj.destroy(); }
+    this.bCreated = false;
+    this.stc_status.set_text("DataObject / Dataset / Grid 삭제 완료");
+    this.stc_result.set_text("");
+};
+    ]]></Script>
+  </Form>
+</FDL>

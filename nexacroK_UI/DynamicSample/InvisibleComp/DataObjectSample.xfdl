@@ -30,8 +30,8 @@ this.btn_create_onclick = function(obj, e)
     if (this.bCreated) { this.stc_status.set_text("이미 생성되어 있습니다. 삭제 후 다시 시도하세요."); return; }
 
     // ────── DataObject 동적 생성 ──────────────────────────
-    var dobj = new nexacro.DataObject("dobj_api", this);
-    this.addChild("dobj_api", dobj);
+    var dobj = new nexacro.DataObject("doUserList", this);
+    this.addChild("doUserList", dobj);
     dobj.addEventHandler("onsuccess", this.dobj_api_onsuccess, this);
     dobj.addEventHandler("onload",    this.dobj_api_onload,    this);
     dobj.addEventHandler("onerror",   this.dobj_api_onerror,   this);
@@ -39,6 +39,8 @@ this.btn_create_onclick = function(obj, e)
     // ────── Dataset 동적 생성 ─────────────────────────────
     var ds = new nexacro.Dataset("ds_result", this);
     this.addChild("ds_result", ds);
+	
+	ds.addEventHandler("onsuccess", this.ds_onload, this);
 
     // ────── Grid 동적 생성 ────────────────────────────────
     var grd = new nexacro.Grid("grd_result", 5, 5, 1230, 480, null, null);
@@ -52,7 +54,7 @@ this.btn_create_onclick = function(obj, e)
 
 this.btn_search_onclick = function(obj, e)
 {
-    var dobj = this["dobj_api"];
+    var dobj = this["doUserList"];
     if (!dobj) { this.stc_status.set_text("먼저 DataObject를 동적 생성하세요."); return; }
     this.stc_status.set_text("조회 중... (GET /posts)");
     dobj.request("SEARCH_POSTS", "GET", "https://jsonplaceholder.typicode.com/posts");
@@ -60,7 +62,7 @@ this.btn_search_onclick = function(obj, e)
 
 this.btn_users_onclick = function(obj, e)
 {
-    var dobj = this["dobj_api"];
+    var dobj = this["doUserList"];
     if (!dobj) { this.stc_status.set_text("먼저 DataObject를 동적 생성하세요."); return; }
     this.stc_status.set_text("조회 중... (GET /users)");
     dobj.request("SEARCH_USERS", "GET", "https://jsonplaceholder.typicode.com/users");
@@ -78,11 +80,7 @@ this.dobj_api_onsuccess = function(obj, e)
 
 this.dobj_api_onload = function(obj, e)
 {
-    // DataObject.REASON_REQUEST 는 동적 생성 환경에서 undefined가 되므로 nexacro 전체 경로 사용
-    if (e.reason != nexacro.DataObject.REASON_REQUEST) return;
-
     var ds  = this["ds_result"];
-    // Div 내 동적 생성 컴포넌트는 div.form.all[id] 로 접근
     var grd = this.div_grid.form.all["grd_result"];
     if (!ds || !grd) return;
 
@@ -94,19 +92,35 @@ this.dobj_api_onload = function(obj, e)
 
     // 컬럼·행 전체 초기화 (엔드포인트 전환 시 컬럼 중복 방지)
     ds.clear();
-    var objSample = obj.data[0];
+    var aData     = obj.data;
+    var aKeys     = [];
+    var objSample = aData[0];
+
+    // 첫 번째 객체의 키를 기반으로 컬럼 동적 생성
     for (var key in objSample)
     {
-        var colInfo = new ColumnInfo();
-        colInfo.type     = "String";
-        colInfo.datapath = "@." + key;
-        ds.addColumnInfo(key.toUpperCase(), colInfo);
+        aKeys.push(key);
+        ds.addColumn(key.toUpperCase(), "String", 1000);
     }
-    this.ds_result.binddataobject = obj.id;
-    this.ds_result.dataobjectpath = "$.data[*]";
-    grd.binddataset = this.ds_result.name;
+
+    // obj.data 를 직접 순회하여 Dataset 에 수동으로 채움 (binddataobject 방식 미사용)
+    ds.updatecontrol = false;
+    for (var i = 0; i < aData.length; i++)
+    {
+        var item = aData[i];
+        var r    = ds.addRow();
+        for (var j = 0; j < aKeys.length; j++)
+        {
+            ds.setColumn(r, aKeys[j].toUpperCase(), item[aKeys[j]]);
+        }
+    }
+    ds.updatecontrol = true;
+
+    // Grid 바인딩 후 포맷 재생성
+    grd.set_binddataset("ds_result");
     grd.createFormat();
-    grd.autofittype = "col";
+    grd.set_autofittype("col");
+
     this.stc_status.set_text("✔ 조회 완료: " + ds.rowcount + "건 / 컬럼 수: " + ds.getColCount());
     this.stc_result.set_text("serviceid=" + e.serviceid + " | 첫 번째 컬럼: " + ds.getColumn(0, 0));
 };
@@ -116,16 +130,19 @@ this.dobj_api_onerror = function(obj, e)
     trace("[onerror] " + e.statuscode + ":" + e.errormsg);
     this.stc_status.set_text("통신 오류: " + e.statuscode + " / " + e.errormsg);
 };
-
+this.ds_onload = function(obj:nexacro.NormalDataset,e:nexacro.DSLoadEventInfo)
+{
+	trace("[ds_onload]");
+}
 this.btn_clear_onclick = function(obj, e)
 {
     // Div 내 동적 생성 컴포넌트는 div.form.all[id] 로 접근
     var grd  = this.div_grid.form.all["grd_result"];
     var ds   = this["ds_result"];
-    var dobj = this["dobj_api"];
+    var dobj = this["doUserList"];
     if (grd)  { this.div_grid.removeChild("grd_result"); grd.destroy(); }
     if (ds)   { this.removeChild("ds_result"); ds.destroy(); }
-    if (dobj) { this.removeChild("dobj_api");  dobj.destroy(); }
+    if (dobj) { this.removeChild("doUserList"); dobj.destroy(); }
     this.bCreated = false;
     this.stc_status.set_text("DataObject / Dataset / Grid 삭제 완료");
     this.stc_result.set_text("");

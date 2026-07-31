@@ -20,96 +20,27 @@
 
             
             // UI Components Initialize
-            obj = new nexacro.NexacroPortal("NexacroPortal00","15","30","619","523",null,null,null,null,null,null,this);
+            obj = new nexacro.NexacroPortal("NexacroPortal00","15","30","619","583",null,null,null,null,null,null,this);
             obj.set_appkey("DynamicSample");
             obj.set_apppath("http://172.10.12.45:7070/nexacroK/DynamicSample");
             obj.set_automount("true");
-            obj.set_formurl("InvisibleComp::DataObjectSample.xfdl");
+            obj.set_formurl("InvisibleComp::DatasetSample.xfdl");
             obj.set_taborder("0");
             obj.getSetter("text").set("NexacroPortal00");
             this.addChild(obj.name, obj);
 
-            obj = new nexacro.NexacroPortal("NexacroPortal01","640","30","619","523",null,null,null,null,null,null,this);
-            obj.set_appkey("DynamicSample_sub");
-            obj.set_apppath("http://172.10.12.45:7070/nexacroK/DynamicSample_sub");
+            obj = new nexacro.NexacroPortal("NexacroPortal01","700","30","619","523",null,null,null,null,null,null,this);
+            obj.set_appkey("DataObjectRestSample");
+            obj.set_apppath("http://172.10.12.45:7070/nexacroK/DataObjectRestSample");
             obj.set_automount("true");
-             obj.set_formurl("InvisibleComp::DataObjectSample.xfdl");
+            obj.set_formurl("");
             obj.set_taborder("1");
             obj.getSetter("text").set("NexacroPortal01");
             this.addChild(obj.name, obj);
 
-            obj = new nexacro.Button("Button01","170","600","90","45",null,null,null,null,null,null,this);
-            obj.set_taborder("2");
-            obj.set_text("NexacroPortal\r\nproperties");
-            this.addChild(obj.name, obj);
-
             obj = new nexacro.TextArea("TextArea00","882","594","396","123",null,null,null,null,null,null,this);
-            obj.set_taborder("3");
+            obj.set_taborder("0");
             obj.set_wordWrap("char");
-            this.addChild(obj.name, obj);
-
-            obj = new nexacro.Button("Button00","267","600","97","45",null,null,null,null,null,null,this);
-            obj.set_taborder("4");
-            obj.set_text("mount function");
-            this.addChild(obj.name, obj);
-
-            obj = new nexacro.Button("Button00_00","371","600","117","45",null,null,null,null,null,null,this);
-            obj.set_taborder("5");
-            obj.set_text("unmount function");
-            this.addChild(obj.name, obj);
-
-            obj = new nexacro.Button("Button02","495","600","71","45",null,null,null,null,null,null,this);
-            obj.set_taborder("6");
-            obj.set_text("appkey set");
-            this.addChild(obj.name, obj);
-
-            obj = new nexacro.Button("Button03","573","600","80","45",null,null,null,null,null,null,this);
-            obj.set_taborder("7");
-            obj.set_text("apppath set");
-            this.addChild(obj.name, obj);
-
-            obj = new nexacro.Button("Button04","660","600","80","45",null,null,null,null,null,null,this);
-            obj.set_taborder("8");
-            obj.set_text("formurl set");
-            this.addChild(obj.name, obj);
-
-            obj = new nexacro.Button("Button05","171","655","99","45",null,null,null,null,null,null,this);
-            obj.set_taborder("9");
-            obj.set_text("automount true");
-            this.addChild(obj.name, obj);
-
-            obj = new nexacro.Button("Button06","278","655","95","45",null,null,null,null,null,null,this);
-            obj.set_taborder("10");
-            obj.set_text("automount false");
-            this.addChild(obj.name, obj);
-
-            obj = new nexacro.Button("Button07","381","655","103","45",null,null,null,null,null,null,this);
-            obj.set_taborder("11");
-            obj.set_text("properties rest");
-            this.addChild(obj.name, obj);
-
-            obj = new nexacro.Button("Button08","492","655","73","45",null,null,null,null,null,null,this);
-            obj.set_taborder("12");
-            obj.set_text("mainframe");
-            this.addChild(obj.name, obj);
-
-            obj = new nexacro.Button("Button09","573","655","49","45",null,null,null,null,null,null,this);
-            obj.set_taborder("13");
-            obj.set_text("form");
-            this.addChild(obj.name, obj);
-
-            obj = new nexacro.Button("Button10","630","655","144","45",null,null,null,null,null,null,this);
-            obj.set_taborder("14");
-            obj.set_text("TextArea00.deleteText");
-            this.addChild(obj.name, obj);
-
-            obj = new nexacro.Radio("Radio00","26","600","135","77",null,null,null,null,null,null,this);
-            obj.set_codecolumn("codecolumn");
-            obj.set_datacolumn("datacolumn");
-            obj.set_taborder("15");
-            var Radio00_innerdataset = new nexacro.NormalDataset("Radio00_innerdataset", obj);
-            Radio00_innerdataset._setContents({"ColumnInfo" : {"Column" : [{"id" : "codecolumn","size" : "256"},{"id" : "datacolumn","size" : "256"}]},"Rows" : [{"codecolumn" : "0","datacolumn" : "NeacroPortal00"},{"codecolumn" : "1","datacolumn" : "NeacroPortal01"}]});
-            obj.set_innerdataset(Radio00_innerdataset);
             this.addChild(obj.name, obj);
 
             // Layout Functions
@@ -379,18 +310,6 @@
             this.NexacroPortal01.addEventHandler("onerror",this.NexacroPortal01_onerror,this);
             this.NexacroPortal01.addEventHandler("onmount",this.NexacroPortal01_onmount,this);
             this.NexacroPortal01.addEventHandler("onunmount",this.NexacroPortal01_onunmount,this);
-            this.Button01.addEventHandler("onclick",this.Button01_onclick,this);
-            this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
-            this.Button00_00.addEventHandler("onclick",this.Button00_00_onclick,this);
-            this.Button02.addEventHandler("onclick",this.Button02_onclick,this);
-            this.Button03.addEventHandler("onclick",this.Button03_onclick,this);
-            this.Button04.addEventHandler("onclick",this.Button04_onclick,this);
-            this.Button05.addEventHandler("onclick",this.Button05_onclick,this);
-            this.Button06.addEventHandler("onclick",this.Button06_onclick,this);
-            this.Button07.addEventHandler("onclick",this.Button07_onclick,this);
-            this.Button08.addEventHandler("onclick",this.Button08_onclick,this);
-            this.Button09.addEventHandler("onclick",this.Button09_onclick,this);
-            this.Button10.addEventHandler("onclick",this.Button10_onclick,this);
         };
 
         this.loadIncludeScript("Form_Work.xfdl");

@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Work" width="1280" height="720" titletext="Form_Work">
+    <Layouts>
+      <Layout width="1280" height="720" screenid="Desktop_screen">
+        <NexacroPortal id="NexacroPortal00" taborder="0" text="Button00" left="41" top="30" width="619" height="523" appkey="nexacroK_mfe_sub2" apppath="http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub2" formurl="" automount="true" onmount="NexacroPortal00_onmount" onunmount="NexacroPortal00_onunmount" onerror="NexacroPortal00_onerror"/>
+        <Button id="Button01" taborder="1" text="NexacroPortal&#13;&#10;properties" left="682" top="33" width="138" height="54" onclick="Button01_onclick"/>
+        <TextArea id="TextArea00" taborder="2" left="680" top="257" width="396" height="323" wordWrap="char"/>
+        <Button id="Button00" taborder="2" text="mount function" left="830" top="34" width="117" height="52" onclick="Button00_onclick"/>
+        <Button id="Button00_00" taborder="3" text="unmount function" left="960" top="34" width="117" height="52" onclick="Button00_00_onclick"/>
+        <Button id="Button02" taborder="4" text="appkey set" left="681" top="93" width="139" height="47" onclick="Button02_onclick"/>
+        <Button id="Button03" taborder="5" text="apppath set" left="828" top="93" width="119" height="50" onclick="Button03_onclick"/>
+        <Button id="Button04" taborder="6" text="formurl set" left="961" top="93" width="121" height="51" onclick="Button04_onclick"/>
+        <Button id="Button05" taborder="7" text="automount true" left="685" top="152" width="133" height="45" onclick="Button05_onclick"/>
+        <Button id="Button06" taborder="8" text="automount false" left="829" top="152" width="125" height="45" onclick="Button06_onclick"/>
+        <Button id="Button07" taborder="9" text="properties rest" left="972" top="151" width="113" height="51" onclick="Button07_onclick"/>
+        <Button id="Button08" taborder="10" text="mainframe" left="681" top="207" width="130" height="44" onclick="Button08_onclick"/>
+        <Button id="Button09" taborder="11" text="form" left="832" top="208" width="98" height="43" onclick="Button09_onclick"/>
+        <Button id="Button10" taborder="12" text="TextArea00.deleteText" left="940" top="211" width="144" height="42" onclick="Button10_onclick"/>
+        <Button id="Button11" taborder="13" text="NexacroPortal에 연결된 화면의 checkbox 값 변경 하기" left="40" top="568" width="170" height="72" onclick="Button11_onclick" wordWrap="char"/>
+        <Button id="Button11_00" taborder="14" text="NexacroPortal에 연결된 화면의 컴포넌트 함수 실행" left="220" top="568" width="170" height="72" wordWrap="char" onclick="Button11_00_onclick"/>
+        <Button id="Button11_00_00" taborder="15" text="NexacroPortal에 연결된 화면에 선언된 함수 호출" left="400" top="568" width="170" height="72" wordWrap="char" onclick="Button11_00_00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[let objPortal = null;
+let eventPortal = null;
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.TextArea00.deleteText();
+	this.TextArea00.insertText(" appkey = "+this.NexacroPortal00.appkey
+							   +"\n apppath = "+ this.NexacroPortal00.apppath
+							   +"\n formurl = "+ this.NexacroPortal00.formurl
+							   +"\n automount = "+ this.NexacroPortal00.automount
+							   +"\n mainframe = "+ this.NexacroPortal00.mainframe
+							   +"\n form = "+ this.NexacroPortal00.form);
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.NexacroPortal00.mount();
+};
+this.Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.NexacroPortal00.appkey="nexacroK_mfe_sub6";
+	this.TextArea00.deleteText();
+	this.TextArea00.insertText("NexacroPortal00.appkey set" + this.NexacroPortal00.appkey);
+};
+
+this.Button00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.NexacroPortal00.unmount();
+};
+
+this.Button03_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.NexacroPortal00.apppath="http://172.10.12.45:9090/nexacroK/nexacroK_mfe_sub6";
+	this.TextArea00.deleteText();
+	this.TextArea00.insertText("NexacroPortal00.apppath set" + this.NexacroPortal00.apppath);
+};
+
+this.Button04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.NexacroPortal00.formurl = "FrameBase::Form_Work.xfdl";
+	this.TextArea00.deleteText();
+	this.TextArea00.insertText("NexacroPortal00.formurl set" + this.NexacroPortal00.formurl);
+};
+
+this.Button05_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+	this.NexacroPortal00.automount ="true";
+	this.TextArea00.deleteText();
+	this.TextArea00.insertText("NexacroPortal00.automount true set" + this.NexacroPortal00.automount);
+};
+
+this.Button06_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.NexacroPortal00.automount = "false";
+	this.TextArea00.deleteText();
+	this.TextArea00.insertText("NexacroPortal00.automount false set" + this.NexacroPortal00.automount);
+};
+
+this.Button07_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.NexacroPortal00.automount ="";
+	this.NexacroPortal00.formurl ="";
+	this.NexacroPortal00.apppath="";
+	this.NexacroPortal00.appkey="";
+};
+
+this.Button08_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.TextArea00.deleteText();
+	this.TextArea00.insertText(".NexacroPortal00.mainframe = "+ this.NexacroPortal00.mainframe);
+};
+
+this.Button09_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.TextArea00.deleteText();
+	this.TextArea00.insertText("NexacroPortal00.form = "+ this.NexacroPortal00.form);
+};
+this.NexacroPortal00_onmount = function(obj, e)
+{
+	this.TextArea00.deleteText();;
+	this.TextArea00.insertText("NexacroPortal00_onmount obj = "+ obj+" NexacroPortal00_onmount e = "+e);
+	objPortal = obj;
+	eventPortal = e;
+// 	trace(obj)
+// 	trace(e);
+// 	trace(e.appkey);
+	trace("===================================");
+}
+
+this.NexacroPortal00_onunmount = function(obj, e)
+{
+	this.TextArea00.deleteText();
+	this.TextArea00.insertText("NexacroPortal00_onunmount obj = "+ obj
+								+" NexacroPortal00_onmount e = "+e);
+	objPortal = null;
+	eventPortal = null;
+	trace(obj)
+	trace(e);
+	trace("===================================");
+}
+
+this.NexacroPortal00_onerror = function(obj, e)
+{
+	this.TextArea00.deleteText();
+	this.TextArea00.insertText("NexacroPortal00_onerror obj = "+ obj
+								+" NexacroPortal00_onerror e = "+e);
+}
+this.Button10_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.TextArea00.deleteText();
+};
+
+this.Button11_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//trace(objPortal);
+	//trace(eventPortal);
+	//trace(eventPortal.appkey);
+	objPortal.get_form().CheckBox00.value=true;
+	objPortal.get_form().CheckBox01.value=true;
+	objPortal.get_form().CheckBox02.value=true;
+
+};
+
+
+this.Button11_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	objPortal.get_form().Button00.click();
+};
+
+this.Button11_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	objPortal.get_form().customFunction();
+};
+
+this.customFunction = function()
+{	
+	alert("nexacroK_NexaPortal_test_00 alert");
+}
+]]></Script>
+  </Form>
+</FDL>

@@ -11,6 +11,7 @@
         <Button id="btn_open2" taborder="5" text="nexacro.open" left="660" top="100" width="110" height="75" onclick="btn_open2_onclick"/>
         <Button id="btn_open2_00" taborder="6" text="nexacro.setWheelZoom( objFrame, 150 )" left="790" top="100" width="260" height="75" onclick="btn_open2_00_onclick"/>
         <Button id="Button02" taborder="7" text="ALT+SHIFT+S" left="310" top="100" width="217" height="80" hotkey="ALT+SHIFT+S" onclick="Button02_onclick"/>
+        <TextArea id="TextArea00" taborder="8" left="791" top="12" width="308" height="74"/>
       </Layout>
     </Layouts>
     <Script type="xscript5.1"><![CDATA[
@@ -31,27 +32,27 @@ this.btn_showmodal_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInf
 
 	objFrame.init( "modal00", 0, 0, 500, 500 );
 	objFrame.formurl = "FrameBase::sub_form.xfdl";
-
+	this.TextArea00.deleteText();
 	var ret1 = objFrame.showModal( objParentFrame, {a:'aaa', b:'bbb'}, this )
 	.then((result1) => {
 	  trace("Closed showmodal with args: "+ " return1 = " + ret1 + ", result1 = " + result1.arg);
-	
+	  this.TextArea00.insertText("showmodal :" +result1.arg);
 	 
 	}).catch((err) => {
-		trace("Failed to open popup promise_open_test1 : " + err.message + " return = " + ret1);
+		this.TextArea00.insertText("Failed to open popup promise_open_test1 : " + err.message + " return = " + ret1);
 	});
 };
 
 this.btn_open2_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 {
-
+	this.TextArea00.deleteText();
 	let ret1 = nexacro.open("promise_open_test1","FrameBase::sub_form.xfdl", this.getOwnerFrame(), { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 150, "promise")
 	.then((result1) => {
 	  trace("Closed popup with args: "+ " return1 = " + ret1 + ", result1 = " + result1);
-	 trace("nexacro.open  : "+result1);
+	 this.TextArea00.insertText("nexacro.open  : "+result1);
 	 
 	}).catch((err) => {
-		trace("Failed to open popup promise_open_test1 : " + err.message + " return = " + ret1);
+		this.TextArea00.insertText("Failed to open popup promise_open_test1 : " + err.message + " return = " + ret1);
 	});
 };
 
