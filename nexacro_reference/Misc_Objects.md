@@ -30,7 +30,7 @@
 
 **Remark**
 
-컴포넌트의 속성이 value로 지정된 경우에는 바인딩된 Dataset에서 데이터를 가져오고(get) 수정된 데이터를 다시 Dataset에 반영(set)할 수 있습니다.
+컴포넌트의 속성이 value로 지정된 경우에는 바인딩된 Dataset에서 데이터를 가져오고(get) 수정된 데이터를 다시 Dataset에 반영(set)할 수 있습니다.
 value 이외의 속성을 지정하는 경우에는 데이터를 가져오는(get) 작업만 가능합니다.
 
 **Property**
@@ -268,9 +268,11 @@ var bSucc = this.BindItem00.destroy();
 
 **Return**
 
-BindItem 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | BindItem 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-BindItem 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+BindItem 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -299,8 +301,19 @@ BindItem.init(strName[,strCompID,strPropertyID,strDatasetID,strColumnID])
 
 **Parameters**
 
-```
-BindItem을 구별할 수 있는 이름
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | BindItem을 구별할 수 있는 이름 |
+| strCompID | String | 바인딩할 컴포넌트의 ID |
+| strPropertyID | String | 바인딩할 컴포넌트의 PropertyID |
+| strDatasetID | String | 바인딩할 Dataset ID |
+| strColumnID | String | 바인딩할 Dataset Column ID |
+
+**Sample Call**
+
+```javascript
+BindItem00.init("aa");
+BindItem00.init("aa", "comp_edit", "text", "dataset1", "column1");
 ```
 
 **Return**
@@ -1124,15 +1137,23 @@ ExcelExportObject.addEvent( strEventID )
 
 **Parameters**
 
-```
-ExcelExportObject 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | ExcelExportObject 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.ExcelExportObject00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -1159,15 +1180,26 @@ ExcelExportObject.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelExportObject00_onmove = function( obj:nexacro.ExcelExportObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ExcelExportObject00.addEventHandler( "onmove", this.ExcelExportObject00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -1188,15 +1220,27 @@ ExcelExportObject.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelExportObject00_onmove = function( obj:nexacro.ExcelExportObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ExcelExportObject00.addEventHandlerLookup( "onmove", "ExcelExportObject00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -1223,17 +1267,123 @@ ExcelExportObject.addExportItem( constExportItemType, varExportSource, strRange 
 
 **Parameters**
 
-```
-Export 대상이 되는 컴포넌트의 종류를 상수값으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| constExportItemType | Constant | Export 대상이 되는 컴포넌트의 종류를 상수값으로 설정합니다.
 
-현재 Grid 만 Export 할 수 있으며 "nexacro.ExportItemTypes.GRID" 로 설정하여야 합니다.
+현재 Grid 만 Export 할 수 있으며 "nexacro.ExportItemTypes.GRID" 로 설정하여야 합니다. |
+| objExportItem | Object | Export 정보를 설정한 ExportItem 오브젝트를 설정합니다. |
+| varExportSource | Object | Export 대상이 되는 컴포넌트를 오브젝트로 설정합니다.
+
+현재 Grid 만 Export 할 수 있으며 "this.Grid00" 형태로 설정하여야 합니다. |
+| strRange | String | "시트명!셀영역" 또는 "셀영역" 형태로 오브젝트 내용이 Export 되는 위치를 지정합니다.
+
+* 2개 이상의 Item을 추가하는 경우에는 각 데이터의 Row 위치가 겹치지 않게 파라미터를 지정해야 합니다.
+같은 시트 내에서 중복되는 Row를 strRange 파라미터로 지정할 수는 없습니다.
+예를 들어 아래와 같은 코드는 첫 번째 코드에서 두 번째 Row(A2)를 Export 위치로 지정하면 다음 코드에서 컬럼이 다르더라도 두 번째 Row(P2)를 지정할 수는 없습니다.
+addExportItem(nexacro.ExportItemTypes.GRID, this.Grid00, "Sheet1!A2");
+addExportItem(nexacro.ExportItemTypes.GRID, this.Grid01, "Sheet1!P2");
+
+2개 이상의 Item을 출력하는 경우 세로 방향으로 Row가 겹치지 않게 출력할 수는 있지만 가로 방향으로 Item을 배치해 출력할 수는 없습니다. |
+| strExportHead | String | Grid 의 Head, Summary 영역에 대한 Export 방식을 설정합니다.
+
+"allband" 설정 시 Head, Summary 영역을 모두 Export 합니다.
+"nohead" 설정 시 Head 영역은 Export 하지 않고, Summary 영역만 Export 합니다.
+"nosumm" 설정 시 Head 영역만 Export 하고, Summary 영역은 Export 하지 않습니다.
+"nohead,nosumm" 설정 시 Head, Summary 영역을 모두 Export 하지 않습니다.
+
+값 생략 시 strExportSelect 값이 "allrecord" 이면 "allband" 로 적용되고, "selectrecord" 이면 "nohead,nosumm" 으로 적용됩니다.
+
+* Grid 의 selecttype 속성값이 "area", 'multiarea" 이면 설정값과 관계없이 항상 "nohead,nosumm" 으로 적용됩니다. |
+| strExportSelect | String | Grid 에서 선택영역에 대한 Export 방식을 설정합니다.
+
+"allrecord" 설정 시 선택영역에 관계없이 모든 Row 를 Export 합니다.
+"selectrecord" 설정 시 선택된 Row, Cell, Area 만 Export 합니다.
+
+값 생략 시 "allrecord" 로 적용됩니다. |
+| strExportMerge | String | Grid 에서 포맷과 관계없이 논리적으로 병합된 Cell 의 Export 방식을 설정합니다.
+strExportSelect 값을 "selectrecord" 로 설정 시 항상 "nosuppress" 로 적용됩니다.
+
+"suppress" 설정 시 병합된 결과대로 1 개 Cell 만 값을 Export 합니다.
+나머지 Cell 은 병합되지 않으며 모두 공백으로 처리됩니다.
+
+"nosuppress" 설정 시 병합된 결과를 무시하고 각 Cell 에 모두 값을 Export 합니다.
+
+"merge" 설정 시 병합된 결과대로 1 개 Cell 만 값을 Export 합니다.
+나머지 Cell 은 병합되어 처리됩니다.
+
+값 생략 시 "suppress" 로 적용됩니다.
+
+* 논리적인 병합이란 suppress 속성 또는 mergeCell() 메소드에 의해 Grid 에 표시된 데이터가 병합된 것을 의미합니다. |
+| strExportValue | String | 엑셀 파일로 Export 시킬 경우 Export 되는 내용과 형식을 설정합니다.
+
+"allstyle" 설정 시 선택된 영역이 있을 경우 선택에 의해 변경된 속성은 Export 되지 않습니다.
+"selectstyle" 설정 시 선택된 영역이 있을 경우 선택에 의해 변경된 속성도 Export 됩니다.
+
+값 설정 시 value, format, calendardateformat, font, color, background(color), -nexa-text-aign, -nexa-vertical-align, -nexa-border(style,color) 속성이 Export 됩니다.
+
+값 생략 시 "allstyle" 로 적용됩니다. |
+| strExportImage | String | Grid 의 Cell 에 설정된 이미지의 Export 방식을 설정합니다.
+
+"none" 설정 시 설정된 이미지 정보를 무시하고 공백으로 Export 합니다.
+"url" 설정 시 설정된 이미지의 위치정보를 URL 형식의 문자열로 Export 합니다.
+"image" 설정 시, 설정된 이미지의 위치가 "http://" 또는 "https://"로 시작하는 인터넷 URL 경로이거나 "data"로 시작하는 Base 64 인코딩 데이터인 경우만 이미지를 그대로 Export 합니다.
+
+값 생략 시 "none" 으로 적용됩니다. |
+| strExceptStyle | String | Grid 의 Cell 에 적용된 CSS 관련 속성 중 Export 시 제외할 속성을 설정합니다.
+
+"none" 설정 시 Export 에서 제외되는 속성이 없습니다.
+"align" 설정 시 Align 관련 -nexa-text-align, -nexa-vertical-align 속성값을 Export 에서 제외됩니다.
+"background" 설정 시 background 의 color 관련 속성값을 Export 에서 제외됩니다.
+"color" 설정 시 color 속성값을 Export 에서 제외됩니다.
+"font" 설정 시 font 속성값을 Export 에서 제외됩니다.
+"border" 설정 시 -nexa-border 속성값을 Export 에서 제외됩니다.
+
+각 설정값을 콤마(",")로 구분하여 중복 설정할 수 있습니다. |
+| strExportSize | String | Grid Cell 의 Column size(width), Row size(height) 값을 엑셀에 적용할지 설정합니다.
+
+"width" 설정 시 너비를 같게 Export 합니다.
+"height" 설정 시 높이를 같게 Export 합니다.
+"both" 설정 시 너비와 높이를 같게 Export 합니다.
+
+값 생략 시 "width"로 적용됩니다.
+
+"height" 또는 "both"로 설정하더라도 autofittype, autosizingtype, extendsizetype 등 데이터에 따라 Grid Cell 높이에 영향을 미치는 속성을 설정했다면 화면에 표시되는 Grid Cell 높이와 Export 처리된 파일 내 Cell 높이를 같게 처리할 수 없습니다. |
+| arrCellIndex | Array | Export 시 바인드된 Column 값을 적용할 Cell 의 인덱스를 배열로 설정합니다.
+
+인덱스가 설정된 Cell 은 표시된 텍스트값이 아닌 바인드된 Column 값을 Export 합니다.
+
+인덱스가 설정되지 않은 Cell 은 사용 Method 에 따라 결과가 달라질 수 있습니다.
+* exportData() : nOrgValue 파라미터값에 따라 Export 값이 결정됩니다.
+* exportDataEx() : Cell 에 표시된 텍스트값이 Export 됩니다. |
+| strBandId | String | arrCellIndex로 설정한 값을 적용할 Band를 설정하는 속성입니다.
+
+"head", "body", "summ" 중 하나의 값을 설정할 수 있습니다.
+
+값 생략 시 모든 Band를 대상으로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nIndex;
+nIndex = this.ExcelExportObject00.addExportItem( nexacro.ExportItemTypes.GRID, ExportItem00 );
+
+nIndex = this.ExcelExportObject00.addExportItem( nexacro.ExportItemTypes.GRID, this.Grid00, "Sheet1!A1" );
+nIndex = this.ExcelExportObject00.addExportItem( nexacro.ExportItemTypes.GRID, this.Grid00, "Sheet1!A1", "nohead");
+nIndex = this.ExcelExportObject00.addExportItem( nexacro.ExportItemTypes.GRID, this.Grid00, "Sheet1!A1", "allband", "selectrecord");
+nIndex = this.ExcelExportObject00.addExportItem( nexacro.ExportItemTypes.GRID, this.Grid00, "Sheet1!A1", "allband", "allrecord", "nosuppress");
+nIndex = this.ExcelExportObject00.addExportItem( nexacro.ExportItemTypes.GRID, this.Grid00, "Sheet1!A1", "allband", "allrecord", "suppress", "allstyle", "none", "color", "both");
+nIndex = this.ExcelExportObject00.addExportItem( nexacro.ExportItemTypes.GRID, this.Grid00, "Sheet1!A1", "allband", "allrecord", "suppress", "allstyle", "none", "color", "both", [1, 5] );
+nIndex = this.ExcelExportObject00.addExportItem( nexacro.ExportItemTypes.GRID, this.Grid00, "Sheet1!A1", "allband", "allrecord", "suppress", "allstyle", "none", "color", "both", [1, 5], "head" );
 ```
 
 **Return**
 
-ExcelExportObject 에 추가된 Item 의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ExcelExportObject 에 추가된 Item 의 인덱스를 반환합니다.
 
-추가에 실패하였을 경우 "-1" 을 반환합니다.
+추가에 실패하였을 경우 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -1276,7 +1426,9 @@ var nCnt = this.ExcelExportObject00.clear();
 
 **Return**
 
-삭제된 Item 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 삭제된 Item 의 갯수를 반환합니다. |
 
 
 ---
@@ -1297,13 +1449,21 @@ ExcelExportObject.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.ExcelExportObject00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -1328,15 +1488,23 @@ ExcelExportObject.clearExportItems(constExportItemType)
 
 **Parameters**
 
-```
-삭제대상이 되는 Item 의 타입을 상수값으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| constExportItemType | Constant | 삭제대상이 되는 Item 의 타입을 상수값으로 설정합니다.
 
-현재 Grid 만 Item 으로 추가 할 수 있으므로 "nexacro.ExportItemTypes.GRID" 로 설정하여야 합니다.
+현재 Grid 만 Item 으로 추가 할 수 있으므로 "nexacro.ExportItemTypes.GRID" 로 설정하여야 합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.ExcelExportObject00.clearExportItems( nexacro.ExportItemTypes.GRID );
 ```
 
 **Return**
 
-삭제된 Item의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 삭제된 Item의 갯수를 반환합니다. |
 
 
 ---
@@ -1361,7 +1529,9 @@ var nCnt = this.ExcelExportObject00.count();
 
 **Return**
 
-모든 item의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 모든 item의 갯수를 반환합니다. |
 
 
 ---
@@ -1382,15 +1552,23 @@ ExcelExportObject.countExportItems(constExportItemType)
 
 **Parameters**
 
-```
-갯수를 확인하려는 Item 의 타입을 상수값으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| constExportItemType | Constant | 갯수를 확인하려는 Item 의 타입을 상수값으로 설정합니다.
 
-현재 Grid 만 Item 으로 추가 할 수 있으므로 "nexacro.ExportItemTypes.GRID" 로 설정하여야 합니다
+현재 Grid 만 Item 으로 추가 할 수 있으므로 "nexacro.ExportItemTypes.GRID" 로 설정하여야 합니다 |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.ExcelExportObject00.countExportItems( nexacro.ExportItemTypes.GRID );
 ```
 
 **Return**
 
-지정한 타입의 item 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 지정한 타입의 item 갯수를 반환합니다. |
 
 
 ---
@@ -1411,16 +1589,25 @@ ExcelExportObject.delExportItem(constExportItemType,nItemIndex)
 
 **Parameters**
 
-```
-삭제대상이 되는 Item 의 타입을 상수값으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| constExportItemType | Constant | 삭제대상이 되는 Item 의 타입을 상수값으로 설정합니다.
 
-현재 Grid 만 Item 으로 추가 할 수 있으므로 "nexacro.ExportItemTypes.GRID" 로 설정하여야 합니다.
+현재 Grid 만 Item 으로 추가 할 수 있으므로 "nexacro.ExportItemTypes.GRID" 로 설정하여야 합니다. |
+| nItemIndex | Number | 삭제하려는 Item 의 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc = this.ExcelExportObject00.delExportItem( nexacro.ExportItemTypes.GRID, 0 );
 ```
 
 **Return**
 
-Item 삭제에 성공하면 "true" 를 반환합니다.
-파라미터가 유효하지 않거나 Item 삭제에 실패하면 "false" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Item 삭제에 성공하면 "true" 를 반환합니다.
+파라미터가 유효하지 않거나 Item 삭제에 실패하면 "false" 를 반환합니다. |
 
 **Remark**
 
@@ -1445,9 +1632,11 @@ ExcelExportObject.destroy()
 
 **Return**
 
-ExcelExportObject 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | ExcelExportObject 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-ExcelExportObject 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+ExcelExportObject 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -1476,19 +1665,48 @@ ExcelExportObject.exportData( [strParam, strParamDS, nOrgValue, bFileDown] ) ;
 
 **Parameters**
 
-```
-서버 통신시에 파라미터로 전달 될 값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strParam | String | 서버 통신시에 파라미터로 전달 될 값을 설정합니다.
 
-DB key 와 같은 값을 전달할 때 사용하는 확장기능입니다.
+DB key 와 같은 값을 전달할 때 사용하는 확장기능입니다. |
+| strParamDS | String | 서버에 전달될 DataSet 을 "Param_DataSet=export_DataSet" 형태로 설정합니다.
+
+개발환경에 따라 서버에 추가적인 기능구현을 위해 DataSet 을 전달할 때 사용하는 확장기능입니다. |
+| nOrgValue | Number | Export 시 Cell 값으로 처리될 대상을 설정합니다.
+
+0 또는 false 설정 시 Cell 에 표시되는 텍스트값을 Export 합니다.
+1 또는 true 설정 시 Cell 에 바인드된 Column 값을 Export 합니다.
+2 설정 시 Cell 의 displaytype 속성값이 "date" 이면 0 으로 적용되고, "date" 가 아니면 1 로 적용됩니다.
+
+값 생략 시 0 으로 적용됩니다.
+
+* valuetypecellindex 속성에 설정된 Cell 은 nOrgValue 파라미터값에 상관없이 바인드 된 Column 값을 Export 합니다.
+   valuetypecellindex 속성에 설정되지 않은 Cell 은 nOrgValue 파라미터값에 맞게 Export 됩니다.
+
+* Export 결과의 일관성을 위하여 valuetypecellindex 속성과 exportDataEx() 메소드를 사용하는 것을 권장합니다. |
+| bFileDown | Boolean | Export 가 완료된 후 생성된 파일의 다운로드 여부를 설정합니다.
+
+true 설정 시 파일을 자동으로 다운로드 받습니다.
+false 설정 시 파일을 자동으로 다운로드 받지 않습니다.
+
+값 생략 시 true 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nCount = this.ExcelExportObject00.exportData();
 ```
 
 **Return**
 
-Export 요청에 성공한 Item 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Export 요청에 성공한 Item 의 갯수를 반환합니다.
 
 Export 시킬 Item 이 없는 경우 0 을 반환합니다.
 
-파라미터가 유효하지 않은 값일 경우 -1 을 반환합니다.
+파라미터가 유효하지 않은 값일 경우 -1 을 반환합니다. |
 
 **Remark**
 
@@ -1534,19 +1752,39 @@ ExcelExportObject.exportDataEx( [strParam, strParamDS, bFileDown] ) ;
 
 **Parameters**
 
-```
-서버 통신시에 파라미터로 전달 될 값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strParam | String | 서버 통신시에 파라미터로 전달 될 값을 설정합니다.
 
-DB key 와 같은 값을 전달할 때 사용하는 확장기능입니다.
+DB key 와 같은 값을 전달할 때 사용하는 확장기능입니다. |
+| strParamDS | String | 서버에 전달될 DataSet 을 "Param_DataSet=export_DataSet" 형태로 설정합니다.
+
+개발환경에 따라 서버에 추가적인 기능구현을 위해 DataSet 을 전달할 때 사용하는 확장기능입니다. |
+| bFileDown | Boolean | Export 가 완료된 후 생성된 파일의 자동 다운로드 여부를 설정합니다.
+
+true 설정 시 파일을 자동으로 다운로드 받습니다.
+true 설정 시 환경에 따라 다운로드를 위한 팝업창이 표시될 수 있습니다.
+
+false 설정 시 파일을 자동으로 다운로드 받지 않습니다.
+
+값 생략 시 true 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nCount = this.ExcelExportObject00.exportDataEx();
+var nCount = this.ExcelExportObject00.exportDataEx( "", "", false );
 ```
 
 **Return**
 
-Export 요청에 성공한 Item 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Export 요청에 성공한 Item 의 갯수를 반환합니다.
 
 Export 시킬 Item 이 없는 경우 0 을 반환합니다.
 
-파라미터가 유효하지 않은 값일 경우 -1 을 반환합니다.
+파라미터가 유효하지 않은 값일 경우 -1 을 반환합니다. |
 
 **Remark**
 
@@ -1596,17 +1834,25 @@ ExcelExportObject.exportItems(constExportItemType)
 
 **Parameters**
 
-```
-Export 하려는 Item 의 타입을 상수값으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| constExportItemType | Constant | Export 하려는 Item 의 타입을 상수값으로 설정합니다.
 
-현재 Grid 만 Item 으로 추가 할 수 있으므로 "nexacro.ExportItemTypes.GRID" 로 설정하여야 합니다.
+현재 Grid 만 Item 으로 추가 할 수 있으므로 "nexacro.ExportItemTypes.GRID" 로 설정하여야 합니다. |
+
+**Sample Call**
+
+```javascript
+var nCount = this.ExcelExportObject00.exportItems( nexacro.ExportItemTypes.GRID );
 ```
 
 **Return**
 
-Export 요청에 성공한 Item 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Export 요청에 성공한 Item 의 갯수를 반환합니다.
 Export 시킬 Item 이 없는 경우 "0" 을 반환합니다.
-파라미터가 유효하지 않은 값일 경우 "-1" 을 반환합니다.
+파라미터가 유효하지 않은 값일 경우 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -1637,15 +1883,27 @@ ExcelExportObject.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelExportObject00_onmove = function( obj:nexacro.ExcelExportObject,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.ExcelExportObject00.findEventHandler( "onmove", this.ExcelExportObject00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -1670,15 +1928,26 @@ ExcelExportObject.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = ExcelExportObject00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -1699,16 +1968,25 @@ ExcelExportObject.getExportItem(constExportItemType,nItemIndex)
 
 **Parameters**
 
-```
-반환 받으려는 Item 의 타입을 상수값으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| constExportItemType | Constant | 반환 받으려는 Item 의 타입을 상수값으로 설정합니다.
 
-현재 Grid 만 Item 으로 추가 할 수 있으므로 "nexacro.ExportItemTypes.GRID" 로 설정하여야 합니다.
+현재 Grid 만 Item 으로 추가 할 수 있으므로 "nexacro.ExportItemTypes.GRID" 로 설정하여야 합니다. |
+| nItemIndex | Number | 반환 받으려는 Item 의 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objExportItem = this.ExcelExportObject00.getExportItem( nexacro.ExportItemTypes.GRID, 0 );
 ```
 
 **Return**
 
-지정된 인덱스에 해당하는 Item 을 ExportItem 오브젝트로 반환합니다.
-지정된 인덱스에 해당하는 Item 이 없을 경우 "null" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스에 해당하는 Item 을 ExportItem 오브젝트로 반환합니다.
+지정된 인덱스에 해당하는 Item 이 없을 경우 "null" 을 반환합니다. |
 
 **Remark**
 
@@ -1733,16 +2011,33 @@ ExcelExportObject.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelExportObject00_onmove = function( obj:nexacro.ExcelExportObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.ExcelExportObject00.insertEventHandler( "onmove", 0, this.ExcelExportObject00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -1767,15 +2062,23 @@ ExcelExportObject.removeEvent( strEventID )
 
 **Parameters**
 
-```
-ExcelExportObject 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | ExcelExportObject 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.ExcelExportObject00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -1806,15 +2109,26 @@ ExcelExportObject.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelExportObject00_onmove = function( obj:nexacro.ExcelExportObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ExcelExportObject00.removeEventHandler( "onmove", this.ExcelExportObject00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -1841,15 +2155,27 @@ ExcelExportObject.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelExportObject00_onmove = function( obj:nexacro.ExcelExportObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ExcelExportObject00.removeEventHandlerLookup( "onmove", "ExcelExportObject00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -1876,15 +2202,26 @@ ExcelExportObject.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelExportObject00_onmove = function( obj:nexacro.ExcelExportObject,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.ExcelExportObject00.setEventHandler( "onmove", this.ExcelExportObject00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -1911,15 +2248,27 @@ ExcelExportObject.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelExportObject00_onmove = function( obj:nexacro.ExcelExportObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ExcelExportObject00.setEventHandlerLookup( "onmove", "ExcelExportObject00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -1946,16 +2295,26 @@ ExcelExportObject.setExportItem( constExportItemType,nItemIndex,objExportItem )
 
 **Parameters**
 
-```
-Export 대상이 되는 컴포넌트의 종류를 상수값으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| constExportItemType | Constant | Export 대상이 되는 컴포넌트의 종류를 상수값으로 설정합니다.
 
-현재 Grid 만 Export 할 수 있으므로 "nexacro.ExportItemTypes.GRID" 로 설정하여야 합니다
+현재 Grid 만 Export 할 수 있으므로 "nexacro.ExportItemTypes.GRID" 로 설정하여야 합니다 |
+| nItemIndex | Number | 추가하려는 Item 이 위치할 인덱스를 설정합니다. |
+| objExportItem | Object | Export 정보를 설정한 ExportItem 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc = this.ExcelExportObject00.setExportItem( nexacro.ExportItemTypes.GRID, 0, this.ExportItem00 );
 ```
 
 **Return**
 
-Item 추가에 성공하면 "true" 를 반환합니다.
-파라미터가 유효하지 않거나 Item 추가에 실패하면 "false" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Item 추가에 성공하면 "true" 를 반환합니다.
+파라미터가 유효하지 않거나 Item 추가에 실패하면 "false" 를 반환합니다. |
 
 
 ---
@@ -1978,9 +2337,10 @@ onerror(obj:nexacro.ExcelExportObject,e:nexacro.ExcelExportErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ExcelExportObject | Event가 발생한 Object. |
+| e | ExcelExportErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -2009,9 +2369,10 @@ onprogress(obj:nexacro.ExcelExportObject,e:nexacro.ExcelExportProgressEventInfo)
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ExcelExportObject | Event가 발생한 Object. |
+| e | ExcelExportProgressEventInfo | Event Object. |
 
 **Return**
 
@@ -2043,9 +2404,10 @@ onsuccess(obj:nexacro.ExcelExportObject,e:nexacro.ExcelExportEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ExcelExportObject | Event가 발생한 Object. |
+| e | ExcelExportEventInfo | Event Object. |
 
 **Return**
 
@@ -2517,15 +2879,23 @@ ExcelImportObject.addEvent( strEventID )
 
 **Parameters**
 
-```
-ExcelImportObject 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | ExcelImportObject 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.ExcelImportObject00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -2552,15 +2922,26 @@ ExcelImportObject.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelImportObject00_onmove = function( obj:nexacro.ExcelImportObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ExcelImportObject00.addEventHandler( "onmove", this.ExcelImportObject00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -2581,15 +2962,27 @@ ExcelImportObject.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelImportObject00_onmove = function( obj:nexacro.ExcelImportObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ExcelImportObject00.addEventHandlerLookup( "onmove", "ExcelImportObject00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -2615,13 +3008,21 @@ ExcelImportObject.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.ExcelImportObject00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -2646,9 +3047,11 @@ ExcelImportObject.destroy()
 
 **Return**
 
-ExcelImportObject 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | ExcelImportObject 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-ExcelImportObject 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+ExcelImportObject 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -2677,15 +3080,27 @@ ExcelImportObject.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelImportObject00_onmove = function( obj:nexacro.ExcelImportObject,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.ExcelImportObject00.findEventHandler( "onmove", this.ExcelImportObject00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2710,15 +3125,26 @@ ExcelImportObject.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = ExcelImportObject00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -2739,12 +3165,65 @@ ExcelImportObject.importData( strSource,strRange,strOutDatasets [,strArgument] )
 
 **Parameters**
 
-```
-Import 할 파일의 위치를 URL 형식의 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strSource | String | Import 할 파일의 위치를 URL 형식의 문자열로 설정합니다.
 
 importfilemode 속성값이 "server" 일 경우 "http://", "https://" 형식으로 파일의 위치를 설정합니다.
 importfilemode 속성값이 "server" 일 때 상대경로를 설정 시 importurl 속성에 설정된 경로를 기준으로 처리됩니다.
-importfilemode 속성값이 "local" 이거나 strSource 값을 설정하지 않았을 경우 FileDialog 가 표시되고 파일을 선택합니다.
+importfilemode 속성값이 "local" 이거나 strSource 값을 설정하지 않았을 경우 FileDialog 가 표시되고 파일을 선택합니다. |
+| strRange | String | strSource 에 설정한 파일에서 DataSet 으로 Import 할 영역을 "시트명!셀영역:셀영역" 또는 Import 할 파일의 형식이 CSV, TXT 인 경우에 "시작영역:끝영역" 형식으로 설정합니다.
+
+여러 영역을 지정해야 할 경우 아래 형식으로 반복 설정합니다.
+
+strRange ::= '[Command=<strCommand>; Output=<dsName>; Head=<strArea>; Body=<strArea>]'
+
+<strCommand> ::= 'getsheetlist' | 'getsheetdata'
+  "getsheetlist" 설정 시 strSource 에 설정한 파일에서 시트목록을 Import 합니다.
+  "getsheetdata" 설정 시  strSource 에 설정한 파일에서 <strArea> 의 데이터를 Import 합니다.
+  값을 생략 할 경우 "getsheetdata"로 적용됩니다.
+
+<dsName> 
+  Import 한 데이터를 갖는 변수명입니다.
+  strOutDatasets 에서 오른쪽 대입변수로 사용됩니다.
+  값을 생략 할 경우 "output1", "output2" ... 로 자동설정됩니다.
+
+<strArea> ::= '시트명!셀영역:셀영역'
+  Import 할 데이터 영역을 설정합니다.
+  "Head" 항목에 정의된 영역은 Import 시 DataSet 의 Column 명으로 사용됩니다.
+  "Head" 항목 생략 시 "Column0", "Column1" ... 으로 자동설정됩니다.
+  "Body" 항목에 정의된 영역은 DataSet 의 Row 데이터로 Import 됩니다.
+  "Body" 항목 생략 시 모든 레코드가 Import 됩니다.
+  * 시트명을 생략하면 첫 번째 시트가 작업 대상이 됩니다.
+  * 첫 번째 시트가 아닌 다른 시트를 지정하는 경우에는 "Head", "Body" 모두 설정해주어야 합니다.
+    아래와 같이 설정한 경우에는 Head는 첫 번째 시트에서 처리되고 Body만 지정한 시트에서 처리됩니다.
+    Body에서 설정한 셀영역이 Head에 없는 경우에는 에러가 발생할 수 있습니다.
+    [Command=getData;Output=output2;Body=Sheet2!A1;]
+
+* Import 할 파일의 형식이 CSV, TXT 인 경우에는 아래와 같이 적용합니다.
+
+<strCommand> 지원하지 않습니다.
+<strArea> ::= StartCol[,StartRow[:EndCol[,EndRow]]]
+  "Head" 항목에서 StartRow, EndCol, EndRow를 생략하면 아래와 같이 처리합니다.
+  - StartRow=0, EndCol=ColumnCount-1, EndRow=0
+  "Head" 항목에서 EndRow 설정값은 무시하고 StartRow 설정값 기준으로 동작합니다.
+  "Body" 항목에서 StartRow, EndCol, EndRow를 생략하면 아래와 같이 처리합니다.
+  - StartRow=0, EndCol=ColumnCount-1, EndRow=RowCount-1 |
+| strOutDatasets | String | Import 한 데이터를 저장할 DataSet 의 ID 를 "DataSet명=변수명" 의 형식으로 설정합니다.
+
+DataSet 을 1개 이상 설정할 수 있으며 공백으로 구분합니다.
+우측의 "변수명" 은 strRange 에 설정한 변수명을 설정하거나 "output1" ... 으로 자동생성된 변수명을 설정합니다. |
+| strArgument | String | Import 시 필요한 정보를 "변수명=변수값" 형태로 설정합니다.
+
+파라미터쌍을 1개 이상 설정할 수 있으며 공백으로 구분합니다.
+비밀번호가 설정된 엑셀파일을 Import 할 경우 "filepassword=엑셀파일비밀번호" 를 입력해야 정상동작합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelImportObject00.importData("http://localhost:8080/xeni/XImport/my.xlsx","Sheet00!D15:E28","Dataset03=output1");
+this.ExcelImportObject00.importData("","Sheet00!D15:E28","Dataset03=output1","filepassword=strpassword");
+this.ExcelImportObject00.importData("", "[Command=getsheetlist;Output=sheetlist][Command=getsheetdata;Output=output1;Head=!A1:K1;Body=!A2:K15][Output=output2; Body=Sheet1!B7:Z207]", "ds_list=sheetlist, ds_Data1=output1, ds_Data2=output2");
 ```
 
 **Return**
@@ -2780,10 +3259,68 @@ ExcelImportObject.importDataEx( strImportID, strSource,strRange,strOutDatasets [
 
 **Parameters**
 
-```
-Import 를 구분하기 위한 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strImportID | String | Import 를 구분하기 위한 ID 를 문자열로 설정합니다.
 
-설정값은 onsuccess 이벤트에서 ExcelImportEventInfo 오브젝트의 importid 속성으로 전달됩니다.
+설정값은 onsuccess 이벤트에서 ExcelImportEventInfo 오브젝트의 importid 속성으로 전달됩니다. |
+| strSource | String | Import 할 파일의 위치를 URL 형식의 문자열로 설정합니다.
+
+importfilemode 속성값이 "server" 일 경우 "http://", "https://" 형식으로 파일의 위치를 설정합니다.
+importfilemode 속성값이 "server" 일 때 상대경로를 설정 시 importurl 속성에 설정된 경로를 기준으로 처리됩니다.
+importfilemode 속성값이 "local" 이거나 strSource 값을 설정하지 않았을 경우 FileDialog 가 표시되고 파일을 선택합니다. |
+| strRange | String | strSource 에 설정한 파일에서 DataSet 으로 Import 할 영역을 "시트명!셀영역:셀영역" 또는 Import 할 파일의 형식이 CSV, TXT 인 경우에 "시작영역:끝영역" 형식으로 설정합니다.
+
+여러 영역을 지정해야 할 경우 아래 형식으로 반복 설정합니다.
+
+strRange ::= '[Command=<strCommand>; Output=<dsName>; Head=<strArea>; Body=<strArea>]'
+
+<strCommand> ::= 'getsheetlist' | 'getsheetdata'
+  "getsheetlist" 설정 시 strSource 에 설정한 파일에서 시트목록을 Import 합니다.
+  "getsheetdata" 설정 시  strSource 에 설정한 파일에서 <strArea> 의 데이터를 Import 합니다.
+  값을 생략 할 경우 "getsheetdata"로 적용됩니다.
+
+<dsName> 
+  Import 한 데이터를 갖는 변수명입니다.
+  strOutDatasets 에서 오른쪽 대입변수로 사용됩니다.
+  값을 생략 할 경우 "output1", "output2" ... 로 자동설정됩니다.
+
+<strArea> ::= '시트명!셀영역:셀영역'
+  Import 할 데이터 영역을 설정합니다.
+  "Head" 항목에 정의된 영역은 Import 시 DataSet 의 Column 명으로 사용됩니다.
+  "Head" 항목 생략 시 "Column0", "Column1" ... 으로 자동설정됩니다.
+  "Body" 항목에 정의된 영역은 DataSet 의 Row 데이터로 Import 됩니다.
+  "Body" 항목 생략 시 모든 레코드가 Import 됩니다.
+  * 시트명을 생략하면 첫 번째 시트가 작업 대상이 됩니다.
+  * 첫 번째 시트가 아닌 다른 시트를 지정하는 경우에는 "Head", "Body" 모두 설정해주어야 합니다.
+    아래와 같이 설정한 경우에는 Head는 첫 번째 시트에서 처리되고 Body만 지정한 시트에서 처리됩니다.
+    Body에서 설정한 셀영역이 Head에 없는 경우에는 에러가 발생할 수 있습니다.
+    [Command=getData;Output=output2;Body=Sheet2!A1;]
+
+* Import 할 파일의 형식이 CSV, TXT 인 경우에는 아래와 같이 적용합니다.
+
+<strCommand> 지원하지 않습니다.
+<strArea> ::= StartCol[,StartRow[:EndCol[,EndRow]]]
+  "Head" 항목에서 StartRow, EndCol, EndRow를 생략하면 아래와 같이 처리합니다.
+  - StartRow=0, EndCol=ColumnCount-1, EndRow=0
+  "Head" 항목에서 EndRow 설정값은 무시하고 StartRow 설정값 기준으로 동작합니다.
+  "Body" 항목에서 StartRow, EndCol, EndRow를 생략하면 아래와 같이 처리합니다.
+  - StartRow=0, EndCol=ColumnCount-1, EndRow=RowCount-1 |
+| strOutDatasets | String | Import 한 데이터를 저장할 DataSet 의 ID 를 "DataSet명=변수명" 의 형식으로 설정합니다.
+
+DataSet 을 1개 이상 설정할 수 있으며 공백으로 구분합니다.
+우측의 "변수명" 은 strRange 에 설정한 변수명을 설정하거나 "output1" ... 으로 자동생성된 변수명을 설정합니다. |
+| strArgument | String | Import 시 필요한 정보를 "변수명=변수값" 형태로 설정합니다.
+
+파라미터쌍을 1개 이상 설정할 수 있으며 공백으로 구분합니다.
+비밀번호가 설정된 엑셀파일을 Import 할 경우 "filepassword=엑셀파일비밀번호" 를 입력해야 정상동작합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelImportObject00.importDataEx("Import00", "http://localhost:8080/xeni/XImport/my.xlsx","Sheet00!D15:E28","Dataset03=output1");
+this.ExcelImportObject00.importDataEx("Import01", "","Sheet00!D15:E28","Dataset03=output1","filepassword=strpassword");
+this.ExcelImportObject00.importDataEx("Import02", "", "[Command=getsheetlist;Output=sheetlist][Command=getsheetdata;Output=output1;Head=!A1:K1;Body=!A2:K15][Output=output2; Body=Sheet1!B7:Z207]", "ds_list=sheetlist, ds_Data1=output1, ds_Data2=output2");
 ```
 
 **Return**
@@ -2819,16 +3356,33 @@ ExcelImportObject.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelImportObject00_onmove = function( obj:nexacro.ExcelImportObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.ExcelImportObject00.insertEventHandler( "onmove", 0, this.ExcelImportObject00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2853,15 +3407,23 @@ ExcelImportObject.removeEvent( strEventID )
 
 **Parameters**
 
-```
-ExcelImportObject 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | ExcelImportObject 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.ExcelImportObject00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -2892,15 +3454,26 @@ ExcelImportObject.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelImportObject00_onmove = function( obj:nexacro.ExcelImportObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ExcelImportObject00.removeEventHandler( "onmove", this.ExcelImportObject00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -2927,15 +3500,27 @@ ExcelImportObject.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelImportObject00_onmove = function( obj:nexacro.ExcelImportObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ExcelImportObject00.removeEventHandlerLookup( "onmove", "ExcelImportObject00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -2962,15 +3547,26 @@ ExcelImportObject.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelImportObject00_onmove = function( obj:nexacro.ExcelImportObject,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.ExcelImportObject00.setEventHandler( "onmove", this.ExcelImportObject00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2997,15 +3593,27 @@ ExcelImportObject.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExcelImportObject00_onmove = function( obj:nexacro.ExcelImportObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ExcelImportObject00.setEventHandlerLookup( "onmove", "ExcelImportObject00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3034,9 +3642,10 @@ onerror(obj:nexacro.ExcelImportObject,e:nexacro.ExcelImportErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ExcelImportObject | Event가 발생한 Object. |
+| e | ExcelImportErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -3065,9 +3674,10 @@ onsuccess(obj:nexacro.ExcelImportObject,e:nexacro.ExcelImportEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ExcelImportObject | Event가 발생한 Object. |
+| e | ExcelImportEventInfo | Event Object. |
 
 **Return**
 
@@ -3426,8 +4036,19 @@ system.attachChildFrame(window, document, strKey, stradlurl, strDivId, strxfdlur
 
 **Parameters**
 
-```
-window 객체를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| window | Object | window 객체를 설정합니다. |
+| document | Object | document 객체를 설정합니다. |
+| strKey | String | Application 의 AppVariables 에 등록할때 사용할 Key 값을 문자열로 설정합니다. |
+| stradlurl | String | Generate 된 "xadl" 파일의 이름을 문자열로 설정합니다. |
+| strDivId | String | Generate 된 "xfdl" 파일이 로드될 사용자 Division 의 ID 를 설정합니다. |
+| strxfdlurl | String | Generate 된 "xfdl" 파일의 이름을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+system.attachChildFrame(window, document, "nexacro", "nexacro.xadl.quickview.js", "div_user", "./Base/test.xfdl.js");
 ```
 
 **Return**
@@ -3459,8 +4080,9 @@ system.checkDevicePermission(arrPermissiontypes);
 
 **Parameters**
 
-```
-설정 여부를 확인할 수 있는 권한 목록을 배열 형식으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| arrPermissiontypes | Array | 설정 여부를 확인할 수 있는 권한 목록을 배열 형식으로 설정합니다.
 지정할 수 있는 값은 아래와 같습니다.
 
 // 공통 
@@ -3477,7 +4099,12 @@ nexacro.DevicePermissionType.STORAGE: "storage"
 
 // iOS 
 nexacro.DevicePermissionType.PHOTO: "photo" 
-nexacro.DevicePermissionType.REMINDERS: "reminders"
+nexacro.DevicePermissionType.REMINDERS: "reminders" |
+
+**Sample Call**
+
+```javascript
+system.checkDevicePermission(["camera","photo"]);
 ```
 
 **Return**
@@ -3538,13 +4165,22 @@ system.clientToScreenX(objComp, nPosX)
 
 **Parameters**
 
-```
-변환할 x 좌표값의 기준이 되는 컴포넌트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 변환할 x 좌표값의 기준이 되는 컴포넌트를 설정합니다. |
+| nPosX | Number | 변환할 컴포넌트 기준의 x 좌표값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nX = system.clientToScreenX(this.Button00, 10);
 ```
 
 **Return**
 
-스크린 기준의 x 좌표값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 스크린 기준의 x 좌표값을 반환합니다. |
 
 **Remark**
 
@@ -3576,13 +4212,22 @@ system.clientToScreenY(objComp, nPosY)
 
 **Parameters**
 
-```
-변환할 y 좌표값의 기준이 되는 컴포넌트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 변환할 y 좌표값의 기준이 되는 컴포넌트를 설정합니다. |
+| nPosY | Number | 변환할 컴포넌트 기준의 y 좌표값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nY = system.clientToScreenY(this.Button00, 10);
 ```
 
 **Return**
 
-스크린 기준의 y 좌표값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 스크린 기준의 y 좌표값을 반환합니다. |
 
 **Remark**
 
@@ -3619,13 +4264,21 @@ system.convertRealPath(strAlias)
 
 **Parameters**
 
-```
-절대경로로 변환하려는 Alias 가 포함된 경로를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strAlias | String | 절대경로로 변환하려는 Alias 가 포함된 경로를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var strPath = system.convertRealPath("%INSTALLROOT%");
 ```
 
 **Return**
 
-실제 절대경로를 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 실제 절대경로를 반환합니다. |
 
 **Remark**
 
@@ -3748,9 +4401,17 @@ system.execBrowser( strUrl )
 
 **Parameters**
 
-```
-URL 경로 또는 전화 걸기, 메일 보내기 기능을 실행하기 위한 정보를 문자열로 설정합니다.
-Android NRE, iOS/iPadOS NRE에서는 파일 또는 앱을 실행하기 위한 문자열을 설정할 수 있습니다. Remark 항목을 참고하세요.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strUrl | String | URL 경로 또는 전화 걸기, 메일 보내기 기능을 실행하기 위한 정보를 문자열로 설정합니다.
+Android NRE, iOS/iPadOS NRE에서는 파일 또는 앱을 실행하기 위한 문자열을 설정할 수 있습니다. Remark 항목을 참고하세요. |
+
+**Sample Call**
+
+```javascript
+system.execBrowser("http://www.dummy.com");
+system.execBrowser("mailto:test@dummy.com");
+system.execBrowser("tel:2025550145");
 ```
 
 **Return**
@@ -3800,8 +4461,18 @@ system.execDefaultBrowser( strUrl, [bNewWindow] );
 
 **Parameters**
 
-```
-웹페이지 URL 경로를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strUrl | String | 웹페이지 URL 경로를 문자열로 설정합니다. |
+| bNewWindow | Boolean | 설정한 URL을 새창으로 열지 설정합니다.
+값을 설정하지 않으면 false로 설정됩니다.
+
+윈도우 운영체제 NRE만 지원합니다. |
+
+**Sample Call**
+
+```javascript
+system.execDefaultBrowser("https://www.google.com/")
 ```
 
 **Return**
@@ -3837,8 +4508,9 @@ system.execNexacro(strCommand)
 
 **Parameters**
 
-```
-옵션예약어와 옵션값을 쌍으로 하여 실행옵션을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strCommand | String | 옵션예약어와 옵션값을 쌍으로 하여 실행옵션을 설정합니다.
 옵션값에 빈칸이 포함된 경우는 따옴표(") 로 묶어야 합니다.
 
 -K : 어플리케이션을 구별하기 위한 키값을 문자열로 설정합니다.
@@ -3876,7 +4548,13 @@ system.execNexacro(strCommand)
 -NC : 어플리케이션이 실행될 때 적용될 Config 파일의 경로와 파일명을 설정합니다.
          Local 경로에 위치한 XML 형식의 파일만 설정할 수 있습니다.
          파일명만 설정할 경우 nexacro.exe 위치와 동일한 경로에서 파일을 찾습니다.
-         옵션값 생략 시 "%USERAPP%\config\"+[Key] 경로에서 "nexacro_config.xml" 파일을 찾습니다.
+         옵션값 생략 시 "%USERAPP%\config\"+[Key] 경로에서 "nexacro_config.xml" 파일을 찾습니다. |
+
+**Sample Call**
+
+```javascript
+system.execNexacro(" -S \"file://c:\\prj1\\start.json\" -K \"key\" ");
+system.execNexacro(" -S \"file://c:\\prj1\\start.json\" -K \"key\" -V \"val1:ev=EnvVal,val2:ec=EnvCook,val3:av=AppVal");
 ```
 
 **Return**
@@ -3910,8 +4588,9 @@ system.execShell( strShellCmd )
 
 **Parameters**
 
-```
-윈도우 셸에 전달할 값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strShellCmd | String | 윈도우 셸에 전달할 값을 설정합니다.
 사용할 수 있는 형식은 아래와 같습니다.
 
 (1) 파일 경로+파일명
@@ -3922,7 +4601,22 @@ Alias로 설정하거나 직접 파일 경로를 지정할 수 있습니다.
 "http://", "https://"로 시작하는 문자열은 URL 값으로 전달되며 기본 웹 브라우저에서 실행됩니다.
 
 (3) 이메일
-"mailto:"로 시작하는 문자열은 기본 이메일 앱에서 실행됩니다.
+"mailto:"로 시작하는 문자열은 기본 이메일 앱에서 실행됩니다. |
+
+**Sample Call**
+
+```javascript
+// file name
+system.execShell("%MYDOCUMENT%test.png"); // alias
+system.execShell("C:\\Users\\test\\Documents\\test.png");
+system.execShell("file://C:\\Users\\test\\Documents\\test.png");
+
+// url
+system.execShell("http://www.test.com");
+system.execShell("http://www.test.com/test.png");
+
+// email
+system.execShell("mailto:user00@test.com?subject=TestSubject&cc=user01@test.com&body=TestBody");
 ```
 
 **Return**
@@ -3970,13 +4664,24 @@ system.exportPDF(objComponent, strFileName)
 
 **Parameters**
 
-```
-PDF 파일로 출력할 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComponent | Object | PDF 파일로 출력할 컴포넌트를 오브젝트로 설정합니다. |
+| strFileName | String | 출력할 PDF 파일명을 확장자를 포함해 설정합니다.
+운영체제 보안정책에 따라 설정할 수 있는 파일명에 제약이 있을 수 있습니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = system.exportPDF(this.Grid00, "document.pdf");
 ```
 
 **Return**
 
-이미지 출력에 성공하면 true를 반환하고 실패하면 false를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이미지 출력에 성공하면 true를 반환하고 실패하면 false를 반환합니다. |
 
 **Remark**
 
@@ -4004,19 +4709,38 @@ system.getClipboard( strFormat [, objCallBackFunc [, objTarget]] )
 
 **Parameters**
 
-```
-시스템 클립보드에 데이터를 저장할 때 적용할 형식을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strFormat | String | 시스템 클립보드에 데이터를 저장할 때 적용할 형식을 문자열로 설정합니다.
 
 "CF_TEXT" 설정 시 데이터를 텍스트 형식으로 저장합니다.
 "CF_UNICODETEXT" 설정 시 데이터를 유니코드 텍스트 형식으로 저장합니다.
-"CF_CSV" 설정 시 데이터를 CSV 형식으로 저장합니다.
+"CF_CSV" 설정 시 데이터를 CSV 형식으로 저장합니다. |
+| objCallBackFunc | Object | 시스템 클립보드의 데이터가 반환될 CallBack 함수를 오브젝트 형태로 설정합니다.
+
+* Chrome, Opera 브라우저인 경우만 적용되는 파라미터입니다. |
+| objTarget | Object | CallBack 함수가 정의된 영역을 오브젝트 형태로 설정합니다.
+
+값 생략 시 window 로 적용됩니다.
+
+* Chrome, Opera 브라우저인 경우만 적용되는 파라미터입니다. |
+
+**Sample Call**
+
+```javascript
+var varData = system.getClipboard("CF_TEXT");
+
+this.callback = function(data){ trace(data); };
+system.getClipboard("CF_TEXT", this.callback, this);
 ```
 
 **Return**
 
-시스템 클립보드의 데이터를 지정된 형식으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | 시스템 클립보드의 데이터를 지정된 형식으로 반환합니다.
 
-* Chrome, Opera 브라우저는 undefined 를 반환합니다.
+* Chrome, Opera 브라우저는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -4054,7 +4778,9 @@ system.getCursorX()
 
 **Return**
 
-마우스 커서가 위치한 곳의 x 좌표값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 마우스 커서가 위치한 곳의 x 좌표값을 반환합니다. |
 
 **Remark**
 
@@ -4088,7 +4814,9 @@ system.getCursorY()
 
 **Return**
 
-마우스 커서가 위치한 곳의 y 좌표값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 마우스 커서가 위치한 곳의 y 좌표값을 반환합니다. |
 
 **Remark**
 
@@ -4118,13 +4846,22 @@ system.getMonitorIndex(nCursorX, nCursorY)
 
 **Parameters**
 
-```
-스크린의 x 좌표 값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nCursorX | Number | 스크린의 x 좌표 값을 설정합니다. |
+| nCursorY | Number | 스크린의 y 좌표 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nMoniterIndex = system.getMonitorIndex(-10,10);
 ```
 
 **Return**
 
-좌표에 해당하는 모니터 번호를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 좌표에 해당하는 모니터 번호를 반환합니다. |
 
 **Remark**
 
@@ -4154,10 +4891,12 @@ system.getPackageVersion()
 
 **Return**
 
-Package version code, Package version name을 배열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | Package version code, Package version name을 배열로 반환합니다.
 
 [0] Package version code
-[1] Package version name
+[1] Package version name |
 
 
 ---
@@ -4182,7 +4921,9 @@ system.getScreenHeight()
 
 **Return**
 
-스크린의 높이를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 스크린의 높이를 반환합니다. |
 
 
 ---
@@ -4203,13 +4944,22 @@ system.getScreenPosition(objComp)
 
 **Parameters**
 
-```
-x, y 좌표값을 반환할 기준이 되는 컴포넌트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | x, y 좌표값을 반환할 기준이 되는 컴포넌트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var x = system.getScreenPosition(this.Button00).x;
+var y = system.getScreenPosition(this.Button00).y;
 ```
 
 **Return**
 
-애플리케이션이 실행된 스크린을 기준으로 설정한 컴포넌트의 x, y 좌표값을 속성으로 가지는 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 애플리케이션이 실행된 스크린을 기준으로 설정한 컴포넌트의 x, y 좌표값을 속성으로 가지는 오브젝트를 반환합니다. |
 
 
 ---
@@ -4230,18 +4980,20 @@ system.getScreenPrintString(objComponent)
 
 **Parameters**
 
-```
-출력할 컴포넌트를 오브젝트로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComponent | Object | 출력할 컴포넌트를 오브젝트로 설정합니다. |
 
 **Return**
 
-HTML 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | HTML 문자열을 반환합니다.
 실행 환경에 따라 반환되는 HTML 변환 방식이 다릅니다.
 - WRE: 컴포넌트를 HTML 형태로 변환해 출력
 - NRE: 컴포넌트를 Base64 인코딩 데이터로 변환해 img 태그로 출력
 
-출력할 내용이 없거나 objComponet가 잘못 설정된 경우 빈 문자열을 반환합니다.
+출력할 내용이 없거나 objComponet가 잘못 설정된 경우 빈 문자열을 반환합니다. |
 
 **Remark**
 
@@ -4272,15 +5024,23 @@ system.getScreenRect(nMonitorIndex)
 
 **Parameters**
 
-```
-스크린정보를 가져올 모니터의 번호를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMonitorIndex | Number | 스크린정보를 가져올 모니터의 번호를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objRect  =  system.getScreenRect( 1 );
 ```
 
 **Return**
 
-인수로 전달된 모니터의 스크린정보를 갖는 Rect 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 인수로 전달된 모니터의 스크린정보를 갖는 Rect 오브젝트를 반환합니다.
 
-Rect 오브젝트는 "left", "top", "right", "bottom", "width", "height" 속성을 갖습니다.
+Rect 오브젝트는 "left", "top", "right", "bottom", "width", "height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -4305,15 +5065,23 @@ system.getScreenResolution(nMonitorIndex)
 
 **Parameters**
 
-```
-해상도를 가져올 모니터의 번호를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMonitorIndex | Number | 해상도를 가져올 모니터의 번호를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var strRes = system.getScreenResolution(1);
 ```
 
 **Return**
 
-지정된 모니터의 해상도값을 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 지정된 모니터의 해상도값을 문자열로 반환합니다.
 
-잘못된 모니터 번호를 입력 시 "0" 을 반환합니다.
+잘못된 모니터 번호를 입력 시 "0" 을 반환합니다. |
 
 **Remark**
 
@@ -4342,7 +5110,9 @@ system.getScreenWidth()
 
 **Return**
 
-스크린의 너비를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 스크린의 너비를 반환합니다. |
 
 
 ---
@@ -4363,14 +5133,22 @@ system.isPrimaryMonitor(nMonitorIndex)
 
 **Parameters**
 
-```
-주 모니터 여부를 판단할 모니터의 번호를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMonitorIndex | Number | 주 모니터 여부를 판단할 모니터의 번호를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bPri = system.isPrimaryMonitor(1);
 ```
 
 **Return**
 
-지정한 모니터가 주 모니터이면 "true" 를 반환합니다.
-지정한 모니터가 주 모니터가 아니면 "false" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 지정한 모니터가 주 모니터이면 "true" 를 반환합니다.
+지정한 모니터가 주 모니터가 아니면 "false" 를 반환합니다. |
 
 **Remark**
 
@@ -4395,16 +5173,70 @@ system.print( objComponent [, bHideDialog [, strVAlign [, strHAlign [, bFitOnePa
 
 **Parameters**
 
-```
-프린터로 출력할 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComponent | Object | 프린터로 출력할 컴포넌트를 오브젝트로 설정합니다. |
+| bHideDialog | Boolean | true 설정 시 프린터 설정창으로 표시하지 않고 출력합니다.
+false 설정 시 프린터로 출력 전에 프린터 설정창을 표시합니다.
+
+값 생략 시 true 로 적용됩니다.
+
+* Desktop WRE 는 지원하지 않으며 항상 false 로 적용됩니다. |
+| strVAlign | String | 이미지가 용지에 출력될 수직위치를 설정합니다.
+
+"top" 설정 시 이미지가 용지의 상단에 출력됩니다.
+"middle" 설정 시 이미지가 용지의 중앙에 출력됩니다.
+"bottom" 설정 시 이미지가 용지의 하단에 출력됩니다.
+
+값 생략 시 "middle" 로 적용됩니다.
+
+* Desktop WRE 는 지원하지 않으며 항상 "top" 으로 적용됩니다. |
+| strHAlign | String | 이미지가 용지에 출력될 수평위치를 설정합니다.
+
+"left" 설정 시 이미지가 용지의 좌측에 출력됩니다.
+"center" 설정 시 이미지가 용지의 중앙에 출력됩니다.
+"right" 설정 시 이미지가 용지의 우측에 출력됩니다.
+
+값 생략 시 "center" 로 적용됩니다.
+
+* Desktop WRE 는 지원하지 않으며 항상 "left" 로 적용됩니다. |
+| bFitOnePage | Boolean | true 설정 시 이미지가 한페이지를 초과하는 경우 축소하여 한페이지로 출력합니다.
+true 설정 시 이미지가 한페이지보다 작은 경우 비율에 맞게 확대하여 한페이지로 출력합니다.
+
+false 설정 시 이미지 크기에 맞게 여러페이지로 출력합니다.
+false 설정 시 strVAlign 은 "top" 으로 적용되고, strHAlign 은 "left" 로 적용됩니다.
+
+값 생략 시 false 로 적용됩니다.
+
+* Desktop WRE 는 지원하지 않으며 항상 false 로 적용됩니다. |
+| strOrientation | String | 용지가 출력되는 방향을 설정합니다.
+
+"portrait" 설정 시 용지에 세로 방향으로 출력됩니다.
+"landscape" 설정 시 용지에 가로 방향으로 출력됩니다.
+
+설정값은 bHideDialog 파라미터를 true 로 설정했을 때만 적용됩니다.
+값 생략 시 "portrait" 로 적용됩니다.
+
+* Windows NRE 만 지원하는 파라미터입니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = system.print( this.Grid00 );
+bSucc = system.print( this.Grid00, false, "top", "left" );
+bSucc = system.print( this.Grid00, false, "top", "left", false );
+bSucc = system.print( this.Grid00, false, "top", "left", false, "landscape" );
 ```
 
 **Return**
 
-이미지 출력 요청에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이미지 출력 요청에 성공하면 true 를 반환합니다.
 이미지 출력 요청에 실패하면 false 를 반환합니다.
 
-실제 프린트 성공과 관계없이 메소드 호출 성공유무를 반환합니다.
+실제 프린트 성공과 관계없이 메소드 호출 성공유무를 반환합니다. |
 
 **Remark**
 
@@ -4435,8 +5267,9 @@ system.requestDevicePermission(arrPermissionTypes[, strDescription])
 
 **Parameters**
 
-```
-요청할 권한 목록을 배열 형식으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| arrPermissionTypes | Array | 요청할 권한 목록을 배열 형식으로 설정합니다.
 지정할 수 있는 값은 아래와 같습니다.
 
 // 공통 
@@ -4453,7 +5286,14 @@ nexacro.DevicePermissionType.STORAGE: "storage"
 
 // iOS 
 nexacro.DevicePermissionType.PHOTO: "photo" 
-nexacro.DevicePermissionType.REMINDERS: "reminders"
+nexacro.DevicePermissionType.REMINDERS: "reminders" |
+| strDescription | String | 요청 권한에 대한 설명을 설정합니다. 사용자에 의해 거부된 권한을 요청하는 경우 대화상자에 표시합니다.
+iOS 운영체제에서는 지원하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+system.requestDevicePermission(["camera","location"], "Permissions required");
 ```
 
 **Return**
@@ -4486,14 +5326,52 @@ system.saveToImageBase64String( objComponent [, bWholeForm [,strImageType [,strO
 
 **Parameters**
 
-```
-이미지로 출력할 컴포넌트를 오브젝트 형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComponent | Object | 이미지로 출력할 컴포넌트를 오브젝트 형태로 설정합니다. |
+| bWholeForm | Boolean | 컴포넌트가 Form 형태인 경우만 설정한 값이 적용됩니다.
+
+true 설정 시 스크롤에 의해 화면에 표시되지 않는 영역을 포함하여 전체 Form 을 이미지로 출력합니다.
+false 설정 시 현재 화면에 표시된 Form 영역만 이미지로 출력합니다.
+
+값을 설정하지 않으면 false 로 적용됩니다. |
+| strImageType | String | 출력할 이미지 파일의 형식을 설정합니다.
+기본값은 "JPG"로 설정합니다.
+
+"BMP", "BMP_MONO", "JPG", "TIF", "TIF_24", "TIF_MONO", "GIF", "PNG" 를 설정할 수 있습니다. |
+| strOptions | String | 출력할 이미지 파일의 이미지 압축률, 이미지 압축방식, DPI 해상도를 설정합니다.
+
+압축률은 이미지 형식이 "JPG" 일 때만 지원하며 "Compress:압축비율" 형식으로 설정합니다.
+압축비율은 "0~100" 범위의 정수값으로 설정합니다.
+이미지 형식이 "JPG" 일 때 값을 설정하지 않으면 50 으로 적용됩니다.
+
+압축방식은 이미지 형식이 "TIF" 일 때만 지원하며 "Compress:압축종류" 형식으로 설정합니다.
+압축종류는 "NONE", "LZW", "CCITT3", "CCITT4" 중 하나를 설정합니다.
+이미지 형식이 "TIF" 일 때 값을 설정하지 않으면 "LZW" 가 적용됩니다.
+
+DPI 해상도는 가로는 "ResolutionX:해상도" 형식으로, 세로는 "ResolutionY:해상도" 형식으로 설정합니다.
+해상도는 정수값으로 설정합니다.
+해상도를 설정하지 않으면 가로/세로 모두 96 으로 적용됩니다.
+
+각 옵션은 "Compress:95;ResolutionX:300"와 같이 ";" 문자로 구분하여 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var strResult;
+
+strResult = system.saveToImageBase64String( this.Button00 );
+strResult = system.saveToImageBase64String( this, true );
+strResult = system.saveToImageBase64String( this.Div00.form, true );
+strResult = system.saveToImageBase64String( this.Div00.form, true, "TIF_MONO","Compress:CCITT3;ResolutionX:300;ResolutionY:300" );
 ```
 
 **Return**
 
-- 컴포넌트의 이미지를 Base64 로 인코딩 된 문자열로 반환합니다.
-  인코딩에 실패하였을 경우 빈문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | - 컴포넌트의 이미지를 Base64 로 인코딩 된 문자열로 반환합니다.
+  인코딩에 실패하였을 경우 빈문자열을 반환합니다. |
 
 **Remark**
 
@@ -4529,15 +5407,51 @@ system.saveToImageFile(objComponent, strFileName, strImageType[,strOptions [,bWh
 
 **Parameters**
 
-```
-이미지 파일로 출력할 컴포넌트를 오브젝트 형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComponent | Object | 이미지 파일로 출력할 컴포넌트를 오브젝트 형태로 설정합니다. |
+| strFileName | String | 출력할 이미지 파일의 이름을 설정합니다. |
+| strImageType | String | 출력할 이미지 파일의 형식을 설정합니다.
+"BMP", "BMP_MONO", "JPG", "TIF", "TIF_24", "TIF_MONO", "GIF", "PNG" 를 설정할 수 있습니다. |
+| strOptions | String | 출력할 이미지 파일의 이미지 압축률, 이미지 압축방식, DPI 해상도를 설정합니다.
+
+압축률은 이미지 형식이 "JPG" 일 때만 지원하며 "Compress:압축비율" 형식으로 설정합니다.
+압축비율은 "0~100" 범위의 정수값으로 설정합니다.
+이미지 형식이 "JPG" 일 때 값을 설정하지 않으면 50 으로 적용됩니다.
+
+압축방식은 이미지 형식이 "TIF" 일 때만 지원하며 "Compress:압축종류" 형식으로 설정합니다.
+압축종류는 "NONE", "LZW", "CCITT3", "CCITT4" 중 하나를 설정합니다.
+이미지 형식이 "TIF" 일 때 값을 설정하지 않으면 "LZW" 가 적용됩니다.
+
+DPI 해상도는 가로는 "ResolutionX:해상도" 형식으로, 세로는 "ResolutionY:해상도" 형식으로 설정합니다.
+해상도는 정수값으로 설정합니다.
+해상도를 설정하지 않으면 가로/세로 모두 96 으로 적용됩니다.
+
+각 옵션은 "Compress:95;ResolutionX:300"와 같이 ";" 문자로 구분하여 설정합니다. |
+| bWholeForm | Boolean | 컴포넌트가 Form 형태인 경우만 설정한 값이 적용됩니다.
+
+true 설정 시 스크롤에 의해 화면에 표시되지 않는 영역을 포함하여 전체 Form 을 이미지로 출력합니다.
+false 설정 시 현재 화면에 표시된 Form 영역만 이미지로 출력합니다.
+
+값을 설정하지 않으면 false 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = system.saveToImageFile(this.Grid00, "test.jpg","PNG");
+bSucc = system.saveToImageFile(this.Button00, "test.tif","TIF_MONO","Compress:CCITT3;ResolutionX:300;ResolutionY:300");
+bSucc = system.saveToImageFile(this, "test.png","PNG", "", true);
+bSucc = system.saveToImageFile(this.Div00.form, "test.jpg","JPG", "", true);
 ```
 
 **Return**
 
-이미지 출력에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이미지 출력에 성공하면 true 를 반환합니다.
 
-이미지 출력에 실패하면 false 를 반환합니다.
+이미지 출력에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -4580,13 +5494,22 @@ system.screenToClientX(objComp, nPosX)
 
 **Parameters**
 
-```
-변환될 x 좌표값의 기준이 되는 컴포넌트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 변환될 x 좌표값의 기준이 되는 컴포넌트를 설정합니다. |
+| nPosX | Number | 변환할 스크린 기준의 x 좌표값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nX = system.screenToClientX(this.Button00, 10);
 ```
 
 **Return**
 
-컴포넌트의 클라이언트 기준 x 좌표값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 컴포넌트의 클라이언트 기준 x 좌표값을 반환합니다. |
 
 **Remark**
 
@@ -4612,13 +5535,22 @@ system.screenToClientY(objComp, nPosY)
 
 **Parameters**
 
-```
-변환될 y 좌표값의 기준이 되는 컴포넌트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 변환될 y 좌표값의 기준이 되는 컴포넌트를 설정합니다. |
+| nPosY | Number | 변환할 스크린 기준의 y 좌표값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nY = system.screenToClientY(this.Button00, 10);
 ```
 
 **Return**
 
-컴포넌트의 클라이언트 기준 y 좌표값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 컴포넌트의 클라이언트 기준 y 좌표값을 반환합니다. |
 
 **Remark**
 
@@ -4649,12 +5581,19 @@ system.setClipboard( strFormat, varData )
 
 **Parameters**
 
-```
-시스템 클립보드에 데이터를 저장할 때 적용할 형식을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strFormat | String | 시스템 클립보드에 데이터를 저장할 때 적용할 형식을 문자열로 설정합니다.
 
 "CF_TEXT" 설정 시 데이터를 텍스트 형식으로 저장합니다.
 "CF_UNICODETEXT" 설정 시 데이터를 유니코드 텍스트 형식으로 저장합니다.
-"CF_CSV" 설정 시 데이터를 CSV 형식으로 저장합니다.
+"CF_CSV" 설정 시 데이터를 CSV 형식으로 저장합니다. |
+| varData | String | 저장할 데이터를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+system.setClipboard( "CF_TEXT", "copy data" );
 ```
 
 **Return**
@@ -4689,13 +5628,39 @@ system.showModalSync( objChildframe [, strID ] , objParentFrame, [{objArguList} 
 
 **Parameters**
 
-```
-Modal 로 표시할 ChildFrame 을 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objChildframe | Object | Modal 로 표시할 ChildFrame 을 오브젝트로 설정합니다. |
+| strID | String | Modal 로 표시할 ChildFrame 의 ID 를 문자열로 설정합니다.
+
+값 생략 시 objChildFrame 에 설정된 ChildFrame 의 name 속성값이 설정됩니다. |
+| objParentFrame | Object | Modal 로 표시할 ChildFrame 의 부모 Frame 을 Object 형태로 설정합니다.
+
+null 설정 시 MainFrame 이 부모로 설정됩니다. |
+| objArguList | Object | Modal 로 표시할 ChildFrame 에 추가될 변수리스트를 "{변수명:변수값 , 변수명:변수값}" 형식으로 설정합니다. |
+| objOpener | Object | Modal 로 표시할 ChildFrame 의 Opener 로 설정될 Form 을 오브젝트로 설정합니다.
+
+값 생략 시 objParentFrame 파라미터에 설정된 Frame 의 Form 이 설정됩니다.
+objParentFrame 파라미터를 null 로 설정하면 undefined 가 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = new ChildFrame();
+var objParentFrame = this.getOwnerFrame();
+
+objFrame.init( "modalsync00", 0, 0, 500, 500 );
+objFrame.formurl = "Base::Test00.xfdl";
+
+var vRtn = system.showModalSync( objFrame, objParentFrame, {a:'aaa', b:'bbb'}, this );
+var vRtn = system.showModalSync( objFrame, "modalsync00", objParentFrame, null, this );
 ```
 
 **Return**
 
-Modal 로 표시된 ChildFrame 이 종료된 후 성공/실패 여부를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Modal 로 표시된 ChildFrame 이 종료된 후 성공/실패 여부를 반환합니다. |
 
 **Remark**
 
@@ -4751,13 +5716,38 @@ system.showModalWindow( objChildFrame [, strID] , objParentFrame[, {objArguList}
 
 **Parameters**
 
-```
-Modal Window 로 표시할 ChildFrame 을 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objChildFrame | Object | Modal Window 로 표시할 ChildFrame 을 오브젝트로 설정합니다. |
+| strID | String | Modal Window 로 표시할 ChildFrame 의 ID 를 문자열로 설정합니다.
+
+값 생략 시 objChildFrame 에 설정된 ChildFrame 의 name 속성값이 설정됩니다. |
+| objParentFrame | Object | Modal Window 로 표시할 ChildFrame 의 부모 Frame 을 Object 형태로 설정합니다.
+
+null 설정 시 부모가 설정되지 않습니다.
+
+ChildFrame 이외의 Object 설정 시 부모 Frame 을 사용할 수 없다는 의미의 OverLay Color 가 표시되지 않습니다. |
+| objArguList | Object | Modal Window 로 표시할 ChildFrame 에 추가될 변수리스트를 "{변수명:변수값 , 변수명:변수값}" 형식으로 설정합니다. |
+| objOpener | Object | Modal Window 로 표시할 ChildFrame 의 Opener 로 설정될 Form 을 오브젝트로 설정합니다.
+
+값 생략 시 objParentFrame 에 설정된 Frame 의 Form 오브젝트가 설정됩니다.
+objParentFrame 파라미터를 null 로 설정하면 undefined 가 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var objCFrame = new ChildFrame();
+
+objCFrame.init( "moda00", 0, 0, 500, 500 );
+objCFrame.formurl = "Base::Test00.xfdl";
+var ret = system.showModalWindow( objCFrame, "modal00", this.getOwnerFrame(), {a:'aaa', b:'bbb'}, this );
 ```
 
 **Return**
 
-Modal Window 로 표시된 ChildFrame 에서 close() 메소드에 설정한 파라미터값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Modal Window 로 표시된 ChildFrame 에서 close() 메소드에 설정한 파라미터값을 반환합니다. |
 
 **Remark**
 

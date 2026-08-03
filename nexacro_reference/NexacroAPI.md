@@ -99,13 +99,21 @@ nexacro.addErrorMessage( enumLang, strCode, strMsg )
 
 **Parameters**
 
-```
-에러메시지가 추가될 언어를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumLang | String | 에러메시지가 추가될 언어를 설정합니다.
 
 "ko" 설정 시 한국어 영역에 에러메시지를 추가합니다.
 "en" 설정 시 영어 영역에 에러메시지를 추가합니다.
 "ja" 설정 시 일본어 영역에 에러메시지를 추가합니다.
-"zh" 설정 시 중국어 영역에 에러메시지를 추가합니다.
+"zh" 설정 시 중국어 영역에 에러메시지를 추가합니다. |
+| strCode | String | 추가될 에러메시지의 코드를 문자열로 설정합니다. |
+| strMsg | String | 추가될 에러메시지를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+nexacro.addErrorMessage( "en", "test_code","Test Error Message" ) ;
 ```
 
 **Return**
@@ -135,13 +143,21 @@ nexacro.base64Decode( strData )
 
 **Parameters**
 
-```
-Base64 형식으로 인코딩된 데이터를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strData | String | Base64 형식으로 인코딩된 데이터를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var strOutput = nexacro.base64Decode( strInput ) ;
 ```
 
 **Return**
 
-디코딩된 결과 데이터를 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 디코딩된 결과 데이터를 반환합니다. |
 
 
 ---
@@ -162,13 +178,21 @@ nexacro.base64Encode( strData )
 
 **Parameters**
 
-```
-Base64 형식으로 인코딩할 데이터를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strData | String | Base64 형식으로 인코딩할 데이터를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var strOutput = nexacro.base64Encode( strInput ) ;
 ```
 
 **Return**
 
-Base64 형식으로 인코딩된 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Base64 형식으로 인코딩된 오브젝트를 반환합니다. |
 
 
 ---
@@ -189,13 +213,30 @@ nexacro.ceil( nVal [,nFractionDigit] );
 
 **Parameters**
 
-```
-올림을 수행할 숫자값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nVal | Number | 올림을 수행할 숫자값을 설정합니다. |
+| nFractionDigit | Number | 올림을 수행할 자릿수를 설정합니다.
+
+"0" 설정 시 소숫점 자리가 기준이 됩니다.
+양수 설정 시 소숫점 자리 이하가 기준이 됩니다.
+음수 설정 시 소숫점 자리 이상이 기준이 됩니다.
+
+값 생략 시 "0" 으로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nNum
+nNum = nexacro.ceil(3.0123);      // nNum = 4
+nNum = nexacro.ceil(3.0123, 2);  // nNum = 3.02
 ```
 
 **Return**
 
-올림한 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 올림한 값을 반환합니다. |
 
 **Remark**
 
@@ -250,13 +291,23 @@ nexacro.flashWindow( enumType, nCount, [,nInterval] )
 
 **Parameters**
 
-```
-어플리케이션이 아이콘이 깜빡이는 방식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumType | String | 어플리케이션이 아이콘이 깜빡이는 방식을 설정합니다.
 
 "count" 설정 시 지정된 횟수만큼 깜빡인 후 종료됩니다.
 "timer" 설정 시 "stop" 값으로 flashWindow() 메소드를 실행할 때까지 계속 깜빡입니다.
 "timernofg" 설정 시 해당 어플리케이션이 활성화 될 때까지 깜빡입니다.
-"stop" 설정 시 현재 깜빡이는 동작을 중지합니다.
+"stop" 설정 시 현재 깜빡이는 동작을 중지합니다. |
+| nCount | Number | enumType 값이 "count" 인 경우 깜박이는 횟수를 숫자로 설정합니다.
+
+enumType 값이 "count" 가 아닌 경우 설정값은 무시됩니다. |
+| nInterval | Number | 어플리케이션 아이콘이 깜박이는 간격을 밀리초(milliseconds) 단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+nexacro.flashWindow( "count", 10, 500 );
 ```
 
 **Return**
@@ -286,13 +337,30 @@ nexacro.floor( nVal [,nFractionDigit] );
 
 **Parameters**
 
-```
-내림을 수행할 숫자값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nVal | Number | 내림을 수행할 숫자값을 설정합니다. |
+| nFractionDigit | Number | 내림을 수행할 자릿수를 설정합니다.
+
+"0" 설정 시 소숫점 자리가 기준이 됩니다.
+양수 설정 시 소숫점 자리 이하가 기준이 됩니다.
+음수 설정 시 소숫점 자리 이상이 기준이 됩니다.
+
+값 생략 시 "0" 으로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nNum;
+nNum = nexacro.floor(9.9999);      // nNum = 9
+nNum = nexacro.floor(9.9999, 2);  // nNum = 9.99
 ```
 
 **Return**
 
-내림한 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 내림한 값을 반환합니다. |
 
 **Remark**
 
@@ -352,7 +420,9 @@ var objApp = nexacro.getApplication() ;
 
 **Return**
 
-Application 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Application 오브젝트를 반환합니다. |
 
 
 ---
@@ -373,15 +443,30 @@ nexacro.getCookieVariable( strID [, bSecure] )
 
 **Parameters**
 
-```
-값을 가져올 쿠키변수의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 값을 가져올 쿠키변수의 ID 를 문자열로 설정합니다. |
+| bSecure | Boolean | Secure 속성값에 따라 쿠키변수의 값을 가져옵니다.
+
+true 설정 시 쿠키변수의 Secure 속성값이 true 일 때만 값을 가져옵니다.
+false 설정 시 쿠키변수의 Secure 속성값이 false 일 때만 값을 가져옵니다.
+
+값 생략 시 Secure 속성값에 관계없이 쿠키변수의 값을 가져옵니다. |
+
+**Sample Call**
+
+```javascript
+var vCookie0 = nexacro.getCookieVariable("Cookie0") ;
+var vCookie1 = nexacro.getCookieVariable("Cookie1", true) ;
 ```
 
 **Return**
 
-Cookies 영역에 정의된 쿠키변수의 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Cookies 영역에 정의된 쿠키변수의 값을 반환합니다.
 
-조건에 만족하는 쿠키변수가 없을 경우 undefined 를 반환합니다.
+조건에 만족하는 쿠키변수가 없을 경우 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -410,17 +495,27 @@ nexacro.getEnableWheelZoom( objFrame )
 
 **Parameters**
 
-```
-Zoom 기능 설정여부를 확인할 window 에 속한 Frame 을 오브젝트 형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objFrame | Object | Zoom 기능 설정여부를 확인할 window 에 속한 Frame 을 오브젝트 형태로 설정합니다.
 
-동일한 window 에 속한 Frame 중 어느것을 설정하여도 동일한 결과를 반환합니다.
+동일한 window 에 속한 Frame 중 어느것을 설정하여도 동일한 결과를 반환합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+
+var bEnableZoom = nexacro.getEnableWheelZoom( objFrame )
 ```
 
 **Return**
 
-지정된 Frame 이 속한 window 에 Zoom 기능이 설정되어 있으면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 지정된 Frame 이 속한 window 에 Zoom 기능이 설정되어 있으면 true 를 반환합니다.
 
-지정된 Frame 이 속한 window 에 Zoom 기능이 설정되어 있지 않으면 false 를 반환합니다.
+지정된 Frame 이 속한 window 에 Zoom 기능이 설정되어 있지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -456,7 +551,9 @@ var objEnv = nexacro.getEnvironment() ;
 
 **Return**
 
-Environment 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Environment 오브젝트를 반환합니다. |
 
 
 ---
@@ -477,13 +574,21 @@ nexacro.getEnvironmentVariable( strID )
 
 **Parameters**
 
-```
-값을 가져올 변수의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 값을 가져올 변수의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var vEnv0 = nexacro.getEnvironmentVariable("Env_Variable0") ;
 ```
 
 **Return**
 
-Environment 의 Variable 영역에 정의된 변수의 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Environment 의 Variable 영역에 정의된 변수의 값을 반환합니다. |
 
 **Remark**
 
@@ -508,8 +613,14 @@ nexacro.getHTTPHeaderVariable( strID )
 
 **Parameters**
 
-```
-값을 가져올 변수의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 값을 가져올 변수의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var vHTTPVal0 = nexacro.getHTTPHeaderVariable("HeaderVal00") ;
 ```
 
 **Return**
@@ -539,7 +650,9 @@ var strLogFilePath = nexacro.getLogFilePath();
 
 **Return**
 
-로그 파일이 저장된 경로를 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 로그 파일이 저장된 경로를 문자열로 반환합니다. |
 
 **Remark**
 
@@ -569,17 +682,26 @@ nexacro.getPopupFrames( [objFrame] )
 
 **Parameters**
 
-```
-기준 Frame 을 오브젝트 형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objFrame | Object | 기준 Frame 을 오브젝트 형태로 설정합니다.
 
-값 생략 시 Remark 에 설명된 조건에 따라 적용되는 Frame 이 달라질 수 있으므로 주의하여야 합니다.
+값 생략 시 Remark 에 설명된 조건에 따라 적용되는 Frame 이 달라질 수 있으므로 주의하여야 합니다. |
+
+**Sample Call**
+
+```javascript
+var arrPopFrame = nexacro.getPopupFrames() ;
+var arrPopFrame = nexacro.getPopupFrames( this.getOwnerFrame() ) ;
 ```
 
 **Return**
 
-파라미터로 설정한 Frame 이 속한 Window 에서 팝업으로 실행된 Frame 을 Collection 형태로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | 파라미터로 설정한 Frame 이 속한 Window 에서 팝업으로 실행된 Frame 을 Collection 형태로 반환합니다.
 
-objFrame 파라미터에 null 또는 잘못된 값을 설정할 경우 undefined 를 반환합니다.
+objFrame 파라미터에 null 또는 잘못된 값을 설정할 경우 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -624,13 +746,21 @@ nexacro.getPrivateProfile( strKey )
 
 **Parameters**
 
-```
-개인화 데이터를 저장할 때 설정했던 키값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strKey | String | 개인화 데이터를 저장할 때 설정했던 키값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var vPrivate0 = nexacro.getPrivateProfile( "aa" ) ;
 ```
 
 **Return**
 
-인수로 전달된 키값에 해당하는 개인화 데이터를 저장 시 설정한 데이터 타입으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | 인수로 전달된 키값에 해당하는 개인화 데이터를 저장 시 설정한 데이터 타입으로 반환합니다. |
 
 **Remark**
 
@@ -668,7 +798,9 @@ var strPrjPath = nexacro.getProjectPath();
 
 **Return**
 
-애플리케이션의 실행 경로를 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 애플리케이션의 실행 경로를 문자열로 반환합니다. |
 
 
 ---
@@ -689,13 +821,21 @@ nexacro.getStringResourceValue(strKey);
 
 **Parameters**
 
-```
-StringResource에서 가져올 문자열에 해당하는 Key 값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strKey | String | StringResource에서 가져올 문자열에 해당하는 Key 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var strResource = nexacro.getStringResourceValue("A0001");
 ```
 
 **Return**
 
-StringResource에서 지정한 Key 값에 해당하는 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | StringResource에서 지정한 Key 값에 해당하는 문자열을 반환합니다. |
 
 
 ---
@@ -717,16 +857,50 @@ nexacro.getTextSize( strText, strFont [, refObj] );
 
 **Parameters**
 
-```
-화면에 표시될 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 화면에 표시될 텍스트를 설정합니다. |
+| strFont | String | 텍스트에 적용될 폰트정보를 font 속성 형식에 맞게 설정합니다.
+
+컴포넌트의 font 속성에 값이 설정되어 있다면 font 속성을 설정할 수 있습니다. |
+| nLimitWidth | Number | 텍스트가 표시되는 영역의 최대 너비를 pixel 단위의 숫자로 설정합니다.
+
+strWordWrap 값이 "none" 또는 "line" 이면 nLimitWidth 에 설정된 값은 무시됩니다.
+strWordWrap 값이 "char" 또는 "english" 일 경우 nLimitWidth 값에 맞게 텍스트가 줄바꿈되어 표시됩니다. |
+| strWordWrap | String | 텍스트가 줄바꿈 되는 기준을 설정합니다.
+
+"none" 설정 시 텍스트에 포함된 개행문자와 nLimitWidth 값이 무시되어 한줄로 표시됩니다.
+"line" 설정 시 nLimitWidth 값은 무시되고 텍스트에 포함된 개행문자를 기준으로 줄바꿈이 됩니다.
+"char" 설정 시 nLimitWidth 값을 기준으로 글자 단위로 줄바꿈이 됩니다.
+"english" 설정 시 nLimitWidth 값을 기준으로 글자 단위로 줄바꿈이 됩니다.
+
+"char", "english" 설정 시 텍스트에 포함된 개행문자에 의해서도 줄바꿈이 됩니다. |
+| refObj | Object | strFont의 단위가 "em"인 경우 상대적인 크기를 설정할 기준 컴포넌트(오브젝트)를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Static00.font = "italic bold 10pt Arial";
+
+var strText = "Sample Text";
+
+var objSize = nexacro.getTextSize( strText, this.Static00.font );
+var objSize2 = nexacro.getTextSize( strText, "italic bold 10pt Arial", 100, "char" );
+var objSize3 = nexacro.getTextSize( strText, "italic bold 2em Arial", this );
+
+trace( objSize.nx + "," + objSize.ny );
+trace( objSize2.nx + "," + objSize2.ny );
+trace( objSize3.nx + "," + objSize3.ny );
 ```
 
 **Return**
 
-인수값을 기준으로 계산된 텍스트가 표시되는 영역의 크기 정보를 오브젝트로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 인수값을 기준으로 계산된 텍스트가 표시되는 영역의 크기 정보를 오브젝트로 반환합니다.
 
 반환된 오브젝트의 "nx" 속성에 텍스트의 가로크기가 저장됩니다.
-반환된 오브젝트의 "ny" 속성에 텍스트의 세로크기가 저장됩니다.
+반환된 오브젝트의 "ny" 속성에 텍스트의 세로크기가 저장됩니다. |
 
 **Remark**
 
@@ -754,15 +928,25 @@ nexacro.getWheelZoom( objFrame )
 
 **Parameters**
 
-```
-Zoom 배율을 확인할 window 에 속한 Frame 을 오브젝트 형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objFrame | Object | Zoom 배율을 확인할 window 에 속한 Frame 을 오브젝트 형태로 설정합니다.
 
-동일한 window 에 속한 Frame 중 어느것을 설정하여도 동일한 결과를 반환합니다.
+동일한 window 에 속한 Frame 중 어느것을 설정하여도 동일한 결과를 반환합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+
+var nZoomScale = nexacro.getWheelZoom( objFrame );
 ```
 
 **Return**
 
-지정된 Frame 이 속한 window 의 Zoom 배율을 "%" 단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 지정된 Frame 이 속한 window 의 Zoom 배율을 "%" 단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -795,14 +979,25 @@ nexacro.isAlpha( strChar )
 
 **Parameters**
 
-```
-알파벳에 대응하는 코드값인지 확인 할 10진수 숫자를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nChar | Number | 알파벳에 대응하는 코드값인지 확인 할 10진수 숫자를 설정합니다. |
+| strChar | String | 알파벳 여부를 확인 할 문자열을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bRet;
+bRet = nexacro.isAlpha(97);       // true, 97 = 'a'
+bRet = nexacro.isAlpha("aaa");  // true
 ```
 
 **Return**
 
-전달된 문자코드 또는 문자열이 알파벳이면 "true" 를 반환합니다.
-전달된 문자코드 또는 문자열이 알파벳이 아니면 "false" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 전달된 문자코드 또는 문자열이 알파벳이면 "true" 를 반환합니다.
+전달된 문자코드 또는 문자열이 알파벳이 아니면 "false" 를 반환합니다. |
 
 
 ---
@@ -824,17 +1019,28 @@ nexacro.isAlphaNumeric( strChar )
 
 **Parameters**
 
-```
-알파벳 또는 숫자에 대응하는 코드값인지 확인 할 10진수 숫자를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nChar | Number | 알파벳 또는 숫자에 대응하는 코드값인지 확인 할 10진수 숫자를 설정합니다. |
+| strChar | String | 알파벳과 숫자로만 이루어져 있는지 확인 할 문자열을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bRet;
+bRet = nexacro.isAlphaNumeric(97);            // true , 97 = 'a'
+bRet = nexacro.isAlphaNumeric("123abc");   // true
 ```
 
 **Return**
 
-전달된 문자코드가 알파벳 또는 숫자이면 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 전달된 문자코드가 알파벳 또는 숫자이면 "true" 를 반환합니다.
 전달된 문자열이 알파벳과 숫자로만 이루어져 있다면 "true" 를 반환합니다.
 
 전달된 문자코드가 알파벳 또는 숫자가 아니면 "false" 를 반환합니다.
-전달된 문자열에 알파벳과 숫자 이외의 문자가 있다면 "false" 를 반환합니다.
+전달된 문자열에 알파벳과 숫자 이외의 문자가 있다면 "false" 를 반환합니다. |
 
 
 ---
@@ -855,16 +1061,31 @@ nexacro.isExistCookieVariable( strID [, bSecure] )
 
 **Parameters**
 
-```
-존재여부를 확인할 쿠키변수의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 존재여부를 확인할 쿠키변수의 ID 를 문자열로 설정합니다. |
+| bSecure | Boolean | Secure 속성값에 따라 쿠키변수의 존재여부를 확인합니다.
+
+true 설정 시 쿠키변수가 존재하고 Secure 속성값이 true 일 때만 true 를 반환합니다.
+false 설정 시 쿠키변수가 존재하고 Secure 속성값이 false 일 때만 true 를 반환합니다.
+
+값 생략 시 Secure 속성값에 관계없이 쿠키변수의 존재여부를 확인합니다. |
+
+**Sample Call**
+
+```javascript
+nexacro.isExistCookieVariable( "Cookie0" ) ;
+nexacro.isExistCookieVariable( "Cookie1", true ) ;
 ```
 
 **Return**
 
-Cookies 영역에 쿠키변수가 존재하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Cookies 영역에 쿠키변수가 존재하면 true 를 반환합니다.
 Cookies 영역에 쿠키변수가 존재하지 않으면 false 를 반환합니다.
 
-bSecure 설정 시 bSecure 에 설정한 값까지 일치할 경우 true 를 반환합니다.
+bSecure 설정 시 bSecure 에 설정한 값까지 일치할 경우 true 를 반환합니다. |
 
 
 ---
@@ -886,14 +1107,25 @@ nexacro.isLower( strChar )
 
 **Parameters**
 
-```
-알파벳 소문자에 대응하는 코드값인지 확인 할 10진수 숫자를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nChar | Number | 알파벳 소문자에 대응하는 코드값인지 확인 할 10진수 숫자를 설정합니다. |
+| strChar | String | 알파벳 소문자 여부를 확인 할 문자열을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bRet;
+bRet = nexacro.isLower(97);       // true , 97 = 'a'
+bRet = nexacro.isLower("abC");  // false
 ```
 
 **Return**
 
-전달된 문자코드 또는 문자열이 알파벳 소문자이면 "true" 를 반환합니다.
-전달된 문자코드 또는 문자열이 알파벳 소문자가 아니면 "false" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 전달된 문자코드 또는 문자열이 알파벳 소문자이면 "true" 를 반환합니다.
+전달된 문자코드 또는 문자열이 알파벳 소문자가 아니면 "false" 를 반환합니다. |
 
 
 ---
@@ -915,14 +1147,25 @@ nexacro.isNumeric( strChar )
 
 **Parameters**
 
-```
-숫자에 대응하는 코드값인지 확인 할 10진수 숫자를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nChar | Number | 숫자에 대응하는 코드값인지 확인 할 10진수 숫자를 설정합니다. |
+| strChar | String | 숫자 여부를 확인 할 문자열을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bRet;
+bRet = nexacro.isNumeric(97);      // false , 97 = 'a'
+bRet = nexacro.isNumeric("123");  // true
 ```
 
 **Return**
 
-전달된 문자코드 또는 문자열이 숫자이면 "true" 를 반환합니다.
-전달된 문자코드 또는 문자열이 숫자가 아니면 "false" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 전달된 문자코드 또는 문자열이 숫자이면 "true" 를 반환합니다.
+전달된 문자코드 또는 문자열이 숫자가 아니면 "false" 를 반환합니다. |
 
 
 ---
@@ -944,14 +1187,28 @@ nexacro.isSpace( strChar )
 
 **Parameters**
 
-```
-공백문자에 대응하는 코드값인지 확인 할 10진수 숫자를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nChar | Number | 공백문자에 대응하는 코드값인지 확인 할 10진수 숫자를 설정합니다. |
+| strChar | String | 공백문자 여부를 확인 할 문자열을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bRet;
+bRet = nexacro.isSpace(0);        // false , 0 = Null
+bRet = nexacro.isSpace(32);      // true , 32 = Space
+bRet = nexacro.isSpace(97);      // false , 97 = 'a'
+bRet = nexacro.isSpace("");       // true
+bRet = nexacro.isSpace(" ");      // true
 ```
 
 **Return**
 
-전달된 문자코드 또는 문자열이 공백문자이면 "true" 를 반환합니다.
-전달된 문자코드 또는 문자열이 공백문자가 아니면 "false" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 전달된 문자코드 또는 문자열이 공백문자이면 "true" 를 반환합니다.
+전달된 문자코드 또는 문자열이 공백문자가 아니면 "false" 를 반환합니다. |
 
 
 ---
@@ -973,14 +1230,25 @@ nexacro.isUpper( strChar );
 
 **Parameters**
 
-```
-알파벳 대문자에 대응하는 코드값인지 확인 할 10진수 숫자를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nChar | Number | 알파벳 대문자에 대응하는 코드값인지 확인 할 10진수 숫자를 설정합니다. |
+| strChar | String | 알파벳 대문자 여부를 확인 할 문자열을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bRet;
+bRet = nexacro.isUpper(65);        // true , 65 = 'A'
+bRet = nexacro.isUpper("abC");   // false
 ```
 
 **Return**
 
-전달된 문자코드 또는 문자열이 알파벳 대문자이면 "true" 를 반환합니다.
-전달된 문자코드 또는 문자열이 알파벳 대문자가 아니면 "false" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 전달된 문자코드 또는 문자열이 알파벳 대문자이면 "true" 를 반환합니다.
+전달된 문자코드 또는 문자열이 알파벳 대문자가 아니면 "false" 를 반환합니다. |
 
 
 ---
@@ -1002,12 +1270,37 @@ nexacro.loadStringResource(strUrl);
 
 **Parameters**
 
-```
-StringResource에서 로드할 대상 언어를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strLang | String | StringResource에서 로드할 대상 언어를 설정합니다.
 
 strLang 파라미터 값만 설정한 경우 아래와 같은 상황에서는 메서드가 동작하지 않습니다.
 - 제너레이트 된 StringResource 파일이 없는 경우
-- Environment.usestringresource 속성값이 false인 경우
+- Environment.usestringresource 속성값이 false인 경우 |
+| strUrl | String | StringResource 정보를 갱신하기 위한 서비스 URL을 문자열로 설정합니다.
+
+- strUrl 파라미터 값 설정 시 Environment.usestringresource 속성값과 상관없이 동작합니다.
+- 반환되는 값은 지정한 언어 데이터를 포함한 JSON 파일 형식이어야 합니다.
+
+* strLang 파라미터 값을 설정한 경우
+strLang 파라미터값을 기준으로 해당하는 언어 데이터를 탐색하고 로드합니다.
+URL 문자열 형태에 따라 URL 호출 시점에 lang=[strLang] 매개변수를 추가합니다.
+- 매개변수가 있는 경우: ⟨=[strLang] 추가
+  예) http://dummy.com/i18n?test=true
+       -> http://dummy.com/i18n?test=true⟨=ja
+- 매개변수가 없는 경우: ?lang=[strLang] 추가
+  예) http://dummy.com/i18n
+       -> http://dummy.com/i18n?lang=ja
+
+* strUrl 파라미터 값만 설정한 경우
+Environment.locale 속성값을 기준으로 해당하는 언어 데이터를 탐색하고 로드합니다. |
+
+**Sample Call**
+
+```javascript
+nexacro.loadStringResource("ja");
+nexacro.loadStringResource("ja", "https://dummy.com/i18n");
+nexacro.loadStringResource("https://dummy.com/i18n");
 ```
 
 **Return**
@@ -1051,11 +1344,17 @@ nexacro.loadStyle( strURL )
 
 **Parameters**
 
-```
-어플리케이션에 적용시킬 XCSS 파일경로를 "xcssrc::[FileID]" 형식으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strURL | String | 어플리케이션에 적용시킬 XCSS 파일경로를 "xcssrc::[FileID]" 형식으로 설정합니다.
 
 파일경로의 "xcssrc::" 는 고정 Prefix 값으로 수정할 수 없습니다.
-XCSS 파일은 Resource Service 영역의 "./_resource_/_xcss_" 에 위치하여야 합니다.
+XCSS 파일은 Resource Service 영역의 "./_resource_/_xcss_" 에 위치하여야 합니다. |
+
+**Sample Call**
+
+```javascript
+nexacro.loadStyle( "xcssrc::theme1.xcss" );
 ```
 
 **Return**
@@ -1094,13 +1393,68 @@ nexacro.open( strID, strFormURL, objParentFrame, {objArguList}, strOpenStyle, nL
 
 **Parameters**
 
-```
-Modeless Window 로 표시할 ChildFrame 의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | Modeless Window 로 표시할 ChildFrame 의 ID 를 문자열로 설정합니다. |
+| strFormURL | String | Modeless Window 로 표시할 ChildFrame 에 로딩될 Form 을 URL 로 설정합니다. |
+| objParentFrame | Object | Modeless Window 로 표시할 ChildFrame 의 부모 Frame 을 Object 형태로 설정합니다.
+
+null 설정 시 부모가 설정되지 않습니다. |
+| objArguList | Object | Modeless Window 로 표시할 ChildFrame 에 추가될 변수리스트를 "{변수명:변수값 , 변수명:변수값}" 형식으로 설정합니다. |
+| strOpenStyle | String | Modeless Window 로 표시할 ChildFrame 에 적용될 속성값을 "속성명1=속성값1 속성명2=속성값2" 형식으로 설정합니다.
+
+ChildFrame 의 일부 속성을 설정할 수 있으며 각 속성은 공백(Space)으로 구분합니다.
+ChildFrame 의 CSS 관련 속성은 설정할 수 없습니다. (예: background, -nexa-border, font 등)
+
+* 다음 속성 또는 속성의 특정 설정값은 open 메서드 실행 시 특정 실행 환경만 지원합니다.
+"dragmovetype" 속성의 "all" 값은 Windows NRE 만 지원합니다.
+"layered" 속성은 Windows NRE 와 macOS NRE 만 지원합니다.
+"openstatus" 속성의 "maximize" 값은 Windows NRE만 지원합니다.
+"openstatus" 속성의 "normal", "minimize" 값은 Windows NRE 만 지원합니다.
+"showtitlebar" 속성은 Windows NRE 환경만 지원합니다.
+"showstatusbar" 속성은 Windows NRE만 지원합니다. |
+| nLeft | Number | Modeless Window 로 표시할 ChildFrame 의 left 값을 설정합니다. |
+| nTop | Number | Modeless Window 로 표시할 ChildFrame 의 top 값을 설정합니다. |
+| nWidth | Number | Modeless Window 로 표시할 ChildFrame 의 width 값을 설정합니다. |
+| nHeight | Number | Modeless Window 로 표시할 ChildFrame 의 height 값을 설정합니다. |
+| objOpener | Object | opener 로 설정할 Form 을 오브젝트 형태로 설정합니다.
+
+값 생략 시 objParentFrame 파라미터에 설정된 Form 이 설정됩니다. |
+| strExtOpenStyle | String | ChildFrame 이 표시될 때 추가적으로 적용될 속성을 "속성명1=속성값1 속성명2=속성값2" 형식으로 설정합니다.
+환경에 따라 설정할 수 있는 속성이 다르며 각 속성은 공백(Space)으로 구분합니다.
+
+
+* Windows NRE 환경에서만 지원하는 속성으로 생략 시 false 로 적용됩니다.
+"noactivate" 속성에 true 설정 시 표시된 ChildFrame 이 활성화 되지 않습니다.
+"noactivate" 속성에 false 설정 시 표시된 ChildFrame 이 활성화 되어 포커스를 갖습니다.
+"noactivate" 속성은 표시된 ChildFrame 에 포커스를 이동하지 않으려 할 때 사용합니다. |
+| strReturnType | String | 반환값 타입을 설정합니다.
+값을 설정하지 않으면 Modeless Window 표시 성공/실패 여부를 반환합니다.
+값을 설정하는 경우 다음과 같이 반환값 타입이 정해집니다.
+- "promise": Promise 오브젝트를 반환합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = nexacro.open("modeless", "Base::Form01.xfdl",  this.getOwnerFrame(), {a:'aaa', b:'bbb'}, "titletext=TEST", 0, 0);
+bSucc = nexacro.open("modeless", "Base::Form01.xfdl",  this.getOwnerFrame(), {a:'aaa', b:'bbb'}, "titletext=TEST autosize=false", 0, 0, 640, 480);
+bSucc = nexacro.open("modeless", "Base::Form01.xfdl",  this.getOwnerFrame(), {a:'aaa', b:'bbb'}, "titletext=TEST", 0, 0, null, null, this);
+bSucc = nexacro.open("modeless", "Base::Form01.xfdl",  this.getOwnerFrame(), {a:'aaa', b:'bbb'}, "titletext=TEST", 0, 0, null, null, this, "location=true menubar=true toolbar=true");
+bSucc = nexacro.open("modeless", "Base::Form01.xfdl",  this.getOwnerFrame(), {a:'aaa', b:'bbb'}, "titletext=TEST", 0, 0, null, null, this, "noactivate=true");
+
+nexacro.open("modeless", "Base::Form01.xfdl",  this.getOwnerFrame(), {a:'aaa', b:'bbb'}, "titletext=TEST", 0, 0, null, null, this, "noactivate=true", "promise").then((result) => {
+   trace("Closed popup"); 
+ }).catch((err) => {
+   trace("Failed to open popup: " + err.message);
+ });
 ```
 
 **Return**
 
-returnType 설정값에 따라 반환값 타입이 달라집니다.
+| Type | Description |
+| --- | --- |
+| Boolean, Object | returnType 설정값에 따라 반환값 타입이 달라집니다.
 
 - 설정값 없음: (Boolean) 
   Modeless Window 정상 표시 여부를 반환합니다.
@@ -1108,7 +1462,7 @@ returnType 설정값에 따라 반환값 타입이 달라집니다.
 - "promise": (Object)
   Promise 오브젝트를 반환합니다.
   Promise 오브젝트는 자바스크립트 표준 내장 객체입니다.
-  내부적으로 resolve 수행 시점은 Modeless Window가 종료되는 시점입니다.
+  내부적으로 resolve 수행 시점은 Modeless Window가 종료되는 시점입니다. |
 
 **Remark**
 
@@ -1148,17 +1502,25 @@ nexacro.parseDate( strDate )
 
 **Parameters**
 
-```
-날짜형식의 문자열을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strDate | String | 날짜형식의 문자열을 설정합니다.
 
-유효하지 않은 날짜형식의 문자열은 오류로 처리됩니다.
+유효하지 않은 날짜형식의 문자열은 오류로 처리됩니다. |
+
+**Sample Call**
+
+```javascript
+var ret = nexacro.parseDate("1999-10-10");     // 939481200000
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 인수로 전달된 날짜 사이의 시간을 밀리초로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 인수로 전달된 날짜 사이의 시간을 밀리초로 반환합니다.
 
-유효하지 않은 날짜형식으로 오류로 처리되면 undefined 를 반환합니다.
+유효하지 않은 날짜형식으로 오류로 처리되면 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -1206,8 +1568,21 @@ nexacro.removeCookieVariable( strID [, bSecure] )
 
 **Parameters**
 
-```
-제거될 쿠키변수의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 제거될 쿠키변수의 ID 를 설정합니다. |
+| bSecure | Boolean | Secure 속성값에 따라 쿠키변수를 제거합니다.
+
+true 설정 시 쿠키변수의 Secure 속성값이 true 일 때만 쿠키변수를 제거합니다.
+false 설정 시 쿠키변수의 Secure 속성값이 false 일 때만 쿠키변수를 제거합니다.
+
+값 생략 시 Secure 속성값에 관계없이 쿠키변수를 제거합니다. |
+
+**Sample Call**
+
+```javascript
+nexacro.removeCookieVariable( "Cookie0" ) ;
+nexacro.removeCookieVariable( "Cookie1", true ) ;
 ```
 
 **Return**
@@ -1239,8 +1614,14 @@ nexacro.removeEnvironmentVariable( strID )
 
 **Parameters**
 
-```
-제거될 변수의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 제거될 변수의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+nexacro.removeEnvironmentVariable( "Env_Variable0" ) ;
 ```
 
 **Return**
@@ -1272,8 +1653,14 @@ nexacro.removeHTTPHeaderVariable( strID )
 
 **Parameters**
 
-```
-제거될 변수의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 제거될 변수의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+nexacro.removeHTTPHeaderVariable( "HeaderVal00" );
 ```
 
 **Return**
@@ -1299,8 +1686,14 @@ nexacro.removePrivateProfile( strKey )
 
 **Parameters**
 
-```
-삭제할 개인화 데이터의 키값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strKey | String | 삭제할 개인화 데이터의 키값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+nexacro.removePrivateProfile("aa");
 ```
 
 **Return**
@@ -1330,13 +1723,17 @@ nexacro.replaceAll( strText, strOrgText, strRepText );
 
 **Parameters**
 
-```
-변환을 수행할 전체 문자열을 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 변환을 수행할 전체 문자열을 설정합니다. |
+| strOrgText | String | strText 값에서 새 문자열로 변환될 문자열을 설정합니다. |
+| strRepText | String | strOrgText 값의 문자열 대신 변환할 문자열을 설정합니다. |
 
 **Return**
 
-특정 문자열을 새 문자열로 변환한 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 특정 문자열을 새 문자열로 변환한 문자열을 반환합니다. |
 
 
 ---
@@ -1357,13 +1754,35 @@ nexacro.round( nVal [,nFractionDigit] );
 
 **Parameters**
 
-```
-반올림을 수행할 숫자값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nVal | Number | 반올림을 수행할 숫자값을 설정합니다. |
+| nFractionDigit | Number | 반올림을 수행할 자릿수를 설정합니다.
+
+"0" 설정 시 소숫점 자리가 기준이 됩니다.
+양수 설정 시 소숫점 자리 이하가 기준이 됩니다.
+음수 설정 시 소숫점 자리 이상이 기준이 됩니다.
+
+값 생략 시 "0" 으로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nNum;
+nNum = nexacro.round(1.4915);         // 1 
+nNum = nexacro.round(1.4915, 2);     // 1.49  
+nNum = nexacro.round(1.5163);         // 2
+nNum = nexacro.round(1.5163, 2);     // 1.52
+nNum = nexacro.round(1024.256, -1); // 1020
+nNum = nexacro.round(1024.256, -2); // 1000
+nNum = nexacro.round(1024.256, -4); // 0
 ```
 
 **Return**
 
-반올림한 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 반올림한 값을 반환합니다. |
 
 **Remark**
 
@@ -1388,8 +1807,23 @@ nexacro.setCookieVariable( strID, varVal [, bSecure] )
 
 **Parameters**
 
-```
-추가될 쿠키변수의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 추가될 쿠키변수의 ID 를 설정합니다. |
+| varVal | String | 추가될 쿠키변수가 갖는 값을 설정합니다. |
+| bSecure | Boolean | 추가될 쿠키변수의 Secure 속성 여부를 설정합니다.
+
+true 로 설정 시 HTTP 통신일 때 쿠키변수를 포함시키지 않습니다.
+true 로 설정 시 HTTPS 통신일 때 쿠키변수에 Secure 속성을 설정하여 포함시킵니다.
+false 설정 시 모든 통신에 Secure 속성을 설정하지 않은 쿠키변수를 포함시킵니다.
+
+값을 생략하면 false 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+nexacro.setCookieVariable( "Cookie0", "test" ) ;
+nexacro.setCookieVariable( "Cookie1", "test", true ) ;
 ```
 
 **Return**
@@ -1430,10 +1864,21 @@ nexacro.setEnableWheelZoom( objFrame, bZoom)
 
 **Parameters**
 
-```
-Zoom 기능을 설정할 window 에 속한 Frame 을 오브젝트 형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objFrame | Object | Zoom 기능을 설정할 window 에 속한 Frame 을 오브젝트 형태로 설정합니다.
 
-동일한 window 에 속한 Frame 중 어느것을 설정하여도 동일하게 설정됩니다.
+동일한 window 에 속한 Frame 중 어느것을 설정하여도 동일하게 설정됩니다. |
+| bZoom | Boolean | true 설정 시 objFrame 이 속한 window  의 Zoom 기능을 활성화 합니다.
+
+false 설정 시 objFrame 이 속한 window  의 Zoom 기능을 비활성화 합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+
+nexacro.setEnableWheelZoom( objFrame, false );
 ```
 
 **Return**
@@ -1486,8 +1931,15 @@ nexacro.setEnvironmentVariable( strID, varVal )
 
 **Parameters**
 
-```
-추가될 변수의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 추가될 변수의 ID를 설정합니다. |
+| varVal | String | 추가될 변수가 갖는 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var vEnv0 = nexacro.setEnvironmentVariable("Env_Variable0", "test") ;
 ```
 
 **Return**
@@ -1519,8 +1971,15 @@ nexacro.setHTTPHeaderVariable( strID, varVal )
 
 **Parameters**
 
-```
-추가될 HTTP Header 변수의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 추가될 HTTP Header 변수의 ID 를 설정합니다. |
+| varVal | String | 추가될 HTTP Header 변수가 갖는 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+nexacro.setHTTPHeaderVariable("HeaderVal00", "test") ;
 ```
 
 **Return**
@@ -1555,13 +2014,21 @@ nexacro.setInitialVariable( strType, strID, varVal )
 
 **Parameters**
 
-```
-설정할 변수의 Global 영역 위치를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strType | String | 설정할 변수의 Global 영역 위치를 문자열로 설정합니다.
 
 “environment” 설정 시 Environment 의 Variables 영역에 변수를 설정합니다.
 “cookie” 설정 시 Environment 의 Cookies 영역에 변수를 설정합니다.
 “httpheader” 설정 시 Environment 의 HTTPHeader 영역에 변수를 설정합니다.
-“application” 설정 시 Application 의 Variables 영역에 변수를 설정합니다.
+“application” 설정 시 Application 의 Variables 영역에 변수를 설정합니다. |
+| strID | String | 설정할 Global 변수의 ID 를 문자열로 설정합니다. |
+| varVal | String | Global 변수의 값을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+nexacro.setInitialVariable( "cookie", "ValA", "Text" );
 ```
 
 **Return**
@@ -1595,17 +2062,28 @@ nexacro.setPrivateProfile( strKey, varVal )
 
 **Parameters**
 
-```
-개인화 데이터를 저장하기 위한 키값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strKey | String | 개인화 데이터를 저장하기 위한 키값을 설정합니다.
 
 XML 태그명으로 사용되므로 XML 태그명에서 사용 할 수 없는 문자는 설정할 수 없습니다.
-또한, ":" 문자를 설정할 수 없습니다.
+또한, ":" 문자를 설정할 수 없습니다. |
+| varVal | Variant | 저장할 개인화 데이터를 설정합니다.
+
+기본 자료형(integer, float, string, boolean) 과 Date 를 설정할 수 있습니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc = nexacro.setPrivateProfile( "aa", "A" );
 ```
 
 **Return**
 
-개인화 데이터 저장에 성공하면 "true" 를 반환합니다.
-개인화 데이터 저장에 실패하면 "false" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 개인화 데이터 저장에 성공하면 "true" 를 반환합니다.
+개인화 데이터 저장에 실패하면 "false" 를 반환합니다. |
 
 **Remark**
 
@@ -1639,9 +2117,11 @@ nexacro.setProtocolVar(strName, strKey, strValue) ;
 
 **Parameters**
 
-```
-TypeDefinition 의 Protocols 영역에 정의된 Protocol 어답터 중 설정값을 전달할 Protocol 의 "Protocol ID" 를 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | TypeDefinition 의 Protocols 영역에 정의된 Protocol 어답터 중 설정값을 전달할 Protocol 의 "Protocol ID" 를 설정합니다. |
+| strKey | String | Protocol 어답터에 전달될 설정값에 해당하는 Key 값을 설정합니다. |
+| strValue | String | Protocol 어답터에 전달될 설정값을 설정합니다. |
 
 **Return**
 
@@ -1666,11 +2146,17 @@ nexacro.setRenderingType( nType )
 
 **Parameters**
 
-```
-Windows 넥사크로의 렌더링 방식을 0 또는 1 로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nType | Number | Windows 넥사크로의 렌더링 방식을 0 또는 1 로 설정합니다.
 
 0 설정 시 RealTime 방식(기존과 동일)으로 주기적으로 렌더링을 실행합니다.
-1 설정 시 Event 방식으로 내부 규칙에 의해 렌더링을 실행합니다.
+1 설정 시 Event 방식으로 내부 규칙에 의해 렌더링을 실행합니다. |
+
+**Sample Call**
+
+```javascript
+nexacro.setRenderingType( 1 );
 ```
 
 **Return**
@@ -1704,8 +2190,25 @@ nexacro.setTimeout(objContext, objCallbackFunc, nDelay);
 
 **Parameters**
 
-```
-콜백 함수가 실행될 때 this로 바인딩될 오브젝트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objContext | Object | 콜백 함수가 실행될 때 this로 바인딩될 오브젝트를 설정합니다. |
+| objCallbackFunc | Object | 지연 시간 이후 실행할 콜백함수를 설정합니다. |
+| nDelay | Number | 콜백 함수 실행을 지연시킬 시간을 밀리초(milliseconds) 단위로 설정합니다.
+값을 설정하지 않으면 기본값으로 0이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	nexacro.setTimeout(obj, this.onceCallback, 1000);
+};
+
+this.onceCallback = function()
+{
+	trace(this.id); // Button00
+}
 ```
 
 **Return**
@@ -1731,10 +2234,22 @@ nexacro.setWheelZoom( objFrame, nZoomScale)
 
 **Parameters**
 
-```
-Zoom 배율을 설정할 window 에 속한 Frame 을 오브젝트 형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objFrame | Object | Zoom 배율을 설정할 window 에 속한 Frame 을 오브젝트 형태로 설정합니다.
 
-동일한 window 에 속한 Frame 중 어느것을 설정하여도 동일하게 설정됩니다.
+동일한 window 에 속한 Frame 중 어느것을 설정하여도 동일하게 설정됩니다. |
+| nZoomScale | Number | objFrame 이 속한 window  의 Zoom 배율을 "%" 단위의 숫자로 설정합니다.
+
+50%~200% 범위 내에서 10% 단위로 설정하여야 합니다.
+설정값이 범위를 벗어나거나 10% 단위가 아닌 경우 메소드가 실행되지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+
+nexacro.setWheelZoom( objFrame, 150 );
 ```
 
 **Return**
@@ -1777,13 +2292,21 @@ nexacro.stripQuote( strText )
 
 **Parameters**
 
-```
-따옴표를 제거 할 문자열을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | Object | 따옴표를 제거 할 문자열을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var strVal = nexacro.stripQuote("\"hello\""); // hello
 ```
 
 **Return**
 
-전달된 문자열의 양쪽 끝에서 따옴표를 제거하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 전달된 문자열의 양쪽 끝에서 따옴표를 제거하여 반환합니다. |
 
 **Remark**
 
@@ -1811,13 +2334,34 @@ nexacro.toNumber( varValue [, varNanVal [, varPinfVal [, varNinfVal]]] )
 
 **Parameters**
 
-```
-숫자로 변환할 문자열을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| varValue | String | 숫자로 변환할 문자열을 설정합니다. |
+| varNanVal | Number | varValue 를 숫자로 변환한 결과값이 "NaN" 일 때 반환할 값을 설정합니다.
+
+값 생략 시 "NaN" 이 적용됩니다. |
+| varPinfVal | Number | varValue 를 숫자로 변환한 결과값이 "POSITIVE_INFINITY" 일 때 반환할 값을 설정합니다.
+
+값 생략 시 "POSITIVE_INFINITY" 가 적용됩니다. |
+| varNinfVal | Number | varValue 를 숫자로 변환한 결과값이 "NEGATIVE_INFINITY" 일 때 반환할 값을 설정합니다.
+
+값 생략 시 "NEGATIVE_INFINITY" 가 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var varNum;
+varNum = nexacro.toNumber("123.4");                                          // 123.4
+varNum = nexacro.toNumber(Number.NaN, 0);                               // 0
+varNum = nexacro.toNumber(Number.POSITIVE_INFINITY, 0, 1);       // 1
+varNum = nexacro.toNumber(Number.NEGATIVE_INFINITY, 0, 1, 2);  // 2
 ```
 
 **Return**
 
-문자열을 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 문자열을 숫자로 변환하여 반환합니다. |
 
 
 ---
@@ -1838,13 +2382,27 @@ nexacro.trim( strText [,strChar] )
 
 **Parameters**
 
-```
-양쪽 끝에서 공백문자 또는 지정된 문자를 제거 할 문자열을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 양쪽 끝에서 공백문자 또는 지정된 문자를 제거 할 문자열을 설정합니다. |
+| strChar | String | 문자열의 양쪽 끝에서 제거할 문자를 설정합니다.
+
+값 생략 시 문자열의 양쪽 끝에서 공백문자를 제거합니다. |
+
+**Sample Call**
+
+```javascript
+var strText = "  abcd  ";
+var strText2 = "abcdaa";
+var strTrim = nexacro.trim( strText );             // strTrim = abcd
+var strTrim = nexacro.trim( strText2 ,"a" );     // strTrim =  bcd
 ```
 
 **Return**
 
-문자열의 양쪽 끝에서 공백문자 또는 지정된 문자가 제거된 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 문자열의 양쪽 끝에서 공백문자 또는 지정된 문자가 제거된 문자열을 반환합니다. |
 
 
 ---
@@ -1865,13 +2423,24 @@ nexacro.trimLeft( strText [,strChar] )
 
 **Parameters**
 
-```
-왼쪽 끝에서 공백문자 또는 지정된 문자를 제거 할 문자열을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 왼쪽 끝에서 공백문자 또는 지정된 문자를 제거 할 문자열을 설정합니다. |
+| strChar | String | 문자열의 왼쪽 끝에서 제거할 문자를 설정합니다.
+
+값 생략 시 문자열의 왼쪽 끝에서 공백문자를 제거합니다. |
+
+**Sample Call**
+
+```javascript
+var ret = nexacro.trimLeft( " nexacro" );     // ret = "nexacro"
 ```
 
 **Return**
 
-문자열의 왼쪽 끝에서 공백문자 또는 지정된 문자가 제거된 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 문자열의 왼쪽 끝에서 공백문자 또는 지정된 문자가 제거된 문자열을 반환합니다. |
 
 
 ---
@@ -1892,13 +2461,24 @@ nexacro.trimRight( strText [,strChar] )
 
 **Parameters**
 
-```
-오른쪽 끝에서 공백문자 또는 지정된 문자를 제거 할 문자열을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 오른쪽 끝에서 공백문자 또는 지정된 문자를 제거 할 문자열을 설정합니다. |
+| strTarget | String | 문자열의 오른쪽 끝에서 제거할 문자를 설정합니다.
+
+값 생략 시 문자열의 오른쪽 끝에서 공백문자를 제거합니다. |
+
+**Sample Call**
+
+```javascript
+var ret = nexacro.trimLeft( "nexacro  " );     // ret = "nexacro"
 ```
 
 **Return**
 
-문자열의 오른쪽 끝에서 공백문자 또는 지정된 문자가 제거된 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 문자열의 오른쪽 끝에서 공백문자 또는 지정된 문자가 제거된 문자열을 반환합니다. |
 
 
 ---
@@ -1919,13 +2499,21 @@ nexacro.wrapQuote( strText )
 
 **Parameters**
 
-```
-큰따옴표를 붙일 문자열을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 큰따옴표를 붙일 문자열을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var strVal = nexacro.wrapQuote("hello"); // "hello"
 ```
 
 **Return**
 
-전달된 문자열의 양쪽 끝에 큰따옴표를 붙여 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 전달된 문자열의 양쪽 끝에 큰따옴표를 붙여 반환합니다. |
 
 
 ---

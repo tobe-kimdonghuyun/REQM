@@ -1718,8 +1718,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.Spin00.enableevent = true;  
-
-this.Spin00.enableevent = false;
+this.Spin00.enableevent = false;
 ```
 - **`true`** — Spin 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — Spin 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -3035,8 +3034,7 @@ Spin.tooltiptext[= strToolTipText]
 
 ```javascript
 this.Spin00.tooltiptext = "This is ToolTip Text"; this.Spin00.tooltiptext = "";          // 풍선 도움말이 표시되지 않습니다. 
-
-this.Spin00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
+this.Spin00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
 ```
 - **`strToolTipText`** — 풍선도움말에 표시할 텍스트를 설정합니다.
 
@@ -3513,15 +3511,23 @@ Spin.addEvent( strEventID )
 
 **Parameters**
 
-```
-Spin 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | Spin 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.Spin00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -3548,15 +3554,26 @@ Spin.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin00_onmove = function( obj:nexacro.Spin,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Spin00.addEventHandler( "onmove", this.Spin00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -3577,15 +3594,27 @@ Spin.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin00_onmove = function( obj:nexacro.Spin,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Spin00.addEventHandlerLookup( "onmove", "Spin00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -3679,13 +3708,21 @@ Spin.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.Spin00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -3714,9 +3751,11 @@ var bSucc = this.Spin00.destroy();
 
 **Return**
 
-Spin 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Spin 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-Spin 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+Spin 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -3745,15 +3784,27 @@ Spin.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin00_onmove = function( obj:nexacro.Spin,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.Spin00.findEventHandler( "onmove", this.Spin00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3782,10 +3833,12 @@ var nCaretpos = this.Spin00.getCaretPos();
 
 **Return**
 
-캐럿이 위치한 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 캐럿이 위치한 인덱스를 반환합니다.
 읽기 전용 상태이거나 Spin에 포커스가 없으면 "-1"을 반환합니다.
 
-첫번째 위치의 인덱스는 "0" 입니다.
+첫번째 위치의 인덱스는 "0" 입니다. |
 
 **Remark**
 
@@ -3814,7 +3867,9 @@ var strTxt = this.Spin00.getDisplayText() ;
 
 **Return**
 
-Spin 에 표시된 텍스트값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Spin 에 표시된 텍스트값을 반환합니다. |
 
 **Remark**
 
@@ -3839,15 +3894,26 @@ Spin.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = Spin00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -3872,7 +3938,9 @@ var nBottom = this.Spin.getOffsetBottom();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 Spin 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 Spin 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -3901,7 +3969,9 @@ var nHeight = this.Spin.getOffsetHeight();
 
 **Return**
 
-Spin 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Spin 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -3930,7 +4000,9 @@ var nleft = this.Spin.getOffsetLeft();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 Spin 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 Spin 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -3959,7 +4031,9 @@ var nRight = this.Spin.getOffsetRight();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 Spin 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 Spin 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -3988,7 +4062,9 @@ var nTop = this.Spin.getOffsetTop();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 Spin 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 Spin 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -4017,7 +4093,9 @@ var nWidth = this.Spin.getOffsetWidth();
 
 **Return**
 
-Spin 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Spin 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -4046,9 +4124,11 @@ var nbottom = this.Spin.getPixelBottom();
 
 **Return**
 
-Spin 의 bottom 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Spin 의 bottom 속성값을 픽셀단위로 반환합니다.
 
-bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4077,9 +4157,11 @@ var nheight = this.Spin.getPixelHeight();
 
 **Return**
 
-Spin 의 height 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Spin 의 height 속성값을 픽셀단위로 반환합니다.
 
-height 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+height 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4108,9 +4190,11 @@ var nleft = this.Spin.getPixelLeft();
 
 **Return**
 
-Spin 의 left 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Spin 의 left 속성값을 픽셀단위로 반환합니다.
 
-left 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+left 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4139,9 +4223,11 @@ var nright = this.Spin.getPixelRight();
 
 **Return**
 
-Spin 의 right 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Spin 의 right 속성값을 픽셀단위로 반환합니다.
 
-right 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+right 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4170,9 +4256,11 @@ var ntop = this.Spin.getPixelTop();
 
 **Return**
 
-Spin 의 top 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Spin 의 top 속성값을 픽셀단위로 반환합니다.
 
-top 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+top 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4201,9 +4289,11 @@ var nwidth = this.Spin.getPixelWidth();
 
 **Return**
 
-Spin 의 width 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Spin 의 width 속성값을 픽셀단위로 반환합니다.
 
-width 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+width 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4232,10 +4322,12 @@ var vArrSelect = this.Spin00.getSelect();
 
 **Return**
 
-- 선택한 텍스트의 시작 인덱스와 끝 인덱스를 배열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | - 선택한 텍스트의 시작 인덱스와 끝 인덱스를 배열로 반환합니다.
 - 선택한 텍스트가 없는 경우 현재 캐럿 위치의 인덱스 값을 배열 형태로 반환합니다.
   예를 들어, 캐럿 위치의 인덱스 값이 1인 경우 [1, 1]을 반환합니다.
-- 텍스트 편집 영역의 상태를 확인할 수 없는 경우 [0, 0]을 반환합니다.
+- 텍스트 편집 영역의 상태를 확인할 수 없는 경우 [0, 0]을 반환합니다. |
 
 **Remark**
 
@@ -4279,9 +4371,11 @@ var strText = this.Spin00.getSelectedText();
 
 **Return**
 
-- 편집영역에서 선택한 텍스트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | - 편집영역에서 선택한 텍스트를 반환합니다.
 - 선택된 텍스트가 없을 경우 빈값을 반환합니다.
-- 텍스트 편집 영역의 상태를 확인할 수 없는 경우 빈값을 반환합니다.
+- 텍스트 편집 영역의 상태를 확인할 수 없는 경우 빈값을 반환합니다. |
 
 **Remark**
 
@@ -4316,8 +4410,62 @@ Spin.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth
 
 **Parameters**
 
-```
-Spin 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | Spin 의 ID를 문자열로 설정합니다. |
+| vLeft | String, Number | Spin 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 Spin 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Spin 의 left 가 결정됩니다. |
+| vTop | String, Number | Spin 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 Spin 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Spin 의 top 이 결정됩니다. |
+| vWidth | String, Number | Spin 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Spin 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Spin 의 width 가 결정됩니다. |
+| vHeight | String, Number | Spin 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Spin 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Spin 의 height 가 결정됩니다. |
+| vRight | String, Number | Spin 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 Spin 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Spin 의 right 가 결정됩니다. |
+| vBottom | String, Number | Spin 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 Spin 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Spin 의 bottom 이 결정됩니다. |
+| vMinWidth | String, Number | Spin 이(가) 화면에 표시되는 최소 너비값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxWidth | String, Number | Spin 이(가) 화면에 표시되는 최대 너비값을 pixel 단위의 숫자로 설정합니다.
+
+vMinWidth 보다 작은 값을 설정하면 vMinWidth 값으로 설정됩니다. |
+| vMinHeight | String, Number | Spin 이(가) 화면에 표시되는 최소 높이값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxHeight | String, Number | Spin 이(가) 화면에 표시되는 최대 높이값을 pixel 단위의 숫자로 설정합니다.
+
+vMinHeight 보다 작은 값을 설정하면 vMinHeight 값으로 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = new Spin();
+
+objComp.init( "Spin00", 30, 120, 196, 46 );
+objComp.init( "Spin00", 30, 120, 196, 46, null, null );
+objComp.init( "Spin00", null, null, 300, "400px", "80%", 300 );
+objComp.init( "Spin00", 0, 0, 200, 100, null, null, 300, 500, 200, 500 );
+objComp.init( "Spin00", "Spin22:10", 300, null, null, "Spin33:10", "20%", 300, 500, 200, 500 );
 ```
 
 **Return**
@@ -4365,16 +4513,33 @@ Spin.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin00_onmove = function( obj:nexacro.Spin,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.Spin00.insertEventHandler( "onmove", 0, this.Spin00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4399,12 +4564,49 @@ Spin.move( vLeft, vTop [, vWidth, vHeight [, vRight, vBottom]] )
 
 **Parameters**
 
-```
-Spin 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | Spin 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 Spin 의 left 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Spin 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Spin 의 left 가 결정됩니다. |
+| vTop | String, Number | Spin 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 Spin 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Spin 의 top 이 결정됩니다. |
+| vWidth | String, Number | Spin 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Spin 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Spin 의 width 가 결정됩니다. |
+| vHeight | String, Number | Spin 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Spin 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Spin 의 height 가 결정됩니다. |
+| vRight | String, Number | Spin 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 Spin 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Spin 의 right 가 결정됩니다. |
+| vBottom | String, Number | Spin 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 Spin 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Spin 의 bottom 이 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin00.move(10,10);
+this.Spin00.move(10,10,100,100);
+this.Spin00.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -4441,8 +4643,16 @@ Spin.moveToNext( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin.moveToNext( this.Button00 );
+this.Spin.moveToNext( "Button00" );
 ```
 
 **Return**
@@ -4480,8 +4690,16 @@ Spin.moveToPrev( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin.moveToPrev( this.Button00 );
+this.Spin.moveToPrev( "Button00" );
 ```
 
 **Return**
@@ -4518,15 +4736,23 @@ Spin.removeEvent( strEventID )
 
 **Parameters**
 
-```
-Spin 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | Spin 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.Spin00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -4557,15 +4783,26 @@ Spin.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin00_onmove = function( obj:nexacro.Spin,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Spin00.removeEventHandler( "onmove", this.Spin00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -4592,15 +4829,27 @@ Spin.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin00_onmove = function( obj:nexacro.Spin,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Spin00.removeEventHandlerLookup( "onmove", "Spin00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -4627,13 +4876,25 @@ Spin.resize( vWidth, vHeight )
 
 **Parameters**
 
-```
-Spin 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vWidth | String, Number | Spin 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 음수값을 설정할 수 없습니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Spin 의 width 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Spin 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Spin 의 width 가 결정됩니다. |
+| vHeight | String, Number | Spin 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+음수값을 설정할 수 없습니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Spin 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Spin 의 height 가 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin00.resize( 100,100 );
 ```
 
 **Return**
@@ -4749,16 +5010,26 @@ Spin.setCaretPos( [nIndex] )
 
 **Parameters**
 
-```
-캐럿이 위치할 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIndex | Number | 캐럿이 위치할 인덱스를 숫자로 설정합니다.
 인덱스는 0 부터 시작하며 "0 ~ 텍스트길이"까지 설정할 수 있습니다.
-"-1"을 설정할 경우 캐럿이 텍스트의 오른쪽 끝에 위치합니다.
+"-1"을 설정할 경우 캐럿이 텍스트의 오른쪽 끝에 위치합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = this.Spin00.setCaretPos();
+bSucc = this.Spin00.setCaretPos(2);
 ```
 
 **Return**
 
-캐럿 설정에 성공하면 "true"를 반환합니다.
-캐럿 설정에 실패하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 캐럿 설정에 성공하면 "true"를 반환합니다.
+캐럿 설정에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -4788,15 +5059,26 @@ Spin.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin00_onmove = function( obj:nexacro.Spin,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.Spin00.setEventHandler( "onmove", this.Spin00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4823,15 +5105,27 @@ Spin.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin00_onmove = function( obj:nexacro.Spin,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Spin00.setEventHandlerLookup( "onmove", "Spin00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4858,19 +5152,28 @@ Spin.setFocus( [bMoveScroll] )
 
 **Parameters**
 
-```
-부모 컴포넌트에 스크롤이 있을 경우, Spin 기준으로 스크롤을 이동할지 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bMoveScroll | Boolean | 부모 컴포넌트에 스크롤이 있을 경우, Spin 기준으로 스크롤을 이동할지 여부를 설정합니다.
 
 true: Spin 이(가) 화면에 표시되도록 스크롤을 이동합니다.
 false: Spin 위치와 관계없이 스크롤을 이동하지 않습니다.
 
-값을 지정하지 않으면 기본값은 true입니다.
+값을 지정하지 않으면 기본값은 true입니다. |
+
+**Sample Call**
+
+```javascript
+var objBefComp = this.Spin00.setFocus();
+var objBefComp = this.Spin00.setFocus( false );
 ```
 
 **Return**
 
-Spin 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
-이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Spin 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
+이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다. |
 
 **Remark**
 
@@ -4895,8 +5198,14 @@ Spin.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 Spin 의 bottom 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 컴포넌트의 Top 위치를 기준으로 Spin 의 bottom 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin.setOffsetBottom( 10 );
 ```
 
 **Return**
@@ -4929,8 +5238,14 @@ Spin.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-Spin 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | Spin 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin.setOffsetHeight( 10 );
 ```
 
 **Return**
@@ -4963,8 +5278,14 @@ Spin.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 Spin 의 left 값을 픽셀단위의 숫자로 설정합니다
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 컴포넌트의 Left 위치를 기준으로 Spin 의 left 값을 픽셀단위의 숫자로 설정합니다 |
+
+**Sample Call**
+
+```javascript
+this.Spin.setOffsetLeft( 10 );
 ```
 
 **Return**
@@ -4997,8 +5318,14 @@ Spin.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 Spin 의 right 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 컴포넌트의 Left 위치를 기준으로 Spin 의 right 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin.setOffsetRight( 600 );
 ```
 
 **Return**
@@ -5031,8 +5358,14 @@ Spin.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 Spin 의 top 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 컴포넌트의 Top 위치를 기준으로 Spin 의 top 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin.setOffsetTop( 10 );
 ```
 
 **Return**
@@ -5065,8 +5398,14 @@ Spin.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-Spin 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | Spin 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin.setOffsetWidth( 10 );
 ```
 
 **Return**
@@ -5099,8 +5438,15 @@ Spin.setRange(nMin,nMax)
 
 **Parameters**
 
-```
-value 속성이 가질 수 있는 최소값을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMin | Number | value 속성이 가질 수 있는 최소값을 실수로 설정합니다. |
+| nMax | Number | value 속성이 가질 수 있는 최대값을 실수로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Spin00.setRange(0, 100);
 ```
 
 **Return**
@@ -5136,20 +5482,40 @@ Spin.setSelect( [nBegin [,nEnd]] )
 
 **Parameters**
 
-```
-선택할 영역의 시작 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBegin | Number | 선택할 영역의 시작 인덱스를 숫자로 설정합니다.
 
 인덱스는 0 부터 시작하며 "0 ~ 텍스트길이" 까지 설정할 수 있습니다.
 -1 을 설정하면 선택할 영역의 시작 위치가 오른쪽 끝으로 설정됩니다.
 
-값 생략 시 0 으로 적용됩니다.
+값 생략 시 0 으로 적용됩니다. |
+| nEnd | Number | 선택할 영역의 끝 인덱스를 숫자로 설정합니다.
+
+인덱스는 0 부터 시작하며 "0 ~ 텍스트길이" 까지 설정할 수 있습니다.
+-1 을 설정하면 선택할 영역의 끝 위치가 오른쪽 끝으로 설정됩니다.
+
+값 생략 시 -1 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+
+this.Spin00.setFocus();
+
+bSucc = this.Spin00.setSelect();
+bSucc = this.Spin00.setSelect( 3 );
+bSucc = this.Spin00.setSelect( 3, 5 );
 ```
 
 **Return**
 
-지정된 영역의 선택에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 지정된 영역의 선택에 성공하면 true 를 반환합니다.
 
-지정된 영역의 선택에 실패하면 false 를 반환합니다.
+지정된 영역의 선택에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -5221,9 +5587,11 @@ var bSucc = this.Spin00.updateToDataset();
 
 **Return**
 
-반영에 성공하면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 반영에 성공하면 "true"를 반환합니다.
 
-반영에 실패하면 "false"를 반환합니다.
+반영에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -5252,16 +5620,19 @@ canchange(obj:nexacro.Spin,e:nexacro.ChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | ChangeEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값을 "true"로 반환하면 변경된 value 속성값이 적용됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값을 "true"로 반환하면 변경된 value 속성값이 적용됩니다.
 이벤트에서 리턴값을 "false"로 반환하면 value 속성값을 변경하지 않습니다.
 
-이벤트에서 리턴값을 생략하면 "true"로 적용됩니다.
+이벤트에서 리턴값을 생략하면 "true"로 적용됩니다. |
 
 **Remark**
 
@@ -5288,9 +5659,10 @@ onchanged(obj:nexacro.Spin,e:nexacro.ChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | ChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -5319,9 +5691,10 @@ oncontextmenu(obj:nexacro.Spin,e:nexacro.ContextMenuEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | ContextMenuEventInfo | Event Object. |
 
 **Return**
 
@@ -5361,15 +5734,18 @@ ondevicebuttonup(obj:nexacro.Spin,e:nexacro.DeviceButtonEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | DeviceButtonEventInfo | Event Object. |
 
 **Return**
 
-true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
-반환값을 생략하면 false로 적용됩니다.
+반환값을 생략하면 false로 적용됩니다. |
 
 **Remark**
 
@@ -5398,16 +5774,19 @@ ondrag(obj:nexacro.Spin,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 드래그 상태가 취소되고 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5441,16 +5820,19 @@ ondragenter(obj:nexacro.Spin,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5477,16 +5859,19 @@ ondragleave(obj:nexacro.Spin,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5513,16 +5898,19 @@ ondragmove(obj:nexacro.Spin,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5549,16 +5937,19 @@ ondrop(obj:nexacro.Spin,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5592,9 +5983,10 @@ oneditclick(obj:nexacro.Spin,e:nexacro.EditClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | EditClickEventInfo | Event Object. |
 
 **Return**
 
@@ -5625,9 +6017,10 @@ oninput(obj:nexacro.Spin,e:nexacro.InputEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | InputEventInfo | Event Object. |
 
 **Return**
 
@@ -5667,16 +6060,19 @@ onkeydown(obj:nexacro.Spin,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5731,16 +6127,19 @@ onkeyup(obj:nexacro.Spin,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5773,9 +6172,10 @@ onkillfocus(obj:nexacro.Spin,e:nexacro.KillFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | KillFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -5807,16 +6207,19 @@ onlbuttondown(obj:nexacro.Spin,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5857,16 +6260,19 @@ onlbuttonup(obj:nexacro.Spin,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5907,16 +6313,19 @@ onmouseenter(obj:nexacro.Spin,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5955,16 +6364,19 @@ onmouseleave(obj:nexacro.Spin,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6000,16 +6412,19 @@ onmousemove(obj:nexacro.Spin,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6045,9 +6460,10 @@ onmove(obj:nexacro.Spin,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -6072,16 +6488,19 @@ onrbuttondown(obj:nexacro.Spin,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6127,16 +6546,19 @@ onrbuttonup(obj:nexacro.Spin,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6181,9 +6603,10 @@ onsetfocus(obj:nexacro.Spin,e:nexacro.SetFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | SetFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -6226,9 +6649,10 @@ onsize(obj:nexacro.Spin,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -6253,16 +6677,19 @@ onspin(obj:nexacro.Spin,e:nexacro.SpinEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | SpinEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값을 "true"로 반환하면 변경된 value 속성값이 적용됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값을 "true"로 반환하면 변경된 value 속성값이 적용됩니다.
 이벤트에서 리턴값을 "false"로 반환하면 value 속성값을 변경하지 않습니다.
 
-이벤트에서 리턴값을 생략하면 "true"로 적용됩니다.
+이벤트에서 리턴값을 생략하면 "true"로 적용됩니다. |
 
 **Remark**
 
@@ -6289,16 +6716,19 @@ ontouchend(obj:nexacro.Spin,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6323,16 +6753,19 @@ ontouchmove(obj:nexacro.Spin,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6357,16 +6790,19 @@ ontouchstart(obj:nexacro.Spin,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Spin | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 

@@ -1627,15 +1627,24 @@ Plugin.callMethod( strMethodID, [varArg1, [varArg2...]])
 
 **Parameters**
 
-```
-호출할 메소드의 이름을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMethodID | String | 호출할 메소드의 이름을 문자열로 설정합니다. |
+| varArgN | Object | 호출할 메소드에 전달될 인수를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varRet = this.Plugin00.callMethod("Connect", "10.1.1.1", 1000);
 ```
 
 **Return**
 
-객체의 메소드에서 리턴값이 있을 경우 해당값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | 객체의 메소드에서 리턴값이 있을 경우 해당값을 반환합니다.
 
-객체의 메소드에서 오브젝트를 리턴한 경우 PluginObject 로 Wrapping 되어 반환될 수 있습니다.
+객체의 메소드에서 오브젝트를 리턴한 경우 PluginObject 로 Wrapping 되어 반환될 수 있습니다. |
 
 **Remark**
 
@@ -1673,7 +1682,9 @@ var nBottom = this.Plugin.getOffsetBottom();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 Plugin 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 Plugin 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -1702,7 +1713,9 @@ var nHeight = this.Plugin.getOffsetHeight();
 
 **Return**
 
-Plugin 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Plugin 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -1731,7 +1744,9 @@ var nleft = this.Plugin.getOffsetLeft();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 Plugin 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 Plugin 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -1760,7 +1775,9 @@ var nRight = this.Plugin.getOffsetRight();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 Plugin 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 Plugin 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -1789,7 +1806,9 @@ var nTop = this.Plugin.getOffsetTop();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 Plugin 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 Plugin 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -1818,7 +1837,9 @@ var nWidth = this.Plugin.getOffsetWidth();
 
 **Return**
 
-Plugin 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Plugin 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -1847,9 +1868,11 @@ var nbottom = this.Plugin.getPixelBottom();
 
 **Return**
 
-Plugin 의 bottom 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Plugin 의 bottom 속성값을 픽셀단위로 반환합니다.
 
-bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -1878,9 +1901,11 @@ var nheight = this.Plugin.getPixelHeight();
 
 **Return**
 
-Plugin 의 height 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Plugin 의 height 속성값을 픽셀단위로 반환합니다.
 
-height 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+height 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -1909,9 +1934,11 @@ var nleft = this.Plugin.getPixelLeft();
 
 **Return**
 
-Plugin 의 left 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Plugin 의 left 속성값을 픽셀단위로 반환합니다.
 
-left 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+left 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -1940,9 +1967,11 @@ var nright = this.Plugin.getPixelRight();
 
 **Return**
 
-Plugin 의 right 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Plugin 의 right 속성값을 픽셀단위로 반환합니다.
 
-right 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+right 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -1971,9 +2000,11 @@ var ntop = this.Plugin.getPixelTop();
 
 **Return**
 
-Plugin 의 top 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Plugin 의 top 속성값을 픽셀단위로 반환합니다.
 
-top 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+top 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2002,9 +2033,11 @@ var nwidth = this.Plugin.getPixelWidth();
 
 **Return**
 
-Plugin 의 width 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Plugin 의 width 속성값을 픽셀단위로 반환합니다.
 
-width 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+width 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2029,15 +2062,23 @@ Plugin.getProperty( strPropID )
 
 **Parameters**
 
-```
-Plugin 에 연결된 객체에 정의된 속성명을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strPropID | String | Plugin 에 연결된 객체에 정의된 속성명을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varPropValue = this.Plugin00.getProperty("port");
 ```
 
 **Return**
 
-객체의 속성이 가지고 있는 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | 객체의 속성이 가지고 있는 값을 반환합니다.
 
-객체의 속성값이 오브젝트인  경우 PluginObject 로 Wrapping 되어 반환될 수 있습니다.
+객체의 속성값이 오브젝트인  경우 PluginObject 로 Wrapping 되어 반환될 수 있습니다. |
 
 **Remark**
 
@@ -2068,8 +2109,62 @@ Plugin.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWid
 
 **Parameters**
 
-```
-Plugin 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | Plugin 의 ID를 문자열로 설정합니다. |
+| vLeft | String, Number | Plugin 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 Plugin 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Plugin 의 left 가 결정됩니다. |
+| vTop | String, Number | Plugin 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 Plugin 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Plugin 의 top 이 결정됩니다. |
+| vWidth | String, Number | Plugin 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Plugin 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Plugin 의 width 가 결정됩니다. |
+| vHeight | String, Number | Plugin 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Plugin 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Plugin 의 height 가 결정됩니다. |
+| vRight | String, Number | Plugin 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 Plugin 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Plugin 의 right 가 결정됩니다. |
+| vBottom | String, Number | Plugin 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 Plugin 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Plugin 의 bottom 이 결정됩니다. |
+| vMinWidth | String, Number | Plugin 이(가) 화면에 표시되는 최소 너비값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxWidth | String, Number | Plugin 이(가) 화면에 표시되는 최대 너비값을 pixel 단위의 숫자로 설정합니다.
+
+vMinWidth 보다 작은 값을 설정하면 vMinWidth 값으로 설정됩니다. |
+| vMinHeight | String, Number | Plugin 이(가) 화면에 표시되는 최소 높이값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxHeight | String, Number | Plugin 이(가) 화면에 표시되는 최대 높이값을 pixel 단위의 숫자로 설정합니다.
+
+vMinHeight 보다 작은 값을 설정하면 vMinHeight 값으로 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = new Plugin();
+
+objComp.init( "Plugin00", 30, 120, 196, 46 );
+objComp.init( "Plugin00", 30, 120, 196, 46, null, null );
+objComp.init( "Plugin00", null, null, 300, "400px", "80%", 300 );
+objComp.init( "Plugin00", 0, 0, 200, 100, null, null, 300, 500, 200, 500 );
+objComp.init( "Plugin00", "Plugin22:10", 300, null, null, "Plugin33:10", "20%", 300, 500, 200, 500 );
 ```
 
 **Return**
@@ -2123,9 +2218,11 @@ var bSucc = Plugin00.install();
 
 **Return**
 
-객체 설치에 성공하면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 객체 설치에 성공하면 "true"를 반환합니다.
 
-객체가 이미 설치되어 있거나 설치에 실패하면 "false"를 반환합니다.
+객체가 이미 설치되어 있거나 설치에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -2156,9 +2253,11 @@ var bRet = this.Plugin00.isInstalled();
 
 **Return**
 
-객체가 시스템에 설치되어 있으면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 객체가 시스템에 설치되어 있으면 "true"를 반환합니다.
 
-객체가 시스템에 설치되어 있지 않으면 "false"를 반환합니다.
+객체가 시스템에 설치되어 있지 않으면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -2189,9 +2288,11 @@ var bRet = this.Plugin00.isLoaded();
 
 **Return**
 
-객체가 Plugin 컴포넌트에 정상적으로 로드 되었으면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 객체가 Plugin 컴포넌트에 정상적으로 로드 되었으면 "true"를 반환합니다.
 
-객체가 Plugin 컴포넌트에 정상적으로 로드 되지 않았으면 "false"를 반환합니다.
+객체가 Plugin 컴포넌트에 정상적으로 로드 되지 않았으면 "false"를 반환합니다. |
 
 
 ---
@@ -2212,12 +2313,49 @@ Plugin.move( vLeft, vTop [, vWidth, vHeight [, vRight, vBottom]] )
 
 **Parameters**
 
-```
-Plugin 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | Plugin 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 Plugin 의 left 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Plugin 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Plugin 의 left 가 결정됩니다. |
+| vTop | String, Number | Plugin 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 Plugin 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Plugin 의 top 이 결정됩니다. |
+| vWidth | String, Number | Plugin 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Plugin 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Plugin 의 width 가 결정됩니다. |
+| vHeight | String, Number | Plugin 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Plugin 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Plugin 의 height 가 결정됩니다. |
+| vRight | String, Number | Plugin 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 Plugin 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Plugin 의 right 가 결정됩니다. |
+| vBottom | String, Number | Plugin 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 Plugin 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Plugin 의 bottom 이 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Plugin00.move(10,10);
+this.Plugin00.move(10,10,100,100);
+this.Plugin00.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -2254,8 +2392,16 @@ Plugin.moveToNext( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Plugin.moveToNext( this.Button00 );
+this.Plugin.moveToNext( "Button00" );
 ```
 
 **Return**
@@ -2293,8 +2439,16 @@ Plugin.moveToPrev( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Plugin.moveToPrev( this.Button00 );
+this.Plugin.moveToPrev( "Button00" );
 ```
 
 **Return**
@@ -2399,19 +2553,28 @@ Plugin.setFocus( [bMoveScroll] )
 
 **Parameters**
 
-```
-부모 컴포넌트에 스크롤이 있을 경우, Plugin 기준으로 스크롤을 이동할지 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bMoveScroll | Boolean | 부모 컴포넌트에 스크롤이 있을 경우, Plugin 기준으로 스크롤을 이동할지 여부를 설정합니다.
 
 true: Plugin 이(가) 화면에 표시되도록 스크롤을 이동합니다.
 false: Plugin 위치와 관계없이 스크롤을 이동하지 않습니다.
 
-값을 지정하지 않으면 기본값은 true입니다.
+값을 지정하지 않으면 기본값은 true입니다. |
+
+**Sample Call**
+
+```javascript
+var objBefComp = this.Plugin00.setFocus();
+var objBefComp = this.Plugin00.setFocus( false );
 ```
 
 **Return**
 
-Plugin 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
-이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Plugin 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
+이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다. |
 
 **Remark**
 
@@ -2436,8 +2599,14 @@ Plugin.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 Plugin 의 bottom 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 컴포넌트의 Top 위치를 기준으로 Plugin 의 bottom 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Plugin.setOffsetBottom( 10 );
 ```
 
 **Return**
@@ -2470,8 +2639,14 @@ Plugin.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-Plugin 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | Plugin 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Plugin.setOffsetHeight( 10 );
 ```
 
 **Return**
@@ -2504,8 +2679,14 @@ Plugin.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 Plugin 의 left 값을 픽셀단위의 숫자로 설정합니다
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 컴포넌트의 Left 위치를 기준으로 Plugin 의 left 값을 픽셀단위의 숫자로 설정합니다 |
+
+**Sample Call**
+
+```javascript
+this.Plugin.setOffsetLeft( 10 );
 ```
 
 **Return**
@@ -2538,8 +2719,14 @@ Plugin.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 Plugin 의 right 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 컴포넌트의 Left 위치를 기준으로 Plugin 의 right 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Plugin.setOffsetRight( 600 );
 ```
 
 **Return**
@@ -2572,8 +2759,14 @@ Plugin.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 Plugin 의 top 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 컴포넌트의 Top 위치를 기준으로 Plugin 의 top 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Plugin.setOffsetTop( 10 );
 ```
 
 **Return**
@@ -2606,8 +2799,14 @@ Plugin.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-Plugin 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | Plugin 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Plugin.setOffsetWidth( 10 );
 ```
 
 **Return**
@@ -2640,8 +2839,15 @@ Plugin.setProeprty( strPropID, varVal )
 
 **Parameters**
 
-```
-Plugin 에 연결된 객체에 정의된 속성명을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strPropID | String | Plugin 에 연결된 객체에 정의된 속성명을 문자열로 설정합니다. |
+| varVal | String | strPropID 값에 해당하는 속성에 설정할 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Plugin00.setProeprty("port", "8080"l)
 ```
 
 **Return**

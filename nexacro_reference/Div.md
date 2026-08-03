@@ -1507,8 +1507,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.Div00.enableevent = true;  
-
-this.Div00.enableevent = false;
+this.Div00.enableevent = false;
 ```
 - **`true`** — Div 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — Div 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -3084,8 +3083,7 @@ Div.tooltiptext[= strToolTipText]
 
 ```javascript
 this.Div00.tooltiptext = "This is ToolTip Text"; this.Div00.tooltiptext = "";          // 풍선 도움말이 표시되지 않습니다. 
-
-this.Div00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
+this.Div00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
 ```
 - **`strToolTipText`** — 풍선도움말에 표시할 텍스트를 설정합니다.
 
@@ -3255,9 +3253,7 @@ strUrl ::= <absolute-url> | <relative-url>
 ```
 ```javascript
 this.Div00.url = "http://localhost:8080/Prj/Base/temp00.xfdl.js";     // 절대경로
-
-this.Div00.url = "../Base/temp00.xfdl";                                        // 상대경로
-this.Div00.url = "Base::temp00.xfdl";                                           // TypeDefinition의 Services 경로
+this.Div00.url = "../Base/temp00.xfdl";                                        // 상대경로this.Div00.url = "Base::temp00.xfdl";                                           // TypeDefinition의 Services 경로
 ```
 - **`<absolute-url>`** — 웹에 Generate 된 파일을 "http://경로/폼명", "https://경로/폼명" 형식으로 설정합니다.
 
@@ -3515,14 +3511,23 @@ Div.addChild( strChildID, objComp )
 
 **Parameters**
 
-```
-자식으로 추가될 컴포넌트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strChildID | String | 자식으로 추가될 컴포넌트의 ID를 설정합니다. |
+| objComp | Object | 자식으로 추가될 컴포넌트의 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nIndex = this.Div00.addChild( "Button00", Button00 );
 ```
 
 **Return**
 
-추가된 자식 컴포넌트의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 자식 컴포넌트의 인덱스를 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -3569,15 +3574,23 @@ Div.addEvent( strEventID )
 
 **Parameters**
 
-```
-Div 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | Div 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.Div00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -3604,15 +3617,26 @@ Div.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div00_onmove = function( obj:nexacro.Div,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Div00.addEventHandler( "onmove", this.Div00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -3633,15 +3657,27 @@ Div.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div00_onmove = function( obj:nexacro.Div,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Div00.addEventHandlerLookup( "onmove", "Div00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -3735,13 +3771,21 @@ Div.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.Div00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -3770,9 +3814,11 @@ var bSucc = this.Div00.destroy();
 
 **Return**
 
-Div 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Div 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-Div 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+Div 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -3801,15 +3847,27 @@ Div.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div00_onmove = function( obj:nexacro.Div,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.Div00.findEventHandler( "onmove", this.Div00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3834,15 +3892,26 @@ Div.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = Div00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -3867,7 +3936,9 @@ var nBottom = this.Div.getOffsetBottom();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 Div 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 Div 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -3896,7 +3967,9 @@ var nHeight = this.Div.getOffsetHeight();
 
 **Return**
 
-Div 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Div 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -3925,7 +3998,9 @@ var nleft = this.Div.getOffsetLeft();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 Div 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 Div 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -3954,7 +4029,9 @@ var nRight = this.Div.getOffsetRight();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 Div 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 Div 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -3983,7 +4060,9 @@ var nTop = this.Div.getOffsetTop();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 Div 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 Div 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -4012,7 +4091,9 @@ var nWidth = this.Div.getOffsetWidth();
 
 **Return**
 
-Div 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Div 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -4041,9 +4122,11 @@ var nbottom = this.Div.getPixelBottom();
 
 **Return**
 
-Div 의 bottom 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Div 의 bottom 속성값을 픽셀단위로 반환합니다.
 
-bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4072,9 +4155,11 @@ var nheight = this.Div.getPixelHeight();
 
 **Return**
 
-Div 의 height 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Div 의 height 속성값을 픽셀단위로 반환합니다.
 
-height 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+height 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4103,9 +4188,11 @@ var nleft = this.Div.getPixelLeft();
 
 **Return**
 
-Div 의 left 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Div 의 left 속성값을 픽셀단위로 반환합니다.
 
-left 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+left 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4134,9 +4221,11 @@ var nright = this.Div.getPixelRight();
 
 **Return**
 
-Div 의 right 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Div 의 right 속성값을 픽셀단위로 반환합니다.
 
-right 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+right 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4165,9 +4254,11 @@ var ntop = this.Div.getPixelTop();
 
 **Return**
 
-Div 의 top 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Div 의 top 속성값을 픽셀단위로 반환합니다.
 
-top 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+top 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4196,9 +4287,11 @@ var nwidth = this.Div.getPixelWidth();
 
 **Return**
 
-Div 의 width 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Div 의 width 속성값을 픽셀단위로 반환합니다.
 
-width 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+width 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4223,8 +4316,62 @@ Div.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth,
 
 **Parameters**
 
-```
-Div 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | Div 의 ID를 문자열로 설정합니다. |
+| vLeft | String, Number | Div 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 Div 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Div 의 left 가 결정됩니다. |
+| vTop | String, Number | Div 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 Div 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Div 의 top 이 결정됩니다. |
+| vWidth | String, Number | Div 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Div 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Div 의 width 가 결정됩니다. |
+| vHeight | String, Number | Div 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Div 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Div 의 height 가 결정됩니다. |
+| vRight | String, Number | Div 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 Div 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Div 의 right 가 결정됩니다. |
+| vBottom | String, Number | Div 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 Div 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Div 의 bottom 이 결정됩니다. |
+| vMinWidth | String, Number | Div 이(가) 화면에 표시되는 최소 너비값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxWidth | String, Number | Div 이(가) 화면에 표시되는 최대 너비값을 pixel 단위의 숫자로 설정합니다.
+
+vMinWidth 보다 작은 값을 설정하면 vMinWidth 값으로 설정됩니다. |
+| vMinHeight | String, Number | Div 이(가) 화면에 표시되는 최소 높이값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxHeight | String, Number | Div 이(가) 화면에 표시되는 최대 높이값을 pixel 단위의 숫자로 설정합니다.
+
+vMinHeight 보다 작은 값을 설정하면 vMinHeight 값으로 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = new Div();
+
+objComp.init( "Div00", 30, 120, 196, 46 );
+objComp.init( "Div00", 30, 120, 196, 46, null, null );
+objComp.init( "Div00", null, null, 300, "400px", "80%", 300 );
+objComp.init( "Div00", 0, 0, 200, 100, null, null, 300, 500, 200, 500 );
+objComp.init( "Div00", "Div22:10", 300, null, null, "Div33:10", "20%", 300, 500, 200, 500 );
 ```
 
 **Return**
@@ -4272,15 +4419,25 @@ Div.insertChild( nIdx, strChildID, objComp )
 
 **Parameters**
 
-```
-부모 컴포넌트에 추가 될 순서를 설정합니다.
-"-1"로 설정할 경우 자식 컴포넌트 중 제일 마지막에 추가됩니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIdx | Number | 부모 컴포넌트에 추가 될 순서를 설정합니다.
+"-1"로 설정할 경우 자식 컴포넌트 중 제일 마지막에 추가됩니다. |
+| strChildID | String | 자식으로 추가될 컴포넌트의 ID를 설정합니다. |
+| objComp | Object | 자식으로 추가될 컴포넌트의 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nIndex = this.Div00.insertChild( 0, "Button00", Button00 );
 ```
 
 **Return**
 
-추가된 자식 컴포넌트의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 자식 컴포넌트의 인덱스를 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -4327,16 +4484,33 @@ Div.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div00_onmove = function( obj:nexacro.Div,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.Div00.insertEventHandler( "onmove", 0, this.Div00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4361,12 +4535,49 @@ Div.move( vLeft, vTop [, vWidth, vHeight [, vRight, vBottom]] )
 
 **Parameters**
 
-```
-Div 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | Div 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 Div 의 left 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Div 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Div 의 left 가 결정됩니다. |
+| vTop | String, Number | Div 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 Div 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Div 의 top 이 결정됩니다. |
+| vWidth | String, Number | Div 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Div 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Div 의 width 가 결정됩니다. |
+| vHeight | String, Number | Div 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Div 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Div 의 height 가 결정됩니다. |
+| vRight | String, Number | Div 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 Div 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Div 의 right 가 결정됩니다. |
+| vBottom | String, Number | Div 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 Div 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Div 의 bottom 이 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Div00.move(10,10);
+this.Div00.move(10,10,100,100);
+this.Div00.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -4403,8 +4614,16 @@ Div.moveToNext( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div.moveToNext( this.Button00 );
+this.Div.moveToNext( "Button00" );
 ```
 
 **Return**
@@ -4442,8 +4661,16 @@ Div.moveToPrev( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div.moveToPrev( this.Button00 );
+this.Div.moveToPrev( "Button00" );
 ```
 
 **Return**
@@ -4519,14 +4746,22 @@ Div.removeChild( strChildID )
 
 **Parameters**
 
-```
-제거할 자식 컴포넌트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strChildID | String | 제거할 자식 컴포넌트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDelete = this.Div00.removeChild( "Button00" );
 ```
 
 **Return**
 
-컴포넌트 제거에 성공하면 제거된 컴포넌트의 오브젝트를 반환합니다.
-컴포넌트 제거에 실패하면 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 컴포넌트 제거에 성공하면 제거된 컴포넌트의 오브젝트를 반환합니다.
+컴포넌트 제거에 실패하면 "null"을 반환합니다. |
 
 **Remark**
 
@@ -4563,15 +4798,23 @@ Div.removeEvent( strEventID )
 
 **Parameters**
 
-```
-Div 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | Div 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.Div00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -4602,15 +4845,26 @@ Div.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div00_onmove = function( obj:nexacro.Div,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Div00.removeEventHandler( "onmove", this.Div00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -4637,15 +4891,27 @@ Div.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div00_onmove = function( obj:nexacro.Div,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Div00.removeEventHandlerLookup( "onmove", "Div00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -4672,13 +4938,25 @@ Div.resize( vWidth, vHeight )
 
 **Parameters**
 
-```
-Div 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vWidth | String, Number | Div 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 음수값을 설정할 수 없습니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Div 의 width 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Div 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Div 의 width 가 결정됩니다. |
+| vHeight | String, Number | Div 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+음수값을 설정할 수 없습니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Div 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Div 의 height 가 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Div00.resize( 100,100 );
 ```
 
 **Return**
@@ -4794,21 +5072,33 @@ Div.setContents( strCont );
 
 **Parameters**
 
-```
-Div 의 내부 구성 컨텐츠 정보를 XML 형태의 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strCont | String | Div 의 내부 구성 컨텐츠 정보를 XML 형태의 문자열로 설정합니다.
 
 "<Layout> ... </Layout>" 형태로 레이아웃 태그를 포함하여 설정하여야 합니다.
 
 컨텐츠 정보에 User Property 를 포함할 수 있습니다.
-컨텐츠 정보에 Invisible Object, Bind Object, InitValue Object 는 포함할 수 없습니다.
+컨텐츠 정보에 Invisible Object, Bind Object, InitValue Object 는 포함할 수 없습니다. |
+
+**Sample Call**
+
+```javascript
+var strCont =  '<Layout>'
+                 + '    <Button id="Button00" taborder="0" text="Button00" left="50" top="50" width="100" height="50"/>'
+                 + '</Layout>';
+
+this.Div00.setContents( strCont );
 ```
 
 **Return**
 
-컨텐츠 생성에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 컨텐츠 생성에 성공하면 true 를 반환합니다.
 컨텐츠 생성에 실패하면 false 를 반환합니다.
 
-문자열 파싱 중 오류가 발생하거나 잘못된 컴포넌트(오타 포함) 정의에 의해 오류가 발생할 경우 컨텐츠 생성에 실패하게 됩니다.
+문자열 파싱 중 오류가 발생하거나 잘못된 컴포넌트(오타 포함) 정의에 의해 오류가 발생할 경우 컨텐츠 생성에 실패하게 됩니다. |
 
 **Remark**
 
@@ -4833,15 +5123,26 @@ Div.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div00_onmove = function( obj:nexacro.Div,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.Div00.setEventHandler( "onmove", this.Div00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4868,15 +5169,27 @@ Div.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div00_onmove = function( obj:nexacro.Div,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Div00.setEventHandlerLookup( "onmove", "Div00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4903,19 +5216,36 @@ Div.setFocus( [bMoveScroll [, bInnerFocus]] )
 
 **Parameters**
 
-```
-부모 컴포넌트에 스크롤이 있을 경우, Div 기준으로 스크롤을 이동할지 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bMoveScroll | Boolean | 부모 컴포넌트에 스크롤이 있을 경우, Div 기준으로 스크롤을 이동할지 여부를 설정합니다.
 
 true: Div 이(가) 화면에 표시되도록 스크롤을 이동합니다.
 false: Div 위치와 관계없이 스크롤을 이동하지 않습니다.
 
-값을 지정하지 않으면 기본값은 true입니다.
+값을 지정하지 않으면 기본값은 true입니다. |
+| bInnerFocus | Boolean | 자식 컴포넌트(또는 아이템으로 등록된 컴포넌트)로 포커스를 이동할지 여부를 설정합니다.
+
+true: 포커스를 받을 수 있는 첫 번째 컴포넌트로 포커스를 이동합니다.
+       포커스를 받을 수 있는 컴포넌트가 없는 경우 Div 에 포커스가 설정됩니다.
+false: Div 에 포커스를 설정합니다.
+
+값을 설정하지 않으면 기본값은 true입니다. |
+
+**Sample Call**
+
+```javascript
+var objBefComp = this.Div00.setFocus();
+var objBefComp = this.Div00.setFocus( false );
+var objBefComp = this.Div00.setFocus( true, false );
 ```
 
 **Return**
 
-Div 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
-이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Div 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
+이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다. |
 
 **Remark**
 
@@ -4940,8 +5270,14 @@ Div.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 Div 의 bottom 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 컴포넌트의 Top 위치를 기준으로 Div 의 bottom 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div.setOffsetBottom( 10 );
 ```
 
 **Return**
@@ -4974,8 +5310,14 @@ Div.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-Div 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | Div 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div.setOffsetHeight( 10 );
 ```
 
 **Return**
@@ -5008,8 +5350,14 @@ Div.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 Div 의 left 값을 픽셀단위의 숫자로 설정합니다
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 컴포넌트의 Left 위치를 기준으로 Div 의 left 값을 픽셀단위의 숫자로 설정합니다 |
+
+**Sample Call**
+
+```javascript
+this.Div.setOffsetLeft( 10 );
 ```
 
 **Return**
@@ -5042,8 +5390,14 @@ Div.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 Div 의 right 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 컴포넌트의 Left 위치를 기준으로 Div 의 right 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div.setOffsetRight( 600 );
 ```
 
 **Return**
@@ -5076,8 +5430,14 @@ Div.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 Div 의 top 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 컴포넌트의 Top 위치를 기준으로 Div 의 top 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div.setOffsetTop( 10 );
 ```
 
 **Return**
@@ -5110,8 +5470,14 @@ Div.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-Div 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | Div 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Div.setOffsetWidth( 10 );
 ```
 
 **Return**
@@ -5182,9 +5548,10 @@ onclick(obj:nexacro.Div,e:nexacro.ClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | ClickEventInfo | Event Object. |
 
 **Return**
 
@@ -5221,9 +5588,10 @@ oncontextmenu(obj:nexacro.Div,e:nexacro.ContextMenuEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | ContextMenuEventInfo | Event Object. |
 
 **Return**
 
@@ -5254,15 +5622,18 @@ ondevicebuttonup(obj:nexacro.Div,e:nexacro.DeviceButtonEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | DeviceButtonEventInfo | Event Object. |
 
 **Return**
 
-true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
-반환값을 생략하면 false로 적용됩니다.
+반환값을 생략하면 false로 적용됩니다. |
 
 **Remark**
 
@@ -5291,16 +5662,19 @@ ondrag(obj:nexacro.Div,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 드래그 상태가 취소되고 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5334,16 +5708,19 @@ ondragenter(obj:nexacro.Div,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5370,16 +5747,19 @@ ondragleave(obj:nexacro.Div,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5406,16 +5786,19 @@ ondragmove(obj:nexacro.Div,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5442,16 +5825,19 @@ ondrop(obj:nexacro.Div,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5485,9 +5871,10 @@ onhscroll(obj:nexacro.Div,e:nexacro.ScrollEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | ScrollEventInfo | Event Object. |
 
 **Return**
 
@@ -5512,16 +5899,19 @@ onkeydown(obj:nexacro.Div,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5568,16 +5958,19 @@ onkeyup(obj:nexacro.Div,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5610,9 +6003,10 @@ onkillfocus(obj:nexacro.Div,e:nexacro.KillFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | KillFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -5644,16 +6038,19 @@ onlbuttondown(obj:nexacro.Div,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5693,16 +6090,19 @@ onlbuttonup(obj:nexacro.Div,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5734,16 +6134,19 @@ onmousedown(obj:nexacro.Div,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5773,16 +6176,19 @@ onmouseenter(obj:nexacro.Div,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5821,16 +6227,19 @@ onmouseleave(obj:nexacro.Div,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5866,16 +6275,19 @@ onmousemove(obj:nexacro.Div,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5911,16 +6323,19 @@ onmouseup(obj:nexacro.Div,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5952,16 +6367,19 @@ onmousewheel(obj:nexacro.Div,e:nexacro.MouseWheelEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | MouseWheelEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6000,9 +6418,10 @@ onmove(obj:nexacro.Div,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -6027,16 +6446,19 @@ onrbuttondown(obj:nexacro.Div,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6077,16 +6499,19 @@ onrbuttonup(obj:nexacro.Div,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6126,9 +6551,10 @@ onsetfocus(obj:nexacro.Div,e:nexacro.SetFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | SetFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -6171,9 +6597,10 @@ onsize(obj:nexacro.Div,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -6198,16 +6625,19 @@ ontouchend(obj:nexacro.Div,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6232,16 +6662,19 @@ ontouchmove(obj:nexacro.Div,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6266,16 +6699,19 @@ ontouchstart(obj:nexacro.Div,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6304,9 +6740,10 @@ onvscroll(obj:nexacro.Div,e:nexacro.ScrollEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Div | Event가 발생한 Object. |
+| e | ScrollEventInfo | Event Object. |
 
 **Return**
 

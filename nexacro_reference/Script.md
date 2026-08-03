@@ -141,17 +141,26 @@ Date.addDate(nDays)
 
 **Parameters**
 
-```
-Date 오브젝트에 더할 날짜(Day) 수를 숫자로 설정합나다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nDays | Number | Date 오브젝트에 더할 날짜(Day) 수를 숫자로 설정합나다.
 
-음수로 설정 시 Date 오브젝트에서 설정한 날짜 (Day)수를 뺍니다.
+음수로 설정 시 Date 오브젝트에서 설정한 날짜 (Day)수를 뺍니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+var nMs = objDate.addDate(30);
 ```
 
 **Return**
 
-Date 오브젝트에 저장된 날짜에 지정한 날짜만큼 더한 날짜를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Date 오브젝트에 저장된 날짜에 지정한 날짜만큼 더한 날짜를 반환합니다.
 
-UTC(협정세계시) 1970년 1월 1일 자정부터 밀리초 단위로 저장된 시간 값을 반환합니다.
+UTC(협정세계시) 1970년 1월 1일 자정부터 밀리초 단위로 저장된 시간 값을 반환합니다. |
 
 
 ---
@@ -172,17 +181,26 @@ Date.addHours(nHours)
 
 **Parameters**
 
-```
-Date 오브젝트에 더할 시간값(Hour)을 숫자로 설정합나다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHours | Number | Date 오브젝트에 더할 시간값(Hour)을 숫자로 설정합나다.
 
-음수로 설정 시 Date 오브젝트에서 설정한 시간값(Hour)을 뺍니다.
+음수로 설정 시 Date 오브젝트에서 설정한 시간값(Hour)을 뺍니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+var nMs = objDate.addHours(10);
 ```
 
 **Return**
 
-Date 오브젝트에 저장된 날짜에 지정한 시간만큼 더한 날짜를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Date 오브젝트에 저장된 날짜에 지정한 시간만큼 더한 날짜를 반환합니다.
 
-UTC(협정세계시) 1970년 1월 1일 자정부터 밀리초 단위로 저장된 시간 값을 반환합니다.
+UTC(협정세계시) 1970년 1월 1일 자정부터 밀리초 단위로 저장된 시간 값을 반환합니다. |
 
 
 ---
@@ -203,17 +221,26 @@ Date.addMilliseconds(nMsec)
 
 **Parameters**
 
-```
-Date 오브젝트에 더할 밀리초값(MilliSecond)을 숫자로 설정합나다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMsec | Number | Date 오브젝트에 더할 밀리초값(MilliSecond)을 숫자로 설정합나다.
 
-음수로 설정 시 Date 오브젝트에서 설정한 밀리초값(MilliSecond)을 뺍니다.
+음수로 설정 시 Date 오브젝트에서 설정한 밀리초값(MilliSecond)을 뺍니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+var nMs = objDate.addMilliseconds(80);
 ```
 
 **Return**
 
-Date 오브젝트에 저장된 날짜에 지정한 밀리초만큼 더한 날짜를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Date 오브젝트에 저장된 날짜에 지정한 밀리초만큼 더한 날짜를 반환합니다.
 
-UTC(협정세계시) 1970년 1월 1일 자정부터 밀리초 단위로 저장된 시간 값을 반환합니다.
+UTC(협정세계시) 1970년 1월 1일 자정부터 밀리초 단위로 저장된 시간 값을 반환합니다. |
 
 
 ---
@@ -234,17 +261,26 @@ Date.addMinutes(nMinutes)
 
 **Parameters**
 
-```
-Date 오브젝트에 더할 분값(Minutes)을 숫자로 설정합나다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMinutes | Number | Date 오브젝트에 더할 분값(Minutes)을 숫자로 설정합나다.
 
-음수로 설정 시 Date 오브젝트에서 설정한 분값(Minutes)을 뺍니다.
+음수로 설정 시 Date 오브젝트에서 설정한 분값(Minutes)을 뺍니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+var nMs = objDate.addMinutes(5);
 ```
 
 **Return**
 
-Date 오브젝트에 저장된 날짜에 지정한 분(Minutes)만큼 더한 날짜를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Date 오브젝트에 저장된 날짜에 지정한 분(Minutes)만큼 더한 날짜를 반환합니다.
 
-UTC(협정세계시) 1970년 1월 1일 자정부터 밀리초 단위로 저장된 시간 값을 반환합니다.
+UTC(협정세계시) 1970년 1월 1일 자정부터 밀리초 단위로 저장된 시간 값을 반환합니다. |
 
 
 ---
@@ -265,17 +301,26 @@ Date.addMonth(nMonths)
 
 **Parameters**
 
-```
-Date 오브젝트에 더할 월값(Month)을 숫자로 설정합나다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMonths | Number | Date 오브젝트에 더할 월값(Month)을 숫자로 설정합나다.
 
-음수로 설정 시 Date 오브젝트에서 설정한 월값(Month)을 뺍니다.
+음수로 설정 시 Date 오브젝트에서 설정한 월값(Month)을 뺍니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+var nMs = objDate.addMonth(3);
 ```
 
 **Return**
 
-Date 오브젝트에 저장된 날짜에 지정한 월(Month)만큼 더한 날짜를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Date 오브젝트에 저장된 날짜에 지정한 월(Month)만큼 더한 날짜를 반환합니다.
 
-UTC(협정세계시) 1970년 1월 1일 자정부터 밀리초 단위로 저장된 시간 값을 반환합니다.
+UTC(협정세계시) 1970년 1월 1일 자정부터 밀리초 단위로 저장된 시간 값을 반환합니다. |
 
 
 ---
@@ -296,17 +341,26 @@ Date.addSeconds(nSeconds)
 
 **Parameters**
 
-```
-Date 오브젝트에 더할 초값(Second)을 숫자로 설정합나다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nSeconds | Number | Date 오브젝트에 더할 초값(Second)을 숫자로 설정합나다.
 
-음수로 설정 시 Date 오브젝트에서 설정한 초값(Second)을 뺍니다.
+음수로 설정 시 Date 오브젝트에서 설정한 초값(Second)을 뺍니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+var nMs = objDate.addSeconds(30);
 ```
 
 **Return**
 
-Date 오브젝트에 저장된 날짜에 지정한 초(Second)만큼 더한 날짜를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Date 오브젝트에 저장된 날짜에 지정한 초(Second)만큼 더한 날짜를 반환합니다.
 
-UTC(협정세계시) 1970년 1월 1일 자정부터 밀리초 단위로 저장된 시간 값을 반환합니다.
+UTC(협정세계시) 1970년 1월 1일 자정부터 밀리초 단위로 저장된 시간 값을 반환합니다. |
 
 
 ---
@@ -327,17 +381,26 @@ Date.addYear(nYears)
 
 **Parameters**
 
-```
-Date 오브젝트에 더할 년수값(Year)을 숫자로 설정합나다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nYears | Number | Date 오브젝트에 더할 년수값(Year)을 숫자로 설정합나다.
 
-음수로 설정 시 Date 오브젝트에서 설정한 년수값(Year)을 뺍니다.
+음수로 설정 시 Date 오브젝트에서 설정한 년수값(Year)을 뺍니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+var nMs = objDate.addYear(3);
 ```
 
 **Return**
 
-Date 오브젝트에 저장된 날짜에 지정한 년수(Year)만큼 더한 날짜를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Date 오브젝트에 저장된 날짜에 지정한 년수(Year)만큼 더한 날짜를 반환합니다.
 
-UTC(협정세계시) 1970년 1월 1일 자정부터 밀리초 단위로 저장된 시간 값을 반환합니다.
+UTC(협정세계시) 1970년 1월 1일 자정부터 밀리초 단위로 저장된 시간 값을 반환합니다. |
 
 
 ---
@@ -364,7 +427,9 @@ trace(objDate.getDate());
 
 **Return**
 
-1 부터 31 사이의 날짜 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1 부터 31 사이의 날짜 값을 반환합니다. |
 
 **Remark**
 
@@ -398,7 +463,9 @@ trace(objDate.getDay());
 
 **Return**
 
-0 (일요일) 부터 6 (토요일) 사이의 요일 코드값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 0 (일요일) 부터 6 (토요일) 사이의 요일 코드값을 반환합니다. |
 
 **Remark**
 
@@ -435,7 +502,9 @@ trace(objDate.getFullYear());
 
 **Return**
 
-네자리 년도(Year)값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 네자리 년도(Year)값을 반환합니다. |
 
 **Remark**
 
@@ -472,7 +541,9 @@ trace(objDate.getHours());
 
 **Return**
 
-0 부터 23 까지의 시(Hour)값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 0 부터 23 까지의 시(Hour)값을 반환합니다. |
 
 **Remark**
 
@@ -510,7 +581,9 @@ trace(objDate.getMilliseconds());
 
 **Return**
 
-0 부터 999 사이의 밀리초(MilliSecond)값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 0 부터 999 사이의 밀리초(MilliSecond)값을 반환합니다. |
 
 **Remark**
 
@@ -544,7 +617,9 @@ trace(objDate.getMinutes());
 
 **Return**
 
-0 부터 59 사이의 분(Minute)값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 0 부터 59 사이의 분(Minute)값을 반환합니다. |
 
 **Remark**
 
@@ -582,7 +657,9 @@ trace(objDate.getMonth());
 
 **Return**
 
-0 (1월) 부터 11 (12월) 사이의 월(Month) 코드값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 0 (1월) 부터 11 (12월) 사이의 월(Month) 코드값을 반환합니다. |
 
 **Remark**
 
@@ -619,7 +696,9 @@ trace(objDate.getSeconds());
 
 **Return**
 
-0 부터 59 사이의 초(Second)값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 0 부터 59 사이의 초(Second)값을 반환합니다. |
 
 **Remark**
 
@@ -657,7 +736,9 @@ trace(objDate.getTime());
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -694,9 +775,11 @@ trace(objDate.getTimezoneOffset());
 
 **Return**
 
-Date 오브젝트에 저장된 값과 UTC(협정세계시) 사이의 시간차를 분(Minute)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Date 오브젝트에 저장된 값과 UTC(협정세계시) 사이의 시간차를 분(Minute)값으로 반환합니다.
 
-Date 오브젝트에 저장된 값이 태평양 일광 절약 시간(PDT)처럼 UTC보다 느리면 양수가 되고 한국이나 일본처럼 UTC보다 빠르면 음수가 됩니다.
+Date 오브젝트에 저장된 값이 태평양 일광 절약 시간(PDT)처럼 UTC보다 느리면 양수가 되고 한국이나 일본처럼 UTC보다 빠르면 음수가 됩니다. |
 
 **Example**
 
@@ -726,7 +809,9 @@ trace(objDate.getUTCDate());
 
 **Return**
 
-1 부터 31 사이의 날짜 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1 부터 31 사이의 날짜 값을 반환합니다. |
 
 **Remark**
 
@@ -760,7 +845,9 @@ trace(objDate.getUTCDay());
 
 **Return**
 
-0 (일요일) 부터 6 (토요일) 사이의 요일 코드값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 0 (일요일) 부터 6 (토요일) 사이의 요일 코드값을 반환합니다. |
 
 **Remark**
 
@@ -797,7 +884,9 @@ trace(objDate.getUTCFullYear());
 
 **Return**
 
-네자리 년도(Year)값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 네자리 년도(Year)값을 반환합니다. |
 
 **Remark**
 
@@ -834,7 +923,9 @@ trace(objDate.getUTCHours());
 
 **Return**
 
-0 부터 23 까지의 시(Hour)값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 0 부터 23 까지의 시(Hour)값을 반환합니다. |
 
 **Remark**
 
@@ -872,7 +963,9 @@ trace(objDate.getUTCMilliseconds());
 
 **Return**
 
-0 부터 999 사이의 밀리초(MilliSecond)값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 0 부터 999 사이의 밀리초(MilliSecond)값을 반환합니다. |
 
 **Example**
 
@@ -902,7 +995,9 @@ trace(objDate.getUTCMinutes());
 
 **Return**
 
-0 부터 59 사이의 분(Minute)값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 0 부터 59 사이의 분(Minute)값을 반환합니다. |
 
 **Remark**
 
@@ -938,7 +1033,9 @@ trace(objDate.getUTCMonth());
 
 **Return**
 
-0 (1월) 부터 11 (12월) 사이의 월(Month) 코드값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 0 (1월) 부터 11 (12월) 사이의 월(Month) 코드값을 반환합니다. |
 
 **Remark**
 
@@ -975,7 +1072,9 @@ trace(objDate.getUTCSeconds());
 
 **Return**
 
-0 부터 59 사이의 초(Second)값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 0 부터 59 사이의 초(Second)값을 반환합니다. |
 
 **Remark**
 
@@ -1011,10 +1110,12 @@ trace(objDate.getYear());
 
 **Return**
 
-1900년에서 1999년까지의 날짜는 두자리 년도(Year)값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1900년에서 1999년까지의 날짜는 두자리 년도(Year)값을 반환합니다.
 이 기간 외의 날짜는 네자리 년도(Year)값을 반환합니다.
 
-예를 들어, 1996년은 96으로 반환하고 1825년이나 2025년은 네자리 그대로 반환됩니다.
+예를 들어, 1996년은 96으로 반환하고 1825년이나 2025년은 네자리 그대로 반환됩니다. |
 
 **Remark**
 
@@ -1043,17 +1144,26 @@ Date.parse(strDate)
 
 **Parameters**
 
-```
-날짜 형식의 문자열을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strDate | String | 날짜 형식의 문자열을 설정합니다.
 
-유효하지 않은 날짜형식의 문자열은 오류로 처리됩니다.
+유효하지 않은 날짜형식의 문자열은 오류로 처리됩니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+var nMs = objDate.parse("2021-06-29T11:00:00.000Z");
 ```
 
 **Return**
 
-1970년 1월 1일 자정과 지정된 날짜 사이의 시간을 밀리초(MilliSecond)로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정과 지정된 날짜 사이의 시간을 밀리초(MilliSecond)로 반환합니다.
 
-유효하지 않은 날짜형식으로 오류로 처리되면 NaN을 반환합니다.
+유효하지 않은 날짜형식으로 오류로 처리되면 NaN을 반환합니다. |
 
 **Remark**
 
@@ -1101,17 +1211,27 @@ Date.setDate(nDate)
 
 **Parameters**
 
-```
-변경시킬 날짜(Day)를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nDate | Number | 변경시킬 날짜(Day)를 숫자로 설정합니다.
 
 현재 달(Month)의 마지막 날짜(Day) 보다 큰 수를 설정하면 다음달로 전체 날짜값이 변경됩니다.
 0 을 설정하면 이전 달의 마지막 날로 전체 날짜값이 변경됩니다.
-음수를 설정하면 이전 달의 마지막 날부터 날짜(Day)를 거꾸로 계산하여 전체 날짜값이 변경됩니다.
+음수를 설정하면 이전 달의 마지막 날부터 날짜(Day)를 거꾸로 계산하여 전체 날짜값이 변경됩니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+traceobjDate.setDate(28));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 변경된 날짜까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 변경된 날짜까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1144,13 +1264,30 @@ Date.setFullYear(nYear[, nMonth[, nDate]])
 
 **Parameters**
 
-```
-변경시킬 년도(Year)값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nYear | Number | 변경시킬 년도(Year)값을 설정합니다. |
+| nMonth | Number | 변경시킬 0 (1월) 부터 11 (12월) 사이의 월(Month) 코드값을 설정합니다.
+
+값을 설정하지 않으면 월(Month)을 변경하지 않습니다. |
+| nDate | Number | 변경시킬 날짜(Day)값을 설정합니다.
+
+값을 설정하지 않으면 날짜(Day)를 변경하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.setFullYear(2009));
+trace(objDate.setFullYear(2009,3,1));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1180,13 +1317,34 @@ Date.setHours(nHours[, nMinutes[, nSeconds[, nMillisecond]]])
 
 **Parameters**
 
-```
-변경시킬 시(Hour)값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHours | Number | 변경시킬 시(Hour)값을 설정합니다. |
+| nMinutes | Number | 변경시킬 분(Minute)값을 설정합니다.
+
+값을 설정하지 않으면 분(Minute)을 변경하지 않습니다. |
+| nSeconds | Number | 변경시킬 초(Second)값을 설정합니다.
+
+값을 설정하지 않으면 초(Second)를 변경하지 않습니다. |
+| nMillisecond | Number | 변경시킬 밀리초(MilliSecond)값을 설정합니다.
+
+값을 설정하지 않으면 밀리초(MilliSecond)를 변경하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.setHours( 13 ));
+trace(objDate.setHours( 13, 24 ));
+trace(objDate.setHours( 13, 59, 59, 999 ));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1218,13 +1376,23 @@ Date.setMilliseconds(nMilliSecond)
 
 **Parameters**
 
-```
-변경시킬 밀리초(MilliSecond)값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMilliSecond | Number | 변경시킬 밀리초(MilliSecond)값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.setMilliseconds(568));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1254,13 +1422,31 @@ Date.setMinutes(nMinutes[, nSeconds[, nMillisecond]])
 
 **Parameters**
 
-```
-변경시킬 분(Minute)값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMinutes | Number | 변경시킬 분(Minute)값을 설정합니다. |
+| nSeconds | Number | 변경시킬 초(Second)값을 설정합니다.
+
+값을 설정하지 않으면 초(Second)를 변경하지 않습니다. |
+| nMillisecond | Number | 변경시킬 밀리초(MilliSecond)값을 설정합니다.
+
+값을 설정하지 않으면 밀리초(MilliSecond)를 변경하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.setMinutes( 49 ));
+trace(objDate.setMinutes( 49, 59 ));
+trace(objDate.setMinutes( 49, 59, 999 ));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1292,13 +1478,27 @@ Date.setMonth(nMonth[, nDate])
 
 **Parameters**
 
-```
-변경시킬 0 (1월) 부터 11 (12월) 사이의 월(Month) 코드값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMonth | Number | 변경시킬 0 (1월) 부터 11 (12월) 사이의 월(Month) 코드값을 설정합니다. |
+| nDate | Number | 변경시킬 날짜(Day)값을 설정합니다.
+
+값을 설정하지 않으면 날짜(Day)를 변경하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.setMonth( 3 ));
+trace(objDate.setMonth( 3, 15 ));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1329,13 +1529,27 @@ Date.setSeconds(nSeconds[, nMillisecond])
 
 **Parameters**
 
-```
-변경시킬 초(Second)값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nSeconds | Number | 변경시킬 초(Second)값을 설정합니다. |
+| nMillisecond | Number | 변경시킬 밀리초(MilliSecond)값을 설정합니다.
+
+값을 설정하지 않으면 밀리초(MilliSecond)를 변경하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.setSeconds( 59 ));
+trace(objDate.setSeconds( 59, 456 ));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1366,13 +1580,23 @@ Date.setTime(nMs)
 
 **Parameters**
 
-```
-1970년 1월 1일 자정부터 설정할 날짜까지의 시간을 밀리초(MilliSecond)값으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMs | Number | 1970년 1월 1일 자정부터 설정할 날짜까지의 시간을 밀리초(MilliSecond)값으로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+var nMs = objDate.setTime(199);   // 1 January 1970
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1401,13 +1625,23 @@ Date.setUTCDate(nDate)
 
 **Parameters**
 
-```
-변경시킬 날짜(Day)를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nDate | Number | 변경시킬 날짜(Day)를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.setUTCDate(31));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1440,13 +1674,30 @@ Date.setUTCFullYear(nYears[, nMonths[, nDate]])
 
 **Parameters**
 
-```
-변경시킬 년도(Year)값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nYears | Number | 변경시킬 년도(Year)값을 설정합니다. |
+| nMonths | Number | 변경시킬 0 (1월) 부터 11 (12월) 사이의 월(Month) 코드값을 설정합니다.
+
+값을 설정하지 않으면 월(Month)을 변경하지 않습니다. |
+| nDate | Number | 변경시킬 날짜(Day)값을 설정합니다.
+
+값을 설정하지 않으면 날짜(Day)를 변경하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.setUTCFullYear(2009));
+trace(objDate.setUTCFullYear(2009, 3, 15));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1476,13 +1727,35 @@ Date.setUTCHours(nHours[, nMinutes[, nSeconds[, nMillisecond]]])
 
 **Parameters**
 
-```
-변경시킬 시(Hour)값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHours | Number | 변경시킬 시(Hour)값을 설정합니다. |
+| nMinutes | Number | 변경시킬 분(Minute)값을 설정합니다.
+
+값을 설정하지 않으면 분(Minute)을 변경하지 않습니다. |
+| nSeconds | Number | 변경시킬 초(Second)값을 설정합니다.
+
+값을 설정하지 않으면 초(Second)를 변경하지 않습니다. |
+| nMillisecond | Number | 변경시킬 밀리초(MilliSecond)값을 설정합니다.
+
+값을 설정하지 않으면 밀리초(MilliSecond)를 변경하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.setUTCHours(23));
+trace(objDate.setUTCHours(23, 59));
+trace(objDate.setUTCHours(23, 59, 59));
+trace(objDate.setUTCHours(23, 59, 59, 999));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1514,13 +1787,23 @@ Date.setUTCMilliseconds(nMs)
 
 **Parameters**
 
-```
-변경시킬 밀리초(MilliSecond)값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMs | Number | 변경시킬 밀리초(MilliSecond)값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.setUTCMilliseconds(999));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1550,13 +1833,31 @@ Date.setUTCMinutes(nMinutes[, nSeconds[, nMillisecond]])
 
 **Parameters**
 
-```
-변경시킬 분(Minute)값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMinutes | Number | 변경시킬 분(Minute)값을 설정합니다. |
+| nSeconds | Number | 변경시킬 초(Second)값을 설정합니다.
+
+값을 설정하지 않으면 초(Second)를 변경하지 않습니다. |
+| nMillisecond | Number | 변경시킬 밀리초(MilliSecond)값을 설정합니다.
+
+값을 설정하지 않으면 밀리초(MilliSecond)를 변경하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.setUTCMinutes(59));
+trace(objDate.setUTCMinutes(59,59));
+trace(objDate.setUTCMinutes(59,59,999));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1588,13 +1889,27 @@ Date.setUTCMonth(nMonth[, nDate])
 
 **Parameters**
 
-```
-변경시킬 0 (1월) 부터 11 (12월) 사이의 월(Month) 코드값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMonth | Number | 변경시킬 0 (1월) 부터 11 (12월) 사이의 월(Month) 코드값을 설정합니다. |
+| nDate | Number | 변경시킬 날짜(Day)값을 설정합니다.
+
+값을 설정하지 않으면 날짜(Day)를 변경하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.setUTCMonth(11));
+trace(objDate.setUTCMonth(11,31));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1625,13 +1940,27 @@ Date.setUTCSeconds(nSeconds[, nMillisecond])
 
 **Parameters**
 
-```
-변경시킬 초(Second)값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nSeconds | Number | 변경시킬 초(Second)값을 설정합니다. |
+| nMillisecond | Number | 변경시킬 밀리초(MilliSecond)값을 설정합니다.
+
+값을 설정하지 않으면 밀리초(MilliSecond)를 변경하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.setUTCSeconds(59));
+trace(objDate.setUTCSeconds(59,999));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1662,13 +1991,23 @@ Date.setYear(nYears)
 
 **Parameters**
 
-```
-변경시킬 년도(Year)값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nYears | Number | 변경시킬 년도(Year)값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.setYear(2009));
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -1709,7 +2048,9 @@ trace(objDate.toDateString());
 
 **Return**
 
-문자열로 변환된 날짜를 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 문자열로 변환된 날짜를 반환합니다. |
 
 **Remark**
 
@@ -1743,7 +2084,9 @@ trace(objDate.toGMTString());
 
 **Return**
 
-문자열로 변환된 날짜와 시간을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 문자열로 변환된 날짜와 시간을 반환합니다. |
 
 **Remark**
 
@@ -1774,16 +2117,27 @@ Date.toLocaleDateString( [strLocale] )
 
 **Parameters**
 
-```
-ISO 639-1 에서 정의하고 있는 2-알파벳 언어코드와 ISO 3166-1 에서 정의하고 있는 2-알파벳 국가코드를 조합하여 "언어[_국가]" 형식의 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strLocale | String | ISO 639-1 에서 정의하고 있는 2-알파벳 언어코드와 ISO 3166-1 에서 정의하고 있는 2-알파벳 국가코드를 조합하여 "언어[_국가]" 형식의 문자열로 설정합니다.
 
 값 생략 시 Environment 의 locale 속성값이 적용됩니다.
-Environment 의 locale 속성값도 설정하지 않았을 경우 시스템의 로케일 설정값이 적용됩니다.
+Environment 의 locale 속성값도 설정하지 않았을 경우 시스템의 로케일 설정값이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.toLocaleDateString());
+trace(objDate.toLocaleDateString( "ko_KR" ));
 ```
 
 **Return**
 
-특정 로케일 형식에 맞게 변환된 날짜를 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 특정 로케일 형식에 맞게 변환된 날짜를 문자열로 반환합니다. |
 
 **Remark**
 
@@ -1815,16 +2169,27 @@ Date.toLocaleString( [strLocale] )
 
 **Parameters**
 
-```
-ISO 639-1 에서 정의하고 있는 2-알파벳 언어코드와 ISO 3166-1 에서 정의하고 있는 2-알파벳 국가코드를 조합하여 "언어[_국가]" 형식의 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strLocale | String | ISO 639-1 에서 정의하고 있는 2-알파벳 언어코드와 ISO 3166-1 에서 정의하고 있는 2-알파벳 국가코드를 조합하여 "언어[_국가]" 형식의 문자열로 설정합니다.
 
 값 생략 시 Environment 의 locale 속성값이 적용됩니다.
-Environment 의 locale 속성값도 설정하지 않았을 경우 시스템의 로케일 설정값이 적용됩니다.
+Environment 의 locale 속성값도 설정하지 않았을 경우 시스템의 로케일 설정값이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.toLocaleString());
+trace(objDate.toLocaleString( "ko_KR" ));
 ```
 
 **Return**
 
-특정 로케일 형식에 맞게 변환된 날짜와 시간을 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 특정 로케일 형식에 맞게 변환된 날짜와 시간을 문자열로 반환합니다. |
 
 **Remark**
 
@@ -1856,16 +2221,27 @@ Date.toLocaleTimeString( [strLocale] )
 
 **Parameters**
 
-```
-ISO 639-1 에서 정의하고 있는 2-알파벳 언어코드와 ISO 3166-1 에서 정의하고 있는 2-알파벳 국가코드를 조합하여 "언어[_국가]" 형식의 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strLocale | String | ISO 639-1 에서 정의하고 있는 2-알파벳 언어코드와 ISO 3166-1 에서 정의하고 있는 2-알파벳 국가코드를 조합하여 "언어[_국가]" 형식의 문자열로 설정합니다.
 
 값 생략 시 Environment 의 locale 속성값이 적용됩니다.
-Environment 의 locale 속성값도 설정하지 않았을 경우 시스템의 로케일 설정값이 적용됩니다.
+Environment 의 locale 속성값도 설정하지 않았을 경우 시스템의 로케일 설정값이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+
+trace(objDate.toLocaleTimeString());
+trace(objDate.toLocaleTimeString( "ko_KR" ));
 ```
 
 **Return**
 
-특정 로케일 형식에 맞게 변환된 시간을 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 특정 로케일 형식에 맞게 변환된 시간을 문자열로 반환합니다. |
 
 **Remark**
 
@@ -1903,11 +2279,13 @@ trace(objDate.toString());
 
 **Return**
 
-Date 오브젝트에 저장된 값에서 날짜와 시간을 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Date 오브젝트에 저장된 값에서 날짜와 시간을 문자열로 반환합니다.
 
 Date 오브젝트에 날짜값만 있을 경우 8 자리 날짜형식으로 반환합니다.
 Date 오브젝트에 시간값만 있을 경우 9 자리 시간형식으로 반환합니다.
-Date 오브젝트에 날짜와 시간값이 모두 있을 경우 17 자리 날짜시간형식으로 반환합니다.
+Date 오브젝트에 날짜와 시간값이 모두 있을 경우 17 자리 날짜시간형식으로 반환합니다. |
 
 **Remark**
 
@@ -1941,7 +2319,9 @@ trace(objDate.toTimeString());
 
 **Return**
 
-문자열로 변환된 시간을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 문자열로 변환된 시간을 반환합니다. |
 
 **Remark**
 
@@ -1975,7 +2355,9 @@ trace(objDate.toUTCString());
 
 **Return**
 
-문자열로 변환된 날짜와 시간을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 문자열로 변환된 날짜와 시간을 반환합니다. |
 
 **Remark**
 
@@ -2005,15 +2387,33 @@ Date.UTC(nYear, nMonth, nDay[, nHours[, nMinutes[, nSeconds[,nMillisecond]]]])
 
 **Parameters**
 
-```
-네자리 년도(Year)값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nYear | Number | 네자리 년도(Year)값을 설정합니다.
 
-0부터 99까지의 값을 입력하는 경우 1900을 더한 값으로 처리됩니다.
+0부터 99까지의 값을 입력하는 경우 1900을 더한 값으로 처리됩니다. |
+| nMonth | Number | 0 (1월) 부터 11 (12월) 사이의 월(Month) 코드값을 설정합니다. |
+| nDay | Number | 1 부터 31 사이의 날짜 값을 설정합니다. |
+| nHours | Number | 0 부터 23 까지의 시(Hour)값을 설정합니다.
+
+0 은 자정, 23 은 오후 11시를 의미합니다. |
+| nMinutes | Number | 0 부터 59 사이의 분(Minute)값을 설정합니다. |
+| nSeconds | Number | 0 부터 59 사이의 초(Second)값을 설정합니다. |
+| nMillisecond | Number | 0 부터 999 사이의 밀리초(MilliSecond)값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDate = new nexacro.Date();
+trace(objDate.UTC( 2009, 3, 1 ));
+trace(objDate.UTC( 2009, 3, 1, 0, 0, 0, 0) );
 ```
 
 **Return**
 
-1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 1970년 1월 1일 자정부터 Date 오브젝트에 저장된 값까지의 시간을 밀리초(MilliSecond)값으로 반환합니다. |
 
 **Remark**
 
@@ -2063,11 +2463,13 @@ trace(objDate.valueOf());
 
 **Return**
 
-Date 오브젝트에 저장된 값에서 날짜와 시간을 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Date 오브젝트에 저장된 값에서 날짜와 시간을 문자열로 반환합니다.
 
 Date 오브젝트에 날짜값만 있을 경우 8 자리 날짜형식으로 반환합니다.
 Date 오브젝트에 시간값만 있을 경우 9 자리 시간형식으로 반환합니다.
-Date 오브젝트에 날짜와 시간값이 모두 있을 경우 17 자리 날짜시간형식으로 반환합니다.
+Date 오브젝트에 날짜와 시간값이 모두 있을 경우 17 자리 날짜시간형식으로 반환합니다. |
 
 **Remark**
 
@@ -2169,7 +2571,9 @@ trace(objDec1);
 
 **Return**
 
-변경된 절대값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Decimal | 변경된 절대값을 반환합니다. |
 
 **Remark**
 
@@ -2194,8 +2598,18 @@ Decimal.addDecimal( objDecimal )
 
 **Parameters**
 
-```
-Decimal 오브젝트에 더할 Decimal 오브젝트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDecimal | Decimal | Decimal 오브젝트에 더할 Decimal 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDec1 = new nexacro.Decimal( 20 );
+var objDec2 = new nexacro.Decimal( "1234567890123456789012345" );
+
+objDec1.addDecimal(objDec2);
+trace(objDec1);
 ```
 
 **Return**
@@ -2225,8 +2639,17 @@ Decimal.addDouble( nValue )
 
 **Parameters**
 
-```
-Decimal 오브젝트에 더할 숫자값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nValue | Number | Decimal 오브젝트에 더할 숫자값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDec1 = new nexacro.Decimal( 20 );
+
+objDec1.addDouble(30);
+trace(objDec1);
 ```
 
 **Return**
@@ -2263,7 +2686,9 @@ trace(objDec1);
 
 **Return**
 
-소수점을 기준으로 올림한 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Decimal | 소수점을 기준으로 올림한 값을 반환합니다. |
 
 **Remark**
 
@@ -2288,8 +2713,18 @@ Decimal.divDecimal( objDecimal )
 
 **Parameters**
 
-```
-Decimal 오브젝트를 나눌 Decimal 오브젝트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDecimal | Decimal | Decimal 오브젝트를 나눌 Decimal 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDec1 = new nexacro.Decimal( "1234567890123456789012345" );
+var objDec2 = new nexacro.Decimal( 5 );
+
+objDec1.divDecimal(objDec2);
+trace(objDec1);
 ```
 
 **Return**
@@ -2319,8 +2754,17 @@ Decimal.divDouble( nValue )
 
 **Parameters**
 
-```
-Decimal 오브젝트를 나눌 숫자값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nValue | Number | Decimal 오브젝트를 나눌 숫자값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDec1 = new nexacro.Decimal( 100 );
+
+objDec1.divDouble(5);
+trace(objDec1);
 ```
 
 **Return**
@@ -2357,7 +2801,9 @@ trace(objDec1);
 
 **Return**
 
-소수점을 기준으로 내림한 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Decimal | 소수점을 기준으로 내림한 값을 반환합니다. |
 
 **Remark**
 
@@ -2382,15 +2828,26 @@ Decimal.isEqual( objDecimal )
 
 **Parameters**
 
-```
-값을 비교할 Decimal 오브젝트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDecimal | Decimal | 값을 비교할 Decimal 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDec1 = new nexacro.Decimal( 30 );
+var objDec2 = new nexacro.Decimal( 30 );
+
+trace(objDec1.isEqual(objDec2));
 ```
 
 **Return**
 
-두 오브젝트의 값이 일치하면 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 두 오브젝트의 값이 일치하면 "true" 를 반환합니다.
 
-두 오브젝트의 값이 다르면 "false" 를 반환합니다.
+두 오브젝트의 값이 다르면 "false" 를 반환합니다. |
 
 
 ---
@@ -2419,9 +2876,11 @@ trace(objDec2.isInfinity());
 
 **Return**
 
-Decimal 오브젝트의 값이 Infinity 값이면 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Decimal 오브젝트의 값이 Infinity 값이면 "true" 를 반환합니다.
 
-Decimal 오브젝트의 값이 Infinity 값이 아니면 "false" 를 반환합니다.
+Decimal 오브젝트의 값이 Infinity 값이 아니면 "false" 를 반환합니다. |
 
 
 ---
@@ -2450,9 +2909,11 @@ trace(objDec2.isNaN());
 
 **Return**
 
-Decimal 오브젝트의 값이 NaN 값이면 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Decimal 오브젝트의 값이 NaN 값이면 "true" 를 반환합니다.
 
-Decimal 오브젝트의 값이 NaN 값이 아니면 "false" 를 반환합니다.
+Decimal 오브젝트의 값이 NaN 값이 아니면 "false" 를 반환합니다. |
 
 
 ---
@@ -2483,9 +2944,11 @@ trace(objDec3.isNaNOrInf());
 
 **Return**
 
-Decimal 오브젝트의 값이 Infinity 또는 NaN 값이면 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Decimal 오브젝트의 값이 Infinity 또는 NaN 값이면 "true" 를 반환합니다.
 
-Decimal 오브젝트의 값이 Infinity, NaN 값이 모두 아니면 "false" 를 반환합니다.
+Decimal 오브젝트의 값이 Infinity, NaN 값이 모두 아니면 "false" 를 반환합니다. |
 
 
 ---
@@ -2514,9 +2977,11 @@ trace(objDec2.isNegative());
 
 **Return**
 
-Decimal 오브젝트의 값이 음수값이면 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Decimal 오브젝트의 값이 음수값이면 "true" 를 반환합니다.
 
-Decimal 오브젝트의 값이 음수값이 아니면 "false" 를 반환합니다.
+Decimal 오브젝트의 값이 음수값이 아니면 "false" 를 반환합니다. |
 
 
 ---
@@ -2545,9 +3010,11 @@ trace(objDec2.isZero());
 
 **Return**
 
-Decimal 오브젝트의 값이 0 값이면 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Decimal 오브젝트의 값이 0 값이면 "true" 를 반환합니다.
 
-Decimal 오브젝트의 값이 0 값이 아니면 "false" 를 반환합니다.
+Decimal 오브젝트의 값이 0 값이 아니면 "false" 를 반환합니다. |
 
 
 ---
@@ -2568,8 +3035,18 @@ Decimal.modDecimal( objDecimal )
 
 **Parameters**
 
-```
-Decimal 오브젝트를 나눌 Decimal 오브젝트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDecimal | Decimal | Decimal 오브젝트를 나눌 Decimal 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDec1 = new nexacro.Decimal( "1234567890123456789012345" );
+var objDec2 = new nexacro.Decimal( 3 );
+
+objDec1.modDecimal(objDec2);
+trace(objDec1);
 ```
 
 **Return**
@@ -2599,8 +3076,17 @@ Decimal.modDouble( nValue )
 
 **Parameters**
 
-```
-Decimal 오브젝트를 나눌 숫자값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nValue | Number | Decimal 오브젝트를 나눌 숫자값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDec1 = new nexacro.Decimal( 100 );
+
+objDec1.modDouble(3);
+trace(objDec1);
 ```
 
 **Return**
@@ -2630,8 +3116,18 @@ Decimal.mulDecimal( objDecimal )
 
 **Parameters**
 
-```
-Decimal 오브젝트에 곱할 Decimal 오브젝트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDecimal | Decimal | Decimal 오브젝트에 곱할 Decimal 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDec1 = new nexacro.Decimal( "12345678901234567890" );
+var objDec2 = new nexacro.Decimal( 30 );
+
+objDec1.mulDecimal(objDec2);
+trace(objDec1);
 ```
 
 **Return**
@@ -2661,8 +3157,17 @@ Decimal.mulDouble( nValue )
 
 **Parameters**
 
-```
-Decimal 오브젝트에 곱할 숫자값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nValue | Number | Decimal 오브젝트에 곱할 숫자값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDec1 = new nexacro.Decimal( 20 );
+
+objDec1.mulDouble(30);
+trace(objDec1);
 ```
 
 **Return**
@@ -2699,7 +3204,9 @@ trace(objDec1);
 
 **Return**
 
-소수점을 기준으로 반올림한 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Decimal | 소수점을 기준으로 반올림한 값을 반환합니다. |
 
 **Remark**
 
@@ -2724,8 +3231,18 @@ Decimal.setDecimal( objDecimal )
 
 **Parameters**
 
-```
-Decimal 오브젝트에 저장할 다른 Decimal 오브젝트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDecimal | Decimal | Decimal 오브젝트에 저장할 다른 Decimal 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDec1 = new nexacro.Decimal( 20 );
+var objDec2 = new nexacro.Decimal( "1234567890123456789012345" );
+
+objDec1.setDecimal(objDec2);
+trace(objDec1);
 ```
 
 **Return**
@@ -2755,8 +3272,17 @@ Decimal.setDouble( nValue )
 
 **Parameters**
 
-```
-Decimal 오브젝트에 저장할 숫자값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nValue | Number | Decimal 오브젝트에 저장할 숫자값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDec1 = new nexacro.Decimal( 20 );
+
+objDec1.setDouble( 30 );
+trace(objDec1);
 ```
 
 **Return**
@@ -2786,10 +3312,19 @@ Decimal.setString( strValue )
 
 **Parameters**
 
-```
-Decimal 오브젝트에 저장할 숫자로 된 문자열을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strValue | String | Decimal 오브젝트에 저장할 숫자로 된 문자열을 설정합니다.
 
-숫자가 아닌 문자가 포함되어 있을 경우 정상적으로 저장되지 않습니다.
+숫자가 아닌 문자가 포함되어 있을 경우 정상적으로 저장되지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var objDec1 = new nexacro.Decimal( 20 );
+
+objDec1.setString( "30" );
+trace(objDec1);
 ```
 
 **Return**
@@ -2819,8 +3354,18 @@ Decimal.subDecimal( objDecimal )
 
 **Parameters**
 
-```
-Decimal 오브젝트에서 값을 빼려는 Decimal 오브젝트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDecimal | Decimal | Decimal 오브젝트에서 값을 빼려는 Decimal 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDec1 = new nexacro.Decimal( "1234567890123456789012345" );
+var objDec2 = new nexacro.Decimal( 30 );
+
+objDec1.subDecimal(objDec2);
+trace(objDec1);
 ```
 
 **Return**
@@ -2850,8 +3395,17 @@ Decimal.subDouble( nValue )
 
 **Parameters**
 
-```
-Decimal 오브젝트에서 값을 빼려는 숫자값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nValue | Number | Decimal 오브젝트에서 값을 빼려는 숫자값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDec1 = new nexacro.Decimal( 20 );
+
+objDec1.subDouble(30);
+trace(objDec1);
 ```
 
 **Return**
@@ -2887,7 +3441,9 @@ trace(objDec1.toString());
 
 **Return**
 
-Decimal 오브젝트에 저장된 값을 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Decimal 오브젝트에 저장된 값을 문자열로 반환합니다. |
 
 
 ---
@@ -2915,7 +3471,9 @@ trace(objDec1);
 
 **Return**
 
-소수점을 기준으로 버림한 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Decimal | 소수점을 기준으로 버림한 값을 반환합니다. |
 
 **Remark**
 
@@ -3018,15 +3576,23 @@ DomParser.addEvent( strEventID )
 
 **Parameters**
 
-```
-DomParser 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | DomParser 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.DomParser00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -3053,15 +3619,26 @@ DomParser.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DomParser00_onmove = function( obj:nexacro.DomParser,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DomParser00.addEventHandler( "onmove", this.DomParser00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -3082,15 +3659,27 @@ DomParser.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.DomParser00_onmove = function( obj:nexacro.DomParser,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DomParser00.addEventHandlerLookup( "onmove", "DomParser00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -3116,13 +3705,21 @@ DomParser.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.DomParser00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -3147,15 +3744,27 @@ DomParser.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DomParser00_onmove = function( obj:nexacro.DomParser,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.DomParser00.findEventHandler( "onmove", this.DomParser00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3180,15 +3789,26 @@ DomParser.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = DomParser00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -3209,16 +3829,33 @@ DomParser.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DomParser00_onmove = function( obj:nexacro.DomParser,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.DomParser00.insertEventHandler( "onmove", 0, this.DomParser00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3243,17 +3880,27 @@ DomParser.parseFromString( strXML )
 
 **Parameters**
 
-```
-DOMDocument 오브젝트로 변환하려는 XML 문자열을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strXML | String | DOMDocument 오브젝트로 변환하려는 XML 문자열을 설정합니다.
 
-"text/xml" 형식의 문자열만 설정할 수 있습니다.
+"text/xml" 형식의 문자열만 설정할 수 있습니다. |
+
+**Sample Call**
+
+```javascript
+var objDom00 = new nexacro.DomParser();
+
+var objDomDoc = objDom00.parseFromString( strXML );
 ```
 
 **Return**
 
-XML 문자열 해석에 성공하면 DOMDocumnet 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | XML 문자열 해석에 성공하면 DOMDocumnet 오브젝트를 반환합니다.
 
-XML 문자열 해석에 실패하면 null 값을 반환합니다.
+XML 문자열 해석에 실패하면 null 값을 반환합니다. |
 
 
 ---
@@ -3274,15 +3921,23 @@ DomParser.removeEvent( strEventID )
 
 **Parameters**
 
-```
-DomParser 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | DomParser 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.DomParser00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -3313,15 +3968,26 @@ DomParser.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DomParser00_onmove = function( obj:nexacro.DomParser,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DomParser00.removeEventHandler( "onmove", this.DomParser00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -3348,15 +4014,27 @@ DomParser.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.DomParser00_onmove = function( obj:nexacro.DomParser,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DomParser00.removeEventHandlerLookup( "onmove", "DomParser00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -3383,15 +4061,26 @@ DomParser.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DomParser00_onmove = function( obj:nexacro.DomParser,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.DomParser00.setEventHandler( "onmove", this.DomParser00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3418,15 +4107,27 @@ DomParser.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.DomParser00_onmove = function( obj:nexacro.DomParser,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DomParser00.setEventHandlerLookup( "onmove", "DomParser00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3455,9 +4156,10 @@ onerror(obj:nexacro.DomParser,e:nexacro.DomParseErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DomParser | Event가 발생한 Object. |
+| e | DomParseErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -3597,16 +4299,25 @@ Image.getBase64String([bOnlydata]);
 
 **Parameters**
 
-```
-false: Data URI 형태로 반환
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bOnlydata | Boolean | false: Data URI 형태로 반환
 true: Data URI 형태 중 Base64 인코딩 데이터만 반환
 
-값을 설정하지 않으면 false로 설정됩니다.
+값을 설정하지 않으면 false로 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var strBase64 = objImg.getBase64String(); // data:image/png;base64,iVBORw0KGgoAAAA....
+var strBase64 = objImg.getBase64String(true); // iVBORw0KGgoAAAA....
 ```
 
 **Return**
 
-Image 오브젝트에 저장된 Base64 데이터를 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Image 오브젝트에 저장된 Base64 데이터를 반환합니다. |
 
 **Remark**
 
@@ -3634,9 +4345,9 @@ Image.setBase64String(strBase64);
 
 **Parameters**
 
-```
-Base64 로 인코딩 된 이미지 데이터를 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strBase64 | String | Base64 로 인코딩 된 이미지 데이터를 설정합니다. |
 
 **Return**
 
@@ -3667,9 +4378,10 @@ onerror(obj:nexacro.Image,e:nexacro.ErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Image | Event가 발생한 Object. |
+| e | ErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -3694,9 +4406,10 @@ onload(obj:nexacro.Image,e:nexacro.LoadEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Image | Event가 발생한 Object. |
+| e | LoadEventInfo | Event Object. |
 
 **Return**
 
@@ -3760,9 +4473,11 @@ PluginObject.callMethod( strMethodID [, varArg1 [, varArg2 ]]);
 
 **Parameters**
 
-```
-호출할 메소드의 이름을 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMethodID | String | 호출할 메소드의 이름을 문자열로 설정합니다. |
+| varArg1 | Object | 호출할 메소드에 전달될 인수를 설정합니다. |
+| varArg2 | Object | 호출할 메소드에 전달될 인수를 설정합니다. |
 
 **Return**
 
@@ -3791,15 +4506,26 @@ PluginObject.getProperty( strPropID );
 
 **Parameters**
 
-```
-PluginObject 로 Wrapping 된 객체에 정의된 속성명을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strPropID | String | PluginObject 로 Wrapping 된 객체에 정의된 속성명을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDoc = this.WebBrowser00.getProperty( "document" );  // PluginObject
+
+var objSub = objDoc.getProperty( "objSub" );
+var varVal = objDoc.getProperty( "PropID" );
 ```
 
 **Return**
 
-strPropID 가 객체를 가질 경우 해당 객체를 Wrapping 한 PluginObject 객체를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | strPropID 가 객체를 가질 경우 해당 객체를 Wrapping 한 PluginObject 객체를 반환합니다.
 
-strPropID 가 속성일 경우 속성값을 반환합니다.
+strPropID 가 속성일 경우 속성값을 반환합니다. |
 
 **Remark**
 
@@ -3835,8 +4561,16 @@ PluginObject.setProperty( strPropID, varValue );
 
 **Parameters**
 
-```
-PluginObject 로 Wrapping 된 객체에 정의된 속성명을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strPropID | String | PluginObject 로 Wrapping 된 객체에 정의된 속성명을 문자열로 설정합니다. |
+| varValue | Variant | strPropID 속성에 저장할 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDoc = this.WebBrowser00.getProperty( "document" );  // PluginObject
+objDoc.setProperty( "prop1", 3 );
 ```
 
 **Return**
@@ -3950,7 +4684,9 @@ var objPoint2 = objPoint1.clone();
 
 **Return**
 
-현재 Point 오브젝트의 값을 복사한 새로운 Point 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 현재 Point 오브젝트의 값을 복사한 새로운 Point 오브젝트를 반환합니다. |
 
 
 ---
@@ -3972,8 +4708,19 @@ Point.copy( nX, nY )
 
 **Parameters**
 
-```
-현재 Point 오브젝트의 x, y 속성값에 복사될 값을 Point 오브젝트 형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objPoint | Object | 현재 Point 오브젝트의 x, y 속성값에 복사될 값을 Point 오브젝트 형태로 설정합니다. |
+| nX | Number | Point 오브젝트의 x 속성값에 복사할 값을 숫자 형태로 설정합니다. |
+| nY | Number | Point 오브젝트의 y 속성값에 복사할 값을 숫자 형태로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objPoint1 = new nexacro.Point(10,10);
+var objPoint2 = new nexacro.Point(20,20);
+
+objPoint1.copy(objPoint2);
 ```
 
 **Return**
@@ -4005,15 +4752,34 @@ Point.equals( nX, nY )
 
 **Parameters**
 
-```
-Point 오브젝트의 x, y 속성값과 비교할 값을 Point 오브젝트 형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objPoint | Object | Point 오브젝트의 x, y 속성값과 비교할 값을 Point 오브젝트 형태로 설정합니다. |
+| arrVal | Array | Point 오브젝트의 x, y 속성값과 비교할 값을 배열 형태로 설정합니다.
+
+x, y 속성값을 각각 첫번째, 두번째 원소와 비교합니다. |
+| nX | Number | Point 오브젝트의 x 속성값과 비교할 값을 숫자 형태로 설정합니다. |
+| nY | Number | Point 오브젝트의 y 속성값과 비교할 값을 숫자 형태로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objPoint1 = new nexacro.Point(10,10);
+var objPoint2 = new nexacro.Point(20,20);
+var arrVal = new Array(20,20);
+
+alert( objPoint1.equals(objPoint2) );
+alert( objPoint1.equals(arrVal) );
+alert( objPoint1.equals(20,20) );
 ```
 
 **Return**
 
-Point 오브젝트에 저장된 x, y 속성값과 인수로 전달된 값이 모두 일치하면 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Point 오브젝트에 저장된 x, y 속성값과 인수로 전달된 값이 모두 일치하면 "true" 를 반환합니다.
 
-Point 오브젝트에 저장된 x, y 속성값과 인수로 전달된 값이 하나라도 다르면 "false" 를 반환합니다.
+Point 오브젝트에 저장된 x, y 속성값과 인수로 전달된 값이 하나라도 다르면 "false" 를 반환합니다. |
 
 **Remark**
 
@@ -4207,7 +4973,9 @@ var objRect2 = objRect1.clone();
 
 **Return**
 
-현재 Rect 오브젝트의 값을 복사한 새로운 Rect 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 현재 Rect 오브젝트의 값을 복사한 새로운 Rect 오브젝트를 반환합니다. |
 
 
 ---
@@ -4228,8 +4996,17 @@ Rect.copy( objRect )
 
 **Parameters**
 
-```
-현재 Rect 오브젝트의 속성에 복사될 값을 Rect 오브젝트 형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objRect | Object | 현재 Rect 오브젝트의 속성에 복사될 값을 Rect 오브젝트 형태로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objRect1 = new nexacro.Rect( 10,10,100,100 );
+var objRect2 = new nexacro.Rect( 20,20,200,200 );
+
+objRect1.copy(objRect2);
 ```
 
 **Return**
@@ -4259,15 +5036,26 @@ Rect.equals( objRect )
 
 **Parameters**
 
-```
-현재 Rect 오브젝트의 속성값과 비교할 값을 Rect 오브젝트 형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objRect | Object | 현재 Rect 오브젝트의 속성값과 비교할 값을 Rect 오브젝트 형태로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objRect1 = new nexacro.Rect(10,10,100,100);
+var objRect2 = new nexacro.Rect(20,20,200,200);
+
+alert( objRect1.equals(objRect2) );
 ```
 
 **Return**
 
-현재 Rect 오브젝트와 인수로 전달된 Rect 오브젝트의 속성값이 모두 일치하면 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 현재 Rect 오브젝트와 인수로 전달된 Rect 오브젝트의 속성값이 모두 일치하면 "true" 를 반환합니다.
 
-현재 Rect 오브젝트와 인수로 전달된 Rect 오브젝트의 속성값이 하나라도 다르면 "false" 를 반환합니다.
+현재 Rect 오브젝트와 인수로 전달된 Rect 오브젝트의 속성값이 하나라도 다르면 "false" 를 반환합니다. |
 
 **Remark**
 
@@ -4298,7 +5086,9 @@ alert(objRect1.getBottom());
 
 **Return**
 
-Rect 오브젝트의 하단 좌표값을 pixel 단위의 정수로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Rect 오브젝트의 하단 좌표값을 pixel 단위의 정수로 반환합니다. |
 
 
 ---
@@ -4325,7 +5115,9 @@ alert(objRect1.getRight());
 
 **Return**
 
-Rect 오브젝트의 우측 좌표값을 pixel 단위의 정수로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Rect 오브젝트의 우측 좌표값을 pixel 단위의 정수로 반환합니다. |
 
 
 ---
@@ -4346,15 +5138,26 @@ Rect.isSameSize( objRect )
 
 **Parameters**
 
-```
-현재 Rect 오브젝트의 넓이, 높이와 비교할 Rect 오브젝트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objRect | Object | 현재 Rect 오브젝트의 넓이, 높이와 비교할 Rect 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objRect1 = new nexacro.Rect(10,10,100,100);
+var objRect2 = new nexacro.Rect(30,30,100,100);
+
+alert( objRect1.isSameSize(objRect2) );
 ```
 
 **Return**
 
-현재 Rect 오브젝트와 인수로 전달된 Rect 오브젝트의 넓이와 높이가 일치하면 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 현재 Rect 오브젝트와 인수로 전달된 Rect 오브젝트의 넓이와 높이가 일치하면 "true" 를 반환합니다.
 
-현재 Rect 오브젝트와 인수로 전달된 Rect 오브젝트의 넓이 또는 높이가 다르면 "false" 를 반환합니다.
+현재 Rect 오브젝트와 인수로 전달된 Rect 오브젝트의 넓이 또는 높이가 다르면 "false" 를 반환합니다. |
 
 **Remark**
 
@@ -4439,13 +5242,23 @@ XmlSerializer.serializeToString( objDOM )
 
 **Parameters**
 
-```
-XML 문자열로 변환하려는 DOMDocument 오브젝트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDOM | Object | XML 문자열로 변환하려는 DOMDocument 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objSerial00 = new nexacro.XmlSerializer();
+
+var strXML = objSerial00.serializeToString( objDOMDoc );
 ```
 
 **Return**
 
-DOMDocumnet 오브젝트 해석에 성공하면 XML 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | DOMDocumnet 오브젝트 해석에 성공하면 XML 문자열을 반환합니다. |
 
 
 ---

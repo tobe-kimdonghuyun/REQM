@@ -113,19 +113,38 @@ EventObject.fireEvent( objFireComp, objEventInfo [, bCancelable] )
 
 **Parameters**
 
-```
-이벤트 핸들러 함수에 전달할 컴포넌트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objFireComp | Object | 이벤트 핸들러 함수에 전달할 컴포넌트를 설정합니다.
 
-일반적으로 이벤트가 발생할 컴포넌트를 동일하게 설정합니다.
+일반적으로 이벤트가 발생할 컴포넌트를 동일하게 설정합니다. |
+| objEvent | Object | 이벤트 핸들러 함수에 전달할 EventInfo 오브젝트를 설정합니다. |
+| bCancelable | Boolean | 이벤트 핸들러 함수의 반환값에 따라 함수실행을 중지시킬 지 여부를 설정합니다.
+
+true 설정 시 핸들러 함수에서 false 를 반환하면 핸들러 함수실행을 모두 중지합니다.
+true 설정 시 핸들러 함수에서 true 를 반환하면 다음 핸들러 함수를 실행합니다.
+
+false 설정 시 핸들러 함수에서 true/false 값을 반환하면 다음 핸들러 함수를 실행합니다.
+
+값 생략 시 false 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var objEventInfo = new ClickEventInfo();
+
+var bRtn = this.Button00.onclick.fireEvent( this.Button00, objEventInfo, true );
 ```
 
 **Return**
 
-bCancelable 파라미터가 true 이고 핸들러 함수 실행중 false 가 반환되었다면 false 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | bCancelable 파라미터가 true 이고 핸들러 함수 실행중 false 가 반환되었다면 false 를 반환합니다.
 bCancelable 파라미터가 true 이고 핸들러 함수 실행중 false 가 반환되지 않았다면 true 를 반환합니다.
 
 bCancelable 파라미터가 false 이면 마지막 핸들러 함수에서 반환한 값을 반환합니다.
-bCancelable 파라미터가 false 이고 마지막 핸들러 함수에서 값을 반환하지 않으면 빈값을 반환합니다.
+bCancelable 파라미터가 false 이고 마지막 핸들러 함수에서 값을 반환하지 않으면 빈값을 반환합니다. |
 
 **Remark**
 

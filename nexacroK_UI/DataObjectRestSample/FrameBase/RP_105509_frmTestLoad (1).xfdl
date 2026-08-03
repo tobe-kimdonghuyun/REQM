@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmTestLoad" width="1280" height="720" titletext="New Form" onload="frmTestLoad_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="Button00" taborder="0" text="load();" left="38" top="39" width="120" height="50" onclick="Button00_onclick"/>
+        <Grid id="Grid00" taborder="1" left="30" top="126" width="330" height="168" binddataset="Dataset00">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2"/>
+                <Cell col="3" text="bind:Column3"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="Grid01" taborder="2" left="461" top="128" width="327" height="171" binddataset="Dataset01">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2"/>
+                <Cell col="3" text="bind:Column3"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="Button01" taborder="3" text="load(false)" left="220" top="39" width="120" height="50" onclick="Button01_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <DataObject id="DataObject00" url="http://localhost:8080/json/test00.json" onerror="DataObject00_onerror"/>
+      <DataObject id="DataObject01" url="http://localhost:8080/json/test01.json" onerror="DataObject01_onerror"/>
+      <Dataset id="Dataset00" binddataobject="DataObject00" dataobjectpath="$.data[*]">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256" datapath="@.Column0"/>
+          <Column id="Column1" type="STRING" size="256" datapath="@.Column1"/>
+          <Column id="Column2" type="STRING" size="256" datapath="@.Column2"/>
+          <Column id="Column3" type="STRING" size="256" datapath="@.Column3"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="Dataset01" binddataobject="DataObject01" dataobjectpath="$.data[*]">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256" datapath="@.Column0"/>
+          <Column id="Column1" type="STRING" size="256" datapath="@.Column1"/>
+          <Column id="Column2" type="STRING" size="256" datapath="@.Column2"/>
+          <Column id="Column3" type="STRING" size="256" datapath="@.Column3"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[
+this.DataObject01_onerror = function(obj:nexacro.DataObject,e:nexacro.DataObjectErrorEventInfo)
+{
+	trace(obj.name,e.errormsg);
+};
+
+this.DataObject00_onerror = function(obj:nexacro.DataObject,e:nexacro.DataObjectErrorEventInfo)
+{
+	trace(obj.name,e.errormsg);
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.DataObject00.load()
+	this.DataObject01.load();
+};
+
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.DataObject00.load(false)
+	this.DataObject01.load(false);
+};
+
+
+this.Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.Dataset02.set_url("Base::dsSample.xml");
+	this.Dataset02.set_serverdatasetid('dsSample');
+	this.Dataset02.clear();
+	this.Dataset02.load(); 	
+	
+	this.Dataset03.set_url("Base::dsSample1.xml");
+	this.Dataset03.set_serverdatasetid('dsSample1');
+	this.Dataset03.clear();
+	this.Dataset03.load(); 	
+};
+]]></Script>
+  </Form>
+</FDL>

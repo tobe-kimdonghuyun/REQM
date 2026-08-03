@@ -846,8 +846,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.Graphics00.enableevent = true;  
-
-this.Graphics00.enableevent = false;
+this.Graphics00.enableevent = false;
 ```
 - **`true`** — Graphics 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — Graphics 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -1818,13 +1817,24 @@ Graphics.addChild( strID, objGObject )
 
 **Parameters**
 
-```
-자식으로 추가하려는 Graphics 오브젝트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 자식으로 추가하려는 Graphics 오브젝트의 ID 를 문자열로 설정합니다. |
+| objGObject | Object | 자식으로 추가하려는 Graphics 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGRect = new nexacro.GraphicsRect();
+
+this.Graphics00.addChild( "GraphicsRect00", objGRect );
 ```
 
 **Return**
 
-Graphics 에 추가된 Graphics 오브젝트의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Graphics 에 추가된 Graphics 오브젝트의 인덱스를 반환합니다. |
 
 **Remark**
 
@@ -1855,15 +1865,23 @@ Graphics.addEvent( strEventID )
 
 **Parameters**
 
-```
-Graphics 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | Graphics 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.Graphics00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -1890,15 +1908,26 @@ Graphics.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics00_onmove = function( obj:nexacro.Graphics,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Graphics00.addEventHandler( "onmove", this.Graphics00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -1919,15 +1948,27 @@ Graphics.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics00_onmove = function( obj:nexacro.Graphics,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Graphics00.addEventHandlerLookup( "onmove", "Graphics00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -2049,13 +2090,21 @@ Graphics.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.Graphics00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -2084,9 +2133,11 @@ var bSucc = this.Graphics00.destroy();
 
 **Return**
 
-Graphics 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Graphics 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-Graphics 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+Graphics 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -2115,15 +2166,27 @@ Graphics.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics00_onmove = function( obj:nexacro.Graphics,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.Graphics00.findEventHandler( "onmove", this.Graphics00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2148,7 +2211,9 @@ Graphics.getAllObjects()
 
 **Return**
 
-Graphics 에 추가된 모든 하위 오브젝트를 배열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | Graphics 에 추가된 모든 하위 오브젝트를 배열로 반환합니다. |
 
 **Remark**
 
@@ -2173,15 +2238,26 @@ Graphics.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = Graphics00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -2202,7 +2278,9 @@ Graphics.getFirstChild()
 
 **Return**
 
-Graphics 에 추가된 첫번째 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 에 추가된 첫번째 오브젝트를 반환합니다. |
 
 **Remark**
 
@@ -2228,7 +2306,9 @@ Graphics.getLastChild()
 
 **Return**
 
-Graphics 에 추가된 마지막 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 에 추가된 마지막 오브젝트를 반환합니다. |
 
 **Remark**
 
@@ -2254,15 +2334,17 @@ Graphics.getNextObject( strID )
 
 **Parameters**
 
-```
-기준 오브젝트의 ID 를 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 기준 오브젝트의 ID 를 문자열로 설정합니다. |
 
 **Return**
 
-strID 에 해당하는 오브젝트의 다음 순서 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | strID 에 해당하는 오브젝트의 다음 순서 오브젝트를 반환합니다.
 
-다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 
 ---
@@ -2283,13 +2365,15 @@ Graphics.getObjectByID( strID )
 
 **Parameters**
 
-```
-얻으려 하는 오브젝트의 ID 를 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 얻으려 하는 오브젝트의 ID 를 문자열로 설정합니다. |
 
 **Return**
 
-strID 에 해당하는 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | strID 에 해당하는 오브젝트를 반환합니다. |
 
 **Remark**
 
@@ -2318,7 +2402,9 @@ var nBottom = this.Graphics.getOffsetBottom();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 Graphics 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 Graphics 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2347,7 +2433,9 @@ var nHeight = this.Graphics.getOffsetHeight();
 
 **Return**
 
-Graphics 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Graphics 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -2376,7 +2464,9 @@ var nleft = this.Graphics.getOffsetLeft();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 Graphics 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 Graphics 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2405,7 +2495,9 @@ var nRight = this.Graphics.getOffsetRight();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 Graphics 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 Graphics 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2434,7 +2526,9 @@ var nTop = this.Graphics.getOffsetTop();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 Graphics 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 Graphics 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2463,7 +2557,9 @@ var nWidth = this.Graphics.getOffsetWidth();
 
 **Return**
 
-Graphics 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Graphics 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -2492,9 +2588,11 @@ var nbottom = this.Graphics.getPixelBottom();
 
 **Return**
 
-Graphics 의 bottom 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Graphics 의 bottom 속성값을 픽셀단위로 반환합니다.
 
-bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2523,9 +2621,11 @@ var nheight = this.Graphics.getPixelHeight();
 
 **Return**
 
-Graphics 의 height 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Graphics 의 height 속성값을 픽셀단위로 반환합니다.
 
-height 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+height 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2554,9 +2654,11 @@ var nleft = this.Graphics.getPixelLeft();
 
 **Return**
 
-Graphics 의 left 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Graphics 의 left 속성값을 픽셀단위로 반환합니다.
 
-left 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+left 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2585,9 +2687,11 @@ var nright = this.Graphics.getPixelRight();
 
 **Return**
 
-Graphics 의 right 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Graphics 의 right 속성값을 픽셀단위로 반환합니다.
 
-right 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+right 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2616,9 +2720,11 @@ var ntop = this.Graphics.getPixelTop();
 
 **Return**
 
-Graphics 의 top 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Graphics 의 top 속성값을 픽셀단위로 반환합니다.
 
-top 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+top 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2647,9 +2753,11 @@ var nwidth = this.Graphics.getPixelWidth();
 
 **Return**
 
-Graphics 의 width 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Graphics 의 width 속성값을 픽셀단위로 반환합니다.
 
-width 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+width 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2674,15 +2782,17 @@ Graphics.getPrevObject( strID )
 
 **Parameters**
 
-```
-기준 오브젝트의 ID 를 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 기준 오브젝트의 ID 를 문자열로 설정합니다. |
 
 **Return**
 
-strID 에 해당하는 오브젝트의 이전 순서 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | strID 에 해당하는 오브젝트의 이전 순서 오브젝트를 반환합니다.
 
-이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 
 ---
@@ -2703,17 +2813,22 @@ Graphics.hitTest( nX, nY )
 
 **Parameters**
 
-```
-오브젝트를 확인하려는 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | 오브젝트를 확인하려는 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
 
-설정값은 Graphics 컴포넌트를 기준으로 처리됩니다.
-```
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+| nY | Number | 오브젝트를 확인하려는 위치의 y 좌표값을 pixel 단위의 숫자로 설정합니다.
+
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
 
 **Return**
 
-인수로 전달된 좌표위치에 표시된 Graphics 오브젝트 중 제일 위에 표시된 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 인수로 전달된 좌표위치에 표시된 Graphics 오브젝트 중 제일 위에 표시된 오브젝트를 반환합니다.
 
-즉, 해당 위치에 표시된 Graphics 오브젝트 중 순서상 제일 마지막에 추가된 오브젝트를 반환합니다.
+즉, 해당 위치에 표시된 Graphics 오브젝트 중 순서상 제일 마지막에 추가된 오브젝트를 반환합니다. |
 
 **Remark**
 
@@ -2738,15 +2853,20 @@ Graphics.hitTestAll( nX, nY )
 
 **Parameters**
 
-```
-오브젝트를 확인하려는 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | 오브젝트를 확인하려는 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
 
-설정값은 Graphics 컴포넌트를 기준으로 처리됩니다.
-```
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+| nY | Number | 오브젝트를 확인하려는 위치의 y 좌표값을 pixel 단위의 숫자로 설정합니다.
+
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
 
 **Return**
 
-인수로 전달된 좌표위치에 표시된 모든 Graphics 오브젝트를 배열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 인수로 전달된 좌표위치에 표시된 모든 Graphics 오브젝트를 배열로 반환합니다. |
 
 **Remark**
 
@@ -2771,13 +2891,15 @@ Graphics.indexOf( strID )
 
 **Parameters**
 
-```
-인덱스를 얻으려 하는 오브젝트의 ID 를 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 인덱스를 얻으려 하는 오브젝트의 ID 를 문자열로 설정합니다. |
 
 **Return**
 
-strID 에 해당하는 오브젝트의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | strID 에 해당하는 오브젝트의 인덱스를 반환합니다. |
 
 
 ---
@@ -2798,8 +2920,62 @@ Graphics.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinW
 
 **Parameters**
 
-```
-Graphics 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | Graphics 의 ID를 문자열로 설정합니다. |
+| vLeft | String, Number | Graphics 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 Graphics 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Graphics 의 left 가 결정됩니다. |
+| vTop | String, Number | Graphics 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 Graphics 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Graphics 의 top 이 결정됩니다. |
+| vWidth | String, Number | Graphics 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Graphics 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Graphics 의 width 가 결정됩니다. |
+| vHeight | String, Number | Graphics 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Graphics 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Graphics 의 height 가 결정됩니다. |
+| vRight | String, Number | Graphics 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 Graphics 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Graphics 의 right 가 결정됩니다. |
+| vBottom | String, Number | Graphics 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 Graphics 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Graphics 의 bottom 이 결정됩니다. |
+| vMinWidth | String, Number | Graphics 이(가) 화면에 표시되는 최소 너비값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxWidth | String, Number | Graphics 이(가) 화면에 표시되는 최대 너비값을 pixel 단위의 숫자로 설정합니다.
+
+vMinWidth 보다 작은 값을 설정하면 vMinWidth 값으로 설정됩니다. |
+| vMinHeight | String, Number | Graphics 이(가) 화면에 표시되는 최소 높이값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxHeight | String, Number | Graphics 이(가) 화면에 표시되는 최대 높이값을 pixel 단위의 숫자로 설정합니다.
+
+vMinHeight 보다 작은 값을 설정하면 vMinHeight 값으로 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = new Graphics();
+
+objComp.init( "Graphics00", 30, 120, 196, 46 );
+objComp.init( "Graphics00", 30, 120, 196, 46, null, null );
+objComp.init( "Graphics00", null, null, 300, "400px", "80%", 300 );
+objComp.init( "Graphics00", 0, 0, 200, 100, null, null, 300, 500, 200, 500 );
+objComp.init( "Graphics00", "Graphics22:10", 300, null, null, "Graphics33:10", "20%", 300, 500, 200, 500 );
 ```
 
 **Return**
@@ -2847,13 +3023,25 @@ Graphics.insertChild( nIdx, strID, objGObject )
 
 **Parameters**
 
-```
-Graphics 오브젝트가 삽입될 위치의 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIdx | Number | Graphics 오브젝트가 삽입될 위치의 인덱스를 숫자로 설정합니다. |
+| strID | String | 삽입하려는 Graphics 오브젝트의 ID 를 문자열로 설정합니다. |
+| objGObject | Object | 삽입하려는 Graphics 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGRect = new nexacro.GraphicsRect();
+
+this.Graphics00.insertChild( 0, "GRect00", objGRect );
 ```
 
 **Return**
 
-Graphics 컴포넌트에 자식으로 삽입된 Graphics 오브젝트의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Graphics 컴포넌트에 자식으로 삽입된 Graphics 오브젝트의 인덱스를 반환합니다. |
 
 **Remark**
 
@@ -2882,16 +3070,33 @@ Graphics.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics00_onmove = function( obj:nexacro.Graphics,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.Graphics00.insertEventHandler( "onmove", 0, this.Graphics00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2916,12 +3121,49 @@ Graphics.move( vLeft, vTop [, vWidth, vHeight [, vRight, vBottom]] )
 
 **Parameters**
 
-```
-Graphics 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | Graphics 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 Graphics 의 left 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Graphics 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Graphics 의 left 가 결정됩니다. |
+| vTop | String, Number | Graphics 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 Graphics 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Graphics 의 top 이 결정됩니다. |
+| vWidth | String, Number | Graphics 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Graphics 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Graphics 의 width 가 결정됩니다. |
+| vHeight | String, Number | Graphics 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Graphics 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Graphics 의 height 가 결정됩니다. |
+| vRight | String, Number | Graphics 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 Graphics 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Graphics 의 right 가 결정됩니다. |
+| vBottom | String, Number | Graphics 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 Graphics 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Graphics 의 bottom 이 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics00.move(10,10);
+this.Graphics00.move(10,10,100,100);
+this.Graphics00.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -2958,8 +3200,16 @@ Graphics.moveToNext( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics.moveToNext( this.Button00 );
+this.Graphics.moveToNext( "Button00" );
 ```
 
 **Return**
@@ -2997,8 +3247,16 @@ Graphics.moveToPrev( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics.moveToPrev( this.Button00 );
+this.Graphics.moveToPrev( "Button00" );
 ```
 
 **Return**
@@ -3060,13 +3318,23 @@ Graphics.removeChild( strID )
 
 **Parameters**
 
-```
-제거하려는 Graphics 오브젝트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 제거하려는 Graphics 오브젝트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGObject = this.Graphics.removeChild( "GraphicsRect00" );
+
+objGObject.destroy();
 ```
 
 **Return**
 
-Graphics 컴포넌트에서 제거된 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트에서 제거된 Graphics 오브젝트를 반환합니다. |
 
 **Remark**
 
@@ -3094,15 +3362,23 @@ Graphics.removeEvent( strEventID )
 
 **Parameters**
 
-```
-Graphics 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | Graphics 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.Graphics00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -3133,15 +3409,26 @@ Graphics.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics00_onmove = function( obj:nexacro.Graphics,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Graphics00.removeEventHandler( "onmove", this.Graphics00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -3168,15 +3455,27 @@ Graphics.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics00_onmove = function( obj:nexacro.Graphics,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Graphics00.removeEventHandlerLookup( "onmove", "Graphics00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -3203,13 +3502,25 @@ Graphics.resize( vWidth, vHeight )
 
 **Parameters**
 
-```
-Graphics 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vWidth | String, Number | Graphics 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 음수값을 설정할 수 없습니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Graphics 의 width 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Graphics 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Graphics 의 width 가 결정됩니다. |
+| vHeight | String, Number | Graphics 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+음수값을 설정할 수 없습니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Graphics 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Graphics 의 height 가 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics00.resize( 100,100 );
 ```
 
 **Return**
@@ -3325,15 +3636,26 @@ Graphics.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics00_onmove = function( obj:nexacro.Graphics,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.Graphics00.setEventHandler( "onmove", this.Graphics00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3360,15 +3682,27 @@ Graphics.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics00_onmove = function( obj:nexacro.Graphics,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Graphics00.setEventHandlerLookup( "onmove", "Graphics00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3395,19 +3729,28 @@ Graphics.setFocus( [bMoveScroll] )
 
 **Parameters**
 
-```
-부모 컴포넌트에 스크롤이 있을 경우, Graphics 기준으로 스크롤을 이동할지 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bMoveScroll | Boolean | 부모 컴포넌트에 스크롤이 있을 경우, Graphics 기준으로 스크롤을 이동할지 여부를 설정합니다.
 
 true: Graphics 이(가) 화면에 표시되도록 스크롤을 이동합니다.
 false: Graphics 위치와 관계없이 스크롤을 이동하지 않습니다.
 
-값을 지정하지 않으면 기본값은 true입니다.
+값을 지정하지 않으면 기본값은 true입니다. |
+
+**Sample Call**
+
+```javascript
+var objBefComp = this.Graphics00.setFocus();
+var objBefComp = this.Graphics00.setFocus( false );
 ```
 
 **Return**
 
-Graphics 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
-이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
+이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다. |
 
 **Remark**
 
@@ -3432,8 +3775,14 @@ Graphics.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 Graphics 의 bottom 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 컴포넌트의 Top 위치를 기준으로 Graphics 의 bottom 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics.setOffsetBottom( 10 );
 ```
 
 **Return**
@@ -3466,8 +3815,14 @@ Graphics.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-Graphics 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | Graphics 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics.setOffsetHeight( 10 );
 ```
 
 **Return**
@@ -3500,8 +3855,14 @@ Graphics.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 Graphics 의 left 값을 픽셀단위의 숫자로 설정합니다
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 컴포넌트의 Left 위치를 기준으로 Graphics 의 left 값을 픽셀단위의 숫자로 설정합니다 |
+
+**Sample Call**
+
+```javascript
+this.Graphics.setOffsetLeft( 10 );
 ```
 
 **Return**
@@ -3534,8 +3895,14 @@ Graphics.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 Graphics 의 right 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 컴포넌트의 Left 위치를 기준으로 Graphics 의 right 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics.setOffsetRight( 600 );
 ```
 
 **Return**
@@ -3568,8 +3935,14 @@ Graphics.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 Graphics 의 top 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 컴포넌트의 Top 위치를 기준으로 Graphics 의 top 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics.setOffsetTop( 10 );
 ```
 
 **Return**
@@ -3602,8 +3975,14 @@ Graphics.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-Graphics 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | Graphics 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Graphics.setOffsetWidth( 10 );
 ```
 
 **Return**
@@ -3674,9 +4053,10 @@ onclick(obj:nexacro.Graphics,e:nexacro.ClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | ClickEventInfo | Event Object. |
 
 **Return**
 
@@ -3713,9 +4093,10 @@ ondblclick(obj:nexacro.Graphics,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
@@ -3744,15 +4125,18 @@ ondevicebuttonup(obj:nexacro.Graphics,e:nexacro.DeviceButtonEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | DeviceButtonEventInfo | Event Object. |
 
 **Return**
 
-true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
-반환값을 생략하면 false로 적용됩니다.
+반환값을 생략하면 false로 적용됩니다. |
 
 **Remark**
 
@@ -3781,16 +4165,19 @@ ondrag(obj:nexacro.Graphics,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 드래그 상태가 취소되고 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -3824,16 +4211,19 @@ ondragenter(obj:nexacro.Graphics,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -3860,16 +4250,19 @@ ondragleave(obj:nexacro.Graphics,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -3896,16 +4289,19 @@ ondragmove(obj:nexacro.Graphics,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -3932,16 +4328,19 @@ ondrop(obj:nexacro.Graphics,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -3975,16 +4374,19 @@ onkeydown(obj:nexacro.Graphics,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -4021,16 +4423,19 @@ onkeyup(obj:nexacro.Graphics,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -4063,9 +4468,10 @@ onkillfocus(obj:nexacro.Graphics,e:nexacro.KillFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | KillFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -4097,16 +4503,19 @@ onlbuttondown(obj:nexacro.Graphics,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -4138,16 +4547,19 @@ onlbuttonup(obj:nexacro.Graphics,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -4179,16 +4591,19 @@ onmousedown(obj:nexacro.Graphics,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -4218,16 +4633,19 @@ onmouseenter(obj:nexacro.Graphics,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -4266,16 +4684,19 @@ onmouseleave(obj:nexacro.Graphics,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -4311,16 +4732,19 @@ onmousemove(obj:nexacro.Graphics,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -4356,16 +4780,19 @@ onmouseup(obj:nexacro.Graphics,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -4397,9 +4824,10 @@ onmove(obj:nexacro.Graphics,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -4424,16 +4852,19 @@ onrbuttondown(obj:nexacro.Graphics,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -4465,16 +4896,19 @@ onrbuttonup(obj:nexacro.Graphics,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -4508,9 +4942,10 @@ onsetfocus(obj:nexacro.Graphics,e:nexacro.SetFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | SetFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -4553,9 +4988,10 @@ onsize(obj:nexacro.Graphics,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -4580,16 +5016,19 @@ ontouchend(obj:nexacro.Graphics,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -4614,16 +5053,19 @@ ontouchmove(obj:nexacro.Graphics,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -4648,16 +5090,19 @@ ontouchstart(obj:nexacro.Graphics,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Graphics | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5173,9 +5618,11 @@ GraphicsEllipse.destroy()
 
 **Return**
 
-GraphicsEllipse 가 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GraphicsEllipse 가 정상적으로 삭제되면 true 를 반환합니다.
 
-GraphicsEllipse 가 정상적으로 삭제되지 않으면 false 를 반환합니다.
+GraphicsEllipse 가 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -5210,12 +5657,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -5254,9 +5703,11 @@ trace( objNext.toString() );
 
 **Return**
 
-부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
 
-다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -5291,12 +5742,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -5336,11 +5789,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsEllipse 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -5380,11 +5835,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse 오브젝트의 strokepen 속성값을 설정했더라도 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -5423,9 +5880,11 @@ trace( objPrev.toString() );
 
 **Return**
 
-부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
 
-이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -5459,11 +5918,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsEllipse 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -5502,11 +5963,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -5544,9 +6007,11 @@ var bResult = objGEllipse.isEmptyRect() ;
 
 **Return**
 
-GraphicsEllipse 에 영역이 설정되어 있지 않으면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GraphicsEllipse 에 영역이 설정되어 있지 않으면 true 를 반환합니다.
 
-GraphicsEllipse 에 영역이 설정되어 있으면 false 를 반환합니다.
+GraphicsEllipse 에 영역이 설정되어 있으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -5571,17 +6036,30 @@ GraphicsEllipse.isHitTest( nX, nY )
 
 **Parameters**
 
-```
-확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | 확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
 
-설정값은 Graphics 컴포넌트를 기준으로 처리됩니다.
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+| nY | Number | 확인할 위치의 y 좌표값을 pixel 단위의 숫자로 설정합니다.
+
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsEllipse = this.Graphics00.getObjectByID("GraphicsEllipse00");
+
+var bResult = objGraphicsEllipse.isHitTest( 100, 100 );
 ```
 
 **Return**
 
-인수로 전달된 좌표위치가 GraphicsEllipse 영역에 포함되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 인수로 전달된 좌표위치가 GraphicsEllipse 영역에 포함되면 true 를 반환합니다.
 
-인수로 전달된 좌표위치가 GraphicsEllipse 영역에 포함되지 않으면 false 를 반환합니다.
+인수로 전달된 좌표위치가 GraphicsEllipse 영역에 포함되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -5609,12 +6087,20 @@ GraphicsEllipse.rotate( nAngle [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 회전될 각도를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nAngle | Number | 현재 모습에서 회전될 각도를 숫자로 설정합니다.
 
 양수로 설정 시 시계방향으로 회전합니다.
-음수로 설정 시 반시계방향으로 회전합니다.
-```
+음수로 설정 시 반시계방향으로 회전합니다. |
+| nCenterX | Number | 회전의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 회전의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -5652,12 +6138,24 @@ GraphicsEllipse.scale( nScaleX, nScaleY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsEllipse 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsEllipse 가 축소됩니다.
-```
+1.0 보다 작은값을 설정하면 GraphicsEllipse 가 축소됩니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsEllipse 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsEllipse 가 축소됩니다. |
+| nCenterX | Number | 확대/축소의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 확대/축소의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -5695,11 +6193,20 @@ GraphicsEllipse.setClipRect( nX, nY, nWidth, nHeight );
 
 **Parameters**
 
-```
-Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
 
-설정값은 GraphicsEllipse 의 x 속성값 위치를 0 으로 가정하고 처리됩니다.
-```
+설정값은 GraphicsEllipse 의 x 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nY | Number | Clipping 할 영역의 y 좌표를 숫자로 설정합니다.
+
+설정값은 GraphicsEllipse 의 y 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nWidth | Number | Clipping 할 영역의 너비를 숫자로 설정합니다.
+
+설정값은 nX 파라미터값을 기준으로 처리됩니다. |
+| nHeight | Number | Clipping 할 영역의 높이를 숫자로 설정합니다.
+
+설정값은 nY 파라미터값을 기준으로 처리됩니다. |
 
 **Return**
 
@@ -5733,10 +6240,21 @@ GraphicsEllipse.setTransform( strMethod );
 
 **Parameters**
 
-```
-GraphicsEllipse 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMethod | String | GraphicsEllipse 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
 translate(), scale(), rotate(), shear() 메소드를 사용할 수 있습니다.
-null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다.
+null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsEllipse = new nexacro.GraphicsEllipse();
+this.Graphics00.addChild("GraphicsEllipse00", objGraphicsEllipse);
+
+objGraphicsEllipse.setTransform( "translate(50, 50),rotate(20)" );
+
+objGraphicsEllipse.setTransform(null);
 ```
 
 **Return**
@@ -5778,9 +6296,18 @@ GraphicsEllipse.shear( nRadianX, nRadianY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRadianX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nRadianY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nCenterX | Number | 비틀기의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 비틀기의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -5818,7 +6345,9 @@ GraphicsEllipse.toString();
 
 **Return**
 
-일반적으로 "[object GraphicsEllipse]" 형태의 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 일반적으로 "[object GraphicsEllipse]" 형태의 문자열을 반환합니다. |
 
 
 ---
@@ -5839,11 +6368,28 @@ GraphicsEllipse.transform( nScaleX, nShearX, nShearY, nScaleY, nTransX, nTransY 
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsEllipse 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsEllipse 가 축소됩니다.
+1.0 보다 작은값을 설정하면 GraphicsEllipse 가 축소됩니다. |
+| nShearX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nShearY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsEllipse 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsEllipse 가 축소됩니다. |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsEllipse = new nexacro.GraphicsEllipse();
+
+objGraphicsEllipse.transform( 1.5, 0, 0, 1.5, 0, 0 );    // scale(1.5,1.5) 와 동일
+objGraphicsEllipse.transform( 1, 0, 0, 1, 50, 50 );      // translate(50, 50) 와 동일
 ```
 
 **Return**
@@ -5882,9 +6428,10 @@ GraphicsEllipse.translate( nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
 
 **Return**
 
@@ -6153,13 +6700,25 @@ GraphicsGroup.addChild( strID, objGObject )
 
 **Parameters**
 
-```
-자식으로 추가하려는 Graphics 오브젝트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 자식으로 추가하려는 Graphics 오브젝트의 ID 를 문자열로 설정합니다. |
+| objGObject | Object | 자식으로 추가하려는 Graphics 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGGroup = new nexacro.GraphicsGroup();
+var objGRect = new nexacro.GraphicsRect();
+
+objGGroup.addChild( "GraphicsRect00", objGRect );
 ```
 
 **Return**
 
-GraphicsGroup 에 추가된 Graphics 오브젝트의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | GraphicsGroup 에 추가된 Graphics 오브젝트의 인덱스를 반환합니다. |
 
 **Remark**
 
@@ -6222,9 +6781,11 @@ GraphicsGroup.destroy()
 
 **Return**
 
-GraphicsGroup 가 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GraphicsGroup 가 정상적으로 삭제되면 true 를 반환합니다.
 
-GraphicsGroup 가 정상적으로 삭제되지 않으면 false 를 반환합니다.
+GraphicsGroup 가 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6259,12 +6820,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -6296,7 +6859,9 @@ GraphicsGroup.getFirstChild()
 
 **Return**
 
-GraphicsGroup 에 추가된 첫번째 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | GraphicsGroup 에 추가된 첫번째 오브젝트를 반환합니다. |
 
 **Remark**
 
@@ -6322,7 +6887,9 @@ GraphicsGroup.getLastChild()
 
 **Return**
 
-GraphicsGroup 에 추가된 마지막 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | GraphicsGroup 에 추가된 마지막 오브젝트를 반환합니다. |
 
 **Remark**
 
@@ -6355,9 +6922,11 @@ trace( objNext.toString() );
 
 **Return**
 
-부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
 
-다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -6384,13 +6953,15 @@ GraphicsGroup.getObjectByID( strID )
 
 **Parameters**
 
-```
-얻으려 하는 오브젝트의 ID 를 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 얻으려 하는 오브젝트의 ID 를 문자열로 설정합니다. |
 
 **Return**
 
-strID 에 해당하는 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | strID 에 해당하는 오브젝트를 반환합니다. |
 
 
 ---
@@ -6411,7 +6982,9 @@ GraphicsGroup.getObjects()
 
 **Return**
 
-GraphicsGroup 에 추가된 순서대로 오브젝트를 배열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | GraphicsGroup 에 추가된 순서대로 오브젝트를 배열로 반환합니다. |
 
 **Remark**
 
@@ -6445,12 +7018,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -6490,11 +7065,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsGroup 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsGroup 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -6534,11 +7111,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsGroup 오브젝트의 strokepen 속성값을 설정했더라도 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -6577,9 +7156,11 @@ trace( objPrev.toString() );
 
 **Return**
 
-부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
 
-이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -6613,11 +7194,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsGroup 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsGroup 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -6656,11 +7239,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsGroup 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -6692,9 +7277,11 @@ GraphicsGroup.hasChild()
 
 **Return**
 
-Graphics 오브젝트가 한 개 이상 추가되어 있으면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Graphics 오브젝트가 한 개 이상 추가되어 있으면 true 를 반환합니다.
 
-Graphics 오브젝트가 추가되어 있지 않으면 false 를 반환합니다.
+Graphics 오브젝트가 추가되어 있지 않으면 false 를 반환합니다. |
 
 
 ---
@@ -6715,13 +7302,15 @@ GraphicsGroup.indexOf( strID )
 
 **Parameters**
 
-```
-인덱스를 얻으려 하는 오브젝트의 ID 를 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 인덱스를 얻으려 하는 오브젝트의 ID 를 문자열로 설정합니다. |
 
 **Return**
 
-strID 에 해당하는 오브젝트의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | strID 에 해당하는 오브젝트의 인덱스를 반환합니다. |
 
 
 ---
@@ -6742,13 +7331,26 @@ GraphicsGroup.insertChild( nIdx, strID, objGObject )
 
 **Parameters**
 
-```
-Graphics 오브젝트가 삽입될 위치의 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIdx | Number | Graphics 오브젝트가 삽입될 위치의 인덱스를 숫자로 설정합니다. |
+| strID | String | 삽입하려는 Graphics 오브젝트의 ID 를 문자열로 설정합니다. |
+| objGPath | Object | 삽입하려는 Graphics 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGGroup = new nexacro.GraphicsGroup();
+var objGRect = new nexacro.GraphicsRect();
+
+objGGroup.insertChild( 0, "GRect00", objGRect );
 ```
 
 **Return**
 
-GraphicsGroup 에 자식으로 삽입된 Graphics 오브젝트의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | GraphicsGroup 에 자식으로 삽입된 Graphics 오브젝트의 인덱스를 반환합니다. |
 
 **Remark**
 
@@ -6781,17 +7383,30 @@ GraphicsGroup.isHitTest( nX, nY )
 
 **Parameters**
 
-```
-확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | 확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
 
-설정값은 Graphics 컴포넌트를 기준으로 처리됩니다.
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+| nY | Number | 확인할 위치의 y 좌표값을 pixel 단위의 숫자로 설정합니다.
+
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsGroup = this.Graphics00.getObjectByID("GraphicsGroup00");
+
+var bResult = objGraphicsGroup.isHitTest( 100, 100 );
 ```
 
 **Return**
 
-인수로 전달된 좌표위치가 GraphicsGroup 영역에 포함되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 인수로 전달된 좌표위치가 GraphicsGroup 영역에 포함되면 true 를 반환합니다.
 
-인수로 전달된 좌표위치가 GraphicsGroup 영역에 포함되지 않으면 false 를 반환합니다.
+인수로 전달된 좌표위치가 GraphicsGroup 영역에 포함되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6819,13 +7434,22 @@ GraphicsGroup.removeChild( strID )
 
 **Parameters**
 
-```
-제거하려는 Graphics 오브젝트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 제거하려는 Graphics 오브젝트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGObject = objGGroup.removeChild( "GraphicsRect00" );
+objGObject.destroy();
 ```
 
 **Return**
 
-GraphicsGroup 에서 제거된 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | GraphicsGroup 에서 제거된 Graphics 오브젝트를 반환합니다. |
 
 **Remark**
 
@@ -6857,12 +7481,20 @@ GraphicsGroup.rotate( nAngle [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 회전될 각도를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nAngle | Number | 현재 모습에서 회전될 각도를 숫자로 설정합니다.
 
 양수로 설정 시 시계방향으로 회전합니다.
-음수로 설정 시 반시계방향으로 회전합니다.
-```
+음수로 설정 시 반시계방향으로 회전합니다. |
+| nCenterX | Number | 회전의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 회전의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -6900,12 +7532,24 @@ GraphicsGroup.scale( nScaleX, nScaleY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsGroup 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsGroup 가 축소됩니다.
-```
+1.0 보다 작은값을 설정하면 GraphicsGroup 가 축소됩니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsGroup 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsGroup 가 축소됩니다. |
+| nCenterX | Number | 확대/축소의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 확대/축소의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -6943,11 +7587,20 @@ GraphicsGroup.setClipRect( nX, nY, nWidth, nHeight );
 
 **Parameters**
 
-```
-Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
 
-설정값은 GraphicsGroup 의 x 속성값 위치를 0 으로 가정하고 처리됩니다.
-```
+설정값은 GraphicsGroup 의 x 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nY | Number | Clipping 할 영역의 y 좌표를 숫자로 설정합니다.
+
+설정값은 GraphicsGroup 의 y 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nWidth | Number | Clipping 할 영역의 너비를 숫자로 설정합니다.
+
+설정값은 nX 파라미터값을 기준으로 처리됩니다. |
+| nHeight | Number | Clipping 할 영역의 높이를 숫자로 설정합니다.
+
+설정값은 nY 파라미터값을 기준으로 처리됩니다. |
 
 **Return**
 
@@ -6981,10 +7634,21 @@ GraphicsGroup.setTransform( strMethod );
 
 **Parameters**
 
-```
-GraphicsGroup 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMethod | String | GraphicsGroup 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
 translate(), scale(), rotate(), shear() 메소드를 사용할 수 있습니다.
-null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다.
+null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsGroup = new nexacro.GraphicsGroup();
+this.Graphics00.addChild("GraphicsGroup00", objGraphicsGroup);
+
+objGraphicsGroup.setTransform( "translate(50, 50),rotate(20)" );
+
+objGraphicsGroup.setTransform(null);
 ```
 
 **Return**
@@ -7026,9 +7690,18 @@ GraphicsGroup.shear( nRadianX, nRadianY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRadianX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nRadianY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nCenterX | Number | 비틀기의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 비틀기의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -7066,9 +7739,18 @@ GraphicsGroup.shear( nRadianX, nRadianY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRadianX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nRadianY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nCenterX | Number | 비틀기의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 비틀기의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -7106,11 +7788,28 @@ GraphicsGroup.transform( nScaleX, nShearX, nShearY, nScaleY, nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsGroup 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsGroup 가 축소됩니다.
+1.0 보다 작은값을 설정하면 GraphicsGroup 가 축소됩니다. |
+| nShearX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nShearY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsGroup 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsGroup 가 축소됩니다. |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsGroup = new nexacro.GraphicsGroup();
+
+objGraphicsGroup.transform( 1.5, 0, 0, 1.5, 0, 0 );    // scale(1.5,1.5) 와 동일
+objGraphicsGroup.transform( 1, 0, 0, 1, 50, 50 );      // translate(50, 50) 와 동일
 ```
 
 **Return**
@@ -7149,9 +7848,10 @@ GraphicsGroup.translate( nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
 
 **Return**
 
@@ -7314,8 +8014,7 @@ strImage ::= 'URL(' <theme-Image> | <web-Image> | <absolute-image> | <relative-i
 ```
 ```javascript
 var objGImage = new nexacro.GraphicsImage();  
-
-objGImage.image = "URL('theme://images/V13_logo.png')";                            // 테마 이미지 
+objGImage.image = "URL('theme://images/V13_logo.png')";                            // 테마 이미지 
 objGImage.image = "URL('http://www.tobesoft.com/images/gnb/btn_h1.gif')";  // 웹 이미지 
 objGImage.image = "URL('file://C:\xplatform_logo.gif')";                                // 절대경로 이미지 
 objGImage.image = "URL('Base::test.jpg')";                                                  // TypeDefinition Prefix 이미지 
@@ -7615,9 +8314,11 @@ GraphicsImage.destroy()
 
 **Return**
 
-GraphicsImage 가 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GraphicsImage 가 정상적으로 삭제되면 true 를 반환합니다.
 
-GraphicsImage 가 정상적으로 삭제되지 않으면 false 를 반환합니다.
+GraphicsImage 가 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -7652,12 +8353,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -7696,9 +8399,11 @@ trace( objNext.toString() );
 
 **Return**
 
-부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
 
-다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -7733,12 +8438,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -7778,11 +8485,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsImage 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsImage 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -7822,11 +8531,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsImage 오브젝트의 strokepen 속성값을 설정했더라도 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -7865,9 +8576,11 @@ trace( objPrev.toString() );
 
 **Return**
 
-부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
 
-이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -7901,11 +8614,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsImage 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsImage 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -7944,11 +8659,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsImage 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -7987,9 +8704,11 @@ var bResult = objGraphicsText.isEmptyRect() ;
 
 **Return**
 
-GraphicsImage 에 이미지가 로딩되어 있지 않으면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GraphicsImage 에 이미지가 로딩되어 있지 않으면 true 를 반환합니다.
 
-GraphicsImage 에 이미지가 로딩되어 있으면 false 를 반환합니다.
+GraphicsImage 에 이미지가 로딩되어 있으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -8016,17 +8735,30 @@ GraphicsImage.isHitTest( nX, nY )
 
 **Parameters**
 
-```
-확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | 확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
 
-설정값은 Graphics 컴포넌트를 기준으로 처리됩니다.
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+| nY | Number | 확인할 위치의 y 좌표값을 pixel 단위의 숫자로 설정합니다.
+
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsImage = this.Graphics00.getObjectByID("GraphicsImage00");
+
+var bResult = objGraphicsImage.isHitTest( 100, 100 );
 ```
 
 **Return**
 
-인수로 전달된 좌표위치가 GraphicsImage 영역에 포함되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 인수로 전달된 좌표위치가 GraphicsImage 영역에 포함되면 true 를 반환합니다.
 
-인수로 전달된 좌표위치가 GraphicsImage 영역에 포함되지 않으면 false 를 반환합니다.
+인수로 전달된 좌표위치가 GraphicsImage 영역에 포함되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -8054,12 +8786,20 @@ GraphicsImage.rotate( nAngle [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 회전될 각도를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nAngle | Number | 현재 모습에서 회전될 각도를 숫자로 설정합니다.
 
 양수로 설정 시 시계방향으로 회전합니다.
-음수로 설정 시 반시계방향으로 회전합니다.
-```
+음수로 설정 시 반시계방향으로 회전합니다. |
+| nCenterX | Number | 회전의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 회전의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -8097,12 +8837,24 @@ GraphicsImage.scale( nScaleX, nScaleY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsImage 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsImage 가 축소됩니다.
-```
+1.0 보다 작은값을 설정하면 GraphicsImage 가 축소됩니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsImage 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsImage 가 축소됩니다. |
+| nCenterX | Number | 확대/축소의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 확대/축소의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -8140,11 +8892,20 @@ GraphicsImage.setClipRect( nX, nY, nWidth, nHeight );
 
 **Parameters**
 
-```
-Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
 
-설정값은 GraphicsImage 의 x 속성값 위치를 0 으로 가정하고 처리됩니다.
-```
+설정값은 GraphicsImage 의 x 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nY | Number | Clipping 할 영역의 y 좌표를 숫자로 설정합니다.
+
+설정값은 GraphicsImage 의 y 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nWidth | Number | Clipping 할 영역의 너비를 숫자로 설정합니다.
+
+설정값은 nX 파라미터값을 기준으로 처리됩니다. |
+| nHeight | Number | Clipping 할 영역의 높이를 숫자로 설정합니다.
+
+설정값은 nY 파라미터값을 기준으로 처리됩니다. |
 
 **Return**
 
@@ -8178,8 +8939,18 @@ GraphicsImage.setImageLoadEventHandler( objfunc, objTarget )
 
 **Parameters**
 
-```
-이미지가 로딩되었을 때 실행할 함수를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objfunc | Object | 이미지가 로딩되었을 때 실행할 함수를 설정합니다. |
+| objTarget | Object | 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGImage = new nexacro.GraphicsImage();
+
+objGImage.setImageLoadEventHandler( this.LoadingCallBack, this );
+objGImage.image = "url('imagerc::img_50.png')";
 ```
 
 **Return**
@@ -8209,10 +8980,21 @@ GraphicsImage.setTransform( strMethod );
 
 **Parameters**
 
-```
-GraphicsImage 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMethod | String | GraphicsImage 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
 translate(), scale(), rotate(), shear() 메소드를 사용할 수 있습니다.
-null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다.
+null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsImage = new nexacro.GraphicsImage();
+this.Graphics00.addChild("GraphicsImage00", objGraphicsImage);
+
+objGraphicsImage.setTransform( "translate(50, 50),rotate(20)" );
+
+objGraphicsImage.setTransform(null);
 ```
 
 **Return**
@@ -8254,9 +9036,18 @@ GraphicsImage.shear( nRadianX, nRadianY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRadianX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nRadianY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nCenterX | Number | 비틀기의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 비틀기의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -8294,7 +9085,9 @@ GraphicsImage.toString();
 
 **Return**
 
-일반적으로 "[object GraphicsImage]" 형태의 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 일반적으로 "[object GraphicsImage]" 형태의 문자열을 반환합니다. |
 
 
 ---
@@ -8315,11 +9108,28 @@ GraphicsImage.transform( nScaleX, nShearX, nShearY, nScaleY, nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsImage 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsImage 가 축소됩니다.
+1.0 보다 작은값을 설정하면 GraphicsImage 가 축소됩니다. |
+| nShearX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nShearY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsImage 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsImage 가 축소됩니다. |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsImage = new nexacro.GraphicsImage();
+
+objGraphicsImage.transform( 1.5, 0, 0, 1.5, 0, 0 );    // scale(1.5,1.5) 와 동일
+objGraphicsImage.transform( 1, 0, 0, 1, 50, 50 );      // translate(50, 50) 와 동일
 ```
 
 **Return**
@@ -8358,9 +9168,10 @@ GraphicsImage.translate( nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
 
 **Return**
 
@@ -8562,8 +9373,7 @@ enumCap ::= 'butt' | 'round' | 'square'
 ```
 ```javascript
 var objGLine = new nexacro.GraphicsLine();  
-
-objGLine.strokepen = "10px solid red"; 
+objGLine.strokepen = "10px solid red"; 
 objGLine.strokecap = "square";
 ```
 - **`"butt"`** — 직선의 끝점을 벗어나지 않고 끝을 각지게 표시합니다.
@@ -8602,8 +9412,7 @@ strStrokePen ::= <line-width> <line-style> <color>
 ```
 ```javascript
 var objGLine = new nexacro.GraphicsLine();  
-
-objGLine.strokepen = "5px solid red"; 
+objGLine.strokepen = "5px solid red"; 
 objGLine.strokepen = "5 dotted #999999"; 
 objGLine.strokepen = "5px dotted rgb(255,0,0)";
 ```
@@ -8723,8 +9532,7 @@ GraphicsLine.x1[= nX1]
 
 ```javascript
 var objGLine = new nexacro.GraphicsLine();  
-
-objGLine.x1 = 50; 
+objGLine.x1 = 50; 
 objGLine.y1 = 50;
 ```
 - **`nX1`** — 직선이 시작하는 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
@@ -8762,8 +9570,7 @@ GraphicsLine.x2[= nX2]
 
 ```javascript
 var objGLine = new nexacro.GraphicsLine();  
-
-objGLine.x2 = 50; 
+objGLine.x2 = 50; 
 objGLine.y2 = 50;
 ```
 - **`nX2`** — 직선이 끝나는 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
@@ -8836,8 +9643,7 @@ GraphicsLine.y1[= nY1]
 
 ```javascript
 var objGLine = new nexacro.GraphicsLine();  
-
-objGLine.x1 = 50; 
+objGLine.x1 = 50; 
 objGLine.y1 = 50;
 ```
 - **`nY1`** — 직선이 시작하는 위치의 y 좌표값을 pixel 단위의 숫자로 설정합니다.
@@ -8875,8 +9681,7 @@ GraphicsLine.y2[= nY2]
 
 ```javascript
 var objGLine = new nexacro.GraphicsLine();  
-
-objGLine.x2 = 50; 
+objGLine.x2 = 50; 
 objGLine.y2 = 50;
 ```
 - **`nY2`** — 직선이 끝나는 위치의 y 좌표값을 pixel 단위의 숫자로 설정합니다.
@@ -8910,9 +9715,11 @@ GraphicsLine.destroy()
 
 **Return**
 
-GraphicsLine 가 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GraphicsLine 가 정상적으로 삭제되면 true 를 반환합니다.
 
-GraphicsLine 가 정상적으로 삭제되지 않으면 false 를 반환합니다.
+GraphicsLine 가 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -8947,12 +9754,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -8991,9 +9800,11 @@ trace( objNext.toString() );
 
 **Return**
 
-부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
 
-다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -9028,12 +9839,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -9073,11 +9886,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsLine 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsLine 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -9117,11 +9932,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsLine 오브젝트의 strokepen 속성값을 설정했더라도 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -9160,9 +9977,11 @@ trace( objPrev.toString() );
 
 **Return**
 
-부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
 
-이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -9196,11 +10015,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsLine 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsLine 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -9239,11 +10060,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsLine 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -9275,17 +10098,30 @@ GraphicsLine.isHitTest( nX, nY )
 
 **Parameters**
 
-```
-확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | 확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
 
-설정값은 Graphics 컴포넌트를 기준으로 처리됩니다.
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+| nY | Number | 확인할 위치의 y 좌표값을 pixel 단위의 숫자로 설정합니다.
+
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsLine = this.Graphics00.getObjectByID("GraphicsLine00");
+
+var bResult = objGraphicsLine.isHitTest( 100, 100 );
 ```
 
 **Return**
 
-인수로 전달된 좌표위치가 GraphicsLine 영역에 포함되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 인수로 전달된 좌표위치가 GraphicsLine 영역에 포함되면 true 를 반환합니다.
 
-인수로 전달된 좌표위치가 GraphicsLine 영역에 포함되지 않으면 false 를 반환합니다.
+인수로 전달된 좌표위치가 GraphicsLine 영역에 포함되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -9313,17 +10149,22 @@ GraphicsLine.isPointInPath( objPoint [, nTolerance] )
 
 **Parameters**
 
-```
-GraphicsLine 영역에 포함되는지 확인할 좌표값을 nexacro.Point 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objPoint | Object | GraphicsLine 영역에 포함되는지 확인할 좌표값을 nexacro.Point 오브젝트로 설정합니다.
 
-설정한 좌표값은 Graphics 컴포넌트를 기준으로 처리됩니다.
-```
+설정한 좌표값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+| nTolerance | Number | objPoint 위치가 GraphicsLine 영역에 포함되었다고 판단할 최대거리를 숫자로 설정합니다.
+
+objPoint 위치와 GraphicsLine 영역의 거리가 설정값보다 작으면 포함되었다고 판단합니다. |
 
 **Return**
 
-objPoint 좌표위치가 GraphicsLine 영역에 포함되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | objPoint 좌표위치가 GraphicsLine 영역에 포함되면 true 를 반환합니다.
 
-objPoint 좌표위치가 GraphicsLine 영역에 포함되지 않으면 false 를 반환합니다.
+objPoint 좌표위치가 GraphicsLine 영역에 포함되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -9348,12 +10189,20 @@ GraphicsLine.rotate( nAngle [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 회전될 각도를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nAngle | Number | 현재 모습에서 회전될 각도를 숫자로 설정합니다.
 
 양수로 설정 시 시계방향으로 회전합니다.
-음수로 설정 시 반시계방향으로 회전합니다.
-```
+음수로 설정 시 반시계방향으로 회전합니다. |
+| nCenterX | Number | 회전의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 회전의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -9391,12 +10240,24 @@ GraphicsLine.scale( nScaleX, nScaleY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsLine 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsLine 가 축소됩니다.
-```
+1.0 보다 작은값을 설정하면 GraphicsLine 가 축소됩니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsLine 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsLine 가 축소됩니다. |
+| nCenterX | Number | 확대/축소의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 확대/축소의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -9434,11 +10295,20 @@ GraphicsLine.setClipRect( nX, nY, nWidth, nHeight );
 
 **Parameters**
 
-```
-Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
 
-설정값은 GraphicsLine 의 x 속성값 위치를 0 으로 가정하고 처리됩니다.
-```
+설정값은 GraphicsLine 의 x 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nY | Number | Clipping 할 영역의 y 좌표를 숫자로 설정합니다.
+
+설정값은 GraphicsLine 의 y 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nWidth | Number | Clipping 할 영역의 너비를 숫자로 설정합니다.
+
+설정값은 nX 파라미터값을 기준으로 처리됩니다. |
+| nHeight | Number | Clipping 할 영역의 높이를 숫자로 설정합니다.
+
+설정값은 nY 파라미터값을 기준으로 처리됩니다. |
 
 **Return**
 
@@ -9472,10 +10342,21 @@ GraphicsLine.setTransform( strMethod );
 
 **Parameters**
 
-```
-GraphicsLine 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMethod | String | GraphicsLine 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
 translate(), scale(), rotate(), shear() 메소드를 사용할 수 있습니다.
-null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다.
+null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsLine = new nexacro.GraphicsLine();
+this.Graphics00.addChild("GraphicsLine00", objGraphicsLine);
+
+objGraphicsLine.setTransform( "translate(50, 50),rotate(20)" );
+
+objGraphicsLine.setTransform(null);
 ```
 
 **Return**
@@ -9517,9 +10398,18 @@ GraphicsLine.shear( nRadianX, nRadianY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRadianX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nRadianY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nCenterX | Number | 비틀기의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 비틀기의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -9557,7 +10447,9 @@ GraphicsLine.toString();
 
 **Return**
 
-일반적으로 "[object GraphicsLine]" 형태의 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 일반적으로 "[object GraphicsLine]" 형태의 문자열을 반환합니다. |
 
 
 ---
@@ -9578,11 +10470,28 @@ GraphicsLine.transform( nScaleX, nShearX, nShearY, nScaleY, nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsLine 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsLine 가 축소됩니다.
+1.0 보다 작은값을 설정하면 GraphicsLine 가 축소됩니다. |
+| nShearX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nShearY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsLine 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsLine 가 축소됩니다. |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsLine = new nexacro.GraphicsLine();
+
+objGraphicsLine.transform( 1.5, 0, 0, 1.5, 0, 0 );    // scale(1.5,1.5) 와 동일
+objGraphicsLine.transform( 1, 0, 0, 1, 50, 50 );      // translate(50, 50) 와 동일
 ```
 
 **Return**
@@ -9621,9 +10530,10 @@ GraphicsLine.translate( nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
 
 **Return**
 
@@ -9970,8 +10880,7 @@ enumCap ::= 'butt' | 'round' | 'square'
 ```
 ```javascript
 var objGPath = new nexacro.GraphicsPath();  
-
-objGPath.strokepen = "10px solid red"; 
+objGPath.strokepen = "10px solid red"; 
 objGPath.strokejoin = "bevel"; 
 objGPath.strokecap = "square";
 ```
@@ -10011,8 +10920,7 @@ enumJoin ::= 'miter' | 'round' | 'bevel'
 ```
 ```javascript
 var objGPath = new nexacro.GraphicsPath();  
-
-objGPath.strokepen = "10px solid red"; 
+objGPath.strokepen = "10px solid red"; 
 objGPath.strokejoin = "bevel";
 ```
 - **`"miter"`** — 경로가 만나는 중심점에서 테두리가 만나는 바깥점까지 뾰족하게 표시됩니다.
@@ -10055,8 +10963,7 @@ strStrokePen ::= <line-width> <line-style> <color>
 ```
 ```javascript
 var objGPath = new nexacro.GraphicsPath();  
-
-objGPath.strokepen = "5px solid red"; 
+objGPath.strokepen = "5px solid red"; 
 objGPath.strokepen = "5 dotted #999999"; 
 objGPath.strokepen = "5px dotted rgb(255,0,0)";
 ```
@@ -10211,10 +11118,35 @@ GraphicsPath.arcTo(  nX, nY, nRadiusX, nRadiusY, nRotation, bClockwise, bLarge )
 
 **Parameters**
 
-```
-추가할 타원호 경로의 x 좌표 위치를 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | 추가할 타원호 경로의 x 좌표 위치를 pixel 단위의 숫자로 설정합니다.
 
-설정값은 GrpahicsPath 의 x 속성값을 기준으로 처리됩니다.
+설정값은 GrpahicsPath 의 x 속성값을 기준으로 처리됩니다. |
+| nY | Number | 추가할 타원호 경로의 y 좌표 위치를 pixel 단위의 숫자로 설정합니다.
+
+설정값은 GrpahicsPath 의 y 속성값을 기준으로 처리됩니다. |
+| nRadiusX | Number | 표시할 타원호의 가로 반지름을 pixel 단위의 숫자로 설정합니다. |
+| nRadiusY | Number | 표시할 타원호의 세로 반지름을 pixel 단위의 숫자로 설정합니다. |
+| nRotation | Number | 표시할 타원호의 x 축이 회전할 각도를 설정합니다.
+
+180 도를 설정하면 0 도와 같은 모양으로 표시됩니다. |
+| bClockwise | Boolean | 타원호 경로의 시작점과 끝점을 기준으로 표시될 타원호를 설정합니다.
+
+true 또는 1 설정 시 현재위치에서 nX, nY 까지의 직선을 기준으로 시계방향에 위치한 타원호를 표시합니다.
+false 또는 0 설정 시 현재위치에서 nX, nY 까지의 직선을 기준으로 반시계방향에 위치한 타원호를 표시합니다. |
+| bLarge | Boolean | 타원호 경로의 시작점과 끝점을 기준으로 표시될 타원호를 설정합니다.
+
+true 또는 1 설정 시 bClockwise 방향에 위치한 타원호 중 큰 타원호를 표시합니다.
+false 또는 0 설정 시 bClockwise 방향에 위치한 타원호 중 작은 타원호를 표시합니다. |
+
+**Sample Call**
+
+```javascript
+var objGPath = new nexacro.GraphicsPath();
+
+objGPath.moveTo( 100,100 );
+objGPath.arcTo( 200, 200, 100, 50, 0, true, false );
 ```
 
 **Return**
@@ -10257,8 +11189,22 @@ GraphicsPath.bezierCurveTo( nCBeginX, nCBeginY, nCEndX, nCEndY, nX, nY )
 
 **Parameters**
 
-```
-cubic Bezier 곡선을 결정할 컨트롤 포인트의 시작점 x 좌표 위치를 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nCBeginX | Number | cubic Bezier 곡선을 결정할 컨트롤 포인트의 시작점 x 좌표 위치를 pixel 단위의 숫자로 설정합니다. |
+| nCBeginY | Number | cubic Bezier 곡선을 결정할 컨트롤 포인트의 시작점 y 좌표 위치를 pixel 단위의 숫자로 설정합니다. |
+| nCEndX | Number | cubic Bezier 곡선을 결정할 컨트롤 포인트의 끝점 x 좌표 위치를 pixel 단위의 숫자로 설정합니다. |
+| nCEndY | Number | cubic Bezier 곡선을 결정할 컨트롤 포인트의 끝점 y 좌표 위치를 pixel 단위의 숫자로 설정합니다. |
+| nX | Number | 추가할 cubic Bezier 곡선의 x 좌표 위치를 pixel 단위의 숫자로 설정합니다. |
+| nY | Number | 추가할 cubic Bezier 곡선의 y 좌표 위치를 pixel 단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGPath = new nexacro.GraphicsPath();
+
+objGPath.moveTo(100,100);
+objGPath.bezierCurveTo(400,200,400,300,300,300);
 ```
 
 **Return**
@@ -10351,9 +11297,11 @@ GraphicsPath.destroy()
 
 **Return**
 
-GraphicsPath 가 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GraphicsPath 가 정상적으로 삭제되면 true 를 반환합니다.
 
-GraphicsPath 가 정상적으로 삭제되지 않으면 false 를 반환합니다.
+GraphicsPath 가 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -10388,12 +11336,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -10432,9 +11382,11 @@ trace( objNext.toString() );
 
 **Return**
 
-부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
 
-다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -10469,12 +11421,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -10514,12 +11468,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -10559,11 +11515,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsPath 오브젝트의 strokepen 속성값을 설정했더라도 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -10595,7 +11553,9 @@ GraphicsPath.getPathData()
 
 **Return**
 
-경로 데이터를 SVG 형식의 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 경로 데이터를 SVG 형식의 문자열로 반환합니다. |
 
 **Remark**
 
@@ -10631,9 +11591,11 @@ trace( objPrev.toString() );
 
 **Return**
 
-부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
 
-이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -10667,11 +11629,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsPath 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsPath 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -10710,11 +11674,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsPath 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -10753,9 +11719,11 @@ var bResult = objGPath.hasSegments() ;
 
 **Return**
 
-GraphicsPath 에 경로 데이터가 설정되어 있으면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GraphicsPath 에 경로 데이터가 설정되어 있으면 true 를 반환합니다.
 
-GraphicsPath 에 경로 데이터가 설정되어 있지 않으면 false 를 반환합니다.
+GraphicsPath 에 경로 데이터가 설정되어 있지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -10780,17 +11748,30 @@ GraphicsPath.isHitTest( nX, nY )
 
 **Parameters**
 
-```
-확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | 확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
 
-설정값은 Graphics 컴포넌트를 기준으로 처리됩니다.
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+| nY | Number | 확인할 위치의 y 좌표값을 pixel 단위의 숫자로 설정합니다.
+
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsPath = this.Graphics00.getObjectByID("GraphicsPath00");
+
+var bResult = objGraphicsPath.isHitTest( 100, 100 );
 ```
 
 **Return**
 
-인수로 전달된 좌표위치가 GraphicsPath 영역에 포함되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 인수로 전달된 좌표위치가 GraphicsPath 영역에 포함되면 true 를 반환합니다.
 
-인수로 전달된 좌표위치가 GraphicsPath 영역에 포함되지 않으면 false 를 반환합니다.
+인수로 전달된 좌표위치가 GraphicsPath 영역에 포함되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -10818,17 +11799,22 @@ GraphicsPath.isPointInPath( objPoint [, nTolerance] )
 
 **Parameters**
 
-```
-GraphicsPath 영역에 포함되는지 확인할 좌표값을 nexacro.Point 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objPoint | Object | GraphicsPath 영역에 포함되는지 확인할 좌표값을 nexacro.Point 오브젝트로 설정합니다.
 
-설정한 좌표값은 Graphics 컴포넌트를 기준으로 처리됩니다.
-```
+설정한 좌표값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+| nTolerance | Number | objPoint 위치가 GraphicsPath 영역에 포함되었다고 판단할 최대거리를 숫자로 설정합니다.
+
+objPoint 위치와 GraphicsPath 영역의 거리가 설정값보다 작으면 포함되었다고 판단합니다. |
 
 **Return**
 
-objPoint 좌표위치가 GraphicsPath 영역에 포함되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | objPoint 좌표위치가 GraphicsPath 영역에 포함되면 true 를 반환합니다.
 
-objPoint 좌표위치가 GraphicsPath 영역에 포함되지 않으면 false 를 반환합니다.
+objPoint 좌표위치가 GraphicsPath 영역에 포함되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -10853,10 +11839,22 @@ GraphicsPath.lineTo( nX, nY )
 
 **Parameters**
 
-```
-추가할 직선경로의 x 좌표 위치를 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | 추가할 직선경로의 x 좌표 위치를 pixel 단위의 숫자로 설정합니다.
 
-설정값은 GrpahicsPath 의 x 속성값을 기준으로 처리됩니다.
+설정값은 GrpahicsPath 의 x 속성값을 기준으로 처리됩니다. |
+| nY | Number | 추가할 직선경로의 y 좌표 위치를 pixel 단위의 숫자로 설정합니다.
+
+설정값은 GrpahicsPath 의 y 속성값을 기준으로 처리됩니다. |
+
+**Sample Call**
+
+```javascript
+var objGPath = new nexacro.GraphicsPath();
+
+objGPath.moveTo( 0,0 );
+objGPath.lineTo( 300,300 );
 ```
 
 **Return**
@@ -10892,10 +11890,21 @@ GraphicsPath.moveBy( nX, nY )
 
 **Parameters**
 
-```
-현재 시작위치에서 x 좌표가 이동할 거리를 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | 현재 시작위치에서 x 좌표가 이동할 거리를 pixel 단위의 숫자로 설정합니다.
 
-설정값은 현재 시작위치의 x 좌표값을 기준으로 처리됩니다.
+설정값은 현재 시작위치의 x 좌표값을 기준으로 처리됩니다. |
+| nY | Number | 현재 시작위치에서 y 좌표가 이동할 거리를 pixel 단위의 숫자로 설정합니다.
+
+설정값은 현재 시작위치의 y 좌표값을 기준으로 처리됩니다. |
+
+**Sample Call**
+
+```javascript
+var objGPath = new nexacro.GraphicsPath();
+
+objGPath.moveBy( 300,300 );
 ```
 
 **Return**
@@ -10931,10 +11940,21 @@ GraphicsPath.moveTo( nX, nY )
 
 **Parameters**
 
-```
-GraphicsPath 의 시작위치 중 x 좌표 위치를 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | GraphicsPath 의 시작위치 중 x 좌표 위치를 pixel 단위의 숫자로 설정합니다.
 
-설정값은 GrpahicsPath 의 x 속성값을 기준으로 처리됩니다.
+설정값은 GrpahicsPath 의 x 속성값을 기준으로 처리됩니다. |
+| nY | Number | GraphicsPath 의 시작위치 중 y 좌표 위치를 pixel 단위의 숫자로 설정합니다.
+
+설정값은 GrpahicsPath 의 y 속성값을 기준으로 처리됩니다. |
+
+**Sample Call**
+
+```javascript
+var objGPath = new nexacro.GraphicsPath();
+
+objGPath.moveTo( 300,300 );
 ```
 
 **Return**
@@ -10970,8 +11990,20 @@ GraphicsPath.quadraticCurveTo( nControlX, nControlY, nX, nY )
 
 **Parameters**
 
-```
-quadratic Bezier 곡선을 결정할 컨트롤 포인트의 x 좌표 위치를 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nControlX | Number | quadratic Bezier 곡선을 결정할 컨트롤 포인트의 x 좌표 위치를 pixel 단위의 숫자로 설정합니다. |
+| nControlY | Number | quadratic Bezier 곡선을 결정할 컨트롤 포인트의 y 좌표 위치를 pixel 단위의 숫자로 설정합니다. |
+| nX | Number | 추가할 quadratic Bezier 곡선의 x 좌표 위치를 pixel 단위의 숫자로 설정합니다. |
+| nY | Number | 추가할 quadratic Bezier 곡선의 y 좌표 위치를 pixel 단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGPath = new nexacro.GraphicsPath();
+
+objGPath.moveTo( 100,100 );
+objGPath.quadraticCurveTo( 0, 200, 200, 200 );
 ```
 
 **Return**
@@ -11009,12 +12041,20 @@ GraphicsPath.rotate( nAngle [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 회전될 각도를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nAngle | Number | 현재 모습에서 회전될 각도를 숫자로 설정합니다.
 
 양수로 설정 시 시계방향으로 회전합니다.
-음수로 설정 시 반시계방향으로 회전합니다.
-```
+음수로 설정 시 반시계방향으로 회전합니다. |
+| nCenterX | Number | 회전의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 회전의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -11052,12 +12092,24 @@ GraphicsPath.scale( nScaleX, nScaleY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsPath 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsPath 가 축소됩니다.
-```
+1.0 보다 작은값을 설정하면 GraphicsPath 가 축소됩니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsPath 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsPath 가 축소됩니다. |
+| nCenterX | Number | 확대/축소의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 확대/축소의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -11095,11 +12147,20 @@ GraphicsPath.setClipRect( nX, nY, nWidth, nHeight );
 
 **Parameters**
 
-```
-Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
 
-설정값은 GraphicsPath 의 x 속성값 위치를 0 으로 가정하고 처리됩니다.
-```
+설정값은 GraphicsPath 의 x 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nY | Number | Clipping 할 영역의 y 좌표를 숫자로 설정합니다.
+
+설정값은 GraphicsPath 의 y 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nWidth | Number | Clipping 할 영역의 너비를 숫자로 설정합니다.
+
+설정값은 nX 파라미터값을 기준으로 처리됩니다. |
+| nHeight | Number | Clipping 할 영역의 높이를 숫자로 설정합니다.
+
+설정값은 nY 파라미터값을 기준으로 처리됩니다. |
 
 **Return**
 
@@ -11133,8 +12194,9 @@ GraphicsPath.setPathData( strPath )
 
 **Parameters**
 
-```
-경로 데이터를 SVG 형식의 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strPath | String | 경로 데이터를 SVG 형식의 문자열로 설정합니다.
 
 설정할 수 있는 SVG 형식입니다.
 - "M x,y" : 시작위치를 x,y 좌표위치로 설정합니다.
@@ -11146,7 +12208,16 @@ GraphicsPath.setPathData( strPath )
 - "S x2,y2 x,y" : 현재 위치에서 x,y 좌표위치까지 cubic Bezier 곡선을 표시합니다.
 - "Q x1,y1 x,y" : 현재 위치에서 x,y 좌표위치까지 quadratic Bezier 곡선을 표시합니다.
 - "T x,y" : 현재 위치에서 x,y 좌표위치까지 quadratic Bezier 곡선을 표시합니다.
-- "A rx,ry rotation large clockwise x,y" : 현재 위치에서 x,y 좌표위치까지 타원호를 표시합니다.
+- "A rx,ry rotation large clockwise x,y" : 현재 위치에서 x,y 좌표위치까지 타원호를 표시합니다. |
+
+**Sample Call**
+
+```javascript
+var objGPath = new nexacro.GraphicsPath();
+
+objGPath.setPathData("M50,50 H150 V150 H50 Z"); 
+objGPath.setPathData("M50,50 L150,50 L150,150 L50,150 L50,50");
+objGPath.setPathData("M 10 80 C 40,10 65,10 95,80 S 150,150 180,80");
 ```
 
 **Return**
@@ -11183,10 +12254,21 @@ GraphicsPath.setTransform( strMethod );
 
 **Parameters**
 
-```
-GraphicsPath 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMethod | String | GraphicsPath 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
 translate(), scale(), rotate(), shear() 메소드를 사용할 수 있습니다.
-null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다.
+null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsPath = new nexacro.GraphicsPath();
+this.Graphics00.addChild("GraphicsPath00", objGraphicsPath);
+
+objGraphicsPath.setTransform( "translate(50, 50),rotate(20)" );
+
+objGraphicsPath.setTransform(null);
 ```
 
 **Return**
@@ -11228,9 +12310,18 @@ GraphicsPath.shear( nRadianX, nRadianY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRadianX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nRadianY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nCenterX | Number | 비틀기의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 비틀기의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -11268,7 +12359,9 @@ GraphicsPath.toString();
 
 **Return**
 
-일반적으로 "[object GraphicsPath]" 형태의 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 일반적으로 "[object GraphicsPath]" 형태의 문자열을 반환합니다. |
 
 
 ---
@@ -11289,11 +12382,28 @@ GraphicsPath.transform( nScaleX, nShearX, nShearY, nScaleY, nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsPath 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsPath 가 축소됩니다.
+1.0 보다 작은값을 설정하면 GraphicsPath 가 축소됩니다. |
+| nShearX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nShearY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsPath 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsPath 가 축소됩니다. |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsPath = new nexacro.GraphicsPath();
+
+objGraphicsPath.transform( 1.5, 0, 0, 1.5, 0, 0 );    // scale(1.5,1.5) 와 동일
+objGraphicsPath.transform( 1, 0, 0, 1, 50, 50 );      // translate(50, 50) 와 동일
 ```
 
 **Return**
@@ -11332,9 +12442,10 @@ GraphicsPath.translate( nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
 
 **Return**
 
@@ -11682,8 +12793,7 @@ enumCap ::= 'butt' | 'round' | 'square'
 ```
 ```javascript
 var objGPaths = new nexacro.GraphicsPaths();  
-
-objGPaths.strokepen = "10px solid red"; 
+objGPaths.strokepen = "10px solid red"; 
 objGPaths.strokejoin = "bevel"; 
 objGPaths.strokecap = "square";
 ```
@@ -11723,8 +12833,7 @@ enumJoin ::= 'miter' | 'round' | 'bevel'
 ```
 ```javascript
 var objGPaths = new nexacro.GraphicsPaths();  
-
-objGPaths.strokepen = "10px solid red"; 
+objGPaths.strokepen = "10px solid red"; 
 objGPaths.strokejoin = "bevel";
 ```
 - **`"miter"`** — 경로가 만나는 중심점에서 테두리가 만나는 바깥점까지 뾰족하게 표시됩니다.
@@ -11767,8 +12876,7 @@ strStrokePen ::= <line-width> <line-style> <color>
 ```
 ```javascript
 var objGPaths = new nexacro.GraphicsPaths();  
-
-objGPaths.strokepen = "5px solid red"; 
+objGPaths.strokepen = "5px solid red"; 
 objGPaths.strokepen = "5 dotted #999999"; 
 objGPaths.strokepen = "5px dotted rgb(255,0,0)";
 ```
@@ -11923,13 +13031,25 @@ GraphicsPaths.addChild( strID, objGPath )
 
 **Parameters**
 
-```
-추가하려는 GraphicsPath 오브젝트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 추가하려는 GraphicsPath 오브젝트의 ID 를 문자열로 설정합니다. |
+| objGPath | Object | 추가하려는 GraphicsPath 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGPaths = new nexacro.GraphicsPaths();
+var objGPath = new nexacro.GraphicsPath();
+
+objGPaths.addChild( "GPath00", objGPath );
 ```
 
 **Return**
 
-GraphicsPaths 에 추가된 GraphicsPath 오브젝트의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | GraphicsPaths 에 추가된 GraphicsPath 오브젝트의 인덱스를 반환합니다. |
 
 **Remark**
 
@@ -12021,9 +13141,11 @@ GraphicsPaths.destroy()
 
 **Return**
 
-GraphicsPaths 가 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GraphicsPaths 가 정상적으로 삭제되면 true 를 반환합니다.
 
-GraphicsPaths 가 정상적으로 삭제되지 않으면 false 를 반환합니다.
+GraphicsPaths 가 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -12058,12 +13180,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -12095,13 +13219,15 @@ GraphicsPaths.getChildByIndex( nIndex )
 
 **Parameters**
 
-```
-얻으려 하는 GraphicsPath 오브젝트의 인덱스를 숫자로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIndex | Number | 얻으려 하는 GraphicsPath 오브젝트의 인덱스를 숫자로 설정합니다. |
 
 **Return**
 
-GraphicsPaths 에서 nIndex 에 해당하는 GraphicsPath 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | GraphicsPaths 에서 nIndex 에 해당하는 GraphicsPath 오브젝트를 반환합니다. |
 
 
 ---
@@ -12122,7 +13248,9 @@ GraphicsPaths.getFirstChild()
 
 **Return**
 
-GraphicsPaths 에 추가된 첫번째 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | GraphicsPaths 에 추가된 첫번째 오브젝트를 반환합니다. |
 
 **Remark**
 
@@ -12148,7 +13276,9 @@ GraphicsPaths.getLastChild()
 
 **Return**
 
-GraphicsPaths 에 추가된 마지막 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | GraphicsPaths 에 추가된 마지막 오브젝트를 반환합니다. |
 
 **Remark**
 
@@ -12181,9 +13311,11 @@ trace( objNext.toString() );
 
 **Return**
 
-부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
 
-다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -12210,13 +13342,15 @@ GraphicsPaths.getObjectByID( strID )
 
 **Parameters**
 
-```
-얻으려 하는 오브젝트의 ID 를 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 얻으려 하는 오브젝트의 ID 를 문자열로 설정합니다. |
 
 **Return**
 
-strID 에 해당하는 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | strID 에 해당하는 오브젝트를 반환합니다. |
 
 
 ---
@@ -12237,7 +13371,9 @@ GraphicsPaths.getObjects()
 
 **Return**
 
-GraphicsPaths 에 추가된 순서대로 오브젝트를 배열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | GraphicsPaths 에 추가된 순서대로 오브젝트를 배열로 반환합니다. |
 
 **Remark**
 
@@ -12271,12 +13407,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -12316,11 +13454,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsPaths 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsPaths 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -12360,11 +13500,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsPaths 오브젝트의 strokepen 속성값을 설정했더라도 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -12396,7 +13538,9 @@ GraphicsPaths.getPathData()
 
 **Return**
 
-경로 데이터를 SVG 형식의 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 경로 데이터를 SVG 형식의 문자열로 반환합니다. |
 
 **Remark**
 
@@ -12432,9 +13576,11 @@ trace( objPrev.toString() );
 
 **Return**
 
-부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
 
-이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -12468,11 +13614,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsPaths 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsPaths 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -12511,11 +13659,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsPaths 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -12547,9 +13697,11 @@ GraphicsPaths.hasChild()
 
 **Return**
 
-GraphicsPath 오브젝트가 한 개 이상 추가되어 있으면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GraphicsPath 오브젝트가 한 개 이상 추가되어 있으면 true 를 반환합니다.
 
-GraphicsPath 오브젝트가 추가되어 있지 않으면 false 를 반환합니다.
+GraphicsPath 오브젝트가 추가되어 있지 않으면 false 를 반환합니다. |
 
 
 ---
@@ -12570,13 +13722,15 @@ GraphicsPaths.indexOf( strID )
 
 **Parameters**
 
-```
-인덱스를 얻으려 하는 오브젝트의 ID 를 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 인덱스를 얻으려 하는 오브젝트의 ID 를 문자열로 설정합니다. |
 
 **Return**
 
-strID 에 해당하는 오브젝트의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | strID 에 해당하는 오브젝트의 인덱스를 반환합니다. |
 
 
 ---
@@ -12597,13 +13751,26 @@ GraphicsPaths.insertChild( nIdx, strID, objGPath )
 
 **Parameters**
 
-```
-GraphicsPath 오브젝트가 삽입될 위치의 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIdx | Number | GraphicsPath 오브젝트가 삽입될 위치의 인덱스를 숫자로 설정합니다. |
+| strID | String | 삽입하려는 GraphicsPath 오브젝트의 ID 를 문자열로 설정합니다. |
+| objGPath | Object | 삽입하려는 GraphicsPath 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGPaths = new nexacro.GraphicsPaths();
+var objGPath = new nexacro.GraphicsPath();
+
+objGPaths.insertChild( 0, "GPath00", objGPath );
 ```
 
 **Return**
 
-GraphicsPaths 에 삽입된 GraphicsPath 오브젝트의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | GraphicsPaths 에 삽입된 GraphicsPath 오브젝트의 인덱스를 반환합니다. |
 
 **Remark**
 
@@ -12636,17 +13803,30 @@ GraphicsPaths.isHitTest( nX, nY )
 
 **Parameters**
 
-```
-확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | 확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
 
-설정값은 Graphics 컴포넌트를 기준으로 처리됩니다.
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+| nY | Number | 확인할 위치의 y 좌표값을 pixel 단위의 숫자로 설정합니다.
+
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsPaths = this.Graphics00.getObjectByID("GraphicsPaths00");
+
+var bResult = objGraphicsPaths.isHitTest( 100, 100 );
 ```
 
 **Return**
 
-인수로 전달된 좌표위치가 GraphicsPaths 영역에 포함되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 인수로 전달된 좌표위치가 GraphicsPaths 영역에 포함되면 true 를 반환합니다.
 
-인수로 전달된 좌표위치가 GraphicsPaths 영역에 포함되지 않으면 false 를 반환합니다.
+인수로 전달된 좌표위치가 GraphicsPaths 영역에 포함되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -12674,13 +13854,22 @@ GraphicsPaths.removeChild( strID )
 
 **Parameters**
 
-```
-제거하려는 GraphicsPath 오브젝트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 제거하려는 GraphicsPath 오브젝트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objRemovePath = objGPaths.removeChild( "GraphicsPath00" );
+objRemovePath.destroy();
 ```
 
 **Return**
 
-GraphicsPaths 에서 제거된 GraphicsPath 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | GraphicsPaths 에서 제거된 GraphicsPath 오브젝트를 반환합니다. |
 
 **Remark**
 
@@ -12712,12 +13901,20 @@ GraphicsPaths.rotate( nAngle [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 회전될 각도를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nAngle | Number | 현재 모습에서 회전될 각도를 숫자로 설정합니다.
 
 양수로 설정 시 시계방향으로 회전합니다.
-음수로 설정 시 반시계방향으로 회전합니다.
-```
+음수로 설정 시 반시계방향으로 회전합니다. |
+| nCenterX | Number | 회전의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 회전의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -12755,12 +13952,24 @@ GraphicsPaths.scale( nScaleX, nScaleY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsPaths 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsPaths 가 축소됩니다.
-```
+1.0 보다 작은값을 설정하면 GraphicsPaths 가 축소됩니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsPaths 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsPaths 가 축소됩니다. |
+| nCenterX | Number | 확대/축소의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 확대/축소의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -12798,11 +14007,20 @@ GraphicsPaths.setClipRect( nX, nY, nWidth, nHeight );
 
 **Parameters**
 
-```
-Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
 
-설정값은 GraphicsPaths 의 x 속성값 위치를 0 으로 가정하고 처리됩니다.
-```
+설정값은 GraphicsPaths 의 x 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nY | Number | Clipping 할 영역의 y 좌표를 숫자로 설정합니다.
+
+설정값은 GraphicsPaths 의 y 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nWidth | Number | Clipping 할 영역의 너비를 숫자로 설정합니다.
+
+설정값은 nX 파라미터값을 기준으로 처리됩니다. |
+| nHeight | Number | Clipping 할 영역의 높이를 숫자로 설정합니다.
+
+설정값은 nY 파라미터값을 기준으로 처리됩니다. |
 
 **Return**
 
@@ -12836,8 +14054,9 @@ GraphicsPaths.setPathData( strPath )
 
 **Parameters**
 
-```
-경로 데이터를 SVG 형식의 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strPath | String | 경로 데이터를 SVG 형식의 문자열로 설정합니다.
 
 설정할 수 있는 SVG 형식입니다.
 - "M x,y" : 시작위치를 x,y 좌표위치로 설정합니다.
@@ -12849,7 +14068,16 @@ GraphicsPaths.setPathData( strPath )
 - "S x2,y2 x,y" : 현재 위치에서 x,y 좌표위치까지 cubic Bezier 곡선을 표시합니다.
 - "Q x1,y1 x,y" : 현재 위치에서 x,y 좌표위치까지 quadratic Bezier 곡선을 표시합니다.
 - "T x,y" : 현재 위치에서 x,y 좌표위치까지 quadratic Bezier 곡선을 표시합니다.
-- "A rx,ry rotation large clockwise x,y" : 현재 위치에서 x,y 좌표위치까지 타원호를 표시합니다.
+- "A rx,ry rotation large clockwise x,y" : 현재 위치에서 x,y 좌표위치까지 타원호를 표시합니다. |
+
+**Sample Call**
+
+```javascript
+var objGPath = new nexacro.GraphicsPaths();
+
+objGPath.setPathData("M50,50 H150 V150 H50 Z"); 
+objGPath.setPathData("M50,50 L150,50 L150,150 L50,150 L50,50");
+objGPath.setPathData("M 10 80 C 40,10 65,10 95,80 S 150,150 180,80");
 ```
 
 **Return**
@@ -12886,10 +14114,21 @@ GraphicsPaths.setTransform( strMethod );
 
 **Parameters**
 
-```
-GraphicsPaths 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMethod | String | GraphicsPaths 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
 translate(), scale(), rotate(), shear() 메소드를 사용할 수 있습니다.
-null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다.
+null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsPaths = new nexacro.GraphicsPaths();
+this.Graphics00.addChild("GraphicsPaths00", objGraphicsPaths);
+
+objGraphicsPaths.setTransform( "translate(50, 50),rotate(20)" );
+
+objGraphicsPaths.setTransform(null);
 ```
 
 **Return**
@@ -12931,9 +14170,18 @@ GraphicsPaths.shear( nRadianX, nRadianY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRadianX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nRadianY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nCenterX | Number | 비틀기의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 비틀기의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -12971,7 +14219,9 @@ GraphicsPaths.toString();
 
 **Return**
 
-일반적으로 "[object GraphicsPaths]" 형태의 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 일반적으로 "[object GraphicsPaths]" 형태의 문자열을 반환합니다. |
 
 
 ---
@@ -12992,11 +14242,28 @@ GraphicsPaths.transform( nScaleX, nShearX, nShearY, nScaleY, nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsPaths 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsPaths 가 축소됩니다.
+1.0 보다 작은값을 설정하면 GraphicsPaths 가 축소됩니다. |
+| nShearX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nShearY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsPaths 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsPaths 가 축소됩니다. |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsPaths = new nexacro.GraphicsPaths();
+
+objGraphicsPaths.transform( 1.5, 0, 0, 1.5, 0, 0 );    // scale(1.5,1.5) 와 동일
+objGraphicsPaths.transform( 1, 0, 0, 1, 50, 50 );      // translate(50, 50) 와 동일
 ```
 
 **Return**
@@ -13035,9 +14302,10 @@ GraphicsPaths.translate( nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
 
 **Return**
 
@@ -13396,8 +14664,7 @@ GraphicsRect.radiusx[= nRadiusx]
 
 ```javascript
 var objGRect = new nexacro.GraphicsRect();  
-
-objGRect.radiusx = 50; 
+objGRect.radiusx = 50; 
 objGRect.radiusy = 50;
 ```
 - **`nRadiusx`** — 모서리를 둥글게 표시하기 위한 x 축의 반경을 pixel 단위의 숫자로 설정합니다.
@@ -13433,8 +14700,7 @@ GraphicsRect.radiusy[= nRadiusy]
 
 ```javascript
 var objGRect = new nexacro.GraphicsRect();  
-
-objGRect.radiusx = 50; 
+objGRect.radiusx = 50; 
 objGRect.radiusy = 50;
 ```
 - **`nRadiusy`** — 모서리를 둥글게 표시하기 위한 y 축의 반경을  pixel 단위의 숫자로 설정합니다.
@@ -13473,8 +14739,7 @@ enumJoin ::= 'miter' | 'round' | 'bevel'
 ```
 ```javascript
 var objGRect = new nexacro.GraphicsRect();  
-
-objGRect.strokepen = "10px solid red"; 
+objGRect.strokepen = "10px solid red"; 
 objGRect.strokejoin = "bevel";
 ```
 - **`"miter"`** — 모서리 끝부분이 일반적인 사각형 모양의 직각으로 표시됩니다.
@@ -13702,9 +14967,11 @@ GraphicsRect.destroy()
 
 **Return**
 
-GraphicsRect 가 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GraphicsRect 가 정상적으로 삭제되면 true 를 반환합니다.
 
-GraphicsRect 가 정상적으로 삭제되지 않으면 false 를 반환합니다.
+GraphicsRect 가 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -13739,12 +15006,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -13783,9 +15052,11 @@ trace( objNext.toString() );
 
 **Return**
 
-부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
 
-다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -13820,12 +15091,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -13865,11 +15138,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsRect 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsRect 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -13909,11 +15184,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsRect 오브젝트의 strokepen 속성값을 설정했더라도 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -13952,9 +15229,11 @@ trace( objPrev.toString() );
 
 **Return**
 
-부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
 
-이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -13988,11 +15267,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsRect 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsRect 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -14031,11 +15312,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -14073,9 +15356,11 @@ var bResult = objGraphicsRect.isEmptyRect() ;
 
 **Return**
 
-GraphicsRect 에 영역이 설정되어 있지 않으면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GraphicsRect 에 영역이 설정되어 있지 않으면 true 를 반환합니다.
 
-GraphicsRect 에 영역이 설정되어 있으면 false 를 반환합니다.
+GraphicsRect 에 영역이 설정되어 있으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -14100,17 +15385,30 @@ GraphicsRect.isHitTest( nX, nY )
 
 **Parameters**
 
-```
-확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | 확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
 
-설정값은 Graphics 컴포넌트를 기준으로 처리됩니다.
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+| nY | Number | 확인할 위치의 y 좌표값을 pixel 단위의 숫자로 설정합니다.
+
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsRect = this.Graphics00.getObjectByID("GraphicsRect00");
+
+var bResult = objGraphicsRect.isHitTest( 100, 100 );
 ```
 
 **Return**
 
-인수로 전달된 좌표위치가 GraphicsRect 영역에 포함되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 인수로 전달된 좌표위치가 GraphicsRect 영역에 포함되면 true 를 반환합니다.
 
-인수로 전달된 좌표위치가 GraphicsRect 영역에 포함되지 않으면 false 를 반환합니다.
+인수로 전달된 좌표위치가 GraphicsRect 영역에 포함되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -14138,12 +15436,20 @@ GraphicsRect.rotate( nAngle [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 회전될 각도를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nAngle | Number | 현재 모습에서 회전될 각도를 숫자로 설정합니다.
 
 양수로 설정 시 시계방향으로 회전합니다.
-음수로 설정 시 반시계방향으로 회전합니다.
-```
+음수로 설정 시 반시계방향으로 회전합니다. |
+| nCenterX | Number | 회전의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 회전의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -14181,12 +15487,24 @@ GraphicsRect.scale( nScaleX, nScaleY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsRect 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsRect 가 축소됩니다.
-```
+1.0 보다 작은값을 설정하면 GraphicsRect 가 축소됩니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsRect 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsRect 가 축소됩니다. |
+| nCenterX | Number | 확대/축소의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 확대/축소의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -14224,11 +15542,20 @@ GraphicsRect.setClipRect( nX, nY, nWidth, nHeight );
 
 **Parameters**
 
-```
-Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
 
-설정값은 GraphicsRect 의 x 속성값 위치를 0 으로 가정하고 처리됩니다.
-```
+설정값은 GraphicsRect 의 x 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nY | Number | Clipping 할 영역의 y 좌표를 숫자로 설정합니다.
+
+설정값은 GraphicsRect 의 y 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nWidth | Number | Clipping 할 영역의 너비를 숫자로 설정합니다.
+
+설정값은 nX 파라미터값을 기준으로 처리됩니다. |
+| nHeight | Number | Clipping 할 영역의 높이를 숫자로 설정합니다.
+
+설정값은 nY 파라미터값을 기준으로 처리됩니다. |
 
 **Return**
 
@@ -14262,10 +15589,21 @@ GraphicsRect.setTransform( strMethod );
 
 **Parameters**
 
-```
-GraphicsRect 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMethod | String | GraphicsRect 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
 translate(), scale(), rotate(), shear() 메소드를 사용할 수 있습니다.
-null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다.
+null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsRect = new nexacro.GraphicsRect();
+this.Graphics00.addChild("GraphicsRect00", objGraphicsRect);
+
+objGraphicsRect.setTransform( "translate(50, 50),rotate(20)" );
+
+objGraphicsRect.setTransform(null);
 ```
 
 **Return**
@@ -14307,9 +15645,18 @@ GraphicsRect.shear( nRadianX, nRadianY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRadianX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nRadianY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nCenterX | Number | 비틀기의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 비틀기의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -14347,7 +15694,9 @@ GraphicsRect.toString();
 
 **Return**
 
-일반적으로 "[object GraphicsRect]" 형태의 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 일반적으로 "[object GraphicsRect]" 형태의 문자열을 반환합니다. |
 
 
 ---
@@ -14368,11 +15717,28 @@ GraphicsRect.transform( nScaleX, nShearX, nShearY, nScaleY, nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsRect 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsRect 가 축소됩니다.
+1.0 보다 작은값을 설정하면 GraphicsRect 가 축소됩니다. |
+| nShearX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nShearY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsRect 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsRect 가 축소됩니다. |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsRect = new nexacro.GraphicsRect();
+
+objGraphicsRect.transform( 1.5, 0, 0, 1.5, 0, 0 );    // scale(1.5,1.5) 와 동일
+objGraphicsRect.transform( 1, 0, 0, 1, 50, 50 );      // translate(50, 50) 와 동일
 ```
 
 **Return**
@@ -14411,9 +15777,10 @@ GraphicsRect.translate( nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
 
 **Return**
 
@@ -14517,8 +15884,7 @@ strColor ::= <NamedColor> | <NumericColor>
 ```
 ```javascript
 var objGText = new nexacro.GraphicsText(100,100);  
-
-objGText.font = "bold 12pt arial, sans-serif"; 
+objGText.font = "bold 12pt arial, sans-serif"; 
 objGText.color = "blue"; objGText.color = "#999999"; 
 objGText.color = "rgb(255,0,0)";
 ```
@@ -14570,8 +15936,7 @@ strfont ::= [<font-style>] [<font-weight>] <font-size> ['/'<line-height>] <font-
 ```
 ```javascript
 var objGraphicsText = new nexacro.GraphicsText();  
-
-objGraphicsText.font = "bold 12pt/30px arial, sans-serif"; 
+objGraphicsText.font = "bold 12pt/30px arial, sans-serif"; 
 objGraphicsText.color = "blue";
 ```
 - **`<font-style>`** — 폰트의 스타일을 설정합니다.
@@ -14756,8 +16121,7 @@ GraphicsText.text[= strText]
 
 ```javascript
 var objGraphicsText = new nexacro.GraphicsText();  
-
-objGraphicsText.text = "Text";
+objGraphicsText.text = "Text";
 ```
 - **`strText`** — GraphicsText 에 표시될 텍스트를 설정합니다.
 
@@ -14785,8 +16149,7 @@ enumTextAlign ::= 'left' | 'center' | 'right'
 ```
 ```javascript
 var objGraphicsText = new nexacro.GraphicsText();  
-
-objGraphicsText.x = 100; 
+objGraphicsText.x = 100; 
 objGraphicsText.y = 100; 
 objGraphicsText.textAlign = "left"; 
 objGraphicsText.verticalAlign = "top";
@@ -14822,8 +16185,7 @@ GraphicsText.textwidth[= nTextWidth]
 
 ```javascript
 var objGraphicsText = new nexacro.GraphicsText();  
-
-objGraphicsText.wordWrap = "char"; 
+objGraphicsText.wordWrap = "char"; 
 objGraphicsText.textwidth = 100;
 ```
 - **`nTextWidth`** — 텍스트가 표시되는 영역의 너비를 pixel 단위의 숫자로 설정합니다.
@@ -14862,8 +16224,7 @@ enumVAlign ::= 'top' | 'middle' | 'bottom'
 ```
 ```javascript
 var objGraphicsText = new nexacro.GraphicsText();  
-
-objGraphicsText.x = 100; 
+objGraphicsText.x = 100; 
 objGraphicsText.y = 100; 
 objGraphicsText.textAlign = "left"; 
 objGraphicsText.verticalAlign = "top";
@@ -14940,8 +16301,7 @@ enumWordwrap ::= 'none' | 'char'
 ```
 ```javascript
 var objGraphicsText = new nexacro.GraphicsText();  
-
-objGraphicsText.wordWrap = "char"; 
+objGraphicsText.wordWrap = "char"; 
 objGraphicsText.textwidth = 100;
 ```
 - **`"none"`** — 자동으로 줄바꿈을 수행하지 않습니다.
@@ -14976,8 +16336,7 @@ GraphicsText.x[= nX]
 
 ```javascript
 var objGraphicsText = new nexacro.GraphicsText();  
-
-objGraphicsText.x = 200; 
+objGraphicsText.x = 200; 
 objGraphicsText.y = 200;
 ```
 - **`nX`** — 부모 오브젝트를 기준으로 GraphicsText 가 표시될 x 축 좌표값을 pixel 단위의 숫자로 설정합니다.
@@ -15016,8 +16375,7 @@ GraphicsText.y[= nY]
 
 ```javascript
 var objGraphicsText = new nexacro.GraphicsText();  
-
-objGraphicsText.x = 200; 
+objGraphicsText.x = 200; 
 objGraphicsText.y = 200;
 ```
 - **`nY`** — 부모 오브젝트를 기준으로 GraphicsText 가 표시될 y 축 좌표값을 pixel 단위의 숫자로 설정합니다.
@@ -15056,9 +16414,11 @@ GraphicsText.destroy()
 
 **Return**
 
-GraphicsText 가 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GraphicsText 가 정상적으로 삭제되면 true 를 반환합니다.
 
-GraphicsText 가 정상적으로 삭제되지 않으면 false 를 반환합니다.
+GraphicsText 가 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -15093,12 +16453,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -15137,9 +16499,11 @@ trace( objNext.toString() );
 
 **Return**
 
-부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 다음 순서의 Graphics 오브젝트를 반환합니다.
 
-다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+다음 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -15174,12 +16538,14 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsEllipse, GraphicsLine, GraphicsPath, GraphicsPaths, GraphicsRect 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에 바깥쪽 외곽선 영역이 포함됩니다.
 strokepen 속성값을 설정하지 않았거나 GraphicsGroup, GraphicsImage, GraphicsText 오브젝트의 경우에는 외곽선 정보가 없으며 반환되는 영역정보에 외곽선 영역이 포함되지 않습니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -15219,11 +16585,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsText 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsText 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -15263,11 +16631,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모 오브젝트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsText 오브젝트의 strokepen 속성값을 설정했더라도 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -15306,9 +16676,11 @@ trace( objPrev.toString() );
 
 **Return**
 
-부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 부모가 동일한 이전 순서의 Graphics 오브젝트를 반환합니다.
 
-이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다.
+이전 순서의 Graphics 오브젝트가 없을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -15342,11 +16714,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsText 오브젝트의 strokepen 속성값을 설정했더라도 외곽선 영역과 관계없이 GraphicsText 오브젝트의 실제 영역이 반환됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -15385,11 +16759,13 @@ trace( "left : " + objRect.left );
 
 **Return**
 
-Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Object | Graphics 컴포넌트의 left, top 위치를 기준으로 계산된 영역정보가 Rect 오브젝트로 반환됩니다.
 
 GraphicsText 오브젝트의 strokepen 속성값을 설정한 경우 반환되는 영역정보에는 안쪽 외곽선 영역이 제외됩니다.
 
-* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다.
+* Rect 오브젝트는 "left","top","right","bottom","width","height" 속성을 갖습니다. |
 
 **Remark**
 
@@ -15427,9 +16803,11 @@ var bResult = objGraphicsText.isEmptyRect() ;
 
 **Return**
 
-GraphicsText 에 설정된 텍스트가 없으면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GraphicsText 에 설정된 텍스트가 없으면 true 를 반환합니다.
 
-GraphicsText 에 설정된 텍스트가 있으면 false 를 반환합니다.
+GraphicsText 에 설정된 텍스트가 있으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -15454,17 +16832,30 @@ GraphicsText.isHitTest( nX, nY )
 
 **Parameters**
 
-```
-확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | 확인할 위치의 x 좌표값을 pixel 단위의 숫자로 설정합니다.
 
-설정값은 Graphics 컴포넌트를 기준으로 처리됩니다.
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+| nY | Number | 확인할 위치의 y 좌표값을 pixel 단위의 숫자로 설정합니다.
+
+설정값은 Graphics 컴포넌트를 기준으로 처리됩니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsText = this.Graphics00.getObjectByID("GraphicsText00");
+
+var bResult = objGraphicsText.isHitTest( 100, 100 );
 ```
 
 **Return**
 
-인수로 전달된 좌표위치가 GraphicsText 영역에 포함되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 인수로 전달된 좌표위치가 GraphicsText 영역에 포함되면 true 를 반환합니다.
 
-인수로 전달된 좌표위치가 GraphicsText 영역에 포함되지 않으면 false 를 반환합니다.
+인수로 전달된 좌표위치가 GraphicsText 영역에 포함되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -15492,12 +16883,20 @@ GraphicsText.rotate( nAngle [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 회전될 각도를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nAngle | Number | 현재 모습에서 회전될 각도를 숫자로 설정합니다.
 
 양수로 설정 시 시계방향으로 회전합니다.
-음수로 설정 시 반시계방향으로 회전합니다.
-```
+음수로 설정 시 반시계방향으로 회전합니다. |
+| nCenterX | Number | 회전의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 회전의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -15535,12 +16934,24 @@ GraphicsText.scale( nScaleX, nScaleY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsText 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsText 가 축소됩니다.
-```
+1.0 보다 작은값을 설정하면 GraphicsText 가 축소됩니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsText 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsText 가 축소됩니다. |
+| nCenterX | Number | 확대/축소의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 확대/축소의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -15578,11 +16989,20 @@ GraphicsText.setClipRect( nX, nY, nWidth, nHeight );
 
 **Parameters**
 
-```
-Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nX | Number | Clipping 할 영역의 x 좌표를 숫자로 설정합니다.
 
-설정값은 GraphicsText 의 x 속성값 위치를 0 으로 가정하고 처리됩니다.
-```
+설정값은 GraphicsText 의 x 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nY | Number | Clipping 할 영역의 y 좌표를 숫자로 설정합니다.
+
+설정값은 GraphicsText 의 y 속성값 위치를 0 으로 가정하고 처리됩니다. |
+| nWidth | Number | Clipping 할 영역의 너비를 숫자로 설정합니다.
+
+설정값은 nX 파라미터값을 기준으로 처리됩니다. |
+| nHeight | Number | Clipping 할 영역의 높이를 숫자로 설정합니다.
+
+설정값은 nY 파라미터값을 기준으로 처리됩니다. |
 
 **Return**
 
@@ -15616,10 +17036,21 @@ GraphicsText.setTransform( strMethod );
 
 **Parameters**
 
-```
-GraphicsText 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMethod | String | GraphicsText 에 적용할 Transform 관련 메소드를 "," 로 구분하여 설정합니다.
 translate(), scale(), rotate(), shear() 메소드를 사용할 수 있습니다.
-null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다.
+null 값 설정 시 transform 효과가 지정되지 않은 상태로 초기화합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsText = new nexacro.GraphicsText();
+this.Graphics00.addChild("GraphicsText00", objGraphicsText);
+
+objGraphicsText.setTransform( "translate(50, 50),rotate(20)" );
+
+objGraphicsText.setTransform(null);
 ```
 
 **Return**
@@ -15661,9 +17092,18 @@ GraphicsText.shear( nRadianX, nRadianY [, nCenterX, nCenterY] );
 
 **Parameters**
 
-```
-현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRadianX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nRadianY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nCenterX | Number | 비틀기의 중심이 되는 x 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
+| nCenterY | Number | 비틀기의 중심이 되는 y 좌표를 숫자로 설정합니다.
+설정값은 부모 오브젝트를 기준으로 처리됩니다.
+
+값 생략 시 0 값이 적용됩니다. |
 
 **Return**
 
@@ -15701,7 +17141,9 @@ GraphicsText.toString();
 
 **Return**
 
-일반적으로 "[object GraphicsText]" 형태의 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 일반적으로 "[object GraphicsText]" 형태의 문자열을 반환합니다. |
 
 
 ---
@@ -15722,11 +17164,28 @@ GraphicsText.transform( nScaleX, nShearX, nShearY, nScaleY, nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nScaleX | Number | 현재 크기에서 확대/축소 될 가로 배율을 실수로 설정합니다.
 
 1.0 보다 큰값을 설정하면 GraphicsText 가 확대됩니다.
-1.0 보다 작은값을 설정하면 GraphicsText 가 축소됩니다.
+1.0 보다 작은값을 설정하면 GraphicsText 가 축소됩니다. |
+| nShearX | Number | 현재 모습에서 x 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nShearY | Number | 현재 모습에서 y 축 기준으로 비틀어질 각도를 라디안값으로 설정합니다. |
+| nScaleY | Number | 현재 크기에서 확대/축소 될 세로 배율을 실수로 설정합니다.
+
+1.0 보다 큰값을 설정하면 GraphicsText 가 확대됩니다.
+1.0 보다 작은값을 설정하면 GraphicsText 가 축소됩니다. |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objGraphicsText = new nexacro.GraphicsText();
+
+objGraphicsText.transform( 1.5, 0, 0, 1.5, 0, 0 );    // scale(1.5,1.5) 와 동일
+objGraphicsText.transform( 1, 0, 0, 1, 50, 50 );      // translate(50, 50) 와 동일
 ```
 
 **Return**
@@ -15765,9 +17224,10 @@ GraphicsText.translate( nTransX, nTransY );
 
 **Parameters**
 
-```
-현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTransX | Number | 현재 위치에서 x 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
+| nTransY | Number | 현재 위치에서 y 축 방향으로 이동 할 거리를 pixel 단위의 숫자로 설정합니다. |
 
 **Return**
 

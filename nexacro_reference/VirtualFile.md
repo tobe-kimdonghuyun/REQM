@@ -281,15 +281,23 @@ VirtualFile.addEvent( strEventID )
 
 **Parameters**
 
-```
-VirtualFile 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | VirtualFile 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.VirtualFile00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -316,15 +324,26 @@ VirtualFile.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.VirtualFile00_onsuccess = function( obj:nexacro.VirtualFile,  e:nexacro.VirtualFileEventInfo) { // 수행할 스크립트 };
+var nIndex = this.VirtualFile00.addEventHandler( "onsuccess", this.VirtualFile00_onsuccess, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 
 ---
@@ -345,13 +364,21 @@ VirtualFile.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.VirtualFile00.clearEventHandler( "onsuccess" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -414,17 +441,28 @@ VirtualFile.copy( strSrc, strDest );
 
 **Parameters**
 
-```
-복사할 원본 파일명을 경로와 함께 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strSrc | String | 복사할 원본 파일명을 경로와 함께 설정합니다.
 
-절대경로 또는 Alias 를 사용하여 설정합니다.
+절대경로 또는 Alias 를 사용하여 설정합니다. |
+| strDest | String | 복사하여 생성될 파일명을 경로와 함께 설정합니다.
+
+절대경로 또는 Alias 를 사용하여 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc = this.VirtualFile00.copy("%USERAPP%source.txt", "%USERAPP%dest.txt") ;
 ```
 
 **Return**
 
-파라미터가 생략되거나 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파라미터가 생략되거나 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
 
-그 외의 정상적인 경우에는 true 를 반환합니다.
+그 외의 정상적인 경우에는 true 를 반환합니다. |
 
 **Remark**
 
@@ -560,16 +598,30 @@ VirtualFile.createDirectory( strPath, [bAllCreate] )
 
 **Parameters**
 
-```
-생성할 폴더명을 경로와 함께 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strPath | String | 생성할 폴더명을 경로와 함께 설정합니다.
 
 "C:\\TobeSoft\\TestFolder" 와 같이 절대경로를 설정 시 해당 위치에 폴더가 생성됩니다.
-"My_Folder" 와 같이 디렉토리명만 설정할 경우 "내문서" 위치에 폴더가 생성됩니다.
+"My_Folder" 와 같이 디렉토리명만 설정할 경우 "내문서" 위치에 폴더가 생성됩니다. |
+| bAllCreate | Boolean | true 설정 시 중간의 경로를 모두 생성한 후 폴더가 생성됩니다.
+false 설정 시 중간의 경로가 존재할 경우만 폴더가 생성됩니다.
+
+값 생략 시 false 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = this.VirtualFile00.createDirectory( "C:\\TobeSoft\\TestFolder", true );
+bSucc = this.VirtualFile00.createDirectory( "TestFolder" ) ;
 ```
 
 **Return**
 
-폴더 생성여부와 관계없이 메소드 수행 여부를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 폴더 생성여부와 관계없이 메소드 수행 여부를 반환합니다. |
 
 **Remark**
 
@@ -595,16 +647,30 @@ VirtualFile.deleteDirectory( strPath [, bAllChild] )
 
 **Parameters**
 
-```
-삭제할 폴더명을 경로와 함께 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strPath | String | 삭제할 폴더명을 경로와 함께 설정합니다.
 
 "C:\\TobeSoft\\TestFolder" 와 같이 절대경로를 설정 시 해당 위치의 폴더가 삭제됩니다.
-"My_Folder" 와 같이 폴더명만 설정할 경우 "내문서" 위치의 폴더가 삭제됩니다.
+"My_Folder" 와 같이 폴더명만 설정할 경우 "내문서" 위치의 폴더가 삭제됩니다. |
+| bAllChild | Boolean | true 설정 시 삭제되는 폴더의 하위 폴더와 파일이 모두 삭제됩니다.
+false 설정 시 삭제되는 폴더의 하위 폴더와 파일을 삭제하지 않습니다.
+
+값 생략 시 false 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = this.VirtualFile00.deleteDirectory( "TestFolder" );
+bSucc = this.VirtualFile00.deleteDirectory( "C:\\TobeSoft\\TestFolder", true );
 ```
 
 **Return**
 
-폴더 삭제여부와 관계없이 메소드 수행 여부를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 폴더 삭제여부와 관계없이 메소드 수행 여부를 반환합니다. |
 
 **Remark**
 
@@ -634,9 +700,11 @@ var bSucc = this.VirtualFile00.destroy();
 
 **Return**
 
-VirtualFile 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | VirtualFile 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-VirtualFile 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+VirtualFile 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -665,14 +733,25 @@ VirtualFile.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.VirtualFile00_onsuccess = function( obj:nexacro.VirtualFile,  e:nexacro.VirtualFileEventInfo) { //수행할 스크립트 };
+var nIndex = this.VirtualFile00.findEventHandler( "onsuccess", this.VirtualFile00_onsuccess, this );
 ```
 
 **Return**
 
-이벤트에서 찾으려고 하는 핸들러 함수의 인덱스를 반환합니다.
-찾으려고 하는 핸들러 함수가 존재하지 않는다면 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에서 찾으려고 하는 핸들러 함수의 인덱스를 반환합니다.
+찾으려고 하는 핸들러 함수가 존재하지 않는다면 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -697,14 +776,24 @@ VirtualFile.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+인덱스는 "0"부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = VirtualFile00.getEventHandler( "onsuccess", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 "null"을 반환합니다. |
 
 
 ---
@@ -725,18 +814,48 @@ VirtualFile.getFileList( strPath, strSearchExpr [, constOption] )
 
 **Parameters**
 
-```
-파일 또는 폴더 목록을 가져올 대상 폴더를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strPath | String | 파일 또는 폴더 목록을 가져올 대상 폴더를 설정합니다.
 
-절대경로 또는 Alias 를 사용하여 설정합니다.
+절대경로 또는 Alias 를 사용하여 설정합니다. |
+| strSearchExpr | String | 반환되는 목록에 포함시킬 파일 또는 폴더의 검색조건을 정규표현식으로 설정합니다.
+설정한 정규표현식을 파일명 또는 폴더명과 매칭시킵니다.
+
+정규표현식에서 Escape 문자("\") 사용 시 두번("\\") 설정하여야 합니다.
+ex) "Text" 뒤에 숫자가 붙은 파일명 또는 폴더명 검색 시 "Text\\d" 형태로 설정
+
+정규표현식에서 "." 문자는 개행문자 이외의 모든 문자와 매칭되므로 "." 문자 자체를 매칭하려면 "\\." 로 설정하여야 합니다.
+ex) 확장자가 "txt" 인 파일명 검색 시 "\\.txt$" 형태로 설정 |
+| constOption | Constant | 반환되는 파일목록을 구성하는 검색옵션을 상수값으로 설정합니다.
+
+"VirtualFile.findAll" 또는 1 (0x01) 설정 시 strPath 위치에 속한 파일과 폴더를 대상으로 검색합니다.
+"VirtualFile.findFileOnly" 또는 2 (0x02) 설정 시 strPath 위치에 속한 파일을 대상으로 검색합니다.
+"VirtualFile.findDirectoryOnly" 또는 4 (0x04) 설정 시 strPath 위치에 속한 폴더를 대상으로 검색합니다.
+
+"VirtualFile.findRecursive" 또는 8 (0x08) 설정 시 하위 폴더에 대한 재귀검색을 합니다.
+"VirtualFile.findCaseless" 또는 16 (0x10) 설정 시 대소문자를 구분하지 않고 검색합니다.
+
+"VirtualFile.findRecursive" 와 "VirtualFile.findCaseless" 값은 다른 옵션과 "|" 문자로 구분하여 함께 설정할 수 있습니다.
+
+값 생략 시 "VirtualFile.findAll" 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.VirtualFile00.getFileList( "%MYDOCUMENT%", "\\.txt$", VirtualFile.findFileOnly );
+this.VirtualFile00.getFileList( "%MYDOCUMENT%", "\\.jpg$", VirtualFile.findFileOnly | VirtualFile.findRecursive );
+this.VirtualFile00.getFileList( "%MYDOCUMENT%\\TestFolder", "^Folder.*\\d", VirtualFile.findDirectoryOnly | VirtualFile.findRecursive | VirtualFile.findCaseless );
 ```
 
 **Return**
 
-메소드 실행에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 true 를 반환합니다.
 메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 false 를 반환합니다.
 
-파일 또는 폴더 목록의 반환여부와 관계없이 메소드 실행여부를 반환합니다.
+파일 또는 폴더 목록의 반환여부와 관계없이 메소드 실행여부를 반환합니다. |
 
 **Remark**
 
@@ -874,10 +993,12 @@ this.VirtualFile00.getFileSize();
 
 **Return**
 
-파일 크기의 반환여부와 관계없이 메소드의 수행여부를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파일 크기의 반환여부와 관계없이 메소드의 수행여부를 반환합니다.
 
 메소드 수행에 성공하면 true 를 반환합니다.
-메소드 수행에 실패하면 false 를 반환합니다.
+메소드 수행에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -915,16 +1036,33 @@ VirtualFile.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.VirtualFile00_onsuccess = function( obj:nexacro.VirtualFile,  e:nexacro.VirtualFileEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.VirtualFile00.insertEventHandler( "onsuccess", 0, this.VirtualFile00_onsuccess, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -949,17 +1087,25 @@ VirtualFile.isExist(strPath)
 
 **Parameters**
 
-```
-존재여부를 확인할 파일 또는 폴더를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strPath | String | 존재여부를 확인할 파일 또는 폴더를 설정합니다.
 
-절대경로 또는 Alias 를 사용하여 설정합니다.
+절대경로 또는 Alias 를 사용하여 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.VirtualFile00.isExist("%USERAPP%");
 ```
 
 **Return**
 
-파라미터가 생략되거나 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파라미터가 생략되거나 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
 
-그 외의 정상적인 경우에는 true 를 반환합니다.
+그 외의 정상적인 경우에는 true 를 반환합니다. |
 
 **Remark**
 
@@ -1093,18 +1239,46 @@ VirtualFile.open( strFileName ,constOptions )
 
 **Parameters**
 
-```
-오픈할 파일명을 절대경로 또는 Alias 를 사용하여 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strFileName | String | 오픈할 파일명을 절대경로 또는 Alias 를 사용하여 설정합니다.
 
-* FileUpload, FileUpTransfer, FileDialog 또는 Drag&Drop 으로 전달된 VirtualFile 오브젝트일 때만 strFileName 파라미터값을 null 또는 빈값으로 설정할 수 있습니다.
+* FileUpload, FileUpTransfer, FileDialog 또는 Drag&Drop 으로 전달된 VirtualFile 오브젝트일 때만 strFileName 파라미터값을 null 또는 빈값으로 설정할 수 있습니다. |
+| constOptions | Object | 파일을 오픈하는 옵션을 상수값으로 설정합니다.
+각 옵션값들은 OR("|") 연산자를 사용하여 중복하여 설정할 수 있습니다.
+
+VirtualFile.openRead 또는 1 설정 시 읽기전용으로 파일을 오픈합니다.
+파일이 존재하지 않으면 에러가 발생합니다.
+
+VirtualFile.openWrite 또는 2 설정 시 쓰기전용으로 파일을 오픈합니다.
+파일이 존재하지 않으면 파일을 생성합니다.
+
+VirtualFile.openAppend 또는 16 설정 시 읽기/쓰기 용도로 파일을 오픈합니다.
+파일이 존재하면 오픈된 파일에서 파일포인터가 제일 마지막에 위치하게 됩니다.
+파일이 존재하지 않으면 파일을 생성합니다.
+
+VirtualFile.openCreate 또는 4096 설정 시 파일을 생성하며 오픈합니다.
+파일이 존재하면 onerror 이벤트가 발생합니다.
+
+VirtualFile.openText 또는 256 설정 시 파일을 텍스트모드로 오픈합니다.
+
+VirtualFile.openBinary 또는 512 설정 시 파일을 이진모드로 오픈합니다. |
+
+**Sample Call**
+
+```javascript
+this.VirtualFile00.open( "%USERAPP%test.txt", VirtualFile.openRead );
+this.VirtualFile00.open( "%USERAPP%test.txt", VirtualFile.openWrite | VirtualFile.openAppend );
 ```
 
 **Return**
 
-파일의 오픈 여부와 관계없이 메소드 실행에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파일의 오픈 여부와 관계없이 메소드 실행에 성공하면 true 를 반환합니다.
 
 파일의 오픈 여부와 관계없이 메소드 실행에 실패하면 false 를 반환합니다.
-파라미터를 생략하거나 잘못된 문자가 설정된 경우 false 를 반환합니다.
+파라미터를 생략하거나 잘못된 문자가 설정된 경우 false 를 반환합니다. |
 
 **Remark**
 
@@ -1246,17 +1420,30 @@ VirtualFile 에 오픈된 파일의 내용을 읽는 메소드입니다.
 
 **Parameters**
 
-```
-파일에서 읽어 올 길이를 Byte 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLength | Number | 파일에서 읽어 올 길이를 Byte 단위의 숫자로 설정합니다.
 
-값 생략 시 전체 파일을 읽어옵니다.
+값 생략 시 전체 파일을 읽어옵니다. |
+| strCharset | String | 파일에서 읽어올 내용에 적용할 CharSet 을 설정합니다.
+
+Windows NRE 만 적용되고 모바일은 "UTF-8" 로 동작합니다. |
+
+**Sample Call**
+
+```javascript
+var varValue;
+varValue = this.VirtualFile00.read(1000);
+varValue = this.VirtualFile00.read(1000, "utf-8");
 ```
 
 **Return**
 
-파라미터에 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파라미터에 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
 
-그 외의 정상적인 경우에는 true 를 반환합니다.
+그 외의 정상적인 경우에는 true 를 반환합니다. |
 
 **Remark**
 
@@ -1294,17 +1481,30 @@ VirtualFile.readLine([strDelimeter[, strCharset]])
 
 **Parameters**
 
-```
-파일에서 읽기를 멈추는 구분자를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strDelimeter | String | 파일에서 읽기를 멈추는 구분자를 설정합니다.
 
-값 생략 시 "\n" 으로 적용됩니다.
+값 생략 시 "\n" 으로 적용됩니다. |
+| strCharset | String | 파일에서 읽어올 내용에 적용할 CharSet 을 설정합니다.
+
+Windows NRE 만 적용되고 모바일은 "UTF-8" 로 동작합니다. |
+
+**Sample Call**
+
+```javascript
+var varValue ;
+varValue = this.VirtualFile00.readLine();
+varValue = thie.VirtualFile00.readLine("\p");
 ```
 
 **Return**
 
-파라미터에 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파라미터에 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
 
-그 외의 정상적인 경우에는 true 를 반환합니다.
+그 외의 정상적인 경우에는 true 를 반환합니다. |
 
 **Remark**
 
@@ -1338,16 +1538,32 @@ VirtualFile.remove( objVirtualFile )
 
 **Parameters**
 
-```
-삭제할 파일명을 경로와 함께 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strFilePath | String | 삭제할 파일명을 경로와 함께 설정합니다.
 
-절대경로 또는 Alias 를 사용하여 설정합니다.
+절대경로 또는 Alias 를 사용하여 설정합니다. |
+| objVirtualFile | Object | FileDialog 오브젝트에서 반환받은 삭제할 VirtualFile 오브젝트를 설정합니다.
+
+메소드를 수행하는 VirtualFile 객체 자신을 설정할 수 없습니다.
+자신을 설정하는 경우 onerror 이벤트가 발생합니다. |
+
+**Sample Call**
+
+```javascript
+this.VirtualFile00.remove("%USERAPP%filename");
+
+var objFileD = new FileDialog();
+objFileD.open("", FileDialog.LOAD, "%USERAPP%", "");
+VirtualFile.remove(obj.e.virtualfiles);
 ```
 
 **Return**
 
-파라미터가 생략되거나 허용되지 않는 문자가 사용된 경우에는 "false" 를 반환합니다.
-그 외의 정상적인 경우에는 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파라미터가 생략되거나 허용되지 않는 문자가 사용된 경우에는 "false" 를 반환합니다.
+그 외의 정상적인 경우에는 "true" 를 반환합니다. |
 
 **Remark**
 
@@ -1479,15 +1695,23 @@ VirtualFile.removeEvent( strEventID )
 
 **Parameters**
 
-```
-VirtualFile 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | VirtualFile 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.VirtualFile00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -1518,14 +1742,25 @@ VirtualFile.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.VirtualFile00_onsuccess = function( obj:nexacro.VirtualFile,  e:nexacro.VirtualFileEventInfo) { // 수행할 스크립트 };
+var nIndex = this.VirtualFile00.removeEventHandler( "onsuccess", this.VirtualFile00_onsuccess, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 "1"을 반환합니다.
-핸들러 함수 제거에 실패하면 "0"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 "1"을 반환합니다.
+핸들러 함수 제거에 실패하면 "0"을 반환합니다. |
 
 **Remark**
 
@@ -1552,17 +1787,31 @@ VirtualFile.rename( strOldname, strNewname );
 
 **Parameters**
 
-```
-위치를 이동하거나 이름을 변경할 파일명을 경로와 함께 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strOldname | String | 위치를 이동하거나 이름을 변경할 파일명을 경로와 함께 설정합니다.
 
-절대경로 또는 Alias 를 사용하여 설정합니다.
+절대경로 또는 Alias 를 사용하여 설정합니다. |
+| strNewname | String | 새로 이동될 위치와 파일명을 경로와 함께 설정합니다.
+
+절대경로 또는 Alias 를 사용하여 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+
+bSucc = this.VirtualFile00.rename("%USERAPP%oldname.txt", "%USERAPP%newname.txt") ;
+bSucc = this.VirtualFile00.rename("%USERAPP%file00.txt", "%SD_CARD%file00.txt") ;
 ```
 
 **Return**
 
-파라미터가 생략되거나 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파라미터가 생략되거나 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
 
-그 외의 정상적인 경우에는 true 를 반환합니다.
+그 외의 정상적인 경우에는 true 를 반환합니다. |
 
 **Remark**
 
@@ -1698,16 +1947,27 @@ VirtualFile.renameDirectory( strOldName, strNewName )
 
 **Parameters**
 
-```
-변경할 폴더명을 경로와 함께 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strOldName | String | 변경할 폴더명을 경로와 함께 설정합니다.
 
 "C:\\TobeSoft\\TestFolder" 와 같이 절대경로를 설정 시 해당 위치의 폴더명이 변경됩니다.
-"My_Folder" 와 같이 폴더명만 설정할 경우 "내문서" 위치의 폴더명이 변경됩니다.
+"My_Folder" 와 같이 폴더명만 설정할 경우 "내문서" 위치의 폴더명이 변경됩니다. |
+| strNewName | String | 경로를 포함하지 않은 새로운 폴더명을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bChange;
+bChange = this.VirtualFile00.renameDirectory( "TestFolder","TestFolder_New" );
+bChange = this.VirtualFile00.renameDirectory( "C:\\TobeSoft\\TestFolder", "TestFolder_New" );
 ```
 
 **Return**
 
-폴더명 변경여부와 관계없이 메소드 수행 여부를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 폴더명 변경여부와 관계없이 메소드 수행 여부를 반환합니다. |
 
 **Remark**
 
@@ -1733,17 +1993,33 @@ VirtualFile.seek(nOffset[, constOption])
 
 **Parameters**
 
-```
-현재 위치에서 파일포인터를 이동시킬 위치를 Byte 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nOffset | Number | 현재 위치에서 파일포인터를 이동시킬 위치를 Byte 단위의 숫자로 설정합니다.
 
-음수값 설정 시 현재 위치에서 시작위치 방향으로 포인터가 이동합니다.
+음수값 설정 시 현재 위치에서 시작위치 방향으로 포인터가 이동합니다. |
+| constOption | Constant | 파일 포인터를 이동시킬때 적용할 옵션을 상수값으로 설정합니다.
+
+"VirtualFile.seekBegin" 또는 0 설정 시 파일의 시작위치를 기준으로 파일포인터가 이동합니다.
+"VirtualFile.seekCurrent" 또는 1 설정 시 현재 파일포인터 위치를 기준으로 이동합니다.
+"VirtualFile.seekEnd" 또는 2 설정 시 파일의 마지막위치를 기준으로 파일포인터가 이동합니다.
+
+값 생략 시 "VirtualFile.seekCurrent" 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.VirtualFile00.seek(1000);
+this.VirtualFile00.seek(1000, VirtualFile.seekBegin);
 ```
 
 **Return**
 
-파라미터에 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파라미터에 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
 
-그 외의 정상적인 경우에는 true 를 반환합니다.
+그 외의 정상적인 경우에는 true 를 반환합니다. |
 
 **Remark**
 
@@ -1769,14 +2045,25 @@ VirtualFile.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.VirtualFile00_onsuccess = function( obj:nexacro.VirtualFile,  e:nexacro.VirtualFileEventInfo ) { //수행할 스크립트 };
+var nIndex = this.VirtualFile00.setEventHandler( "onsuccess", this.VirtualFile00_onsuccess, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 "0"을 반환합니다.
-첫번째 핸들러 함수 변경에 실패하면 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 "0"을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -1803,15 +2090,28 @@ VirtualFile.write( varData [, strCharset] )
 
 **Parameters**
 
-```
-오픈된 파일에 저장할 데이터를 문자열 또는 Buffer 오브젝트 형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| varData | Variant | 오픈된 파일에 저장할 데이터를 문자열 또는 Buffer 오브젝트 형태로 설정합니다. |
+| strCharset | String | 오픈된 파일에서 저장할 내용에 적용할 CharSet 을 설정합니다.
+
+Windows NRE 만 적용되고 모바일은 "UTF-8" 로 동작합니다. |
+
+**Sample Call**
+
+```javascript
+this.VirtualFile00.write( "test" );
+this.VirtualFile00.write( new Object() );
+this.VirtualFile00.write( "Hello!!", "utf-8" );
 ```
 
 **Return**
 
-필수 파라미터가 생략되거나 파라미터에 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 필수 파라미터가 생략되거나 파라미터에 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
 
-그 외의 정상적인 경우에는 true 를 반환합니다.
+그 외의 정상적인 경우에는 true 를 반환합니다. |
 
 **Remark**
 
@@ -1853,9 +2153,10 @@ onerror(obj:nexacro.VirtualFile,e:nexacro.VirtualFileErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | VirtualFile | Event가 발생한 Object. |
+| e | VirtualFileErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -1889,9 +2190,10 @@ onsuccess(obj:nexacro.VirtualFile,e:nexacro.VirtualFileEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | VirtualFile | Event가 발생한 Object. |
+| e | VirtualFileEventInfo | Event Object. |
 
 **Return**
 

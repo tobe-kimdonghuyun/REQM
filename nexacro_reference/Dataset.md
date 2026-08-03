@@ -1453,14 +1453,30 @@ Dataset.addColumn( strColID, strColType [,nColSize [, strDatapath]] )
 
 **Parameters**
 
-```
-DataSet 에 추가할 Column 의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strColID | String | DataSet 에 추가할 Column 의 ID 를 문자열로 설정합니다. |
+| strColType | String | DataSet 에 추가할 Column 의 타입을 설정합니다. |
+| nColSize | Number | DataSet 에 추가할 Column 의 데이터 길이를 설정합니다.
+
+값을 생략하면 "256" 으로 적용됩니다. |
+| strDatapath | String | 데이터에서 컬럼 값으로 가져올 datapath를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nIndex;
+nIndex = this.Dataset00.addColumn( "column00", "string" );
+nIndex = this.Dataset00.addColumn( "column00", "string", 120 );
+nIndex = this.Dataset00.addColumn( "id", "string", 120, "@.id" );
 ```
 
 **Return**
 
-DataSet 에 추가된 Column 의 인덱스를 반환합니다.
-만약, Column 의 추가에 실패하면 "-1" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에 추가된 Column 의 인덱스를 반환합니다.
+만약, Column 의 추가에 실패하면 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -1496,14 +1512,27 @@ Dataset.addColumnInfo( strID, objColInfo )
 
 **Parameters**
 
-```
-DataSet 에 추가할 Column 의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | DataSet 에 추가할 Column 의 ID 를 문자열로 설정합니다. |
+| objColInfo | Object | DataSet 에 추가할 ColumnInfo 객체를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objColinfo = new ColumnInfo() ;
+objColinfo.type = "String";
+objColinfo.size = 5;
+
+var nIndex = this.Dataset00.addColumnInfo("new_col1", objColinfo);
 ```
 
 **Return**
 
-DataSet 에 추가된 Column 의 인덱스를 반환합니다.
-만약, Column 의 추가에 실패하면 "-1" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에 추가된 Column 의 인덱스를 반환합니다.
+만약, Column 의 추가에 실패하면 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -1536,17 +1565,38 @@ Dataset.addConstColumn( strColID, varVal [, strColType [, nColSize [, strDatapat
 
 **Parameters**
 
-```
-DataSet 에 추가할 Const Column 의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strColID | String | DataSet 에 추가할 Const Column 의 ID 를 문자열로 설정합니다.
 
-설정한 값과 동일한 Const Column 이 이미 존재하면 해당 Const Column 의 값을 변경합니다.
+설정한 값과 동일한 Const Column 이 이미 존재하면 해당 Const Column 의 값을 변경합니다. |
+| varVal | Variant | DataSet 에 추가할 Const Column 의 값을 설정합니다. |
+| strColType | String | DataSet 에 추가할 Const Column 의 타입을 설정합니다.
+
+값을 생략하면 타입이 설정되지 않거나 잘못된 값이 설정될 수 있습니다. |
+| nColSize | Number | DataSet 에 추가할 Const Column 의 데이터 길이를 설정합니다.
+
+값을 생략하면 size 가 설정되지 않습니다. |
+| strDatapath | String | JSON 데이터에서 컬럼 값으로 가져올 datapath를 설정합니다.
+$를 사용한 루트 경로를 설정합니다.
+@를 사용해 반복 데이터를 선택한 경우 첫 번째 값을 가져옵니다. |
+
+**Sample Call**
+
+```javascript
+var nIndex;
+nIndex = this.Dataset00.addConstColumn( "ConstColumn1", 1234, "INT", 200 );
+nIndex = this.Dataset00.addConstColumn( "ConstColumn2", "TEST", "STRING", 256 );
+nIndex = this.Dataset00.addConstColumn( "company", , "STRING", 256, "$.company" );
 ```
 
 **Return**
 
-DataSet 에 추가된 Const Column 의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에 추가된 Const Column 의 인덱스를 반환합니다.
 
-Const Column 의 추가에 실패하면 -1 을 반환합니다.
+Const Column 의 추가에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -1575,15 +1625,23 @@ Dataset.addEvent( strEventID )
 
 **Parameters**
 
-```
-Dataset 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | Dataset 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.Dataset00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -1610,15 +1668,26 @@ Dataset.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Dataset00_onmove = function( obj:nexacro.Dataset,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Dataset00.addEventHandler( "onmove", this.Dataset00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -1639,15 +1708,27 @@ Dataset.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Dataset00_onmove = function( obj:nexacro.Dataset,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Dataset00.addEventHandlerLookup( "onmove", "Dataset00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -1677,8 +1758,10 @@ var nRow = this.Dataset00.addRow();
 
 **Return**
 
-DataSet 에 추가된 Row 의 인덱스를 반환합니다.
-만약, Row 의 추가에 실패하면 "-1" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에 추가된 Row 의 인덱스를 반환합니다.
+만약, Row 의 추가에 실패하면 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -1716,11 +1799,17 @@ Dataset.append([strUrl])
 
 **Parameters**
 
-```
-데이터를 로드하기 위한 서비스경로(URL)을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strUrl | String | 데이터를 로드하기 위한 서비스경로(URL)을 설정합니다.
 허용되는 형식은 DataSet 의 url 속성을 참고하시기 바랍니다.
 
-값을 설정하지 않을 경우 DataSet 의 url 속성값이 적용됩니다.
+값을 설정하지 않을 경우 DataSet 의 url 속성값이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Dataset00.append("Service1::Serv00.jsp");
 ```
 
 **Return**
@@ -1763,13 +1852,31 @@ Dataset.appendData( objDataset [,bCheckCol [,bUpdateConstCol]] )
 
 **Parameters**
 
-```
-추가될 데이터(Row)를 갖고 있는 DataSet 을 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDataset | Object | 추가될 데이터(Row)를 갖고 있는 DataSet 을 오브젝트로 설정합니다. |
+| bCheckCol | Boolean | true 설정 시 동일한 Column 에 데이터가 추가됩니다.
+false 설정 시 Column 순서에 맞게 데이터가 추가됩니다.
+
+값 생략 시 false 로 적용됩니다. |
+| bUpdateConstCol | Boolean | true 설정 시 동일한 ID 의 Const Column 에 상수값을 수정합니다.
+false 설정 시 동일한 ID 의 Const Column 에 상수값을 수정하지 않습니다.
+
+값 생략 시 false 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nRowCnt;
+nRowCnt = this.Dataset00.appendData( this.Dataset01 );
+nRowCnt = this.Dataset00.appendData( this.Dataset01, true, true );
 ```
 
 **Return**
 
-새로 추가된 데이터를 포함하여 현재 Dataset 의 전체 Row 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 새로 추가된 데이터를 포함하여 현재 Dataset 의 전체 Row 갯수를 반환합니다. |
 
 **Remark**
 
@@ -1873,13 +1980,21 @@ Dataset.assign( objDataset )
 
 **Parameters**
 
-```
-Row, Column 정보와 모든 데이터를 가져올 DataSet 을 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDataset | Object | Row, Column 정보와 모든 데이터를 가져올 DataSet 을 오브젝트로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nRowCnt = this.Dataset00.assign( this.Dataset01 );
 ```
 
 **Return**
 
-현재 DataSet 에 부여된 Row 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 현재 DataSet 에 부여된 Row 의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -1924,7 +2039,9 @@ var nRowCnt = this.Dataset00.clear();
 
 **Return**
 
-삭제된 데이터(Row) 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 삭제된 데이터(Row) 의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -1964,7 +2081,9 @@ var nRowCnt = this.Dataset00.clearData();
 
 **Return**
 
-삭제된 데이터(Row) 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 삭제된 데이터(Row) 의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -1999,13 +2118,21 @@ Dataset.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.Dataset00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -2030,14 +2157,28 @@ Dataset.copyData( objDataset [, bFilteredOnly] )
 
 **Parameters**
 
-```
-복사할 데이터(Row)를 갖고 있는 DataSet 을 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDataset | Object | 복사할 데이터(Row)를 갖고 있는 DataSet 을 오브젝트로 설정합니다. |
+| bFilteredOnly | Boolean | "true" 설정 시 objDataset 이 필터링 되어 있다면 필터링 된 데이터만 복사합니다.
+"false" 설정 시 objDataset 의 필터링 여부와 관계없이 모든 데이터를 복사합니다.
+
+값 생략 시 "false" 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nRowCnt;
+nRowCnt = this.Dataset00.copyData(this.Dataset01);
+nRowCnt = this.Dataset00.copyData(this.Dataset01, true);
 ```
 
 **Return**
 
-복사된 데이터(Row) 의 갯수를 반환합니다.
-복사된 데이터(Row) 가 없다면 "null" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 복사된 데이터(Row) 의 갯수를 반환합니다.
+복사된 데이터(Row) 가 없다면 "null" 을 반환합니다. |
 
 **Remark**
 
@@ -2076,14 +2217,29 @@ Dataset.copyRow( nToRow, objDataset, nFromRow [,strColInfo] )
 
 **Parameters**
 
-```
-새로운 데이터로 갱신될 현재 DataSet 의 Row 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nToRow | Number | 새로운 데이터로 갱신될 현재 DataSet 의 Row 인덱스를 설정합니다. |
+| objDataset | Object | 복사해 올 데이터를 가진 DataSet 을 오브젝트로 설정합니다. |
+| nFromRow | Number | objDataset 에서 복사해 올 Row 의 인덱스를 설정합니다. |
+| strColInfo | String | 데이터를 갱신할 때 "ToColumnID=FromColumnID,ToColumnID1=FromColumnID1" 형식으로 Column 을 매칭시키는 조건을 설정합니다.
+
+값 생략 시 동일한 Column ID를 가진 데이터만 갱신됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = this.Dataset00.copyRow(0,this.Dataset01,1);
+bSucc = this.Dataset00.copyRow(0,this.Dataset01,1,"name=sawon_name,sabun=id_no");
 ```
 
 **Return**
 
-메소드 수행에 성공하면 true 를 반환합니다.
-메소드 수행에 실패하면 false 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 수행에 성공하면 true 를 반환합니다.
+메소드 수행에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -2128,15 +2284,44 @@ Dataset.createDataset( strDatasetID, arrColList [ , strWhereExpr [ , nStartIdx [
 
 **Parameters**
 
-```
-새로 생성될 Dataset 의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strDatasetID | String | 새로 생성될 Dataset 의 ID 를 설정합니다. |
+| arrColList | Array | 새로 생성될 Dataset 의 Column 구조와 데이터 생성방법을 배열형태로 설정합니다.
+
+배열의 각 인자에 아래와 같은 형식으로 정의할 수 있습니다.
+"ColID" : 새로운 Dataset 에 "ColID" 로 Column 을 생성하고, 원본 Dataset 의 "ColID" 값을 설정합니다.
+             원본 Dataset 에 "ColID" 이름을 갖는 Column 이 없다면, 데이터가 null 값으로 설정됩니다.
+"NewColID : OldColID" : 새로운 Dataset 에 "NewColID" 로 Column 을 생성하고 , 원본 Dataset 의 "OldColID" 값을 설정합니다.
+                                  원본 Dataset 에 "OldColID" 이름을 갖는 Column 이 없다면, 데이터가 null 값으로 설정됩니다.
+"NewColID : strExpr" : 새로운 Dataset 에 "NewColID" 로 Column 을 생성하고 , "strExpr" 로 정의된 표현식의 결과값을 설정합니다. |
+| strWhereExpr | String | 새로 생성될 Dataset 에 복사될 Row 를 선택하는 조건을 설정합니다. |
+| nStartIdx | Number | 원본 Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | 원본 Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+
+**Sample Call**
+
+```javascript
+var objNewDS;
+var arrColList = new Array ( "Column00", "NewCol1:Column01", "NewCol2", "NewCol3:Column00+Column01" );
+
+objNewDS = this.Dataset00.createDataset( "Dataset01", arrColList );
+objNewDS = this.Dataset00.createDataset( "Dataset01", arrColList, "Column02 == 10", 5, 10 );
 ```
 
 **Return**
 
-설정한 조건을 만족하는 Row 로 이루어진 Dataset 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 설정한 조건을 만족하는 Row 로 이루어진 Dataset 을 반환합니다.
 
-Dataset 을 생성할 수 없는 경우에는 null 을 반환합니다.
+Dataset 을 생성할 수 없는 경우에는 null 을 반환합니다. |
 
 **Remark**
 
@@ -2164,15 +2349,44 @@ Dataset.createDatasetNF( strDatasetID, arrColList [ , strWhereExpr [ , nStartIdx
 
 **Parameters**
 
-```
-새로 생성될 Dataset 의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strDatasetID | String | 새로 생성될 Dataset 의 ID 를 설정합니다. |
+| arrColList | Array | 새로 생성될 Dataset 의 Column 구조와 데이터 생성방법을 배열형태로 설정합니다.
+
+배열의 각 인자에 아래와 같은 형식으로 정의할 수 있습니다.
+"ColID" : 새로운 Dataset 에 "ColID" 로 Column 을 생성하고, 원본 Dataset 의 "ColID" 값을 설정합니다.
+             원본 Dataset 에 "ColID" 이름을 갖는 Column 이 없다면, 데이터가 null 값으로 설정됩니다.
+"NewColID : OldColID" : 새로운 Dataset 에 "NewColID" 로 Column 을 생성하고 , 원본 Dataset 의 "OldColID" 값을 설정합니다.
+                                  원본 Dataset 에 "OldColID" 이름을 갖는 Column 이 없다면, 데이터가 null 값으로 설정됩니다.
+"NewColID : strExpr" : 새로운 Dataset 에 "NewColID" 로 Column 을 생성하고 , "strExpr" 로 정의된 표현식의 결과값을 설정합니다. |
+| strWhereExpr | String | 새로 생성될 Dataset 에 복사될 Row 를 선택하는 조건을 설정합니다. |
+| nStartIdx | Number | 원본 Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | 원본 Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+
+**Sample Call**
+
+```javascript
+var objNewDS;
+var arrColList = new Array ( "Column00", "NewCol1:Column01", "NewCol2", "NewCol3:Column00+Column01" );
+
+objNewDS = this.Dataset00.createDataset( "Dataset01", arrColList );
+objNewDS = this.Dataset00.createDataset( "Dataset01", arrColList, "Column02 == 10", 5, 10 );
 ```
 
 **Return**
 
-설정한 조건을 만족하는 Row 로 이루어진 Dataset 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 설정한 조건을 만족하는 Row 로 이루어진 Dataset 을 반환합니다.
 
-Dataset 을 생성할 수 없는 경우에는 null 을 반환합니다.
+Dataset 을 생성할 수 없는 경우에는 null 을 반환합니다. |
 
 **Remark**
 
@@ -2204,7 +2418,9 @@ var nRowCnt = this.Dataset00.deleteAll();
 
 **Return**
 
-삭제된 데이터(Row) 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 삭제된 데이터(Row) 의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -2241,14 +2457,25 @@ Dataset.deleteColumn(strColID)
 
 **Parameters**
 
-```
-삭제할 Column 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nCol | Number | 삭제할 Column 의 인덱스를 설정합니다. |
+| strColID | String | 삭제할 Column 의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = this.Dataset00.deleteColumn(1);
+bSucc = this.Dataset00.deleteColumn("Age");
 ```
 
 **Return**
 
-Column 삭제에 성공하면 "true"를 반환합니다.
-Column 삭제에 실패하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Column 삭제에 성공하면 "true"를 반환합니다.
+Column 삭제에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -2283,8 +2510,14 @@ Dataset.deleteMultiRows( arrRowlist );
 
 **Parameters**
 
-```
-Row 인덱스값을 배열 형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| arrRowlist | Array | Row 인덱스값을 배열 형태로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Dataset00.deleteMultiRows(this.Grid00.getSelectedDatasetRows());
 ```
 
 **Return**
@@ -2314,14 +2547,22 @@ Dataset.deleteRow(nRow)
 
 **Parameters**
 
-```
-삭제할 데이터의 Row 인덱스 값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 삭제할 데이터의 Row 인덱스 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc = this.Dataset00.deleteRow(1);
 ```
 
 **Return**
 
-데이터(Row) 삭제에 성공하면 "true" 를 반환합니다.
-데이터(Row) 삭제에 실패하면 "false" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 데이터(Row) 삭제에 성공하면 "true" 를 반환합니다.
+데이터(Row) 삭제에 실패하면 "false" 를 반환합니다. |
 
 **Remark**
 
@@ -2360,14 +2601,23 @@ Dataset.exchangeRow(nRow1,nRow2)
 
 **Parameters**
 
-```
-위치를 교환할 첫번째 데이터의 Row 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow1 | Number | 위치를 교환할 첫번째 데이터의 Row 인덱스를 설정합니다. |
+| nRow2 | Number | 위치를 교환할 두번째 데이터의 Row 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc = this.Dataset00.exchangeRow(2,4);
 ```
 
 **Return**
 
-위치 교환에 성공하면 "true"를 반환합니다.
-위치 교환에 실패하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 위치 교환에 성공하면 "true"를 반환합니다.
+위치 교환에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -2402,22 +2652,48 @@ Dataset.extractRows( strExpr [ ,nStartIdx [ ,nEndIdx [ ,arrArgs ] ] ] )
 
 **Parameters**
 
-```
-Dataset 에서 검색할 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strExpr | String | Dataset 에서 검색할 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrArgs | Array | strExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var arrRows;
+var arrArgs = new Array( "A1", "03" );
+
+arrRows = this.Dataset00.extractRows( "dept_cd == 'A1'" );
+arrRows = this.Dataset00.extractRows( "dept_cd == 'A1'", 3 );
+arrRows = this.Dataset00.extractRows( "dept_cd == 'A1'", 3, 50 );
+arrRows = this.Dataset00.extractRows( "dept_cd == $0", 0, -1, arrArgs );
 ```
 
 **Return**
 
-- 조건표현식에 일치하는 Row의 인덱스 배열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | - 조건표현식에 일치하는 Row의 인덱스 배열을 반환합니다.
   조건표현식에 일치하는 Row가 없는 경우 빈 배열을 반환합니다.
 
 - 아래와 같은 경우에는 -1을 반환합니다.
   - 조건표현식에 문법적인 오류가 있는 경우
   - Dataset 오브젝트에 Row가 없는 경우
-  - nEndIdx 값이 nStartIdx 값보다 크지 않은 경우
+  - nEndIdx 값이 nStartIdx 값보다 크지 않은 경우 |
 
 **Remark**
 
@@ -2445,22 +2721,48 @@ Dataset.extractRowsNF( strExpr [ ,nStartIdx [ ,nEndIdx [ ,arrArgs ] ] ] )
 
 **Parameters**
 
-```
-Dataset 에서 검색할 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strExpr | String | Dataset 에서 검색할 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrArgs | Array | strExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var arrRows;
+var arrArgs = new Array( "A1", "03" );
+
+arrRows = this.Dataset00.extractRowsNF( "dept_cd == 'A1'" );
+arrRows = this.Dataset00.extractRowsNF( "dept_cd == 'A1'", 3 );
+arrRows = this.Dataset00.extractRowsNF( "dept_cd == 'A1'", 3, 50 );
+arrRows = this.Dataset00.extractRowsNF( "dept_cd == $0", 0, -1, arrArgs );
 ```
 
 **Return**
 
-- 조건표현식에 일치하는 Row의 인덱스 배열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | - 조건표현식에 일치하는 Row의 인덱스 배열을 반환합니다.
   조건표현식에 일치하는 Row가 없는 경우 빈 배열을 반환합니다.
 
 - 아래와 같은 경우에는 -1을 반환합니다.
   - 조건표현식에 문법적인 오류가 있는 경우
   - Dataset 오브젝트에 Row가 없는 경우
-  - nEndIdx 값이 nStartIdx 값보다 크지 않은 경우
+  - nEndIdx 값이 nStartIdx 값보다 크지 않은 경우 |
 
 **Remark**
 
@@ -2488,11 +2790,21 @@ Dataset.filter([strFilterExpr])
 
 **Parameters**
 
-```
-DataSet 의 데이터가 필터링 될 조건을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strFilterExpr | String | DataSet 의 데이터가 필터링 될 조건을 문자열로 설정합니다.
 
 빈 문자열("") 설정 시 필터링 조건이 해제됩니다.
-값 생략 시 filterstr 속성값에 설정된 조건식을 사용합니다.
+값 생략 시 filterstr 속성값에 설정된 조건식을 사용합니다. |
+
+**Sample Call**
+
+```javascript
+this.Dataset00.filter();
+this.Dataset00.filter("");
+this.Dataset00.filter("dept_cd == 'A1'");
+this.Dataset00.filter("amount > 1000 && model_cd = 'A-1'");
+this.Dataset00.filter("amount > 1000 || amount < 50 ");
 ```
 
 **Return**
@@ -2539,8 +2851,14 @@ Dataset.filterRow(nRow)
 
 **Parameters**
 
-```
-필터링할 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 필터링할 Row 의 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Dataset00.filterRow(1);
 ```
 
 **Return**
@@ -2574,15 +2892,27 @@ Dataset.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Dataset00_onmove = function( obj:nexacro.Dataset,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.Dataset00.findEventHandler( "onmove", this.Dataset00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2607,13 +2937,33 @@ Dataset.findMaxLengthRow( strColID [ ,nStartIdx [ , nEndIdx] ] )
 
 **Parameters**
 
-```
-Dataset 에서 검색 대상이 되는 Column 의 ID 또는 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strColID | String | Dataset 에서 검색 대상이 되는 Column 의 ID 또는 인덱스를 설정합니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+
+**Sample Call**
+
+```javascript
+var nRow;
+
+nRow = this.Dataset00.findMaxLengthRow( "column00" );
+nRow = this.Dataset00.findMaxLengthRow( "column00", 10 );
+nRow = this.Dataset00.findMaxLengthRow( "column00", 10, 10000 );
 ```
 
 **Return**
 
-특정 Column 값 중 데이터 길이가 가장 긴 Row 의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 중 데이터 길이가 가장 긴 Row 의 인덱스를 반환합니다. |
 
 **Remark**
 
@@ -2641,13 +2991,33 @@ Dataset.findMaxLengthRowNF( strColID [ ,nStartIdx [ , nEndIdx] ] )
 
 **Parameters**
 
-```
-Dataset 에서 검색 대상이 되는 Column 의 ID 또는 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strColID | String | Dataset 에서 검색 대상이 되는 Column 의 ID 또는 인덱스를 설정합니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+
+**Sample Call**
+
+```javascript
+var nRow;
+
+nRow = this.Dataset00.findMaxLengthRowNF( "column00" );
+nRow = this.Dataset00.findMaxLengthRowNF( "column00", 10 );
+nRow = this.Dataset00.findMaxLengthRowNF( "column00", 10, 10000 );
 ```
 
 **Return**
 
-특정 Column 값 중 데이터 길이가 가장 긴 Row 의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 중 데이터 길이가 가장 긴 Row 의 인덱스를 반환합니다. |
 
 **Remark**
 
@@ -2675,15 +3045,23 @@ Dataset.findNFRowIndex( nRowPos )
 
 **Parameters**
 
-```
-필터링 된 DataSet 을 기준으로 한 Row 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowPos | Number | 필터링 된 DataSet 을 기준으로 한 Row 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nRowIdxNF = this.Dataset00.findNFRowIndex( 10 );
 ```
 
 **Return**
 
-필터링되지 않은 데이터를 기준으로 한 Row 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 필터링되지 않은 데이터를 기준으로 한 Row 인덱스를 반환합니다.
 
-잘못된 nRowPos 값을 인수로 전달했을 경우 -1 을 반환합니다.
+잘못된 nRowPos 값을 인수로 전달했을 경우 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2710,16 +3088,38 @@ Dataset.findRow( strColID, strVal [ ,nStartIdx [ ,nEndIdx ] ] )
 
 **Parameters**
 
-```
-Dataset 에서 검색 대상이 되는 Column 의 ID 또는 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strColID | String | Dataset 에서 검색 대상이 되는 Column 의 ID 또는 인덱스를 설정합니다. |
+| strVal | String | strColID 에 해당하는 Column 에서 검색할 값을 설정합니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+
+**Sample Call**
+
+```javascript
+var nRow;
+
+nRow = this.Dataset00.findRow( "column00", "100" );
+nRow = this.Dataset00.findRow( "column00", "100", 10 );
+nRow = this.Dataset00.findRow( "column00", "100", 10, 10000 );
+nRow = this.Dataset00.findRow( 2, "100", 10, 10000 );
 ```
 
 **Return**
 
-전달된 값과 일치하는 데이터를 갖는 첫번째 Row 의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전달된 값과 일치하는 데이터를 갖는 첫번째 Row 의 인덱스를 반환합니다.
 
 만약 일치하는 데이터가 없을 경우에는 -1 을 반환합니다.
-검색대상이 되는 Column 이 Const Column 인 경우 nStartIdx 값을 반환합니다.
+검색대상이 되는 Column 이 Const Column 인 경우 nStartIdx 값을 반환합니다. |
 
 **Remark**
 
@@ -2749,16 +3149,38 @@ Dataset.findRowAs( strColID, strVal, [ ,nStartIdx [ ,nEndIdx ] ] )
 
 **Parameters**
 
-```
-Dataset 에서 검색 대상이 되는 Column 의 ID 또는 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strColID | String | Dataset 에서 검색 대상이 되는 Column 의 ID 또는 인덱스를 설정합니다. |
+| strVal | String | strColID 에 해당하는 Column 에서 검색할 값을 설정합니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+
+**Sample Call**
+
+```javascript
+var nRow;
+
+nRow = this.Dataset00.findRowAs( "cloumn00", "100" );
+nRow = this.Dataset00.findRowAs( "cloumn00", "100", 10 );
+nRow = this.Dataset00.findRowAs( "cloumn00", "100", 10, 10000 );
+nRow = this.Dataset00.findRowAs( 2, "100", 10, 10000 );
 ```
 
 **Return**
 
-전달된 값으로 시작되는 Column 값을 갖는 첫번째 Row 의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전달된 값으로 시작되는 Column 값을 갖는 첫번째 Row 의 인덱스를 반환합니다.
 
 만약 일치하는 데이터가 없을 경우에는 -1 을 반환합니다.
-검색대상이 되는 Column 이 Const Column 인 경우 nStartIdx 값을 반환합니다.
+검색대상이 되는 Column 이 Const Column 인 경우 nStartIdx 값을 반환합니다. |
 
 **Remark**
 
@@ -2788,16 +3210,38 @@ Dataset.findRowAsNF( strColID, strVal, [ ,nStartIdx [ ,nEndIdx ] ] )
 
 **Parameters**
 
-```
-Dataset 에서 검색 대상이 되는 Column 의 ID 또는 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strColID | String | Dataset 에서 검색 대상이 되는 Column 의 ID 또는 인덱스를 설정합니다. |
+| strVal | String | strColID 에 해당하는 Column 에서 검색할 값을 설정합니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+
+**Sample Call**
+
+```javascript
+var nRow;
+
+nRow = this.Dataset00.findRowAsNF( "cloumn00", "100" );
+nRow = this.Dataset00.findRowAsNF( "cloumn00", "100", 10 );
+nRow = this.Dataset00.findRowAsNF( "cloumn00", "100", 10, 10000 );
+nRow = this.Dataset00.findRowAsNF( 2, "100", 10, 10000 );
 ```
 
 **Return**
 
-전달된 값으로 시작되는 Column 값을 갖는 첫번째 Row 의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전달된 값으로 시작되는 Column 값을 갖는 첫번째 Row 의 인덱스를 반환합니다.
 
 만약 일치하는 데이터가 없을 경우에는 -1 을 반환합니다.
-검색대상이 되는 Column 이 Const Column 인 경우 nStartIdx 값을 반환합니다.
+검색대상이 되는 Column 이 Const Column 인 경우 nStartIdx 값을 반환합니다. |
 
 **Remark**
 
@@ -2827,19 +3271,46 @@ Dataset.findRowExpr( strExpr [ ,nStartIdx [ ,nEndIdx [ ,arrArgs] ] ])
 
 **Parameters**
 
-```
-Dataset 에서 검색할 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strExpr | String | Dataset 에서 검색할 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrArgs | Array | strExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var nRow;
+var arrArgs = new Array( "A2", "03" );
+
+nRow = this.Dataset00.findRowExpr( "dept_cd == 'A2'" );
+nRow = this.Dataset00.findRowExpr( "dept_cd == 'A2'", 2 );
+nRow = this.Dataset00.findRowExpr( "dept_cd == 'A2'", 2, 10 );
+nRow = this.Dataset00.findRowExpr( "dept_cd == 'A2' && pos_cd > '03'", 2, 10 );
+nRow = this.Dataset00.findRowExpr( "dept_cd == $0 && pos_cd > $1", 0, -1, arrArgs );
 ```
 
 **Return**
 
-주어진 조건표현식을 만족하는 첫번째 Row 의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 주어진 조건표현식을 만족하는 첫번째 Row 의 인덱스를 반환합니다.
 
 주어진 조건표현식을 만족하는 Row 가 없을 경우에는 -1 을 반환합니다.
-주어진 조건표현식이 Const Column 을 대상으로 한 경우 nStartIdx 값을 반환합니다.
+주어진 조건표현식이 Const Column 을 대상으로 한 경우 nStartIdx 값을 반환합니다. |
 
 **Remark**
 
@@ -2871,19 +3342,46 @@ Dataset.findRowExprNF( strExpr [ ,nStartIdx [ ,nEndIdx [ ,arrArgs] ] ])
 
 **Parameters**
 
-```
-Dataset 에서 검색할 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strExpr | String | Dataset 에서 검색할 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrArgs | Array | strExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var nRow;
+var arrArgs = new Array( "A2", "03" );
+
+nRow = this.Dataset00.findRowExprNF( "dept_cd == 'A2'" );
+nRow = this.Dataset00.findRowExprNF( "dept_cd == 'A2'", 2 );
+nRow = this.Dataset00.findRowExprNF( "dept_cd == 'A2'", 2, 10 );
+nRow = this.Dataset00.findRowExprNF( "dept_cd == 'A2' && pos_cd > '03'", 2, 10 );
+nRow = this.Dataset00.findRowExprNF( "dept_cd == $0 && pos_cd > $1", 0, -1, arrArgs );
 ```
 
 **Return**
 
-주어진 조건표현식을 만족하는 첫번째 Row 의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 주어진 조건표현식을 만족하는 첫번째 Row 의 인덱스를 반환합니다.
 
 주어진 조건표현식을 만족하는 Row 가 없을 경우에는 -1 을 반환합니다.
-주어진 조건표현식이 Const Column 을 대상으로 한 경우 nStartIdx 값을 반환합니다.
+주어진 조건표현식이 Const Column 을 대상으로 한 경우 nStartIdx 값을 반환합니다. |
 
 **Remark**
 
@@ -2915,16 +3413,38 @@ Dataset.findRowNF( strColID, strVal [ ,nStartIdx [ ,nEndIdx ] ] )
 
 **Parameters**
 
-```
-Dataset 에서 검색 대상이 되는 Column 의 ID 또는 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strColID | String | Dataset 에서 검색 대상이 되는 Column 의 ID 또는 인덱스를 설정합니다. |
+| strVal | String | strColID 에 해당하는 Column 에서 검색할 값을 설정합니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+
+**Sample Call**
+
+```javascript
+var nRow;
+
+nRow = this.Dataset00.findRowNF( "column00", "100" );
+nRow = this.Dataset00.findRowNF( "column00", "100", 10 );
+nRow = this.Dataset00.findRowNF( "column00", "100", 10, 10000 );
+nRow = this.Dataset00.findRowNF( 2, "100", 10, 10000 );
 ```
 
 **Return**
 
-전달된 값과 일치하는 데이터를 갖는 첫번째 Row 의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전달된 값과 일치하는 데이터를 갖는 첫번째 Row 의 인덱스를 반환합니다.
 
 만약 일치하는 데이터가 없을 경우에는 -1 을 반환합니다.
-검색대상이 되는 Column 이 Const Column 인 경우 nStartIdx 값을 반환합니다.
+검색대상이 되는 Column 이 Const Column 인 경우 nStartIdx 값을 반환합니다. |
 
 **Remark**
 
@@ -2954,18 +3474,56 @@ Dataset.getAvg( strExpr [ ,nStartIdx [ ,nEndIdx [ ,bExcludeNaN [ ,arrArgs ] ] ] 
 
 **Parameters**
 
-```
-Dataset 에서 평균을 구할 Column 의 ID 또는 계산식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strExpr | String | Dataset 에서 평균을 구할 Column 의 ID 또는 계산식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 계산을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 계산합니다. |
+| nEndIdx | Number | Dataset 에서 계산을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 계산합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 계산합니다. |
+| bExcludeNaN | Boolean | Column 값 또는 계산값이 null, undefined, ""(Empty String), NaN 값 일 때 평균값 계산에서 제외할 지 여부를 설정합니다.
+평균값 계산에 포함되면 분모에 해당하는 전체갯수값이 증가합니다.
+
+true 설정 시 평균값 계산에서 제외합니다.
+false 설정 시 평균값 계산에 포함합니다.
+
+값 생략 시 true 로 적용됩니다. |
+| arrArgs | Array | strExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다.
+
+배열에 Column 의 ID 를 설정해도 Column 값으로 치환되지 않습니다.
+strExpr 에 Column 의 ID 를 직접 설정하여야 Column 값이 적용됩니다.
+즉, arrArgs[0] 에 Column ID 설정 시 "$0" 는 문자열로 치환되며, Column ID 에 해당하는 값으로 치환되지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var varAvg;
+var arrArgs = new Array( 10, 500 );
+
+varAvg = this.Dataset00.getAvg( "salary" );
+varAvg = this.Dataset00.getAvg( "salary", 5 );
+varAvg = this.Dataset00.getAvg( "salary", 5, 10 );
+varAvg = this.Dataset00.getAvg( "unit*order_cnt", 2 );
+varAvg = this.Dataset00.getAvg( "salary*$0-$1", 2, -1, true, arrArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값의 평균값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값의 평균값을 반환합니다.
 
-평균값을 구할 수 없는 경우에는 NaN 값을 반환합니다.
+평균값을 구할 수 없는 경우에는 NaN 값을 반환합니다. |
 
 **Remark**
 
@@ -3002,18 +3560,56 @@ Dataset.getAvgNF( strExpr [ ,nStartIdx [ ,nEndIdx [ ,bExcludeNaN [ ,arrArgs ] ] 
 
 **Parameters**
 
-```
-Dataset 에서 평균을 구할 Column 의 ID 또는 계산식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strExpr | String | Dataset 에서 평균을 구할 Column 의 ID 또는 계산식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 계산을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 계산을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| bExcludeNaN | Boolean | Column 값 또는 계산값이 null, undefined, ""(Empty String), NaN 값 일 때 평균값 계산에서 제외할 지 여부를 설정합니다.
+평균값 계산에 포함되면 분모에 해당하는 전체갯수값이 증가합니다.
+
+true 설정 시 평균값 계산에서 제외합니다.
+false 설정 시 평균값 계산에 포함합니다.
+
+값 생략 시 true 로 적용됩니다. |
+| arrArgs | Array | strExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다.
+
+배열에 Column 의 ID 를 설정해도 Column 값으로 치환되지 않습니다.
+strExpr 에 Column 의 ID 를 직접 설정하여야 Column 값이 적용됩니다.
+즉, arrArgs[0] 에 Column ID 설정 시 "$0" 는 문자열로 치환되며, Column ID 에 해당하는 값으로 치환되지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var varAvg;
+var arrArgs = new Array( 10, 500 );
+
+varAvg = this.Dataset00.getAvgNF( "salary" );
+varAvg = this.Dataset00.getAvgNF( "salary", 5 );
+varAvg = this.Dataset00.getAvgNF( "salary", 5, 10 );
+varAvg = this.Dataset00.getAvgNF( "unit*order_cnt", 2 );
+varAvg = this.Dataset00.getAvgNF( "salary*$0-$1", 2, -1, true, arrArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값의 평균값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값의 평균값을 반환합니다.
 
-평균값을 구할 수 없는 경우에는 NaN 값을 반환합니다.
+평균값을 구할 수 없는 경우에는 NaN 값을 반환합니다. |
 
 **Remark**
 
@@ -3050,18 +3646,69 @@ Dataset.getCaseAvg( strCmpExpr, strValExpr [ ,nStartIdx [ ,nEndIdx [ ,bExcludeNa
 
 **Parameters**
 
-```
-Dataset 에서 대상 Row 를 검색할 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strCmpExpr | String | Dataset 에서 대상 Row 를 검색할 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다. |
+| strValExpr | String | Dataset 에서 평균을 구할 Column 의 ID 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrValArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| bExcludeNaN | Boolean | Column 값 또는 계산값이 null, undefined, ""(Empty String), NaN 값 일 때 평균값 계산에서 제외할 지 여부를 설정합니다.
+평균값 계산에 포함되면 분모에 해당하는 전체갯수값이 증가합니다.
+
+true 설정 시 평균값 계산에서 제외합니다.
+false 설정 시 평균값 계산에 포함합니다.
+
+값 생략 시 true 로 적용됩니다. |
+| arrCmpArgs | Array | strCmpExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrCmpArgs[0] 값으로, "$2" 는 arrCmpArgs[2] 값으로 치환됩니다.
+
+배열에 Column 의 ID 를 설정해도 Column 값으로 치환되지 않습니다.
+strCmpExpr 에 Column 의 ID 를 직접 설정하여야 Column 값이 적용됩니다.
+즉, arrCmpArgs[0] 에 Column ID 설정 시 "$0" 는 문자열로 치환되며, Column ID 에 해당하는 값으로 치환되지 않습니다. |
+| arrValArgs | Array | strValExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrValArgs[0] 값으로, "$2" 는 arrValArgs[2] 값으로 치환됩니다.
+
+배열에 Column 의 ID 를 설정해도 Column 값으로 치환되지 않습니다.
+strValExpr 에 Column 의 ID 를 직접 설정하여야 Column 값이 적용됩니다.
+즉, arrValArgs[0] 에 Column ID 설정 시 "$0" 는 문자열로 치환되며, Column ID 에 해당하는 값으로 치환되지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var varAvg;
+var arrCmpArgs = new Array( "A2", "03" );
+var arrValArgs = new Array( 10, 500 );
+
+varAvg = this.Dataset00.getCaseAvg( "pos_cd > '03'", "salary" );
+varAvg = this.Dataset00.getCaseAvg( "pos_cd > '03'", "salary", 4 );
+varAvg = this.Dataset00.getCaseAvg( "pos_cd > '03'", "salary", 4, 30 );
+varAvg = this.Dataset00.getCaseAvg( "pos_cd > '03'", "unit*order_cnt", 4 );
+varAvg = this.Dataset00.getCaseAvg( "pos_cd > $1", "salary*$0-$1", 2, -1, true, arrCmpArgs, arrValArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값의 평균값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값의 평균값을 반환합니다.
 
-평균값을 구할 수 없는 경우에는 NaN 값을 반환합니다.
+평균값을 구할 수 없는 경우에는 NaN 값을 반환합니다. |
 
 **Remark**
 
@@ -3098,18 +3745,69 @@ Dataset.getCaseAvgNF( strCmpExpr, strValExpr [ ,nStartIdx [ ,nEndIdx [ ,bExclude
 
 **Parameters**
 
-```
-Dataset 에서 대상 Row 를 검색할 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strCmpExpr | String | Dataset 에서 대상 Row 를 검색할 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다. |
+| strValExpr | String | Dataset 에서 평균을 구할 Column 의 ID 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrValArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| bExcludeNaN | Boolean | Column 값 또는 계산값이 null, undefined, ""(Empty String), NaN 값 일 때 평균값 계산에서 제외할 지 여부를 설정합니다.
+평균값 계산에 포함되면 분모에 해당하는 전체갯수값이 증가합니다.
+
+true 설정 시 평균값 계산에서 제외합니다.
+false 설정 시 평균값 계산에 포함합니다.
+
+값 생략 시 true 로 적용됩니다. |
+| arrCmpArgs | Array | strCmpExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrCmpArgs[0] 값으로, "$2" 는 arrCmpArgs[2] 값으로 치환됩니다.
+
+배열에 Column 의 ID 를 설정해도 Column 값으로 치환되지 않습니다.
+strCmpExpr 에 Column 의 ID 를 직접 설정하여야 Column 값이 적용됩니다.
+즉, arrCmpArgs[0] 에 Column ID 설정 시 "$0" 는 문자열로 치환되며, Column ID 에 해당하는 값으로 치환되지 않습니다. |
+| arrValArgs | Array | strValExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrValArgs[0] 값으로, "$2" 는 arrValArgs[2] 값으로 치환됩니다.
+
+배열에 Column 의 ID 를 설정해도 Column 값으로 치환되지 않습니다.
+strValExpr 에 Column 의 ID 를 직접 설정하여야 Column 값이 적용됩니다.
+즉, arrValArgs[0] 에 Column ID 설정 시 "$0" 는 문자열로 치환되며, Column ID 에 해당하는 값으로 치환되지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var varAvg;
+var arrCmpArgs = new Array( "A2", "03" );
+var arrValArgs = new Array( 10, 500 );
+
+varAvg = this.Dataset00.getCaseAvgNF( "pos_cd > '03'", "salary" );
+varAvg = this.Dataset00.getCaseAvgNF( "pos_cd > '03'", "salary", 4 );
+varAvg = this.Dataset00.getCaseAvgNF( "pos_cd > '03'", "salary", 4, 30 );
+varAvg = this.Dataset00.getCaseAvgNF( "pos_cd > '03'", "unit*order_cnt", 4 );
+varAvg = this.Dataset00.getCaseAvgNF( "pos_cd > $1", "salary*$0-$1", 2, -1, true, arrCmpArgs, arrValArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값의 평균값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값의 평균값을 반환합니다.
 
-평균값을 구할 수 없는 경우에는 NaN 값을 반환합니다.
+평균값을 구할 수 없는 경우에는 NaN 값을 반환합니다. |
 
 **Remark**
 
@@ -3146,16 +3844,42 @@ Dataset.getCaseCount( strExpr [ ,nStartIdx [ ,nEndIdx [ ,arrArgs] ] ] )
 
 **Parameters**
 
-```
-Dataset 에서 검색할 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strExpr | String | Dataset 에서 검색할 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrArgs | Array | strExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var nRowCnt;
+var arrArgs = new Array( "A1", "03" );
+
+nRowCnt = this.Dataset00.getCaseCount( "dept_cd == 'A1'" );
+nRowCnt = this.Dataset00.getCaseCount( "dept_cd == 'A1'", 3 );
+nRowCnt = this.Dataset00.getCaseCount( "dept_cd == 'A1'", 3, 50 );
+nRowCnt = this.Dataset00.getCaseCount( "dept_cd == $0", 3, 50, arrArgs );
 ```
 
 **Return**
 
-주어진 조건표현식을 만족하는 Row 의 전체 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 주어진 조건표현식을 만족하는 Row 의 전체 갯수를 반환합니다. |
 
 **Remark**
 
@@ -3188,16 +3912,42 @@ Dataset.getCaseCountNF( strExpr [ ,nStartIdx [ ,nEndIdx [ ,arrArgs] ] ] )
 
 **Parameters**
 
-```
-Dataset 에서 검색할 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strExpr | String | Dataset 에서 검색할 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrArgs | Array | strExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var nRowCnt;
+var arrArgs = new Array( "A1", "03" );
+
+nRowCnt = this.Dataset00.getCaseCountNF( "dept_cd == 'A1'" );
+nRowCnt = this.Dataset00.getCaseCountNF( "dept_cd == 'A1'", 3 );
+nRowCnt = this.Dataset00.getCaseCountNF( "dept_cd == 'A1'", 3, 50 );
+nRowCnt = this.Dataset00.getCaseCountNF( "dept_cd == $0", 3, 50, arrArgs );
 ```
 
 **Return**
 
-주어진 조건표현식을 만족하는 Row 의 전체 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 주어진 조건표현식을 만족하는 Row 의 전체 갯수를 반환합니다. |
 
 **Remark**
 
@@ -3230,18 +3980,55 @@ Dataset.getCaseMax( strCmpExpr, strValExpr [ ,nStartIdx [ ,nEndIdx [ ,arrCmpArgs
 
 **Parameters**
 
-```
-Dataset 에서 검색할 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strCmpExpr | String | Dataset 에서 검색할 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다. |
+| strValExpr | String | Dataset 에서 최대값을 구할 Column 의 ID 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrValArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrCmpArgs | Array | strCmpExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrCmpArgs[0] 값으로, "$2" 는 arrCmpArgs[2] 값으로 치환됩니다. |
+| arrValArgs | Array | strValExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrValArgs[0] 값으로, "$2" 는 arrValArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varMax;
+var arrCmpArgs = new Array( "A2", "03" );
+var arrValArgs = new Array( "salary", "bonus" );
+
+varMax = this.Dataset00.getCaseMax( "dept_cd == 'A2'", "salary" );
+varMax = this.Dataset00.getCaseMax( "dept_cd == 'A2'", "salary", 5 );
+varMax = this.Dataset00.getCaseMax( "dept_cd == 'A2'", "salary", 5, 100 );
+varMax = this.Dataset00.getCaseMax( "dept_cd == 'A2'", "salary + bonus", 5, 100 );
+varMax = this.Dataset00.getCaseMax( "(dept_cd == 'A2') && (pos_cd > '03')", "salary + bonus", 5, 100 );
+varMax = this.Dataset00.getCaseMax( "(dept_cd == $0) && (pos_cd > $1)", "$0 + $1", 5,100, arrCmpArgs, arrValArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값 중 최대값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값 중 최대값을 반환합니다.
 
-최대값을 구할 수 없는 경우에는 undefined 를 반환합니다.
+최대값을 구할 수 없는 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -3279,18 +4066,55 @@ Dataset.getCaseMaxNF( strCmpExpr, strValExpr [ ,nStartIdx [ ,nEndIdx [ ,arrCmpAr
 
 **Parameters**
 
-```
-Dataset 에서 검색할 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strCmpExpr | String | Dataset 에서 검색할 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다. |
+| strValExpr | String | Dataset 에서 최대값을 구할 Column 의 ID 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrValArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrCmpArgs | Array | strCmpExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrCmpArgs[0] 값으로, "$2" 는 arrCmpArgs[2] 값으로 치환됩니다. |
+| arrValArgs | Array | strValExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrValArgs[0] 값으로, "$2" 는 arrValArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varMax;
+var arrCmpArgs = new Array( "A2", "03" );
+var arrValArgs = new Array( "salary", "bonus" );
+
+varMax = this.Dataset00.getCaseMaxNF( "dept_cd == 'A2'", "salary" );
+varMax = this.Dataset00.getCaseMaxNF( "dept_cd == 'A2'", "salary", 5 );
+varMax = this.Dataset00.getCaseMaxNF( "dept_cd == 'A2'", "salary", 5, 100 );
+varMax = this.Dataset00.getCaseMaxNF( "dept_cd == 'A2'", "salary + bonus", 5, 100 );
+varMax = this.Dataset00.getCaseMaxNF( "(dept_cd == 'A2') && (pos_cd > '03')", "salary + bonus", 5, 100 );
+varMax = this.Dataset00.getCaseMaxNF( "(dept_cd == $0) && (pos_cd > $1)", "$0 + $1", 5,100, arrCmpArgs, arrValArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값 중 최대값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값 중 최대값을 반환합니다.
 
-최대값을 구할 수 없는 경우에는 undefined 를 반환합니다.
+최대값을 구할 수 없는 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -3328,18 +4152,55 @@ Dataset.getCaseMin( strCmpExpr, strValExpr [ ,nStartIdx [ ,nEndIdx [ ,arrCmpArgs
 
 **Parameters**
 
-```
-Dataset 에서 검색할 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strCmpExpr | String | Dataset 에서 검색할 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다. |
+| strValExpr | String | Dataset 에서 최소값을 구할 Column 의 ID 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrValArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrCmpArgs | Array | strCmpExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrCmpArgs[0] 값으로, "$2" 는 arrCmpArgs[2] 값으로 치환됩니다. |
+| arrValArgs | Array | strValExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrValArgs[0] 값으로, "$2" 는 arrValArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varMin;
+var arrCmpArgs = new Array( "A2", "03" );
+var arrValArgs = new Array( "salary", "bonus" );
+
+varMin = this.Dataset00.getCaseMin( "dept_cd == 'A2'", "salary" );
+varMin = this.Dataset00.getCaseMin( "dept_cd == 'A2'", "salary", 5 );
+varMin = this.Dataset00.getCaseMin( "dept_cd == 'A2'", "salary", 5, 100 );
+varMin = this.Dataset00.getCaseMin( "dept_cd == 'A2'", "salary + bonus", 5, 100 );
+varMin = this.Dataset00.getCaseMin( "(dept_cd == 'A2') && (pos_cd > '03')", "salary + bonus", 5, 100 );
+varMin = this.Dataset00.getCaseMin( "(dept_cd == $0) && (pos_cd > $1)", "$0 + $1", 5,100, arrCmpArgs, arrValArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값 중 최소값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값 중 최소값을 반환합니다.
 
-최소값을 구할 수 없는 경우에는 undefined 를 반환합니다.
+최소값을 구할 수 없는 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -3377,18 +4238,55 @@ Dataset.getCaseMinNF( strCmpExpr, strValExpr [ ,nStartIdx [ ,nEndIdx [ ,arrCmpAr
 
 **Parameters**
 
-```
-Dataset 에서 검색할 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strCmpExpr | String | Dataset 에서 검색할 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다. |
+| strValExpr | String | Dataset 에서 최소값을 구할 Column 의 ID 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrValArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrCmpArgs | Array | strCmpExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrCmpArgs[0] 값으로, "$2" 는 arrCmpArgs[2] 값으로 치환됩니다. |
+| arrValArgs | Array | strValExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrValArgs[0] 값으로, "$2" 는 arrValArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varMin;
+var arrCmpArgs = new Array( "A2", "03" );
+var arrValArgs = new Array( "salary", "bonus" );
+
+varMin = this.Dataset00.getCaseMinNF( "dept_cd == 'A2'", "salary" );
+varMin = this.Dataset00.getCaseMinNF( "dept_cd == 'A2'", "salary", 5 );
+varMin = this.Dataset00.getCaseMinNF( "dept_cd == 'A2'", "salary", 5, 100 );
+varMin = this.Dataset00.getCaseMinNF( "dept_cd == 'A2'", "salary + bonus", 5, 100 );
+varMin = this.Dataset00.getCaseMinNF( "(dept_cd == 'A2') && (pos_cd > '03')", "salary + bonus", 5, 100 );
+varMin = this.Dataset00.getCaseMinNF( "(dept_cd == $0) && (pos_cd > $1)", "$0 + $1", 5,100, arrCmpArgs, arrValArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값 중 최소값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값 중 최소값을 반환합니다.
 
-최소값을 구할 수 없는 경우에는 undefined 를 반환합니다.
+최소값을 구할 수 없는 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -3426,18 +4324,54 @@ Dataset.getCaseSum( strCmpExpr, strValExpr [ ,nStartIdx [ ,nEndIdx [ ,arrCmpArgs
 
 **Parameters**
 
-```
-Dataset 에서 검색할 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strCmpExpr | String | Dataset 에서 검색할 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다. |
+| strValExpr | String | Dataset 에서 합계를 구할 Column 의 ID 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrValArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrCmpArgs | Array | strCmpExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrCmpArgs[0] 값으로, "$2" 는 arrCmpArgs[2] 값으로 치환됩니다. |
+| arrValArgs | Array | strValExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrValArgs[0] 값으로, "$2" 는 arrValArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varSum;
+var arrCmpArgs = new Array( "A2", "03" );
+var arrValArgs = new Array( "unit", "order_cnt" );
+
+varSum = this.Dataset00.getCaseSum( "pos_cd > '03'", "salary" );
+varSum = this.Dataset00.getCaseSum( "pos_cd > '03'", "salary", 4 );
+varSum = this.Dataset00.getCaseSum( "pos_cd > '03'", "salary", 4, 30 );
+varSum = this.Dataset00.getCaseSum( "pos_cd > '03'", "unit*order_cnt", 4 );
+varSum = this.Dataset00.getCaseSum( "pos_cd > $1", "$0*$1", 4, -1, arrCmpArgs, arrValArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값의 합계값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값의 합계값을 반환합니다.
 
-합계값을 구할 수 없는 경우에는 undefined 를 반환합니다.
+합계값을 구할 수 없는 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -3474,18 +4408,54 @@ Dataset.getCaseSumNF( strCmpExpr, strValExpr [ ,nStartIdx [ ,nEndIdx [ ,arrCmpAr
 
 **Parameters**
 
-```
-Dataset 에서 검색할 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strCmpExpr | String | Dataset 에서 검색할 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrCmpArgs 에 정의된 값으로 치환됩니다. |
+| strValExpr | String | Dataset 에서 합계를 구할 Column 의 ID 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrValArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrCmpArgs | Array | strCmpExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrCmpArgs[0] 값으로, "$2" 는 arrCmpArgs[2] 값으로 치환됩니다. |
+| arrValArgs | Array | strValExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrValArgs[0] 값으로, "$2" 는 arrValArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varSum;
+var arrCmpArgs = new Array( "A2", "03" );
+var arrValArgs = new Array( "unit", "order_cnt" );
+
+varSum = this.Dataset00.getCaseSumNF( "pos_cd > '03'", "salary" );
+varSum = this.Dataset00.getCaseSumNF( "pos_cd > '03'", "salary", 4 );
+varSum = this.Dataset00.getCaseSumNF( "pos_cd > '03'", "salary", 4, 30 );
+varSum = this.Dataset00.getCaseSumNF( "pos_cd > '03'", "unit*order_cnt", 4 );
+varSum = this.Dataset00.getCaseSumNF( "pos_cd > $1", "$0*$1", 4, -1, arrCmpArgs, arrValArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값의 합계값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값의 합계값을 반환합니다.
 
-합계값을 구할 수 없는 경우에는 undefined 를 반환합니다.
+합계값을 구할 수 없는 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -3526,7 +4496,9 @@ var nColCnt = this.Dataset00.getColCount();
 
 **Return**
 
-DataSet 에 정의된 전체 Column 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에 정의된 전체 Column 의 갯수를 반환합니다. |
 
 
 ---
@@ -3547,17 +4519,25 @@ Dataset.getColID( nColIdx )
 
 **Parameters**
 
-```
-ID 를 구하려는 Column 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nColIdx | Number | ID 를 구하려는 Column 의 인덱스를 설정합니다.
 
-Const Column 에 해당하는 인덱스를 설정할 수 있습니다.
+Const Column 에 해당하는 인덱스를 설정할 수 있습니다. |
+
+**Sample Call**
+
+```javascript
+var strColID = this.Dataset00.getColID( 2 );
 ```
 
 **Return**
 
-전달된 인덱스에 해당하는 Column 의 ID 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 전달된 인덱스에 해당하는 Column 의 ID 를 반환합니다.
 
-해당하는 Column 이 없을 경우에는 "undefined" 를 반환합니다.
+해당하는 Column 이 없을 경우에는 "undefined" 를 반환합니다. |
 
 **Remark**
 
@@ -3591,15 +4571,23 @@ Dataset.getColIndex( strColID )
 
 **Parameters**
 
-```
-인덱스를 구하려는 일반 Column 또는 Const Column 의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strColID | String | 인덱스를 구하려는 일반 Column 또는 Const Column 의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nColIdx = this.Dataset00.getColIndex( "Column0" );
 ```
 
 **Return**
 
-전달된 ID 에 해당하는 Column 의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전달된 ID 에 해당하는 Column 의 인덱스를 반환합니다.
 
-해당하는 Column 이 없을 경우에는 "-1" 을 반환합니다.
+해당하는 Column 이 없을 경우에는 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -3631,17 +4619,29 @@ Dataset.getColumn( nRow, strColID )
 
 **Parameters**
 
-```
-DataSet 에서 값을 구하려는 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | DataSet 에서 값을 구하려는 Row 의 인덱스를 설정합니다.
 
-첫번째 Row 의 인덱스값은 "0" 입니다.
+첫번째 Row 의 인덱스값은 "0" 입니다. |
+| nColIdx | Number | DataSet 에서 값을 구하려는 Column 의 인덱스를 설정합니다. |
+| strColID | String | DataSet 에서 값을 구하려는 Column 의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varCol;
+varCol = this.Dataset00.getColumn(2,1);
+varCol = this.Dataset00.getColumn(2,"cust_addr");
 ```
 
 **Return**
 
-지정한 Row 와 Column 의 현재값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | 지정한 Row 와 Column 의 현재값을 반환합니다.
 
-지정한 Row 와 Column 이 존재하지 않으면 "undefined" 를 반환합니다.
+지정한 Row 와 Column 이 존재하지 않으면 "undefined" 를 반환합니다. |
 
 **Remark**
 
@@ -3677,15 +4677,25 @@ Dataset.getColumnInfo( strColName )
 
 **Parameters**
 
-```
-대상 Column 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nColIdx | Number | 대상 Column 의 인덱스를 설정합니다. |
+| strColName | String | 대상 Column 의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objColInfo = this.Dataset00.getColumnInfo(1);
+objColInfo.size = 5;
 ```
 
 **Return**
 
-지정한 인덱스 또는 ID 에 해당하는 Column 의 ColumnInfo 객체를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정한 인덱스 또는 ID 에 해당하는 Column 의 ColumnInfo 객체를 반환합니다.
 
-지정한 인덱스 또는 ID 에 해당하는 Column 이 없을 경우에는 undefined 를 반환합니다.
+지정한 인덱스 또는 ID 에 해당하는 Column 이 없을 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -3716,17 +4726,29 @@ Dataset.getColumnNF( nRow, strColID )
 
 **Parameters**
 
-```
-DataSet 에서 값을 구하려는 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | DataSet 에서 값을 구하려는 Row 의 인덱스를 설정합니다.
 
-첫번째 Row 의 인덱스값은 "0" 입니다.
+첫번째 Row 의 인덱스값은 "0" 입니다. |
+| nColIdx | Number | DataSet 에서 값을 구하려는 Column 의 인덱스를 설정합니다. |
+| strColID | String | DataSet 에서 값을 구하려는 Column 의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varCol;
+varCol = this.Dataset00.getColumnNF(2,1);
+varCol = this.Dataset00.getColumnNF(2,"cust_addr");
 ```
 
 **Return**
 
-지정한 Row 와 Column 의 현재값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | 지정한 Row 와 Column 의 현재값을 반환합니다.
 
-지정한 Row 와 Column 이 존재하지 않으면 "undefined" 를 반환합니다.
+지정한 Row 와 Column 이 존재하지 않으면 "undefined" 를 반환합니다. |
 
 **Remark**
 
@@ -3761,15 +4783,23 @@ Dataset.getConstColID( nColIdx )
 
 **Parameters**
 
-```
-ID 를 구하려는 Const Column 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nColIdx | Number | ID 를 구하려는 Const Column 의 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var strColID = this.Dataset00.getConstColID( 0 );
 ```
 
 **Return**
 
-전달된 인덱스에 해당하는 Const Column 의 ID 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 전달된 인덱스에 해당하는 Const Column 의 ID 를 반환합니다.
 
-해당하는 Const Column 이 없을 경우에는 "undefined" 를 반환합니다.
+해당하는 Const Column 이 없을 경우에는 "undefined" 를 반환합니다. |
 
 **Remark**
 
@@ -3800,15 +4830,23 @@ Dataset.getConstColIndex( strColID )
 
 **Parameters**
 
-```
-인덱스를 구하려는 Const Column 의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strColID | String | 인덱스를 구하려는 Const Column 의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nColIdx = this.Dataset00.getConstColIndex( "ConstColumn0" );
 ```
 
 **Return**
 
-전달된 ID 에 해당하는 Const Column 의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전달된 ID 에 해당하는 Const Column 의 인덱스를 반환합니다.
 
-해당하는 Const Column 이 없을 경우에는 "-1" 을 반환합니다.
+해당하는 Const Column 이 없을 경우에는 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -3837,14 +4875,25 @@ Dataset.getConstColumn(strColID)
 
 **Parameters**
 
-```
-DataSet 에서 값을 구하려는 Const Column 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nColIdx | Number | DataSet 에서 값을 구하려는 Const Column 의 인덱스를 설정합니다. |
+| strColID | String | DataSet 에서 값을 구하려는 Const Column 의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varCol;
+varCol = this.Dataset00.getConstColumn(0);
+varCol = this.Dataset00.getConstColumn("Const00");
 ```
 
 **Return**
 
-지정한 Const Column 의 값을 반환합니다.
-만약, 지정한 Const Column 이 존재하지 않으면 "undefined"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | 지정한 Const Column 의 값을 반환합니다.
+만약, 지정한 Const Column 이 존재하지 않으면 "undefined"를 반환합니다. |
 
 **Remark**
 
@@ -3874,7 +4923,9 @@ var nConstCnt = this.Dataset00.getConstCount();
 
 **Return**
 
-DataSet 에 정의된 Const Column 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에 정의된 Const Column 의 갯수를 반환합니다. |
 
 
 ---
@@ -3895,15 +4946,36 @@ Dataset.getCount( [ strColID [ ,nStartIdx [ ,nEndIdx ] ] ] )
 
 **Parameters**
 
-```
-데이터의 유무를 확인하려는 Column 의 ID 또는 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strColID | String | 데이터의 유무를 확인하려는 Column 의 ID 또는 인덱스를 설정합니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 계산합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+
+**Sample Call**
+
+```javascript
+var nRowCnt;
+
+nRowCnt = this.Dataset00.getCount();
+nRowCnt = this.Dataset00.getCount( "col_id" );
+nRowCnt = this.Dataset00.getCount( "col_id", 5, 10 );
+nRowCnt = this.Dataset00.getCount( 2, 5, 10 );
 ```
 
 **Return**
 
-특정 Column 의 값이 null 이 아닌 Row 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 의 값이 null 이 아닌 Row 의 갯수를 반환합니다.
 
-Column 의 ID 나 인덱스를 설정하지 않으면 Row 의 전체 갯수를 반환합니다.
+Column 의 ID 나 인덱스를 설정하지 않으면 Row 의 전체 갯수를 반환합니다. |
 
 **Remark**
 
@@ -3936,15 +5008,35 @@ Dataset.getCountNF( [ strColID [ ,nStartIdx [ ,nEndIdx ] ] ] )
 
 **Parameters**
 
-```
-데이터의 유무를 확인하려는 Column 의 ID 또는 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strColID | String | 데이터의 유무를 확인하려는 Column 의 ID 또는 인덱스를 설정합니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 계산합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+
+**Sample Call**
+
+```javascript
+var nRowCnt;
+
+nRowCnt = this.Dataset00.getCountNF( "col_id" );
+nRowCnt = this.Dataset00.getCountNF( "col_id", 5, 10 );
+nRowCnt = this.Dataset00.getCountNF( 2, 5, 10 );
 ```
 
 **Return**
 
-특정 Column 의 값이 null 이 아닌 Row 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 의 값이 null 이 아닌 Row 의 갯수를 반환합니다.
 
-Column 의 ID 나 인덱스를 설정하지 않으면 Row 의 전체 갯수를 반환합니다.
+Column 의 ID 나 인덱스를 설정하지 않으면 Row 의 전체 갯수를 반환합니다. |
 
 **Remark**
 
@@ -3978,14 +5070,26 @@ Dataset.getDeletedColumn(nRow,strColID)
 
 **Parameters**
 
-```
-삭제된 Row 중에서 값을 구하려는 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 삭제된 Row 중에서 값을 구하려는 Row 의 인덱스를 설정합니다. |
+| nColIdx | Number | 삭제된 Row 중에서 값을 구하려는 Column 의 인덱스를 설정합니다. |
+| strColID | String | 삭제된 행중에서 값을 구하려는 열의 ID입니다. |
+
+**Sample Call**
+
+```javascript
+var varValue;
+varValue = this.Dataset00.getDeletedColumn(0,2);
+varValue = this.Dataset00.getDeletedColumn(0,"name");
 ```
 
 **Return**
 
-삭제된 Row 중에서 지정된 Row, Column 에 해당하는 값을 반환합니다.
-해당하는 Row 나 Column 이 존재하지 않는 경우에는 "undefined"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | 삭제된 Row 중에서 지정된 Row, Column 에 해당하는 값을 반환합니다.
+해당하는 Row 나 Column 이 존재하지 않는 경우에는 "undefined"를 반환합니다. |
 
 **Remark**
 
@@ -4015,7 +5119,9 @@ var nRowCnt = this.Dataset00.getDeletedRowCount();
 
 **Return**
 
-Dataset 오브젝트에서 삭제된 Row의 개수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Dataset 오브젝트에서 삭제된 Row의 개수를 반환합니다. |
 
 **Remark**
 
@@ -4045,7 +5151,9 @@ var objArr = this.Dataset00.getDeletedRowset();
 
 **Return**
 
-삭제된 전체 Row의 내용을 배열 오브젝트로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | 삭제된 전체 Row의 내용을 배열 오브젝트로 반환합니다. |
 
 **Remark**
 
@@ -4081,15 +5189,26 @@ Dataset.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = Dataset00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -4110,16 +5229,24 @@ Dataset.getGroupRangeCount(nRow)
 
 **Parameters**
 
-```
-대상 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 대상 Row 의 인덱스를 설정합니다.
 
-첫번째 Row 의 인덱스값은 "0" 입니다.
+첫번째 Row 의 인덱스값은 "0" 입니다. |
+
+**Sample Call**
+
+```javascript
+var nRowCnt = this.Dataset00.getGroupRangeCount(2);
 ```
 
 **Return**
 
-그룹소계 Row 의 참조 대상이 된 Row 의 갯수를 반환합니다.
-만약, 지정한 Row 가 존재하지 않으면 "0" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 그룹소계 Row 의 참조 대상이 된 Row 의 갯수를 반환합니다.
+만약, 지정한 Row 가 존재하지 않으면 "0" 을 반환합니다. |
 
 **Remark**
 
@@ -4155,17 +5282,25 @@ Dataset.getGroupRangeStart(nRow)
 
 **Parameters**
 
-```
-대상 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 대상 Row 의 인덱스를 설정합니다.
 
-첫번째 Row 의 인덱스값은 "0" 입니다.
+첫번째 Row 의 인덱스값은 "0" 입니다. |
+
+**Sample Call**
+
+```javascript
+var nRow = this.Dataset00.getGroupRangeStart(1);
 ```
 
 **Return**
 
-그룹소계 Row 의 참조 대상이 된 Row 의 시작 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 그룹소계 Row 의 참조 대상이 된 Row 의 시작 인덱스를 반환합니다.
 지정한 Row 가 그룹 정보를 포함하고 있는 Row 가 아닐 경우에는 Row 의 인덱스를 반환합니다.
-만약, 지정한 Row 가 존재하지 않으면 "-1" 을 반환합니다.
+만약, 지정한 Row 가 존재하지 않으면 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -4201,18 +5336,45 @@ Dataset.getMax( strExpr [ ,nStartIdx [ ,nEndIdx [ ,arrArgs ] ] ] )
 
 **Parameters**
 
-```
-Dataset 에서 최대값을 구할 Column 의 ID 또는 계산식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strExpr | String | Dataset 에서 최대값을 구할 Column 의 ID 또는 계산식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrValArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrValArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrArgs | Array | strExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varMax;
+var arrArgs = new Array( "unit", "order_cnt" );
+
+varMax = this.Dataset00.getMax( "amount" );
+varMax = this.Dataset00.getMax( "amount", 15 );
+varMax = this.Dataset00.getMax( "amount", 15, 20 );
+varMax = this.Dataset00.getMax( "unit * order_cnt", 15, 20 );
+varMax = this.Dataset00.getMax( "$0*$1", 15, 20, arrArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값 중 최대값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값 중 최대값을 반환합니다.
 
-최대값을 구할 수 없는 경우에는 undefined 를 반환합니다.
+최대값을 구할 수 없는 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -4250,18 +5412,45 @@ Dataset.getMaxNF( strExpr [ ,nStartIdx [ ,nEndIdx [ ,arrArgs ] ] ] )
 
 **Parameters**
 
-```
-Dataset 에서 최대값을 구할 Column 의 ID 또는 계산식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strExpr | String | Dataset 에서 최대값을 구할 Column 의 ID 또는 계산식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrValArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrValArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrArgs | Array | strExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varMax;
+var arrArgs = new Array( "unit", "order_cnt" );
+
+varMax = this.Dataset00.getMaxNF( "amount" );
+varMax = this.Dataset00.getMaxNF( "amount", 15 );
+varMax = this.Dataset00.getMaxNF( "amount", 15, 20 );
+varMax = this.Dataset00.getMaxNF( "unit * order_cnt", 15, 20 );
+varMax = this.Dataset00.getMaxNF( "$0*$1", 15, 20, arrArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값 중 최대값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값 중 최대값을 반환합니다.
 
-최대값을 구할 수 없는 경우에는 undefined 를 반환합니다.
+최대값을 구할 수 없는 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -4299,18 +5488,45 @@ Dataset.getMin( strExpr [ ,nStartIdx [ ,nEndIdx [ ,arrArgs ] ] ] )
 
 **Parameters**
 
-```
-Dataset 에서 최소값을 구할 Column 의 ID 또는 계산식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strExpr | String | Dataset 에서 최소값을 구할 Column 의 ID 또는 계산식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrValArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrValArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrArgs | Array | strExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varMin;
+var arrArgs = new Array( "unit", "order_cnt" );
+
+varMin = this.Dataset00.getMin( "amount" );
+varMin = this.Dataset00.getMin( "amount", 15 );
+varMin = this.Dataset00.getMin( "amount", 15, 20 );
+varMin = this.Dataset00.getMin( "unit* order_cnt", 15, 20 );
+varMin = this.Dataset00.getMin( "$0*$1", 15, 20, arrArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값 중 최소값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값 중 최소값을 반환합니다.
 
-최소값을 구할 수 없는 경우에는 undefined 를 반환합니다.
+최소값을 구할 수 없는 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -4348,18 +5564,45 @@ Dataset.getMinNF( strExpr [ ,nStartIdx [ ,nEndIdx [ ,arrArgs ] ] ] )
 
 **Parameters**
 
-```
-Dataset 에서 최소값을 구할 Column 의 ID 또는 계산식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strExpr | String | Dataset 에서 최소값을 구할 Column 의 ID 또는 계산식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrValArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrValArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 검색을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 검색합니다. |
+| nEndIdx | Number | Dataset 에서 검색을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 검색합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 검색합니다. |
+| arrArgs | Array | strExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varMin;
+var arrArgs = new Array( "unit", "order_cnt" );
+
+varMin = this.Dataset00.getMinNF( "amount" );
+varMin = this.Dataset00.getMinNF( "amount", 15 );
+varMin = this.Dataset00.getMinNF( "amount", 15, 20 );
+varMin = this.Dataset00.getMinNF( "unit* order_cnt", 15, 20 );
+varMin = this.Dataset00.getMinNF( "$0*$1", 15, 20, arrArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값 중 최소값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값 중 최소값을 반환합니다.
 
-최소값을 구할 수 없는 경우에는 undefined 를 반환합니다.
+최소값을 구할 수 없는 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -4398,15 +5641,27 @@ Dataset.getOrgColumn( nRow ,strColID )
 
 **Parameters**
 
-```
-초기값을 구하려는 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 초기값을 구하려는 Row 의 인덱스를 설정합니다. |
+| nColIdx | Number | 초기값을 구하려는 Column 의 인덱스를 설정합니다. |
+| strColID | String | 초기값을 구하려는 Column 의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varCol;
+varCol = this.Dataset00.getOrgColumn( 0, 2 );
+varCol = this.Dataset00.getOrgColumn( 2, "cust_addr" );
 ```
 
 **Return**
 
-지정한 Row 와 Column 의 초기값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | 지정한 Row 와 Column 의 초기값을 반환합니다.
 
-지정한 Row 와 Column 이 존재하지 않으면 undefined 를 반환합니다.
+지정한 Row 와 Column 이 존재하지 않으면 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -4445,15 +5700,27 @@ Dataset.getOrgColumnNF( nRow ,strColID )
 
 **Parameters**
 
-```
-초기값을 구하려는 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 초기값을 구하려는 Row 의 인덱스를 설정합니다. |
+| nColIdx | Number | 초기값을 구하려는 Column 의 인덱스를 설정합니다. |
+| strColID | String | 초기값을 구하려는 Column 의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varCol;
+varCol = this.Dataset00.getOrgColumnNF( 0, 2 );
+varCol = this.Dataset00.getOrgColumnNF( 2, "cust_addr" );
 ```
 
 **Return**
 
-지정한 Row 와 Column 의 초기값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | 지정한 Row 와 Column 의 초기값을 반환합니다.
 
-지정한 Row 와 Column 이 존재하지 않으면 undefined 를 반환합니다.
+지정한 Row 와 Column 이 존재하지 않으면 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -4495,7 +5762,9 @@ var nRowCount = this.Dataset00.getRowCount();
 
 **Return**
 
-DataSet 에서 Row 의 전체 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에서 Row 의 전체 갯수를 반환합니다. |
 
 **Remark**
 
@@ -4527,7 +5796,9 @@ var nRowCount = this.Dataset00.getRowCountNF();
 
 **Return**
 
-DataSet 에서 Row 의 전체 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에서 Row 의 전체 갯수를 반환합니다. |
 
 **Remark**
 
@@ -4555,16 +5826,24 @@ Dataset.getRowLevel(nRow)
 
 **Parameters**
 
-```
-대상 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 대상 Row 의 인덱스를 설정합니다.
 
-첫번째 Row 의 인덱스값은 "0" 입니다.
+첫번째 Row 의 인덱스값은 "0" 입니다. |
+
+**Sample Call**
+
+```javascript
+var nRowLevel = this.Dataset00.getRowLevel(0);
 ```
 
 **Return**
 
-DataSet 에서 지정한 Row 의 레벨값을 반환합니다.
-만약 지정한 Row 가 없으면 "0" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에서 지정한 Row 의 레벨값을 반환합니다.
+만약 지정한 Row 가 없으면 "0" 을 반환합니다. |
 
 **Remark**
 
@@ -4593,15 +5872,49 @@ Dataset.getRowsAvg( arrRows, strColExpr [ ,bExcludeNaN [ ,arrArgs ] ] )
 
 **Parameters**
 
-```
-평균값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| arrRows | Array | 평균값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다. |
+| strColExpr | String | arrRows 에 해당하는 Row 에서 평균을 구할 Column 의 ID, Index 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| bExcludeNaN | Boolean | Column 값 또는 계산값이 null, undefined, ""(Empty String), NaN 값 일 때 평균값 계산에서 제외할 지 여부를 설정합니다.
+평균값 계산에 포함되면 분모에 해당하는 전체갯수값이 증가합니다.
+
+true 설정 시 평균값 계산에서 제외합니다.
+false 설정 시 평균값 계산에 포함합니다.
+
+값 생략 시 true 로 적용됩니다. |
+| arrArgs | Array | strColExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다.
+
+배열에 Column 의 ID 를 설정해도 Column 값으로 치환되지 않습니다.
+strColExpr 에 Column 의 ID 를 직접 설정하여야 Column 값이 적용됩니다.
+즉, arrArgs[0] 에 Column ID 설정 시 "$0" 는 문자열로 치환되며, Column ID 에 해당하는 값으로 치환되지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var varAvg;
+var arrRows = new Array( 1, 2, 5, 10 );
+var arrArgs = new Array( 10, 500 );
+
+varAvg = this.Dataset00.getRowsAvg( arrRows, 3 );
+varAvg = this.Dataset00.getRowsAvg( arrRows, "salary" );
+varAvg = this.Dataset00.getRowsAvg( arrRows, "unit*order_cnt", true );
+varAvg = this.Dataset00.getRowsAvg( arrRows, "salary*$0-$1", true, arrArgs );
 ```
 
 **Return**
 
-특정 Row 의 Column 값 또는 계산값의 평균값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Row 의 Column 값 또는 계산값의 평균값을 반환합니다.
 
-평균값을 구할 수 없는 경우에는 POSITIVE_INFINITY 값을 반환합니다.
+평균값을 구할 수 없는 경우에는 POSITIVE_INFINITY 값을 반환합니다. |
 
 **Remark**
 
@@ -4634,15 +5947,49 @@ Dataset.getRowsAvgNF( arrRows, strColExpr [ ,bExcludeNaN [ ,arrArgs ] ] )
 
 **Parameters**
 
-```
-평균값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| arrRows | Array | 평균값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다. |
+| strColExpr | String | arrRows 에 해당하는 Row 에서 평균을 구할 Column 의 ID, Index 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| bExcludeNaN | Boolean | Column 값 또는 계산값이 null, undefined, ""(Empty String), NaN 값 일 때 평균값 계산에서 제외할 지 여부를 설정합니다.
+평균값 계산에 포함되면 분모에 해당하는 전체갯수값이 증가합니다.
+
+true 설정 시 평균값 계산에서 제외합니다.
+false 설정 시 평균값 계산에 포함합니다.
+
+값 생략 시 true 로 적용됩니다. |
+| arrArgs | Array | strColExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다.
+
+배열에 Column 의 ID 를 설정해도 Column 값으로 치환되지 않습니다.
+strColExpr 에 Column 의 ID 를 직접 설정하여야 Column 값이 적용됩니다.
+즉, arrArgs[0] 에 Column ID 설정 시 "$0" 는 문자열로 치환되며, Column ID 에 해당하는 값으로 치환되지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var varAvg;
+var arrRows = new Array( 1, 2, 5, 10 );
+var arrArgs = new Array( 10, 500 );
+
+varAvg = this.Dataset00.getRowsAvgNF( arrRows, 3 );
+varAvg = this.Dataset00.getRowsAvgNF( arrRows, "salary" );
+varAvg = this.Dataset00.getRowsAvgNF( arrRows, "unit*order_cnt", true );
+varAvg = this.Dataset00.getRowsAvgNF( arrRows, "salary*$0-$1", true, arrArgs );
 ```
 
 **Return**
 
-특정 Row 의 Column 값 또는 계산값의 평균값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Row 의 Column 값 또는 계산값의 평균값을 반환합니다.
 
-평균값을 구할 수 없는 경우에는 POSITIVE_INFINITY  값을 반환합니다.
+평균값을 구할 수 없는 경우에는 POSITIVE_INFINITY  값을 반환합니다. |
 
 **Remark**
 
@@ -4675,13 +6022,36 @@ Dataset.getRowsCount( arrRows, strColExpr [ ,arrArgs ] )
 
 **Parameters**
 
-```
-특정 Column 의 데이터 유무를 확인할 Row 의 Index 를 숫자형 배열형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| arrRows | Array | 특정 Column 의 데이터 유무를 확인할 Row 의 Index 를 숫자형 배열형태로 설정합니다. |
+| strColExpr | String | arrRows 에 해당하는 Row 에서 데이터 유무를 확인할 Column 의 ID, Index 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| arrArgs | Array | strColExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt;
+var arrRows = new Array( 1, 2, 5, 10 );
+var arrArgs = new Array( "unit", "order_cnt" );
+
+nCnt = this.Dataset00.getRowsCount( arrRows, 3 );
+nCnt = this.Dataset00.getRowsCount( arrRows, "salary" );
+nCnt = this.Dataset00.getRowsCount( arrRows, "unit*order_cnt" );
+nCnt = this.Dataset00.getRowsCount( arrRows, "$0*$1", arrArgs );
 ```
 
 **Return**
 
-전달된 Row 에서 특정 Column 의 값이 null 이 아닌 Row 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전달된 Row 에서 특정 Column 의 값이 null 이 아닌 Row 의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -4710,15 +6080,38 @@ Dataset.getRowsCountNF( arrRows, strColExpr [ ,arrArgs ] )
 
 **Parameters**
 
-```
-특정 Column 의 데이터 유무를 확인할 Row 의 Index 를 숫자형 배열형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| arrRows | Array | 특정 Column 의 데이터 유무를 확인할 Row 의 Index 를 숫자형 배열형태로 설정합니다. |
+| strColExpr | String | arrRows 에 해당하는 Row 에서 데이터 유무를 확인할 Column 의 ID, Index 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| arrArgs | Array | strColExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt;
+var arrRows = new Array( 1, 2, 5, 10 );
+var arrArgs = new Array( "unit", "order_cnt" );
+
+nCnt = this.Dataset00.getRowsCountNF( arrRows, 3 );
+nCnt = this.Dataset00.getRowsCountNF( arrRows, "salary" );
+nCnt = this.Dataset00.getRowsCountNF( arrRows, "unit*order_cnt" );
+nCnt = this.Dataset00.getRowsCountNF( arrRows, "$0*$1", arrArgs );
 ```
 
 **Return**
 
-전달된 Row 에서 특정 Column 의 값이 null 이 아닌 Row 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전달된 Row 에서 특정 Column 의 값이 null 이 아닌 Row 의 갯수를 반환합니다.
 
-* datatyperule 속성값이 "2.0" 인 경우 undefined, null, EmptyString(""), NaN, "invalid date" 를 제외한 Row 의 갯수를 반환합니다.
+* datatyperule 속성값이 "2.0" 인 경우 undefined, null, EmptyString(""), NaN, "invalid date" 를 제외한 Row 의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -4747,15 +6140,38 @@ Dataset.getRowsMax( arrRows, strColExpr [ ,arrArgs ] )
 
 **Parameters**
 
-```
-최대값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| arrRows | Array | 최대값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다. |
+| strColExpr | String | arrRows 에 해당하는 Row 에서 최대값을 구할 Column 의 ID, Index 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| arrArgs | Array | strColExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varMax;
+var arrRows = new Array( 1, 2, 5, 10 );
+var arrArgs = new Array( "unit", "order_cnt" );
+
+varMax = this.Dataset00.getRowsMax( arrRows, 3 );
+varMax = this.Dataset00.getRowsMax( arrRows, "salary" );
+varMax = this.Dataset00.getRowsMax( arrRows, "unit*order_cnt" );
+varMax = this.Dataset00.getRowsMax( arrRows, "$0*$1", arrArgs );
 ```
 
 **Return**
 
-전달된 Row 에서 Column 값 또는 계산값 중 최대값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전달된 Row 에서 Column 값 또는 계산값 중 최대값을 반환합니다.
 
-최대값을 구할 수 없는 경우에는 undefined 를 반환합니다.
+최대값을 구할 수 없는 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -4789,15 +6205,38 @@ Dataset.getRowsMaxNF( arrRows, strColExpr [ ,arrArgs ] )
 
 **Parameters**
 
-```
-최대값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| arrRows | Array | 최대값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다. |
+| strColExpr | String | arrRows 에 해당하는 Row 에서 최대값을 구할 Column 의 ID, Index 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| arrArgs | Array | strColExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varMax;
+var arrRows = new Array( 1, 2, 5, 10 );
+var arrArgs = new Array( "unit", "order_cnt" );
+
+varMax = this.Dataset00.getRowsMaxNF( arrRows, 3 );
+varMax = this.Dataset00.getRowsMaxNF( arrRows, "salary" );
+varMax = this.Dataset00.getRowsMaxNF( arrRows, "unit*order_cnt" );
+varMax = this.Dataset00.getRowsMaxNF( arrRows, "$0*$1", arrArgs );
 ```
 
 **Return**
 
-전달된 Row 에서 Column 값 또는 계산값 중 최대값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전달된 Row 에서 Column 값 또는 계산값 중 최대값을 반환합니다.
 
-최대값을 구할 수 없는 경우에는 undefined 를 반환합니다.
+최대값을 구할 수 없는 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -4831,15 +6270,38 @@ Dataset.getRowsMin( arrRows, strColExpr [ ,arrArgs ] )
 
 **Parameters**
 
-```
-최소값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| arrRows | Array | 최소값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다. |
+| strColExpr | String | arrRows 에 해당하는 Row 에서 최소값을 구할 Column 의 ID, Index 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| arrArgs | Array | strColExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varMin;
+var arrRows = new Array( 1, 2, 5, 10 );
+var arrArgs = new Array( "unit", "order_cnt" );
+
+varMin = this.Dataset00.getRowsMin( arrRows, 3 );
+varMin = this.Dataset00.getRowsMin( arrRows, "salary" );
+varMin = this.Dataset00.getRowsMin( arrRows, "unit*order_cnt" );
+varMin = this.Dataset00.getRowsMin( arrRows, "$0*$1", arrArgs );
 ```
 
 **Return**
 
-전달된 Row 에서 Column 값 또는 계산값 중 최소값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전달된 Row 에서 Column 값 또는 계산값 중 최소값을 반환합니다.
 
-최소값을 구할 수 없는 경우에는 undefined 를 반환합니다.
+최소값을 구할 수 없는 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -4873,15 +6335,38 @@ Dataset.getRowsMinNF( arrRows, strColExpr [ ,arrArgs ] )
 
 **Parameters**
 
-```
-최소값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| arrRows | Array | 최소값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다. |
+| strColExpr | String | arrRows 에 해당하는 Row 에서 최소값을 구할 Column 의 ID, Index 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| arrArgs | Array | strColExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varMin;
+var arrRows = new Array( 1, 2, 5, 10 );
+var arrArgs = new Array( "unit", "order_cnt" );
+
+varMin = this.Dataset00.getRowsMinNF( arrRows, 3 );
+varMin = this.Dataset00.getRowsMinNF( arrRows, "salary" );
+varMin = this.Dataset00.getRowsMinNF( arrRows, "unit*order_cnt" );
+varMin = this.Dataset00.getRowsMinNF( arrRows, "$0*$1", arrArgs );
 ```
 
 **Return**
 
-전달된 Row 에서 Column 값 또는 계산값 중 최소값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전달된 Row 에서 Column 값 또는 계산값 중 최소값을 반환합니다.
 
-최소값을 구할 수 없는 경우에는 undefined 를 반환합니다.
+최소값을 구할 수 없는 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -4915,13 +6400,36 @@ Dataset.getRowsSum( arrRows, strColExpr [ ,arrArgs ] )
 
 **Parameters**
 
-```
-합계값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| arrRows | Array | 합계값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다. |
+| strColExpr | String | arrRows 에 해당하는 Row 에서 합계값을 구할 Column 의 ID, Index 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| arrArgs | Array | strColExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varSum;
+var arrRows = new Array( 1, 2, 5, 10 );
+var arrArgs = new Array( "unit", "order_cnt" );
+
+varSum= this.Dataset00.getRowsSum( arrRows, 3 );
+varSum= this.Dataset00.getRowsSum( arrRows, "salary" );
+varSum= this.Dataset00.getRowsSum( arrRows, "unit*order_cnt" );
+varSum= this.Dataset00.getRowsSum( arrRows, "$0*$1", arrArgs );
 ```
 
 **Return**
 
-전달된 Row 에서 Column 값 또는 계산값의 합계값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전달된 Row 에서 Column 값 또는 계산값의 합계값을 반환합니다. |
 
 **Remark**
 
@@ -4952,13 +6460,36 @@ Dataset.getRowsSumNF( arrRows, strColExpr [ ,arrArgs ] )
 
 **Parameters**
 
-```
-합계값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| arrRows | Array | 합계값을 구할 Row 의 Index 를 숫자형 배열형태로 설정합니다. |
+| strColExpr | String | arrRows 에 해당하는 Row 에서 합계값을 구할 Column 의 ID, Index 또는 계산식을 설정합니다.
+
+"$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| arrArgs | Array | strColExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varSum;
+var arrRows = new Array( 1, 2, 5, 10 );
+var arrArgs = new Array( "unit", "order_cnt" );
+
+varSum= this.Dataset00.getRowsSumNF( arrRows, 3 );
+varSum= this.Dataset00.getRowsSumNF( arrRows, "salary" );
+varSum= this.Dataset00.getRowsSumNF( arrRows, "unit*order_cnt" );
+varSum= this.Dataset00.getRowsSumNF( arrRows, "$0*$1", arrArgs );
 ```
 
 **Return**
 
-전달된 Row 에서 Column 값 또는 계산값의 합계값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전달된 Row 에서 Column 값 또는 계산값의 합계값을 반환합니다. |
 
 **Remark**
 
@@ -4989,17 +6520,25 @@ Dataset.getRowType( nRow )
 
 **Parameters**
 
-```
-대상 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 대상 Row 의 인덱스를 설정합니다.
 
-첫번째 Row 의 인덱스값은 "0" 입니다.
+첫번째 Row 의 인덱스값은 "0" 입니다. |
+
+**Sample Call**
+
+```javascript
+var nRowType = this.Dataset00.getRowType( 0 );
 ```
 
 **Return**
 
-DataSet 에서 지정된 Row 의 타입을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에서 지정된 Row 의 타입을 반환합니다.
 
-지정한 Row 가 존재하지 않으면 "ROWTYPE_EMPTY" 를 반환합니다.
+지정한 Row 가 존재하지 않으면 "ROWTYPE_EMPTY" 를 반환합니다. |
 
 **Remark**
 
@@ -5073,17 +6612,25 @@ Dataset.getRowTypeNF( nRow )
 
 **Parameters**
 
-```
-대상 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 대상 Row 의 인덱스를 설정합니다.
 
-첫번째 Row 의 인덱스값은 "0" 입니다.
+첫번째 Row 의 인덱스값은 "0" 입니다. |
+
+**Sample Call**
+
+```javascript
+var nRowType = this.Dataset00.getRowTypeNF( 0 );
 ```
 
 **Return**
 
-DataSet 에서 지정된 Row 의 타입을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에서 지정된 Row 의 타입을 반환합니다.
 
-지정한 Row 가 존재하지 않으면 "ROWTYPE_EMPTY" 를 반환합니다.
+지정한 Row 가 존재하지 않으면 "ROWTYPE_EMPTY" 를 반환합니다. |
 
 **Remark**
 
@@ -5157,18 +6704,45 @@ Dataset.getSum( strExpr [ ,nStartIdx [ ,nEndIdx [ ,arrArgs ] ] ] )
 
 **Parameters**
 
-```
-Dataset 에서 합계를 구할 Column 의 ID 또는 계산식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strExpr | String | Dataset 에서 합계를 구할 Column 의 ID 또는 계산식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 계산을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 계산합니다. |
+| nEndIdx | Number | Dataset 에서 계산을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 계산합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 계산합니다. |
+| arrArgs | Array | strExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varSum;
+var arrArgs = new Array( "unit", "order_cnt" );
+
+varSum = this.Dataset00.getSum( "amount" );
+varSum = this.Dataset00.getSum( "amount", 15 );
+varSum = this.Dataset00.getSum( "amount", 15, 20 );
+varSum = this.Dataset00.getSum( "unit * order_cnt", 15, 20 );
+varSum = this.Dataset00.getSum( "$0*$1", 15, 20, arrArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값의 합계값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값의 합계값을 반환합니다.
 
-합계값을 구할 수 없는 경우에는 0 을 반환합니다.
+합계값을 구할 수 없는 경우에는 0 을 반환합니다. |
 
 **Remark**
 
@@ -5205,18 +6779,45 @@ Dataset.getSumNF( strExpr [ ,nStartIdx [ ,nEndIdx [ ,arrArgs ] ] ] )
 
 **Parameters**
 
-```
-Dataset 에서 합계를 구할 Column 의 ID 또는 계산식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strExpr | String | Dataset 에서 합계를 구할 Column 의 ID 또는 계산식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| nStartIdx | Number | Dataset 에서 계산을 시작할 Row 의 인덱스를 설정합니다.
+
+음수값을 설정하거나 값을 생략하면 0 으로 적용되어 첫번째 Row 부터 계산합니다. |
+| nEndIdx | Number | Dataset 에서 계산을 종료할 Row 의 인덱스에 1 을 더한 값을 설정합니다.
+즉, 설정한 인덱스값보다 1 작은 인덱스의 Row 까지 계산합니다.
+
+nStartIdx 에 설정한 값보다 큰 값을 설정하여야 합니다.
+음수값을 설정하거나 값을 생략하면 -1 로 적용되어 마지막 Row 까지 계산합니다. |
+| arrArgs | Array | strExpr 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varSum;
+var arrArgs = new Array( "unit", "order_cnt" );
+
+varSum = this.Dataset00.getSumNF( "amount" );
+varSum = this.Dataset00.getSumNF( "amount", 15 );
+varSum = this.Dataset00.getSumNF( "amount", 15, 20 );
+varSum = this.Dataset00.getSumNF( "unit * order_cnt", 15, 20 );
+varSum = this.Dataset00.getSumNF( "$0*$1", 15, 20, arrArgs );
 ```
 
 **Return**
 
-특정 Column 값 또는 계산값의 합계값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Column 값 또는 계산값의 합계값을 반환합니다.
 
-합계값을 구할 수 없는 경우에는 0 을 반환합니다.
+합계값을 구할 수 없는 경우에는 0 을 반환합니다. |
 
 **Remark**
 
@@ -5253,16 +6854,33 @@ Dataset.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Dataset00_onmove = function( obj:nexacro.Dataset,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.Dataset00.insertEventHandler( "onmove", 0, this.Dataset00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -5287,16 +6905,24 @@ Dataset.insertRow(nRow)
 
 **Parameters**
 
-```
-삽입할 위치의 Row 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 삽입할 위치의 Row 인덱스를 설정합니다.
 
-첫번째 Row 의 인덱스값은 "0" 입니다.
+첫번째 Row 의 인덱스값은 "0" 입니다. |
+
+**Sample Call**
+
+```javascript
+var nRow = this.Dataset00.insertRow(0);
 ```
 
 **Return**
 
-DataSet 에 삽입된 Row 의 인덱스를 반환합니다.
-만약, Row 의 삽입에 실패하면 "-1" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에 삽입된 Row 의 인덱스를 반환합니다.
+만약, Row 의 삽입에 실패하면 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -5382,11 +7008,27 @@ Dataset.load( [bAsync [, bBinary]] )
 
 **Parameters**
 
-```
-true 설정 시 비동기(Async)로 데이터를 로드합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bAsync | Boolean | true 설정 시 비동기(Async)로 데이터를 로드합니다.
 false 설정 시 동기(Sync)로 데이터를 로드합니다.
 
-값 생략 시 true 로 적용됩니다.
+값 생략 시 true 로 적용됩니다. |
+| bBinary | Boolean | true 설정 시 Binary 형태로 데이터를 로드합니다.
+false 설정 시 일반적인 형태로 데이터를 로드합니다.
+
+값 생략 시 false 로 적용됩니다.
+
+* web runtime environment 는 false 값만 설정할 수 있습니다. |
+
+**Sample Call**
+
+```javascript
+this.Dataset00.url = "Service1::test.jsp";
+
+this.Dataset00.load(); 
+this.Dataset00.load( true );
+this.Dataset00.load( false, true );
 ```
 
 **Return**
@@ -5442,13 +7084,21 @@ Dataset.loadBIN(varBinData)
 
 **Parameters**
 
-```
-Binary 형식으로 만들어진 데이터를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| varBinData | Object | Binary 형식으로 만들어진 데이터를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nRowCnt = this.Dataset00.loadBIN(varBinData00);
 ```
 
 **Return**
 
-Dataset 에 로드된 데이터의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Dataset 에 로드된 데이터의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -5482,16 +7132,30 @@ Dataset.loadCSV(varCsvData[,bClear])
 
 **Parameters**
 
-```
-CSV 형식으로 만들어진 데이터를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| varCsvData | Object | CSV 형식으로 만들어진 데이터를 설정합니다.
 
 "Dataset:Dataset_id" 형식으로 시작하며, Column 정보를 헤더로 가지는 CSV 데이터를 설정해야 합니다.
-"Dataset_id" 와 "Column Infos" 는 CR/LF 또는 LF 로 구분합니다.
+"Dataset_id" 와 "Column Infos" 는 CR/LF 또는 LF 로 구분합니다. |
+| bClear | Boolean | true 설정 시 DataSet 에 로드 되어 있던 기존 데이터를 삭제합니다.
+false 설정 시 DataSet 에 로드 되어 있던 기존 데이터를 삭제하지 않습니다.
+
+값 생략 시 true 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nRowCnt;
+nRowCnt = this.Dataset00.loadCSV("CSV:utf-8 Dataset:dataset0 Col1:String(20), ...");
+nRowCnt = this.Dataset00.loadCSV("CSV:utf-8 Dataset:dataset0 Col1:String(20), ...",true);
 ```
 
 **Return**
 
-DataSet 에 로드된 데이터의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에 로드된 데이터의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -5555,13 +7219,45 @@ Dataset.loadJSON(strJsonData[,bClear]])
 
 **Parameters**
 
-```
-JSON 형식으로 만들어진 데이터를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strJsonData | String | JSON 형식으로 만들어진 데이터를 설정합니다. |
+| bClear | Boolean | true 설정 시 Dataset 오브젝트에 로드된 기존 데이터를 삭제합니다.
+false 설정 시 Dataset 오브젝트에 로드된 기존 데이터를 삭제하지 않습니다.
+
+값 생략 시 true 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nRowCnt;
+nRowCnt = this.Dataset00.loadJSON(this.Dataset01.saveJSON());
+nRowCnt = this.Dataset00.loadJSON(this.Dataset01.saveJSON(), false);
+
+var oJson =  {
+     "id": "Dataset01",
+     "ColumnInfo" :
+     {
+          "Column":
+          [
+               { "id":"Column0", "type":"STRING", "size":"256" },
+               { "id":"Column1", "type":"STRING", "size":"256" }
+          ]
+     },
+     "Rows":
+     [
+          { "Column0":"TEST", "Column1":"01" },
+          { "Column0":"TEST", "Column1":"02" }
+     ]
+}
+nRowCnt = this.Dataset00.loadJSON(JSON.stringify(oJson));
 ```
 
 **Return**
 
-DataSet 에 로드된 데이터의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에 로드된 데이터의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -5593,13 +7289,19 @@ Dataset.loadSSV ( varSsvData [,bClear] )
 
 **Parameters**
 
-```
-SSV 형식으로 만들어진 데이터를 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| varSsvData | String | SSV 형식으로 만들어진 데이터를 설정합니다. |
+| bClear | Boolean | true 설정 시 DataSet 에 로드 되어 있던 기존 데이터를 삭제합니다.
+false 설정 시 DataSet 에 로드 되어 있던 기존 데이터를 삭제하지 않습니다.
+
+값 생략 시 true 로 적용됩니다. |
 
 **Return**
 
-DataSet 에 로드된 데이터의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에 로드된 데이터의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -5638,13 +7340,27 @@ Dataset.loadXML(strXmlData[,bClear]])
 
 **Parameters**
 
-```
-XML 형식으로 만들어진 데이터를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strXmlData | String | XML 형식으로 만들어진 데이터를 설정합니다. |
+| bClear | Boolean | true 설정 시 DataSet 에 로드 되어 있던 기존 데이터를 삭제합니다.
+false 설정 시 DataSet 에 로드 되어 있던 기존 데이터를 삭제하지 않습니다.
+
+값 생략 시 true 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nRowCnt;
+nRowCnt = this.Dataset00.loadXML("<xml>...</xml>");
+nRowCnt = this.Dataset00.loadXML("<xml>...</xml>", true);
 ```
 
 **Return**
 
-DataSet 에 로드된 데이터의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 에 로드된 데이터의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -5679,18 +7395,36 @@ Dataset.lookup( varCol, varCmpVal, strOutputColID [ ,arrArgs ] )
 
 **Parameters**
 
-```
-DataSet 에서 varCmpVal 값과 비교할 Column 의 ID, Index 또는 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| varCol | String, Number | DataSet 에서 varCmpVal 값과 비교할 Column 의 ID, Index 또는 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식의 치환문을 사용할 수 있습니다.
-치환문은 arrArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| varCmpVal | String | DataSet 에서 varCol 에 해당하는 Column 값과 비교할 값을 설정합니다. |
+| strOutputColID | String | varCol 값과 varCmpVal 값이 일치하는 Row 에서 값을 가져올 Column 의 ID 를 설정합니다. |
+| arrArgs | Array | varCol 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varColVal;
+var arrArgs = new Array( "name", "cust_addr" );
+
+varColVal = this.Dataset00.lookup( "name", "John", "cust_addr" );
+varColVal = this.Dataset00.lookup( "$0", "John", "cust_addr", arrArgs );
 ```
 
 **Return**
 
-주어진 조건에 만족하는 첫번째 Row 의 지정된 Column 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | 주어진 조건에 만족하는 첫번째 Row 의 지정된 Column 값을 반환합니다.
 
-값을 구할 수 없을 경우에는 undefined 를 반환합니다.
+값을 구할 수 없을 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -5721,18 +7455,36 @@ Dataset.lookupAs( varCol, varCmpVal, strOutputColID [ ,arrArgs ] )
 
 **Parameters**
 
-```
-DataSet 에서 varCmpVal 값과 비교할 Column 의 ID, Index 또는 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| varCol | String, Number | DataSet 에서 varCmpVal 값과 비교할 Column 의 ID, Index 또는 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식의 치환문을 사용할 수 있습니다.
-치환문은 arrArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| varCmpVal | Variant | DataSet 에서 varCol 에 해당하는 Column 값과 비교할 값을 설정합니다. |
+| strOutputColID | String | varCol 값이 varCmpVal 값으로 시작하는 Row 에서 값을 가져올 Column 의 ID 를 설정합니다. |
+| arrArgs | Array | varCol 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varColVal;
+var arrArgs = new Array( "name", "cust_addr" );
+
+varColVal = this.Dataset00.lookupAs( "name", "John", "cust_addr" );
+varColVal = this.Dataset00.lookupAs( "$0", "John", "cust_addr", arrArgs );
 ```
 
 **Return**
 
-주어진 조건에 만족하는 첫번째 Row 의 지정된 Column 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | 주어진 조건에 만족하는 첫번째 Row 의 지정된 Column 값을 반환합니다.
 
-값을 구할 수 없을 경우에는 undefined 를 반환합니다.
+값을 구할 수 없을 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -5763,18 +7515,36 @@ Dataset.lookupAsNF( varCol, varCmpVal, strOutputColID [ ,arrArgs ] )
 
 **Parameters**
 
-```
-DataSet 에서 varCmpVal 값과 비교할 Column 의 ID, Index 또는 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| varCol | String, Number | DataSet 에서 varCmpVal 값과 비교할 Column 의 ID, Index 또는 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| varCmpVal | Variant | DataSet 에서 varCol 에 해당하는 Column 값과 비교할 값을 설정합니다. |
+| strOutputColID | String | varCol 값이 varCmpVal 값으로 시작하는 Row 에서 값을 가져올 Column 의 ID 를 설정합니다. |
+| arrArgs | Array | varCol 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varColVal;
+var arrArgs = new Array( "name", "cust_addr" );
+
+varColVal = this.Dataset00.lookupAsNF( "name", "John", "cust_addr" );
+varColVal = this.Dataset00.lookupAsNF( "$0", "John", "cust_addr", arrArgs );
 ```
 
 **Return**
 
-주어진 조건에 만족하는 첫번째 Row 의 지정된 Column 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | 주어진 조건에 만족하는 첫번째 Row 의 지정된 Column 값을 반환합니다.
 
-값을 구할 수 없을 경우에는 undefined 를 반환합니다.
+값을 구할 수 없을 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -5805,18 +7575,36 @@ Dataset.lookupNF( varCol, varCmpVal, strOutputColID [ ,arrArgs ] )
 
 **Parameters**
 
-```
-DataSet 에서 varCmpVal 값과 비교할 Column 의 ID, Index 또는 조건표현식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| varCol | String, Number | DataSet 에서 varCmpVal 값과 비교할 Column 의 ID, Index 또는 조건표현식을 설정합니다.
 
 "$ + 숫자" 형식으로 치환문을 사용할 수 있습니다.
-치환문은 arrArgs 에 정의된 값으로 치환됩니다.
+치환문은 arrArgs 에 정의된 값으로 치환됩니다. |
+| varCmpVal | String | DataSet 에서 varCol 에 해당하는 Column 값과 비교할 값을 설정합니다. |
+| strOutputColID | String | varCol 값과 varCmpVal 값이 일치하는 Row 에서 값을 가져올 Column 의 ID 를 설정합니다. |
+| arrArgs | Array | varCol 에 정의된 치환문에 치환 될 값을 배열형태로 설정합니다.
+
+"$ + 숫자" 형식에서 숫자값이 배열의 인자값으로 사용됩니다.
+즉, "$0" 은 arrArgs[0] 값으로, "$2" 는 arrArgs[2] 값으로 치환됩니다. |
+
+**Sample Call**
+
+```javascript
+var varColVal;
+var arrArgs = new Array( "name", "cust_addr" );
+
+varColVal = this.Dataset00.lookupNF( "name", "John", "cust_addr" );
+varColVal = this.Dataset00.lookupNF( "$0", "John", "cust_addr", arrArgs );
 ```
 
 **Return**
 
-주어진 조건에 만족하는 첫번째 Row 의 지정된 Column 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | 주어진 조건에 만족하는 첫번째 Row 의 지정된 Column 값을 반환합니다.
 
-값을 구할 수 없을 경우에는 undefined 를 반환합니다.
+값을 구할 수 없을 경우에는 undefined 를 반환합니다. |
 
 **Remark**
 
@@ -5847,13 +7635,21 @@ Dataset.mergeData( objDataset )
 
 **Parameters**
 
-```
-현재 Dataset 에 통합할 Dataset 을 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDataset | Object | 현재 Dataset 에 통합할 Dataset 을 오브젝트로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nRowCnt = this.Dataset00.mergeData( this.Dataset01 );
 ```
 
 **Return**
 
-메소드 수행 후 Dataset 의 Row 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 메소드 수행 후 Dataset 의 Row 갯수를 반환합니다. |
 
 **Remark**
 
@@ -5901,16 +7697,27 @@ Dataset.moveRow(nOldRow,nNewRow)
 
 **Parameters**
 
-```
-위치를 이동하려고 하는 Row 의 현재 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nOldRow | Number | 위치를 이동하려고 하는 Row 의 현재 인덱스를 설정합니다.
 
-첫번째 Row 의 인덱스값은 "0" 입니다.
+첫번째 Row 의 인덱스값은 "0" 입니다. |
+| nNewRow | Number | Row 가 이동할 위치의 Row 인덱스를 설정합니다.
+
+첫번째 Row 의 인덱스값은 "0" 입니다. |
+
+**Sample Call**
+
+```javascript
+var nRow = this.Dataset00.moveRow(2,0);
 ```
 
 **Return**
 
-Row 이동에 성공하면 새로운 위치의 Row 인덱스를 반환합니다.
-Row 이동에 실패하면 "-1" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Row 이동에 성공하면 새로운 위치의 Row 인덱스를 반환합니다.
+Row 이동에 실패하면 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -5942,15 +7749,23 @@ Dataset.removeEvent( strEventID )
 
 **Parameters**
 
-```
-Dataset 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | Dataset 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.Dataset00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -5981,15 +7796,26 @@ Dataset.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Dataset00_onmove = function( obj:nexacro.Dataset,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Dataset00.removeEventHandler( "onmove", this.Dataset00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -6016,15 +7842,27 @@ Dataset.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Dataset00_onmove = function( obj:nexacro.Dataset,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Dataset00.removeEventHandlerLookup( "onmove", "Dataset00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -6088,16 +7926,53 @@ Dataset.saveBIN( [strID [, strSaveType [, strSaveNaN [, strSaveInfinity [, strSa
 
 **Parameters**
 
-```
-Binary 형식의 파일 내부에 정의될 DataSet ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | Binary 형식의 파일 내부에 정의될 DataSet ID 를 설정합니다.
 실제 DataSet ID 와 저장 시 사용할 ID 를 다르게 사용할 때 설정합니다.
 
-값 생략 시 현재 DataSet 의 ID 가 적용됩니다.
+값 생략 시 현재 DataSet 의 ID 가 적용됩니다. |
+| strSaveType | String | Binary 형식으로 변환할 대상이 되는 데이터를 선정하는 기준을 설정합니다.
+
+"n","N","normal","Normal" 설정 시 Delete 된 데이터를 제외하고 변환합니다.
+"u","U","update","Update" 설정 시 Update 된 데이터만 변환합니다.
+"a","A","all","All" 설정 시 Insert/Update/Delete 된 모든 데이터를 변환합니다.
+
+값 생략 시 "Normal" 로 적용됩니다. |
+| strSaveNaN | String | 타입이 INT, FLOAT, BIGDECIMAL 인 Column 에 저장된 NaN 값의 변환 방법을 설정합니다.
+
+"include" 설정 시 NaN 값으로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 savenan 속성값이 적용됩니다. |
+| strSaveInfinity | String | 타입이 INT, FLOAT, BIGDECIMAL 인 Column 에 저장된 Infinity 값의 변환 방법을 설정합니다.
+
+"include" 설정 시 Infinity 값으로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 saveinfinity 속성값이 적용됩니다. |
+| strSaveDate | String | 타입이 DATE, TIME, DATETIME 인 Column 에 저장된 잘못된 날자값의 변환 방법을 설정합니다.
+
+"include" 설정 시 "Invalid Date" 문자열로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 saveinvaliddate 속성값이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var varBIN;
+varBIN = this.Dataset00.saveBIN();
+varBIN = this.Dataset00.saveBIN( "Dataset00" );
+varBIN = this.Dataset00.saveBIN( "Dataset00", "normal" );
+varBIN = this.Dataset00.saveBIN( "Dataset00", "normal", "include", "exclude", "include" );
 ```
 
 **Return**
 
-DataSet 의 데이터를 Binary 형식으로 변환한 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | DataSet 의 데이터를 Binary 형식으로 변환한 문자열을 반환합니다. |
 
 **Remark**
 
@@ -6126,16 +8001,45 @@ Dataset.saveCSV( [strID [, strSaveNaN [, strSaveInfinity [, strSaveDate]]]] )
 
 **Parameters**
 
-```
-CSV 형식의 파일 내부에 정의될 DataSet ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | CSV 형식의 파일 내부에 정의될 DataSet ID 를 설정합니다.
 실제 DataSet ID 와 저장 시 사용할 ID 를 다르게 사용할 때 설정합니다.
 
-값 생략 시 현재 DataSet 의 ID가 적용됩니다.
+값 생략 시 현재 DataSet 의 ID가 적용됩니다. |
+| strSaveNaN | String | 타입이 INT, FLOAT, BIGDECIMAL 인 Column 에 저장된 NaN 값의 변환 방법을 설정합니다.
+
+"include" 설정 시 NaN 값으로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 savenan 속성값이 적용됩니다. |
+| strSaveInfinity | String | 타입이 INT, FLOAT, BIGDECIMAL 인 Column 에 저장된 Infinity 값의 변환 방법을 설정합니다.
+
+"include" 설정 시 Infinity 값으로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 saveinfinity 속성값이 적용됩니다. |
+| strSaveDate | String | 타입이 DATE, TIME, DATETIME 인 Column 에 저장된 잘못된 날자값의 변환 방법을 설정합니다.
+
+"include" 설정 시 "Invalid Date" 문자열로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 saveinvaliddate 속성값이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var strCSV;
+strCSV = this.Dataset00.saveCSV();
+strCSV = this.Dataset00.saveCSV( "Dataset00" );
+strCSV = this.Dataset00.saveCSV( "Dataset00", "include", "exclude", "include" );
 ```
 
 **Return**
 
-DataSet 의 데이터를 CSV 형식으로 변환한 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | DataSet 의 데이터를 CSV 형식으로 변환한 문자열을 반환합니다. |
 
 **Remark**
 
@@ -6170,16 +8074,54 @@ Dataset.saveJSON( [strID [, strSaveType [, strSaveNaN [, strSaveInfinity [, strS
 
 **Parameters**
 
-```
-JSON 형식의 파일 내부에 정의될 Dataset 오브젝트 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | JSON 형식의 파일 내부에 정의될 Dataset 오브젝트 ID를 설정합니다.
 실제 Dataset 오브젝트 ID와 저장 시 사용할 ID를 다르게 사용할 때 설정합니다.
 
-값 생략 시 현재 Dataset 오브젝트의 ID가 적용됩니다.
+값 생략 시 현재 Dataset 오브젝트의 ID가 적용됩니다. |
+| strSaveType | String | JSON 형식으로 변환할 대상이 되는 데이터를 선정하는 기준을 설정합니다.
+
+"n","N","normal","Normal" 설정 시 Delete 된 데이터를 제외하고 변환합니다.
+"u","U","update","Update" 설정 시 Update 된 데이터만 변환합니다.
+"a","A","all","All" 설정 시 Insert/Update/Delete 된 모든 데이터를 변환합니다.
+"v","V","view","View" 설정 시 "Normal" 조건의 데이터를 Grid 에 표시된 순서대로 변환합니다.
+
+값 생략 시 "Normal"로 적용됩니다. |
+| strSaveNaN | String | 타입이 INT, FLOAT, BIGDECIMAL 인 Column 에 저장된 NaN 값의 변환 방법을 설정합니다.
+
+"include" 설정 시 NaN 값으로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 savenan 속성값이 적용됩니다. |
+| strSaveInfinity | String | 타입이 INT, FLOAT, BIGDECIMAL 인 Column 에 저장된 Infinity 값의 변환 방법을 설정합니다.
+
+"include" 설정 시 Infinity 값으로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 saveinfinity 속성값이 적용됩니다. |
+| strSaveDate | String | 타입이 DATE, TIME, DATETIME 인 Column 에 저장된 잘못된 날자값의 변환 방법을 설정합니다.
+
+"include" 설정 시 "Invalid Date" 문자열로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 saveinvaliddate 속성값이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var strJson;
+strJson = this.Dataset00.saveJSON();
+strJson = this.Dataset00.saveJSON( "Dataset01" );
+strJson = this.Dataset00.saveJSON( "Dataset01", "normal" );
+strJson = this.Dataset00.saveJSON( "Dataset01", "normal", "include", "exclude", "include" );
 ```
 
 **Return**
 
-Dataset 오브젝트의 데이터를 JSON 형식으로 변환한 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Dataset 오브젝트의 데이터를 JSON 형식으로 변환한 문자열을 반환합니다. |
 
 
 ---
@@ -6200,16 +8142,54 @@ Dataset.saveSSV( [strID [, strSaveType [, strSaveNaN [, strSaveInfinity [, strSa
 
 **Parameters**
 
-```
-SSV 형식의 파일 내부에 정의될 DataSet ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | SSV 형식의 파일 내부에 정의될 DataSet ID 를 설정합니다.
 실제 DataSet ID 와 저장 시 사용할 ID 를 다르게 사용할 때 설정합니다.
 
-값 생략 시 현재 DataSet 의 ID가 적용됩니다.
+값 생략 시 현재 DataSet 의 ID가 적용됩니다. |
+| strSaveType | String | SSV 형식으로 변환할 대상이 되는 데이터를 선정하는 기준을 설정합니다.
+
+"n","N","normal","Normal" 설정 시 Delete 된 데이터를 제외하고 변환합니다.
+"u","U","update","Update" 설정 시 Update 된 데이터만 변환합니다.
+"a","A","all","All" 설정 시 Insert/Update/Delete 된 모든 데이터를 변환합니다.
+"v","V","view","View" 설정 시 "Normal" 조건의 데이터를 Grid 에 표시된 순서대로 변환합니다.
+
+값 생략 시 "Normal"로 적용됩니다. |
+| strSaveNaN | String | 타입이 INT, FLOAT, BIGDECIMAL 인 Column 에 저장된 NaN 값의 변환 방법을 설정합니다.
+
+"include" 설정 시 NaN 값으로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 savenan 속성값이 적용됩니다. |
+| strSaveInfinity | String | 타입이 INT, FLOAT, BIGDECIMAL 인 Column 에 저장된 Infinity 값의 변환 방법을 설정합니다.
+
+"include" 설정 시 Infinity 값으로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 saveinfinity 속성값이 적용됩니다. |
+| strSaveDate | String | 타입이 DATE, TIME, DATETIME 인 Column 에 저장된 잘못된 날자값의 변환 방법을 설정합니다.
+
+"include" 설정 시 "Invalid Date" 문자열로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 saveinvaliddate 속성값이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var strSSV;
+strSSV = this.Dataset00.saveSSV();
+strSSV = this.Dataset00.saveSSV( "Dataset00" );
+strSSV = this.Dataset00.saveSSV( "Dataset00", "normal" );
+strSSV = this.Dataset00.saveSSV( "Dataset00", "normal", "include", "exclude", "include" );
 ```
 
 **Return**
 
-DataSet 의 데이터를 SSV 형식으로 변환한 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | DataSet 의 데이터를 SSV 형식으로 변환한 문자열을 반환합니다. |
 
 **Remark**
 
@@ -6251,16 +8231,54 @@ Dataset.saveXML( [strID [, strSaveType [, strSaveNaN [, strSaveInfinity [, strSa
 
 **Parameters**
 
-```
-XML 형식의 파일 내부에 정의될 DataSet ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | XML 형식의 파일 내부에 정의될 DataSet ID 를 설정합니다.
 실제 DataSet ID 와 저장 시 사용할 ID 를 다르게 사용할 때 설정합니다.
 
-값 생략 시 현재 DataSet 의 ID가 적용됩니다.
+값 생략 시 현재 DataSet 의 ID가 적용됩니다. |
+| strSaveType | String | XML 형식으로 변환할 대상이 되는 데이터를 선정하는 기준을 설정합니다.
+
+"n","N","normal","Normal" 설정 시 Delete 된 데이터를 제외하고 변환합니다.
+"u","U","update","Update" 설정 시 Update 된 데이터만 변환합니다.
+"a","A","all","All" 설정 시 Insert/Update/Delete 된 모든 데이터를 변환합니다.
+"v","V","view","View" 설정 시 "Normal" 조건의 데이터를 Grid 에 표시된 순서대로 변환합니다.
+
+값 생략 시 "Normal"로 적용됩니다. |
+| strSaveNaN | String | 타입이 INT, FLOAT, BIGDECIMAL 인 Column 에 저장된 NaN 값의 변환 방법을 설정합니다.
+
+"include" 설정 시 NaN 값으로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 savenan 속성값이 적용됩니다. |
+| strSaveInfinity | String | 타입이 INT, FLOAT, BIGDECIMAL 인 Column 에 저장된 Infinity 값의 변환 방법을 설정합니다.
+
+"include" 설정 시 Infinity 값으로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 saveinfinity 속성값이 적용됩니다. |
+| strSaveDate | String | 타입이 DATE, TIME, DATETIME 인 Column 에 저장된 잘못된 날자값의 변환 방법을 설정합니다.
+
+"include" 설정 시 "Invalid Date" 문자열로 변환합니다.
+"exclude" 설정 시 빈문자열("")로 변환합니다.
+
+값 생략 시 saveinvaliddate 속성값이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var strXml;
+strXml = this.Dataset00.saveXML();
+strXml = this.Dataset00.saveXML( "Dataset00" );
+strXml = this.Dataset00.saveXML( "Dataset00", "normal" );
+strXml = this.Dataset00.saveXML( "Dataset00", "normal", "include", "exclude", "include" );
 ```
 
 **Return**
 
-DataSet 의 데이터를 XML 형식으로 변환한 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | DataSet 의 데이터를 XML 형식으로 변환한 문자열을 반환합니다. |
 
 **Remark**
 
@@ -6305,17 +8323,30 @@ Dataset.setColumn( nRow, strColID, varVal )
 
 **Parameters**
 
-```
-값을 변경하려는 Column 의 Row 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 값을 변경하려는 Column 의 Row 인덱스를 설정합니다.
 
-첫번째 Row 의 인덱스값은 0 입니다.
+첫번째 Row 의 인덱스값은 0 입니다. |
+| nColIdx | Number | 값을 변경하려는 Column 의 인덱스를 설정합니다. |
+| strColID | String | 값을 변경하려는 Column 의 ID 를 설정합니다. |
+| varVal | Variant | 변경하려는 Column 의 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = this.Dataset00.setColumn( 1, 0, "078543" );
+bSucc = this.Dataset00.setColumn( 1, "cust_zip", "078543" );
 ```
 
 **Return**
 
-Column 값 변경에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Column 값 변경에 성공하면 true 를 반환합니다.
 
-Column 값 변경에 실패하면 false 를 반환합니다.
+Column 값 변경에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6359,17 +8390,30 @@ Dataset.setColumnNF( nRow, strColID, varVal )
 
 **Parameters**
 
-```
-값을 변경하려는 Column 의 Row 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 값을 변경하려는 Column 의 Row 인덱스를 설정합니다.
 
-첫번째 Row 의 인덱스값은 0 입니다.
+첫번째 Row 의 인덱스값은 0 입니다. |
+| nColIdx | Number | 값을 변경하려는 Column 의 인덱스를 설정합니다. |
+| strColID | String | 값을 변경하려는 Column 의 ID 를 설정합니다. |
+| varVal | Variant | 변경하려는 Column 의 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = this.Dataset00.setColumnNF( 1, 0, "078543" );
+bSucc = this.Dataset00.setColumnNF( 1, "cust_zip", "078543" );
 ```
 
 **Return**
 
-Column 값 변경에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Column 값 변경에 성공하면 true 를 반환합니다.
 
-Column 값 변경에 실패하면 false 를 반환합니다.
+Column 값 변경에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6413,14 +8457,26 @@ Dataset.setConstColumn(strColID,varVal)
 
 **Parameters**
 
-```
-값을 변경할 Const Column 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nColIdx | Number | 값을 변경할 Const Column 의 인덱스를 설정합니다. |
+| strColID | String | 값을 변경할 Const Column 의 ID 를 설정합니다. |
+| varVal | Variant | 변경할 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = this.Dataset00.setConstColumn(1,"TobeSoft");
+bSucc = this.Dataset00.setConstColumn("DS_TEST","TobeSoft");
 ```
 
 **Return**
 
-상수값 변경에 성공하면 true 를 반환합니다.
-상수값 변경에 실패하면 false 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 상수값 변경에 성공하면 true 를 반환합니다.
+상수값 변경에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6451,18 +8507,37 @@ Dataset.setContents( strContents );
 
 **Parameters**
 
-```
-Dataset 의 내부 구성 컨텐츠 정보를 XML 형태의 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strCont | String | Dataset 의 내부 구성 컨텐츠 정보를 XML 형태의 문자열로 설정합니다.
 
-"<ColumnInfo> ... </ColumnInfo> <Rows> ... </Rows>" 형태로 ColumnInfo 와 Rows 태그를 포함하여 설정하여야 합니다.
+"<ColumnInfo> ... </ColumnInfo> <Rows> ... </Rows>" 형태로 ColumnInfo 와 Rows 태그를 포함하여 설정하여야 합니다. |
+
+**Sample Call**
+
+```javascript
+var strContents =  '<ColumnInfo>'
+                     + '  <Column id="Column0" type="STRING" size="256"/>'
+                     + '  <Column id="Column1" type="STRING" size="256"/>'
+                     + '</ColumnInfo>'
+                     + '<Rows>'
+                     + '  <Row>'
+                     + '    <Col id="Column0">AA</Col>'
+                     + '    <Col id="Column1">BB</Col>'
+                     + '  </Row>'
+                     + '</Rows>';
+
+this.Dataset00.setContents( strContents );
 ```
 
 **Return**
 
-컨텐츠 생성에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 컨텐츠 생성에 성공하면 true 를 반환합니다.
 컨텐츠 생성에 실패하면 false 를 반환합니다.
 
-문자열 파싱 중 오류가 발생하거나 잘못된 태그(오타 포함) 정의에 의해 오류가 발생할 경우 컨텐츠 생성에 실패하게 됩니다.
+문자열 파싱 중 오류가 발생하거나 잘못된 태그(오타 포함) 정의에 의해 오류가 발생할 경우 컨텐츠 생성에 실패하게 됩니다. |
 
 **Remark**
 
@@ -6489,15 +8564,26 @@ Dataset.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Dataset00_onmove = function( obj:nexacro.Dataset,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.Dataset00.setEventHandler( "onmove", this.Dataset00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -6524,15 +8610,27 @@ Dataset.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Dataset00_onmove = function( obj:nexacro.Dataset,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Dataset00.setEventHandlerLookup( "onmove", "Dataset00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -6560,14 +8658,32 @@ Dataset.setRowType( nRow, strRowType )
 
 **Parameters**
 
-```
-타입을 변경할 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 타입을 변경할 Row 의 인덱스를 설정합니다. |
+| nRowType | Number | 변경할 Row 타입값을 숫자로 설정합니다. |
+| strRowType | String | 변경할 Row 타입값을 문자로 설정합니다.
+
+"i", "I" 설정 시 "Dataset.ROWTYPE_INSERT" 로 적용됩니다.
+"u", "U" 설정 시 "Dataset.ROWTYPE_UPDATE" 로 적용됩니다.
+"d", "D" 설정 시 "Dataset.ROWTYPE_DELETE" 로 적용됩니다.
+
+이외의 값 설정 시 "Dataset.ROWTYPE_NORMAL" 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = this.Dataset00.setRowType(0, Dataset.ROWTYPE_INSERT);
+bSucc = this.Dataset00.setRowType(0, "I");
 ```
 
 **Return**
 
-타입 변환에 성공하면 "true" 를 반환합니다.
-타입 변환에 실패하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 타입 변환에 성공하면 "true" 를 반환합니다.
+타입 변환에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -6652,14 +8768,32 @@ Dataset.setRowTypeNF( nRow, strRowType )
 
 **Parameters**
 
-```
-타입을 변경할 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 타입을 변경할 Row 의 인덱스를 설정합니다. |
+| nRowType | Number | 변경할 Row 타입값을 숫자로 설정합니다. |
+| strRowType | String | 변경할 Row 타입값을 문자로 설정합니다.
+
+"i", "I" 설정 시 "Dataset.ROWTYPE_INSERT" 로 적용됩니다.
+"u", "U" 설정 시 "Dataset.ROWTYPE_UPDATE" 로 적용됩니다.
+"d", "D" 설정 시 "Dataset.ROWTYPE_DELETE" 로 적용됩니다.
+
+이외의 값 설정 시 "Dataset.ROWTYPE_NORMAL" 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = this.Dataset00.setRowTypeNF(0, Dataset.ROWTYPE_INSERT);
+bSucc = this.Dataset00.setRowTypeNF(0, "I");
 ```
 
 **Return**
 
-타입 변환에 성공하면 "true" 를 반환합니다.
-타입 변환에 실패하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 타입 변환에 성공하면 "true" 를 반환합니다.
+타입 변환에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -6744,16 +8878,28 @@ Dataset.updateColID(strOldColID, strNewColID)
 
 **Parameters**
 
-```
-ID 를 변경할 Column 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nCol | Number | ID 를 변경할 Column 의 인덱스를 설정합니다.
 
-첫번째 Column 의 인덱스값은 "0" 입니다.
+첫번째 Column 의 인덱스값은 "0" 입니다. |
+| strOldColID | String | ID 를 변경할 Column 의 ID 를 설정합니다. |
+| strNewColID | String | 변경할 Column 의 새 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nColIndex;
+nColIndex = this.Dataset00.updateColID(0, "NewColumn0");
+nColIndex = this.Dataset00.updateColID("OldColumn0", "NewColumn0");
 ```
 
 **Return**
 
-ID 가 변경된 Column 의 인덱스를 반환합니다.
-만일 지정한 Column 이 존재하지 않거나 ID 가 동일한 Column 이 있을 경우 "-1" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ID 가 변경된 Column 의 인덱스를 반환합니다.
+만일 지정한 Column 이 존재하지 않거나 ID 가 동일한 Column 이 있을 경우 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -6788,16 +8934,28 @@ Dataset.updateConstColID(strOldColID, strNewColID)
 
 **Parameters**
 
-```
-ID 를 변경할 Const Column 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nCol | Number | ID 를 변경할 Const Column 의 인덱스를 설정합니다.
 
-첫번째 Column 의 인덱스값은 "0" 입니다.
+첫번째 Column 의 인덱스값은 "0" 입니다. |
+| strNewColID | String | 변경할 Const Column 의 새 ID 를 문자열로 설정합니다. |
+| strOldColID | String | ID 를 변경할 Const Column 의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nColIndex;
+nColIndex = this.Dataset00.updateConstColID(0, "NewConstColumn0");
+nColIndex = this.Dataset00.updateConstColID("OldConstColumn0", "NewConstColumn0");
 ```
 
 **Return**
 
-ID 가 변경된 Const Column 의 인덱스를 반환합니다.
-만일 지정한 Const Column 이 존재하지 않거나 ID 가 동일한 Const Column 이 있을 경우 "-1" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ID 가 변경된 Const Column 의 인덱스를 반환합니다.
+만일 지정한 Const Column 이 존재하지 않거나 ID 가 동일한 Const Column 이 있을 경우 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -6827,19 +8985,30 @@ Dataset.updateSortGroup( [strKeyString] )
 
 **Parameters**
 
-```
-그룹핑 또는 정렬의 기준이 되는 조건식을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strKeyString | String | 그룹핑 또는 정렬의 기준이 되는 조건식을 문자열로 설정합니다.
 
-값 생략 시 keystring 속성에 설정된 값이 조건식으로 적용됩니다.
+값 생략 시 keystring 속성에 설정된 값이 조건식으로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+
+bSucc = this.Dataset00.updateSortGroup();
+bSucc = this.Dataset00.updateSortGroup( "G:+column0-column1" );
 ```
 
 **Return**
 
-그룹핑 또는 정렬에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 그룹핑 또는 정렬에 성공하면 true 를 반환합니다.
 그룹핑 또는 정렬에 실패하면 false 를 반환합니다.
 
 두개 이상의 파라미터를 지정한 경우 false 를 반환합니다.
-keystring 속성값이 설정되지 않은 상태에서 파라미터를 생략하면 false 를 반환합니다.
+keystring 속성값이 설정되지 않은 상태에서 파라미터를 생략하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6880,16 +9049,19 @@ cancolumnchange(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Dataset | Event가 발생한 Object. |
+| e | DSColChangeEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 "true" 를 반환하면 Column 값이 변경되고, oncolumnchanged 이벤트가 발생합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 "true" 를 반환하면 Column 값이 변경되고, oncolumnchanged 이벤트가 발생합니다.
 이벤트에서 리턴값으로 "false" 를 반환하면 Column 값이 변경되지 않고, oncolumnchanged 이벤트가 발생하지 않습니다.
 
-이벤트에서 리턴값을 생략하면 "true" 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 "true" 로 적용됩니다. |
 
 **Remark**
 
@@ -6919,16 +9091,19 @@ canrowposchange(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Dataset | Event가 발생한 Object. |
+| e | DSRowPosChangeEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 "true" 를 반환하면 rowposition 속성값이 변경되고, onrowposchanged 이벤트가 발생합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 "true" 를 반환하면 rowposition 속성값이 변경되고, onrowposchanged 이벤트가 발생합니다.
 이벤트에서 리턴값으로 "false" 를 반환하면 rowposition 속성값이 변경되지 않고, onrowposchanged 이벤트가 발생하지 않습니다.
 
-이벤트에서 리턴값을 생략하면 "true" 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 "true" 로 적용됩니다. |
 
 **Remark**
 
@@ -6960,9 +9135,10 @@ oncolumnchanged(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Dataset | Event가 발생한 Object. |
+| e | DSColChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -6998,9 +9174,10 @@ onload(obj:nexacro.NormalDataset,e:nexacro.DSLoadEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Dataset | Event가 발생한 Object. |
+| e | DSLoadEventInfo | Event Object. |
 
 **Return**
 
@@ -7035,9 +9212,10 @@ onrowposchanged(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Dataset | Event가 발생한 Object. |
+| e | DSRowPosChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -7068,9 +9246,10 @@ onrowsetchanged(obj:nexacro.NormalDataset,e:nexacro.DSRowsetChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Dataset | Event가 발생한 Object. |
+| e | DSRowsetChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -7107,9 +9286,10 @@ onvaluechanged(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Dataset | Event가 발생한 Object. |
+| e | DSColChangeEventInfo | Event Object. |
 
 **Return**
 

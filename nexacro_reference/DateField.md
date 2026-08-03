@@ -1622,8 +1622,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.DateField00.enableevent = true;  
-
-this.DateField00.enableevent = false;
+this.DateField00.enableevent = false;
 ```
 - **`true`** — DateField 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — DateField 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -3831,8 +3830,7 @@ DateField.tooltiptext[= strToolTipText]
 
 ```javascript
 this.DateField00.tooltiptext = "This is ToolTip Text"; this.DateField00.tooltiptext = "";          // 풍선 도움말이 표시되지 않습니다. 
-
-this.DateField00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
+this.DateField00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
 ```
 - **`strToolTipText`** — 풍선도움말에 표시할 텍스트를 설정합니다.
 
@@ -4373,15 +4371,23 @@ DateField.addEvent( strEventID )
 
 **Parameters**
 
-```
-DateField 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | DateField 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.DateField00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -4408,15 +4414,26 @@ DateField.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField00_onmove = function( obj:nexacro.DateField,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DateField00.addEventHandler( "onmove", this.DateField00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -4437,15 +4454,27 @@ DateField.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField00_onmove = function( obj:nexacro.DateField,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DateField00.addEventHandlerLookup( "onmove", "DateField00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -4539,13 +4568,21 @@ DateField.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.DateField00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -4574,9 +4611,11 @@ var bSucc = this.DateField00.destroy();
 
 **Return**
 
-DateField 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | DateField 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-DateField 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+DateField 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -4648,15 +4687,27 @@ DateField.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField00_onmove = function( obj:nexacro.DateField,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.DateField00.findEventHandler( "onmove", this.DateField00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4685,10 +4736,12 @@ var nCaretpos = this.DateField00.getCaretPos();
 
 **Return**
 
-캐럿이 위치한 인덱스를 반환합니다. 
+| Type | Description |
+| --- | --- |
+| Number | 캐럿이 위치한 인덱스를 반환합니다. 
 읽기 전용 상태이거나 DateField 컴포넌트에 포커스가 없으면 -1을 반환합니다. 
 
-첫 번째 위치의 인덱스는 0입니다.
+첫 번째 위치의 인덱스는 0입니다. |
 
 **Remark**
 
@@ -4717,10 +4770,12 @@ var nDay = this.DateField00.getDay();
 
 **Return**
 
-날짜 중 일(Day)에 해당하는 정수값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 날짜 중 일(Day)에 해당하는 정수값을 반환합니다.
 1일은 1, 31일은 31을 반환합니다.
 
-value 속성값이 null이면 1을 반환합니다.
+value 속성값이 null이면 1을 반환합니다. |
 
 
 ---
@@ -4745,10 +4800,12 @@ var nDayofWeek = this.DateField00.getDayOfWeek();
 
 **Return**
 
-각 요일에 해당하는 숫자값을 반환합니다. 
+| Type | Description |
+| --- | --- |
+| Number | 각 요일에 해당하는 숫자값을 반환합니다. 
 0(일), 1(월), 2(화), 3(수), 4(목), 5(금), 6(토)를 반환합니다. 
 
-value 속성값이 null이면 4를 반환합니다.
+value 속성값이 null이면 4를 반환합니다. |
 
 
 ---
@@ -4773,7 +4830,9 @@ var strTxt = this.DateField00.getDisplayText() ;
 
 **Return**
 
-DateField 에 표시된 텍스트값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | DateField 에 표시된 텍스트값을 반환합니다. |
 
 **Remark**
 
@@ -4798,15 +4857,26 @@ DateField.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = DateField00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -4831,7 +4901,9 @@ var objDs = this.DateField00.getInnerDataset()
 
 **Return**
 
-innerdataset 속성에 설정되어 있는 Dataset 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | innerdataset 속성에 설정되어 있는 Dataset 오브젝트를 반환합니다. |
 
 
 ---
@@ -4856,10 +4928,12 @@ var nMonth = this.DateField00.getMonth();
 
 **Return**
 
-날짜 중 월(Month)에 해당하는 정수값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 날짜 중 월(Month)에 해당하는 정수값을 반환합니다.
 1월은 1, 12월은 12를 반환합니다.
 
-value 속성값이 null이면 1을 반환합니다.
+value 속성값이 null이면 1을 반환합니다. |
 
 
 ---
@@ -4884,7 +4958,9 @@ var nBottom = this.DateField.getOffsetBottom();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 DateField 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 DateField 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -4913,7 +4989,9 @@ var nHeight = this.DateField.getOffsetHeight();
 
 **Return**
 
-DateField 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateField 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -4942,7 +5020,9 @@ var nleft = this.DateField.getOffsetLeft();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 DateField 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 DateField 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -4971,7 +5051,9 @@ var nRight = this.DateField.getOffsetRight();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 DateField 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 DateField 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -5000,7 +5082,9 @@ var nTop = this.DateField.getOffsetTop();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 DateField 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 DateField 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -5029,7 +5113,9 @@ var nWidth = this.DateField.getOffsetWidth();
 
 **Return**
 
-DateField 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateField 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -5058,9 +5144,11 @@ var nbottom = this.DateField.getPixelBottom();
 
 **Return**
 
-DateField 의 bottom 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateField 의 bottom 속성값을 픽셀단위로 반환합니다.
 
-bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -5089,9 +5177,11 @@ var nheight = this.DateField.getPixelHeight();
 
 **Return**
 
-DateField 의 height 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateField 의 height 속성값을 픽셀단위로 반환합니다.
 
-height 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+height 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -5120,9 +5210,11 @@ var nleft = this.DateField.getPixelLeft();
 
 **Return**
 
-DateField 의 left 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateField 의 left 속성값을 픽셀단위로 반환합니다.
 
-left 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+left 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -5151,9 +5243,11 @@ var nright = this.DateField.getPixelRight();
 
 **Return**
 
-DateField 의 right 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateField 의 right 속성값을 픽셀단위로 반환합니다.
 
-right 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+right 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -5182,9 +5276,11 @@ var ntop = this.DateField.getPixelTop();
 
 **Return**
 
-DateField 의 top 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateField 의 top 속성값을 픽셀단위로 반환합니다.
 
-top 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+top 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -5213,9 +5309,11 @@ var nwidth = this.DateField.getPixelWidth();
 
 **Return**
 
-DateField 의 width 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateField 의 width 속성값을 픽셀단위로 반환합니다.
 
-width 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+width 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -5244,10 +5342,12 @@ var vArrSelect = this.DateField00.getSelect();
 
 **Return**
 
-- 선택한 텍스트의 시작 인덱스와 끝 인덱스를 배열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | - 선택한 텍스트의 시작 인덱스와 끝 인덱스를 배열로 반환합니다.
 - 선택한 텍스트가 없는 경우 현재 캐럿 위치의 인덱스 값을 배열 형태로 반환합니다.
   예를 들어, 캐럿 위치의 인덱스 값이 1인 경우 [1, 1]을 반환합니다.
-- 텍스트 편집 영역의 상태를 확인할 수 없는 경우 [0, 0]을 반환합니다.
+- 텍스트 편집 영역의 상태를 확인할 수 없는 경우 [0, 0]을 반환합니다. |
 
 **Remark**
 
@@ -5291,9 +5391,11 @@ var strText = this.DateField00.getSelectedText();
 
 **Return**
 
-- 편집영역에서 선택한 텍스트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | - 편집영역에서 선택한 텍스트를 반환합니다.
 - 선택된 텍스트가 없을 경우 빈값을 반환합니다.
-- 텍스트 편집 영역의 상태를 확인할 수 없는 경우 빈값을 반환합니다.
+- 텍스트 편집 영역의 상태를 확인할 수 없는 경우 빈값을 반환합니다. |
 
 **Remark**
 
@@ -5328,11 +5430,13 @@ DateField.getValidStatus()
 
 **Return**
 
-DateField 컴포넌트에 입력한 텍스트의 유효성 검사 결과를 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | DateField 컴포넌트에 입력한 텍스트의 유효성 검사 결과를 반환합니다.
 
 - "invalid": 입력한 텍스트가 유효하지 않습니다.
 - "valid": 입력한 텍스트가 유효합니다.
-- "": 입력값이 없을 때
+- "": 입력값이 없을 때 |
 
 
 ---
@@ -5357,9 +5461,11 @@ var nYear = this.DateField00.getYear();
 
 **Return**
 
-날짜 중 연도(Year)에 해당하는 정수값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 날짜 중 연도(Year)에 해당하는 정수값을 반환합니다.
 
-value 속성값이 null이면 1970을 반환합니다.
+value 속성값이 null이면 1970을 반환합니다. |
 
 
 ---
@@ -5380,8 +5486,62 @@ DateField.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMin
 
 **Parameters**
 
-```
-DateField 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | DateField 의 ID를 문자열로 설정합니다. |
+| vLeft | String, Number | DateField 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 DateField 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateField 의 left 가 결정됩니다. |
+| vTop | String, Number | DateField 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 DateField 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 DateField 의 top 이 결정됩니다. |
+| vWidth | String, Number | DateField 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 DateField 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateField 의 width 가 결정됩니다. |
+| vHeight | String, Number | DateField 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 DateField 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 DateField 의 height 가 결정됩니다. |
+| vRight | String, Number | DateField 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 DateField 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateField 의 right 가 결정됩니다. |
+| vBottom | String, Number | DateField 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 DateField 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 DateField 의 bottom 이 결정됩니다. |
+| vMinWidth | String, Number | DateField 이(가) 화면에 표시되는 최소 너비값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxWidth | String, Number | DateField 이(가) 화면에 표시되는 최대 너비값을 pixel 단위의 숫자로 설정합니다.
+
+vMinWidth 보다 작은 값을 설정하면 vMinWidth 값으로 설정됩니다. |
+| vMinHeight | String, Number | DateField 이(가) 화면에 표시되는 최소 높이값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxHeight | String, Number | DateField 이(가) 화면에 표시되는 최대 높이값을 pixel 단위의 숫자로 설정합니다.
+
+vMinHeight 보다 작은 값을 설정하면 vMinHeight 값으로 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = new DateField();
+
+objComp.init( "DateField00", 30, 120, 196, 46 );
+objComp.init( "DateField00", 30, 120, 196, 46, null, null );
+objComp.init( "DateField00", null, null, 300, "400px", "80%", 300 );
+objComp.init( "DateField00", 0, 0, 200, 100, null, null, 300, 500, 200, 500 );
+objComp.init( "DateField00", "DateField22:10", 300, null, null, "DateField33:10", "20%", 300, 500, 200, 500 );
 ```
 
 **Return**
@@ -5429,16 +5589,33 @@ DateField.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField00_onmove = function( obj:nexacro.DateField,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.DateField00.insertEventHandler( "onmove", 0, this.DateField00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -5467,8 +5644,10 @@ var bDrop = this.DateField00.isDropdown();
 
 **Return**
 
-화면에 팝업달력이 표시되어 있으면 true를 반환합니다.
-화면에 팝업달력이 표시되어 있지 않으면 false를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 화면에 팝업달력이 표시되어 있으면 true를 반환합니다.
+화면에 팝업달력이 표시되어 있지 않으면 false를 반환합니다. |
 
 
 ---
@@ -5489,12 +5668,49 @@ DateField.move( vLeft, vTop [, vWidth, vHeight [, vRight, vBottom]] )
 
 **Parameters**
 
-```
-DateField 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | DateField 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 DateField 의 left 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateField 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateField 의 left 가 결정됩니다. |
+| vTop | String, Number | DateField 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 DateField 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 DateField 의 top 이 결정됩니다. |
+| vWidth | String, Number | DateField 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 DateField 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateField 의 width 가 결정됩니다. |
+| vHeight | String, Number | DateField 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 DateField 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 DateField 의 height 가 결정됩니다. |
+| vRight | String, Number | DateField 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 DateField 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateField 의 right 가 결정됩니다. |
+| vBottom | String, Number | DateField 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 DateField 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 DateField 의 bottom 이 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField00.move(10,10);
+this.DateField00.move(10,10,100,100);
+this.DateField00.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -5531,8 +5747,16 @@ DateField.moveToNext( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField.moveToNext( this.Button00 );
+this.DateField.moveToNext( "Button00" );
 ```
 
 **Return**
@@ -5570,8 +5794,16 @@ DateField.moveToPrev( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField.moveToPrev( this.Button00 );
+this.DateField.moveToPrev( "Button00" );
 ```
 
 **Return**
@@ -5608,15 +5840,23 @@ DateField.removeEvent( strEventID )
 
 **Parameters**
 
-```
-DateField 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | DateField 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.DateField00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -5647,15 +5887,26 @@ DateField.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField00_onmove = function( obj:nexacro.DateField,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DateField00.removeEventHandler( "onmove", this.DateField00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -5682,15 +5933,27 @@ DateField.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField00_onmove = function( obj:nexacro.DateField,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DateField00.removeEventHandlerLookup( "onmove", "DateField00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -5717,13 +5980,25 @@ DateField.resize( vWidth, vHeight )
 
 **Parameters**
 
-```
-DateField 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vWidth | String, Number | DateField 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 음수값을 설정할 수 없습니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 DateField 의 width 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateField 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateField 의 width 가 결정됩니다. |
+| vHeight | String, Number | DateField 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+음수값을 설정할 수 없습니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 DateField 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 DateField 의 height 가 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField00.resize( 100,100 );
 ```
 
 **Return**
@@ -5839,15 +6114,26 @@ DateField.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField00_onmove = function( obj:nexacro.DateField,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.DateField00.setEventHandler( "onmove", this.DateField00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -5874,15 +6160,27 @@ DateField.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField00_onmove = function( obj:nexacro.DateField,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DateField00.setEventHandlerLookup( "onmove", "DateField00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -5909,19 +6207,28 @@ DateField.setFocus( [bMoveScroll] )
 
 **Parameters**
 
-```
-부모 컴포넌트에 스크롤이 있을 경우, DateField 기준으로 스크롤을 이동할지 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bMoveScroll | Boolean | 부모 컴포넌트에 스크롤이 있을 경우, DateField 기준으로 스크롤을 이동할지 여부를 설정합니다.
 
 true: DateField 이(가) 화면에 표시되도록 스크롤을 이동합니다.
 false: DateField 위치와 관계없이 스크롤을 이동하지 않습니다.
 
-값을 지정하지 않으면 기본값은 true입니다.
+값을 지정하지 않으면 기본값은 true입니다. |
+
+**Sample Call**
+
+```javascript
+var objBefComp = this.DateField00.setFocus();
+var objBefComp = this.DateField00.setFocus( false );
 ```
 
 **Return**
 
-DateField 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
-이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | DateField 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
+이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다. |
 
 **Remark**
 
@@ -5946,8 +6253,14 @@ DateField.setInnerDataset( objDataset )
 
 **Parameters**
 
-```
-innerdataset 속성으로 설정할 Dataset 오브젝트입니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDataset | Object | innerdataset 속성으로 설정할 Dataset 오브젝트입니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField00.setInnerDataset( this.Dataset00 )
 ```
 
 **Return**
@@ -5977,8 +6290,14 @@ DateField.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 DateField 의 bottom 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 컴포넌트의 Top 위치를 기준으로 DateField 의 bottom 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField.setOffsetBottom( 10 );
 ```
 
 **Return**
@@ -6011,8 +6330,14 @@ DateField.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-DateField 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | DateField 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField.setOffsetHeight( 10 );
 ```
 
 **Return**
@@ -6045,8 +6370,14 @@ DateField.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 DateField 의 left 값을 픽셀단위의 숫자로 설정합니다
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 컴포넌트의 Left 위치를 기준으로 DateField 의 left 값을 픽셀단위의 숫자로 설정합니다 |
+
+**Sample Call**
+
+```javascript
+this.DateField.setOffsetLeft( 10 );
 ```
 
 **Return**
@@ -6079,8 +6410,14 @@ DateField.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 DateField 의 right 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 컴포넌트의 Left 위치를 기준으로 DateField 의 right 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField.setOffsetRight( 600 );
 ```
 
 **Return**
@@ -6113,8 +6450,14 @@ DateField.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 DateField 의 top 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 컴포넌트의 Top 위치를 기준으로 DateField 의 top 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField.setOffsetTop( 10 );
 ```
 
 **Return**
@@ -6147,8 +6490,14 @@ DateField.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-DateField 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | DateField 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateField.setOffsetWidth( 10 );
 ```
 
 **Return**
@@ -6181,20 +6530,40 @@ DateField.setSelect( [nBegin [,nEnd]] )
 
 **Parameters**
 
-```
-선택할 영역의 시작 인덱스를 숫자로 설정합니다. 
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBegin | Number | 선택할 영역의 시작 인덱스를 숫자로 설정합니다. 
 
 인덱스는 0부터 시작하며 "0 ~ 텍스트 길이"까지 설정할 수 있습니다. 
 -1을 설정하면 선택할 영역의 시작 위치가 오른쪽 끝으로 설정됩니다. 
 
-값 생략 시 0으로 적용됩니다.
+값 생략 시 0으로 적용됩니다. |
+| nEnd | Number | 선택할 영역의 끝 인덱스를 숫자로 설정합니다. 
+
+인덱스는 0부터 시작하며 "0 ~ 텍스트 길이"까지 설정할 수 있습니다. 
+-1을 설정하면 선택할 영역의 끝 위치가 오른쪽 끝으로 설정됩니다. 
+
+값 생략 시 -1로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+
+this.DateField00.setFocus();
+
+bSucc = this.DateField00.setSelect();
+bSucc = this.DateField00.setSelect( 3 );
+bSucc = this.DateField00.setSelect( 3, 5 );
 ```
 
 **Return**
 
-지정된 영역의 선택에 성공하면 true를 반환합니다. 
+| Type | Description |
+| --- | --- |
+| Boolean | 지정된 영역의 선택에 성공하면 true를 반환합니다. 
 
-지정된 영역의 선택에 실패하면 false를 반환합니다.
+지정된 영역의 선택에 실패하면 false를 반환합니다. |
 
 **Remark**
 
@@ -6268,9 +6637,11 @@ var bSucc = this.DateField00.updateToDataset();
 
 **Return**
 
-반영에 성공하면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 반영에 성공하면 "true"를 반환합니다.
 
-반영에 실패하면 "false"를 반환합니다.
+반영에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -6299,16 +6670,19 @@ canchange(obj:nexacro.DateField,e:nexacro.ChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | ChangeEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값을 true로 반환하면 변경된 날짜가 적용됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값을 true로 반환하면 변경된 날짜가 적용됩니다.
 이벤트에서 리턴값을 false로 반환하면 날짜를 변경하지 않습니다.
 
-이벤트에서 리턴값을 생략하면 true로 적용됩니다.
+이벤트에서 리턴값을 생략하면 true로 적용됩니다. |
 
 **Remark**
 
@@ -6338,9 +6712,10 @@ onchanged(obj:nexacro.DateField,e:nexacro.ChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | ChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -6374,9 +6749,10 @@ oncloseup(obj:nexacro.DateField,e:nexacro.DateFieldCloseUpEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | DateFieldCloseUpEventInfo | Event Object. |
 
 **Return**
 
@@ -6408,9 +6784,10 @@ oncontextmenu(obj:nexacro.DateField,e:nexacro.ContextMenuEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | ContextMenuEventInfo | Event Object. |
 
 **Return**
 
@@ -6450,9 +6827,10 @@ ondayclick(obj:nexacro.DateField,e:nexacro.DateFieldDayClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | DateFieldDayClickEventInfo | Event Object. |
 
 **Return**
 
@@ -6486,15 +6864,18 @@ ondevicebuttonup(obj:nexacro.DateField,e:nexacro.DeviceButtonEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | DeviceButtonEventInfo | Event Object. |
 
 **Return**
 
-true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
-반환값을 생략하면 false로 적용됩니다.
+반환값을 생략하면 false로 적용됩니다. |
 
 **Remark**
 
@@ -6523,16 +6904,19 @@ ondrag(obj:nexacro.DateField,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 드래그 상태가 취소되고 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6566,16 +6950,19 @@ ondragenter(obj:nexacro.DateField,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6602,16 +6989,19 @@ ondragleave(obj:nexacro.DateField,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6638,16 +7028,19 @@ ondragmove(obj:nexacro.DateField,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6674,16 +7067,19 @@ ondrop(obj:nexacro.DateField,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6717,16 +7113,19 @@ ondropdown(obj:nexacro.DateField,e:nexacro.EventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | EventInfo | Event Object. |
 
 **Return**
 
-이벤트의 리턴값으로 true를 반환하면 팝업달력이 화면에 표시됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트의 리턴값으로 true를 반환하면 팝업달력이 화면에 표시됩니다.
 이벤트의 리턴값으로 false를 반환하면 팝업달력이 표시되지 않습니다.
 
-이벤트의 리턴값을 생략하면 true로 적용됩니다.
+이벤트의 리턴값을 생략하면 true로 적용됩니다. |
 
 **Remark**
 
@@ -6753,9 +7152,10 @@ oneditclick(obj:nexacro.DateField,e:nexacro.EditClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | EditClickEventInfo | Event Object. |
 
 **Return**
 
@@ -6786,9 +7186,10 @@ oninnerdatachanged(obj:nexacro.DateField,e:nexacro.InnerdataChangedEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | InnerdataChangedEventInfo | Event Object. |
 
 **Return**
 
@@ -6821,9 +7222,10 @@ oninput(obj:nexacro.DateField,e:nexacro.InputEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | InputEventInfo | Event Object. |
 
 **Return**
 
@@ -6867,9 +7269,10 @@ oninvalid(obj:nexacro.DateField,e:nexacro.EventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | EventInfo | Event Object. |
 
 **Return**
 
@@ -6898,16 +7301,19 @@ onkeydown(obj:nexacro.DateField,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6968,16 +7374,19 @@ onkeyup(obj:nexacro.DateField,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7010,9 +7419,10 @@ onkillfocus(obj:nexacro.DateField,e:nexacro.KillFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | KillFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -7044,16 +7454,19 @@ onlbuttondown(obj:nexacro.DateField,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7095,16 +7508,19 @@ onlbuttonup(obj:nexacro.DateField,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7146,16 +7562,19 @@ onmouseenter(obj:nexacro.DateField,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7194,16 +7613,19 @@ onmouseleave(obj:nexacro.DateField,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7239,16 +7661,19 @@ onmousemove(obj:nexacro.DateField,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7284,9 +7709,10 @@ onmove(obj:nexacro.DateField,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -7311,16 +7737,19 @@ onrbuttondown(obj:nexacro.DateField,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7366,16 +7795,19 @@ onrbuttonup(obj:nexacro.DateField,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7420,9 +7852,10 @@ onsetfocus(obj:nexacro.DateField,e:nexacro.SetFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | SetFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -7465,9 +7898,10 @@ onsize(obj:nexacro.DateField,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -7492,16 +7926,19 @@ ontouchend(obj:nexacro.DateField,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7526,16 +7963,19 @@ ontouchmove(obj:nexacro.DateField,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7560,16 +8000,19 @@ ontouchstart(obj:nexacro.DateField,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateField | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 

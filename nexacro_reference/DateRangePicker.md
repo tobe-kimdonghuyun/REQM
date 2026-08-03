@@ -1546,8 +1546,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.DateRangePicker00.enableevent = true;  
-
-this.DateRangePicker00.enableevent = false;
+this.DateRangePicker00.enableevent = false;
 ```
 - **`true`** — DateRangePicker 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — DateRangePicker 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -3214,8 +3213,7 @@ DateRangePicker.tooltiptext[= strToolTipText]
 
 ```javascript
 this.DateRangePicker00.tooltiptext = "This is ToolTip Text"; this.DateRangePicker00.tooltiptext = "";          // 풍선 도움말이 표시되지 않습니다. 
-
-this.DateRangePicker00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
+this.DateRangePicker00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
 ```
 - **`strToolTipText`** — 풍선도움말에 표시할 텍스트를 설정합니다.
 
@@ -3618,15 +3616,23 @@ DateRangePicker.addEvent( strEventID )
 
 **Parameters**
 
-```
-DateRangePicker 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | DateRangePicker 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.DateRangePicker00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -3653,15 +3659,26 @@ DateRangePicker.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker00_onmove = function( obj:nexacro.DateRangePicker,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DateRangePicker00.addEventHandler( "onmove", this.DateRangePicker00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -3682,15 +3699,27 @@ DateRangePicker.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker00_onmove = function( obj:nexacro.DateRangePicker,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DateRangePicker00.addEventHandlerLookup( "onmove", "DateRangePicker00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -3784,13 +3813,21 @@ DateRangePicker.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.DateRangePicker00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -3819,9 +3856,11 @@ var bSucc = this.DateRangePicker00.destroy();
 
 **Return**
 
-DateRangePicker 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | DateRangePicker 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-DateRangePicker 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+DateRangePicker 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -3850,15 +3889,27 @@ DateRangePicker.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker00_onmove = function( obj:nexacro.DateRangePicker,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.DateRangePicker00.findEventHandler( "onmove", this.DateRangePicker00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3883,15 +3934,26 @@ DateRangePicker.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = DateRangePicker00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -3916,7 +3978,9 @@ var objDs = this.DateRangePicker00.getInnerDataset()
 
 **Return**
 
-innerdataset 속성에 설정되어 있는 Dataset 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | innerdataset 속성에 설정되어 있는 Dataset 오브젝트를 반환합니다. |
 
 
 ---
@@ -3941,7 +4005,9 @@ var nBottom = this.DateRangePicker.getOffsetBottom();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 DateRangePicker 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 DateRangePicker 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -3970,7 +4036,9 @@ var nHeight = this.DateRangePicker.getOffsetHeight();
 
 **Return**
 
-DateRangePicker 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateRangePicker 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -3999,7 +4067,9 @@ var nleft = this.DateRangePicker.getOffsetLeft();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 DateRangePicker 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 DateRangePicker 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -4028,7 +4098,9 @@ var nRight = this.DateRangePicker.getOffsetRight();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 DateRangePicker 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 DateRangePicker 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -4057,7 +4129,9 @@ var nTop = this.DateRangePicker.getOffsetTop();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 DateRangePicker 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 DateRangePicker 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -4086,7 +4160,9 @@ var nWidth = this.DateRangePicker.getOffsetWidth();
 
 **Return**
 
-DateRangePicker 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateRangePicker 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -4115,9 +4191,11 @@ var nbottom = this.DateRangePicker.getPixelBottom();
 
 **Return**
 
-DateRangePicker 의 bottom 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateRangePicker 의 bottom 속성값을 픽셀단위로 반환합니다.
 
-bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4146,9 +4224,11 @@ var nheight = this.DateRangePicker.getPixelHeight();
 
 **Return**
 
-DateRangePicker 의 height 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateRangePicker 의 height 속성값을 픽셀단위로 반환합니다.
 
-height 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+height 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4177,9 +4257,11 @@ var nleft = this.DateRangePicker.getPixelLeft();
 
 **Return**
 
-DateRangePicker 의 left 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateRangePicker 의 left 속성값을 픽셀단위로 반환합니다.
 
-left 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+left 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4208,9 +4290,11 @@ var nright = this.DateRangePicker.getPixelRight();
 
 **Return**
 
-DateRangePicker 의 right 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateRangePicker 의 right 속성값을 픽셀단위로 반환합니다.
 
-right 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+right 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4239,9 +4323,11 @@ var ntop = this.DateRangePicker.getPixelTop();
 
 **Return**
 
-DateRangePicker 의 top 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateRangePicker 의 top 속성값을 픽셀단위로 반환합니다.
 
-top 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+top 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4270,9 +4356,11 @@ var nwidth = this.DateRangePicker.getPixelWidth();
 
 **Return**
 
-DateRangePicker 의 width 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DateRangePicker 의 width 속성값을 픽셀단위로 반환합니다.
 
-width 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+width 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4297,8 +4385,62 @@ DateRangePicker.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom,
 
 **Parameters**
 
-```
-DateRangePicker 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | DateRangePicker 의 ID를 문자열로 설정합니다. |
+| vLeft | String, Number | DateRangePicker 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 DateRangePicker 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateRangePicker 의 left 가 결정됩니다. |
+| vTop | String, Number | DateRangePicker 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 DateRangePicker 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 DateRangePicker 의 top 이 결정됩니다. |
+| vWidth | String, Number | DateRangePicker 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 DateRangePicker 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateRangePicker 의 width 가 결정됩니다. |
+| vHeight | String, Number | DateRangePicker 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 DateRangePicker 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 DateRangePicker 의 height 가 결정됩니다. |
+| vRight | String, Number | DateRangePicker 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 DateRangePicker 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateRangePicker 의 right 가 결정됩니다. |
+| vBottom | String, Number | DateRangePicker 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 DateRangePicker 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 DateRangePicker 의 bottom 이 결정됩니다. |
+| vMinWidth | String, Number | DateRangePicker 이(가) 화면에 표시되는 최소 너비값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxWidth | String, Number | DateRangePicker 이(가) 화면에 표시되는 최대 너비값을 pixel 단위의 숫자로 설정합니다.
+
+vMinWidth 보다 작은 값을 설정하면 vMinWidth 값으로 설정됩니다. |
+| vMinHeight | String, Number | DateRangePicker 이(가) 화면에 표시되는 최소 높이값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxHeight | String, Number | DateRangePicker 이(가) 화면에 표시되는 최대 높이값을 pixel 단위의 숫자로 설정합니다.
+
+vMinHeight 보다 작은 값을 설정하면 vMinHeight 값으로 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = new DateRangePicker();
+
+objComp.init( "DateRangePicker00", 30, 120, 196, 46 );
+objComp.init( "DateRangePicker00", 30, 120, 196, 46, null, null );
+objComp.init( "DateRangePicker00", null, null, 300, "400px", "80%", 300 );
+objComp.init( "DateRangePicker00", 0, 0, 200, 100, null, null, 300, 500, 200, 500 );
+objComp.init( "DateRangePicker00", "DateRangePicker22:10", 300, null, null, "DateRangePicker33:10", "20%", 300, 500, 200, 500 );
 ```
 
 **Return**
@@ -4346,16 +4488,33 @@ DateRangePicker.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker00_onmove = function( obj:nexacro.DateRangePicker,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.DateRangePicker00.insertEventHandler( "onmove", 0, this.DateRangePicker00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4380,12 +4539,49 @@ DateRangePicker.move( vLeft, vTop [, vWidth, vHeight [, vRight, vBottom]] )
 
 **Parameters**
 
-```
-DateRangePicker 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | DateRangePicker 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 DateRangePicker 의 left 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateRangePicker 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateRangePicker 의 left 가 결정됩니다. |
+| vTop | String, Number | DateRangePicker 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 DateRangePicker 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 DateRangePicker 의 top 이 결정됩니다. |
+| vWidth | String, Number | DateRangePicker 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 DateRangePicker 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateRangePicker 의 width 가 결정됩니다. |
+| vHeight | String, Number | DateRangePicker 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 DateRangePicker 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 DateRangePicker 의 height 가 결정됩니다. |
+| vRight | String, Number | DateRangePicker 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 DateRangePicker 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateRangePicker 의 right 가 결정됩니다. |
+| vBottom | String, Number | DateRangePicker 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 DateRangePicker 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 DateRangePicker 의 bottom 이 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker00.move(10,10);
+this.DateRangePicker00.move(10,10,100,100);
+this.DateRangePicker00.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -4422,8 +4618,16 @@ DateRangePicker.moveToNext( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker.moveToNext( this.Button00 );
+this.DateRangePicker.moveToNext( "Button00" );
 ```
 
 **Return**
@@ -4461,8 +4665,16 @@ DateRangePicker.moveToPrev( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker.moveToPrev( this.Button00 );
+this.DateRangePicker.moveToPrev( "Button00" );
 ```
 
 **Return**
@@ -4499,15 +4711,23 @@ DateRangePicker.removeEvent( strEventID )
 
 **Parameters**
 
-```
-DateRangePicker 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | DateRangePicker 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.DateRangePicker00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -4538,15 +4758,26 @@ DateRangePicker.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker00_onmove = function( obj:nexacro.DateRangePicker,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DateRangePicker00.removeEventHandler( "onmove", this.DateRangePicker00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -4573,15 +4804,27 @@ DateRangePicker.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker00_onmove = function( obj:nexacro.DateRangePicker,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DateRangePicker00.removeEventHandlerLookup( "onmove", "DateRangePicker00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -4608,13 +4851,25 @@ DateRangePicker.resize( vWidth, vHeight )
 
 **Parameters**
 
-```
-DateRangePicker 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vWidth | String, Number | DateRangePicker 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 음수값을 설정할 수 없습니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 DateRangePicker 의 width 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateRangePicker 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 DateRangePicker 의 width 가 결정됩니다. |
+| vHeight | String, Number | DateRangePicker 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+음수값을 설정할 수 없습니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 DateRangePicker 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 DateRangePicker 의 height 가 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker00.resize( 100,100 );
 ```
 
 **Return**
@@ -4730,15 +4985,26 @@ DateRangePicker.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker00_onmove = function( obj:nexacro.DateRangePicker,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.DateRangePicker00.setEventHandler( "onmove", this.DateRangePicker00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4765,15 +5031,27 @@ DateRangePicker.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker00_onmove = function( obj:nexacro.DateRangePicker,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DateRangePicker00.setEventHandlerLookup( "onmove", "DateRangePicker00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4800,19 +5078,28 @@ DateRangePicker.setFocus( [bMoveScroll] )
 
 **Parameters**
 
-```
-부모 컴포넌트에 스크롤이 있을 경우, DateRangePicker 기준으로 스크롤을 이동할지 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bMoveScroll | Boolean | 부모 컴포넌트에 스크롤이 있을 경우, DateRangePicker 기준으로 스크롤을 이동할지 여부를 설정합니다.
 
 true: DateRangePicker 이(가) 화면에 표시되도록 스크롤을 이동합니다.
 false: DateRangePicker 위치와 관계없이 스크롤을 이동하지 않습니다.
 
-값을 지정하지 않으면 기본값은 true입니다.
+값을 지정하지 않으면 기본값은 true입니다. |
+
+**Sample Call**
+
+```javascript
+var objBefComp = this.DateRangePicker00.setFocus();
+var objBefComp = this.DateRangePicker00.setFocus( false );
 ```
 
 **Return**
 
-DateRangePicker 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
-이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | DateRangePicker 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
+이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다. |
 
 **Remark**
 
@@ -4837,8 +5124,14 @@ DateRangePicker.setInnerDataset( objDataset )
 
 **Parameters**
 
-```
-innerdataset 속성으로 설정할 Dataset 오브젝트입니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDataset | Object | innerdataset 속성으로 설정할 Dataset 오브젝트입니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker00.setInnerDataset( this.Dataset00 )
 ```
 
 **Return**
@@ -4868,8 +5161,14 @@ DateRangePicker.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 DateRangePicker 의 bottom 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 컴포넌트의 Top 위치를 기준으로 DateRangePicker 의 bottom 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker.setOffsetBottom( 10 );
 ```
 
 **Return**
@@ -4902,8 +5201,14 @@ DateRangePicker.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-DateRangePicker 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | DateRangePicker 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker.setOffsetHeight( 10 );
 ```
 
 **Return**
@@ -4936,8 +5241,14 @@ DateRangePicker.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 DateRangePicker 의 left 값을 픽셀단위의 숫자로 설정합니다
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 컴포넌트의 Left 위치를 기준으로 DateRangePicker 의 left 값을 픽셀단위의 숫자로 설정합니다 |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker.setOffsetLeft( 10 );
 ```
 
 **Return**
@@ -4970,8 +5281,14 @@ DateRangePicker.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 DateRangePicker 의 right 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 컴포넌트의 Left 위치를 기준으로 DateRangePicker 의 right 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker.setOffsetRight( 600 );
 ```
 
 **Return**
@@ -5004,8 +5321,14 @@ DateRangePicker.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 DateRangePicker 의 top 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 컴포넌트의 Top 위치를 기준으로 DateRangePicker 의 top 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker.setOffsetTop( 10 );
 ```
 
 **Return**
@@ -5038,8 +5361,14 @@ DateRangePicker.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-DateRangePicker 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | DateRangePicker 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DateRangePicker.setOffsetWidth( 10 );
 ```
 
 **Return**
@@ -5110,9 +5439,10 @@ onchanged(obj:nexacro.DateRangePicker,e:nexacro.RangeDateChangedEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | RangeDateChangedEventInfo | Event Object. |
 
 **Return**
 
@@ -5137,9 +5467,10 @@ oncontextmenu(obj:nexacro.DateRangePicker,e:nexacro.ContextMenuEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | ContextMenuEventInfo | Event Object. |
 
 **Return**
 
@@ -5170,9 +5501,10 @@ ondayclick(obj:nexacro.DateRangePicker,e:nexacro.DateRangePickerDayClickEventInf
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | DateRangePickerDayClickEventInfo | Event Object. |
 
 **Return**
 
@@ -5201,15 +5533,18 @@ ondevicebuttonup(obj:nexacro.DateRangePicker,e:nexacro.DeviceButtonEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | DeviceButtonEventInfo | Event Object. |
 
 **Return**
 
-true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
-반환값을 생략하면 false로 적용됩니다.
+반환값을 생략하면 false로 적용됩니다. |
 
 **Remark**
 
@@ -5238,16 +5573,19 @@ ondrag(obj:nexacro.DateRangePicker,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 드래그 상태가 취소되고 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5281,16 +5619,19 @@ ondragenter(obj:nexacro.DateRangePicker,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5317,16 +5658,19 @@ ondragleave(obj:nexacro.DateRangePicker,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5353,16 +5697,19 @@ ondragmove(obj:nexacro.DateRangePicker,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5389,16 +5736,19 @@ ondrop(obj:nexacro.DateRangePicker,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5432,9 +5782,10 @@ oninnerdatachanged(obj:nexacro.DateRangePicker,e:nexacro.InnerdataChangedEventIn
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | InnerdataChangedEventInfo | Event Object. |
 
 **Return**
 
@@ -5467,16 +5818,19 @@ onkeydown(obj:nexacro.DateRangePicker,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5513,16 +5867,19 @@ onkeyup(obj:nexacro.DateRangePicker,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5555,9 +5912,10 @@ onkillfocus(obj:nexacro.DateRangePicker,e:nexacro.KillFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | KillFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -5589,16 +5947,19 @@ onlbuttondown(obj:nexacro.DateRangePicker,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5630,16 +5991,19 @@ onlbuttonup(obj:nexacro.DateRangePicker,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5671,16 +6035,19 @@ onmousedown(obj:nexacro.DateRangePicker,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5710,16 +6077,19 @@ onmouseenter(obj:nexacro.DateRangePicker,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5758,16 +6128,19 @@ onmouseleave(obj:nexacro.DateRangePicker,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5803,16 +6176,19 @@ onmousemove(obj:nexacro.DateRangePicker,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5848,16 +6224,19 @@ onmouseup(obj:nexacro.DateRangePicker,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5889,16 +6268,19 @@ onmousewheel(obj:nexacro.DateRangePicker,e:nexacro.MouseWheelEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | MouseWheelEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 휠버튼 회전값이 무시되고, 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 휠버튼 회전값이 무시되고, 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 휠버튼 회전값이 처리되고, 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5933,9 +6315,10 @@ onmove(obj:nexacro.DateRangePicker,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -5960,16 +6343,19 @@ onrbuttondown(obj:nexacro.DateRangePicker,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6015,16 +6401,19 @@ onrbuttonup(obj:nexacro.DateRangePicker,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6069,9 +6458,10 @@ onsetfocus(obj:nexacro.DateRangePicker,e:nexacro.SetFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | SetFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -6114,9 +6504,10 @@ onsize(obj:nexacro.DateRangePicker,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -6141,16 +6532,19 @@ ontouchend(obj:nexacro.DateRangePicker,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6175,16 +6569,19 @@ ontouchmove(obj:nexacro.DateRangePicker,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6209,16 +6606,19 @@ ontouchstart(obj:nexacro.DateRangePicker,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DateRangePicker | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 

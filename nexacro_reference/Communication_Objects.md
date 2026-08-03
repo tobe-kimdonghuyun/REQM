@@ -237,15 +237,23 @@ TCPClientSocket.addEvent( strEventID )
 
 **Parameters**
 
-```
-TCPClientSocket 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | TCPClientSocket 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.TCPClientSocket00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -272,15 +280,28 @@ TCPClientSocket.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 오브젝트 형태로 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.TCPClientSocket00_onerror = function( obj:nexacro.TCPClientSocket,  e:nexacro.SocketErrorEventInfo)
+{ // 수행할 스크립트 };
+
+var nIndex = this.TCPClientSocket00.addEventHandler( "onerror", this.TCPClientSocket_onerror, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1" 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1" 을 반환합니다. |
 
 
 ---
@@ -301,15 +322,30 @@ TCPClientSocket.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+
+해당 영역에 핸들러 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.TCPClientSocket00_onerror = function( obj:nexacro.TCPClientSocket,  e:nexacro.SocketErrorEventInfo)
+{ // 수행할 스크립트 };
+
+var nIndex = this.TCPClientSocket00.addEventHandlerLookup( "onerror", "TCPClientSocket_onerror", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1" 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -335,13 +371,21 @@ TCPClientSocket.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-핸들러 함수를 모두 제거할 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 모두 제거할 이벤트의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.TCPClientSocket00.clearEventHandler( "onerror" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -370,9 +414,11 @@ var bSucc = this.TCPClientSocket00.close();
 
 **Return**
 
-연결해제 요청이 정상적으로 실행되었으면 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 연결해제 요청이 정상적으로 실행되었으면 "true" 를 반환합니다.
 
-연결해제 요청이 정상적으로 실행되지 않았으면 "false" 를 반환합니다.
+연결해제 요청이 정상적으로 실행되지 않았으면 "false" 를 반환합니다. |
 
 **Remark**
 
@@ -406,9 +452,11 @@ var bSucc = this.TCPClientSocket00.destroy();
 
 **Return**
 
-TCPClientSocket 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | TCPClientSocket 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-TCPClientSocket 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+TCPClientSocket 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -437,15 +485,28 @@ TCPClientSocket.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 오브젝트 형태로 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.TCPClientSocket00_onerror = function( obj:nexacro.TCPClientSocket,  e:nexacro.SocketErrorEventInfo)
+{ // 수행할 스크립트 };
+
+var nIndex = this.TCPClientSocket00.findEventHandler( "onerror", this.TCPClientSocket_onerror, this);
 ```
 
 **Return**
 
-이벤트에서 찾으려고 하는 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에서 찾으려고 하는 핸들러 함수의 인덱스를 반환합니다.
 
-찾으려고 하는 핸들러 함수가 존재하지 않는다면 "-1" 을 반환합니다.
+찾으려고 하는 핸들러 함수가 존재하지 않는다면 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -470,15 +531,26 @@ TCPClientSocket.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+인덱스는 "0" 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = TCPClientSocket00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -499,16 +571,33 @@ TCPClientSocket.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.TCPClientSocket00_onerror = function( obj:nexacro.TCPClientSocket,  e:nexacro.SocketErrorEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.TCPClientSocket00.insertEventHandler( "onerror", 0, this.TCPClientSocket00_onerror, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -533,15 +622,24 @@ TCPClientSocket.open( strAddress, nPort )
 
 **Parameters**
 
-```
-연결할 서버의 도메인명 또는 IPv4 형식의 IP 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strAddress | String | 연결할 서버의 도메인명 또는 IPv4 형식의 IP 를 문자열로 설정합니다. |
+| nPort | Number | 연결할 서버의 Port 값을 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc = this.TCPClientSocket00.open("127.0.0.1",3000);
 ```
 
 **Return**
 
-연결요청이 정상적으로 실행되었으면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 연결요청이 정상적으로 실행되었으면 true 를 반환합니다.
 
-연결요청이 정상적으로 실행되지 않았으면 false 를 반환합니다.
+연결요청이 정상적으로 실행되지 않았으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -579,21 +677,43 @@ TCPClientSocket.read( nSize [, nTimeOut [, strCharSet]] )
 
 **Parameters**
 
-```
-수신될 데이터의 최대 크기를 바이트 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nSize | Number | 수신될 데이터의 최대 크기를 바이트 단위의 숫자로 설정합니다.
 
 설정값은 수신될 데이터의 최대 크기로 적용되며 실제 수신된 데이터는 설정값보다 작을 수 있습니다.
 
 0 을 설정하면 수신 할 데이터가 있는지 검사만 수행합니다.
-음수값을 설정하면 메소드 실행 시 실패로 처리됩니다.
+음수값을 설정하면 메소드 실행 시 실패로 처리됩니다. |
+| nTimeOut | Number | 데이터가 수신될 때까지 대기하는 시간을 초단위의 숫자로 설정합니다.
+
+0 이하값을 설정하면 대기시간이 무한대로 적용됩니다.
+
+값 생략 시 0 으로 적용됩니다. |
+| strCharSet | String | 데이터가 수신될 때 적용될 문자셋을 설정합니다.
+
+값 생략 시 시스템의 문자셋이 적용됩니다.
+
+특별히 문자셋을 변환할 필요가 있을 때만 설정하는 것을 권장합니다. |
+
+**Sample Call**
+
+```javascript
+var arrRecvData;
+
+arrRecvData = this.TCPClientSocket00.read( 1000 );
+arrRecvData = this.TCPClientSocket00.read( 1000, 3 );
+arrRecvData = this.TCPClientSocket00.read( 1000, 3, "utf-8" );
 ```
 
 **Return**
 
-데이터의 수신 성공여부와 수신데이터를 배열형태로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | 데이터의 수신 성공여부와 수신데이터를 배열형태로 반환합니다.
 
 배열의 첫번째 원소에 데이터 수신여부를 Boolean 값으로 반환합니다.
-배열의 두번째 원소에 수신된 데이터를 반환합니다.
+배열의 두번째 원소에 수신된 데이터를 반환합니다. |
 
 **Remark**
 
@@ -622,20 +742,43 @@ TCPClientSocket.readLine( nSize [, nTimeOut [, strCharSet]] )
 
 **Parameters**
 
-```
-수신될 데이터의 최대 크기를 바이트 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nSize | Number | 수신될 데이터의 최대 크기를 바이트 단위의 숫자로 설정합니다.
 
 설정값은 수신될 데이터의 최대 크기로 적용되며 실제 수신된 데이터는 설정값보다 작을 수 있습니다.
 
-0 이하값을 설정하면 메소드가 정상적으로 실행되지 않습니다.
+0 이하값을 설정하면 메소드가 정상적으로 실행되지 않습니다. |
+| nTimeOut | Number | 데이터가 수신될 때까지 대기하는 시간을 초단위의 숫자로 설정합니다..
+
+수신된 데이터에 줄바꿈 문자가 없을 경우 대기시간이 다시 적용되므로 값 설정에 주의하여야 합니다.
+
+0 이하값을 설정하면 대기시간이 무한대로 적용됩니다.
+값을 설정하지 않으면 0 으로 적용됩니다. |
+| strCharSet | String | 데이터가 수신될 때 적용될 문자셋을 설정합니다.
+
+값 생략 시 시스템의 문자셋이 적용됩니다.
+
+특별히 문자셋을 변환할 필요가 있을 때만 설정하는 것을 권장합니다. |
+
+**Sample Call**
+
+```javascript
+var arrRecvData;
+
+arrRecvData = this.TCPClientSocket00.readLine( 1000 );
+arrRecvData = this.TCPClientSocket00.readLine( 1000, 3 );
+arrRecvData = this.TCPClientSocket00.readLine( 1000, 3, "utf-8" );
 ```
 
 **Return**
 
-데이터의 수신 성공여부와 수신데이터를 배열형태로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | 데이터의 수신 성공여부와 수신데이터를 배열형태로 반환합니다.
 
 배열의 첫번째 원소에 데이터 수신여부를 Boolean 값으로 반환합니다.
-배열의 두번째 원소에 수신된 데이터를 반환합니다.
+배열의 두번째 원소에 수신된 데이터를 반환합니다. |
 
 **Remark**
 
@@ -674,15 +817,23 @@ TCPClientSocket.removeEvent( strEventID )
 
 **Parameters**
 
-```
-TCPClientSocket 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | TCPClientSocket 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.TCPClientSocket00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -713,15 +864,28 @@ TCPClientSocket.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 오브젝트 형태로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.TCPClientSocket00_onerror = function( obj:nexacro.TCPClientSocket,  e:nexacro.SocketErrorEventInfo)
+{ // 수행할 스크립트 };
+
+var nIndex = this.TCPClientSocket00.removeEventHandler( "onerror", this.TCPClientSocket_onerror, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 "1" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 "1" 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 "0" 을 반환합니다.
+핸들러 함수 제거에 실패하면 "0" 을 반환합니다. |
 
 **Remark**
 
@@ -748,15 +912,30 @@ TCPClientSocket.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.TCPClientSocket00_onerror = function( obj:nexacro.TCPClientSocket,  e:nexacro.SocketErrorEventInfo)
+{ // 수행할 스크립트 };
+
+var nIndex = this.TCPClientSocket00.removeEventHandlerLookup( "onerror", "TCPClientSocket_onerror", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 "1" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 "1" 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 "0" 을 반환합니다.
+핸들러 함수 제거에 실패하면 "0" 을 반환합니다. |
 
 **Remark**
 
@@ -786,15 +965,28 @@ TCPClientSocket.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 오브젝트 형태로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.TCPClientSocket00_onerror = function( obj:nexacro.TCPClientSocket,  e:nexacro.SocketErrorEventInfo)
+{ // 수행할 스크립트 };
+
+var nIndex = this.TCPClientSocket00.setEventHandler( "onerror", this.TCPClientSocket_onerror, this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 "0" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 "0" 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 "-1" 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -821,14 +1013,29 @@ TCPClientSocket.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.TCPClientSocket00_onerror = function( obj:nexacro.TCPClientSocket,  e:nexacro.SocketErrorEventInfo)
+{ // 수행할 스크립트 };
+
+var nIndex = this.TCPClientSocket00.setEventHandlerLookup( "onerror", "TCPClientSocket_onerror", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 "0"을 반환합니다.
-첫번째 핸들러 함수 변경에 실패하면 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 "0"을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -858,15 +1065,30 @@ TCPClientSocket.write( strData [, strCharset] )
 
 **Parameters**
 
-```
-연결된 서버로 송신 할 데이터를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strData | String | 연결된 서버로 송신 할 데이터를 설정합니다. |
+| strCharset | String | 연결된 서버로 송신 할 데이터의 문자셋을 설정합니다.
+
+값을 설정하지 않으면 시스템의 문자셋이 설정됩니다.
+
+특별히 데이터의 문자셋을 변환할 필요가 있을 때만 설정하는 것을 권장합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+var bSucc = this.TCPClientSocket00.write( "Send Message" );
+var bSucc = this.TCPClientSocket00.write( "Send Message", "utf-8" );
 ```
 
 **Return**
 
-연결된 서버로 데이터 송신을 시작하면 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 연결된 서버로 데이터 송신을 시작하면 "true" 를 반환합니다.
 
-연결된 서버로 데이터 송신을 시작하지 못하면 "false" 를 반환합니다.
+연결된 서버로 데이터 송신을 시작하지 못하면 "false" 를 반환합니다. |
 
 **Remark**
 
@@ -897,9 +1119,10 @@ ondataarrived(obj:nexacro.TCPClientSocket,e:nexacro.SocketReceiveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TCPClientSocket | Event가 발생한 Object. |
+| e | SocketReceiveEventInfo | Event Object. |
 
 **Return**
 
@@ -933,9 +1156,10 @@ onerror(obj:nexacro.TCPClientSocket,e:nexacro.SocketErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TCPClientSocket | Event가 발생한 Object. |
+| e | SocketErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -964,9 +1188,10 @@ onsuccess(obj:nexacro.TCPClientSocket,e:nexacro.SocketEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TCPClientSocket | Event가 발생한 Object. |
+| e | SocketEventInfo | Event Object. |
 
 **Return**
 
@@ -1259,8 +1484,22 @@ XAgent.configure(strProject, strLicense, strUpdateUrl, strAdminApiUrl)
 
 **Parameters**
 
-```
-X-AGENT 서버 프로젝트 이름
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strProject | String | X-AGENT 서버 프로젝트 이름 |
+| strLicense | String | X-AGENT 서버 라이선스 |
+| strUpdateUrl | String | X-AGENT 모듈 업데이트 URL 정보 |
+| strAdminApiUrl | String | X-AGENT Admin API URL 정보 |
+
+**Sample Call**
+
+```javascript
+var strProject = "com.nexacro.xagent"
+var strLicense = "http://localhost:8080/license_xagent.xml"
+var strUpdateUrl = "http://www.localhost:8080/xagent_update/"
+var strAdminApiUrl = "http://www.localhost:8080/xagent_admin_api/event/"
+
+this.XAgent00.configure(strProject, strLicense, strUpdateUrl, strAdminApiUrl);
 ```
 
 **Return**
@@ -1295,9 +1534,12 @@ XAgent.connect([strProject [,strLicense [,strUpdateUrl [,strAdminApiUrl]]]]
 
 **Parameters**
 
-```
-X-AGENT 서버 프로젝트 이름
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strProject | String | X-AGENT 서버 프로젝트 이름 |
+| strLicense | String | X-AGENT 서버 라이선스 |
+| strUpdateUrl | String | X-AGENT 모듈 업데이트 URL 정보 |
+| strAdminApiUrl | String | X-AGENT Admin API URL 정보 |
 
 **Return**
 
@@ -1358,18 +1600,41 @@ XAgent.execute(strModule, strFunc, objParam [,objExtraData])
 
 **Parameters**
 
-```
-모듈 이름
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strModule | String | 모듈 이름 |
+| strFunc | String | 모듈 함수 이름 |
+| objParam | Object | 모듈 함수에 전달할 인수
+JSON 오브젝트 형식으로 설정합니다. |
+| objExtraData | Object | 메서드 실행 반환값에 포함될 추가 데이터 |
+
+**Sample Call**
+
+```javascript
+var strModuleName = "xagent_module";
+var strFunName = "testFunc";
+var strParam = {"param1": "value1", "param2": "value2", "param3": "value3"};
+var objExtra = { requestType: "execute"};
+
+var result = this.XAgent00.execute(strModuleName, strFunName, strParam, objExtra);
+
+if (result) 
+{
+    trace("UID: " + result.uid);
+    trace("Extra Data: " + result.extra.requestType);
+}
 ```
 
 **Return**
 
-XAgent 내부적으로 생성된 고유 식별자 uid와 objExtraData 데이터를 포함하는 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | XAgent 내부적으로 생성된 고유 식별자 uid와 objExtraData 데이터를 포함하는 오브젝트를 반환합니다.
 
 반환된 오브젝트의 'uid' 속성에 고유 식별자(UID) 값이 저장됩니다.
 반환된 오브젝트의 'extra' 속성에 objExtraData 데이터 값이 저장됩니다.
 
-execute 메서드 실행 성공 여부와 상관없이 메서드 실행 시 바로 반환하는 값입니다.
+execute 메서드 실행 성공 여부와 상관없이 메서드 실행 시 바로 반환하는 값입니다. |
 
 **Remark**
 
@@ -1405,9 +1670,19 @@ XAgent.installed(strRegistryPath, strRegistryKey)
 
 **Parameters**
 
-```
-아래 경로에 있는 레지스트리 CLSID(GUID)
-Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{registryPath}
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strRegistryPath | String | 아래 경로에 있는 레지스트리 CLSID(GUID)
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{registryPath} |
+| strRegistryKey | String | 레지스트리 키 |
+
+**Sample Call**
+
+```javascript
+var strRegistryPath = "{9E5A2E5A-4E6A-4E3A-8A3A-3A3E5A2E9E5A}";
+var strRegistryKey = "DisplayName";
+
+this.XAgent00.installed(strRegistryPath, strRegistryKey );
 ```
 
 **Return**
@@ -1439,14 +1714,14 @@ XAgent.status(strType);
 
 **Parameters**
 
-```
-상태를 확인할 대상을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strType | String | 상태를 확인할 대상을 설정합니다.
 
 - "all":  X-AGENT 서버, 모듈 상태 정보
   파라미터 값을 설정하지 않은 경우 "all"로 동작합니다.
 - "server": X-AGENT 서버 상태 정보
-- "process":  X-AGENT 모듈 상태 정보
-```
+- "process":  X-AGENT 모듈 상태 정보 |
 
 **Return**
 
@@ -1499,8 +1774,21 @@ XAgent.updateModule(strName, strVersion, strFile, strProject[, bForceInstall])
 
 **Parameters**
 
-```
-모듈 이름
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | 모듈 이름 |
+| strVersion | String | 업데이트 모듈 버전
+모듈 파일 내 META-INF 폴더에 있는 module.json 파일 내 version 값과 같은 값을 설정합니다. |
+| strFile | String | 업데이트 모듈 파일 이름 |
+| strProject | String | 프로젝트 이름 |
+| bForceInstall | Boolean | version과 상관 없이 강제 업데이트 여부를 설정합니다.
+값을 설정하지 않으면 false로 적용됩니다.
+false인 경우에는 상위 버전인 경우에만 업데이트를 수행합니다. |
+
+**Sample Call**
+
+```javascript
+this.XAgent00.updateModule("xagent", “1.1”, “xagent_1.1.zip", "com.nexacro.xagent", true);
 ```
 
 **Return**
@@ -1575,8 +1863,14 @@ XAgent.updateModules(strProject)
 
 **Parameters**
 
-```
-프로젝트 이름
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strProject | String | 프로젝트 이름 |
+
+**Sample Call**
+
+```javascript
+this.XAgent00.updateModules(“com.nexacro.xagent”);
 ```
 
 **Return**
@@ -1608,13 +1902,20 @@ XAgent.version([strType])
 
 **Parameters**
 
-```
-버전 정보를 요청할 대상을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strType | String | 버전 정보를 요청할 대상을 설정합니다.
 
 - "all":  X-AGENT 서버, 모듈 버전 정보
   파라미터 값을 설정하지 않은 경우 "all"로 동작합니다.
 - "server": X-AGENT 서버 버전 정보
-- "modules":  X-AGENT 모듈 버전 정보
+- "modules":  X-AGENT 모듈 버전 정보 |
+
+**Sample Call**
+
+```javascript
+this.XAgent00.version();
+this.XAgent00.version("server");
 ```
 
 **Return**
@@ -1657,9 +1958,10 @@ onerror(obj:nexacro.XAgent,e:nexacro.XAgentErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | XAgent | Event가 발생한 Object. |
+| e | XAgentErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -1684,9 +1986,10 @@ onsuccess(obj:nexacro.XAgent,e:nexacro.XAgentEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | XAgent | Event가 발생한 Object. |
+| e | XAgentEventInfo | Event Object. |
 
 **Return**
 
@@ -1879,7 +2182,7 @@ strIplist ::= [strScheme]strIPaddress:nPort [, [strScheme]strIPaddress:nPort]*
 strScheme ::= "tcp://" | "http://"
 ```
 ```javascript
-this.XPush00.iplist = "192.168.0.1:1004";
+this.XPush00.iplist = "192.168.0.1:1004";
 this.XPush00.iplist = "192.168.0.1:1004,127.0.0.1:1004";
 ```
 - **`strScheme`** — "tcp://" 설정 시 TCP 통신을 사용하여 메시지를 전달받습니다.
@@ -2255,10 +2558,24 @@ XPush.connect( [strUserID [,strSessionID]] )
 
 **Parameters**
 
-```
-X-PUSH 서버에 연결 시 인증을 위한 User ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strUserID | String | X-PUSH 서버에 연결 시 인증을 위한 User ID를 설정합니다.
 
-값 생략 시 userid 속성값이 적용됩니다.
+값 생략 시 userid 속성값이 적용됩니다. |
+| strSessionID | String | X-PUSH 서버에 연결 시 인증을 위한 Session ID 를 설정합니다.
+
+값 생략 시 sessionid 속성값이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.XPush00.userid = "user00";    
+this.XPush00.sessionid = "session00";
+
+this.XPush00.connect();
+this.XPush00.connect("user00");
+this.XPush00.connect("user00", "session00");
 ```
 
 **Return**
@@ -2304,9 +2621,11 @@ var bSucc = this.XPush00.destroy();
 
 **Return**
 
-XPush 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | XPush 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-XPush 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+XPush 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -2374,7 +2693,9 @@ var strIPAddress = this.XPush00.getCurrentIP();
 
 **Return**
 
-현재 접속중인 X-PUSH 서버의 IP값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 현재 접속중인 X-PUSH 서버의 IP값을 반환합니다. |
 
 **Remark**
 
@@ -2408,7 +2729,9 @@ var nPort = this.XPush00.getCurrentPort();
 
 **Return**
 
-현재 접속중인 X-PUSH 서버의 Port 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 현재 접속중인 X-PUSH 서버의 Port 값을 반환합니다. |
 
 **Remark**
 
@@ -2475,9 +2798,13 @@ XPush.getRegisteredTopicsWithUserID(strUserID [, strProjectID] )
 
 **Parameters**
 
-```
-신뢰성 메시지를 수신할 사용자의 ID를 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strUserID | String | 신뢰성 메시지를 수신할 사용자의 ID를 문자열로 설정합니다. |
+| strProjectID | String | 신뢰성 메시지를 수신할 프로젝트의 ID를 문자열로 설정합니다.
+값 생략 시 projectid 속성값이 적용됩니다.
+
+* protocolversion 속성값이 3 인 경우만 적용됩니다. |
 
 **Return**
 
@@ -2547,8 +2874,15 @@ this.XPush00.registerTopic(strMessageType, strMessgageKey);
 
 **Parameters**
 
-```
-Message Layout 파일에 정의된 메시지 타입 중 수신 받을 메시지 타입을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMessageType | String | Message Layout 파일에 정의된 메시지 타입 중 수신 받을 메시지 타입을 설정합니다. |
+| strMessgageKey | String | 수신 받을 메세지의 Key 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.XPush00.registerTopic("CPDT", "command01");
 ```
 
 **Return**
@@ -2584,8 +2918,22 @@ this.XPush00.registerTopicWithUserID( strMessageType, strMessgageKey, strUserID 
 
 **Parameters**
 
-```
-Message Layout 파일에 정의된 메시지 타입 중 수신 받을 메시지 타입을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMessageType | String | Message Layout 파일에 정의된 메시지 타입 중 수신 받을 메시지 타입을 문자열로 설정합니다. |
+| strMessgageKey | String | 수신 받을 메시지의 Key 값을 문자열로 설정합니다. |
+| strUserID | String | 신뢰성 메시지를 수신할 사용자의 ID 를 문자열로 설정합니다. |
+| strProjectID | String | 신뢰성 메시지를 수신할 프로젝트의 ID 를 문자열로 설정합니다.
+
+값 생략 시 projectid 속성값이 적용됩니다.
+
+* protocolversion 속성값이 3 인 경우만 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.XPush00.registerTopicWithUserID( "CPDT", "command01", "userID" );
+this.XPush00.registerTopicWithUserID( "CPDT", "command01", "userID", "Project00" );
 ```
 
 **Return**
@@ -2621,9 +2969,12 @@ requestMessage ( strMsgType, strMsgKeys );
 
 **Parameters**
 
-```
-Message Layout 파일에 정의된 메시지 타입 중 수신 받을 메시지 타입을 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMsgType | String | Message Layout 파일에 정의된 메시지 타입 중 수신 받을 메시지 타입을 설정합니다. |
+| strMsgKeys | String | 수신 받을 메세지의 Key 값을 설정합니다.
+
+수신 받을 메세지가 여러개일 경우 콤마(",")로 구분하여  여러개의 Key 값을 설정할 수 있습니다. |
 
 **Return**
 
@@ -2658,8 +3009,15 @@ XPush.requestMessageCount(strMessageType, strMessgageKey)
 
 **Parameters**
 
-```
-Message Layout 파일에 정의된 메시지 타입 중 갯수를 수신 받을 메시지의 타입을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMessageType | String | Message Layout 파일에 정의된 메시지 타입 중 갯수를 수신 받을 메시지의 타입을 설정합니다. |
+| strMessgageKey | String | 미수신된 신뢰성 메세지의 Key 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.XPush00.requestMessageCount("CPDT", "command01")
 ```
 
 **Return**
@@ -2697,8 +3055,22 @@ XPush.requestMessageCountWithUserID( strMessageType, strMessgageKey, strUserID [
 
 **Parameters**
 
-```
-Message Layout 파일에 정의된 메시지 타입 중 갯수를 수신 받을 메시지의 타입을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMessageType | String | Message Layout 파일에 정의된 메시지 타입 중 갯수를 수신 받을 메시지의 타입을 문자열로 설정합니다. |
+| strMessgageKey | String | 미수신한 신뢰성 메시지의 Key 값을 문자열로 설정합니다. |
+| strUserID | String | 미수신한 신뢰성 메시지의 갯수를 확인할 사용자의 ID 를 문자열로 설정합니다. |
+| strProjectID | String | 미수신한 신뢰성 메시지의 갯수를 확인할 프로젝트의 ID 를 문자열로 설정합니다.
+
+값 생략 시 projectid 속성값이 적용됩니다.
+
+* protocolversion 속성값이 3 인 경우만 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.XPush00.requestMessageCountWithUserID( "CPDT", "command01", "userID" );
+this.XPush00.requestMessageCountWithUserID( "CPDT", "command01", "userID", "Project00" );
 ```
 
 **Return**
@@ -2736,11 +3108,11 @@ XPush.sendResponse(strmsgid)
 
 **Parameters**
 
-```
-수신된 신뢰성 메시지의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strmsgid | String | 수신된 신뢰성 메시지의 ID를 설정합니다.
 
-메시지 수신 시 발생하는 CallBack 함수에 "msgid" 파라미터의 값으로 ID가 전달됩니다.
-```
+메시지 수신 시 발생하는 CallBack 함수에 "msgid" 파라미터의 값으로 ID가 전달됩니다. |
 
 **Return**
 
@@ -2777,8 +3149,52 @@ XPush.subscribe(strMsgType, strMsgKey, objForm, objDataset, strType, strCallBack
 
 **Parameters**
 
-```
-Message Layout 파일에 정의된 메시지 타입 중 수신 받을 메시지 타입을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMsgType | String | Message Layout 파일에 정의된 메시지 타입 중 수신 받을 메시지 타입을 설정합니다. |
+| strMsgKey | String | 수신 받을 메세지의 Key 값을 설정합니다. |
+| objForm | Object | 메시지를 수신 받을 Form 의 오브젝트를 설정합니다. |
+| objDataset | Object | 수신 받은 메시지를 저장할 DataSet 의 오브젝트를 설정합니다. |
+| strType | String | 수신 된 메시지를 DataSet 에 저장하는 방법을 설정합니다.
+
+"append" 설정 시 DataSet 의 마지막 Row 로 수신된 메시지를 추가합니다.
+
+"insert" 설정 시 nRow 파라미터로 설정한 위치에 수신된 메시지를 추가합니다.
+nRow 파라미터를 설정하지 않으면 0 으로 적용됩니다.
+
+"replace" 설정 시 첫번째 Row 가 수신된 메시지로 대체됩니다.
+Row 가 없을 경우 메시지가 DataSet 에 추가되지 않습니다.
+
+"update" 설정 시 DataSet 의 Row 중 Key 값이 동일한 첫번째 Row 에 수신된 메시지를 업데이트 합니다.
+업데이트할 Row가 없다면 콜백함수는 호출되지 않습니다.
+
+"allUpdate" 설정 시 DataSet 의 Row 중 Key 값이 동일한 모든 Row 에 수신된 메시지를 업데이트 합니다.
+
+"updateorappend" 설정 시 "update" 설정과 동일하게 동작하지만 Key 값이 동일한 Row 가 없을 경우 "append" 로 동작합니다.
+
+* Key 값이 동일한 Row 는 아래 순서로 찾습니다.
+  a) Message Layout 파일에서 "key" 속성값이 "true" 로 설정된 필드(Field)의 이름을 확인
+  b) a) 에서 확인한 필드(Field) 이름과 동일한 이름의 Column 을 확인
+  c) b) 에서 확인한 Column 에서 메시지에 포함된 Key 값과 동일값을 갖는 Row  를 확인 |
+| strCallBack | String | 수신된 메시지를 DataSet 에 저장 후 호출할 CallBack 함수명을 문자열로 설정합니다.
+
+CallBack 함수는 CallBackName ( ChangeRow, ChangeCol, ColList, strMsgType, strActionType, strMsgID ) 형태로 정의하며 strType 파라미터와 조건에 따라 파라미터의 의미가 다르므로  하단 리마크를 참조하시기 바랍니다. |
+| nRow | Number | strType 값이 "insert" 일 경우 DataSet 에 삽입할 Row 의 인덱스를 설정합니다.
+
+값 생략 시 0 으로 적용됩니다. |
+| strCheck | String | "0" 설정 시 DataSet 에 메시지를 무조건 반영합니다.
+strCheck 에 설정한 값이 Message Layout 파일에 "check" 속성값이 "true" 로 설정된 필드(Field)값과 일치할 경우만 DataSet 에 메시지를 반영합니다.
+
+값 생략 시 "0" 으로 적용됩니다. |
+| bUseActiveFormCallBack | Boolean | true 설정 시 활성화된 Form 에서만 CallBack 함수를 호출합니다.
+false 설정 시 활성화 되지 않은 Form 에서도 CallBack 함수를 호출합니다.
+
+값 생략 시 false 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.XPush00.subscribe("CPDT", "command01", this, this.Dataset00, "append", "funcCallback");
 ```
 
 **Return**
@@ -2869,8 +3285,15 @@ XPush.unregisterTopic(strMessageType, strMessgageKey)
 
 **Parameters**
 
-```
-Message Layout 파일에 정의된 메시지 타입 중 수신을 중지할 메시지 타입을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMessageType | String | Message Layout 파일에 정의된 메시지 타입 중 수신을 중지할 메시지 타입을 설정합니다. |
+| strMessgageKey | String | 수신을 중지할 메세지의 Key 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.XPush00.unregisterTopic("CPDT", "command01");
 ```
 
 **Return**
@@ -2902,8 +3325,22 @@ XPush.unregisterTopicWithUserID( strMessageType, strMessgageKey, strUserID [, st
 
 **Parameters**
 
-```
-Message Layout 파일에 정의된 메시지 타입 중 수신을 중지할 메시지 타입을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMessageType | String | Message Layout 파일에 정의된 메시지 타입 중 수신을 중지할 메시지 타입을 문자열로 설정합니다. |
+| strMessgageKey | String | 수신을 중지할 메시지의 Key 값을 문자열로 설정합니다. |
+| strUserID | String | 신뢰성 메시지의 수신을 중지할 사용자의 ID 를 문자열로 설정합니다. |
+| strProjectID | String | 신뢰성 메시지의 수신을 중지할 프로젝트의 ID 를 문자열로 설정합니다.
+
+값 생략 시 projectid 속성값이 적용됩니다.
+
+* protocolversion 속성값이 3 인 경우만 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.XPush00.unregisterTopicWithUserID( "CPDT", "command01", "userID" );
+this.XPush00.unregisterTopicWithUserID( "CPDT", "command01", "userID", "Project00" );
 ```
 
 **Return**
@@ -2935,8 +3372,19 @@ XPush.unsubscribe(strMsgType, strMsgKey, objForm, objDataset, strType, strCallBa
 
 **Parameters**
 
-```
-Message Layout 파일에 정의된 메시지 타입 중 수신을 중지할 Topic 의 메시지 타입을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMessageType | String | Message Layout 파일에 정의된 메시지 타입 중 수신을 중지할 Topic 의 메시지 타입을 설정합니다. |
+| strMessgageKey | String | 수신을 중지할 Topic 의 Key 값을 설정합니다. |
+| objForm | Object | Topic 등록 시 설정한 Form 오브젝트를 설정합니다. |
+| objDataset | Object | Topic 등록 시 설정한 DataSet 오브젝트를 설정합니다. |
+| strType | String | Topic 등록 시 설정한 메시지 저장 방법을 설정합니다. |
+| strCallBack | String | Topic 등록 시 설정한 CallBack 함수명을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.XPush00.unsubscribe("CPDT", "command01", this, this.Dataset00, "append", "funcCallback");
 ```
 
 **Return**
@@ -2970,9 +3418,10 @@ onerror(obj:nexacro.XPush,e:nexacro.XPushErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | XPush | Event가 발생한 Object. |
+| e | XPushErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -3003,9 +3452,10 @@ onkeepalive(obj:nexacro.XPush,e:nexacro.XPushKeepAliveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | XPush | Event가 발생한 Object. |
+| e | XPushKeepAliveEventInfo | Event Object. |
 
 **Return**
 
@@ -3039,9 +3489,10 @@ onsuccess(obj:nexacro.XPush,e:nexacro.XPushEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | XPush | Event가 발생한 Object. |
+| e | XPushEventInfo | Event Object. |
 
 **Return**
 

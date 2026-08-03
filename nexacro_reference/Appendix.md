@@ -2294,29 +2294,14 @@ nexacrostudio.findinFileText(prefixurl, line[, findText])
 
 **Parameters**
 
-```
-	
-		Parameters
-		Description
-	
-
-	
-		prefixurl
-		TypeDefinition의 Service에 정의된 Prefix를 포함한 파일 경로를 설정합니다.
+| Parameters | Description |
+| --- | --- |
+| prefixurl | TypeDefinition의 Service에 정의된 Prefix를 포함한 파일 경로를 설정합니다.
 프로젝트 내 텍스트로 편집할 수 있는 파일을 설정할 수 있습니다.
 - Base::test.xfdl
-- theme::blue\\theme.xcss
-	
-
-	
-		line
-		캐럿이 위치할 파일 내의 라인 값을 설정합니다.
-	
-
-	
-		findText
-		line 값에 해당하는 라인 내에서 탐색할 텍스트를 설정합니다.
-```
+- theme::blue\\theme.xcss |
+| line | 캐럿이 위치할 파일 내의 라인 값을 설정합니다. |
+| findText | line 값에 해당하는 라인 내에서 탐색할 텍스트를 설정합니다. |
 
 **Remark**
 
@@ -2344,27 +2329,15 @@ nexacrostudio.getFormImage( prefixurl )
 
 **Parameters**
 
-```
-	
-		Parameters
-		Description
-	
-
-	
-		prefixurl
-		TypeDefinition의 Service에 정의된 Prefix를 포함한 xfdl 파일 경로를 설정합니다.
-```
+| Parameters | Description |
+| --- | --- |
+| prefixurl | TypeDefinition의 Service에 정의된 Prefix를 포함한 xfdl 파일 경로를 설정합니다. |
 
 **Return**
 
-	
-		Return Type
-		Description
-	
-
-	
-		String
-		Form 실행 화면 이미지를 Base64로 인코딩된 이미지 데이터 문자열로 반환합니다.
+| Return Type | Description |
+| --- | --- |
+| String | Form 실행 화면 이미지를 Base64로 인코딩된 이미지 데이터 문자열로 반환합니다. |
 
 **Remark**
 
@@ -2389,16 +2362,9 @@ nexacrostudio.paste(copyText)
 
 **Parameters**
 
-```
-	
-		Parameters
-		Description
-	
-
-	
-		copyText
-		활성화된 편집창에 붙여넣기 할 텍스트를 설정합니다.
-```
+| Parameters | Description |
+| --- | --- |
+| copyText | 활성화된 편집창에 붙여넣기 할 텍스트를 설정합니다. |
 
 **Remark**
 
@@ -2425,33 +2391,17 @@ nexacrostudio.request( requestType[, dataobjectID] );
 
 **Parameters**
 
-```
-	
-		Parameters
-		Description
-	
-
-	
-		requestType
-		프로젝트에서 가져올 정보 타입을 설정합니다.
-	
-
-	
-		dataobjectID
-		request 메서드 호출 후 반환되는 정보를 저장할 DataObject 오브젝트의 id 속성값을 설정합니다.
-DataObject 오브젝트는 Form이 아닌 Application Variables로 생성해야 합니다.
-```
+| Parameters | Description |
+| --- | --- |
+| requestType | 프로젝트에서 가져올 정보 타입을 설정합니다. |
+| dataobjectID | request 메서드 호출 후 반환되는 정보를 저장할 DataObject 오브젝트의 id 속성값을 설정합니다.
+DataObject 오브젝트는 Form이 아닌 Application Variables로 생성해야 합니다. |
 
 **Return**
 
-	
-		Return Type
-		Description
-	
-
-	
-		String
-		requesttype 파라미터값에 따라 요청된 정보를 JSON 형식의 문자열로 반환합니다.
+| Return Type | Description |
+| --- | --- |
+| String | requesttype 파라미터값에 따라 요청된 정보를 JSON 형식의 문자열로 반환합니다. |
 
 **Remark**
 

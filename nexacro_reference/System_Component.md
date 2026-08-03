@@ -23886,7 +23886,7 @@ word-spacing : 30px ;
 
 **Remark**
 
-각 프레임의 showtitlebar 속성값이 true일 때 보여집니다.
+각 프레임의 showtitlebar 속성값이 true일 때 보여집니다.
 maxbutton과 normalbutton은 프레임의 상태에 따라 해당하는 버튼이 보여집니다.
 
 **Structure**

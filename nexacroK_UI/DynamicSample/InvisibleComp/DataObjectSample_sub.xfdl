@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="DataObjectSamplesub" width="1280" height="670" onload="DataObjectSamplesub_onload">
+    <Objects>
+      <!-- DataObject: XML에 정적 선언 — new nexacro.DataObject() + addChild() 코드 불필요 -->
+      <DataObject id="dobj_posts" onsuccess="dobj_posts_onsuccess" onload="dobj_posts_onload" onerror="dobj_api_onerror"/>
+      <DataObject id="dobj_users" onsuccess="dobj_users_onsuccess" onload="dobj_users_onload" onerror="dobj_api_onerror"/>
+
+      <!-- Dataset: XML에 정적 선언 + ColumnInfo/datapath 미리 정의
+           binddataobject 자동 연결 → request() 완료 시 on_notify_onload_dataobject 내부에서 자동 반영
+           addColumnInfo 루프 / loadFromDataObject() 수동 호출 불필요                    -->
+      <Dataset id="ds_posts" binddataobject="dobj_posts" dataobjectpath="$[*]" dataobjectbindmode="twoway" onload="ds_posts_onload">
+        <ColumnInfo>
+          <Column id="USERID" type="STRING" size="256" datapath="@.userId"/>
+          <Column id="ID"     type="STRING" size="256" datapath="@.id"/>
+          <Column id="TITLE"  type="STRING" size="256" datapath="@.title"/>
+          <Column id="BODY"   type="STRING" size="256" datapath="@.body"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_users" binddataobject="dobj_users" dataobjectpath="$[*]" dataobjectbindmode="twoway" onload="ds_users_onload">
+        <ColumnInfo>
+          <Column id="ID"       type="STRING" size="256" datapath="@.id"/>
+          <Column id="NAME"     type="STRING" size="256" datapath="@.name"/>
+          <Column id="USERNAME" type="STRING" size="256" datapath="@.username"/>
+          <Column id="EMAIL"    type="STRING" size="256" datapath="@.email"/>
+          <Column id="PHONE"    type="STRING" size="256" datapath="@.phone"/>
+          <Column id="WEBSITE"  type="STRING" size="256" datapath="@.website"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Layouts>
+      <Layout height="670" width="1280">
+        <Static id="stc_title"  taborder="0" text="[비가시적] DataObject 정적 생성 샘플" left="10" top="10" width="700" height="28" font="bold 14 'Malgun Gothic'" color="#1e40af"/>
+        <Static id="stc_desc2"  taborder="1" text="DataObject / Dataset(ColumnInfo 포함) / Grid 를 모두 XML에 정적 선언 — 동적 생성 코드(new/addChild) 없음" left="10" top="44" width="1240" height="22" color="#555555"/>
+        <Button id="btn_search" taborder="2" text="게시글 조회 (GET /posts)" left="10"  top="74" width="210" height="32" onclick="btn_search_onclick"/>
+        <Button id="btn_users"  taborder="3" text="사용자 조회 (GET /users)" left="230" top="74" width="210" height="32" onclick="btn_users_onclick"/>
+        <Button id="btn_clear"  taborder="4" text="데이터 초기화"             left="450" top="74" width="120" height="32" onclick="btn_clear_onclick"/>
+        <Static id="stc_status" taborder="5" text="준비됨"                    left="584" top="80" width="680" height="22" color="#cc0000"/>
+        <Static id="stc_result" taborder="6" text=""                          left="10" top="116" width="1240" height="22" color="#333333"/>
+        <!-- Grid: XML에 정적 선언 — Form_onload에서 binddataset 지정 + createFormat() -->
+        <Grid id="grd_result"   taborder="7" left="10" top="144" width="1250" height="516" binddataset="ds_posts"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// [정적 선언 방식] 동적 샘플(DataObjectSample.xfdl)과의 차이점
+//
+// 동적: new nexacro.DataObject/Dataset/Grid() + addChild() 로 런타임에 생성
+//       dobj_api_onload에서 ColumnInfo 루프 + loadFromDataObject() 수동 호출 필요
+//
+// 정적: DataObject/Dataset(ColumnInfo)/Grid 를 XML에 미리 선언
+//       binddataobject + dataobjectpath + ColumnInfo.datapath 조합으로
+//       request() 완료 후 on_notify_onload_dataobject 내부에서 Dataset 자동 반영
+//       → onload 핸들러는 rowcount 표시 등 후처리만 담당
+
+this.DataObjectSamplesub_onload = function(obj, e)
+{
+    // Grid는 XML에 binddataset="ds_posts" 로 지정되어 있으나
+    // Format이 없으면 표시가 안 되므로 createFormat()으로 컬럼 자동 구성
+    this.grd_result.createFormat();
+    this.grd_result.set_autofittype("col");
+    this.stc_status.set_text("준비됨 — [게시글 조회] 또는 [사용자 조회]를 클릭하세요.");
+};
+
+// ─── 게시글 조회 ─────────────────────────────────────────────────────────────
+this.btn_search_onclick = function(obj, e)
+{
+    this.stc_status.set_text("조회 중... (GET /posts)");
+    this.stc_result.set_text("API: GET https://jsonplaceholder.typicode.com/posts");
+    // Grid를 ds_posts 기준으로 전환 후 포맷 재생성
+    this.grd_result.set_binddataset("ds_posts");
+    this.grd_result.createFormat();
+    this.grd_result.set_autofittype("col");
+    this.dobj_posts.request("SEARCH_POSTS", "GET", "https://jsonplaceholder.typicode.com/posts");
+};
+
+this.dobj_posts_onsuccess = function(obj, e)
+{
+    trace("[posts onsuccess] statuscode=" + e.statuscode);
+    if (e.statuscode > 200)
+    {
+        e.preventDefault();
+        this.stc_status.set_text("통신 오류: HTTP " + e.statuscode);
+    }
+};
+
+this.dobj_posts_onload = function(obj, e)
+{
+    // 데이터는 이미 on_notify_onload_dataobject 내부에서 ds_posts에 자동 반영됨
+    // 여기서는 통신 완료 여부 trace만 기록
+    trace("[posts onload] serviceid=" + e.serviceid);
+};
+
+// Dataset.onload: DataObject 자동 반영 완료 후 rowcount 확정 시점
+this.ds_posts_onload = function(obj, e)
+{
+    trace("[ds_posts onload] rowcount=" + obj.rowcount + " reason=" + e.reason);
+    this.stc_status.set_text("✔ 게시글 조회 완료: " + obj.rowcount + "건 / 컬럼 수: " + obj.getColCount());
+};
+
+// ─── 사용자 조회 ─────────────────────────────────────────────────────────────
+this.btn_users_onclick = function(obj, e)
+{
+    this.stc_status.set_text("조회 중... (GET /users)");
+    this.stc_result.set_text("API: GET https://jsonplaceholder.typicode.com/users");
+    // Grid를 ds_users 기준으로 전환 후 포맷 재생성
+    this.grd_result.set_binddataset("ds_users");
+    this.grd_result.createFormat();
+    this.grd_result.set_autofittype("col");
+    this.dobj_users.request("SEARCH_USERS", "GET", "https://jsonplaceholder.typicode.com/users");
+};
+
+this.dobj_users_onsuccess = function(obj, e)
+{
+    trace("[users onsuccess] statuscode=" + e.statuscode);
+    if (e.statuscode > 200)
+    {
+        e.preventDefault();
+        this.stc_status.set_text("통신 오류: HTTP " + e.statuscode);
+    }
+};
+
+this.dobj_users_onload = function(obj, e)
+{
+    trace("[users onload] serviceid=" + e.serviceid);
+};
+
+// Dataset.onload: ds_users 자동 반영 완료 시점
+this.ds_users_onload = function(obj, e)
+{
+    trace("[ds_users onload] rowcount=" + obj.rowcount + " reason=" + e.reason);
+    this.stc_status.set_text("✔ 사용자 조회 완료: " + obj.rowcount + "건 / 컬럼 수: " + obj.getColCount());
+};
+
+// ─── 공통 오류 처리 ──────────────────────────────────────────────────────────
+this.dobj_api_onerror = function(obj, e)
+{
+    trace("[onerror] " + e.statuscode + ":" + e.errormsg);
+    this.stc_status.set_text("통신 오류: " + e.statuscode + " / " + e.errormsg);
+};
+
+// ─── 데이터 초기화 ───────────────────────────────────────────────────────────
+this.btn_clear_onclick = function(obj, e)
+{
+    this.ds_posts.clear();
+    this.ds_users.clear();
+    this.stc_status.set_text("데이터 초기화 완료");
+    this.stc_result.set_text("");
+};
+    ]]></Script>
+  </Form>
+</FDL>

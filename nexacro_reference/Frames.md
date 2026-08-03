@@ -503,11 +503,8 @@ bAutoSize ::= 'true' | 'false'
 ```
 ```javascript
 var objFrame = new ChildFrame();
-
-objFrame.init("modal00", 0, 0, 500, 500); objFrame.formurl = "Base::Test00.xfdl";
-objFrame.autosize = false;
-
-var vRtn = objFrame.showModal("modal00", this.getOwnerFrame());
+objFrame.init("modal00", 0, 0, 500, 500); objFrame.formurl = "Base::Test00.xfdl";objFrame.autosize = false;
+var vRtn = objFrame.showModal("modal00", this.getOwnerFrame());
 ```
 - **`true`** — ChildFrame 의 formurl 속성에 설정된 Form 의 크기에 맞게 ChildFrame 의 크기를 설정합니다.
 
@@ -915,9 +912,7 @@ strcssclass ::= <ClassName> [ , &ltClassName> ]*
 ```
 ```javascript
 var objCFrame = this.getOwnerFrame();
-
-objCFrame.cssclass = "TestClass";
-objCFrame.cssclass = "TestClass,TestClass2";
+objCFrame.cssclass = "TestClass";objCFrame.cssclass = "TestClass,TestClass2";
 ```
 - **`<ClassName>`** — XCSS 에 정의된 classname 을 설정합니다.
 
@@ -1136,8 +1131,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.ChildFrame00.enableevent = true;  
-
-this.ChildFrame00.enableevent = false;
+this.ChildFrame00.enableevent = false;
 ```
 - **`true`** — ChildFrame 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — ChildFrame 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -2440,15 +2434,26 @@ ChildFrame.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ChildFrame00_onmove = function( obj:nexacro.ChildFrame,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ChildFrame00.addEventHandler( "onmove", this.ChildFrame00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -2469,15 +2474,27 @@ ChildFrame.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.ChildFrame00_onmove = function( obj:nexacro.ChildFrame,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ChildFrame00.addEventHandlerLookup( "onmove", "ChildFrame00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -2503,8 +2520,15 @@ ChildFrame.alert( strText )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+objFrame.alert( "Warning" );
 ```
 
 **Return**
@@ -2534,13 +2558,21 @@ ChildFrame.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.ChildFrame00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -2565,14 +2597,40 @@ ChildFrame.confirm( strText [,strCaption [,strType]] )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+| strCaption | String | 대화상자의 TitleBar에 표시할 텍스트를 설정합니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+| strType | String | 대화상자의 왼쪽 영역에 표시될 아이콘 종류를 문자열로 설정합니다.
+
+"error" 설정 시 빨간색 "X" 모양 아이콘이 표시됩니다.
+"question" 설정 시 물음표("?") 모양 아이콘이 표시됩니다.
+"warning" 설정 시 노랑색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+"information" 설정 시 파란색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+
+값을 설정하지 않으면 아이콘을 표시하지 않습니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+objFrame.confirm( "Exit ?" );
+objFrame.confirm( "Exit ?",  "Title Text");
+objFrame.confirm( "Exit ?",  "Title Text", "question" );
 ```
 
 **Return**
 
-표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
-표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
+표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -2601,9 +2659,11 @@ var bSucc = this.ChildFrame00.destroy();
 
 **Return**
 
-ChildFrame 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | ChildFrame 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-ChildFrame 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+ChildFrame 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -2632,15 +2692,27 @@ ChildFrame.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ChildFrame00_onmove = function( obj:nexacro.ChildFrame,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.ChildFrame00.findEventHandler( "onmove", this.ChildFrame00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2665,15 +2737,26 @@ ChildFrame.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = ChildFrame00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -2698,9 +2781,11 @@ var objForm = ChildFrame00.getForm();
 
 **Return**
 
-ChildFrame 이 갖고 있는 Form 을 Object 형태로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | ChildFrame 이 갖고 있는 Form 을 Object 형태로 반환합니다.
 
-Form 이 없거나 생성되기 전이면 "null"을 반환합니다.
+Form 이 없거나 생성되기 전이면 "null"을 반환합니다. |
 
 **Remark**
 
@@ -2729,7 +2814,9 @@ var nHwnd = this.parent.getNativeHandle();
 
 **Return**
 
-ChildFrame이 속한 윈도우 핸들(HWND)값
+| Type | Description |
+| --- | --- |
+| Number | ChildFrame이 속한 윈도우 핸들(HWND)값 |
 
 
 ---
@@ -2756,7 +2843,9 @@ var nBottom = objApp.mainframe.frame.getOffsetBottom();
 
 **Return**
 
-부모 Frame 의 Top 위치를 기준으로 ChildFrame 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Top 위치를 기준으로 ChildFrame 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2787,7 +2876,9 @@ var nHeight = objApp.mainframe.frame.getOffsetHeight( ) ;
 
 **Return**
 
-ChildFrame 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ChildFrame 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -2818,7 +2909,9 @@ var nLeft = objApp.mainframe.frame.getOffsetLeft();
 
 **Return**
 
-부모 Frame 의 Left 위치를 기준으로 ChildFrame 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Left 위치를 기준으로 ChildFrame 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2849,7 +2942,9 @@ var nRight = objApp.mainframe.frame.getOffsetRight();
 
 **Return**
 
-부모 Frame 의 Left 위치를 기준으로 ChildFrame 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Left 위치를 기준으로 ChildFrame 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2880,7 +2975,9 @@ var nTop = objApp.mainframe.frame.getOffsetTop();
 
 **Return**
 
-부모 Frame 의 Top 위치를 기준으로 ChildFrame 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Top 위치를 기준으로 ChildFrame 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2911,7 +3008,9 @@ var nWidth = objApp.mainframe.frame.getOffsetWidth( ) ;
 
 **Return**
 
-ChildFrame 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ChildFrame 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -2940,8 +3039,10 @@ var objFrame = this.getOwnerFrame().getOwnerFrame() ;
 
 **Return**
 
-ChildFrame 이 소속된 부모 Frame 오브젝트를 반환합니다.
-ChildFrame 이 소속된 Frame 이 없을 경우 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | ChildFrame 이 소속된 부모 Frame 오브젝트를 반환합니다.
+ChildFrame 이 소속된 Frame 이 없을 경우 "null"을 반환합니다. |
 
 
 ---
@@ -2962,8 +3063,32 @@ ChildFrame.init( strName, nLeft, nTop, nWidth, nHeight [, nRight, nBottom [,strU
 
 **Parameters**
 
-```
-ChildFrame 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | ChildFrame 의 ID를 문자열로 설정합니다. |
+| nLeft | Number | 부모 Frame 의 좌상단을 기준으로 ChildFrame 의 left 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nTop | Number | 부모 Frame 의 좌상단을 기준으로 ChildFrame 의 top 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nWidth | Number | ChildFrame 의 width 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nHeight | Number | ChildFrame 의 height 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nRight | Number | 부모 Frame 의 우하단을 기준으로 ChildFrame 의 right 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다.
+nLeft, nWidth 값을 모두 설정했을 경우 nRight 값은 무시됩니다. |
+| nBottom | Number | 부모 Frame 의 우하단을 기준으로 ChildFrame 의 bottom 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다.
+nTop, nHeight 값을 모두 설정했을 경우 nBottom 값은 무시됩니다 |
+| strURL | String | ChildFrame 에 속할 Form 의 위치정보를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var obFrame = new ChildFrame();
+
+obFrame.init( "ChildFrame00", 30, 120, 196, 46, null, null);
+obFrame.init( "ChildFrame00", null, null, 300, "400px", "80%", 300, "Base::Form00.xfdl" );
 ```
 
 **Return**
@@ -3001,16 +3126,33 @@ ChildFrame.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ChildFrame00_onmove = function( obj:nexacro.ChildFrame,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.ChildFrame00.insertEventHandler( "onmove", 0, this.ChildFrame00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3035,8 +3177,27 @@ ChildFrame.move( nLeft, nTop [, nWidth, nHeight [, nRight, nBottom]] )
 
 **Parameters**
 
-```
-ChildFrame 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | ChildFrame 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vTop | String, Number | ChildFrame 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vWidth | String, Number | ChildFrame 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vHeight | String, Number | ChildFrame 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vRight | String, Number | ChildFrame 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다. |
+| vBottom | String, Number | ChildFrame 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.move(10,10);
+objApp.mainframe.frame.move(10,10,100,100);
+objApp.mainframe.frame.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -3068,15 +3229,26 @@ ChildFrame.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ChildFrame00_onmove = function( obj:nexacro.ChildFrame,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ChildFrame00.removeEventHandler( "onmove", this.ChildFrame00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -3103,15 +3275,27 @@ ChildFrame.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.ChildFrame00_onmove = function( obj:nexacro.ChildFrame,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ChildFrame00.removeEventHandlerLookup( "onmove", "ChildFrame00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -3138,15 +3322,26 @@ ChildFrame.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ChildFrame00_onmove = function( obj:nexacro.ChildFrame,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.ChildFrame00.setEventHandler( "onmove", this.ChildFrame00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3173,15 +3368,27 @@ ChildFrame.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.ChildFrame00_onmove = function( obj:nexacro.ChildFrame,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ChildFrame00.setEventHandlerLookup( "onmove", "ChildFrame00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3240,8 +3447,16 @@ ChildFrame.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Top 위치를 기준으로 ChildFrame 의 bottom 을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 FrameSet 의 Top 위치를 기준으로 ChildFrame 의 bottom 을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetBottom( 1000 ) ;
 ```
 
 **Return**
@@ -3273,8 +3488,16 @@ ChildFrame.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-ChildFrame 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | ChildFrame 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetHeight( 1000 ) ;
 ```
 
 **Return**
@@ -3304,8 +3527,16 @@ ChildFrame.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Left 위치를 기준으로 ChildFrame 의 left 를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 FrameSet 의 Left 위치를 기준으로 ChildFrame 의 left 를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetLeft( 100 ) ;
 ```
 
 **Return**
@@ -3335,8 +3566,16 @@ ChildFrame.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Left 위치를 기준으로 ChildFrame 의 right 를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 FrameSet 의 Left 위치를 기준으로 ChildFrame 의 right 를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetRight( 1000 ) ;
 ```
 
 **Return**
@@ -3368,8 +3607,16 @@ ChildFrame.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Top 위치를 기준으로 ChildFrame 의 top 을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 FrameSet 의 Top 위치를 기준으로 ChildFrame 의 top 을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetTop( 100 ) ;
 ```
 
 **Return**
@@ -3399,8 +3646,16 @@ ChildFrame.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-ChildFrame 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | ChildFrame 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetWidth( 1000 ) ;
 ```
 
 **Return**
@@ -3473,15 +3728,70 @@ ChildFrame.showModal( [strID,] objParentFrame, [{objArguList} [, objOpener [, ca
 
 **Parameters**
 
-```
-Modal 로 표시할 ChildFrame 의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | Modal 로 표시할 ChildFrame 의 ID 를 문자열로 설정합니다.
 
-값 생략 시 ChildFrame 에 설정된 name 속성값으로 설정됩니다.
+값 생략 시 ChildFrame 에 설정된 name 속성값으로 설정됩니다. |
+| objParentFrame | Object | Modal 로 표시할 ChildFrame 의 부모 Frame 을 Object 형태로 설정합니다.
+
+null 설정 시 MainFrame 이 부모로 설정됩니다. |
+| objArguList | Object | Modal 로 표시할 ChildFrame 에 추가될 변수리스트를 "{변수명:변수값 , 변수명:변수값}" 형식으로 설정합니다. |
+| objOpener | Object | Modal 로 표시할 ChildFrame 의 Opener 로 설정될 Form 을 오브젝트로 설정합니다.
+
+값 생략 시 objParentFrame 파라미터에 설정된 Frame 의 Form 이 설정됩니다.
+objParentFrame 파라미터를 null 로 설정하면 undefined 가 설정됩니다. |
+| callbackFunc | String | Modal 로 표시된 ChildFrame 이 종료된 후 결과를 받을 때 호출될 콜백 함수를 설정합니다.
+
+콜백 함수는 strID 값과 반환값을 인수로 갖습니다.
+strID 값은 showModal() 메소드 실행 시 설정한 strID 값을 갖습니다.
+반환값은 Modal 로 표시된 ChildFrame 에서 close() 메소드에 설정한 파라미터값을 갖습니다. |
+
+**Sample Call**
+
+```javascript
+this.fn_callback = function( strID, vArgu ) { ... }  // CallBack Function
+
+var objFrame = new ChildFrame();
+var objParentFrame = this.getOwnerFrame();
+
+objFrame.init( "modal00", 0, 0, 500, 500 );
+objFrame.formurl = "Base::Test00.xfdl";
+objFrame.autosize = false;
+
+var vRtn = objFrame.showModal( objParentFrame, {a:'aaa', b:'bbb'}, this, this.fn_callback );
+var vRtn = objFrame.showModal( "modal00", objParentFrame, null, this, this.fn_callback );
+
+var req = objFrame.showModal( objParentFrame, {a:'aaa', b:'bbb'}, this);
+req.then(() => { trace('showModal closed');})
+.catch((err) => { trace("error")});
+
+var req = objFrame.showModal( objParentFrame, {a:'aaa', b:'bbb'}, this);
+req.then((params) => { trace(params.name  + ' ' + params.arg + ' showModal closed');})
+.catch((err) => { trace("error")});
+
+this.fn_sync_showModal = async function() 
+{ 
+    let objFrame = new ChildFrame();
+    let objParentFrame = this.getOwnerFrame();
+
+    objFrame.init( "modal00", 0, 0, 500, 500 );
+    objFrame.formurl = "Base::test.xfdl";
+
+    await objFrame.showModal( objParentFrame, {a:'aaa', b:'bbb'}, this); 
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+    this.fn_sync_showModal();
+};
 ```
 
 **Return**
 
-callbackFunc 설정값에 따라 반환값 타입이 달라집니다.
+| Type | Description |
+| --- | --- |
+| Boolean, Object | callbackFunc 설정값에 따라 반환값 타입이 달라집니다.
 
 - callbackFunc 설정: (Boolean) 
   메서드 실행 성공/실패 여부를 반환합니다.
@@ -3492,7 +3802,7 @@ callbackFunc 설정값에 따라 반환값 타입이 달라집니다.
   내부적으로 resolve 수행 시점은 Modal 로 표시된 ChildFrame이 종료되는 시점입니다.
   Promise 오브젝트에서 then 메서드 사용 시 다음과 같이 인자값을 받아 처리할 수 있습니다.
   - argument.name: showModal 메서드 실행 시 설정한 strID 값
-  - argument.arg: close 메서드로 ChildFrame이 종료되는 경우 close 메서드 파라미터값
+  - argument.arg: close 메서드로 ChildFrame이 종료되는 경우 close 메서드 파라미터값 |
 
 **Remark**
 
@@ -3550,9 +3860,10 @@ onactivate(obj:nexacro.ChildFrame,e:nexacro.ActivateEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ChildFrame | Event가 발생한 Object. |
+| e | ActivateEventInfo | Event Object. |
 
 **Return**
 
@@ -3592,16 +3903,19 @@ onbeforeclose(obj:nexacro.ChildFrame,e:nexacro.CloseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ChildFrame | Event가 발생한 Object. |
+| e | CloseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 문자열 설정 시 ChildFrame 종료를 위한 확인창이 표시됩니다.
+| Type | Description |
+| --- | --- |
+| String | 이벤트에서 리턴값으로 문자열 설정 시 ChildFrame 종료를 위한 확인창이 표시됩니다.
 이벤트에서 리턴값으로 설정한 문자열이 종료를 위한 확인창에 사용됩니다.
 
-이벤트에서 리턴값을 생략하거나 null, undefined, ""(Empty String) 으로 설정 시 확인창이 표시되지 않습니다.
+이벤트에서 리턴값을 생략하거나 null, undefined, ""(Empty String) 으로 설정 시 확인창이 표시되지 않습니다. |
 
 **Remark**
 
@@ -3633,9 +3947,10 @@ onclose(obj:nexacro.ChildFrame,e:nexacro.CloseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ChildFrame | Event가 발생한 Object. |
+| e | CloseEventInfo | Event Object. |
 
 **Return**
 
@@ -3666,9 +3981,10 @@ ondeactivate(obj:nexacro.ChildFrame,e:nexacro.ActivateEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ChildFrame | Event가 발생한 Object. |
+| e | ActivateEventInfo | Event Object. |
 
 **Return**
 
@@ -3709,9 +4025,10 @@ onmove(obj:nexacro.ChildFrame,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ChildFrame | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -3736,9 +4053,10 @@ onorientationchange(obj:nexacro.ChildFrame,e:nexacro.OrientationChangeEventInfo)
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ChildFrame | Event가 발생한 Object. |
+| e | OrientationChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -3772,9 +4090,10 @@ onsize(obj:nexacro.ChildFrame,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ChildFrame | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -3799,16 +4118,19 @@ onsyscommand(obj:nexacro.ChildFrame,e:nexacro.SysCommandEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ChildFrame | Event가 발생한 Object. |
+| e | SysCommandEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 프레임으로 이벤트가 전파되고, 시스템명령이 수행됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 프레임으로 이벤트가 전파되고, 시스템명령이 수행됩니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 프레임으로 이벤트가 전파되지 않고, 시스템명령도 취소됩니다.
 
-이벤트에서 리턴값을 생략하면 true 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 true 로 적용됩니다. |
 
 **Remark**
 
@@ -4664,9 +4986,7 @@ strcssclass ::= <ClassName> [ , &ltClassName> ]*
 ```
 ```javascript
 var objApp = nexacro.getApplication();
-
-objApp.mainframe.FrameSet00.cssclass = "TestClass";
-objApp.mainframe.FrameSet00.cssclass = "TestClass,TestClass2";
+objApp.mainframe.FrameSet00.cssclass = "TestClass";objApp.mainframe.FrameSet00.cssclass = "TestClass,TestClass2";
 ```
 - **`<ClassName>`** — XCSS 에 정의된 classname 을 설정합니다.
 
@@ -4844,8 +5164,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.FrameSet00.enableevent = true;  
-
-this.FrameSet00.enableevent = false;
+this.FrameSet00.enableevent = false;
 ```
 - **`true`** — FrameSet 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — FrameSet 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -5408,8 +5727,7 @@ enumRestoreType ::= 'normal' | 'keepmaximizeposition'
 ```
 ```javascript
 var objApp = nexacro.getApplication();
-
-objApp.mainframe.FrameSet00.restorechildpositiontype = "keepmaximizeposition";
+objApp.mainframe.FrameSet00.restorechildpositiontype = "keepmaximizeposition";
 ```
 - **`"normal"`** — 하위 ChildFrame 중 하나가 최대화 될 때 최대화 되어 있던 ChildFrame 은 normal 크기로 변경됩니다.
 
@@ -6000,14 +6318,27 @@ FrameSet.addChild( strChildID, objFrame )
 
 **Parameters**
 
-```
-자식으로 추가될 Frame 의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strChildID | String | 자식으로 추가될 Frame 의 ID를 설정합니다. |
+| objFrame | Object | 자식으로 추가될 Frame 의 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objFrame = new FrameSet();
+
+objFrame.init( "FrameSet00", 30, 120, 196, 46 );
+objApp.mainframe.frame.addChild( "FrameSet00", objFrame ) ;
 ```
 
 **Return**
 
-추가된 자식 Frame 의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 자식 Frame 의 인덱스를 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -6043,15 +6374,26 @@ FrameSet.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.FrameSet00_onmove = function( obj:nexacro.FrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.FrameSet00.addEventHandler( "onmove", this.FrameSet00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -6072,15 +6414,27 @@ FrameSet.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.FrameSet00_onmove = function( obj:nexacro.FrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.FrameSet00.addEventHandlerLookup( "onmove", "FrameSet00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -6106,8 +6460,15 @@ FrameSet.alert( strText )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+objFrame.alert( "Warning" );
 ```
 
 **Return**
@@ -6137,14 +6498,20 @@ FrameSet.arrange( strArrangeType )
 
 **Parameters**
 
-```
-자식 Frame 을 정렬하는 방법을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strArrangeType | String | 자식 Frame 을 정렬하는 방법을 문자열로 설정합니다.
 
 "cascade" 설정 시 자식 Frame 의 TitleBar 를 기준으로 자식 Frame을 계단식으로 배열합니다.
 "vertical" 설정 시 자식 Frame 을 수직(왼쪽에서 오른쪽으로)으로 배열합니다.
 "horizontal" 설정 시 자식 Frame 을 수평(위에서 아래로)으로 배열합니다.
 "tilevertical" 설정 시 자식 Frame을 수직 바둑판 형태로 배열하고 여백부분은 마지막 행에 표시됩니다.
-"tilehorizontal" 설정 시 자식 Frame을 수평 바둑판 형태로 배열하고 여백부분은 마지막 열에 표시됩니다.
+"tilehorizontal" 설정 시 자식 Frame을 수평 바둑판 형태로 배열하고 여백부분은 마지막 열에 표시됩니다. |
+
+**Sample Call**
+
+```javascript
+FrameSet00.arrange( "cascade" );
 ```
 
 **Return**
@@ -6170,13 +6537,21 @@ FrameSet.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.FrameSet00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -6201,14 +6576,40 @@ FrameSet.confirm( strText [,strCaption [,strType]] )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+| strCaption | String | 대화상자의 TitleBar에 표시할 텍스트를 설정합니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+| strType | String | 대화상자의 왼쪽 영역에 표시될 아이콘 종류를 문자열로 설정합니다.
+
+"error" 설정 시 빨간색 "X" 모양 아이콘이 표시됩니다.
+"question" 설정 시 물음표("?") 모양 아이콘이 표시됩니다.
+"warning" 설정 시 노랑색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+"information" 설정 시 파란색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+
+값을 설정하지 않으면 아이콘을 표시하지 않습니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+objFrame.confirm( "Exit ?" );
+objFrame.confirm( "Exit ?",  "Title Text");
+objFrame.confirm( "Exit ?",  "Title Text", "question" );
 ```
 
 **Return**
 
-표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
-표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
+표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -6237,9 +6638,11 @@ var bSucc = this.FrameSet00.destroy();
 
 **Return**
 
-FrameSet 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | FrameSet 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-FrameSet 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+FrameSet 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6268,15 +6671,27 @@ FrameSet.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.FrameSet00_onmove = function( obj:nexacro.FrameSet,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.FrameSet00.findEventHandler( "onmove", this.FrameSet00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -6306,8 +6721,10 @@ var objActiveFrame = objApp.mainframe.frame.getActiveFrame() ;
 
 **Return**
 
-FrameSet 의 자식 Frame 중 활성화 상태일 Frame 오브젝트를 반환합니다.
-FrameSet 의 자식 Frame 중 활성화 상태인 Frame 이 없을 경우 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | FrameSet 의 자식 Frame 중 활성화 상태일 Frame 오브젝트를 반환합니다.
+FrameSet 의 자식 Frame 중 활성화 상태인 Frame 이 없을 경우 "null"을 반환합니다. |
 
 **Remark**
 
@@ -6332,15 +6749,26 @@ FrameSet.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = FrameSet00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -6365,7 +6793,9 @@ var nHwnd = this.parent.getNativeHandle();
 
 **Return**
 
-FrameSet이 속한 윈도우 핸들(HWND)값
+| Type | Description |
+| --- | --- |
+| Number | FrameSet이 속한 윈도우 핸들(HWND)값 |
 
 
 ---
@@ -6392,7 +6822,9 @@ var nBottom = objApp.mainframe.frame.getOffsetBottom();
 
 **Return**
 
-부모 Frame 의 Top 위치를 기준으로 FrameSet 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Top 위치를 기준으로 FrameSet 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -6423,7 +6855,9 @@ var nHeight = objApp.mainframe.frame.getOffsetHeight( ) ;
 
 **Return**
 
-FrameSet 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | FrameSet 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -6454,7 +6888,9 @@ var nLeft = objApp.mainframe.frame.getOffsetLeft();
 
 **Return**
 
-부모 Frame 의 Left 위치를 기준으로 FrameSet 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Left 위치를 기준으로 FrameSet 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -6485,7 +6921,9 @@ var nRight = objApp.mainframe.frame.getOffsetRight();
 
 **Return**
 
-부모 Frame 의 Left 위치를 기준으로 FrameSet 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Left 위치를 기준으로 FrameSet 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -6516,7 +6954,9 @@ var nTop = objApp.mainframe.frame.getOffsetTop();
 
 **Return**
 
-부모 Frame 의 Top 위치를 기준으로 FrameSet 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Top 위치를 기준으로 FrameSet 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -6547,7 +6987,9 @@ var nWidth = objApp.mainframe.frame.getOffsetWidth( ) ;
 
 **Return**
 
-FrameSet 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | FrameSet 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -6576,8 +7018,10 @@ var objFrame = this.getOwnerFrame().getOwnerFrame() ;
 
 **Return**
 
-FrameSet 이 소속된 부모 Frame 오브젝트를 반환합니다.
-FrameSet 이 소속된 Frame 이 없을 경우 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | FrameSet 이 소속된 부모 Frame 오브젝트를 반환합니다.
+FrameSet 이 소속된 Frame 이 없을 경우 "null"을 반환합니다. |
 
 
 ---
@@ -6598,8 +7042,31 @@ FrameSet.init( strName, nLeft, nTop, nWidth, nHeight [, nRight, nBottom] )
 
 **Parameters**
 
-```
-FrameSet 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | FrameSet 의 ID를 문자열로 설정합니다. |
+| nLeft | Number | 부모 Frame 의 좌상단을 기준으로 FrameSet 의 left 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nTop | Number | 부모 Frame 의 좌상단을 기준으로 FrameSet 의 top 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nWidth | Number | FrameSet 의 width 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nHeight | Number | FrameSet 의 height 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nRight | Number | 부모 Frame 의 우하단을 기준으로 FrameSet 의 right 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다.
+nLeft, nWidth 값을 모두 설정했을 경우 nRight 값은 무시됩니다. |
+| nBottom | Number | 부모 Frame 의 우하단을 기준으로 FrameSet 의 bottom 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다.
+nTop, nHeight 값을 모두 설정했을 경우 nBottom 값은 무시됩니다 |
+
+**Sample Call**
+
+```javascript
+var obFrame = new FrameSet();
+
+obFrame.init( "FrameSet00", 30, 120, 196, 46, null, null);
+obFrame.init( "FrameSet00", null, null, 300, "400px", "80%", 300);
 ```
 
 **Return**
@@ -6637,15 +7104,29 @@ FrameSet.insertChild( nIdx, strChildID, objComp )
 
 **Parameters**
 
-```
-부모 Frame 에 추가 될 순서를 설정합니다.
-"-1"로 설정할 경우 자식 Frame 중 제일 마지막에 추가됩니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIdx | Number | 부모 Frame 에 추가 될 순서를 설정합니다.
+"-1"로 설정할 경우 자식 Frame 중 제일 마지막에 추가됩니다. |
+| strChildID | String | 자식으로 추가될 Frame 의 ID를 설정합니다. |
+| objComp | Object | 자식으로 추가될 Frame 의 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objFrame = new FrameSet();
+
+objFrame.init( "FrameSet00", 30, 120, 196, 46 );
+objApp.mainframe.frame.insertChild( 0, "FrameSet00", objFrame ) ;
 ```
 
 **Return**
 
-추가된 자식 Frame 의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 자식 Frame 의 인덱스를 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -6685,16 +7166,33 @@ FrameSet.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.FrameSet00_onmove = function( obj:nexacro.FrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.FrameSet00.insertEventHandler( "onmove", 0, this.FrameSet00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -6719,8 +7217,27 @@ FrameSet.move( nLeft, nTop [, nWidth, nHeight [, nRight, nBottom]] )
 
 **Parameters**
 
-```
-FrameSet 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | FrameSet 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vTop | String, Number | FrameSet 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vWidth | String, Number | FrameSet 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vHeight | String, Number | FrameSet 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vRight | String, Number | FrameSet 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다. |
+| vBottom | String, Number | FrameSet 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.move(10,10);
+objApp.mainframe.frame.move(10,10,100,100);
+objApp.mainframe.frame.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -6752,14 +7269,23 @@ FrameSet.removeChild( strChildID )
 
 **Parameters**
 
-```
-제거할 자식 Frame 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strChildID | String | 제거할 자식 Frame 의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objRemoveFrame = objApp.mainframe.frame.removeChild( "FrameSet00" ) ;
 ```
 
 **Return**
 
-Frame 제거에 성공하면 제거된 Frame 의 오브젝트를 반환합니다.
-Frame 제거에 실패하면 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Frame 제거에 성공하면 제거된 Frame 의 오브젝트를 반환합니다.
+Frame 제거에 실패하면 "null"을 반환합니다. |
 
 **Remark**
 
@@ -6789,15 +7315,26 @@ FrameSet.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.FrameSet00_onmove = function( obj:nexacro.FrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.FrameSet00.removeEventHandler( "onmove", this.FrameSet00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -6824,15 +7361,27 @@ FrameSet.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.FrameSet00_onmove = function( obj:nexacro.FrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.FrameSet00.removeEventHandlerLookup( "onmove", "FrameSet00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -6859,15 +7408,26 @@ FrameSet.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.FrameSet00_onmove = function( obj:nexacro.FrameSet,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.FrameSet00.setEventHandler( "onmove", this.FrameSet00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -6894,15 +7454,27 @@ FrameSet.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.FrameSet00_onmove = function( obj:nexacro.FrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.FrameSet00.setEventHandlerLookup( "onmove", "FrameSet00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -6961,8 +7533,16 @@ FrameSet.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Top 위치를 기준으로 FrameSet 의 bottom 을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 FrameSet 의 Top 위치를 기준으로 FrameSet 의 bottom 을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetBottom( 1000 ) ;
 ```
 
 **Return**
@@ -6992,8 +7572,16 @@ FrameSet.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-FrameSet 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | FrameSet 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetHeight( 1000 ) ;
 ```
 
 **Return**
@@ -7025,8 +7613,16 @@ FrameSet.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Left 위치를 기준으로 FrameSet 의 left 를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 FrameSet 의 Left 위치를 기준으로 FrameSet 의 left 를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetLeft( 100 ) ;
 ```
 
 **Return**
@@ -7058,8 +7654,16 @@ FrameSet.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Left 위치를 기준으로 FrameSet 의 right 를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 FrameSet 의 Left 위치를 기준으로 FrameSet 의 right 를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetRight( 1000 ) ;
 ```
 
 **Return**
@@ -7089,8 +7693,16 @@ FrameSet.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Top 위치를 기준으로 FrameSet 의 top 을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 FrameSet 의 Top 위치를 기준으로 FrameSet 의 top 을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetTop( 100 ) ;
 ```
 
 **Return**
@@ -7122,8 +7734,16 @@ FrameSet.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-FrameSet 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | FrameSet 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetWidth( 1000 ) ;
 ```
 
 **Return**
@@ -7197,9 +7817,10 @@ onactivate(obj:nexacro.FrameSet,e:nexacro.ActivateEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | FrameSet | Event가 발생한 Object. |
+| e | ActivateEventInfo | Event Object. |
 
 **Return**
 
@@ -7239,16 +7860,19 @@ onbeforeclose(obj:nexacro.FrameSet,e:nexacro.CloseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | FrameSet | Event가 발생한 Object. |
+| e | CloseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 문자열 설정 시 FrameSet 종료를 위한 확인창이 표시됩니다.
+| Type | Description |
+| --- | --- |
+| String | 이벤트에서 리턴값으로 문자열 설정 시 FrameSet 종료를 위한 확인창이 표시됩니다.
 이벤트에서 리턴값으로 설정한 문자열이 종료를 위한 확인창에 사용됩니다.
 
-이벤트에서 리턴값을 생략하거나 null, undefined, ""(Empty String) 으로 설정 시 확인창이 표시되지 않습니다.
+이벤트에서 리턴값을 생략하거나 null, undefined, ""(Empty String) 으로 설정 시 확인창이 표시되지 않습니다. |
 
 **Remark**
 
@@ -7280,9 +7904,10 @@ onclose(obj:nexacro.FrameSet,e:nexacro.CloseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | FrameSet | Event가 발생한 Object. |
+| e | CloseEventInfo | Event Object. |
 
 **Return**
 
@@ -7313,9 +7938,10 @@ ondeactivate(obj:nexacro.FrameSet,e:nexacro.ActivateEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | FrameSet | Event가 발생한 Object. |
+| e | ActivateEventInfo | Event Object. |
 
 **Return**
 
@@ -7356,9 +7982,10 @@ onmove(obj:nexacro.FrameSet,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | FrameSet | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -7383,9 +8010,10 @@ onorientationchange(obj:nexacro.FrameSet,e:nexacro.OrientationChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | FrameSet | Event가 발생한 Object. |
+| e | OrientationChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -7419,9 +8047,10 @@ onsize(obj:nexacro.FrameSet,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | FrameSet | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -7446,16 +8075,19 @@ onsyscommand(obj:nexacro.FrameSet,e:nexacro.SysCommandEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | FrameSet | Event가 발생한 Object. |
+| e | SysCommandEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 프레임으로 이벤트가 전파되고, 시스템명령이 수행됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 프레임으로 이벤트가 전파되고, 시스템명령이 수행됩니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 프레임으로 이벤트가 전파되지 않고, 시스템명령도 취소됩니다.
 
-이벤트에서 리턴값을 생략하면 true 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 true 로 적용됩니다. |
 
 **Remark**
 
@@ -8306,9 +8938,7 @@ strcssclass ::= <ClassName> [ , &ltClassName> ]*
 ```
 ```javascript
 var objApp = nexacro.getApplication();
-
-objApp.mainframe.HFramSet00.cssclass = "TestClass";
-objApp.mainframe.HFramSet00.cssclass = "TestClass,TestClass2";
+objApp.mainframe.HFramSet00.cssclass = "TestClass";objApp.mainframe.HFramSet00.cssclass = "TestClass,TestClass2";
 ```
 - **`<ClassName>`** — XCSS 에 정의된 classname 을 설정합니다.
 
@@ -8486,8 +9116,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.HFrameSet00.enableevent = true;  
-
-this.HFrameSet00.enableevent = false;
+this.HFrameSet00.enableevent = false;
 ```
 - **`true`** — HFrameSet 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — HFrameSet 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -8995,8 +9624,7 @@ HFrameSet.separatesize[= strSize]
 
 ```javascript
 var objApp = nexacro.getApplication();
-
-objApp.mainframe.HFramSet00.separatesize = "200,*,400,2*";
+objApp.mainframe.HFramSet00.separatesize = "200,*,400,2*";
 ```
 - **`strSize`** — 각 자식 Frame 별로 표시될 너비를 콤마(",")로 구분하여 설정합니다.
 
@@ -9521,14 +10149,27 @@ HFrameSet.addChild( strChildID, objFrame )
 
 **Parameters**
 
-```
-자식으로 추가될 Frame 의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strChildID | String | 자식으로 추가될 Frame 의 ID를 설정합니다. |
+| objFrame | Object | 자식으로 추가될 Frame 의 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objFrame = new FrameSet();
+
+objFrame.init( "FrameSet00", 30, 120, 196, 46 );
+objApp.mainframe.frame.addChild( "FrameSet00", objFrame ) ;
 ```
 
 **Return**
 
-추가된 자식 Frame 의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 자식 Frame 의 인덱스를 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -9564,15 +10205,26 @@ HFrameSet.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.HFrameSet00_onmove = function( obj:nexacro.HFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.HFrameSet00.addEventHandler( "onmove", this.HFrameSet00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -9593,15 +10245,27 @@ HFrameSet.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.HFrameSet00_onmove = function( obj:nexacro.HFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.HFrameSet00.addEventHandlerLookup( "onmove", "HFrameSet00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -9627,8 +10291,15 @@ HFrameSet.alert( strText )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+objFrame.alert( "Warning" );
 ```
 
 **Return**
@@ -9658,13 +10329,21 @@ HFrameSet.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.HFrameSet00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -9689,14 +10368,40 @@ HFrameSet.confirm( strText [,strCaption [,strType]] )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+| strCaption | String | 대화상자의 TitleBar에 표시할 텍스트를 설정합니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+| strType | String | 대화상자의 왼쪽 영역에 표시될 아이콘 종류를 문자열로 설정합니다.
+
+"error" 설정 시 빨간색 "X" 모양 아이콘이 표시됩니다.
+"question" 설정 시 물음표("?") 모양 아이콘이 표시됩니다.
+"warning" 설정 시 노랑색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+"information" 설정 시 파란색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+
+값을 설정하지 않으면 아이콘을 표시하지 않습니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+objFrame.confirm( "Exit ?" );
+objFrame.confirm( "Exit ?",  "Title Text");
+objFrame.confirm( "Exit ?",  "Title Text", "question" );
 ```
 
 **Return**
 
-표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
-표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
+표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -9725,9 +10430,11 @@ var bSucc = this.HFrameSet00.destroy();
 
 **Return**
 
-HFrameSet 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | HFrameSet 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-HFrameSet 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+HFrameSet 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -9756,15 +10463,27 @@ HFrameSet.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.HFrameSet00_onmove = function( obj:nexacro.HFrameSet,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.HFrameSet00.findEventHandler( "onmove", this.HFrameSet00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -9794,8 +10513,10 @@ var objActiveFrame = objApp.mainframe.frame.getActiveFrame() ;
 
 **Return**
 
-HFrameSet 의 자식 Frame 중 활성화 상태일 Frame 오브젝트를 반환합니다.
-HFrameSet 의 자식 Frame 중 활성화 상태인 Frame 이 없을 경우 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | HFrameSet 의 자식 Frame 중 활성화 상태일 Frame 오브젝트를 반환합니다.
+HFrameSet 의 자식 Frame 중 활성화 상태인 Frame 이 없을 경우 "null"을 반환합니다. |
 
 **Remark**
 
@@ -9820,15 +10541,26 @@ HFrameSet.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = HFrameSet00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -9853,7 +10585,9 @@ var nHwnd = this.parent.getNativeHandle();
 
 **Return**
 
-HFrameSet이 속한 윈도우 핸들(HWND)값
+| Type | Description |
+| --- | --- |
+| Number | HFrameSet이 속한 윈도우 핸들(HWND)값 |
 
 
 ---
@@ -9880,7 +10614,9 @@ var nBottom = objApp.mainframe.frame.getOffsetBottom();
 
 **Return**
 
-부모 Frame 의 Top 위치를 기준으로 HFrameSet 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Top 위치를 기준으로 HFrameSet 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -9911,7 +10647,9 @@ var nHeight = objApp.mainframe.frame.getOffsetHeight( ) ;
 
 **Return**
 
-HFrameSet 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | HFrameSet 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -9942,7 +10680,9 @@ var nLeft = objApp.mainframe.frame.getOffsetLeft();
 
 **Return**
 
-부모 Frame 의 Left 위치를 기준으로 HFrameSet 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Left 위치를 기준으로 HFrameSet 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -9973,7 +10713,9 @@ var nRight = objApp.mainframe.frame.getOffsetRight();
 
 **Return**
 
-부모 Frame 의 Left 위치를 기준으로 HFrameSet 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Left 위치를 기준으로 HFrameSet 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -10004,7 +10746,9 @@ var nTop = objApp.mainframe.frame.getOffsetTop();
 
 **Return**
 
-부모 Frame 의 Top 위치를 기준으로 HFrameSet 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Top 위치를 기준으로 HFrameSet 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -10035,7 +10779,9 @@ var nWidth = objApp.mainframe.frame.getOffsetWidth( ) ;
 
 **Return**
 
-HFrameSet 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | HFrameSet 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -10064,8 +10810,10 @@ var objFrame = this.getOwnerFrame().getOwnerFrame() ;
 
 **Return**
 
-HFrameSet 이 소속된 부모 Frame 오브젝트를 반환합니다.
-HFrameSet 이 소속된 Frame 이 없을 경우 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | HFrameSet 이 소속된 부모 Frame 오브젝트를 반환합니다.
+HFrameSet 이 소속된 Frame 이 없을 경우 "null"을 반환합니다. |
 
 
 ---
@@ -10086,8 +10834,31 @@ HFrameSet.init( strName, nLeft, nTop, nWidth, nHeight [, nRight, nBottom] )
 
 **Parameters**
 
-```
-HFrameSet 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | HFrameSet 의 ID를 문자열로 설정합니다. |
+| nLeft | Number | 부모 Frame 의 좌상단을 기준으로 HFrameSet 의 left 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nTop | Number | 부모 Frame 의 좌상단을 기준으로 HFrameSet 의 top 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nWidth | Number | HFrameSet 의 width 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nHeight | Number | HFrameSet 의 height 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nRight | Number | 부모 Frame 의 우하단을 기준으로 HFrameSet 의 right 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다.
+nLeft, nWidth 값을 모두 설정했을 경우 nRight 값은 무시됩니다. |
+| nBottom | Number | 부모 Frame 의 우하단을 기준으로 HFrameSet 의 bottom 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다.
+nTop, nHeight 값을 모두 설정했을 경우 nBottom 값은 무시됩니다 |
+
+**Sample Call**
+
+```javascript
+var obFrame = new HFrameSet();
+
+obFrame.init( "HFrameSet00", 30, 120, 196, 46, null, null);
+obFrame.init( "HFrameSet00", null, null, 300, "400px", "80%", 300);
 ```
 
 **Return**
@@ -10125,15 +10896,29 @@ HFrameSet.insertChild( nIdx, strChildID, objComp )
 
 **Parameters**
 
-```
-부모 Frame 에 추가 될 순서를 설정합니다.
-"-1"로 설정할 경우 자식 Frame 중 제일 마지막에 추가됩니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIdx | Number | 부모 Frame 에 추가 될 순서를 설정합니다.
+"-1"로 설정할 경우 자식 Frame 중 제일 마지막에 추가됩니다. |
+| strChildID | String | 자식으로 추가될 Frame 의 ID를 설정합니다. |
+| objComp | Object | 자식으로 추가될 Frame 의 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objFrame = new FrameSet();
+
+objFrame.init( "FrameSet00", 30, 120, 196, 46 );
+objApp.mainframe.frame.insertChild( 0, "FrameSet00", objFrame ) ;
 ```
 
 **Return**
 
-추가된 자식 Frame 의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 자식 Frame 의 인덱스를 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -10173,16 +10958,33 @@ HFrameSet.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.HFrameSet00_onmove = function( obj:nexacro.HFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.HFrameSet00.insertEventHandler( "onmove", 0, this.HFrameSet00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -10207,8 +11009,27 @@ HFrameSet.move( nLeft, nTop [, nWidth, nHeight [, nRight, nBottom]] )
 
 **Parameters**
 
-```
-HFrameSet 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | HFrameSet 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vTop | String, Number | HFrameSet 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vWidth | String, Number | HFrameSet 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vHeight | String, Number | HFrameSet 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vRight | String, Number | HFrameSet 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다. |
+| vBottom | String, Number | HFrameSet 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.move(10,10);
+objApp.mainframe.frame.move(10,10,100,100);
+objApp.mainframe.frame.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -10240,14 +11061,23 @@ HFrameSet.removeChild( strChildID )
 
 **Parameters**
 
-```
-제거할 자식 Frame 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strChildID | String | 제거할 자식 Frame 의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objRemoveFrame = objApp.mainframe.frame.removeChild( "FrameSet00" ) ;
 ```
 
 **Return**
 
-Frame 제거에 성공하면 제거된 Frame 의 오브젝트를 반환합니다.
-Frame 제거에 실패하면 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Frame 제거에 성공하면 제거된 Frame 의 오브젝트를 반환합니다.
+Frame 제거에 실패하면 "null"을 반환합니다. |
 
 **Remark**
 
@@ -10277,15 +11107,26 @@ HFrameSet.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.HFrameSet00_onmove = function( obj:nexacro.HFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.HFrameSet00.removeEventHandler( "onmove", this.HFrameSet00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -10312,15 +11153,27 @@ HFrameSet.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.HFrameSet00_onmove = function( obj:nexacro.HFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.HFrameSet00.removeEventHandlerLookup( "onmove", "HFrameSet00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -10347,15 +11200,26 @@ HFrameSet.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.HFrameSet00_onmove = function( obj:nexacro.HFrameSet,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.HFrameSet00.setEventHandler( "onmove", this.HFrameSet00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -10382,15 +11246,27 @@ HFrameSet.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.HFrameSet00_onmove = function( obj:nexacro.HFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.HFrameSet00.setEventHandlerLookup( "onmove", "HFrameSet00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -10449,8 +11325,16 @@ HFrameSet.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Top 위치를 기준으로 HFrameSet 의 bottom 을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 FrameSet 의 Top 위치를 기준으로 HFrameSet 의 bottom 을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetBottom( 1000 ) ;
 ```
 
 **Return**
@@ -10480,8 +11364,16 @@ HFrameSet.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-HFrameSet 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | HFrameSet 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetHeight( 1000 ) ;
 ```
 
 **Return**
@@ -10513,8 +11405,16 @@ HFrameSet.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Left 위치를 기준으로 HFrameSet 의 left 를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 FrameSet 의 Left 위치를 기준으로 HFrameSet 의 left 를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetLeft( 100 ) ;
 ```
 
 **Return**
@@ -10546,8 +11446,16 @@ HFrameSet.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Left 위치를 기준으로 HFrameSet 의 right 를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 FrameSet 의 Left 위치를 기준으로 HFrameSet 의 right 를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetRight( 1000 ) ;
 ```
 
 **Return**
@@ -10577,8 +11485,16 @@ HFrameSet.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Top 위치를 기준으로 HFrameSet 의 top 을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 FrameSet 의 Top 위치를 기준으로 HFrameSet 의 top 을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetTop( 100 ) ;
 ```
 
 **Return**
@@ -10610,8 +11526,16 @@ HFrameSet.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-HFrameSet 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | HFrameSet 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetWidth( 1000 ) ;
 ```
 
 **Return**
@@ -10685,9 +11609,10 @@ onactivate(obj:nexacro.HFrameSet,e:nexacro.ActivateEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | HFrameSet | Event가 발생한 Object. |
+| e | ActivateEventInfo | Event Object. |
 
 **Return**
 
@@ -10727,16 +11652,19 @@ onbeforeclose(obj:nexacro.HFrameSet,e:nexacro.CloseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | HFrameSet | Event가 발생한 Object. |
+| e | CloseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 문자열 설정 시 HFrameSet 종료를 위한 확인창이 표시됩니다.
+| Type | Description |
+| --- | --- |
+| String | 이벤트에서 리턴값으로 문자열 설정 시 HFrameSet 종료를 위한 확인창이 표시됩니다.
 이벤트에서 리턴값으로 설정한 문자열이 종료를 위한 확인창에 사용됩니다.
 
-이벤트에서 리턴값을 생략하거나 null, undefined, ""(Empty String) 으로 설정 시 확인창이 표시되지 않습니다.
+이벤트에서 리턴값을 생략하거나 null, undefined, ""(Empty String) 으로 설정 시 확인창이 표시되지 않습니다. |
 
 **Remark**
 
@@ -10768,9 +11696,10 @@ onclose(obj:nexacro.HFrameSet,e:nexacro.CloseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | HFrameSet | Event가 발생한 Object. |
+| e | CloseEventInfo | Event Object. |
 
 **Return**
 
@@ -10801,9 +11730,10 @@ ondeactivate(obj:nexacro.HFrameSet,e:nexacro.ActivateEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | HFrameSet | Event가 발생한 Object. |
+| e | ActivateEventInfo | Event Object. |
 
 **Return**
 
@@ -10844,9 +11774,10 @@ onmove(obj:nexacro.HFrameSet,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | HFrameSet | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -10871,9 +11802,10 @@ onorientationchange(obj:nexacro.HFrameSet,e:nexacro.OrientationChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | HFrameSet | Event가 발생한 Object. |
+| e | OrientationChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -10907,9 +11839,10 @@ onsize(obj:nexacro.HFrameSet,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | HFrameSet | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -10934,16 +11867,19 @@ onsyscommand(obj:nexacro.HFrameSet,e:nexacro.SysCommandEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | HFrameSet | Event가 발생한 Object. |
+| e | SysCommandEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 프레임으로 이벤트가 전파되고, 시스템명령이 수행됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 프레임으로 이벤트가 전파되고, 시스템명령이 수행됩니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 프레임으로 이벤트가 전파되지 않고, 시스템명령도 취소됩니다.
 
-이벤트에서 리턴값을 생략하면 true 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 true 로 적용됩니다. |
 
 **Remark**
 
@@ -11751,9 +12687,7 @@ strcssclass ::= <ClassName> [ , &ltClassName> ]*
 ```
 ```javascript
 var objApp = nexacro.getApplication();
-
-objApp.mainframe.cssclass = "TestClass";
-objApp.mainframe.cssclass = "TestClass,TestClass2";
+objApp.mainframe.cssclass = "TestClass";objApp.mainframe.cssclass = "TestClass,TestClass2";
 ```
 - **`<ClassName>`** — XCSS 에 정의된 classname 을 설정합니다.
 
@@ -11931,8 +12865,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.MainFrame00.enableevent = true;  
-
-this.MainFrame00.enableevent = false;
+this.MainFrame00.enableevent = false;
 ```
 - **`true`** — MainFrame 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — MainFrame 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -12089,9 +13022,7 @@ nheight ::= <nVal> ['px']
 ```
 ```javascript
 var objApp = nexacro.getApplication();
-
-objApp.mainframe.height = 10;
-objApp.mainframe.height = "10px";
+objApp.mainframe.height = 10;objApp.mainframe.height = "10px";
 ```
 - **`<nVal>`** — MainFrame 의 높이를 pixel 단위의 숫자로 설정합니다.
 
@@ -12245,9 +13176,7 @@ nleft ::= <nVal> ['px']
 ```
 ```javascript
 var objApp = nexacro.getApplication();
-
-objApp.mainframe.left = 10;
-objApp.mainframe.left = "10px";
+objApp.mainframe.left = 10;objApp.mainframe.left = "10px";
 ```
 - **`<nVal>`** — MainFrame 의 좌측 좌표값을 pixel 단위의 숫자로 설정합니다.
 
@@ -12971,9 +13900,7 @@ ntop ::= <nVal> ['px']
 ```
 ```javascript
 var objApp = nexacro.getApplication();
-
-objApp.mainframe.top = 10;
-objApp.mainframe.top = "10px";
+objApp.mainframe.top = 10;objApp.mainframe.top = "10px";
 ```
 - **`<nVal>`** — MainFrame 의 상단 좌표값을 pixel 단위의 숫자로 설정합니다.
 
@@ -13048,8 +13975,7 @@ nwidth ::= <nVal> ['px']
 ```
 ```javascript
 var objApp = nexacro.getApplication();
-
-objApp.mainframe.width = 10; objApp.mainframe.width = "10px";
+objApp.mainframe.width = 10; objApp.mainframe.width = "10px";
 ```
 - **`<nVal>`** — MainFrame 의 너비를 pixel 단위의 숫자로 설정합니다.
 
@@ -13118,15 +14044,26 @@ MainFrame.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.MainFrame00_onmove = function( obj:nexacro.MainFrame,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.MainFrame00.addEventHandler( "onmove", this.MainFrame00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -13147,15 +14084,27 @@ MainFrame.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.MainFrame00_onmove = function( obj:nexacro.MainFrame,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.MainFrame00.addEventHandlerLookup( "onmove", "MainFrame00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -13181,8 +14130,15 @@ MainFrame.alert( strText )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+objFrame.alert( "Warning" );
 ```
 
 **Return**
@@ -13212,13 +14168,21 @@ MainFrame.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.MainFrame00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -13243,14 +14207,40 @@ MainFrame.confirm( strText [,strCaption [,strType]] )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+| strCaption | String | 대화상자의 TitleBar에 표시할 텍스트를 설정합니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+| strType | String | 대화상자의 왼쪽 영역에 표시될 아이콘 종류를 문자열로 설정합니다.
+
+"error" 설정 시 빨간색 "X" 모양 아이콘이 표시됩니다.
+"question" 설정 시 물음표("?") 모양 아이콘이 표시됩니다.
+"warning" 설정 시 노랑색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+"information" 설정 시 파란색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+
+값을 설정하지 않으면 아이콘을 표시하지 않습니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+objFrame.confirm( "Exit ?" );
+objFrame.confirm( "Exit ?",  "Title Text");
+objFrame.confirm( "Exit ?",  "Title Text", "question" );
 ```
 
 **Return**
 
-표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
-표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
+표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -13275,15 +14265,27 @@ MainFrame.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.MainFrame00_onmove = function( obj:nexacro.MainFrame,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.MainFrame00.findEventHandler( "onmove", this.MainFrame00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -13308,15 +14310,26 @@ MainFrame.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = MainFrame00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -13341,7 +14354,9 @@ var nHwnd = this.parent.getNativeHandle();
 
 **Return**
 
-MainFrame이 속한 윈도우 핸들(HWND)값
+| Type | Description |
+| --- | --- |
+| Number | MainFrame이 속한 윈도우 핸들(HWND)값 |
 
 
 ---
@@ -13368,9 +14383,11 @@ var nWidth = objApp.mainframe.getOffsetHeight();
 
 **Return**
 
-MainFrame 의 height 속성값을 픽셀단위의 값으로 변경하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | MainFrame 의 height 속성값을 픽셀단위의 값으로 변경하여 반환합니다.
 
-MainFrame 의 height 속성값을 설정하지 않으면 top, bottom 속성값을 기준으로 높이를 반환합니다.
+MainFrame 의 height 속성값을 설정하지 않으면 top, bottom 속성값을 기준으로 높이를 반환합니다. |
 
 **Remark**
 
@@ -13401,9 +14418,11 @@ var nWidth = objApp.mainframe.getOffsetWidth();
 
 **Return**
 
-MainFrame 의 width 속성값을 픽셀단위의 값으로 변경하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | MainFrame 의 width 속성값을 픽셀단위의 값으로 변경하여 반환합니다.
 
-MainFrame 의 width 속성값을 설정하지 않으면 left, right 속성값을 기준으로 너비를 반환합니다.
+MainFrame 의 width 속성값을 설정하지 않으면 left, right 속성값을 기준으로 너비를 반환합니다. |
 
 **Remark**
 
@@ -13428,16 +14447,33 @@ MainFrame.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.MainFrame00_onmove = function( obj:nexacro.MainFrame,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.MainFrame00.insertEventHandler( "onmove", 0, this.MainFrame00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -13462,15 +14498,26 @@ MainFrame.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.MainFrame00_onmove = function( obj:nexacro.MainFrame,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.MainFrame00.removeEventHandler( "onmove", this.MainFrame00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -13497,15 +14544,27 @@ MainFrame.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.MainFrame00_onmove = function( obj:nexacro.MainFrame,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.MainFrame00.removeEventHandlerLookup( "onmove", "MainFrame00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -13532,15 +14591,26 @@ MainFrame.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.MainFrame00_onmove = function( obj:nexacro.MainFrame,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.MainFrame00.setEventHandler( "onmove", this.MainFrame00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -13567,15 +14637,27 @@ MainFrame.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.MainFrame00_onmove = function( obj:nexacro.MainFrame,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.MainFrame00.setEventHandlerLookup( "onmove", "MainFrame00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -13602,8 +14684,16 @@ MainFrame.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-MainFrame 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | MainFrame 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.setOffsetHeight( 1000 ) ;
 ```
 
 **Return**
@@ -13635,8 +14725,16 @@ MainFrame.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-MainFrame 의 left 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | MainFrame 의 left 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.setOffsetLeft( 100 ) ;
 ```
 
 **Return**
@@ -13668,8 +14766,16 @@ MainFrame.setOffsetLeft( nTop );
 
 **Parameters**
 
-```
-MainFrame 의 top 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | MainFrame 의 top 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.setOffsetTop( 100 ) ;
 ```
 
 **Return**
@@ -13701,8 +14807,16 @@ MainFrame.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-MainFrame 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | MainFrame 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.setOffsetWidth( 1000 ) ;
 ```
 
 **Return**
@@ -13736,9 +14850,10 @@ onactivate(obj:nexacro.MainFrame,e:nexacro.ActivateEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | MainFrame | Event가 발생한 Object. |
+| e | ActivateEventInfo | Event Object. |
 
 **Return**
 
@@ -13778,16 +14893,19 @@ onbeforeclose(obj:nexacro.MainFrame,e:nexacro.CloseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | MainFrame | Event가 발생한 Object. |
+| e | CloseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 문자열 설정 시 MainFrame 종료를 위한 확인창이 표시됩니다.
+| Type | Description |
+| --- | --- |
+| String | 이벤트에서 리턴값으로 문자열 설정 시 MainFrame 종료를 위한 확인창이 표시됩니다.
 이벤트에서 리턴값으로 설정한 문자열이 종료를 위한 확인창에 사용됩니다.
 
-이벤트에서 리턴값을 생략하거나 null, undefined, ""(Empty String) 으로 설정 시 확인창이 표시되지 않습니다.
+이벤트에서 리턴값을 생략하거나 null, undefined, ""(Empty String) 으로 설정 시 확인창이 표시되지 않습니다. |
 
 **Remark**
 
@@ -13819,9 +14937,10 @@ onclose(obj:nexacro.MainFrame,e:nexacro.CloseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | MainFrame | Event가 발생한 Object. |
+| e | CloseEventInfo | Event Object. |
 
 **Return**
 
@@ -13859,9 +14978,10 @@ ondeactivate(obj:nexacro.MainFrame,e:nexacro.ActivateEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | MainFrame | Event가 발생한 Object. |
+| e | ActivateEventInfo | Event Object. |
 
 **Return**
 
@@ -13902,9 +15022,10 @@ onmove(obj:nexacro.MainFrame,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | MainFrame | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -13929,9 +15050,10 @@ onorientationchange(obj:nexacro.MainFrame,e:nexacro.OrientationChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | MainFrame | Event가 발생한 Object. |
+| e | OrientationChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -13965,9 +15087,10 @@ onsize(obj:nexacro.MainFrame,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | MainFrame | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -13992,16 +15115,19 @@ onsyscommand(obj:nexacro.MainFrame,e:nexacro.SysCommandEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | MainFrame | Event가 발생한 Object. |
+| e | SysCommandEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 프레임으로 이벤트가 전파되고, 시스템명령이 수행됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 프레임으로 이벤트가 전파되고, 시스템명령이 수행됩니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 프레임으로 이벤트가 전파되지 않고, 시스템명령도 취소됩니다.
 
-이벤트에서 리턴값을 생략하면 true 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 true 로 적용됩니다. |
 
 **Remark**
 
@@ -14861,9 +15987,7 @@ strcssclass ::= <ClassName> [ , &ltClassName> ]*
 ```
 ```javascript
 var objApp = nexacro.getApplication();
-
-objApp.mainframe.TileFramSet00.cssclass = "TestClass";
-objApp.mainframe.TileFrameSet00.cssclass = "TestClass,TestClass2";
+objApp.mainframe.TileFramSet00.cssclass = "TestClass";objApp.mainframe.TileFrameSet00.cssclass = "TestClass,TestClass2";
 ```
 - **`<ClassName>`** — XCSS 에 정의된 classname 을 설정합니다.
 
@@ -15041,8 +16165,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.TileFrameSet00.enableevent = true;  
-
-this.TileFrameSet00.enableevent = false;
+this.TileFrameSet00.enableevent = false;
 ```
 - **`true`** — TileFrameSet 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — TileFrameSet 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -15203,8 +16326,7 @@ TileFrameSet.fullframemaximize[= bFullframe]
 bFullframe ::= 'true' | 'false'
 ```
 ```javascript
-TileFrameSet00.fullframemaximize = true;
-TileFrameSet00.fullframemaximize = false;
+TileFrameSet00.fullframemaximize = true;TileFrameSet00.fullframemaximize = false;
 ```
 - **`"true"`** — TileFrameSet 하단에 최소화된 Frame 표시영역까지 자식 Frame 이 확대되어 표시됩니다.
 - **`"false"`** — TileFrameSet 하단에 최소화된 Frame 표시영역까지 자식 Frame 이 확대되지 않습니다.
@@ -15768,8 +16890,7 @@ TileFrameSet.separatesize[= strSize]
 
 ```javascript
 var objApp = nexacro.getApplication() ;
-
-objApp.mainframe.TileFramSet00.separatesize = "200,*,400,2*";
+objApp.mainframe.TileFramSet00.separatesize = "200,*,400,2*";
 ```
 - **`strSize`** — 각 자식 Frame 별로 표시될 크기를 콤마(",")로 구분하여 설정합니다.
 
@@ -16367,14 +17488,27 @@ TileFrameSet.addChild( strChildID, objFrame )
 
 **Parameters**
 
-```
-자식으로 추가될 Frame 의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strChildID | String | 자식으로 추가될 Frame 의 ID를 설정합니다. |
+| objFrame | Object | 자식으로 추가될 Frame 의 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objFrame = new FrameSet();
+
+objFrame.init( "FrameSet00", 30, 120, 196, 46 );
+objApp.mainframe.frame.addChild( "FrameSet00", objFrame ) ;
 ```
 
 **Return**
 
-추가된 자식 Frame 의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 자식 Frame 의 인덱스를 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -16410,15 +17544,26 @@ TileFrameSet.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.TileFrameSet00_onmove = function( obj:nexacro.TileFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.TileFrameSet00.addEventHandler( "onmove", this.TileFrameSet00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -16439,15 +17584,27 @@ TileFrameSet.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.TileFrameSet00_onmove = function( obj:nexacro.TileFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.TileFrameSet00.addEventHandlerLookup( "onmove", "TileFrameSet00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -16473,8 +17630,15 @@ TileFrameSet.alert( strText )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+objFrame.alert( "Warning" );
 ```
 
 **Return**
@@ -16504,13 +17668,21 @@ TileFrameSet.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.TileFrameSet00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -16535,14 +17707,40 @@ TileFrameSet.confirm( strText [,strCaption [,strType]] )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+| strCaption | String | 대화상자의 TitleBar에 표시할 텍스트를 설정합니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+| strType | String | 대화상자의 왼쪽 영역에 표시될 아이콘 종류를 문자열로 설정합니다.
+
+"error" 설정 시 빨간색 "X" 모양 아이콘이 표시됩니다.
+"question" 설정 시 물음표("?") 모양 아이콘이 표시됩니다.
+"warning" 설정 시 노랑색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+"information" 설정 시 파란색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+
+값을 설정하지 않으면 아이콘을 표시하지 않습니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+objFrame.confirm( "Exit ?" );
+objFrame.confirm( "Exit ?",  "Title Text");
+objFrame.confirm( "Exit ?",  "Title Text", "question" );
 ```
 
 **Return**
 
-표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
-표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
+표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -16571,9 +17769,11 @@ var bSucc = this.TileFrameSet00.destroy();
 
 **Return**
 
-TileFrameSet 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | TileFrameSet 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-TileFrameSet 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+TileFrameSet 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -16602,15 +17802,27 @@ TileFrameSet.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.TileFrameSet00_onmove = function( obj:nexacro.TileFrameSet,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.TileFrameSet00.findEventHandler( "onmove", this.TileFrameSet00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -16640,8 +17852,10 @@ var objActiveFrame = objApp.mainframe.frame.getActiveFrame() ;
 
 **Return**
 
-TileFrameSet 의 자식 Frame 중 활성화 상태일 Frame 오브젝트를 반환합니다.
-TileFrameSet 의 자식 Frame 중 활성화 상태인 Frame 이 없을 경우 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | TileFrameSet 의 자식 Frame 중 활성화 상태일 Frame 오브젝트를 반환합니다.
+TileFrameSet 의 자식 Frame 중 활성화 상태인 Frame 이 없을 경우 "null"을 반환합니다. |
 
 **Remark**
 
@@ -16666,15 +17880,26 @@ TileFrameSet.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = TileFrameSet00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -16699,7 +17924,9 @@ var nHwnd = this.parent.getNativeHandle();
 
 **Return**
 
-TileFrameSet이 속한 윈도우 핸들(HWND)값
+| Type | Description |
+| --- | --- |
+| Number | TileFrameSet이 속한 윈도우 핸들(HWND)값 |
 
 
 ---
@@ -16726,7 +17953,9 @@ var nBottom = objApp.mainframe.frame.getOffsetBottom();
 
 **Return**
 
-부모 Frame 의 Top 위치를 기준으로 TileFrameSet 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Top 위치를 기준으로 TileFrameSet 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -16757,7 +17986,9 @@ var nHeight = objApp.mainframe.frame.getOffsetHeight( ) ;
 
 **Return**
 
-TileFrameSet 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | TileFrameSet 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -16788,7 +18019,9 @@ var nLeft = objApp.mainframe.frame.getOffsetLeft();
 
 **Return**
 
-부모 Frame 의 Left 위치를 기준으로 TileFrameSet 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Left 위치를 기준으로 TileFrameSet 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -16819,7 +18052,9 @@ var nRight = objApp.mainframe.frame.getOffsetRight();
 
 **Return**
 
-부모 Frame 의 Left 위치를 기준으로 TileFrameSet 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Left 위치를 기준으로 TileFrameSet 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -16850,7 +18085,9 @@ var nTop = objApp.mainframe.frame.getOffsetTop();
 
 **Return**
 
-부모 Frame 의 Top 위치를 기준으로 TileFrameSet 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Top 위치를 기준으로 TileFrameSet 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -16881,7 +18118,9 @@ var nWidth = objApp.mainframe.frame.getOffsetWidth( ) ;
 
 **Return**
 
-TileFrameSet 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | TileFrameSet 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -16910,8 +18149,10 @@ var objFrame = this.getOwnerFrame().getOwnerFrame() ;
 
 **Return**
 
-TileFrameSet 이 소속된 부모 Frame 오브젝트를 반환합니다.
-TileFrameSet 이 소속된 Frame 이 없을 경우 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | TileFrameSet 이 소속된 부모 Frame 오브젝트를 반환합니다.
+TileFrameSet 이 소속된 Frame 이 없을 경우 "null"을 반환합니다. |
 
 
 ---
@@ -16932,8 +18173,31 @@ TileFrameSet.init( strName, nLeft, nTop, nWidth, nHeight [, nRight, nBottom] )
 
 **Parameters**
 
-```
-TileFrameSet 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | TileFrameSet 의 ID를 문자열로 설정합니다. |
+| nLeft | Number | 부모 Frame 의 좌상단을 기준으로 TileFrameSet 의 left 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nTop | Number | 부모 Frame 의 좌상단을 기준으로 TileFrameSet 의 top 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nWidth | Number | TileFrameSet 의 width 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nHeight | Number | TileFrameSet 의 height 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nRight | Number | 부모 Frame 의 우하단을 기준으로 TileFrameSet 의 right 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다.
+nLeft, nWidth 값을 모두 설정했을 경우 nRight 값은 무시됩니다. |
+| nBottom | Number | 부모 Frame 의 우하단을 기준으로 TileFrameSet 의 bottom 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다.
+nTop, nHeight 값을 모두 설정했을 경우 nBottom 값은 무시됩니다 |
+
+**Sample Call**
+
+```javascript
+var obFrame = new TileFrameSet();
+
+obFrame.init( "TileFrameSet00", 30, 120, 196, 46, null, null);
+obFrame.init( "TileFrameSet00", null, null, 300, "400px", "80%", 300);
 ```
 
 **Return**
@@ -16971,15 +18235,29 @@ TileFrameSet.insertChild( nIdx, strChildID, objComp )
 
 **Parameters**
 
-```
-부모 Frame 에 추가 될 순서를 설정합니다.
-"-1"로 설정할 경우 자식 Frame 중 제일 마지막에 추가됩니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIdx | Number | 부모 Frame 에 추가 될 순서를 설정합니다.
+"-1"로 설정할 경우 자식 Frame 중 제일 마지막에 추가됩니다. |
+| strChildID | String | 자식으로 추가될 Frame 의 ID를 설정합니다. |
+| objComp | Object | 자식으로 추가될 Frame 의 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objFrame = new FrameSet();
+
+objFrame.init( "FrameSet00", 30, 120, 196, 46 );
+objApp.mainframe.frame.insertChild( 0, "FrameSet00", objFrame ) ;
 ```
 
 **Return**
 
-추가된 자식 Frame 의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 자식 Frame 의 인덱스를 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -17019,16 +18297,33 @@ TileFrameSet.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.TileFrameSet00_onmove = function( obj:nexacro.TileFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.TileFrameSet00.insertEventHandler( "onmove", 0, this.TileFrameSet00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -17053,8 +18348,27 @@ TileFrameSet.move( nLeft, nTop [, nWidth, nHeight [, nRight, nBottom]] )
 
 **Parameters**
 
-```
-TileFrameSet 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | TileFrameSet 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vTop | String, Number | TileFrameSet 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vWidth | String, Number | TileFrameSet 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vHeight | String, Number | TileFrameSet 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vRight | String, Number | TileFrameSet 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다. |
+| vBottom | String, Number | TileFrameSet 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.move(10,10);
+objApp.mainframe.frame.move(10,10,100,100);
+objApp.mainframe.frame.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -17086,14 +18400,23 @@ TileFrameSet.removeChild( strChildID )
 
 **Parameters**
 
-```
-제거할 자식 Frame 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strChildID | String | 제거할 자식 Frame 의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objRemoveFrame = objApp.mainframe.frame.removeChild( "FrameSet00" ) ;
 ```
 
 **Return**
 
-Frame 제거에 성공하면 제거된 Frame 의 오브젝트를 반환합니다.
-Frame 제거에 실패하면 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Frame 제거에 성공하면 제거된 Frame 의 오브젝트를 반환합니다.
+Frame 제거에 실패하면 "null"을 반환합니다. |
 
 **Remark**
 
@@ -17123,15 +18446,26 @@ TileFrameSet.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.TileFrameSet00_onmove = function( obj:nexacro.TileFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.TileFrameSet00.removeEventHandler( "onmove", this.TileFrameSet00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -17158,15 +18492,27 @@ TileFrameSet.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.TileFrameSet00_onmove = function( obj:nexacro.TileFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.TileFrameSet00.removeEventHandlerLookup( "onmove", "TileFrameSet00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -17193,15 +18539,26 @@ TileFrameSet.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.TileFrameSet00_onmove = function( obj:nexacro.TileFrameSet,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.TileFrameSet00.setEventHandler( "onmove", this.TileFrameSet00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -17228,15 +18585,27 @@ TileFrameSet.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.TileFrameSet00_onmove = function( obj:nexacro.TileFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.TileFrameSet00.setEventHandlerLookup( "onmove", "TileFrameSet00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -17295,8 +18664,16 @@ TileFrameSet.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Top 위치를 기준으로 TileFrameSet 의 bottom 을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 FrameSet 의 Top 위치를 기준으로 TileFrameSet 의 bottom 을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetBottom( 1000 ) ;
 ```
 
 **Return**
@@ -17326,8 +18703,16 @@ TileFrameSet.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-TileFrameSet 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | TileFrameSet 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetHeight( 1000 ) ;
 ```
 
 **Return**
@@ -17359,8 +18744,16 @@ TileFrameSet.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Left 위치를 기준으로 TileFrameSet 의 left 를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 FrameSet 의 Left 위치를 기준으로 TileFrameSet 의 left 를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetLeft( 100 ) ;
 ```
 
 **Return**
@@ -17392,8 +18785,16 @@ TileFrameSet.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Left 위치를 기준으로 TileFrameSet 의 right 를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 FrameSet 의 Left 위치를 기준으로 TileFrameSet 의 right 를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetRight( 1000 ) ;
 ```
 
 **Return**
@@ -17423,8 +18824,16 @@ TileFrameSet.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Top 위치를 기준으로 TileFrameSet 의 top 을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 FrameSet 의 Top 위치를 기준으로 TileFrameSet 의 top 을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetTop( 100 ) ;
 ```
 
 **Return**
@@ -17456,8 +18865,16 @@ TileFrameSet.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-TileFrameSet 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | TileFrameSet 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetWidth( 1000 ) ;
 ```
 
 **Return**
@@ -17531,9 +18948,10 @@ onactivate(obj:nexacro.TileFrameSet,e:nexacro.ActivateEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TileFrameSet | Event가 발생한 Object. |
+| e | ActivateEventInfo | Event Object. |
 
 **Return**
 
@@ -17573,16 +18991,19 @@ onbeforeclose(obj:nexacro.TileFrameSet,e:nexacro.CloseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TileFrameSet | Event가 발생한 Object. |
+| e | CloseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 문자열 설정 시 TileFrameSet 종료를 위한 확인창이 표시됩니다.
+| Type | Description |
+| --- | --- |
+| String | 이벤트에서 리턴값으로 문자열 설정 시 TileFrameSet 종료를 위한 확인창이 표시됩니다.
 이벤트에서 리턴값으로 설정한 문자열이 종료를 위한 확인창에 사용됩니다.
 
-이벤트에서 리턴값을 생략하거나 null, undefined, ""(Empty String) 으로 설정 시 확인창이 표시되지 않습니다.
+이벤트에서 리턴값을 생략하거나 null, undefined, ""(Empty String) 으로 설정 시 확인창이 표시되지 않습니다. |
 
 **Remark**
 
@@ -17614,9 +19035,10 @@ onclose(obj:nexacro.TileFrameSet,e:nexacro.CloseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TileFrameSet | Event가 발생한 Object. |
+| e | CloseEventInfo | Event Object. |
 
 **Return**
 
@@ -17647,9 +19069,10 @@ ondeactivate(obj:nexacro.TileFrameSet,e:nexacro.ActivateEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TileFrameSet | Event가 발생한 Object. |
+| e | ActivateEventInfo | Event Object. |
 
 **Return**
 
@@ -17689,9 +19112,10 @@ onmove(obj:nexacro.TileFrameSet,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TileFrameSet | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -17716,9 +19140,10 @@ onorientationchange(obj:nexacro.TileFrameSet,e:nexacro.OrientationChangeEventInf
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TileFrameSet | Event가 발생한 Object. |
+| e | OrientationChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -17752,9 +19177,10 @@ onsize(obj:nexacro.TileFrameSet,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TileFrameSet | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -17779,16 +19205,19 @@ onsyscommand(obj:nexacro.TileFrameSet,e:nexacro.SysCommandEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TileFrameSet | Event가 발생한 Object. |
+| e | SysCommandEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 프레임으로 이벤트가 전파되고, 시스템명령이 수행됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 프레임으로 이벤트가 전파되고, 시스템명령이 수행됩니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 프레임으로 이벤트가 전파되지 않고, 시스템명령도 취소됩니다.
 
-이벤트에서 리턴값을 생략하면 true 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 true 로 적용됩니다. |
 
 **Remark**
 
@@ -18642,9 +20071,7 @@ strcssclass ::= <ClassName> [ , &ltClassName> ]*
 ```
 ```javascript
 var objApp = nexacro.getApplication();
-
-objApp.mainframe.VFramSet00.cssclass = "TestClass";
-objApp.mainframe.VFramSet00.cssclass = "TestClass,TestClass2";
+objApp.mainframe.VFramSet00.cssclass = "TestClass";objApp.mainframe.VFramSet00.cssclass = "TestClass,TestClass2";
 ```
 - **`<ClassName>`** — XCSS 에 정의된 classname 을 설정합니다.
 
@@ -18822,8 +20249,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.VFrameSet00.enableevent = true;  
-
-this.VFrameSet00.enableevent = false;
+this.VFrameSet00.enableevent = false;
 ```
 - **`true`** — VFrameSet 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — VFrameSet 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -19403,8 +20829,7 @@ VFrameSet.separatesize[= strSize]
 
 ```javascript
 var objApp = nexacro.getApplication();
-
-objApp.mainframe.VFramSet00.separatesize = "200,*,400,2*";
+objApp.mainframe.VFramSet00.separatesize = "200,*,400,2*";
 ```
 - **`strSize`** — 각 자식 Frame 별로 표시될 높이를 콤마(",")로 구분하여 설정합니다.
 
@@ -19969,14 +21394,27 @@ VFrameSet.addChild( strChildID, objFrame )
 
 **Parameters**
 
-```
-자식으로 추가될 Frame 의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strChildID | String | 자식으로 추가될 Frame 의 ID를 설정합니다. |
+| objFrame | Object | 자식으로 추가될 Frame 의 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objFrame = new FrameSet();
+
+objFrame.init( "FrameSet00", 30, 120, 196, 46 );
+objApp.mainframe.frame.addChild( "FrameSet00", objFrame ) ;
 ```
 
 **Return**
 
-추가된 자식 Frame 의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 자식 Frame 의 인덱스를 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -20012,15 +21450,26 @@ VFrameSet.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.VFrameSet00_onmove = function( obj:nexacro.VFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.VFrameSet00.addEventHandler( "onmove", this.VFrameSet00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -20041,15 +21490,27 @@ VFrameSet.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.VFrameSet00_onmove = function( obj:nexacro.VFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.VFrameSet00.addEventHandlerLookup( "onmove", "VFrameSet00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -20075,8 +21536,15 @@ VFrameSet.alert( strText )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+objFrame.alert( "Warning" );
 ```
 
 **Return**
@@ -20106,13 +21574,21 @@ VFrameSet.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.VFrameSet00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -20137,14 +21613,40 @@ VFrameSet.confirm( strText [,strCaption [,strType]] )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+| strCaption | String | 대화상자의 TitleBar에 표시할 텍스트를 설정합니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+| strType | String | 대화상자의 왼쪽 영역에 표시될 아이콘 종류를 문자열로 설정합니다.
+
+"error" 설정 시 빨간색 "X" 모양 아이콘이 표시됩니다.
+"question" 설정 시 물음표("?") 모양 아이콘이 표시됩니다.
+"warning" 설정 시 노랑색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+"information" 설정 시 파란색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+
+값을 설정하지 않으면 아이콘을 표시하지 않습니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+
+**Sample Call**
+
+```javascript
+var objFrame = this.getOwnerFrame();
+objFrame.confirm( "Exit ?" );
+objFrame.confirm( "Exit ?",  "Title Text");
+objFrame.confirm( "Exit ?",  "Title Text", "question" );
 ```
 
 **Return**
 
-표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
-표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
+표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -20173,9 +21675,11 @@ var bSucc = this.VFrameSet00.destroy();
 
 **Return**
 
-VFrameSet 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | VFrameSet 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-VFrameSet 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+VFrameSet 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -20204,15 +21708,27 @@ VFrameSet.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.VFrameSet00_onmove = function( obj:nexacro.VFrameSet,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.VFrameSet00.findEventHandler( "onmove", this.VFrameSet00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -20242,8 +21758,10 @@ var objActiveFrame = objApp.mainframe.frame.getActiveFrame() ;
 
 **Return**
 
-VFrameSet 의 자식 Frame 중 활성화 상태일 Frame 오브젝트를 반환합니다.
-VFrameSet 의 자식 Frame 중 활성화 상태인 Frame 이 없을 경우 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | VFrameSet 의 자식 Frame 중 활성화 상태일 Frame 오브젝트를 반환합니다.
+VFrameSet 의 자식 Frame 중 활성화 상태인 Frame 이 없을 경우 "null"을 반환합니다. |
 
 **Remark**
 
@@ -20268,15 +21786,26 @@ VFrameSet.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = VFrameSet00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -20301,7 +21830,9 @@ var nHwnd = this.parent.getNativeHandle();
 
 **Return**
 
-VFrameSet이 속한 윈도우 핸들(HWND)값
+| Type | Description |
+| --- | --- |
+| Number | VFrameSet이 속한 윈도우 핸들(HWND)값 |
 
 
 ---
@@ -20328,7 +21859,9 @@ var nBottom = objApp.mainframe.frame.getOffsetBottom();
 
 **Return**
 
-부모 Frame 의 Top 위치를 기준으로 VFrameSet 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Top 위치를 기준으로 VFrameSet 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -20359,7 +21892,9 @@ var nHeight = objApp.mainframe.frame.getOffsetHeight( ) ;
 
 **Return**
 
-VFrameSet 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | VFrameSet 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -20390,7 +21925,9 @@ var nLeft = objApp.mainframe.frame.getOffsetLeft();
 
 **Return**
 
-부모 Frame 의 Left 위치를 기준으로 VFrameSet 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Left 위치를 기준으로 VFrameSet 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -20421,7 +21958,9 @@ var nRight = objApp.mainframe.frame.getOffsetRight();
 
 **Return**
 
-부모 Frame 의 Left 위치를 기준으로 VFrameSet 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Left 위치를 기준으로 VFrameSet 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -20452,7 +21991,9 @@ var nTop = objApp.mainframe.frame.getOffsetTop();
 
 **Return**
 
-부모 Frame 의 Top 위치를 기준으로 VFrameSet 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 Frame 의 Top 위치를 기준으로 VFrameSet 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -20483,7 +22024,9 @@ var nWidth = objApp.mainframe.frame.getOffsetWidth( ) ;
 
 **Return**
 
-VFrameSet 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | VFrameSet 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -20512,8 +22055,10 @@ var objFrame = this.getOwnerFrame().getOwnerFrame() ;
 
 **Return**
 
-VFrameSet 이 소속된 부모 Frame 오브젝트를 반환합니다.
-VFrameSet 이 소속된 Frame 이 없을 경우 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | VFrameSet 이 소속된 부모 Frame 오브젝트를 반환합니다.
+VFrameSet 이 소속된 Frame 이 없을 경우 "null"을 반환합니다. |
 
 
 ---
@@ -20534,8 +22079,31 @@ VFrameSet.init( strName, nLeft, nTop, nWidth, nHeight [, nRight, nBottom] )
 
 **Parameters**
 
-```
-VFrameSet 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | VFrameSet 의 ID를 문자열로 설정합니다. |
+| nLeft | Number | 부모 Frame 의 좌상단을 기준으로 VFrameSet 의 left 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nTop | Number | 부모 Frame 의 좌상단을 기준으로 VFrameSet 의 top 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nWidth | Number | VFrameSet 의 width 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nHeight | Number | VFrameSet 의 height 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다. |
+| nRight | Number | 부모 Frame 의 우하단을 기준으로 VFrameSet 의 right 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다.
+nLeft, nWidth 값을 모두 설정했을 경우 nRight 값은 무시됩니다. |
+| nBottom | Number | 부모 Frame 의 우하단을 기준으로 VFrameSet 의 bottom 속성값을 설정합니다.
+Pixel 단위 또는 비율("%")로 설정할 수 있습니다.
+nTop, nHeight 값을 모두 설정했을 경우 nBottom 값은 무시됩니다 |
+
+**Sample Call**
+
+```javascript
+var obFrame = new VFrameSet();
+
+obFrame.init( "VFrameSet00", 30, 120, 196, 46, null, null);
+obFrame.init( "VFrameSet00", null, null, 300, "400px", "80%", 300);
 ```
 
 **Return**
@@ -20573,15 +22141,29 @@ VFrameSet.insertChild( nIdx, strChildID, objComp )
 
 **Parameters**
 
-```
-부모 Frame 에 추가 될 순서를 설정합니다.
-"-1"로 설정할 경우 자식 Frame 중 제일 마지막에 추가됩니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIdx | Number | 부모 Frame 에 추가 될 순서를 설정합니다.
+"-1"로 설정할 경우 자식 Frame 중 제일 마지막에 추가됩니다. |
+| strChildID | String | 자식으로 추가될 Frame 의 ID를 설정합니다. |
+| objComp | Object | 자식으로 추가될 Frame 의 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objFrame = new FrameSet();
+
+objFrame.init( "FrameSet00", 30, 120, 196, 46 );
+objApp.mainframe.frame.insertChild( 0, "FrameSet00", objFrame ) ;
 ```
 
 **Return**
 
-추가된 자식 Frame 의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 자식 Frame 의 인덱스를 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -20621,16 +22203,33 @@ VFrameSet.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.VFrameSet00_onmove = function( obj:nexacro.VFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.VFrameSet00.insertEventHandler( "onmove", 0, this.VFrameSet00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -20655,8 +22254,27 @@ VFrameSet.move( nLeft, nTop [, nWidth, nHeight [, nRight, nBottom]] )
 
 **Parameters**
 
-```
-VFrameSet 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | VFrameSet 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vTop | String, Number | VFrameSet 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vWidth | String, Number | VFrameSet 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vHeight | String, Number | VFrameSet 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다. |
+| vRight | String, Number | VFrameSet 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다. |
+| vBottom | String, Number | VFrameSet 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.move(10,10);
+objApp.mainframe.frame.move(10,10,100,100);
+objApp.mainframe.frame.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -20688,14 +22306,23 @@ VFrameSet.removeChild( strChildID )
 
 **Parameters**
 
-```
-제거할 자식 Frame 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strChildID | String | 제거할 자식 Frame 의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objRemoveFrame = objApp.mainframe.frame.removeChild( "FrameSet00" ) ;
 ```
 
 **Return**
 
-Frame 제거에 성공하면 제거된 Frame 의 오브젝트를 반환합니다.
-Frame 제거에 실패하면 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Frame 제거에 성공하면 제거된 Frame 의 오브젝트를 반환합니다.
+Frame 제거에 실패하면 "null"을 반환합니다. |
 
 **Remark**
 
@@ -20725,15 +22352,26 @@ VFrameSet.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.VFrameSet00_onmove = function( obj:nexacro.VFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.VFrameSet00.removeEventHandler( "onmove", this.VFrameSet00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -20760,15 +22398,27 @@ VFrameSet.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.VFrameSet00_onmove = function( obj:nexacro.VFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.VFrameSet00.removeEventHandlerLookup( "onmove", "VFrameSet00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -20795,15 +22445,26 @@ VFrameSet.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.VFrameSet00_onmove = function( obj:nexacro.VFrameSet,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.VFrameSet00.setEventHandler( "onmove", this.VFrameSet00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -20830,15 +22491,27 @@ VFrameSet.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.VFrameSet00_onmove = function( obj:nexacro.VFrameSet,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.VFrameSet00.setEventHandlerLookup( "onmove", "VFrameSet00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -20897,8 +22570,16 @@ VFrameSet.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Top 위치를 기준으로 VFrameSet 의 bottom 을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 FrameSet 의 Top 위치를 기준으로 VFrameSet 의 bottom 을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetBottom( 1000 ) ;
 ```
 
 **Return**
@@ -20928,8 +22609,16 @@ VFrameSet.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-VFrameSet 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | VFrameSet 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetHeight( 1000 ) ;
 ```
 
 **Return**
@@ -20961,8 +22650,16 @@ VFrameSet.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Left 위치를 기준으로 VFrameSet 의 left 를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 FrameSet 의 Left 위치를 기준으로 VFrameSet 의 left 를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetLeft( 100 ) ;
 ```
 
 **Return**
@@ -20994,8 +22691,16 @@ VFrameSet.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Left 위치를 기준으로 VFrameSet 의 right 를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 FrameSet 의 Left 위치를 기준으로 VFrameSet 의 right 를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetRight( 1000 ) ;
 ```
 
 **Return**
@@ -21025,8 +22730,16 @@ VFrameSet.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 FrameSet 의 Top 위치를 기준으로 VFrameSet 의 top 을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 FrameSet 의 Top 위치를 기준으로 VFrameSet 의 top 을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetTop( 100 ) ;
 ```
 
 **Return**
@@ -21058,8 +22771,16 @@ VFrameSet.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-VFrameSet 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | VFrameSet 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.mainframe.frame.frames[0].setOffsetWidth( 1000 ) ;
 ```
 
 **Return**
@@ -21133,9 +22854,10 @@ onactivate(obj:nexacro.VFrameSet,e:nexacro.ActivateEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | VFrameSet | Event가 발생한 Object. |
+| e | ActivateEventInfo | Event Object. |
 
 **Return**
 
@@ -21175,16 +22897,19 @@ onbeforeclose(obj:nexacro.VFrameSet,e:nexacro.CloseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | VFrameSet | Event가 발생한 Object. |
+| e | CloseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 문자열 설정 시 VFrameSet 종료를 위한 확인창이 표시됩니다.
+| Type | Description |
+| --- | --- |
+| String | 이벤트에서 리턴값으로 문자열 설정 시 VFrameSet 종료를 위한 확인창이 표시됩니다.
 이벤트에서 리턴값으로 설정한 문자열이 종료를 위한 확인창에 사용됩니다.
 
-이벤트에서 리턴값을 생략하거나 null, undefined, ""(Empty String) 으로 설정 시 확인창이 표시되지 않습니다.
+이벤트에서 리턴값을 생략하거나 null, undefined, ""(Empty String) 으로 설정 시 확인창이 표시되지 않습니다. |
 
 **Remark**
 
@@ -21216,9 +22941,10 @@ onclose(obj:nexacro.VFrameSet,e:nexacro.CloseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | VFrameSet | Event가 발생한 Object. |
+| e | CloseEventInfo | Event Object. |
 
 **Return**
 
@@ -21249,9 +22975,10 @@ ondeactivate(obj:nexacro.VFrameSet,e:nexacro.ActivateEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | VFrameSet | Event가 발생한 Object. |
+| e | ActivateEventInfo | Event Object. |
 
 **Return**
 
@@ -21292,9 +23019,10 @@ onmove(obj:nexacro.VFrameSet,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | VFrameSet | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -21319,9 +23047,10 @@ onorientationchange(obj:nexacro.VFrameSet,e:nexacro.OrientationChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | VFrameSet | Event가 발생한 Object. |
+| e | OrientationChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -21355,9 +23084,10 @@ onsize(obj:nexacro.VFrameSet,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | VFrameSet | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -21382,16 +23112,19 @@ onsyscommand(obj:nexacro.VFrameSet,e:nexacro.SysCommandEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | VFrameSet | Event가 발생한 Object. |
+| e | SysCommandEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 프레임으로 이벤트가 전파되고, 시스템명령이 수행됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 프레임으로 이벤트가 전파되고, 시스템명령이 수행됩니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 프레임으로 이벤트가 전파되지 않고, 시스템명령도 취소됩니다.
 
-이벤트에서 리턴값을 생략하면 true 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 true 로 적용됩니다. |
 
 **Remark**
 

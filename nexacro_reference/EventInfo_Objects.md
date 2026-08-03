@@ -7195,8 +7195,7 @@ DSColChangeEventInfo.newvalue[= strNewName]
 
 ```javascript
 var strNewval = e.newvalue;  
-
-e.newvalue = "New Data";
+e.newvalue = "New Data";
 ```
 
 **Remark**

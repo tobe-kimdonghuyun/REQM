@@ -245,19 +245,27 @@ Acceleration.getCurrentAcceleration( [nAccuracy] )
 
 **Parameters**
 
-```
-가속도 정보의 정확도를 "0~3" 범위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nAccuracy | Number | 가속도 정보의 정확도를 "0~3" 범위의 숫자로 설정합니다.
 값이 작을수록 반환되는 값의 정확도가 높아집니다.
 
-값 생략 시 0 으로 적용됩니다.
+값 생략 시 0 으로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+Acceleration.getCurrentAcceleration(2);
 ```
 
 **Return**
 
-가속도 정보 수신에 성공하면 true 를 반환하고, onrecvsuccess 이벤트가 발생합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 가속도 정보 수신에 성공하면 true 를 반환하고, onrecvsuccess 이벤트가 발생합니다.
 
 가속도 정보 수신에 실패하면 false 를 반환하고, onrecverror 이벤트가 발생합니다.
-nAccuracy 값이 "0~3" 값이 아니면 false 를 반환합니다.
+nAccuracy 값이 "0~3" 값이 아니면 false 를 반환합니다. |
 
 
 ---
@@ -278,16 +286,27 @@ Acceleration.watchStart( nAccuracy, nIntervalTime )
 
 **Parameters**
 
-```
-가속도 정보 정확도를 "0~3"범위의 숫자로 설정합니다.
-값이 작을수록 반환되는 값의 정확도가 높아집니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nAccuracy | Number | 가속도 정보 정확도를 "0~3"범위의 숫자로 설정합니다.
+값이 작을수록 반환되는 값의 정확도가 높아집니다. |
+| nIntervalTime | Number | 가속도 정보를 수신할 주기를 밀리초(milliseconds) 단위의 숫자로 설정합니다.
+
+주기는 200ms ~ 86,400,000ms 사이의 값을 설정할 수 있습니다. |
+
+**Sample Call**
+
+```javascript
+Acceleration.watchStart(1, 1000);
 ```
 
 **Return**
 
-메소드 실행에 성공하면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 "true"를 반환합니다.
 
-메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환합니다.
+메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -341,9 +360,10 @@ onrecverror(obj:nexacro.Acceleration,e:nexacro.AccelerationErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Acceleration | Event가 발생한 Object. |
+| e | AccelerationErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -368,9 +388,10 @@ onrecvsuccess(obj:nexacro.Acceleration,e:nexacro.AccelerationEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Acceleration | Event가 발생한 Object. |
+| e | AccelerationEventInfo | Event Object. |
 
 **Return**
 
@@ -591,8 +612,10 @@ AppInfo.isDebuggerConnected()
 
 **Return**
 
-USB 디버깅 설정 활성화 여부를 반환합니다.
-USB 디버깅 설정이 활성화된 경우는 true를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | USB 디버깅 설정 활성화 여부를 반환합니다.
+USB 디버깅 설정이 활성화된 경우는 true를 반환합니다. |
 
 
 ---
@@ -936,18 +959,26 @@ AudioPlayer.load(strUrl)
 
 **Parameters**
 
-```
-로딩할 오디오 파일의 위치를 URL 형식의 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strUrl | String | 로딩할 오디오 파일의 위치를 URL 형식의 문자열로 설정합니다.
 
-모바일 기기에 저장된 오디오 파일은 Alias 를 사용하여 문자열로 설정합니다.
+모바일 기기에 저장된 오디오 파일은 Alias 를 사용하여 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.AudioPlayer00.load( "%USERAPP%filename.mp3" );
 ```
 
 **Return**
 
-메소드 실행에 성공하면 "true"를 반환하고, onload 이벤트가 발생합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 "true"를 반환하고, onload 이벤트가 발생합니다.
 메소드 실행에 실패하면 "true"를 반환하고, onerror 이벤트가 발생합니다.
 
-strUrl 값이 생략된 경우 "false"를 반환합니다.
+strUrl 값이 생략된 경우 "false"를 반환합니다. |
 
 **Remark**
 
@@ -1017,17 +1048,25 @@ AudioPlayer.movePos(nPos)
 
 **Parameters**
 
-```
-오디오파일의 재생 위치를 밀리초(milliseconds) 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nPos | Number | 오디오파일의 재생 위치를 밀리초(milliseconds) 단위의 숫자로 설정합니다.
 
-이동 위치는 "0ms ~ duration속성값" 사이의 값을 설정할 수 있습니다.
+이동 위치는 "0ms ~ duration속성값" 사이의 값을 설정할 수 있습니다. |
+
+**Sample Call**
+
+```javascript
+this.AudioPlayer.movePos(1000);
 ```
 
 **Return**
 
-메소드 실행에 성공하면 "true"를 반환하고, onmovepos 이벤트가 발생합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 "true"를 반환하고, onmovepos 이벤트가 발생합니다.
 
-메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환하고, onerror 이벤트가 발생합니다.
+메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환하고, onerror 이벤트가 발생합니다. |
 
 
 ---
@@ -1078,18 +1117,26 @@ AudioPlayer.play( [nIntervalTime] )
 
 **Parameters**
 
-```
-오디오 파일 재생 중 onplaying 이벤트가 발생하는 주기를 밀리초(milliseconds) 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIntervalTime | Object | 오디오 파일 재생 중 onplaying 이벤트가 발생하는 주기를 밀리초(milliseconds) 단위의 숫자로 설정합니다.
 
 주기는 200ms ~ 86,400,000ms 사이의 값을 설정할 수 있습니다.
-값을 생략하거나 200ms 미만으로 설정 시 onplaying 이벤트가 발생하지 않습니다.
+값을 생략하거나 200ms 미만으로 설정 시 onplaying 이벤트가 발생하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+this.AudioPlayer00.play(1000);
 ```
 
 **Return**
 
-메소드 실행에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 true 를 반환합니다.
 
-메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 false 를 반환합니다.
+메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -1173,9 +1220,10 @@ onerror(obj:nexacro.AudioPlayer,e:nexacro.AudioErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | AudioPlayer | Event가 발생한 Object. |
+| e | AudioErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -1200,9 +1248,10 @@ onload(obj:nexacro.AudioPlayer,e:nexacro.AudioEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | AudioPlayer | Event가 발생한 Object. |
+| e | AudioEventInfo | Event Object. |
 
 **Return**
 
@@ -1231,9 +1280,10 @@ onmovepos(obj:nexacro.AudioPlayer,e:nexacro.AudioEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | AudioPlayer | Event가 발생한 Object. |
+| e | AudioEventInfo | Event Object. |
 
 **Return**
 
@@ -1258,9 +1308,10 @@ onplay(obj:nexacro.AudioPlayer,e:nexacro.AudioEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | AudioPlayer | Event가 발생한 Object. |
+| e | AudioEventInfo | Event Object. |
 
 **Return**
 
@@ -1285,9 +1336,10 @@ onplaying(obj:nexacro.AudioPlayer,e:nexacro.AudioEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | AudioPlayer | Event가 발생한 Object. |
+| e | AudioEventInfo | Event Object. |
 
 **Return**
 
@@ -1312,9 +1364,10 @@ onstop(obj:nexacro.AudioPlayer,e:nexacro.AudioEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | AudioPlayer | Event가 발생한 Object. |
+| e | AudioEventInfo | Event Object. |
 
 **Return**
 
@@ -1767,18 +1820,27 @@ AudioRecord.recordingStart( [nIntervalTime] )
 
 **Parameters**
 
-```
-오디오 데이터 녹음 중 onrecording 이벤트가 발생하는 주기를 밀리초(milliseconds) 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIntervalTime | Number | 오디오 데이터 녹음 중 onrecording 이벤트가 발생하는 주기를 밀리초(milliseconds) 단위의 숫자로 설정합니다.
 
 주기는 200ms ~ 86,400,000ms 사이의 값을 설정할 수 있습니다.
-값을 생략하거나 200ms 미만으로 설정 시 onrecording 이벤트가 발생하지 않습니다.
+값을 생략하거나 200ms 미만으로 설정 시 onrecording 이벤트가 발생하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+this.AudioRecord00.recordingStart();
+this.AudioRecord00.recordingStart(1000);
 ```
 
 **Return**
 
-메소드 실행에 성공하면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 "true"를 반환합니다.
 
-메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환합니다.
+메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -1861,9 +1923,10 @@ onerror(obj:nexacro.AudioRecorder,e:nexacro.AudioErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | AudioRecorder | Event가 발생한 Object. |
+| e | AudioErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -1888,9 +1951,10 @@ onrecording(obj:nexacro.AudioRecorder,e:nexacro.AudioEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | AudioRecorder | Event가 발생한 Object. |
+| e | AudioEventInfo | Event Object. |
 
 **Return**
 
@@ -1915,9 +1979,10 @@ onstop(obj:nexacro.AudioRecorder,e:nexacro.AudioEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | AudioRecorder | Event가 발생한 Object. |
+| e | AudioEventInfo | Event Object. |
 
 **Return**
 
@@ -2056,12 +2121,18 @@ BluetoothLE.connect( strAddress )
 
 **Parameters**
 
-```
-Peripheral 디바이스의 주소를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strAddress | String | Peripheral 디바이스의 주소를 문자열로 설정합니다.
 
 Windows NRE 와 Android NRE 는 MAC Address 를 사용합니다.
 macOS NRE 는 OS 가 부여한 UUID 를 사용합니다.
-iOS/iPadOS NRE 는 검색된 디바이스 목록의 Index 를 사용합니다.
+iOS/iPadOS NRE 는 검색된 디바이스 목록의 Index 를 사용합니다. |
+
+**Sample Call**
+
+```javascript
+this.BluetoothLE00.connect( "00:00:00:00:00:00" );
 ```
 
 **Return**
@@ -2168,8 +2239,16 @@ BluetoothLE.readCharacteristic( strSvcUUID, strCharUUID )
 
 **Parameters**
 
-```
-Characteristic 이 정의된 서비스의 UUID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strSvcUUID | String | Characteristic 이 정의된 서비스의 UUID 를 문자열로 설정합니다. |
+| strCharUUID | String | 값을 가져오려는 Characteristic 의 UUID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+// Serial 통신 서비스의 RX Characteristic 값 요청
+this.BluetoothLE00.readCharacteristic( "6E400001-B5A3-F393-E0A9-E50E24DCCA9E", "6E400003-B5A3-F393-E0A9-E50E24DCCA9E" );
 ```
 
 **Return**
@@ -2200,10 +2279,21 @@ BluetoothLE.scanStart( [nDuration [, strSvcUUID]] )
 
 **Parameters**
 
-```
-검색을 지속할 시간을 밀리초(Millisecond) 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nDuration | Number | 검색을 지속할 시간을 밀리초(Millisecond) 단위의 숫자로 설정합니다.
 
-값 생략 시 2000 으로 적용됩니다.
+값 생략 시 2000 으로 적용됩니다. |
+| strSvcUUID | String | 찾으려고 하는 특정 서비스의 UUID 를 문자열로 설정합니다.
+
+값 생략 시 게시(Advertiesement)중인 모든 Peripheral 디바이스를 검색합니다. |
+
+**Sample Call**
+
+```javascript
+this.BluetoothLE.scanStart();
+this.BluetoothLE.scanStart( 5000 );
+this.BluetoothLE.scanStart( 5000, "6E400001-B5A3-F393-E0A9-E50E24DCCA9E" ); // Serial 통신 서비스
 ```
 
 **Return**
@@ -2267,8 +2357,18 @@ BluetoothLE.subscribe( strSvcUUID, strCharUUID )
 
 **Parameters**
 
-```
-Characteristic 이 정의된 서비스의 UUID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strSvcUUID | String | Characteristic 이 정의된 서비스의 UUID 를 문자열로 설정합니다. |
+| strCharUUID | String | Notification 을 요청할 Characteristic 의 UUID 를 문자열로 설정합니다.
+
+Characteristic 의 값이 변경되면 서버로 부터 Notification 이 전달됩니다. |
+
+**Sample Call**
+
+```javascript
+// Serial 통신 서비스의 RX Characteristic 값 변경 시 Notification 요청
+this.BluetoothLE00.subscribe( "6E400001-B5A3-F393-E0A9-E50E24DCCA9E", "6E400003-B5A3-F393-E0A9-E50E24DCCA9E" );
 ```
 
 **Return**
@@ -2301,8 +2401,16 @@ BluetoothLE.unsubscribe( strSvcUUID, strCharUUID )
 
 **Parameters**
 
-```
-Characteristic 이 정의된 서비스의 UUID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strSvcUUID | String | Characteristic 이 정의된 서비스의 UUID 를 문자열로 설정합니다. |
+| strCharUUID | String | Notification 해제를 요청할 Characteristic 의 UUID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+// Serial 통신 서비스의 RX Characteristic 에 대한 Notification 해제
+this.BluetoothLE00.unsubscribe( "6E400001-B5A3-F393-E0A9-E50E24DCCA9E", "6E400003-B5A3-F393-E0A9-E50E24DCCA9E" );
 ```
 
 **Return**
@@ -2333,8 +2441,17 @@ BluetoothLE.writeCharacteristic( strSvcUUID, strCharUUID, strVal )
 
 **Parameters**
 
-```
-Characteristic 이 정의된 서비스의 UUID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strSvcUUID | String | Characteristic 이 정의된 서비스의 UUID 를 문자열로 설정합니다. |
+| strCharUUID | String | 값을 저장하려는 Characteristic 의 UUID 를 문자열로 설정합니다. |
+| strVal | String | Characteristic 에 저장할 값을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+// Serial 통신 서비스의 RX Characteristic 값 저장
+this.BluetoothLE00.readCharacteristic( "6E400001-B5A3-F393-E0A9-E50E24DCCA9E", "6E400003-B5A3-F393-E0A9-E50E24DCCA9E", "C#B0" );
 ```
 
 **Return**
@@ -2367,9 +2484,10 @@ onerror(obj:nexacro.BluetoothLE,e:nexacro.BluetoothLEErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | BluetoothLE | Event가 발생한 Object. |
+| e | BluetoothLEErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -2398,9 +2516,10 @@ onscanresult(obj:nexacro.BluetoothLE,e:nexacro.BluetoothLEScanDeviceEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | BluetoothLE | Event가 발생한 Object. |
+| e | BluetoothLEScanDeviceEventInfo | Event Object. |
 
 **Return**
 
@@ -2431,9 +2550,10 @@ onsubscriberesult(obj:nexacro.BluetoothLE,e:nexacro.BluetoothLEEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | BluetoothLE | Event가 발생한 Object. |
+| e | BluetoothLEEventInfo | Event Object. |
 
 **Return**
 
@@ -2462,9 +2582,10 @@ onsuccess(obj:nexacro.BluetoothLE,e:nexacro.BluetoothLEEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | BluetoothLE | Event가 발생한 Object. |
+| e | BluetoothLEEventInfo | Event Object. |
 
 **Return**
 
@@ -2827,9 +2948,10 @@ oncapture(obj:nexacro.Camera,e:nexacro.CameraEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Camera | Event가 발생한 Object. |
+| e | CameraEventInfo | Event Object. |
 
 **Return**
 
@@ -2854,9 +2976,10 @@ onerror(obj:nexacro.Camera,e:nexacro.CameraErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Camera | Event가 발생한 Object. |
+| e | CameraErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -4167,15 +4290,26 @@ ContactSet.append(objContact)
 
 **Parameters**
 
-```
-추가할 연락처 정보를 Contact 객체 형태로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objContact | Object | 추가할 연락처 정보를 Contact 객체 형태로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objContact = new nexacro.Contact();
+
+objContact.contactname.familyname = "testname";
+this.ContactSet00.append(objContact);
 ```
 
 **Return**
 
-메소드 실행에 성공하면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 "true"를 반환합니다.
 
-메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환합니다.
+메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -4201,18 +4335,29 @@ ContactSet.query( strQueryInfo [, nResultCnt] )
 
 **Parameters**
 
-```
-연락처정보 중 조회할 연락처의 조건을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strQueryInfo | String | 연락처정보 중 조회할 연락처의 조건을 문자열로 설정합니다.
 
 "필드이름:검색어;필드이름:검색어;..." 형태로 설정하여야 합니다.
-검색어에는 "?", "*" 와 같은 와일드카드 문자를 사용할 수 있습니다.
+검색어에는 "?", "*" 와 같은 와일드카드 문자를 사용할 수 있습니다. |
+| nResultCnt | Number | 조건에 맞는 연락처 중 반환받을 연락처정보 갯수를 설정합니다.
+
+"-1" 설정 시 조건에 맞는 연락처를 모두 조회합니다. |
+
+**Sample Call**
+
+```javascript
+this.ContactSet00.query( "contactname:홍길동;phonenumbers:*2214", 5 );
 ```
 
 **Return**
 
-메소드 실행에 성공하면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 "true"를 반환합니다.
 
-메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환합니다.
+메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -4323,15 +4468,23 @@ ContactSet.remove(strUniqueID)
 
 **Parameters**
 
-```
-삭제할 연락처정보의 Contact 객체의 uniqueid 속성값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strUniqueID | String | 삭제할 연락처정보의 Contact 객체의 uniqueid 속성값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ContactSet00.remove("5");
 ```
 
 **Return**
 
-메소드 실행에 성공하면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 "true"를 반환합니다.
 
-메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환합니다.
+메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -4357,15 +4510,26 @@ ContactSet.update(objContact)
 
 **Parameters**
 
-```
-수정할 연락처 정보의 Contact 객체를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objContact | Object | 수정할 연락처 정보의 Contact 객체를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objContact = e.contacts[0];                                   // onsuccess 이벤트에서 연락처정보를 받는다.
+
+objContact.contactname.familyname = "new name";  // 내용수정
+this.Contact00.update(objContact);                             // 연락처정보를 갱신한다.
 ```
 
 **Return**
 
-메소드 실행에 성공하면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 "true"를 반환합니다.
 
-메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환합니다.
+메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -4395,9 +4559,10 @@ onerror(obj:nexacro.ContactSet,e:nexacro.ContactSetErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ContactSet | Event가 발생한 Object. |
+| e | ContactSetErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -4422,9 +4587,10 @@ onsuccess(obj:nexacro.ContactSet,e:nexacro.ContactSetEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ContactSet | Event가 발생한 Object. |
+| e | ContactSetEventInfo | Event Object. |
 
 **Return**
 
@@ -4587,17 +4753,32 @@ ExternalAPI.execExtAPI( strRecvID, strAppID, strAPI [, strParams] )
 
 **Parameters**
 
-```
-실행한 메소드를 구분하기 위한 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strRecvID | String | 실행한 메소드를 구분하기 위한 ID 를 문자열로 설정합니다.
 
-onsuccess, onrecvdata 이벤트에서 ExternalAPIEventIfo 오브젝트의 recvid 속성에 설정한 값이 전달됩니다.
+onsuccess, onrecvdata 이벤트에서 ExternalAPIEventIfo 오브젝트의 recvid 속성에 설정한 값이 전달됩니다. |
+| strAppID | String | 실행하려는 API 모듈이 정의된 외부 앱의 ID 를 문자열로 설정합니다. |
+| strAPI | String | 실행하려는 API 모듈의 이름을 문자열로 설정합니다. |
+| strParams | String | 실행할 API 모듈에 전달할 파라미터를 문자열로 설정합니다.
+
+파라미터가 여러개일 경우 각 파라미터는 공백으로 구분합니다.
+파라미터값에 공백이 포함된 경우는 " ' " (홑따옴표) 를 사용하여야 합니다. |
+
+**Sample Call**
+
+```javascript
+this.ExternalAPI00.execExtAPI( "100", "com.nexacro.testmodule", "fn_Chk" );
+this.ExternalAPI00.execExtAPI( "200", "TestApp://", "fn_Chk", "aa bb 'cc c' dd" );
 ```
 
 **Return**
 
-API 모듈의 실행여부와 관계없이 메소드 실행에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | API 모듈의 실행여부와 관계없이 메소드 실행에 성공하면 true 를 반환합니다.
 
-API 모듈의 실행여부와 관계없이 메소드 실행에 실패하면 false 를 반환합니다.
+API 모듈의 실행여부와 관계없이 메소드 실행에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -4623,18 +4804,27 @@ ExternalAPI.isAccessible ( strAppID )
 
 **Parameters**
 
-```
-접근 가능여부를 확인하려는 외부 앱의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strAppID | String | 접근 가능여부를 확인하려는 외부 앱의 ID 를 문자열로 설정합니다.
 
 Android 는 Domain 형태로 설정합니다. ("com.nexacro.testmodule")
-iOS 는 URL Scheme 형태로 설정합니다. ("TestApp://")
+iOS 는 URL Scheme 형태로 설정합니다. ("TestApp://") |
+
+**Sample Call**
+
+```javascript
+this.ExternalAPI00.isAccessible ( "com.nexacro.testmodule" );     // Android
+this.ExternalAPI00.isAccessible ( "TestApp://" );                                    // iOS
 ```
 
 **Return**
 
-외부 앱의 접근 가능여부와 관계없이 메소드 실행에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 외부 앱의 접근 가능여부와 관계없이 메소드 실행에 성공하면 true 를 반환합니다.
 
-외부 앱의 접근 가능여부와 관계없이 메소드 실행에 실패하면 false 를 반환합니다.
+외부 앱의 접근 가능여부와 관계없이 메소드 실행에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -4662,9 +4852,10 @@ onerror(obj:nexacro.ExternalAPI,e:nexacro.ExternalAPIErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ExternalAPI | Event가 발생한 Object. |
+| e | ExternalAPIErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -4689,9 +4880,10 @@ onrecvdata(obj:nexacro.ExternalAPI,e:nexacro.ExternalAPIEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ExternalAPI | Event가 발생한 Object. |
+| e | ExternalAPIEventInfo | Event Object. |
 
 **Return**
 
@@ -4720,9 +4912,10 @@ onsuccess(obj:nexacro.ExternalAPI,e:nexacro.ExternalAPIEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ExternalAPI | Event가 발생한 Object. |
+| e | ExternalAPIEventInfo | Event Object. |
 
 **Return**
 
@@ -4939,20 +5132,32 @@ Geolocation.getCurrentPosition ( nAccuracy, nTimeout )
 
 **Parameters**
 
-```
-위치 정보의 정확도를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nAccuracy | Number | 위치 정보의 정확도를 숫자로 설정합니다.
 값이 작을수록 반환되는 값의 정확도가 높아집니다.
 
 Android NRE 는 0~2 범위의 값(ACCURACY_0~ACCURACY_2)을 설정합니다.
-iOS/iPadOS NRE 는 0~4 범위의 값(ACCURACY_0~ACCURACY_4)을 설정합니다.
+iOS/iPadOS NRE 는 0~4 범위의 값(ACCURACY_0~ACCURACY_4)을 설정합니다. |
+| nTimeout | Number | 위치 정보를 수신할 제한시간을 밀리초(milliseconds) 단위의 숫자로 설정합니다.
+
+200ms~86,400,000ms 사이의 값을 설정할 수 있습니다.
+제한시간을 초과할 때까지 응답이 없는 경우 onrecverror 이벤트가 발생합니다. |
+
+**Sample Call**
+
+```javascript
+Geolocation.getCurrentPosition( 2, 1000 );
 ```
 
 **Return**
 
-위치 정보 수신에 성공하면 true 를 반환하고, onrecvsuccess 이벤트가 발생합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 위치 정보 수신에 성공하면 true 를 반환하고, onrecvsuccess 이벤트가 발생합니다.
 위치 정보 수신에 실패하면  false 를 반환하고, onrecverror 이벤트가 발생합니다.
 
-nAccuracy 값이 0~4 값이 아니면 false 를 반환합니다.
+nAccuracy 값이 0~4 값이 아니면 false 를 반환합니다. |
 
 **Remark**
 
@@ -4979,19 +5184,30 @@ Geolocation.watchStart(nAccuracy, nIntervalTime)
 
 **Parameters**
 
-```
-위치 정보의 정확도를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nAccuracy | Number | 위치 정보의 정확도를 숫자로 설정합니다.
 값이 작을수록 반환되는 값의 정확도가 높아집니다.
 
 Android 일 경우 "0~2"(ACCURACY_0~ACCURACY_2) 범위의 값을 설정합니다.
-iOS 일 경우 "0~4"(ACCURACY_0 ~ ACCURACY_4) 범위의 값을 설정합니다.
+iOS 일 경우 "0~4"(ACCURACY_0 ~ ACCURACY_4) 범위의 값을 설정합니다. |
+| nIntervalTime | Number | 위치 정보를 수신할 주기를 밀리초(milliseconds) 단위의 숫자로 설정합니다.
+
+주기는 200ms ~ 86,400,000ms 사이의 값을 설정할 수 있습니다 |
+
+**Sample Call**
+
+```javascript
+Geolocation.watchStart(1, 1000);
 ```
 
 **Return**
 
-메소드 실행에 성공하면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 "true"를 반환합니다.
 
-메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환합니다.
+메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -5046,9 +5262,10 @@ onrecverror(obj:nexacro.Geolocation,e:nexacro.GeolocationErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Geolocation | Event가 발생한 Object. |
+| e | GeolocationErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -5073,9 +5290,10 @@ onrecvsuccess(obj:nexacro.Geolocation,e:nexacro.GeolocationEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Geolocation | Event가 발생한 Object. |
+| e | GeolocationEventInfo | Event Object. |
 
 **Return**
 
@@ -5363,20 +5581,35 @@ ImagePicker.open( enumGettype, enumEncodingype )
 
 **Parameters**
 
-```
-이미지가 전달되는 방식을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumGettype | String | 이미지가 전달되는 방식을 설정합니다.
 
 "url" 설정 시 이미지의 위치정보가 "URL" 형태로 전달됩니다.
 "imagedata" 설정 시 이미지가 오브젝트 형태로 전달됩니다.
 
-메소드 수행 후 gettype 속성에 파라미터값이 저장됩니다.
+메소드 수행 후 gettype 속성에 파라미터값이 저장됩니다. |
+| enumEncodingtype | String | 이미지가 전달되는 파일 형식을 설정합니다.
+
+"JPEG" 설정 시 이미지가 "JPEG" 파일로 전달됩니다.
+"PNG" 설정 시 이미지가 "PNG" 파일로 전달됩니다.
+
+메소드 수행 후 encodingtype 속성에 파라미터값이 저장됩니다. |
+
+**Sample Call**
+
+```javascript
+this.ImagePicker00.open( "imagedata", "JPEG" );
+this.ImagePicker00.open( "url", "PNG" );
 ```
 
 **Return**
 
-메소드 실행에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 true 를 반환합니다.
 
-메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 false 를 반환합니다.
+메소드 실행에 실패하거나 파라미터값을 잘 못 설정하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -5413,9 +5646,10 @@ onerror(obj:nexacro.ImagePicker,e:nexacro.ImagePickerErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ImagePicker | Event가 발생한 Object. |
+| e | ImagePickerErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -5440,9 +5674,10 @@ onsuccess(obj:nexacro.ImagePicker,e:nexacro.ImagePickerEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ImagePicker | Event가 발생한 Object. |
+| e | ImagePickerEventInfo | Event Object. |
 
 **Return**
 
@@ -5977,18 +6212,34 @@ LiteDBConnection.open( [strDataSource [,constOpenFlag]] )
 
 **Parameters**
 
-```
-연결할 데이터베이스의 위치정보를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strDataSource | String | 연결할 데이터베이스의 위치정보를 문자열로 설정합니다.
 
 절대경로 또는 Alias 를 사용하여 설정합니다.
-값 생략 시 datasource 속성값이 적용됩니다.
+값 생략 시 datasource 속성값이 적용됩니다. |
+| constOpenFlag | Constant | 데이터베이스와 연결하는 옵션을 설정합니다.
+
+LiteDBConnection.openReadWrite 또는 0 설정 시 데이터베이스를 읽기/쓰기가 가능하도록 연결합니다.
+LiteDBConnection.openReadWriteCreate 또는 1  설정 시 데이터베이스를 읽기/쓰기/파일생성이 가능하도록 연결합니다.
+
+값 생략 시 openflag 속성값이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.LiteDBConnection00.open();
+this.LiteDBConnection00.open("%USERAPP%datasource");
+this.LiteDBConnection00.open("%USERAPP%datasource", LiteDBConnection.openReadWrite);
 ```
 
 **Return**
 
-메소드 실행에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 true 를 반환합니다.
 
-파라미터값을 잘 못 설정하면 false 를 반환합니다.
+파라미터값을 잘 못 설정하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6156,9 +6407,10 @@ onerror(obj:nexacro.LiteDBConnection,e:nexacro.LiteDBErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | LiteDBConnection | Event가 발생한 Object. |
+| e | LiteDBErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -6183,9 +6435,10 @@ onsuccess(obj:nexacro.LiteDBConnection,e:nexacro.LiteDBEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | LiteDBConnection | Event가 발생한 Object. |
+| e | LiteDBEventInfo | Event Object. |
 
 **Return**
 
@@ -6474,15 +6727,24 @@ LiteDBStatement.executeQuery([strQuery])
 
 **Parameters**
 
-```
-수행할 Select 쿼리문을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strQuery | String | 수행할 Select 쿼리문을 문자열로 설정합니다.
 
-값 생략 시 query 속성에 설정된 쿼리문이 적용됩니다.
+값 생략 시 query 속성에 설정된 쿼리문이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var strQuery = "select * from *";
+this.LiteDBStatement00.executeQuery(strQuery);
 ```
 
 **Return**
 
-strQuery 파라미터값(또는 LiteDBStatement 오브젝트의 query 속성값)이 null이거나 String 타입이 아닌 경우 false를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | strQuery 파라미터값(또는 LiteDBStatement 오브젝트의 query 속성값)이 null이거나 String 타입이 아닌 경우 false를 반환합니다. |
 
 **Remark**
 
@@ -6508,15 +6770,24 @@ LiteDBStatement.executeUpdate([strQuery])
 
 **Parameters**
 
-```
-수행할 Insert, Update, Delete 쿼리문을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strQuery | String | 수행할 Insert, Update, Delete 쿼리문을 문자열로 설정합니다.
 
-값 생략 시 query 속성에 설정된 쿼리문이 적용됩니다.
+값 생략 시 query 속성에 설정된 쿼리문이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var strQuery = "insert into .....";
+this.LiteDBStatement00.executeUpdate(strQuery);
 ```
 
 **Return**
 
-strQuery 파라미터값(또는 LiteDBStatement 오브젝트의 query 속성값)이 null이거나 String 타입이 아닌 경우 false를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | strQuery 파라미터값(또는 LiteDBStatement 오브젝트의 query 속성값)이 null이거나 String 타입이 아닌 경우 false를 반환합니다. |
 
 **Remark**
 
@@ -6544,9 +6815,10 @@ onerror(obj:nexacro.LiteDBStatement,e:nexacro.LiteDBErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | LiteDBStatement | Event가 발생한 Object. |
+| e | LiteDBErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -6571,9 +6843,10 @@ onsuccess(obj:nexacro.LiteDBStatement,e:nexacro.LiteDBEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | LiteDBStatement | Event가 발생한 Object. |
+| e | LiteDBEventInfo | Event Object. |
 
 **Return**
 
@@ -6772,14 +7045,22 @@ Network.isReachable(strURL)
 
 **Parameters**
 
-```
-접속 가능 여부를 확인하려는 URL을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strURL | String | 접속 가능 여부를 확인하려는 URL을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Network00.isReachable( "http://www.tobesoft.com" );
 ```
 
 **Return**
 
-strURL 이 생략되거나 허용되지 않는 문자가 사용된 경우에는 "false" 를 반환합니다.
-그 외의 정상적인 경우에는 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | strURL 이 생략되거나 허용되지 않는 문자가 사용된 경우에는 "false" 를 반환합니다.
+그 외의 정상적인 경우에는 "true" 를 반환합니다. |
 
 **Remark**
 
@@ -6807,16 +7088,24 @@ Network.watchStart(nIntervalTime)
 
 **Parameters**
 
-```
-네트워크 상태를 수신할 주기를 밀리초(milliseconds) 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIntervalTime | Number | 네트워크 상태를 수신할 주기를 밀리초(milliseconds) 단위의 숫자로 설정합니다.
 
-주기는 200ms ~ 86,400,000ms 사이의 값을 설정할 수 있습니다.
+주기는 200ms ~ 86,400,000ms 사이의 값을 설정할 수 있습니다. |
+
+**Sample Call**
+
+```javascript
+this.Network00.watchStart(1000);
 ```
 
 **Return**
 
-nIntervalTime 이 생략되거나 허용되지 않는 문자가 사용된 경우에는 "false" 를 반환합니다.
-그 외의 정상적인 경우에는 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | nIntervalTime 이 생략되거나 허용되지 않는 문자가 사용된 경우에는 "false" 를 반환합니다.
+그 외의 정상적인 경우에는 "true" 를 반환합니다. |
 
 **Remark**
 
@@ -6867,9 +7156,10 @@ onrecverror(obj:nexacro.Network,e:nexacro.NetworkErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Network | Event가 발생한 Object. |
+| e | NetworkErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -6894,9 +7184,10 @@ onrecvsuccess(obj:nexacro.Network,e:nexacro.NetworkEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Network | Event가 발생한 Object. |
+| e | NetworkEventInfo | Event Object. |
 
 **Return**
 
@@ -6950,15 +7241,29 @@ Phone.makeCall( strPhoneNumber [, bAutoDialing] )
 
 **Parameters**
 
-```
-전화를 연결할 상대방의 전화번호를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strPhoneNumber | String | 전화를 연결할 상대방의 전화번호를 문자열로 설정합니다. |
+| bAutoDialing | Boolean | true 설정 시 전화연결화면으로 전환 후 전화걸기가 자동으로 진행됩니다.
+false 설정 시 전화연결화면으로 전환만 되고 전화걸기가 자동으로 진행되지 않습니다.
+
+값 생략 시 false 로 적용됩니다.
+iOS/iPadOS NRE 는 설정값에 관계없이 false 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+Phone.makeCall("0212345678");
+Phone.makeCall("0212345678", true);
 ```
 
 **Return**
 
-strPhoneNumber 가 생략되거나 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | strPhoneNumber 가 생략되거나 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
 
-그 외의 정상적인 경우에는 true 를 반환합니다.
+그 외의 정상적인 경우에는 true 를 반환합니다. |
 
 **Remark**
 
@@ -7258,9 +7563,10 @@ onresult(obj:nexacro.QRBarcode,e:nexacro.QRBarcodeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | QRBarcode | Event가 발생한 Object. |
+| e | QRBarcodeEventInfo | Event Object. |
 
 **Return**
 
@@ -7382,13 +7688,19 @@ QRCodeGenerator.make(strValue[, nWidth, nHeight])
 
 **Parameters**
 
-```
-QR 코드로 생성할 값을 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strValue | String | QR 코드로 생성할 값을 설정합니다. |
+| nWidth | Number | 생성할 QR 코드 이미지 너비를 설정합니다.
+값을 생략한 경우 256으로 설정됩니다. |
+| nHeight | Number | 생성할 QR 코드 이미지 높이를 설정합니다.
+값을 생략한 경우 256으로 설정됩니다. |
 
 **Return**
 
-Base64 인코딩 된 PNG 이미지 문자열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Base64 인코딩 된 PNG 이미지 문자열을 반환합니다. |
 
 
 ---
@@ -7595,17 +7907,25 @@ Sms.deleteMessage(nSmsid)
 
 **Parameters**
 
-```
-저장되어 있는 SMS 에서 삭제할 메시지의 인덱스값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nSmsid | Number | 저장되어 있는 SMS 에서 삭제할 메시지의 인덱스값을 설정합니다.
 
-readMessageList() 메소드를 사용하여 반환되는 SMS 목록에서 인덱스값을 확인합니다.
+readMessageList() 메소드를 사용하여 반환되는 SMS 목록에서 인덱스값을 확인합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sms00.deleteMessage( 1 );
 ```
 
 **Return**
 
-nSmsid 가 생략되거나 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | nSmsid 가 생략되거나 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
 
-그 외의 정상적인 경우에는 true 를 반환합니다.
+그 외의 정상적인 경우에는 true 를 반환합니다. |
 
 **Remark**
 
@@ -7732,16 +8052,27 @@ Sms.sendMessage([strNumber [,strMessage]])
 
 **Parameters**
 
-```
-메시지를 보낼 상대의 전화번호를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strNumber | String | 메시지를 보낼 상대의 전화번호를 문자열로 설정합니다.
 
-값 생략 시 phonenumber 속성값이 적용됩니다.
+값 생략 시 phonenumber 속성값이 적용됩니다. |
+| strMessage | String | 상대에게 전송할 메시지를 문자열로 설정합니다.
+
+값 생략 시 message 속성값이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Sms00.sendMessage("010-1234-5678", "hello");
 ```
 
 **Return**
 
-파라미터에 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
-그 외의 정상적인 경우에는 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파라미터에 허용되지 않는 문자가 사용된 경우에는 false 를 반환합니다.
+그 외의 정상적인 경우에는 true 를 반환합니다. |
 
 **Remark**
 
@@ -7772,16 +8103,19 @@ cansendmessage(obj:nexacro.Sms,e:nexacro.SmsEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sms | Event가 발생한 Object. |
+| e | SmsEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값을 "true" 로 반환하면 메시지가 송신됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값을 "true" 로 반환하면 메시지가 송신됩니다.
 이벤트에서 리턴값을 "false" 로 반환하면 메시지가 송신되지 않습니다.
 
-이벤트에서 리턴값을 생략하면 "true" 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 "true" 로 적용됩니다. |
 
 **Remark**
 
@@ -7806,9 +8140,10 @@ ondeletemessage(obj:nexacro.Sms,e:nexacro.SmsEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sms | Event가 발생한 Object. |
+| e | SmsEventInfo | Event Object. |
 
 **Return**
 
@@ -7837,9 +8172,10 @@ onerror(obj:nexacro.Sms,e:nexacro.SmsErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sms | Event가 발생한 Object. |
+| e | SmsErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -7868,9 +8204,10 @@ onreadmessagelist(obj:nexacro.Sms,e:nexacro.SmsMessageListEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sms | Event가 발생한 Object. |
+| e | SmsMessageListEventInfo | Event Object. |
 
 **Return**
 
@@ -7899,9 +8236,10 @@ onrecvmessage(obj:nexacro.Sms,e:nexacro.SmsEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sms | Event가 발생한 Object. |
+| e | SmsEventInfo | Event Object. |
 
 **Return**
 
@@ -7930,9 +8268,10 @@ onsendmessage(obj:nexacro.Sms,e:nexacro.SmsEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sms | Event가 발생한 Object. |
+| e | SmsEventInfo | Event Object. |
 
 **Return**
 
@@ -8184,8 +8523,10 @@ this.Vibrator00.hasVibrator();
 
 **Return**
 
-기기에서 진동기능을 사용할수 있으면 "true" 를 반환합니다.
-기기에서 진동기능을 사용할 수 없으면 "false" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 기기에서 진동기능을 사용할수 있으면 "true" 를 반환합니다.
+기기에서 진동기능을 사용할 수 없으면 "false" 를 반환합니다. |
 
 
 ---
@@ -8264,9 +8605,10 @@ onerror(obj:nexacro.Vibrator,e:nexacro.VibratorErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Vibrator | Event가 발생한 Object. |
+| e | VibratorErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -8291,9 +8633,10 @@ onplay(obj:nexacro.Vibrator,e:nexacro.VibratorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Vibrator | Event가 발생한 Object. |
+| e | VibratorEventInfo | Event Object. |
 
 **Return**
 
@@ -8318,9 +8661,10 @@ onstop(obj:nexacro.Vibrator,e:nexacro.VibratorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Vibrator | Event가 발생한 Object. |
+| e | VibratorEventInfo | Event Object. |
 
 **Return**
 

@@ -812,7 +812,7 @@ this.all
 **Setting Syntax**
 
 ```javascript
-var allobjects = this.all
+var allobjects = this.all
 var object1 = this.all[0];
 ```
 
@@ -1066,7 +1066,7 @@ this.binds
 **Setting Syntax**
 
 ```javascript
-var bindlist = this.binds;
+var bindlist = this.binds;
 var binditem1 = this.binds[0];
 ```
 
@@ -1430,8 +1430,7 @@ Form.enable[= benable]
 benable ::= 'true' | 'false'
 ```
 ```javascript
-this.enable = true;
-this.enable = false;
+this.enable = true;this.enable = false;
 ```
 - **`true`** — Form 을(를) 사용할 수 있게 설정합니다.
 - **`false`** — Form 을(를) 사용할 수 없게 설정합니다.
@@ -1470,8 +1469,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.enableevent = true;  
-
-this.enableevent = false;
+this.enableevent = false;
 ```
 - **`true`** — Form 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — Form 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -1603,8 +1601,7 @@ this.height[= nheight]
 nheight ::= <nVal> ['px']
 ```
 ```javascript
-this.height = 10;
-this.height = "10px";
+this.height = 10;this.height = "10px";
 ```
 - **`<nVal>`** — Form 의 높이를 pixel 단위의 숫자로 설정합니다.
 0~12000 사이의 숫자만 설정할 수 있습니다.
@@ -1824,7 +1821,7 @@ this.objects
 **Setting Syntax**
 
 ```javascript
-var invisibleobjects = this.objects;
+var invisibleobjects = this.objects;
 var object1 = this.objects[0];
 ```
 
@@ -2586,8 +2583,7 @@ Form.tooltiptext[= strToolTipText]
 
 ```javascript
 this.tooltiptext = "This is ToolTip Text"; this.tooltiptext = "";          // 풍선 도움말이 표시되지 않습니다. 
-
-this.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
+this.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
 ```
 - **`strToolTipText`** — 풍선도움말에 표시할 텍스트를 설정합니다.
 
@@ -2767,8 +2763,7 @@ this.width[= nWidth]
 nWidth ::= <nVal> ['px']
 ```
 ```javascript
-this.width = 10;
-this.width = "10px";
+this.width = 10;this.width = "10px";
 ```
 - **`<nVal>`** — Form 의 너비를 pixel 단위의 숫자로 설정합니다.
 0~12000 사이의 숫자만 설정할 수 있습니다.
@@ -2838,14 +2833,23 @@ Form.addChild( strChildID, objComp )
 
 **Parameters**
 
-```
-자식으로 추가될 컴포넌트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strChildID | String | 자식으로 추가될 컴포넌트의 ID를 설정합니다. |
+| objComp | Object | 자식으로 추가될 컴포넌트의 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nIndex = this.addChild( "Button00", Button00 );
 ```
 
 **Return**
 
-추가된 자식 컴포넌트의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 자식 컴포넌트의 인덱스를 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -2892,15 +2896,26 @@ Form.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this_onmove = function( obj:nexacro.XComponent,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.addEventHandler( "onmove", this_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -2921,15 +2936,27 @@ Form.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this_onmove = function( obj:nexacro.XComponent,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.addEventHandlerLookup( "onmove", "XComponent00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -2955,8 +2982,14 @@ Form.alert( strText )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.alert( "Warning" );
 ```
 
 **Return**
@@ -2982,9 +3015,15 @@ cancelTransaction( [strSvcID] )
 
 **Parameters**
 
-```
-중지할 트랜잭션의 ID를 문자열로 설정합니다.
-transaction() 메소드 수행 시 설정한 ID값입니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strSvcID | String | 중지할 트랜잭션의 ID를 문자열로 설정합니다.
+transaction() 메소드 수행 시 설정한 ID값입니다. |
+
+**Sample Call**
+
+```javascript
+this.cancelTransaction( "Trans02" );
 ```
 
 **Return**
@@ -3017,13 +3056,21 @@ Form.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -3048,11 +3095,18 @@ Form.close( [strReturn] )
 
 **Parameters**
 
-```
-Form 이 종료될 때 자신을 호출했던 부모 Form 에게 넘겨줄 값을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strReturn | String | Form 이 종료될 때 자신을 호출했던 부모 Form 에게 넘겨줄 값을 문자열로 설정합니다.
 
 기본형(Primitive Type) 데이터형만 지정 가능합니다.
-특히, Form이 종료되면 Form에 정의됐던 오브젝트(Component, DataSet 등)도 소멸되므로 해당 오브젝트를 설정할 수 없습니다.
+특히, Form이 종료되면 Form에 정의됐던 오브젝트(Component, DataSet 등)도 소멸되므로 해당 오브젝트를 설정할 수 없습니다. |
+
+**Sample Call**
+
+```javascript
+this.close( "OK" );
+this.close( this.Edit00.value );
 ```
 
 **Return**
@@ -3085,14 +3139,40 @@ Form.confirm( strText [,strCaption [,strType]] )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+| strCaption | String | 대화상자의 TitleBar에 표시할 텍스트를 설정합니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+| strType | String | 대화상자의 왼쪽 영역에 표시될 아이콘 종류를 문자열로 설정합니다.
+
+"error" 설정 시 빨간색 "X" 모양 아이콘이 표시됩니다.
+"question" 설정 시 물음표("?") 모양 아이콘이 표시됩니다.
+"warning" 설정 시 노랑색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+"information" 설정 시 파란색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+
+값을 설정하지 않으면 아이콘을 표시하지 않습니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+
+**Sample Call**
+
+```javascript
+var bRtn;
+bRtn = this.confirm( "Please check it carefully." );
+bRtn = this.confirm( "Please check it carefully." , "TitleTest");
+bRtn = this.confirm( "Please check it carefully." , "TitleTest", "error" );
 ```
 
 **Return**
 
-표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
-표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
+표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다. |
 
 
 ---
@@ -3113,15 +3193,27 @@ Form.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this_onmove = function( obj:nexacro.XComponent,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.findEventHandler( "onmove", this_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3146,7 +3238,9 @@ Form.getCurrentLayoutID()
 
 **Return**
 
-현재 레이아웃 name 속성값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 현재 레이아웃 name 속성값을 반환합니다. |
 
 **Remark**
 
@@ -3172,15 +3266,26 @@ Form.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = XComponent00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -3201,15 +3306,24 @@ Form.getFirstAccessibilityComponent( [bStepIn] )
 
 **Parameters**
 
-```
-Form 오브젝트 내에서 taborder가 가장 작은 컴포넌트가 컨테이너 컴포넌트일 경우 자식 컴포넌트까지 검색할지 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bStepIn | Boolean | Form 오브젝트 내에서 taborder가 가장 작은 컴포넌트가 컨테이너 컴포넌트일 경우 자식 컴포넌트까지 검색할지 설정합니다.
 true 설정 시 컨테이너 컴포넌트의 자식까지 검색합니다.
-false 설정 시 컨테이너 컴포넌트를 반환합니다.
+false 설정 시 컨테이너 컴포넌트를 반환합니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = this.getFirstAccessibilityComponent();
+var objComp = this.getFirstAccessibilityComponent(true);
 ```
 
 **Return**
 
-Form 오브젝트 내 accessibilityenable 속성값이 true이고 taborder 속성값이 가장 작은 컴포넌트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Form 오브젝트 내 accessibilityenable 속성값이 true이고 taborder 속성값이 가장 작은 컴포넌트를 반환합니다. |
 
 **Remark**
 
@@ -3237,15 +3351,24 @@ Form.getFirstComponent( [bStepIn] )
 
 **Parameters**
 
-```
-처음으로 포커스를 받는 컴포넌트가 컨테이너 컴포넌트일 경우 자식 컴포넌트까지 검색할지 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bStepIn | Boolean | 처음으로 포커스를 받는 컴포넌트가 컨테이너 컴포넌트일 경우 자식 컴포넌트까지 검색할지 설정합니다.
 "true" 설정 시 컨테이너 컴포넌트의 자식까지 검색합니다.
-"false" 설정 시 컨테이너 컴포넌트를 반환하도록 합니다.
+"false" 설정 시 컨테이너 컴포넌트를 반환하도록 합니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = this.getFirstComponent();
+var objComp = this.getFirstComponent(true);
 ```
 
 **Return**
 
-포커스를 제일 처음에 받는 컴포넌트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 포커스를 제일 처음에 받는 컴포넌트를 반환합니다. |
 
 **Remark**
 
@@ -3278,9 +3401,11 @@ var objComp = this.getFocus();
 
 **Return**
 
-포커스를 가진 자식 컴포넌트가 있으면 해당 컴포넌트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 포커스를 가진 자식 컴포넌트가 있으면 해당 컴포넌트를 반환합니다.
 
-포커스를 가진 자식 컴포넌트가 없으면 null 을 반환합니다.
+포커스를 가진 자식 컴포넌트가 없으면 null 을 반환합니다. |
 
 
 ---
@@ -3305,7 +3430,9 @@ var nScrollPos = this.getHScrollPos();
 
 **Return**
 
-수평스크롤바의 현재 트랙바 위치값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 수평스크롤바의 현재 트랙바 위치값을 반환합니다. |
 
 **Remark**
 
@@ -3336,15 +3463,24 @@ Form.getLastAccessibilityComponent( [bStepIn] )
 
 **Parameters**
 
-```
-Form 오브젝트 내에서 taborder가 가장 큰 컴포넌트가 컨테이너 컴포넌트일 경우 자식 컴포넌트까지 검색할지 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bStepIn | Boolean | Form 오브젝트 내에서 taborder가 가장 큰 컴포넌트가 컨테이너 컴포넌트일 경우 자식 컴포넌트까지 검색할지 설정합니다.
 true 설정 시 컨테이너 컴포넌트의 자식까지 검색합니다.
-false 설정 시 컨테이너 컴포넌트를 반환합니다.
+false 설정 시 컨테이너 컴포넌트를 반환합니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = this.getLastAccessibilityComponent();
+var objComp = this.getLastAccessibilityComponent(true);
 ```
 
 **Return**
 
-Form 오브젝트 내 accessibilityenable 속성값이 true이고 taborder 속성값이 가장 큰 컴포넌트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Form 오브젝트 내 accessibilityenable 속성값이 true이고 taborder 속성값이 가장 큰 컴포넌트를 반환합니다. |
 
 **Remark**
 
@@ -3372,15 +3508,24 @@ Form.getLastComponent( [bStepIn] )
 
 **Parameters**
 
-```
-마지막으로 포커스를 받는 컴포넌트가 컨테이너 컴포넌트일 경우 자식 컴포넌트까지 검색할지 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bStepIn | Boolean | 마지막으로 포커스를 받는 컴포넌트가 컨테이너 컴포넌트일 경우 자식 컴포넌트까지 검색할지 설정합니다.
 "true" 설정 시 컨테이너 컴포넌트의 자식까지 검색합니다.
-"false" 설정 시 컨테이너 컴포넌트를 반환하도록 합니다.
+"false" 설정 시 컨테이너 컴포넌트를 반환하도록 합니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = this.getLastComponent();
+var objComp = this.getLastComponent(true);
 ```
 
 **Return**
 
-포커스를 제일 마지막에 받는 컴포넌트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 포커스를 제일 마지막에 받는 컴포넌트를 반환합니다. |
 
 **Remark**
 
@@ -3409,13 +3554,22 @@ Form.getLayoutInfo ( strLayoutID, strPropID )
 
 **Parameters**
 
-```
-레이아웃의 이름을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strLayoutID | String | 레이아웃의 이름을 문자열로 설정합니다. |
+| strPropID | String | 값을 얻으려 하는 속성의 이름을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nheight = XComponent.getLayoutInfo ( "default", "height" );
 ```
 
 **Return**
 
-strPropID 속성에 설정된 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | strPropID 속성에 설정된 값을 반환합니다. |
 
 **Remark**
 
@@ -3440,13 +3594,25 @@ Form.getNextComponent( objComp [, bStepIn] )
 
 **Parameters**
 
-```
-포커스 이동 시 기준이 되는 컴포넌트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 포커스 이동 시 기준이 되는 컴포넌트를 설정합니다. |
+| bStepIn | Boolean | 포커스가 이동되는 컴포넌트가 컨테이너 컴포넌트일 경우 자식 컴포넌트까지 검색할지 설정합니다.
+"true" 설정 시 컨테이너 컴포넌트의 자식까지 검색합니다.
+"false" 설정 시 컨테이너 컴포넌트를 반환하도록 합니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = this.getNextComponent( this.Edit00 );
+var objComp = this.getNextComponent( this.Edit00, true );
 ```
 
 **Return**
 
-objComp 컴포넌트에서 탭키로 포커스가 이동되는 컴포넌트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | objComp 컴포넌트에서 탭키로 포커스가 이동되는 컴포넌트를 반환합니다. |
 
 **Remark**
 
@@ -3480,7 +3646,9 @@ var nWidth = this.getOffsetHeight( ) ;
 
 **Return**
 
-Form 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Form 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -3511,7 +3679,9 @@ var nWidth = this.getOffsetWidth( ) ;
 
 **Return**
 
-Form 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Form 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -3542,8 +3712,10 @@ var objOwnerFrame = this.getOwnerFrame();
 
 **Return**
 
-Form 이 소속된 부모 Frame 오브젝트를 반환합니다.
-Form 이 소속된 Frame 이 없을 경우 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Form 이 소속된 부모 Frame 오브젝트를 반환합니다.
+Form 이 소속된 Frame 이 없을 경우 "null"을 반환합니다. |
 
 
 ---
@@ -3564,14 +3736,16 @@ this.getPanel(objComp)
 
 **Parameters**
 
-```
-Form 오브젝트에 포함된 컴포넌트를 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | Form 오브젝트에 포함된 컴포넌트를 설정합니다. |
 
 **Return**
 
-지정한 컴포넌트를 연결하고 있는 Panel 컴포넌트를 반환합니다.
-지정한 컴포넌트가 없거나 지정한 컴포넌트에 연결된 Panel 컴포넌트가 없는 경우 null 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정한 컴포넌트를 연결하고 있는 Panel 컴포넌트를 반환합니다.
+지정한 컴포넌트가 없거나 지정한 컴포넌트에 연결된 Panel 컴포넌트가 없는 경우 null 값을 반환합니다. |
 
 
 ---
@@ -3592,13 +3766,25 @@ Form.getPrevtComponent( objComp [, bStepIn] )
 
 **Parameters**
 
-```
-포커스 이동 시 기준이 되는 컴포넌트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 포커스 이동 시 기준이 되는 컴포넌트를 설정합니다. |
+| bStepIn | Boolean | 포커스가 이동되는 컴포넌트가 컨테이너 컴포넌트일 경우 자식 컴포넌트까지 검색할지 설정합니다.
+"true" 설정 시 컨테이너 컴포넌트의 자식까지 검색합니다.
+"false" 설정 시 컨테이너 컴포넌트를 반환하도록 합니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = this.getPrevComponent( this.Edit00 );
+var objComp = this.getPrevComponent( this.Edit00, true );
 ```
 
 **Return**
 
-objComp 컴포넌트에서 Shift+탭키로 포커스가 이동되는 컴포넌트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | objComp 컴포넌트에서 Shift+탭키로 포커스가 이동되는 컴포넌트를 반환합니다. |
 
 **Remark**
 
@@ -3630,7 +3816,9 @@ Form.getStepCount();
 
 **Return**
 
-분할된 화면의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 분할된 화면의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -3659,7 +3847,9 @@ this.getStepIndex() ;
 
 **Return**
 
-현재 표시되는 화면의 인덱스값이 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Number | 현재 표시되는 화면의 인덱스값이 반환됩니다. |
 
 **Remark**
 
@@ -3690,7 +3880,9 @@ var nScrollPos = this.getVScrollPos();
 
 **Return**
 
-수직스크롤바의 현재 트랙바 위치값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 수직스크롤바의 현재 트랙바 위치값을 반환합니다. |
 
 **Remark**
 
@@ -3721,8 +3913,14 @@ Form.go( strURL )
 
 **Parameters**
 
-```
-화면에 로딩할 Form(xfdl 파일)의 URL을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strURL | String | 화면에 로딩할 Form(xfdl 파일)의 URL을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.go( "Base::Menu.xfdl" );
 ```
 
 **Return**
@@ -3752,8 +3950,10 @@ var bHas = this.hasPopupFrame();
 
 **Return**
 
-현재 Form에서 스크립트로 실행된 Form이 있다면 "true"를 반환합니다.
-현재 Form에서 스크립트로 실행된 Form이 없다면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 현재 Form에서 스크립트로 실행된 Form이 있다면 "true"를 반환합니다.
+현재 Form에서 스크립트로 실행된 Form이 없다면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -3778,15 +3978,25 @@ Form.insertChild( nIdx, strChildID, objComp )
 
 **Parameters**
 
-```
-부모 컴포넌트에 추가 될 순서를 설정합니다.
-"-1"로 설정할 경우 자식 컴포넌트 중 제일 마지막에 추가됩니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIdx | Number | 부모 컴포넌트에 추가 될 순서를 설정합니다.
+"-1"로 설정할 경우 자식 컴포넌트 중 제일 마지막에 추가됩니다. |
+| strChildID | String | 자식으로 추가될 컴포넌트의 ID를 설정합니다. |
+| objComp | Object | 자식으로 추가될 컴포넌트의 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nIndex = this.insertChild( 0, "Button00", Button00 );
 ```
 
 **Return**
 
-추가된 자식 컴포넌트의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 자식 컴포넌트의 인덱스를 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -3833,16 +4043,33 @@ Form.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this_onmove = function( obj:nexacro.XComponent,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.insertEventHandler( "onmove", 0, this_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3868,15 +4095,25 @@ Form.isValidObject( strName )
 
 **Parameters**
 
-```
-존재 여부를 확인할 오브젝트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objName | Object | 존재 여부를 확인할 오브젝트를 설정합니다. |
+| strName | String | 존재 여부를 확인할 오브젝트의 이름을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bRet = this.isValidObject( this.Button00 );
+var bRet = this.isValidObject( "Button00" );
 ```
 
 **Return**
 
-인수로 전달된 오브젝트가 Form 에 존재하면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 인수로 전달된 오브젝트가 Form 에 존재하면 "true"를 반환합니다.
 인수로 전달된 오브젝트가 Form 에 존재하지 않으면 "false"를 반환합니다.
-잘못된 값을 인수로 전달했을 경우도 "false"를 반환합니다.
+잘못된 값을 인수로 전달했을 경우도 "false"를 반환합니다. |
 
 
 ---
@@ -3897,8 +4134,14 @@ Form.killTimer( nTimerID )
 
 **Parameters**
 
-```
-setTimer() 메소드에서 타이머 생성 시 설정했던 ID를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTimerID | Number | setTimer() 메소드에서 타이머 생성 시 설정했던 ID를 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.killTimer( 0 );
 ```
 
 **Return**
@@ -3924,13 +4167,15 @@ Form.lookup( strObjectID )
 
 **Parameters**
 
-```
-검색하여 찾고자 하는 오브젝트의 ID를 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strObjectID | String | 검색하여 찾고자 하는 오브젝트의 ID를 문자열로 설정합니다. |
 
 **Return**
 
-검색하여 찾아낸 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 검색하여 찾아낸 오브젝트를 반환합니다. |
 
 
 ---
@@ -3985,14 +4230,22 @@ Form.removeChild( strChildID )
 
 **Parameters**
 
-```
-제거할 자식 컴포넌트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strChildID | String | 제거할 자식 컴포넌트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDelete = this.removeChild( "Button00" );
 ```
 
 **Return**
 
-컴포넌트 제거에 성공하면 제거된 컴포넌트의 오브젝트를 반환합니다.
-컴포넌트 제거에 실패하면 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 컴포넌트 제거에 성공하면 제거된 컴포넌트의 오브젝트를 반환합니다.
+컴포넌트 제거에 실패하면 "null"을 반환합니다. |
 
 **Remark**
 
@@ -4029,15 +4282,26 @@ Form.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this_onmove = function( obj:nexacro.XComponent,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.removeEventHandler( "onmove", this_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -4064,15 +4328,27 @@ Form.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this_onmove = function( obj:nexacro.XComponent,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.removeEventHandlerLookup( "onmove", "XComponent00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -4134,14 +4410,27 @@ Form.scrollBy( nHoffsetpos, nVoffsetpos )
 
 **Parameters**
 
-```
-수평스크롤바의 스크롤을 현재위치에서 이동시킬 값을 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHoffsetpos | Number | 수평스크롤바의 스크롤을 현재위치에서 이동시킬 값을 숫자로 설정합니다.
 
 음수로 설정 시 스크롤의 위치가 감소합니다.
 양수로 설정 시 스크롤의 위치가 증가합니다.
 
 값을 적용했을 때 수평스크롤바의 min 속성값보다 작을 경우 min 값으로 적용됩니다.
-값을 적용했을 때 수평스크롤바의 max 속성값보다 클 경우 max 값으로 적용됩니다.
+값을 적용했을 때 수평스크롤바의 max 속성값보다 클 경우 max 값으로 적용됩니다. |
+| nVoffsetpos | Number | 수직스크롤바의 스크롤을 현재위치에서 이동시킬 값을 숫자로 설정합니다.
+
+음수로 설정 시 스크롤의 위치가 감소합니다.
+양수로 설정 시 스크롤의 위치가 증가합니다.
+
+값을 적용했을 때 수직스크롤바의 min 속성값보다 작을 경우 min 값으로 적용됩니다.
+값을 적용했을 때 수직스크롤바의 max 속성값보다 클 경우 max 값으로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.scrollBy( 20,20 );
 ```
 
 **Return**
@@ -4175,11 +4464,21 @@ Form.scrollTo( nHpos, nVpos )
 
 **Parameters**
 
-```
-수평스크롤바의 스크롤이 위치할 값을 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHpos | Number | 수평스크롤바의 스크롤이 위치할 값을 숫자로 설정합니다.
 
 설정값이 수평스크롤바의 min 속성값보다 작을 경우 min 값으로 적용됩니다.
-설정값이 수평스크롤바의 max 속성값보다 클 경우 max 값으로 적용됩니다.
+설정값이 수평스크롤바의 max 속성값보다 클 경우 max 값으로 적용됩니다. |
+| nVpos | Number | 수직스크롤바의 스크롤이 위치할 값을 숫자로 설정합니다.
+
+설정값이 수직스크롤바의 min 속성값보다 작을 경우 min 값으로 적용됩니다.
+설정값이 수직스크롤바의 max 속성값보다 클 경우 max 값으로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.scrollTo( 20,20 );
 ```
 
 **Return**
@@ -4213,15 +4512,26 @@ Form.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this_onmove = function( obj:nexacro.XComponent,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.setEventHandler( "onmove", this_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4248,15 +4558,27 @@ Form.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this_onmove = function( obj:nexacro.XComponent,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.setEventHandlerLookup( "onmove", "XComponent00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4283,8 +4605,18 @@ Form.setFluidLayoutProperty(strLayoutName, strPropID, strValue)
 
 **Parameters**
 
-```
-레이아웃 이름을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strLayoutName | String | 레이아웃 이름을 문자열로 설정합니다. |
+| strPropID | String | 설정하려는 속성 이름을 문자열로 설정합니다.
+tabletemplate 속성만 지원합니다. |
+| strValue | String | 설정하려는 속성의 속성값을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.form.setFluidLayoutProperty("Layout0", "tabletemplate", "1* 1* 1*/ 1* 1*");
+this.Div00.form.setFluidLayoutProperty("default", "tabletemplate", "1* 1* 1* 1* 1*/ 1* 1* 1*");
 ```
 
 **Return**
@@ -4320,19 +4652,36 @@ Form.setFocus( [bMoveScroll [, bInnerFocus]] )
 
 **Parameters**
 
-```
-부모 컴포넌트에 스크롤이 있을 경우, Form 기준으로 스크롤을 이동할지 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bMoveScroll | Boolean | 부모 컴포넌트에 스크롤이 있을 경우, Form 기준으로 스크롤을 이동할지 여부를 설정합니다.
 
 true: Form 이(가) 화면에 표시되도록 스크롤을 이동합니다.
 false: Form 위치와 관계없이 스크롤을 이동하지 않습니다.
 
-값을 지정하지 않으면 기본값은 true입니다.
+값을 지정하지 않으면 기본값은 true입니다. |
+| bInnerFocus | Boolean | 자식 컴포넌트(또는 아이템으로 등록된 컴포넌트)로 포커스를 이동할지 여부를 설정합니다.
+
+true: 포커스를 받을 수 있는 첫 번째 컴포넌트로 포커스를 이동합니다.
+       포커스를 받을 수 있는 컴포넌트가 없는 경우 Form 에 포커스가 설정됩니다.
+false: Form 에 포커스를 설정합니다.
+
+값을 설정하지 않으면 기본값은 true입니다. |
+
+**Sample Call**
+
+```javascript
+var objBefComp = this.setFocus();
+var objBefComp = this.setFocus( false );
+var objBefComp = this.setFocus( true, false );
 ```
 
 **Return**
 
-Form 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
-이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Form 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
+이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다. |
 
 **Remark**
 
@@ -4357,9 +4706,9 @@ Form.setStepCount(nStepcount)
 
 **Parameters**
 
-```
-분할할 화면 개수를 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nStepcount | Number | 분할할 화면 개수를 설정합니다. |
 
 **Return**
 
@@ -4392,16 +4741,24 @@ Form.setStepIndex( nIndex )
 
 **Parameters**
 
-```
-분할된 화면 중 표시할 화면의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIndex | Number | 분할된 화면 중 표시할 화면의 인덱스를 설정합니다.
 
-인덱스는 "0" 부터 시작하며 "stepcount속성값 - 1"까지 설정할 수 있습니다.
+인덱스는 "0" 부터 시작하며 "stepcount속성값 - 1"까지 설정할 수 있습니다. |
+
+**Sample Call**
+
+```javascript
+this.setStepIndex(1);
 ```
 
 **Return**
 
-분할된 화면 이동에 성공하면 "true"가 반환됩니다.
-분할된 화면 이동에 실패하면 "false"가 반환됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 분할된 화면 이동에 성공하면 "true"가 반환됩니다.
+분할된 화면 이동에 실패하면 "false"가 반환됩니다. |
 
 **Remark**
 
@@ -4428,9 +4785,16 @@ Form.setTimer( nTimerID, nElapse )
 
 **Parameters**
 
-```
-ontimer 이벤트를 발생시킨 타이머를 구분하기 위한 ID를 숫자로 설정합니다.
-ID값은 "0~65535" 사이의 값을 설정할 수 있습니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTimerID | Number | ontimer 이벤트를 발생시킨 타이머를 구분하기 위한 ID를 숫자로 설정합니다.
+ID값은 "0~65535" 사이의 값을 설정할 수 있습니다. |
+| nElapse | Number | ontimer 이벤트를 발생시킬 주기를 밀리초(milliseconds) 단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.setTimer( 0, 1000 );
 ```
 
 **Return**
@@ -4464,13 +4828,28 @@ Form.setWaitCursor( [bWaitFlag [, bForcely]] )
 
 **Parameters**
 
-```
-화면에 Wait Cursor의 표시 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bWaitFlag | Boolean | 화면에 Wait Cursor의 표시 여부를 설정합니다.
 
 true 설정 시 Wait Cursor가 화면에 표시됩니다.
 false 설정 시 화면에 표시된 Wait Cursor 를 해제합니다.
 
-값 생략 시 true 로 적용됩니다.
+값 생략 시 true 로 적용됩니다. |
+| bForcely | Boolean | Environment 의 usewaitcursor 속성값에 관계없이 메소드를 실행 시킬지 여부를 설정합니다.
+
+true 설정 시 userwaitcursor 속성값에 관계없이 Wait Cursor 를 표시/해제 합니다.
+false 설정 시 usewaitcursor 속성값이 true 이면 Wait Cursor 를 표시/해제 합니다.
+false 설정 시 usewaitcursor 속성값이 false 이면 메소드가 실행되지 않습니다.
+
+값 생략 시 false 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.setWaitCursor();
+this.setWaitCursor( true );
+this.setWaitCursor( true, true );
 ```
 
 **Return**
@@ -4507,8 +4886,14 @@ Form.sleep( nMilliseconds )
 
 **Parameters**
 
-```
-스크립트 실행을 멈출 시간을 밀리초(milliseconds) 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMilliseconds | Number | 스크립트 실행을 멈출 시간을 밀리초(milliseconds) 단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.sleep( 1000 );
 ```
 
 **Return**
@@ -4534,17 +4919,111 @@ Form.transaction( strSvcID, strURL, strInDatasets, strOutDatasets, strArgument [
 
 **Parameters**
 
-```
-트랜잭션을 구분하기 위한 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strSvcID | String | 트랜잭션을 구분하기 위한 ID를 문자열로 설정합니다. |
+| strURL | String | 트랜잭션을 요청할 서버페이지 주소를 문자열로 설정합니다.
+
+strURL ::= <absolute-url> | <relative-url>
+
+<absolute-url>
+서버에 배포된 페이지 주소를 문자열로 설정합니다.
+웹에 접근 가능한 환경이어야 하고, Cross Domain 상황이면 사용에 제한이 있습니다.
+
+<relative-url>
+TypeDefinition 의 Services 영역에 정의된 Prefix 를 사용한 형식으로 설정합니다.
+또는 현재 Form 위치를 기준으로 한 상대경로를 사용하여 설정합니다. |
+| strInDatasets | String | 데이터 처리를 위해 서버로 보낼 DataSet 의 ID를 문자열로 설정합니다.
+DataSet 은 Form 영역 또는 Application 의 AppVariables 영역에 정의되어 있어야 합니다.
+"입력ID=DataSet ID" 형식으로 설정하며, 빈칸으로 구분하여 여러개의 DataSet 을 보낼 수 있습니다.
+
+ex) "input1=DataSet00 input2=DataSet01"
+
+Container Component(Div, View 등)의 Dataset 오브젝트는 아래와 같이 설정할 수 있습니다.
+
+ex) "input1=View00.form.Dataset00 input2=Div00.form.Dataset01" |
+| strOutDatasets | String | 서버에서 보내는 데이터를 받을 DataSet 의 ID를 문자열로 설정합니다.
+DataSet 은 Form 영역 또는 Application 의 AppVariables 영역에 정의되어 있어야 합니다.
+"DataSet ID=출력ID" 형식으로 설정하며, 빈칸으로 구분하여 여러개의 DataSet 을 받을 수 있습니다.
+
+ex) "DataSet00=output0 DataSet01=output1"
+
+아래와 같은 형식으로 하나의 Ouput Dataset(출력ID)을 여러 개의 Dataset에서 받을 수 있습니다.
+
+ex) "DataSet00=output0 DataSet01=output0"
+
+Container Component(Div, View 등)의 Dataset 오브젝트는 아래와 같이 설정할 수 있습니다.
+
+ex) "View00.form.Dataset00=ouput0 Div00.form.Dataset01=output1" |
+| strArgument | String | 서버페이지에 보낼 정보를 문자열로 설정합니다.
+"변수ID=변수값" 형식으로 설정하며, 빈칸으로 구분하여 여러개의 인수값을 보낼 수 있습니다.
+
+ex) "argu0=test argu1=30" |
+| strCallbackFunc | String | 트랜잭션 결과를 받을 때 호출될 콜백함수명을 문자열로 설정합니다.
+콜백함수는 Form 영역 또는 Application 영역에 정의되어 있어야 합니다.
+
+strCallbackFunc 파라미터값을 설정하지 않으면 Promise 오브젝트를 반환합니다. |
+| bAsync | Boolean | 트랜잭션을 비동기(ASync)로 처리할지 설정합니다.
+
+true 설정 시 트랜잭션을 비동기(ASync)로 처리하여 트랜잭션의 완료와 관계없이 스크립트가 수행됩니다.
+false 설정 시 트랜잭션을 동기(Sync)로 처리하여 트랜잭션이 완료될 때까지 스크립트 수행이 중단됩니다.
+
+값을 설정하지 않으면 true로 적용됩니다. |
+| nDataType | Number | 트랜잭션 시 클라이언트에서 서버로 보내는 데이터의 형태를 설정합니다.
+
+"0" : XML 형식
+"1" : Binary 형식
+"2" : SSV 형식
+"3" : JSON 형식
+
+값을 설정하지 않으면 "0" 으로 적용됩니다. |
+| bCompress | Boolean | 트랜잭션 시 데이터를 압축시킬지 설정합니다.
+
+true 설정 시 데이터를 압축하여 송수신합니다.
+false 설정 시 데이터를 압축하지 않고 송수신합니다.
+
+값을 설정하지 않으면 false로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.transaction( "MyService01","DataSrv::samplexml.jsp","input1=Dataset02","Dataset03=output1","a=b","callbackFunction");
+this.transaction( "MyService01","DataSrv::samplexml.jsp","input1=Dataset02","Dataset03=output1","a=b","callbackFunction",false,0, true);
+
+const req = this.transaction("MyService01","DataSrv::samplexml.jsp","input1=Dataset02","Dataset03=output","a=b");
+if(req) 
+{
+    req.then(([code, msg]) => {
+        this.callbackFunction("MyService01", code, msg);
+    })
+    .catch([code, msg] => trace(code, msg));
+}
+
+async function loadData(app) 
+{
+    try {
+        const [code,msg] = await app.transaction("MyService01","DataSrv::samplexml.jsp","input1=Dataset02","Dataset03=output","a=b");
+        trace("after transaction message", code, msg);
+    } catch ([code,msg]) {
+        trace(code, msg));
+    }
+}
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+    loadData(this);
+}
 ```
 
 **Return**
 
-strCallbackFunc 파라미터값을 설정하지 않은 경우에만 반환값이 있습니다.
+| Type | Description |
+| --- | --- |
+| Object | strCallbackFunc 파라미터값을 설정하지 않은 경우에만 반환값이 있습니다.
 
 Promise 오브젝트를 반환합니다.
 Promise 오브젝트는 자바스크립트 표준 내장 객체입니다.
-내부적으로 resolve 수행 시점은 transaction 수행이 완료되는 시점입니다.
+내부적으로 resolve 수행 시점은 transaction 수행이 완료되는 시점입니다. |
 
 **Remark**
 
@@ -4639,16 +5118,19 @@ canlayoutchange(obj:nexacro.Form,e:nexacro.LayoutChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | LayoutChangeEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 Form 의 Layout 이 변경됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 Form 의 Layout 이 변경됩니다.
 이벤트에서 리턴값으로 false 를 반환하면 Form 의 Layout 이 변경되지 않습니다.
 
-이벤트에서 리턴값을 생략하면 true 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 true 로 적용됩니다. |
 
 **Remark**
 
@@ -4673,16 +5155,19 @@ canstepchange(obj:nexacro.Form,e:nexacro.StepChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | StepChangeEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 "true"를 반환하면 표시되는 화면이 변경됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 "true"를 반환하면 표시되는 화면이 변경됩니다.
 이벤트에서 리턴값으로 "false"를 반환하면 표시되는 화면이 변경되지 않습니다.
 
-이벤트에서 리턴값을 생략하면 "true"로 적용됩니다.
+이벤트에서 리턴값을 생략하면 "true"로 적용됩니다. |
 
 **Remark**
 
@@ -4709,9 +5194,10 @@ onactivate(obj:nexacro.Form,e:nexacro.ActivateEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | ActivateEventInfo | Event Object. |
 
 **Return**
 
@@ -4774,16 +5260,19 @@ onbeforeclose(obj:nexacro.Form,e:nexacro.CloseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | CloseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 문자열 설정 시 Form 종료를 위한 확인창이 표시됩니다.
+| Type | Description |
+| --- | --- |
+| String | 이벤트에서 리턴값으로 문자열 설정 시 Form 종료를 위한 확인창이 표시됩니다.
 이벤트에서 리턴값으로 설정한 문자열이 종료를 위한 확인창에 사용됩니다.
 
-이벤트에서 리턴값을 생략하거나 null, undefined, ""(Empty String) 으로 설정 시 확인창이 표시되지 않습니다.
+이벤트에서 리턴값을 생략하거나 null, undefined, ""(Empty String) 으로 설정 시 확인창이 표시되지 않습니다. |
 
 **Remark**
 
@@ -4825,9 +5314,10 @@ onbindingvaluechanged(obj:nexacro.Form,e:nexacro.BindingValueChangedEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | BindingValueChangedEventInfo | Event Object. |
 
 **Return**
 
@@ -4862,9 +5352,10 @@ onclick(obj:nexacro.Form,e:nexacro.ClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | ClickEventInfo | Event Object. |
 
 **Return**
 
@@ -4901,9 +5392,10 @@ onclose(obj:nexacro.Form,e:nexacro.CloseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | CloseEventInfo | Event Object. |
 
 **Return**
 
@@ -4944,9 +5436,10 @@ oncontextmenu(obj:nexacro.Form,e:nexacro.ContextMenuEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | ContextMenuEventInfo | Event Object. |
 
 **Return**
 
@@ -4977,9 +5470,10 @@ ondeactivate(obj:nexacro.Form,e:nexacro.ActivateEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | ActivateEventInfo | Event Object. |
 
 **Return**
 
@@ -5028,15 +5522,18 @@ ondevicebuttonup(obj:nexacro.Form,e:nexacro.DeviceButtonEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | DeviceButtonEventInfo | Event Object. |
 
 **Return**
 
-true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
-반환값을 생략하면 false로 적용됩니다.
+반환값을 생략하면 false로 적용됩니다. |
 
 **Remark**
 
@@ -5068,16 +5565,19 @@ ondrag(obj:nexacro.Form,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 드래그 상태가 취소되고 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5111,16 +5611,19 @@ ondragenter(obj:nexacro.Form,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5147,16 +5650,19 @@ ondragleave(obj:nexacro.Form,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5183,16 +5689,19 @@ ondragmove(obj:nexacro.Form,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5219,16 +5728,19 @@ ondrop(obj:nexacro.Form,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5262,13 +5774,16 @@ onerror(obj:nexacro.Form,e:nexacro.ErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | ErrorEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면
   > Environment 의 onerror 로 이벤트를 전파하지 않습니다.
   > 실행중인 Transaction 을 중지시키지 않고 유지합니다.
 
@@ -5277,7 +5792,7 @@ Event가 발생한 Object.
   > 실행중인 Transaction 의 중지여부는 Environment 의 onerror 에서 리턴값으로 결정됩니다.
   > Environment 에 onerror 이벤트가 정의되어 있지 않으면 실행중인 Transaction 은 중지됩니다.
 
-이벤트의 리턴값을 생략하면 false 로 적용됩니다.
+이벤트의 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5305,9 +5820,10 @@ onextendedcommand(obj:nexacro.Form,e:nexacro.ExtendedCommandEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | ExtendedCommandEventInfo | Event Object. |
 
 **Return**
 
@@ -5339,9 +5855,10 @@ onhscroll(obj:nexacro.Form,e:nexacro.ScrollEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | ScrollEventInfo | Event Object. |
 
 **Return**
 
@@ -5366,9 +5883,10 @@ oninit(obj:nexacro.Form,e:nexacro.EventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | EventInfo | Event Object. |
 
 **Return**
 
@@ -5399,16 +5917,19 @@ onkeydown(obj:nexacro.Form,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5454,16 +5975,19 @@ onkeyup(obj:nexacro.Form,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5496,9 +6020,10 @@ onkillfocus(obj:nexacro.Form,e:nexacro.KillFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | KillFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -5530,9 +6055,10 @@ onlayoutchanged(obj:nexacro.Form,e:nexacro.LayoutChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | LayoutChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -5561,16 +6087,19 @@ onlbuttondown(obj:nexacro.Form,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5610,16 +6139,19 @@ onlbuttonup(obj:nexacro.Form,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5651,9 +6183,10 @@ onload(obj:nexacro.Form,e:nexacro.LoadEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | LoadEventInfo | Event Object. |
 
 **Return**
 
@@ -5686,16 +6219,19 @@ onmouseenter(obj:nexacro.Form,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5734,16 +6270,19 @@ onmouseleave(obj:nexacro.Form,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5779,16 +6318,19 @@ onmousemove(obj:nexacro.Form,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5824,16 +6366,19 @@ onmousewheel(obj:nexacro.Form,e:nexacro.MouseWheelEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | MouseWheelEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 휠버튼 회전값이 무시되고, 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 휠버튼 회전값이 무시되고, 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 휠버튼 회전값이 처리되고, 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5872,9 +6417,10 @@ onmove(obj:nexacro.Form,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -5899,9 +6445,10 @@ onorientationchange(obj:nexacro.Form,e:nexacro.OrientationChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | OrientationChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -5935,16 +6482,19 @@ onrbuttondown(obj:nexacro.Form,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5985,16 +6535,19 @@ onrbuttonup(obj:nexacro.Form,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6034,9 +6587,10 @@ onsetfocus(obj:nexacro.Form,e:nexacro.SetFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | SetFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -6079,9 +6633,10 @@ onsize(obj:nexacro.Form,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -6106,9 +6661,10 @@ onstepchanged(obj:nexacro.Form,e:nexacro.StepChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | StepChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -6137,9 +6693,10 @@ ontimer(obj:nexacro.Form,e:nexacro.TimerEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | TimerEventInfo | Event Object. |
 
 **Return**
 
@@ -6174,16 +6731,19 @@ ontouchend(obj:nexacro.Form,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6208,16 +6768,19 @@ ontouchmove(obj:nexacro.Form,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6242,16 +6805,19 @@ ontouchstart(obj:nexacro.Form,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6280,9 +6846,10 @@ onvscroll(obj:nexacro.Form,e:nexacro.ScrollEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Form | Event가 발생한 Object. |
+| e | ScrollEventInfo | Event Object. |
 
 **Return**
 

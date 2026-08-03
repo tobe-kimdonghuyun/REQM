@@ -1521,8 +1521,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.Tab00.enableevent = true;  
-
-this.Tab00.enableevent = false;
+this.Tab00.enableevent = false;
 ```
 - **`true`** — Tab 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — Tab 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -1554,8 +1553,7 @@ Tab.extrabuttonsize[= strSize]
 strSize ::= <strWidth> [ ' ' <strHeight> ]
 ```
 ```javascript
-this.Tab00.extrabuttonsize = "20";
-this.Tab00.extrabuttonsize = "40 20";
+this.Tab00.extrabuttonsize = "20";this.Tab00.extrabuttonsize = "40 20";
 ```
 - **`<strWidth>`** — 추가버튼(Extra Button)의 너비를 pixel 단위의 문자열로 설정합니다.
 - **`<strHeight>`** — 추가버튼(Extra Button)의 높이를 pixel 단위의 문자열로 설정합니다.
@@ -2720,8 +2718,7 @@ Tab.selectedtabbuttonheight[= nHeight]
 nHeight ::= <nVal> ['px']
 ```
 ```javascript
-this.Tab00.selectedtabbuttonheight = 50;
-this.Tab00.selectedtabbuttonheight = "50px";
+this.Tab00.selectedtabbuttonheight = 50;this.Tab00.selectedtabbuttonheight = "50px";
 ```
 - **`<nVal>`** — 선택된 TabpageControl 의 TabButton 에 높이로 적용될 값을 pixel 단위의 숫자로 설정합니다.
 
@@ -2761,8 +2758,7 @@ Tab.selectedtabbuttonwidth[= nWidth]
 nWidth ::= <nVal> ['px']
 ```
 ```javascript
-this.Tab00.selectedtabbuttonwidth = 100;
-this.Tab00.selectedtabbuttonwidth = "100px";
+this.Tab00.selectedtabbuttonwidth = 100;this.Tab00.selectedtabbuttonwidth = "100px";
 ```
 - **`<nVal>`** — 선택된 TabpageControl 의 TabButton 에 너비로 적용될 값을 pixel 단위의 숫자로 설정합니다.
 
@@ -2894,8 +2890,7 @@ Tab.tabbuttonheight[= nHeight]
 nHeight ::= <nVal> ['px']
 ```
 ```javascript
-this.Tab00.tabbuttonheight = 80;
-this.Tab00.tabbuttonheight = "80px";
+this.Tab00.tabbuttonheight = 80;this.Tab00.tabbuttonheight = "80px";
 ```
 - **`<nVal>`** — 일괄로 적용될 TabButton 의 높이를 pixel 단위의 숫자로 설정합니다.
 
@@ -3006,8 +3001,7 @@ Tab.tabbuttonwidth[= nWidth]
 nWidth ::= <nVal> ['px']
 ```
 ```javascript
-this.Tab00.tabbuttonwidth = 80;
-this.Tab00.tabbuttonwidth = "80px";
+this.Tab00.tabbuttonwidth = 80;this.Tab00.tabbuttonwidth = "80px";
 ```
 - **`<nVal>`** — 일괄로 적용될 TabButton 의 너비를 pixel 단위의 숫자로 설정합니다.
 
@@ -3277,8 +3271,7 @@ Tab.tooltiptext[= strToolTipText]
 
 ```javascript
 this.Tab00.tooltiptext = "This is ToolTip Text"; this.Tab00.tooltiptext = "";          // 풍선 도움말이 표시되지 않습니다. 
-
-this.Tab00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
+this.Tab00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
 ```
 - **`strToolTipText`** — 풍선도움말에 표시할 텍스트를 설정합니다.
 
@@ -3447,8 +3440,7 @@ Tab.usecontrolkey[= bUsectrlkey]
 bUsectrlkey ::= 'true' | 'false'
 ```
 ```javascript
-this.Tab00.usecontrolkey = true;
-this.Tab00.usecontrolkey = false;
+this.Tab00.usecontrolkey = true;this.Tab00.usecontrolkey = false;
 ```
 - **`true`** — Tab 컴포넌트에서 "Control+탭" 키 입력 시 다음 TabPage로 포커스를 이동합니다.
 마지막 TabPage 에서 "Control+탭" 키 입력 시 첫번째 TabPage로 포커스를 이동합니다.
@@ -3633,15 +3625,23 @@ Tab.addEvent( strEventID )
 
 **Parameters**
 
-```
-Tab 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | Tab 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.Tab00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -3668,15 +3668,26 @@ Tab.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_onmove = function( obj:nexacro.Tab,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Tab00.addEventHandler( "onmove", this.Tab00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -3697,15 +3708,27 @@ Tab.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_onmove = function( obj:nexacro.Tab,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Tab00.addEventHandlerLookup( "onmove", "Tab00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -3799,13 +3822,21 @@ Tab.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.Tab00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -3834,9 +3865,11 @@ var bSucc = this.Tab00.destroy();
 
 **Return**
 
-Tab 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Tab 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-Tab 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+Tab 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -3865,15 +3898,27 @@ Tab.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_onmove = function( obj:nexacro.Tab,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.Tab00.findEventHandler( "onmove", this.Tab00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3898,15 +3943,26 @@ Tab.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = Tab00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -3927,14 +3983,23 @@ Tab.getIndex( nXpos, nYpos)
 
 **Parameters**
 
-```
-Tab 컴포넌트의 좌상단을 기준으로 한 x 좌표값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nXpos | Number | Tab 컴포넌트의 좌상단을 기준으로 한 x 좌표값을 설정합니다. |
+| nYpos | Number | Tab 컴포넌트의 좌상단을 기준으로 한 y 좌표값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nFindIndex = this.Tab00.getIndex( 10,10 );
 ```
 
 **Return**
 
-인수로 전달된 좌표값에 위치한 탭버튼의 인덱스를 반환합니다.
-인수로 전달된 좌표 위치에 탭버튼이 없다면 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 인수로 전달된 좌표값에 위치한 탭버튼의 인덱스를 반환합니다.
+인수로 전달된 좌표 위치에 탭버튼이 없다면 "-1"을 반환합니다. |
 
 
 ---
@@ -3959,7 +4024,9 @@ var nBottom = this.Tab.getOffsetBottom();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 Tab 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 Tab 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -3988,7 +4055,9 @@ var nHeight = this.Tab.getOffsetHeight();
 
 **Return**
 
-Tab 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Tab 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -4017,7 +4086,9 @@ var nleft = this.Tab.getOffsetLeft();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 Tab 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 Tab 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -4046,7 +4117,9 @@ var nRight = this.Tab.getOffsetRight();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 Tab 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 Tab 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -4075,7 +4148,9 @@ var nTop = this.Tab.getOffsetTop();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 Tab 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 Tab 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -4104,7 +4179,9 @@ var nWidth = this.Tab.getOffsetWidth();
 
 **Return**
 
-Tab 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Tab 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -4133,9 +4210,11 @@ var nbottom = this.Tab.getPixelBottom();
 
 **Return**
 
-Tab 의 bottom 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Tab 의 bottom 속성값을 픽셀단위로 반환합니다.
 
-bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4164,9 +4243,11 @@ var nheight = this.Tab.getPixelHeight();
 
 **Return**
 
-Tab 의 height 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Tab 의 height 속성값을 픽셀단위로 반환합니다.
 
-height 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+height 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4195,9 +4276,11 @@ var nleft = this.Tab.getPixelLeft();
 
 **Return**
 
-Tab 의 left 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Tab 의 left 속성값을 픽셀단위로 반환합니다.
 
-left 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+left 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4226,9 +4309,11 @@ var nright = this.Tab.getPixelRight();
 
 **Return**
 
-Tab 의 right 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Tab 의 right 속성값을 픽셀단위로 반환합니다.
 
-right 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+right 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4257,9 +4342,11 @@ var ntop = this.Tab.getPixelTop();
 
 **Return**
 
-Tab 의 top 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Tab 의 top 속성값을 픽셀단위로 반환합니다.
 
-top 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+top 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4288,9 +4375,11 @@ var nwidth = this.Tab.getPixelWidth();
 
 **Return**
 
-Tab 의 width 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Tab 의 width 속성값을 픽셀단위로 반환합니다.
 
-width 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+width 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -4319,7 +4408,9 @@ var nCount = this.Tab00.getTabpageCount();
 
 **Return**
 
-Tab 컴포넌트에 등록된 TabPage의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Tab 컴포넌트에 등록된 TabPage의 갯수를 반환합니다. |
 
 
 ---
@@ -4340,8 +4431,62 @@ Tab.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth,
 
 **Parameters**
 
-```
-Tab 의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | Tab 의 ID를 설정합니다. |
+| vLeft | String, Number | Tab 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 Tab 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Tab 의 left 가 결정됩니다. |
+| vTop | String, Number | Tab 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 Tab 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Tab 의 top 이 결정됩니다. |
+| vWidth | String, Number | Tab 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Tab 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Tab 의 width 가 결정됩니다. |
+| vHeight | String, Number | Tab 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Tab 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Tab 의 height 가 결정됩니다. |
+| vRight | String, Number | Tab 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 Tab 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Tab 의 right 가 결정됩니다. |
+| vBottom | String, Number | Tab 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 Tab 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Tab 의 bottom 이 결정됩니다. |
+| vMinWidth | String, Number | Tab 이 화면에 표시되는 최소 너비값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxWidth | String, Number | Tab 이 화면에 표시되는 최대 너비값을 pixel 단위의 숫자로 설정합니다.
+
+vMinWidth 보다 작은 값을 설정하면 vMinWidth 값으로 설정됩니다. |
+| vMinHeight | String, Number | Tab 이 화면에 표시되는 최소 높이값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxHeight | String, Number | Tab 이 화면에 표시되는 최대 높이값을 pixel 단위의 숫자로 설정합니다.
+
+vMinHeight 보다 작은 값을 설정하면 vMinHeight 값으로 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = new Tab();
+
+objComp.init( "Tab00", 30, 120, 196, 46 );
+objComp.init( "Tab00", 30, 120, 196, 46, null, null );
+objComp.init( "Tab00", null, null, 300, "400px", "80%", 300 );
+objComp.init( "Tab00", 0, 0, 200, 100, null, null, 300, 500, 200, 500 );
+objComp.init( "Tab00", "Button00:10", 300, null, null, "Static00:10", "20%", 300, 500, 200, 500 );
 ```
 
 **Return**
@@ -4391,16 +4536,33 @@ Tab.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_onmove = function( obj:nexacro.Tab,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.Tab00.insertEventHandler( "onmove", 0, this.Tab00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4425,15 +4587,43 @@ Tab.insertTabpage( strID, nIndex [,strURL [,strText [,nTabBtnWidth [,nTabBtnHeig
 
 **Parameters**
 
-```
-삽입된 TabpageControl 의 ID 로 사용할 유일값을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 삽입된 TabpageControl 의 ID 로 사용할 유일값을 문자열로 설정합니다. |
+| nIndex | Number | 삽입될 위치를 인덱스로 설정합니다.
+
+-1 로 설정시 마지막으로 추가됩니다. |
+| strURL | String | 삽입된 TabpageControl 에 연결할 Form 의 URL 을 문자열로 설정합니다.
+
+연결할 Form 이 없으면 빈값("")을 설정합니다.
+값 생략 시 빈값("") 이 설정됩니다. |
+| strText | String | 삽입된 TabpageControl 의 TabButton 에 표시할 텍스트를 설정합니다.
+
+값 생략 시 첫번째 파라미터인 strID 값이 설정됩니다. |
+| nTabBtnWidth | Number | 삽입된 TabpageControl 의 TabButton 너비를 pixel 단위의 숫자로 설정합니다.
+
+값 생략 시 Tab 의 tabbuttonwidth 속성값이 적용됩니다. |
+| nTabBtnHeight | Number | 삽입된 TabpageControl 의 TabButton 높이를 pixel 단위의 숫자로 설정합니다.
+
+값 생략 시 Tab 의 tabbuttonheight 속성값이 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nIndex;
+nIndex = this.Tab00.insertTabpage( "newpage01",1 );
+nIndex = this.Tab00.insertTabpage( "newpage02",2,"Base::page02.xfdl" );
+nIndex = this.Tab00.insertTabpage( "newpage03",3,"Base::page03.xfdl","Title03" );
+nIndex = this.Tab00.insertTabpage( "newpage04",4,"Base::page04.xfdl","Title04", 100, 50 );
 ```
 
 **Return**
 
-Tab 컴포넌트에 삽입된 TabpageControl 의 인덱스값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Tab 컴포넌트에 삽입된 TabpageControl 의 인덱스값을 반환합니다.
 
-Tab 컴포넌트에 TabpageControl 삽입을 실패하면 -1 을 반환합니다.
+Tab 컴포넌트에 TabpageControl 삽입을 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4458,12 +4648,49 @@ Tab.move( vLeft, vTop [, vWidth, vHeight [, vRight, vBottom]] )
 
 **Parameters**
 
-```
-Tab 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | Tab 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 Tab 의 left 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Tab 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Tab 의 left 가 결정됩니다. |
+| vTop | String, Number | Tab 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 Tab 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Tab 의 top 이 결정됩니다. |
+| vWidth | String, Number | Tab 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Tab 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Tab 의 width 가 결정됩니다. |
+| vHeight | String, Number | Tab 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Tab 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Tab 의 height 가 결정됩니다. |
+| vRight | String, Number | Tab 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 Tab 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Tab 의 right 가 결정됩니다. |
+| vBottom | String, Number | Tab 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 Tab 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Tab 의 bottom 이 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00.move(10,10);
+this.Tab00.move(10,10,100,100);
+this.Tab00.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -4499,14 +4726,23 @@ Tab.moveTabpage( nFromindex, nToindex )
 
 **Parameters**
 
-```
-순서를 변경할 TabPage의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nFromindex | Number | 순서를 변경할 TabPage의 인덱스를 설정합니다. |
+| nToindex | Number | TabPage 가 위치할 새로운 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nSuccess = this.Tab00.moveTabpage(0,1);
 ```
 
 **Return**
 
-TabPage의 순서 변경에 성공하면 "0"을 반환합니다.
-TabPage의 순서 변경에 실패하면 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | TabPage의 순서 변경에 성공하면 "0"을 반환합니다.
+TabPage의 순서 변경에 실패하면 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -4534,8 +4770,16 @@ Tab.moveToNext( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab.moveToNext( this.Button00 );
+this.Tab.moveToNext( "Button00" );
 ```
 
 **Return**
@@ -4573,8 +4817,16 @@ Tab.moveToPrev( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab.moveToPrev( this.Button00 );
+this.Tab.moveToPrev( "Button00" );
 ```
 
 **Return**
@@ -4611,15 +4863,23 @@ Tab.removeEvent( strEventID )
 
 **Parameters**
 
-```
-Tab 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | Tab 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.Tab00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -4650,15 +4910,26 @@ Tab.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_onmove = function( obj:nexacro.Tab,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Tab00.removeEventHandler( "onmove", this.Tab00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -4685,15 +4956,27 @@ Tab.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_onmove = function( obj:nexacro.Tab,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Tab00.removeEventHandlerLookup( "onmove", "Tab00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -4720,14 +5003,22 @@ Tab.removeTabpage( nIndex )
 
 **Parameters**
 
-```
-삭제할 TabPage의 인덱스값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIndex | Number | 삭제할 TabPage의 인덱스값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSuccess = this.Tab00.removeTabpage( 0 );
 ```
 
 **Return**
 
-TabPage 삭제에 성공하면 0을 반환합니다.
-TabPage 삭제에 실패하면 -1을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | TabPage 삭제에 성공하면 0을 반환합니다.
+TabPage 삭제에 실패하면 -1을 반환합니다. |
 
 **Remark**
 
@@ -4754,13 +5045,25 @@ Tab.resize( vWidth, vHeight )
 
 **Parameters**
 
-```
-Tab 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vWidth | String, Number | Tab 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 음수값을 설정할 수 없습니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Tab 의 width 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Tab 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Tab 의 width 가 결정됩니다. |
+| vHeight | String, Number | Tab 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+음수값을 설정할 수 없습니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Tab 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Tab 의 height 가 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00.resize( 100,100 );
 ```
 
 **Return**
@@ -4876,21 +5179,40 @@ Tab.setContents( strCont );
 
 **Parameters**
 
-```
-Tab 의 내부 구성 컨텐츠 정보를 XML 형태의 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strCont | String | Tab 의 내부 구성 컨텐츠 정보를 XML 형태의 문자열로 설정합니다.
 
 "<Tabpages> ... </Tabpages>" 형태로 Tabpages 태그를 포함하여 설정하여야 합니다.
 
 컨텐츠 정보에 User Property 를 포함할 수 있습니다.
-컨텐츠 정보에 Invisible Object, Bind Object, InitValue Object 는 포함할 수 없습니다.
+컨텐츠 정보에 Invisible Object, Bind Object, InitValue Object 는 포함할 수 없습니다. |
+
+**Sample Call**
+
+```javascript
+var strCont =  '<Tabpages>'
+                 + '  <Tabpage id="Tabpage1" text="Tabpage1">'
+                 + '    <Layouts>'
+                 + '      <Layout>'
+                 + '        <Button id="Button00" taborder="0" text="Button00" left="50" top="50" width="100" height="50"/>'
+                 + '      </Layout>'
+                 + '    </Layouts>'
+                 + '  </Tabpage>'
+                 + '  <Tabpage id="Tabpage2" text="Tabpage2"/>'
+                 + '</Tabpages>';
+
+this.Tab00.setContents( strCont );
 ```
 
 **Return**
 
-컨텐츠 생성에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 컨텐츠 생성에 성공하면 true 를 반환합니다.
 컨텐츠 생성에 실패하면 false 를 반환합니다.
 
-문자열 파싱 중 오류가 발생하거나 잘못된 컴포넌트(오타 포함) 정의에 의해 오류가 발생할 경우 컨텐츠 생성에 실패하게 됩니다.
+문자열 파싱 중 오류가 발생하거나 잘못된 컴포넌트(오타 포함) 정의에 의해 오류가 발생할 경우 컨텐츠 생성에 실패하게 됩니다. |
 
 **Remark**
 
@@ -4915,15 +5237,26 @@ Tab.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_onmove = function( obj:nexacro.Tab,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.Tab00.setEventHandler( "onmove", this.Tab00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4950,15 +5283,27 @@ Tab.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_onmove = function( obj:nexacro.Tab,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Tab00.setEventHandlerLookup( "onmove", "Tab00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4985,19 +5330,28 @@ Tab.setFocus( [bMoveScroll] )
 
 **Parameters**
 
-```
-부모 컴포넌트에 스크롤이 있을 경우, Tab 기준으로 스크롤을 이동할지 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bMoveScroll | Boolean | 부모 컴포넌트에 스크롤이 있을 경우, Tab 기준으로 스크롤을 이동할지 여부를 설정합니다.
 
 true: Tab 이(가) 화면에 표시되도록 스크롤을 이동합니다.
 false: Tab 위치와 관계없이 스크롤을 이동하지 않습니다.
 
-값을 지정하지 않으면 기본값은 true입니다.
+값을 지정하지 않으면 기본값은 true입니다. |
+
+**Sample Call**
+
+```javascript
+var objBefComp = this.Tab00.setFocus();
+var objBefComp = this.Tab00.setFocus( false );
 ```
 
 **Return**
 
-Tab 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
-이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Tab 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
+이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다. |
 
 **Remark**
 
@@ -5022,8 +5376,14 @@ Tab.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 Tab 의 bottom 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 컴포넌트의 Top 위치를 기준으로 Tab 의 bottom 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab.setOffsetBottom( 10 );
 ```
 
 **Return**
@@ -5056,8 +5416,14 @@ Tab.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-Tab 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | Tab 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab.setOffsetHeight( 10 );
 ```
 
 **Return**
@@ -5090,8 +5456,14 @@ Tab.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 Tab 의 left 값을 픽셀단위의 숫자로 설정합니다
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 컴포넌트의 Left 위치를 기준으로 Tab 의 left 값을 픽셀단위의 숫자로 설정합니다 |
+
+**Sample Call**
+
+```javascript
+this.Tab.setOffsetLeft( 10 );
 ```
 
 **Return**
@@ -5124,8 +5496,14 @@ Tab.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 Tab 의 right 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 컴포넌트의 Left 위치를 기준으로 Tab 의 right 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab.setOffsetRight( 600 );
 ```
 
 **Return**
@@ -5158,8 +5536,14 @@ Tab.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 Tab 의 top 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 컴포넌트의 Top 위치를 기준으로 Tab 의 top 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab.setOffsetTop( 10 );
 ```
 
 **Return**
@@ -5192,8 +5576,14 @@ Tab.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-Tab 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | Tab 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab.setOffsetWidth( 10 );
 ```
 
 **Return**
@@ -5264,16 +5654,19 @@ canchange(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | TabIndexChangeEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값을 "true"로 반환하면 TabPage 선택을 변경합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값을 "true"로 반환하면 TabPage 선택을 변경합니다.
 이벤트에서 리턴값을 "false"로 반환하면 TabPage 선택을 변경하지 않습니다.
 
-이벤트에서 리턴값을 생략하면 "true"로 적용됩니다.
+이벤트에서 리턴값을 생략하면 "true"로 적용됩니다. |
 
 
 ---
@@ -5294,9 +5687,10 @@ onchanged(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | TabIndexChangeEventInfo | Event Object. |
 
 **Return**
 
@@ -5325,9 +5719,10 @@ oncontextmenu(obj:nexacro.Tab,e:nexacro.ContextMenuEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | ContextMenuEventInfo | Event Object. |
 
 **Return**
 
@@ -5358,15 +5753,18 @@ ondevicebuttonup(obj:nexacro.Tab,e:nexacro.DeviceButtonEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | DeviceButtonEventInfo | Event Object. |
 
 **Return**
 
-true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
-반환값을 생략하면 false로 적용됩니다.
+반환값을 생략하면 false로 적용됩니다. |
 
 **Remark**
 
@@ -5395,16 +5793,19 @@ ondrag(obj:nexacro.Tab,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 드래그 상태가 취소되고 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5438,16 +5839,19 @@ ondragenter(obj:nexacro.Tab,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5474,16 +5878,19 @@ ondragleave(obj:nexacro.Tab,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5510,16 +5917,19 @@ ondragmove(obj:nexacro.Tab,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5546,16 +5956,19 @@ ondrop(obj:nexacro.Tab,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5589,9 +6002,10 @@ onextrabuttonclick(obj:nexacro.Tab,e:nexacro.TabMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | TabMouseEventInfo | Event Object. |
 
 **Return**
 
@@ -5616,16 +6030,19 @@ onkeydown(obj:nexacro.Tab,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5673,16 +6090,19 @@ onkeyup(obj:nexacro.Tab,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5719,9 +6139,10 @@ onkillfocus(obj:nexacro.Tab,e:nexacro.KillFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | KillFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -5753,16 +6174,19 @@ onlbuttondown(obj:nexacro.Tab,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5808,16 +6232,19 @@ onlbuttonup(obj:nexacro.Tab,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5859,16 +6286,19 @@ onmousedown(obj:nexacro.Tab,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5898,16 +6328,19 @@ onmouseenter(obj:nexacro.Tab,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5946,16 +6379,19 @@ onmouseleave(obj:nexacro.Tab,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5991,16 +6427,19 @@ onmousemove(obj:nexacro.Tab,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6036,16 +6475,19 @@ onmouseup(obj:nexacro.Tab,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6077,9 +6519,10 @@ onmove(obj:nexacro.Tab,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -6104,16 +6547,19 @@ onrbuttondown(obj:nexacro.Tab,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6154,16 +6600,19 @@ onrbuttonup(obj:nexacro.Tab,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6203,9 +6652,10 @@ onsetfocus(obj:nexacro.Tab,e:nexacro.SetFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | SetFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -6248,9 +6698,10 @@ onsize(obj:nexacro.Tab,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -6275,16 +6726,19 @@ ontouchend(obj:nexacro.Tab,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6309,16 +6763,19 @@ ontouchmove(obj:nexacro.Tab,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6343,16 +6800,19 @@ ontouchstart(obj:nexacro.Tab,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tab | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -9089,9 +9549,7 @@ TabpageControl.hotkey[= strHotkey]
 **Setting Syntax**
 
 ```javascript
-this.Tab00.Tabpage1.hotkey = "G";
-this.Tab00.Tabpage1.hotkey = "CTRL+A";
- this.Tab00.Tabpage1.hotkey = "CTRL+ALT+X";
+this.Tab00.Tabpage1.hotkey = "G";this.Tab00.Tabpage1.hotkey = "CTRL+A"; this.Tab00.Tabpage1.hotkey = "CTRL+ALT+X";
 ```
 - **`strHotkey`** — 수식키(CTRL, ALT, SHIFT)와 일반키의 조합으로 설정합니다.
 수식키는 중복으로 조합하여 설정할 수 있습니다.
@@ -9680,14 +10138,23 @@ TabpageControl.addChild( strChildID, objComp )
 
 **Parameters**
 
-```
-자식으로 추가될 컴포넌트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strChildID | String | 자식으로 추가될 컴포넌트의 ID를 설정합니다. |
+| objComp | Object | 자식으로 추가될 컴포넌트의 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nIndex = this.TabpageControl00.addChild( "Button00", Button00 );
 ```
 
 **Return**
 
-추가된 자식 컴포넌트의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 자식 컴포넌트의 인덱스를 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -9734,15 +10201,23 @@ TabpageControl.addEvent( strEventID )
 
 **Parameters**
 
-```
-TabpageControl 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | TabpageControl 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.TabpageControl00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -9769,15 +10244,26 @@ TabpageControl.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_Tabpage1_onmove = function( obj:nexacro.Tabpage,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Tab00.Tabpage1.addEventHandler( "onmove", this.Tab00_Tabpage1_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 
 ---
@@ -9798,15 +10284,27 @@ TabPage.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_Tabpage1_onmove = function( obj:nexacro.Tabpage,e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Tab00.Tabpage1.addEventHandlerLookup( "onmove", "Tab00_Tabpage1_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -9832,13 +10330,21 @@ TabpageControl.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.TabpageControl00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -9863,14 +10369,25 @@ TabpageControl.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_Tabpage1_onmove = function( obj:nexacro.Tabpage,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.Tab00.Tabpage1.findEventHandler( "onmove", this.Tab00_Tabpage1_onmove, this );
 ```
 
 **Return**
 
-이벤트에서 찾으려고 하는 핸들러 함수의 인덱스를 반환합니다.
-찾으려고 하는 핸들러 함수가 존재하지 않는다면 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에서 찾으려고 하는 핸들러 함수의 인덱스를 반환합니다.
+찾으려고 하는 핸들러 함수가 존재하지 않는다면 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -9895,15 +10412,26 @@ TabpageControl.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = TabpageControl00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -9924,15 +10452,25 @@ TabpageControl.insertChild( nIdx, strChildID, objComp )
 
 **Parameters**
 
-```
-부모 컴포넌트에 추가 될 순서를 설정합니다.
-"-1"로 설정할 경우 자식 컴포넌트 중 제일 마지막에 추가됩니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIdx | Number | 부모 컴포넌트에 추가 될 순서를 설정합니다.
+"-1"로 설정할 경우 자식 컴포넌트 중 제일 마지막에 추가됩니다. |
+| strChildID | String | 자식으로 추가될 컴포넌트의 ID를 설정합니다. |
+| objComp | Object | 자식으로 추가될 컴포넌트의 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nIndex = this.TabpageControl00.insertChild( 0, "Button00", Button00 );
 ```
 
 **Return**
 
-추가된 자식 컴포넌트의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 자식 컴포넌트의 인덱스를 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -9979,16 +10517,33 @@ TabpageControl.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_Tabpage1_onmove = function( obj:nexacro.Tabpage,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.Tab00.Tabpage1.insertEventHandler( "onmove", 0, this.Tab00_Tabpage1_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -10052,14 +10607,22 @@ TabpageControl.removeChild( strChildID )
 
 **Parameters**
 
-```
-제거할 자식 컴포넌트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strChildID | String | 제거할 자식 컴포넌트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objDelete = this.TabpageControl00.removeChild( "Button00" );
 ```
 
 **Return**
 
-컴포넌트 제거에 성공하면 제거된 컴포넌트의 오브젝트를 반환합니다.
-컴포넌트 제거에 실패하면 "null"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 컴포넌트 제거에 성공하면 제거된 컴포넌트의 오브젝트를 반환합니다.
+컴포넌트 제거에 실패하면 "null"을 반환합니다. |
 
 **Remark**
 
@@ -10096,15 +10659,23 @@ TabpageControl.removeEvent( strEventID )
 
 **Parameters**
 
-```
-TabpageControl 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | TabpageControl 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.TabpageControl00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -10135,14 +10706,25 @@ TabpageControl.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_Tabpage1_onmove = function( obj:nexacro.Tabpage,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Tab00.Tabpage1.removeEventHandler( "onmove", this.Tab00_Tabpage1_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 "1"을 반환합니다.
-핸들러 함수 제거에 실패하면 "0"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 "1"을 반환합니다.
+핸들러 함수 제거에 실패하면 "0"을 반환합니다. |
 
 **Remark**
 
@@ -10169,14 +10751,26 @@ TabpageControl.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_Tabpage1_onmove = function( obj:nexacro.Tabpage,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Tab00.Tabpage1.removeEventHandlerLookup( "onmove", "Tab00_Tabpage1_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 "1"을 반환합니다.
-핸들러 함수 제거에 실패하면 "0"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 "1"을 반환합니다.
+핸들러 함수 제거에 실패하면 "0"을 반환합니다. |
 
 **Remark**
 
@@ -10203,21 +10797,33 @@ TabpageControl.setContents( strCont );
 
 **Parameters**
 
-```
-TabpageControl 의 내부 구성 컨텐츠 정보를 XML 형태의 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strCont | String | TabpageControl 의 내부 구성 컨텐츠 정보를 XML 형태의 문자열로 설정합니다.
 
 "<Layout> ... </Layout>" 형태로 레이아웃 태그를 포함하여 설정하여야 합니다.
 
 컨텐츠 정보에 User Property 를 포함할 수 있습니다.
-컨텐츠 정보에 Invisible Object, Bind Object, InitValue Object 는 포함할 수 없습니다.
+컨텐츠 정보에 Invisible Object, Bind Object, InitValue Object 는 포함할 수 없습니다. |
+
+**Sample Call**
+
+```javascript
+var strCont =  '<Layout>'
+                 + '    <Button id="Button00" taborder="0" text="Button00" left="50" top="50" width="100" height="50"/>'
+                 + '</Layout>';
+
+this.Tab00.Tabpage00.setContents( strCont );
 ```
 
 **Return**
 
-컨텐츠 생성에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 컨텐츠 생성에 성공하면 true 를 반환합니다.
 컨텐츠 생성에 실패하면 false 를 반환합니다.
 
-문자열 파싱 중 오류가 발생하거나 잘못된 컴포넌트(오타 포함) 정의에 의해 오류가 발생할 경우 컨텐츠 생성에 실패하게 됩니다.
+문자열 파싱 중 오류가 발생하거나 잘못된 컴포넌트(오타 포함) 정의에 의해 오류가 발생할 경우 컨텐츠 생성에 실패하게 됩니다. |
 
 **Remark**
 
@@ -10242,14 +10848,25 @@ TabpageControl.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_Tabpage1_onmove = function( obj:nexacro.Tabpage,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.Tab00.Tabpage1.setEventHandler( "onmove", this.Tab00_Tabpage1_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 "0"을 반환합니다.
-첫번째 핸들러 함수 변경에 실패하면 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 "0"을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -10276,14 +10893,26 @@ TabpageControl.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Tab00_Tabpage1_onmove = function( obj:nexacro.Tabpage,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Tab00.Tabpage1.setEventHandlerLookup( "onmove", "Tab00_Tabpage1_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 "0"을 반환합니다.
-첫번째 핸들러 함수 변경에 실패하면 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 "0"을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -10310,19 +10939,36 @@ TabpageControl.setFocus( [bMoveScroll [, bInnerFocus]] )
 
 **Parameters**
 
-```
-부모 컴포넌트에 스크롤이 있을 경우, TabpageControl 기준으로 스크롤을 이동할지 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bMoveScroll | Boolean | 부모 컴포넌트에 스크롤이 있을 경우, TabpageControl 기준으로 스크롤을 이동할지 여부를 설정합니다.
 
 true: TabpageControl 이(가) 화면에 표시되도록 스크롤을 이동합니다.
 false: TabpageControl 위치와 관계없이 스크롤을 이동하지 않습니다.
 
-값을 지정하지 않으면 기본값은 true입니다.
+값을 지정하지 않으면 기본값은 true입니다. |
+| bInnerFocus | Boolean | 자식 컴포넌트(또는 아이템으로 등록된 컴포넌트)로 포커스를 이동할지 여부를 설정합니다.
+
+true: 포커스를 받을 수 있는 첫 번째 컴포넌트로 포커스를 이동합니다.
+       포커스를 받을 수 있는 컴포넌트가 없는 경우 TabpageControl 에 포커스가 설정됩니다.
+false: TabpageControl 에 포커스를 설정합니다.
+
+값을 설정하지 않으면 기본값은 true입니다. |
+
+**Sample Call**
+
+```javascript
+var objBefComp = this.TabpageControl00.setFocus();
+var objBefComp = this.TabpageControl00.setFocus( false );
+var objBefComp = this.TabpageControl00.setFocus( true, false );
 ```
 
 **Return**
 
-TabpageControl 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
-이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | TabpageControl 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
+이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다. |
 
 **Remark**
 
@@ -10349,9 +10995,10 @@ oncontextmenu(obj:nexacro.Tabpage,e:nexacro.ContextMenuEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | ContextMenuEventInfo | Event Object. |
 
 **Return**
 
@@ -10382,15 +11029,18 @@ ondevicebuttonup(obj:nexacro.Tabpage,e:nexacro.DeviceButtonEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | DeviceButtonEventInfo | Event Object. |
 
 **Return**
 
-true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
-반환값을 생략하면 false로 적용됩니다.
+반환값을 생략하면 false로 적용됩니다. |
 
 **Remark**
 
@@ -10419,16 +11069,19 @@ ondrag(obj:nexacro.Tabpage,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 드래그 상태가 취소되고 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -10462,16 +11115,19 @@ ondragenter(obj:nexacro.Tabpage,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -10498,16 +11154,19 @@ ondragleave(obj:nexacro.Tabpage,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -10534,16 +11193,19 @@ ondragmove(obj:nexacro.Tabpage,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -10570,16 +11232,19 @@ ondrop(obj:nexacro.Tabpage,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -10613,9 +11278,10 @@ onhscroll(obj:nexacro.Tabpage,e:nexacro.ScrollEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | ScrollEventInfo | Event Object. |
 
 **Return**
 
@@ -10640,16 +11306,19 @@ onkeydown(obj:nexacro.Tabpage,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -10696,16 +11365,19 @@ onkeyup(obj:nexacro.Tabpage,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -10738,9 +11410,10 @@ onkillfocus(obj:nexacro.Tabpage,e:nexacro.KillFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | KillFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -10772,16 +11445,19 @@ onlbuttondown(obj:nexacro.Tabpage,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -10821,16 +11497,19 @@ onlbuttonup(obj:nexacro.Tabpage,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -10862,16 +11541,19 @@ onmousedown(obj:nexacro.Tabpage,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -10901,16 +11583,19 @@ onmouseenter(obj:nexacro.Tabpage,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -10949,16 +11634,19 @@ onmouseleave(obj:nexacro.Tabpage,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -10994,16 +11682,19 @@ onmousemove(obj:nexacro.Tabpage,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -11039,16 +11730,19 @@ onmouseup(obj:nexacro.Tabpage,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -11080,16 +11774,19 @@ onmousewheel(obj:nexacro.Tabpage,e:nexacro.MouseWheelEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | MouseWheelEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -11128,9 +11825,10 @@ onmove(obj:nexacro.Tabpage,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -11155,16 +11853,19 @@ onrbuttondown(obj:nexacro.Tabpage,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -11205,16 +11906,19 @@ onrbuttonup(obj:nexacro.Tabpage,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -11254,9 +11958,10 @@ onsetfocus(obj:nexacro.Tabpage,e:nexacro.SetFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | SetFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -11299,9 +12004,10 @@ onsize(obj:nexacro.Tabpage,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -11326,16 +12032,19 @@ ontouchend(obj:nexacro.Tabpage,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -11360,16 +12069,19 @@ ontouchmove(obj:nexacro.Tabpage,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -11394,16 +12106,19 @@ ontouchstart(obj:nexacro.Tabpage,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -11432,9 +12147,10 @@ onvscroll(obj:nexacro.Tabpage,e:nexacro.ScrollEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TabpageControl | Event가 발생한 Object. |
+| e | ScrollEventInfo | Event Object. |
 
 **Return**
 
@@ -12527,8 +13243,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.TabButtonIconControl00.enableevent = true;  
-
-this.TabButtonIconControl00.enableevent = false;
+this.TabButtonIconControl00.enableevent = false;
 ```
 - **`true`** — TabButtonIconControl 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — TabButtonIconControl 에서 이벤트가 발생하지 않도록 설정합니다.

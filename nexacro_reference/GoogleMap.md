@@ -1715,15 +1715,23 @@ GoogleMap.addEvent( strEventID )
 
 **Parameters**
 
-```
-GoogleMap 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | GoogleMap 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.GoogleMap00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -1750,15 +1758,26 @@ GoogleMap.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap00_onmove = function( obj:nexacro.GoogleMap,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.GoogleMap00.addEventHandler( "onmove", this.GoogleMap00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -1779,15 +1798,27 @@ GoogleMap.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap00_onmove = function( obj:nexacro.GoogleMap,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.GoogleMap00.addEventHandlerLookup( "onmove", "GoogleMap00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -1813,14 +1844,19 @@ GoogleMap.addItem( strItemID, objItem )
 
 **Parameters**
 
-```
-각 아이템을 구분할 고유 식별자를 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strItemID | String | 각 아이템을 구분할 고유 식별자를 문자열로 설정합니다. |
+| objItem | Object | GoogleMap 위에 표시할 아이템의 오브젝트를 설정합니다.
+
+GoogleMapMarker, GoogleMapPolyline, GoogleMapPolygon 오브젝트를 설정할 수 있습니다. |
 
 **Return**
 
-파라미터를 잘못 설정하거나 중복된 ID가 존재할 경우 "false" 를 반환합니다.
-그 외의 정상적인 경우에는 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파라미터를 잘못 설정하거나 중복된 ID가 존재할 경우 "false" 를 반환합니다.
+그 외의 정상적인 경우에는 "true" 를 반환합니다. |
 
 **Remark**
 
@@ -1845,13 +1881,21 @@ GoogleMap.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.GoogleMap00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -1880,9 +1924,11 @@ var bSucc = this.GoogleMap00.destroy();
 
 **Return**
 
-GoogleMap 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | GoogleMap 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-GoogleMap 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+GoogleMap 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -1911,15 +1957,27 @@ GoogleMap.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap00_onmove = function( obj:nexacro.GoogleMap,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.GoogleMap00.findEventHandler( "onmove", this.GoogleMap00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -1944,14 +2002,28 @@ GoogleMap.getAddress(nLatitude, nLongitude, [nMaxResultCount, [enumLocale]])
 
 **Parameters**
 
-```
-주소를 검색할 위치의 위도를 숫자로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLatitude | Number | 주소를 검색할 위치의 위도를 숫자로 설정합니다. |
+| nLongitude | Number | 주소를 검색할 위치의 경도를 숫자로 설정합니다. |
+| nMaxResultCount | Number | 반환 받을 주소의 최대 갯수를 숫자로 설정합니다.
+
+값 생략 시 "1" 로 적용됩니다.
+"0" 이하로 설정 시 에러가 발생합니다. |
+| enumLocale | String | 반환 받을 주소의 언어를 설정합니다.
+
+"ko" 설정 시 한국어로 된 주소를 반환합니다.
+"en" 설정 시 영어로 된 주소를 반환합니다.
+"ja" 설정 시 일본어로 된 주소를 반환합니다.
+
+값 생략 시 시스템에 설정된 국가정보가 적용됩니다. |
 
 **Return**
 
-파라미터를 잘 못 설정하거나 0 이하로 설정 시 "false" 를 반환합니다.
-그 외의 정상적인 경우에는 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파라미터를 잘 못 설정하거나 0 이하로 설정 시 "false" 를 반환합니다.
+그 외의 정상적인 경우에는 "true" 를 반환합니다. |
 
 **Remark**
 
@@ -1981,14 +2053,16 @@ GoogleMap.getCoordinates( strAddress )
 
 **Parameters**
 
-```
-좌표(위도,경도)로 변환하려는 주소를 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strAddress | String | 좌표(위도,경도)로 변환하려는 주소를 문자열로 설정합니다. |
 
 **Return**
 
-메소드 수행에 성공하면 "true" 를 반환합니다.
-메소드 수행에 실패하면 "false" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 수행에 성공하면 "true" 를 반환합니다.
+메소드 수행에 실패하면 "false" 를 반환합니다. |
 
 **Remark**
 
@@ -2014,15 +2088,26 @@ GoogleMap.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = GoogleMap00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -2047,7 +2132,9 @@ var nBottom = this.GoogleMap.getOffsetBottom();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 GoogleMap 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 GoogleMap 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2076,7 +2163,9 @@ var nHeight = this.GoogleMap.getOffsetHeight();
 
 **Return**
 
-GoogleMap 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | GoogleMap 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -2105,7 +2194,9 @@ var nleft = this.GoogleMap.getOffsetLeft();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 GoogleMap 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 GoogleMap 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2134,7 +2225,9 @@ var nRight = this.GoogleMap.getOffsetRight();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 GoogleMap 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 GoogleMap 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2163,7 +2256,9 @@ var nTop = this.GoogleMap.getOffsetTop();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 GoogleMap 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 GoogleMap 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2192,7 +2287,9 @@ var nWidth = this.GoogleMap.getOffsetWidth();
 
 **Return**
 
-GoogleMap 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | GoogleMap 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -2221,9 +2318,11 @@ var nbottom = this.GoogleMap.getPixelBottom();
 
 **Return**
 
-GoogleMap 의 bottom 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | GoogleMap 의 bottom 속성값을 픽셀단위로 반환합니다.
 
-bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2252,9 +2351,11 @@ var nheight = this.GoogleMap.getPixelHeight();
 
 **Return**
 
-GoogleMap 의 height 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | GoogleMap 의 height 속성값을 픽셀단위로 반환합니다.
 
-height 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+height 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2283,9 +2384,11 @@ var nleft = this.GoogleMap.getPixelLeft();
 
 **Return**
 
-GoogleMap 의 left 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | GoogleMap 의 left 속성값을 픽셀단위로 반환합니다.
 
-left 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+left 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2314,9 +2417,11 @@ var nright = this.GoogleMap.getPixelRight();
 
 **Return**
 
-GoogleMap 의 right 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | GoogleMap 의 right 속성값을 픽셀단위로 반환합니다.
 
-right 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+right 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2345,9 +2450,11 @@ var ntop = this.GoogleMap.getPixelTop();
 
 **Return**
 
-GoogleMap 의 top 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | GoogleMap 의 top 속성값을 픽셀단위로 반환합니다.
 
-top 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+top 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2376,9 +2483,11 @@ var nwidth = this.GoogleMap.getPixelWidth();
 
 **Return**
 
-GoogleMap 의 width 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | GoogleMap 의 width 속성값을 픽셀단위로 반환합니다.
 
-width 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+width 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2403,8 +2512,62 @@ GoogleMap.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMin
 
 **Parameters**
 
-```
-GoogleMap 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | GoogleMap 의 ID를 문자열로 설정합니다. |
+| vLeft | String, Number | GoogleMap 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 GoogleMap 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 GoogleMap 의 left 가 결정됩니다. |
+| vTop | String, Number | GoogleMap 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 GoogleMap 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 GoogleMap 의 top 이 결정됩니다. |
+| vWidth | String, Number | GoogleMap 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 GoogleMap 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 GoogleMap 의 width 가 결정됩니다. |
+| vHeight | String, Number | GoogleMap 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 GoogleMap 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 GoogleMap 의 height 가 결정됩니다. |
+| vRight | String, Number | GoogleMap 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 GoogleMap 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 GoogleMap 의 right 가 결정됩니다. |
+| vBottom | String, Number | GoogleMap 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 GoogleMap 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 GoogleMap 의 bottom 이 결정됩니다. |
+| vMinWidth | String, Number | GoogleMap 이(가) 화면에 표시되는 최소 너비값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxWidth | String, Number | GoogleMap 이(가) 화면에 표시되는 최대 너비값을 pixel 단위의 숫자로 설정합니다.
+
+vMinWidth 보다 작은 값을 설정하면 vMinWidth 값으로 설정됩니다. |
+| vMinHeight | String, Number | GoogleMap 이(가) 화면에 표시되는 최소 높이값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxHeight | String, Number | GoogleMap 이(가) 화면에 표시되는 최대 높이값을 pixel 단위의 숫자로 설정합니다.
+
+vMinHeight 보다 작은 값을 설정하면 vMinHeight 값으로 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = new GoogleMap();
+
+objComp.init( "GoogleMap00", 30, 120, 196, 46 );
+objComp.init( "GoogleMap00", 30, 120, 196, 46, null, null );
+objComp.init( "GoogleMap00", null, null, 300, "400px", "80%", 300 );
+objComp.init( "GoogleMap00", 0, 0, 200, 100, null, null, 300, 500, 200, 500 );
+objComp.init( "GoogleMap00", "GoogleMap22:10", 300, null, null, "GoogleMap33:10", "20%", 300, 500, 200, 500 );
 ```
 
 **Return**
@@ -2452,16 +2615,33 @@ GoogleMap.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap00_onmove = function( obj:nexacro.GoogleMap,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.GoogleMap00.insertEventHandler( "onmove", 0, this.GoogleMap00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2486,8 +2666,9 @@ GoogleMap.load( [bUseSensor[, nLatitude, nLongitude[, constViewMode[, nZoomLevel
 
 **Parameters**
 
-```
-GPS 사용 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bUseSensor | Boolean | GPS 사용 여부를 설정합니다.
 
 true 설정 시 GPS 정보를 기준으로 로딩될 지도의 위치를 결정합니다.
 false 설정 시 GPS 정보를 사용하지 않습니다.
@@ -2495,14 +2676,30 @@ false 설정 시 GPS 정보를 사용하지 않습니다.
 값 생략 시 false 로 적용됩니다.
 
 * 모바일 기기에서 GPS 사용이 허가되지 않은 경우에 true 를 설정하면 onerror 이벤트가 발생합니다.
-   모바일 기기에서 GPS 사용이 허가된 상태일때 true 를 설정하면 사용허가 확인창이 1회 이상 표시될 수 있습니다.
-```
+   모바일 기기에서 GPS 사용이 허가된 상태일때 true 를 설정하면 사용허가 확인창이 1회 이상 표시될 수 있습니다. |
+| nLatitude | Number | 로딩될 지도의 위치정보 중 위도를 숫자로 설정합니다.
+
+값 생략 시 0 으로 적용됩니다. |
+| nLongitude | Number | 로딩될 지도의 위치정보 중 경도를 숫자로 설정합니다.
+
+값 생략 시 0 으로 적용됩니다. |
+| constViewMode | Number | 로딩되는 지도의 모드를 설정합니다.
+
+0 설정 시 일반 Google Map 형태로 표시합니다.
+1 설정 시 위성 이미지를 표시합니다.
+2 설정 시 위성 이미지를 표시하고 주요거리의 투명레이어를 함께 표시합니다.
+3 설정 시 지형 및 초목과 같은 물리적인 지형지물과 주요거리 투명레이어를 함께 표시합니다.
+
+값 생략 시 0 으로 적용됩니다. |
+| nZoomLevel | Number | 로딩될 지도의 Zoom Level 을 0 이상의 정수로 설정합니다. |
 
 **Return**
 
-파라미터를 잘 못 설정할 경우 false 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파라미터를 잘 못 설정할 경우 false 를 반환합니다.
 
-그 외의 정상적인 경우에는 true 를 반환합니다.
+그 외의 정상적인 경우에는 true 를 반환합니다. |
 
 **Remark**
 
@@ -2540,12 +2737,49 @@ GoogleMap.move( vLeft, vTop [, vWidth, vHeight [, vRight, vBottom]] )
 
 **Parameters**
 
-```
-GoogleMap 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | GoogleMap 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 GoogleMap 의 left 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 GoogleMap 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 GoogleMap 의 left 가 결정됩니다. |
+| vTop | String, Number | GoogleMap 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 GoogleMap 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 GoogleMap 의 top 이 결정됩니다. |
+| vWidth | String, Number | GoogleMap 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 GoogleMap 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 GoogleMap 의 width 가 결정됩니다. |
+| vHeight | String, Number | GoogleMap 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 GoogleMap 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 GoogleMap 의 height 가 결정됩니다. |
+| vRight | String, Number | GoogleMap 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 GoogleMap 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 GoogleMap 의 right 가 결정됩니다. |
+| vBottom | String, Number | GoogleMap 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 GoogleMap 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 GoogleMap 의 bottom 이 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap00.move(10,10);
+this.GoogleMap00.move(10,10,100,100);
+this.GoogleMap00.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -2581,15 +2815,23 @@ GoogleMap.removeEvent( strEventID )
 
 **Parameters**
 
-```
-GoogleMap 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | GoogleMap 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.GoogleMap00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -2620,15 +2862,26 @@ GoogleMap.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap00_onmove = function( obj:nexacro.GoogleMap,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.GoogleMap00.removeEventHandler( "onmove", this.GoogleMap00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -2655,15 +2908,27 @@ GoogleMap.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap00_onmove = function( obj:nexacro.GoogleMap,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.GoogleMap00.removeEventHandlerLookup( "onmove", "GoogleMap00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -2690,14 +2955,16 @@ GoogleMap.removeItem(strItemID)
 
 **Parameters**
 
-```
-제거할 아이템의 ID 를 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strItemID | String | 제거할 아이템의 ID 를 설정합니다. |
 
 **Return**
 
-파라미터를 잘 못 설정할 경우 "false" 를 반환합니다.
-그 외의 정상적인 경우에는 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파라미터를 잘 못 설정할 경우 "false" 를 반환합니다.
+그 외의 정상적인 경우에는 "true" 를 반환합니다. |
 
 **Remark**
 
@@ -2722,13 +2989,25 @@ GoogleMap.resize( vWidth, vHeight )
 
 **Parameters**
 
-```
-GoogleMap 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vWidth | String, Number | GoogleMap 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 음수값을 설정할 수 없습니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 GoogleMap 의 width 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 GoogleMap 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 GoogleMap 의 width 가 결정됩니다. |
+| vHeight | String, Number | GoogleMap 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+음수값을 설정할 수 없습니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 GoogleMap 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 GoogleMap 의 height 가 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap00.resize( 100,100 );
 ```
 
 **Return**
@@ -2776,15 +3055,26 @@ GoogleMap.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap00_onmove = function( obj:nexacro.GoogleMap,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.GoogleMap00.setEventHandler( "onmove", this.GoogleMap00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2811,15 +3101,27 @@ GoogleMap.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap00_onmove = function( obj:nexacro.GoogleMap,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.GoogleMap00.setEventHandlerLookup( "onmove", "GoogleMap00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2846,8 +3148,14 @@ GoogleMap.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 GoogleMap 의 bottom 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 컴포넌트의 Top 위치를 기준으로 GoogleMap 의 bottom 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap.setOffsetBottom( 10 );
 ```
 
 **Return**
@@ -2880,8 +3188,14 @@ GoogleMap.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-GoogleMap 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | GoogleMap 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap.setOffsetHeight( 10 );
 ```
 
 **Return**
@@ -2914,8 +3228,14 @@ GoogleMap.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 GoogleMap 의 left 값을 픽셀단위의 숫자로 설정합니다
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 컴포넌트의 Left 위치를 기준으로 GoogleMap 의 left 값을 픽셀단위의 숫자로 설정합니다 |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap.setOffsetLeft( 10 );
 ```
 
 **Return**
@@ -2948,8 +3268,14 @@ GoogleMap.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 GoogleMap 의 right 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 컴포넌트의 Left 위치를 기준으로 GoogleMap 의 right 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap.setOffsetRight( 600 );
 ```
 
 **Return**
@@ -2982,8 +3308,14 @@ GoogleMap.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 GoogleMap 의 top 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 컴포넌트의 Top 위치를 기준으로 GoogleMap 의 top 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap.setOffsetTop( 10 );
 ```
 
 **Return**
@@ -3016,8 +3348,14 @@ GoogleMap.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-GoogleMap 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | GoogleMap 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.GoogleMap.setOffsetWidth( 10 );
 ```
 
 **Return**
@@ -3088,9 +3426,10 @@ onclick(obj:nexacro.GoogleMap,e:nexacro.GoogleMapClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | GoogleMap | Event가 발생한 Object. |
+| e | GoogleMapClickEventInfo | Event Object. |
 
 **Return**
 
@@ -3115,9 +3454,10 @@ onerror(obj:nexacro.GoogleMap,e:nexacro.GoogleMapErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | GoogleMap | Event가 발생한 Object. |
+| e | GoogleMapErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -3142,9 +3482,10 @@ onload(obj:nexacro.GoogleMap,e:nexacro.GoogleMapEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | GoogleMap | Event가 발생한 Object. |
+| e | GoogleMapEventInfo | Event Object. |
 
 **Return**
 
@@ -3169,9 +3510,10 @@ onmapdrag(obj:nexacro.GoogleMap,e:nexacro.GoogleMapDragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | GoogleMap | Event가 발생한 Object. |
+| e | GoogleMapDragEventInfo | Event Object. |
 
 **Return**
 
@@ -3200,9 +3542,10 @@ onmapdragend(obj:nexacro.GoogleMap,e:nexacro.GoogleMapDragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | GoogleMap | Event가 발생한 Object. |
+| e | GoogleMapDragEventInfo | Event Object. |
 
 **Return**
 
@@ -3231,9 +3574,10 @@ onmapdragstart(obj:nexacro.GoogleMap,e:nexacro.GoogleMapDragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | GoogleMap | Event가 발생한 Object. |
+| e | GoogleMapDragEventInfo | Event Object. |
 
 **Return**
 
@@ -3262,9 +3606,10 @@ onrecvsuccess(obj:nexacro.GoogleMap,e:nexacro.GoogleMapEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | GoogleMap | Event가 발생한 Object. |
+| e | GoogleMapEventInfo | Event Object. |
 
 **Return**
 
@@ -3332,8 +3677,7 @@ GoogleMapCircle.latitude[= nLatitude]
 
 ```javascript
 var objMC = new nexacro.GoogleMapCircle();  
-
-objMC.latitude = 37.5;
+objMC.latitude = 37.5;
 ```
 - **`nLatitude`** — 지도에 GoogleMapCircle 이 표시될 위치의 위도값을 숫자로 설정합니다.
 
@@ -3358,8 +3702,7 @@ GoogleMapCircle.longitude[= nLongitude]
 
 ```javascript
 var objMC = new nexacro.GoogleMapCircle();  
-
-objMC.longitude = 127.05;
+objMC.longitude = 127.05;
 ```
 - **`nLongitude`** — 지도에 GoogleMapCircle 이 표시될 위치의 경도값을 숫자로 설정합니다.
 
@@ -3384,8 +3727,7 @@ GoogleMapCircle.radius[= nRadius]
 
 ```javascript
 var objMC = new nexacro.GoogleMapCircle();  
-
-objMC.radius = 120;
+objMC.radius = 120;
 ```
 - **`nRadius`** — GoogleMapCircle 의 반지름 값을 미터단위의 숫자로 설정합니다.
 
@@ -3417,8 +3759,7 @@ bVisible ::= 'true' | 'false'
 ```
 ```javascript
 var objMC = new nexacro.GoogleMapCircle();  
-
-objMC.visible = false;
+objMC.visible = false;
 ```
 - **`"true"`** — 지도에 추가된 GoogleMapCircle 을 표시합니다.
 - **`"false"`** — 지도에 추가된 GoogleMapCircle 을 표시하지 않습니다.
@@ -3477,8 +3818,7 @@ bDraggable ::= 'true' | 'false'
 ```
 ```javascript
 var objMM = new nexacro.GoogleMapMarker();  
-
-objMM.draggable = true;
+objMM.draggable = true;
 ```
 - **`"true"`** — GoogleMapMarker 를 드래그로 움직일 수 있게 설정합니다.
 - **`"false"`** — GoogleMapMarker 를 드래그로 움직일 수 없게 설정합니다.
@@ -3511,14 +3851,10 @@ strImageurl ::= <theme-Image> | <web-Image> | <absolute-image> | <relative-image
 ```
 ```javascript
 var objMM = new nexacro.GoogleMapMarker();  
-
-objMM.image = "theme://images/V13_logo.png";                            // 테마 이미지 
-
-objMM.image = "http://www.tobesoft.com/images/gnb/btn_h1.gif";  // 웹 이미지 
-
-objMM.image = "Base::test.jpg";                                                  // TypeDefinition Prefix 이미지 
-
-objMM.image = "./test.jpg";                                                         // 상대경로 이미지
+objMM.image = "theme://images/V13_logo.png";                            // 테마 이미지 
+objMM.image = "http://www.tobesoft.com/images/gnb/btn_h1.gif";  // 웹 이미지 
+objMM.image = "Base::test.jpg";                                                  // TypeDefinition Prefix 이미지 
+objMM.image = "./test.jpg";                                                         // 상대경로 이미지
 ```
 - **`<theme-Image>`** — 테마에 정의된 이미지를 "theme://images/이미지명" 형식으로 설정합니다.
 
@@ -3603,8 +3939,7 @@ GoogleMapMarker.latitude[= nLatitude]
 
 ```javascript
 var objMM = new nexacro.GoogleMapMarker();  
-
-objMM.latitude = 37.5;
+objMM.latitude = 37.5;
 ```
 - **`nLatitude`** — 지도에 GoogleMapMarker 가 표시될 위치의 위도값을 숫자로 설정합니다.
 
@@ -3629,8 +3964,7 @@ GoogleMapMarker.longitude[= nLongitude]
 
 ```javascript
 var objMM = new nexacro.GoogleMapMarker();  
-
-objMM.longitude = 127.05;
+objMM.longitude = 127.05;
 ```
 - **`nLongitude`** — 지도에 GoogleMapMarker 가 표시될 위치의 경도값을 숫자로 설정합니다.
 
@@ -3655,8 +3989,7 @@ GoogleMapMarker.text[= strText]
 
 ```javascript
 var objMM = new nexacro.GoogleMapMarker();  
-
-objMM.text = "My Home";
+objMM.text = "My Home";
 ```
 - **`strText`** — 지도에 추가된 GoogleMapMarker 위에 표시될 설명을 문자열로 설정합니다.
 
@@ -3686,8 +4019,7 @@ bVisible ::= 'true' | 'false'
 ```
 ```javascript
 var objMM = new nexacro.GoogleMapMarker();  
-
-objMM.visible = false;
+objMM.visible = false;
 ```
 - **`"true"`** — 지도에 추가된 GoogleMapMarker 를 표시합니다.
 - **`"false"`** — 지도에 추가된 GoogleMapMarker 를 표시하지 않습니다.
@@ -3749,12 +4081,9 @@ strColor ::= <NamedColor> | <NumericColor>
 ```
 ```javascript
 var objMP = new nexacro.GoogleMapPolygon();  
-
-objMP.fillbrushcolor = "red"; 
-
-objMP.fillbrushcolor = "#999999"; 
-
-objMP.fillbrushcolor = "rgb(255,0,0)";
+objMP.fillbrushcolor = "red"; 
+objMP.fillbrushcolor = "#999999"; 
+objMP.fillbrushcolor = "rgb(255,0,0)";
 ```
 - **`<NamedColor>`** — "red","blue" 와 같이 미리 정의된 색상이름을 문자열로 설정합니다.
 - **`<NumericColor>`** — 표시할 색의 색상코드입니다.
@@ -3795,12 +4124,9 @@ strColor ::= <NamedColor> | <NumericColor>
 ```
 ```javascript
 var objMP = new nexacro.GoogleMapPolygon();  
-
-objMP.linecolor = "red"; 
-
-objMP.linecolor = "#999999"; 
-
-objMP.linecolor = "rgb(255,0,0)";
+objMP.linecolor = "red"; 
+objMP.linecolor = "#999999"; 
+objMP.linecolor = "rgb(255,0,0)";
 ```
 - **`<NamedColor>`** — "red","blue" 와 같이 미리 정의된 색상이름을 문자열로 설정합니다.
 - **`<NumericColor>`** — 표시할 색의 색상코드입니다.
@@ -3838,8 +4164,7 @@ GoogleMapPolygon.linewidth[= nWidth]
 
 ```javascript
 var objMP = new nexacro.GoogleMapPolygon();  
-
-objMP.linewidth = "1px";
+objMP.linewidth = "1px";
 ```
 - **`nWidth`** — 선의 너비를 pixel 단위의 숫자로 설정합니다.
 
@@ -3869,8 +4194,7 @@ strData ::= <location> [<location>]*
 ```
 ```javascript
 var objMP = new nexacro.GoogleMapPolygon();  
-
-objMP.locationdata = "[37.51,127.06][37.51,127.07][37.50,127.06]";
+objMP.locationdata = "[37.51,127.06][37.51,127.07][37.50,127.06]";
 ```
 - **`<location>`** — "[ ]" 로 구분하여 두개 이상의 위도,경도 좌표를 설정합니다.
 - **`<nlatitude>`** — GoogleMapPolygon 의 영역을 결정하기 위한 위도좌표를 설정합니다.
@@ -3906,8 +4230,7 @@ bVisible ::= 'true' | 'false'
 ```
 ```javascript
 var objMP = new nexacro.GoogleMapPolygon();  
-
-objMP.visible = false;
+objMP.visible = false;
 ```
 - **`"true"`** — 지도에 추가된 GoogleMapPolygon 을 표시합니다.
 - **`"false"`** — 지도에 추가된 GoogleMapPolygon 을 표시하지 않습니다.
@@ -3968,12 +4291,9 @@ strColor ::= <NamedColor> | <NumericColor>
 ```
 ```javascript
 var objMP = new nexacro.GoogleMapPolyline();  
-
-objMP.linecolor = "red"; 
-
-objMP.linecolor = "#999999"; 
-
-objMP.linecolor = "rgb(255,0,0)";
+objMP.linecolor = "red"; 
+objMP.linecolor = "#999999"; 
+objMP.linecolor = "rgb(255,0,0)";
 ```
 - **`<NamedColor>`** — "red","blue" 와 같이 미리 정의된 색상이름을 문자열로 설정합니다.
 - **`<NumericColor>`** — 표시할 색의 색상코드입니다.
@@ -4011,8 +4331,7 @@ GoogleMapPolyline.linewidth[= nWidth]
 
 ```javascript
 var objMP = new nexacro.GoogleMapPolyline();  
-
-objMP.linewidth = "1px";
+objMP.linewidth = "1px";
 ```
 - **`nWidth`** — 선의 너비를 pixel 단위의 숫자로 설정합니다.
 
@@ -4042,8 +4361,7 @@ strData ::= <location> [<location>]*
 ```
 ```javascript
 var objMP = new nexacro.GoogleMapPolyline();  
-
-objMP.locationdata = "[37.51,127.06][37.51,127.07][37.50,127.06]";
+objMP.locationdata = "[37.51,127.06][37.51,127.07][37.50,127.06]";
 ```
 - **`<location>`** — "[ ]" 로 구분하여 두개 이상의 위도,경도 좌표를 설정합니다.
 - **`<nlatitude>`** — GoogleMapPolyline 의 선을 결정하기 위한 위도좌표를 설정합니다.
@@ -4079,8 +4397,7 @@ bVisible ::= 'true' | 'false'
 ```
 ```javascript
 var objMP = new nexacro.GoogleMapPolyline();  
-
-objMP.visible = false;
+objMP.visible = false;
 ```
 - **`"true"`** — 지도에 추가된 GoogleMapPolyline 을 표시합니다.
 - **`"false"`** — 지도에 추가된 GoogleMapPolyline 를 표시하지 않습니다.

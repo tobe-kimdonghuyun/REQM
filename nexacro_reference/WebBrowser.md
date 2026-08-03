@@ -1526,12 +1526,9 @@ strUrl ::= <Web-Url> | <Local-Url>
 ```
 ```javascript
 this.WebBrowser00.url = "http://www.tobesoft.co.kr"; 
-
-this.WebBrowser00.url = "http://m.naver.com"; 
-
-this.WebBrowser00.url = "about:blank"; 
-
-this.WebBrowser00.url = "file://C:\\Test.html";
+this.WebBrowser00.url = "http://m.naver.com"; 
+this.WebBrowser00.url = "about:blank"; 
+this.WebBrowser00.url = "file://C:\\Test.html";
 ```
 - **`<Web-Url>`** — 웹에 위치한 웹페이지의 URL 을 "http://경로/파일명", "https://경로/파일명" 형식으로 설정합니다.
 
@@ -1715,15 +1712,23 @@ WebBrowser.addEvent( strEventID )
 
 **Parameters**
 
-```
-WebBrowser 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | WebBrowser 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.WebBrowser00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -1750,15 +1755,26 @@ WebBrowser.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser00_onmove = function( obj:nexacro.WebBrowser,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.WebBrowser00.addEventHandler( "onmove", this.WebBrowser00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -1779,15 +1795,27 @@ WebBrowser.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser00_onmove = function( obj:nexacro.WebBrowser,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.WebBrowser00.addEventHandlerLookup( "onmove", "WebBrowser00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -1881,15 +1909,19 @@ WebBrowser.callMethod( strMethodID [, varArg1 [, varArg2 ]] );
 
 **Parameters**
 
-```
-호출할 메소드의 이름을 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strMethodID | String | 호출할 메소드의 이름을 문자열로 설정합니다. |
+| varArg1 | Object | 호출할 메소드에 전달될 인수를 설정합니다. |
+| varArg2 | Object | 호출할 메소드에 전달될 인수를 설정합니다. |
 
 **Return**
 
-window 객체의 메소드에서 리턴값이 있을 경우 해당값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Variant | window 객체의 메소드에서 리턴값이 있을 경우 해당값을 반환합니다.
 
-window 객체의 메소드에서 오브젝트를 리턴한 경우 PluginObject 로 Wrapping 되어 반환될 수 있습니다.
+window 객체의 메소드에서 오브젝트를 리턴한 경우 PluginObject 로 Wrapping 되어 반환될 수 있습니다. |
 
 **Remark**
 
@@ -1925,13 +1957,21 @@ WebBrowser.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.WebBrowser00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -1960,9 +2000,11 @@ var bSucc = this.WebBrowser00.destroy();
 
 **Return**
 
-WebBrowser 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | WebBrowser 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-WebBrowser 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+WebBrowser 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -1991,15 +2033,27 @@ WebBrowser.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser00_onmove = function( obj:nexacro.WebBrowser,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.WebBrowser00.findEventHandler( "onmove", this.WebBrowser00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2024,15 +2078,26 @@ WebBrowser.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = WebBrowser00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -2057,7 +2122,9 @@ var nBottom = this.WebBrowser.getOffsetBottom();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 WebBrowser 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 WebBrowser 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2086,7 +2153,9 @@ var nHeight = this.WebBrowser.getOffsetHeight();
 
 **Return**
 
-WebBrowser 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | WebBrowser 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -2115,7 +2184,9 @@ var nleft = this.WebBrowser.getOffsetLeft();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 WebBrowser 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 WebBrowser 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2144,7 +2215,9 @@ var nRight = this.WebBrowser.getOffsetRight();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 WebBrowser 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 WebBrowser 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2173,7 +2246,9 @@ var nTop = this.WebBrowser.getOffsetTop();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 WebBrowser 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 WebBrowser 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -2202,7 +2277,9 @@ var nWidth = this.WebBrowser.getOffsetWidth();
 
 **Return**
 
-WebBrowser 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | WebBrowser 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -2231,9 +2308,11 @@ var nbottom = this.WebBrowser.getPixelBottom();
 
 **Return**
 
-WebBrowser 의 bottom 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | WebBrowser 의 bottom 속성값을 픽셀단위로 반환합니다.
 
-bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2262,9 +2341,11 @@ var nheight = this.WebBrowser.getPixelHeight();
 
 **Return**
 
-WebBrowser 의 height 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | WebBrowser 의 height 속성값을 픽셀단위로 반환합니다.
 
-height 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+height 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2293,9 +2374,11 @@ var nleft = this.WebBrowser.getPixelLeft();
 
 **Return**
 
-WebBrowser 의 left 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | WebBrowser 의 left 속성값을 픽셀단위로 반환합니다.
 
-left 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+left 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2324,9 +2407,11 @@ var nright = this.WebBrowser.getPixelRight();
 
 **Return**
 
-WebBrowser 의 right 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | WebBrowser 의 right 속성값을 픽셀단위로 반환합니다.
 
-right 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+right 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2355,9 +2440,11 @@ var ntop = this.WebBrowser.getPixelTop();
 
 **Return**
 
-WebBrowser 의 top 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | WebBrowser 의 top 속성값을 픽셀단위로 반환합니다.
 
-top 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+top 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2386,9 +2473,11 @@ var nwidth = this.WebBrowser.getPixelWidth();
 
 **Return**
 
-WebBrowser 의 width 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | WebBrowser 의 width 속성값을 픽셀단위로 반환합니다.
 
-width 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+width 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -2413,15 +2502,24 @@ WebBrowser.getProperty( strObjID );
 
 **Parameters**
 
-```
-"window" 설정 시 웹페이지의 window 객체를 반환합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strObjID | String | "window" 설정 시 웹페이지의 window 객체를 반환합니다.
 
-"document" 설정 시 웹페이지의 document 객체를 반환합니다.
+"document" 설정 시 웹페이지의 document 객체를 반환합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser00.getProperty( "window" );
+this.WebBrowser00.getProperty( "document" );
 ```
 
 **Return**
 
-window 또는 document 객체를 갖는 PluginObject 객체를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | window 또는 document 객체를 갖는 PluginObject 객체를 반환합니다. |
 
 **Remark**
 
@@ -2453,8 +2551,62 @@ WebBrowser.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMi
 
 **Parameters**
 
-```
-WebBrowser 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | WebBrowser 의 ID를 문자열로 설정합니다. |
+| vLeft | String, Number | WebBrowser 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 WebBrowser 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 WebBrowser 의 left 가 결정됩니다. |
+| vTop | String, Number | WebBrowser 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 WebBrowser 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 WebBrowser 의 top 이 결정됩니다. |
+| vWidth | String, Number | WebBrowser 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 WebBrowser 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 WebBrowser 의 width 가 결정됩니다. |
+| vHeight | String, Number | WebBrowser 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 WebBrowser 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 WebBrowser 의 height 가 결정됩니다. |
+| vRight | String, Number | WebBrowser 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 WebBrowser 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 WebBrowser 의 right 가 결정됩니다. |
+| vBottom | String, Number | WebBrowser 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 WebBrowser 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 WebBrowser 의 bottom 이 결정됩니다. |
+| vMinWidth | String, Number | WebBrowser 이(가) 화면에 표시되는 최소 너비값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxWidth | String, Number | WebBrowser 이(가) 화면에 표시되는 최대 너비값을 pixel 단위의 숫자로 설정합니다.
+
+vMinWidth 보다 작은 값을 설정하면 vMinWidth 값으로 설정됩니다. |
+| vMinHeight | String, Number | WebBrowser 이(가) 화면에 표시되는 최소 높이값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxHeight | String, Number | WebBrowser 이(가) 화면에 표시되는 최대 높이값을 pixel 단위의 숫자로 설정합니다.
+
+vMinHeight 보다 작은 값을 설정하면 vMinHeight 값으로 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = new WebBrowser();
+
+objComp.init( "WebBrowser00", 30, 120, 196, 46 );
+objComp.init( "WebBrowser00", 30, 120, 196, 46, null, null );
+objComp.init( "WebBrowser00", null, null, 300, "400px", "80%", 300 );
+objComp.init( "WebBrowser00", 0, 0, 200, 100, null, null, 300, 500, 200, 500 );
+objComp.init( "WebBrowser00", "WebBrowser22:10", 300, null, null, "WebBrowser33:10", "20%", 300, 500, 200, 500 );
 ```
 
 **Return**
@@ -2502,16 +2654,33 @@ WebBrowser.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser00_onmove = function( obj:nexacro.WebBrowser,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.WebBrowser00.insertEventHandler( "onmove", 0, this.WebBrowser00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2536,12 +2705,49 @@ WebBrowser.move( vLeft, vTop [, vWidth, vHeight [, vRight, vBottom]] )
 
 **Parameters**
 
-```
-WebBrowser 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | WebBrowser 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 WebBrowser 의 left 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 WebBrowser 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 WebBrowser 의 left 가 결정됩니다. |
+| vTop | String, Number | WebBrowser 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 WebBrowser 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 WebBrowser 의 top 이 결정됩니다. |
+| vWidth | String, Number | WebBrowser 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 WebBrowser 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 WebBrowser 의 width 가 결정됩니다. |
+| vHeight | String, Number | WebBrowser 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 WebBrowser 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 WebBrowser 의 height 가 결정됩니다. |
+| vRight | String, Number | WebBrowser 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 WebBrowser 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 WebBrowser 의 right 가 결정됩니다. |
+| vBottom | String, Number | WebBrowser 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 WebBrowser 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 WebBrowser 의 bottom 이 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser00.move(10,10);
+this.WebBrowser00.move(10,10,100,100);
+this.WebBrowser00.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -2578,8 +2784,16 @@ WebBrowser.moveToNext( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser.moveToNext( this.Button00 );
+this.WebBrowser.moveToNext( "Button00" );
 ```
 
 **Return**
@@ -2617,8 +2831,16 @@ WebBrowser.moveToPrev( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser.moveToPrev( this.Button00 );
+this.WebBrowser.moveToPrev( "Button00" );
 ```
 
 **Return**
@@ -2684,15 +2906,23 @@ WebBrowser.removeEvent( strEventID )
 
 **Parameters**
 
-```
-WebBrowser 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | WebBrowser 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.WebBrowser00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -2723,15 +2953,26 @@ WebBrowser.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser00_onmove = function( obj:nexacro.WebBrowser,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.WebBrowser00.removeEventHandler( "onmove", this.WebBrowser00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -2758,15 +2999,27 @@ WebBrowser.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser00_onmove = function( obj:nexacro.WebBrowser,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.WebBrowser00.removeEventHandlerLookup( "onmove", "WebBrowser00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -2793,13 +3046,25 @@ WebBrowser.resize( vWidth, vHeight )
 
 **Parameters**
 
-```
-WebBrowser 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vWidth | String, Number | WebBrowser 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 음수값을 설정할 수 없습니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 WebBrowser 의 width 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 WebBrowser 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 WebBrowser 의 width 가 결정됩니다. |
+| vHeight | String, Number | WebBrowser 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+음수값을 설정할 수 없습니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 WebBrowser 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 WebBrowser 의 height 가 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser00.resize( 100,100 );
 ```
 
 **Return**
@@ -2915,15 +3180,26 @@ WebBrowser.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser00_onmove = function( obj:nexacro.WebBrowser,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.WebBrowser00.setEventHandler( "onmove", this.WebBrowser00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2950,15 +3226,27 @@ WebBrowser.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser00_onmove = function( obj:nexacro.WebBrowser,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.WebBrowser00.setEventHandlerLookup( "onmove", "WebBrowser00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -2985,8 +3273,14 @@ WebBrowser.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 WebBrowser 의 bottom 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 컴포넌트의 Top 위치를 기준으로 WebBrowser 의 bottom 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser.setOffsetBottom( 10 );
 ```
 
 **Return**
@@ -3019,8 +3313,14 @@ WebBrowser.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-WebBrowser 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | WebBrowser 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser.setOffsetHeight( 10 );
 ```
 
 **Return**
@@ -3053,8 +3353,14 @@ WebBrowser.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 WebBrowser 의 left 값을 픽셀단위의 숫자로 설정합니다
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 컴포넌트의 Left 위치를 기준으로 WebBrowser 의 left 값을 픽셀단위의 숫자로 설정합니다 |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser.setOffsetLeft( 10 );
 ```
 
 **Return**
@@ -3087,8 +3393,14 @@ WebBrowser.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 WebBrowser 의 right 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 컴포넌트의 Left 위치를 기준으로 WebBrowser 의 right 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser.setOffsetRight( 600 );
 ```
 
 **Return**
@@ -3121,8 +3433,14 @@ WebBrowser.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 WebBrowser 의 top 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 컴포넌트의 Top 위치를 기준으로 WebBrowser 의 top 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser.setOffsetTop( 10 );
 ```
 
 **Return**
@@ -3155,8 +3473,14 @@ WebBrowser.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-WebBrowser 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | WebBrowser 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser.setOffsetWidth( 10 );
 ```
 
 **Return**
@@ -3189,8 +3513,15 @@ WebBrowser.setProperty( strPropertyID, varValue );
 
 **Parameters**
 
-```
-document 객체에 정의된 속성명을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strPropertyID | String | document 객체에 정의된 속성명을 문자열로 설정합니다. |
+| varValue | Variant | strPropertyID 속성에 저장할 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.WebBrowser00.setProperty( "prop1", 3 );
 ```
 
 **Return**
@@ -3254,15 +3585,18 @@ ondevicebuttonup(obj:nexacro.WebBrowser,e:nexacro.DeviceButtonEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | WebBrowser | Event가 발생한 Object. |
+| e | DeviceButtonEventInfo | Event Object. |
 
 **Return**
 
-true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
-반환값을 생략하면 false로 적용됩니다.
+반환값을 생략하면 false로 적용됩니다. |
 
 **Remark**
 
@@ -3294,9 +3628,10 @@ onloadcompleted(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | WebBrowser | Event가 발생한 Object. |
+| e | WebLoadCompEventInfo | Event Object. |
 
 **Return**
 
@@ -3325,9 +3660,10 @@ onmove(obj:nexacro.WebBrowser,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | WebBrowser | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -3352,9 +3688,10 @@ onsize(obj:nexacro.WebBrowser,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | WebBrowser | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -3379,9 +3716,10 @@ onusernotify(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | WebBrowser | Event가 발생한 Object. |
+| e | WebUserNotifyEventInfo | Event Object. |
 
 **Return**
 

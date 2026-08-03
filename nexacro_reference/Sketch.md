@@ -1525,8 +1525,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.Sketch00.enableevent = true;  
-
-this.Sketch00.enableevent = false;
+this.Sketch00.enableevent = false;
 ```
 - **`true`** — Sketch 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — Sketch 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -1558,8 +1557,7 @@ Sketch.enableredraw[= bRedraw]
 bRedraw ::= 'true' | 'false'
 ```
 ```javascript
-this.Sketch00.enableredraw = true;
-this.Sketch00.enableredraw = false;
+this.Sketch00.enableredraw = true;this.Sketch00.enableredraw = false;
 ```
 - **`"true"`** — Sketch 에 변경이 발생하면 화면을 자동으로 다시 그립니다.
 - **`"false"`** — Sketch 에 변경이 발생하여도 화면을 자동으로 다시 그리지 않습니다.
@@ -2643,8 +2641,7 @@ Sketch.tooltiptext[= strToolTipText]
 
 ```javascript
 this.Sketch00.tooltiptext = "This is ToolTip Text"; this.Sketch00.tooltiptext = "";          // 풍선 도움말이 표시되지 않습니다. 
-
-this.Sketch00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
+this.Sketch00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
 ```
 - **`strToolTipText`** — 풍선도움말에 표시할 텍스트를 설정합니다.
 
@@ -3073,15 +3070,23 @@ Sketch.addEvent( strEventID )
 
 **Parameters**
 
-```
-Sketch 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | Sketch 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.Sketch00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -3108,15 +3113,26 @@ Sketch.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00_onmove = function( obj:nexacro.Sketch,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Sketch00.addEventHandler( "onmove", this.Sketch00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -3137,15 +3153,27 @@ Sketch.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00_onmove = function( obj:nexacro.Sketch,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Sketch00.addEventHandlerLookup( "onmove", "Sketch00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -3268,13 +3296,21 @@ Sketch.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.Sketch00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -3303,9 +3339,11 @@ var bSucc = this.Sketch00.destroy();
 
 **Return**
 
-Sketch 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Sketch 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-Sketch 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+Sketch 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -3334,8 +3372,19 @@ Sketch.drawErase( nXpos, nYpos [, bStart] )
 
 **Parameters**
 
-```
-Sketch 의 좌상단을 기준으로 한 x 좌표값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nXpos | Number | Sketch 의 좌상단을 기준으로 한 x 좌표값을 설정합니다. |
+| nYpos | Number | Sketch 의 좌상단을 기준으로 한 y 좌표값을 설정합니다. |
+| bStart | Boolean | "true"로 설정 시 전달된 좌표를 새로운 시작점으로 설정합니다.
+"false"로 설정 시 이전 좌표값과 전달된 좌표값을 가상의 선으로 연결한 후 선을 따라 입력값을 지웁니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00.drawErase( 3, 3, true );
+this.Sketch00.drawErase( 5, 5, false );
+this.Sketch00.drawErase( 5, 5 );
 ```
 
 **Return**
@@ -3371,8 +3420,19 @@ Sketch.drawStroke( nXpos, nYpos [, bStart] )
 
 **Parameters**
 
-```
-Sketch 의 좌상단을 기준으로 한 x 좌표값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nXpos | Number | Sketch 의 좌상단을 기준으로 한 x 좌표값을 설정합니다. |
+| nYpos | Number | Sketch 의 좌상단을 기준으로 한 y 좌표값을 설정합니다. |
+| bStart | Boolean | true 로 설정 시 전달된 좌표를 새로운 시작점으로 설정합니다.
+false 로 설정 시 이전 좌표값과 전달된 좌표값을 연결한 선을 그립니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00.drawStroke( 3, 3, true );
+this.Sketch00.drawStroke( 5, 5, false );
+this.Sketch00.drawStroke( 5, 5 );
 ```
 
 **Return**
@@ -3408,8 +3468,19 @@ Sketch.drawText( nXpos, nYpos, strText [, bMultiline] )
 
 **Parameters**
 
-```
-Sketch 의 좌상단을 기준으로 한 x 좌표값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nXpos | Number | Sketch 의 좌상단을 기준으로 한 x 좌표값을 설정합니다. |
+| nYpos | Number | Sketch 의 좌상단을 기준으로 한 y 좌표값을 설정합니다. |
+| strText | String | 전달된 좌표 위치에 표시할 텍스트를 설정합니다. |
+| bMultiline | Boolean | "true" 설정 시 텍스트 내의 개행문자를 줄바꿈 처리합니다.
+"false" 설정 시 텍스트 내의 개행문자를 무시하고 한줄로 처리합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00.drawText( 3, 3, "text" );
+this.Sketch00.drawText( 3, 3, "text", true );
 ```
 
 **Return**
@@ -3435,15 +3506,27 @@ Sketch.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00_onmove = function( obj:nexacro.Sketch,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.Sketch00.findEventHandler( "onmove", this.Sketch00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3468,15 +3551,26 @@ Sketch.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = Sketch00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -3501,7 +3595,9 @@ var nBottom = this.Sketch.getOffsetBottom();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 Sketch 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 Sketch 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -3530,7 +3626,9 @@ var nHeight = this.Sketch.getOffsetHeight();
 
 **Return**
 
-Sketch 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Sketch 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -3559,7 +3657,9 @@ var nleft = this.Sketch.getOffsetLeft();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 Sketch 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 Sketch 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -3588,7 +3688,9 @@ var nRight = this.Sketch.getOffsetRight();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 Sketch 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 Sketch 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -3617,7 +3719,9 @@ var nTop = this.Sketch.getOffsetTop();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 Sketch 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 Sketch 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -3646,7 +3750,9 @@ var nWidth = this.Sketch.getOffsetWidth();
 
 **Return**
 
-Sketch 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Sketch 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -3675,9 +3781,11 @@ var nbottom = this.Sketch.getPixelBottom();
 
 **Return**
 
-Sketch 의 bottom 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Sketch 의 bottom 속성값을 픽셀단위로 반환합니다.
 
-bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -3706,9 +3814,11 @@ var nheight = this.Sketch.getPixelHeight();
 
 **Return**
 
-Sketch 의 height 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Sketch 의 height 속성값을 픽셀단위로 반환합니다.
 
-height 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+height 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -3737,9 +3847,11 @@ var nleft = this.Sketch.getPixelLeft();
 
 **Return**
 
-Sketch 의 left 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Sketch 의 left 속성값을 픽셀단위로 반환합니다.
 
-left 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+left 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -3768,9 +3880,11 @@ var nright = this.Sketch.getPixelRight();
 
 **Return**
 
-Sketch 의 right 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Sketch 의 right 속성값을 픽셀단위로 반환합니다.
 
-right 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+right 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -3799,9 +3913,11 @@ var ntop = this.Sketch.getPixelTop();
 
 **Return**
 
-Sketch 의 top 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Sketch 의 top 속성값을 픽셀단위로 반환합니다.
 
-top 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+top 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -3830,9 +3946,11 @@ var nwidth = this.Sketch.getPixelWidth();
 
 **Return**
 
-Sketch 의 width 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Sketch 의 width 속성값을 픽셀단위로 반환합니다.
 
-width 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+width 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -3857,14 +3975,23 @@ Sketch.hideTextEditor( [bClear] )
 
 **Parameters**
 
-```
-"true" 설정 시 텍스트 입력창에 입력된 텍스트를 삭제합니다.
-"false" 설정 시 텍스트 입력창에 입력된 텍스트를 유지합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bClear | Boolean | "true" 설정 시 텍스트 입력창에 입력된 텍스트를 삭제합니다.
+"false" 설정 시 텍스트 입력창에 입력된 텍스트를 유지합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00.hideTextEditor();
+this.Sketch00.hideTextEditor( false );
 ```
 
 **Return**
 
-텍스트 입력창에 입력되어 있던 텍스트값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 텍스트 입력창에 입력되어 있던 텍스트값을 반환합니다. |
 
 **Remark**
 
@@ -3889,8 +4016,62 @@ Sketch.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWid
 
 **Parameters**
 
-```
-Sketch 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | Sketch 의 ID를 문자열로 설정합니다. |
+| vLeft | String, Number | Sketch 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 Sketch 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Sketch 의 left 가 결정됩니다. |
+| vTop | String, Number | Sketch 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 Sketch 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Sketch 의 top 이 결정됩니다. |
+| vWidth | String, Number | Sketch 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Sketch 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Sketch 의 width 가 결정됩니다. |
+| vHeight | String, Number | Sketch 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Sketch 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Sketch 의 height 가 결정됩니다. |
+| vRight | String, Number | Sketch 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 Sketch 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Sketch 의 right 가 결정됩니다. |
+| vBottom | String, Number | Sketch 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 Sketch 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Sketch 의 bottom 이 결정됩니다. |
+| vMinWidth | String, Number | Sketch 이(가) 화면에 표시되는 최소 너비값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxWidth | String, Number | Sketch 이(가) 화면에 표시되는 최대 너비값을 pixel 단위의 숫자로 설정합니다.
+
+vMinWidth 보다 작은 값을 설정하면 vMinWidth 값으로 설정됩니다. |
+| vMinHeight | String, Number | Sketch 이(가) 화면에 표시되는 최소 높이값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxHeight | String, Number | Sketch 이(가) 화면에 표시되는 최대 높이값을 pixel 단위의 숫자로 설정합니다.
+
+vMinHeight 보다 작은 값을 설정하면 vMinHeight 값으로 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = new Sketch();
+
+objComp.init( "Sketch00", 30, 120, 196, 46 );
+objComp.init( "Sketch00", 30, 120, 196, 46, null, null );
+objComp.init( "Sketch00", null, null, 300, "400px", "80%", 300 );
+objComp.init( "Sketch00", 0, 0, 200, 100, null, null, 300, 500, 200, 500 );
+objComp.init( "Sketch00", "Sketch22:10", 300, null, null, "Sketch33:10", "20%", 300, 500, 200, 500 );
 ```
 
 **Return**
@@ -3938,16 +4119,33 @@ Sketch.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00_onmove = function( obj:nexacro.Sketch,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.Sketch00.insertEventHandler( "onmove", 0, this.Sketch00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -3972,22 +4170,35 @@ Sketch.loadSketch( strData )
 
 **Parameters**
 
-```
-Sketch 에 표시할 이미지의 경로 또는 데이터를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strUrl | String | Sketch 에 표시할 이미지의 경로 또는 데이터를 문자열로 설정합니다.
 
 테마에 정의된 이미지를 "theme://images/이미지명" 형식으로 설정합니다.
 웹의 이미지를 "http://경로/이미지명", "https://경로/이미지명" 형식으로 설정합니다.
 TypeDefinition 영역의 Services 에 정의된 Prefix를 사용한 형식으로 설정합니다. 
 폼의 위치를 기준으로 한 "./경로/이미지명" 형식의 상대경로를 사용하여 설정합니다.
-Base64 로 인코딩 된 이미지 데이터를 문자열로 설정합니다.
+Base64 로 인코딩 된 이미지 데이터를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00.loadSketch("theme://images/V13_logo.png");            // 테마 이미지
+this.Sketch00.loadSketch("http://www.dummy.com/img/h1.gif");     // 웹 이미지
+this.Sketch00.loadSketch("Base::test.jpg");                                   // TypeDefinition Prefix 이미지
+this.Sketch00.loadSketch("./test.jpg");                                          // 상대경로 이미지
+this.Sketch00.loadSketch("data:image/png;base64,iVBORw0~...."); // Data URI 형태
+this.Sketch00.loadSketch("iVBORw0~....");                                   // Data URI 형태 중 Base64 인코딩 데이터
 ```
 
 **Return**
 
-이미지 로드에 성공하면 true 를 반환하고, onload 이벤트가 발생합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이미지 로드에 성공하면 true 를 반환하고, onload 이벤트가 발생합니다.
 이미지 로드에 실패하면 false 를 반환하고, onerror 이벤트가 발생합니다.
 
-지원하지 않는 파일형식, 존재하지 않는 파일, 통신오류 인 경우 false 를 반환합니다.
+지원하지 않는 파일형식, 존재하지 않는 파일, 통신오류 인 경우 false 를 반환합니다. |
 
 **Remark**
 
@@ -4018,12 +4229,49 @@ Sketch.move( vLeft, vTop [, vWidth, vHeight [, vRight, vBottom]] )
 
 **Parameters**
 
-```
-Sketch 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | Sketch 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 Sketch 의 left 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Sketch 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Sketch 의 left 가 결정됩니다. |
+| vTop | String, Number | Sketch 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 Sketch 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Sketch 의 top 이 결정됩니다. |
+| vWidth | String, Number | Sketch 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Sketch 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Sketch 의 width 가 결정됩니다. |
+| vHeight | String, Number | Sketch 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Sketch 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Sketch 의 height 가 결정됩니다. |
+| vRight | String, Number | Sketch 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 Sketch 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Sketch 의 right 가 결정됩니다. |
+| vBottom | String, Number | Sketch 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 Sketch 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Sketch 의 bottom 이 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00.move(10,10);
+this.Sketch00.move(10,10,100,100);
+this.Sketch00.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -4060,8 +4308,16 @@ Sketch.moveToNext( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch.moveToNext( this.Button00 );
+this.Sketch.moveToNext( "Button00" );
 ```
 
 **Return**
@@ -4099,8 +4355,16 @@ Sketch.moveToPrev( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch.moveToPrev( this.Button00 );
+this.Sketch.moveToPrev( "Button00" );
 ```
 
 **Return**
@@ -4168,15 +4432,23 @@ Sketch.removeEvent( strEventID )
 
 **Parameters**
 
-```
-Sketch 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | Sketch 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.Sketch00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -4207,15 +4479,26 @@ Sketch.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00_onmove = function( obj:nexacro.Sketch,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Sketch00.removeEventHandler( "onmove", this.Sketch00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -4242,15 +4525,27 @@ Sketch.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00_onmove = function( obj:nexacro.Sketch,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Sketch00.removeEventHandlerLookup( "onmove", "Sketch00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -4277,13 +4572,25 @@ Sketch.resize( vWidth, vHeight )
 
 **Parameters**
 
-```
-Sketch 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vWidth | String, Number | Sketch 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 음수값을 설정할 수 없습니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Sketch 의 width 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Sketch 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Sketch 의 width 가 결정됩니다. |
+| vHeight | String, Number | Sketch 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+음수값을 설정할 수 없습니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Sketch 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Sketch 의 height 가 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00.resize( 100,100 );
 ```
 
 **Return**
@@ -4331,17 +4638,31 @@ Sketch.saveSketch([strFormat [, nOption]] )
 
 **Parameters**
 
-```
-저장할 파일의 형식을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strFormat | String | 저장할 파일의 형식을 문자열로 설정합니다.
 지원하는 파일 형식은 Remark 항목의 표를 참고하세요.
 
-값을 설정하지 않으면 "PNG" 로 적용됩니다.
+값을 설정하지 않으면 "PNG" 로 적용됩니다. |
+| nOption | Number | 파일 형식이 "JPG"일 때 압축비율을 숫자로 설정합니다.
+압축비율은 0~100 범위의 정수값으로 설정합니다.
+
+값을 설정하지 않으면 100 으로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var result = this.Sketch00.saveSketch();
+var result = this.Sketch00.saveSketch("JPG");
+var result = this.Sketch00.saveSketch("JPG", 50);
 ```
 
 **Return**
 
-이미지 저장에 성공하면 true 를 반환하고, onsuccess 이벤트가 발생합니다.
-이미지 저장에 실패하면 false 를 반환하고, onerror 이벤트가 발생합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이미지 저장에 성공하면 true 를 반환하고, onsuccess 이벤트가 발생합니다.
+이미지 저장에 실패하면 false 를 반환하고, onerror 이벤트가 발생합니다. |
 
 **Remark**
 
@@ -4465,18 +4786,36 @@ Sketch.saveSketchToFile( strPath [, strFormat [, nOption]] )
 
 **Parameters**
 
-```
-저장할 파일의 경로와 파일명을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strPath | String | 저장할 파일의 경로와 파일명을 문자열로 설정합니다.
 
 Windows NRE 는 파일명만 설정할 수 있으며 파일은 "내 문서" 폴더에 저장됩니다.
 Android NRE 는 "%USERAPP%" 와 "%SD_CARD%" Alias를 사용하여 경로와 파일명을 설정합니다.
-iOS/iPadOS NRE 는 지원하지 않습니다.
+iOS/iPadOS NRE 는 지원하지 않습니다. |
+| strFormat | String | 출력할 이미지 파일의 형식을 설정합니다.
+"BMP", "BMP_MONO", "JPG", "TIF", "TIF_24", "TIF_MONO", "GIF", "PNG" 를 설정할 수 있습니다.
+
+안드로이드 NRE에서는 "JPG", "PNG" 형식만 지원합니다.
+값을 설정하지 않으면 "BMP" 로 적용됩니다. |
+| nOption | Number | 파일 형식이 "JPG"일 때 압축비율을 숫자로 설정합니다.
+
+압축비율은 0~100 범위의 정수값으로 설정합니다.
+값을 설정하지 않으면 100 으로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var result = this.Sketch00.saveSketchToFile( "sketchimg.bmp", "BMP" );
+var result = this.Sketch00.saveSketchToFile( "%SD_CARD%Image/sketchimg.jpg", "JPG", 100 );
 ```
 
 **Return**
 
-이미지 저장에 성공하면 true 를 반환하고 onsuccss 이벤트가 발생합니다.
-이미지 저장에 실패하면 false 를 반환하고 onerror 이벤트가 발생합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이미지 저장에 성공하면 true 를 반환하고 onsuccss 이벤트가 발생합니다.
+이미지 저장에 실패하면 false 를 반환하고 onerror 이벤트가 발생합니다. |
 
 **Remark**
 
@@ -4580,11 +4919,18 @@ Sketch.setBrushColor( strColor )
 
 **Parameters**
 
-```
-Brush 객체의 색상을 미리 정의된 색상이름 또는 색상코드로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strColor | String | Brush 객체의 색상을 미리 정의된 색상이름 또는 색상코드로 설정합니다.
 
 "red","blue"와 같이 문자열로 해당 색상을 설정합니다.
-"#"기호로 시작하는 6자리 hexadecimal 값으로 색상코드를 설정할 수 있습니다. ("#FF00FF")
+"#"기호로 시작하는 6자리 hexadecimal 값으로 색상코드를 설정할 수 있습니다. ("#FF00FF") |
+
+**Sample Call**
+
+```javascript
+this.Sketch00.setBrushColor( "#FF00FF" );
+this.Sketch00.setBrushColor( "blue" );
 ```
 
 **Return**
@@ -4610,9 +4956,15 @@ Sketch.setBrushSize( nSize )
 
 **Parameters**
 
-```
-Brush 객체의 크기를 pixel 단위의 숫자로 설정합니다.
-음수값으로 설정할 수 없습니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nSize | Number | Brush 객체의 크기를 pixel 단위의 숫자로 설정합니다.
+음수값으로 설정할 수 없습니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00.setBrushSize( 3 );
 ```
 
 **Return**
@@ -4642,13 +4994,19 @@ Sketch.setBrushType( enumType )
 
 **Parameters**
 
-```
-Brush 객체의 형태를 아래값 중 하나로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumType | String | Brush 객체의 형태를 아래값 중 하나로 설정합니다.
 잘못된 값을 설정하면 "round"로 적용됩니다.
 
 "round" 설정 시 Brush 객체가 원형으로 그려집니다.
 "square" 설정 시 Brush 객체가 사각형으로 그려집니다.
-"butt" 설정 시 Brush 객체가 선으로 그려집니다.
+"butt" 설정 시 Brush 객체가 선으로 그려집니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00.setBrushType( "round" );
 ```
 
 **Return**
@@ -4674,9 +5032,15 @@ Sketch.setEraseSize( nSize )
 
 **Parameters**
 
-```
-Erase 객체의 지름을 pixel 단위의 숫자로 설정합니다.
-음수값으로 설정할 수 없습니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nSize | Number | Erase 객체의 지름을 pixel 단위의 숫자로 설정합니다.
+음수값으로 설정할 수 없습니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00.setEraseSize( 3 );
 ```
 
 **Return**
@@ -4706,15 +5070,26 @@ Sketch.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00_onmove = function( obj:nexacro.Sketch,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.Sketch00.setEventHandler( "onmove", this.Sketch00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4741,15 +5116,27 @@ Sketch.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00_onmove = function( obj:nexacro.Sketch,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Sketch00.setEventHandlerLookup( "onmove", "Sketch00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4776,19 +5163,28 @@ Sketch.setFocus( [bMoveScroll] )
 
 **Parameters**
 
-```
-부모 컴포넌트에 스크롤이 있을 경우, Sketch 기준으로 스크롤을 이동할지 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bMoveScroll | Boolean | 부모 컴포넌트에 스크롤이 있을 경우, Sketch 기준으로 스크롤을 이동할지 여부를 설정합니다.
 
 true: Sketch 이(가) 화면에 표시되도록 스크롤을 이동합니다.
 false: Sketch 위치와 관계없이 스크롤을 이동하지 않습니다.
 
-값을 지정하지 않으면 기본값은 true입니다.
+값을 지정하지 않으면 기본값은 true입니다. |
+
+**Sample Call**
+
+```javascript
+var objBefComp = this.Sketch00.setFocus();
+var objBefComp = this.Sketch00.setFocus( false );
 ```
 
 **Return**
 
-Sketch 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
-이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Sketch 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
+이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다. |
 
 **Remark**
 
@@ -4813,8 +5209,14 @@ Sketch.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 Sketch 의 bottom 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 컴포넌트의 Top 위치를 기준으로 Sketch 의 bottom 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch.setOffsetBottom( 10 );
 ```
 
 **Return**
@@ -4847,8 +5249,14 @@ Sketch.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-Sketch 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | Sketch 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch.setOffsetHeight( 10 );
 ```
 
 **Return**
@@ -4881,8 +5289,14 @@ Sketch.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 Sketch 의 left 값을 픽셀단위의 숫자로 설정합니다
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 컴포넌트의 Left 위치를 기준으로 Sketch 의 left 값을 픽셀단위의 숫자로 설정합니다 |
+
+**Sample Call**
+
+```javascript
+this.Sketch.setOffsetLeft( 10 );
 ```
 
 **Return**
@@ -4915,8 +5329,14 @@ Sketch.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 Sketch 의 right 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 컴포넌트의 Left 위치를 기준으로 Sketch 의 right 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch.setOffsetRight( 600 );
 ```
 
 **Return**
@@ -4949,8 +5369,14 @@ Sketch.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 Sketch 의 top 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 컴포넌트의 Top 위치를 기준으로 Sketch 의 top 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch.setOffsetTop( 10 );
 ```
 
 **Return**
@@ -4983,8 +5409,14 @@ Sketch.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-Sketch 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | Sketch 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch.setOffsetWidth( 10 );
 ```
 
 **Return**
@@ -5026,11 +5458,54 @@ strTextFont ::= [<font-style>] [<font-weight>] <font-size> ['/'<line-height>] <f
 
 **Parameters**
 
-```
-폰트의 스타일을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| <font-style> | String | 폰트의 스타일을 설정합니다.
 
 "normal" 설정 시 스타일이 적용되지 않습니다.
-"italic" 설정 시 기울임 스타일이 적용됩니다.
+"italic" 설정 시 기울임 스타일이 적용됩니다. |
+| <font-weight> | String | 폰트의 굵기를 설정합니다.
+
+"normal" 설정 시 굵기가 적용되지 않습니다.
+"bold" 설정 시 굵은 폰트가 적용됩니다.
+
+"100"~"900" 로 설정 시 설정한 굵기로 폰트가 적용됩니다.
+"100"~"900" 로 설정 시 굵기에 해당하는 폰트가 정의되어 있어야 합니다. |
+| <font-size> | String | 폰트의 크기를 pixel 또는 point 단위로 설정합니다.
+
+단위에 맞게 "px" 또는 "pt" 단위를 설정하여야 합니다. |
+| <nSize> | String | point 단위의 정수값으로 폰트 크기를 설정합니다.
+
+음수값을 설정할 수 없습니다. |
+| <line-height> | String | 텍스트가 여러줄로 표시되는 경우 줄 사이의 간격을 설정합니다.
+
+음수값을 설정할 수 없습니다.
+
+"normal" 설정 시 줄 사이의 간격을 설정하지 않습니다.
+"normal" 설정 시 웹브라우저마다 줄 사이의 간격이 다르게 적용됩니다.
+"normal" 설정 시 Nexacro Runtime Environment는 폰트 크기에 곱할 값( 값)이 "1.5" 일 때와 동일하게 동작합니다. |
+| <nValue> | String | 폰트 크기에 곱할 값을 설정합니다.
+
+계산 결과값이 줄 사이 간격으로 적용됩니다. |
+| <nPixel> | String | 줄 사이의 간격을 pixel 단위의 숫자로 설정합니다.
+
+"px" 단위를 생략할 수 없습니다. |
+| <nPercent> | String | 폰트 크기에 곱할 비율값을 설정합니다.
+
+계산 결과값이 줄 사이 간격으로 적용됩니다.
+"%" 단위를 생략할 수 없습니다. |
+| <font-family> | String | 폰트 이름을 리스트로 설정합니다.
+
+콤마(",")로 구분하여 폰트 이름을 여러개 설정할 수 있습니다.
+먼저 선언된 폰트가 우선적으로 적용됩니다.
+선언된 폰트가 시스템에 없을 경우 선언된 순서대로 사용 가능한 폰트를 적용합니다.
+선언된 폰트가 모두 없을 경우 시스템 기본 폰트가 적용됩니다. |
+| <font-name> | String | 폰트의 이름을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00.setTextFont( "bold 12pt/30px arial, sans-serif" );
 ```
 
 **Return**
@@ -5099,13 +5574,26 @@ Sketch.showTextEditor( nXpos, nYpos, nWidth, nHeight, [strText] )
 
 **Parameters**
 
-```
-Sketch 의 좌상단을 기준으로 한 x 좌표값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nXpos | Number | Sketch 의 좌상단을 기준으로 한 x 좌표값을 설정합니다. |
+| nYpos | Number | Sketch 의 좌상단을 기준으로 한 y 좌표값을 설정합니다. |
+| nWidth | Number | 텍스트 입력창의 너비를 pixel 단위의 숫자로 설정합니다. |
+| nHeight | Number | 텍스트 입력창의 높이를 pixel 단위의 숫자로 설정합니다. |
+| strText | String | 텍스트 입력창에 표시될 텍스트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Sketch00.showTextEditor( 3, 3, 100, 100 );
+this.Sketch00.showTextEditor( 3, 3, 100, 100, "text" );
 ```
 
 **Return**
 
-텍스트 입력창에 입력되어 있던 텍스트값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 텍스트 입력창에 입력되어 있던 텍스트값을 반환합니다. |
 
 **Remark**
 
@@ -5163,9 +5651,10 @@ onclick(obj:nexacro.Sketch,e:nexacro.ClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | ClickEventInfo | Event Object. |
 
 **Return**
 
@@ -5202,9 +5691,10 @@ oncontextmenu(obj:nexacro.Sketch,e:nexacro.ContextMenuEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | ContextMenuEventInfo | Event Object. |
 
 **Return**
 
@@ -5244,9 +5734,10 @@ ondblclick(obj:nexacro.Sketch,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
@@ -5275,15 +5766,18 @@ ondevicebuttonup(obj:nexacro.Sketch,e:nexacro.DeviceButtonEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | DeviceButtonEventInfo | Event Object. |
 
 **Return**
 
-true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
-반환값을 생략하면 false로 적용됩니다.
+반환값을 생략하면 false로 적용됩니다. |
 
 **Remark**
 
@@ -5312,16 +5806,19 @@ ondrag(obj:nexacro.Sketch,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 드래그 상태가 취소되고 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5355,16 +5852,19 @@ ondragenter(obj:nexacro.Sketch,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5391,16 +5891,19 @@ ondragleave(obj:nexacro.Sketch,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5427,16 +5930,19 @@ ondragmove(obj:nexacro.Sketch,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5463,16 +5969,19 @@ ondrop(obj:nexacro.Sketch,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5506,9 +6015,10 @@ onerror(obj:nexacro.Sketch,e:nexacro.SketchErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | SketchErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -5537,9 +6047,10 @@ oninput(obj:nexacro.Sketch,e:nexacro.InputEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | InputEventInfo | Event Object. |
 
 **Return**
 
@@ -5576,16 +6087,19 @@ onkeydown(obj:nexacro.Sketch,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5626,16 +6140,19 @@ onkeyup(obj:nexacro.Sketch,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5668,9 +6185,10 @@ onkillfocus(obj:nexacro.Sketch,e:nexacro.KillFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | KillFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -5702,16 +6220,19 @@ onlbuttondown(obj:nexacro.Sketch,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5743,16 +6264,19 @@ onlbuttonup(obj:nexacro.Sketch,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5784,9 +6308,10 @@ onload(obj:nexacro.Sketch,e:nexacro.SketchLoadEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | SketchLoadEventInfo | Event Object. |
 
 **Return**
 
@@ -5811,16 +6336,19 @@ onmouseenter(obj:nexacro.Sketch,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5859,16 +6387,19 @@ onmouseleave(obj:nexacro.Sketch,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5904,16 +6435,19 @@ onmousemove(obj:nexacro.Sketch,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -5949,9 +6483,10 @@ onmove(obj:nexacro.Sketch,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -5976,16 +6511,19 @@ onrbuttondown(obj:nexacro.Sketch,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6031,16 +6569,19 @@ onrbuttonup(obj:nexacro.Sketch,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6085,9 +6626,10 @@ onsetfocus(obj:nexacro.Sketch,e:nexacro.SetFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | SetFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -6130,9 +6672,10 @@ onsize(obj:nexacro.Sketch,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -6157,9 +6700,10 @@ onsuccess(obj:nexacro.Sketch,e:nexacro.SketchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | SketchEventInfo | Event Object. |
 
 **Return**
 
@@ -6184,16 +6728,19 @@ ontouchend(obj:nexacro.Sketch,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6218,16 +6765,19 @@ ontouchmove(obj:nexacro.Sketch,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -6252,16 +6802,19 @@ ontouchstart(obj:nexacro.Sketch,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Sketch | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 

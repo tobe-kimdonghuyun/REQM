@@ -1752,8 +1752,7 @@ Grid.cellcalendarbuttonsize[= strSize]
 strSize ::= <strWidth> [ ' ' <strHeight> ]
 ```
 ```javascript
-this.Grid00.cellcalendarbuttonsize = "30";
-this.Grid00.cellcalendarbuttonsize = "30 20";
+this.Grid00.cellcalendarbuttonsize = "30";this.Grid00.cellcalendarbuttonsize = "30 20";
 ```
 - **`<strWidth>`** — 드롭다운 버튼의 너비를 pixel 단위의 문자열로 설정합니다.
 - **`<strHeight>`** — 드롭다운 버튼의 높이를 pixel 단위의 문자열로 설정합니다.
@@ -1955,8 +1954,7 @@ Grid.cellcombobuttonsize[= strSize]
 strSize ::= <strWidth> [ ' ' <strHeight> ]
 ```
 ```javascript
-this.Grid00.cellcombobuttonsize = "30";
-this.Grid00.cellcombobuttonsize = "30 20";
+this.Grid00.cellcombobuttonsize = "30";this.Grid00.cellcombobuttonsize = "30 20";
 ```
 - **`<strWidth>`** — 드롭다운 버튼의 너비를 pixel 단위의 문자열로 설정합니다.
 - **`<strHeight>`** — 드롭다운 버튼의 높이를 pixel 단위의 문자열로 설정합니다.
@@ -2916,8 +2914,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.Grid00.enableevent = true;  
-
-this.Grid00.enableevent = false;
+this.Grid00.enableevent = false;
 ```
 - **`true`** — Grid 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — Grid 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -2949,8 +2946,7 @@ Grid.enableredraw[= bRedraw]
 bRedraw ::= 'true' | 'false'
 ```
 ```javascript
-this.Grid00.enableredraw = true;
-this.Grid00.enableredraw = false;
+this.Grid00.enableredraw = true;this.Grid00.enableredraw = false;
 ```
 - **`"true"`** — Grid 에 변경이 발생하면 화면을 자동으로 다시 그립니다.
 - **`"false"`** — Grid 에 변경이 발생하여도 화면을 자동으로 다시 그리지 않습니다.
@@ -3983,11 +3979,7 @@ Grid.nodataimage[= strUrl]
 strImage ::= 'URL(' <theme-Image> | <web-Image> | <absolute-image> | <relative-image> ')'
 ```
 ```javascript
-this.Grid00.nodataimage = "URL('theme://images/nodataimg.png')";                          // 테마 이미지
-this.Grid00.nodataimage = "URL('http://www.tobesoft.com/images/gnb/btn_h1.gif')";  // 웹 이미지
-this.Grid00.nodataimage = "URL('file://C:\\nodataimg.gif')";                                   // 절대경로 이미지
-this.Grid00.nodataimage = "URL('Base::nodataimg.jpg')";                                         // TypeDefinition Prefix 이미지
-this.Grid00.nodataimage = "URL('./nodataimg.jpg')";                                                // 상대경로 이미지
+this.Grid00.nodataimage = "URL('theme://images/nodataimg.png')";                          // 테마 이미지this.Grid00.nodataimage = "URL('http://www.tobesoft.com/images/gnb/btn_h1.gif')";  // 웹 이미지this.Grid00.nodataimage = "URL('file://C:\\nodataimg.gif')";                                   // 절대경로 이미지this.Grid00.nodataimage = "URL('Base::nodataimg.jpg')";                                         // TypeDefinition Prefix 이미지this.Grid00.nodataimage = "URL('./nodataimg.jpg')";                                                // 상대경로 이미지
 ```
 - **`<theme-Image>`** — 테마에 정의된 이미지를 "theme://images/이미지명" 형식으로 설정합니다.
 
@@ -5489,9 +5481,7 @@ Grid.tooltiptext[= strToolTipText]
 **Setting Syntax**
 
 ```javascript
-this.Grid00.tooltiptext = "This is ToolTip Text";
-this.Grid00.tooltiptext = "";          // 풍선 도움말이 표시되지 않습니다.
-this.Grid00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
+this.Grid00.tooltiptext = "This is ToolTip Text";this.Grid00.tooltiptext = "";          // 풍선 도움말이 표시되지 않습니다.this.Grid00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
 ```
 - **`strToolTipText`** — 풍선도움말에 표시할 텍스트를 설정합니다.
 
@@ -6183,15 +6173,23 @@ Grid.addEvent( strEventID )
 
 **Parameters**
 
-```
-Grid 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | Grid 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.Grid00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -6218,15 +6216,26 @@ Grid.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00_onmove = function( obj:nexacro.Grid,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Grid00.addEventHandler( "onmove", this.Grid00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -6247,15 +6256,27 @@ Grid.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00_onmove = function( obj:nexacro.Grid,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Grid00.addEventHandlerLookup( "onmove", "Grid00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -6281,20 +6302,36 @@ Grid.appendContentsCol( enumBand [, bBandAppend] )
 
 **Parameters**
 
-```
-현재 표시된 Grid 포맷에 Column 이 추가될 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 현재 표시된 Grid 포맷에 Column 이 추가될 밴드를 문자열로 설정합니다.
 
 "left" 설정 시 Column 이 Left 밴드 영역에 추가됩니다.
 "body" 설정 시 Column 이 Body 밴드 영역에 추가됩니다.
-"right" 설정 시 Column 이 Right 밴드 영역에 추가됩니다.
+"right" 설정 시 Column 이 Right 밴드 영역에 추가됩니다. |
+| bBandAppend | Boolean | 현재 표시된 Grid 포맷에 추가시킬 Column 이 밴드 영역에 속할 지 설정합니다.
+
+true 설정 시 enumBand 에 설정한 밴드 영역의 마지막 Column 으로 추가됩니다.
+false 설정 시 밴드 영역에 관계없이 전체 Column 의 마지막에 추가됩니다.
+
+값을 설정하지 않으면 true 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nCol;
+nCol = this.Grid00.appendContentsCol("left");
+nCol = this.Grid00.appendContentsCol("left", true);
 ```
 
 **Return**
 
-전체 Column 을 기준으로 Column 이 추가된 위치의 인덱스 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전체 Column 을 기준으로 Column 이 추가된 위치의 인덱스 값을 반환합니다.
 enumBand 에 설정한 밴드 영역내의 인덱스가 아닙니다.
 
-정상적으로 추가하지 못했을 경우 -1 을 반환합니다.
+정상적으로 추가하지 못했을 경우 -1 을 반환합니다. |
 
 **Remark**
 
@@ -6326,20 +6363,28 @@ Grid.appendContentsRow( enumBand )
 
 **Parameters**
 
-```
-현재 Grid 포맷에 Sub Row 가 추가될 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 현재 Grid 포맷에 Sub Row 가 추가될 밴드를 문자열로 설정합니다.
 
 "head" 설정 시 Sub Row 가 Head 밴드 영역에 추가됩니다.
 "body" 설정 시 Sub Row 가 Body 밴드 영역에 추가됩니다.
-"summary" 설정 시 Sub Row 가 Summary 밴드 영역에 추가됩니다.
+"summary" 설정 시 Sub Row 가 Summary 밴드 영역에 추가됩니다. |
+
+**Sample Call**
+
+```javascript
+var nRow = this.Grid00.appendContentsRow("head");
 ```
 
 **Return**
 
-전체 Row 를 기준으로 Row 가 추가된 위치의 인덱스 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전체 Row 를 기준으로 Row 가 추가된 위치의 인덱스 값을 반환합니다.
 enumBand 에 설정한 밴드 영역내의 인덱스가 아닙니다.
 
-정상적으로 추가하지 못했을 경우 "-1"을 반환합니다.
+정상적으로 추가하지 못했을 경우 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -6376,8 +6421,10 @@ var bSucc = this.Grid00.autoFitCol();
 
 **Return**
 
-Column 너비 자동조절에 성공하면 "true"를 반환합니다.
-Column 너비 자동조절에 실패하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Column 너비 자동조절에 성공하면 "true"를 반환합니다.
+Column 너비 자동조절에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -6407,12 +6454,26 @@ Grid.autoSizeCol( enumBand, nColIndex [,bBandIndex] )
 
 **Parameters**
 
-```
-현재 Grid 포맷에서 너비를 자동조절 할 Column 이 속한 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 현재 Grid 포맷에서 너비를 자동조절 할 Column 이 속한 밴드를 문자열로 설정합니다.
 
 "left" 설정 시 Left 밴드 영역의 Column 이 적용됩니다.
 "body" 설정 시 Body 밴드 영역의 Column 이 적용됩니다.
-"right" 설정 시 Right 밴드 영역의 Column 이 적용됩니다.
+"right" 설정 시 Right 밴드 영역의 Column 이 적용됩니다. |
+| nColIndex | Number | 텍스트가 모두 표시되도록 자동조절 할 Column 의 인덱스를 숫자로 설정합니다. |
+| bBandIndex | Boolean | nColIndex 에 설정한 인덱스값이 밴드 기준인지 전체 Column 기준인지 설정합니다.
+
+"true" 설정 시 enumBand 에 설정한 밴드 영역 기준으로 nColIndex 값을 처리합니다.
+"false" 설정 시 enumBand 값에 관계없이 전체 Column 기준으로 nColIndex 값을 처리합니다.
+
+값을 설정하지 않으면 "false"로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00.autoSizeCol( "left", 0 );
+this.Grid00.autoSizeCol( "body", 0, false);
 ```
 
 **Return**
@@ -6442,14 +6503,34 @@ Grid.autoSizeRow( nRowIndex [, nSubRowIndex [, bDatasetRow]] )
 
 **Parameters**
 
-```
-텍스트가 모두 표시되도록 높이를 자동조절 할 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | 텍스트가 모두 표시되도록 높이를 자동조절 할 Row 의 인덱스를 설정합니다.
 
 "0~Row 인덱스" 설정 시 Body 밴드 영역의 Row 인덱스로 적용됩니다.
 "-1" 설정 시 Head 밴드 영역으로 적용됩니다.
 "-2" 설정 시 Summary 밴드 영역으로 적용됩니다.
 
-Row 인덱스는 "0" 부터 시작합니다.
+Row 인덱스는 "0" 부터 시작합니다. |
+| nSubRowIndex | Number | nRowIndex 에 해당하는 Row 에서 높이를 자동조절 할 Sub Row 의 인덱스를 설정합니다.
+
+"0~Sub Row 인덱스" 설정 시 특정 Sub Row 만 높이가 자동조절 됩니다.
+"-1" 설정 시 nRowIndex 에 해당하는 Row 의 모든 Sub Row 의 높이가 자동조절 됩니다.
+
+값 생략 시 "-1"로 적용됩니다. |
+| bDatasetRow | Boolean | nRowIndex 값에 설정한 인덱스의 기준을 설정합니다.
+
+"true" 설정 시 nRowIndex 값은 DataSet 의 Row 인덱스를 의미합니다.
+"false" 설정 시 nRowIndex 값은 Grid 에 표시되는 Row 의 인덱스를 의미합니다.
+
+값 생략 시 "true"로 적용됩니다 |
+
+**Sample Call**
+
+```javascript
+this.Grid00.autoSizeRow( 0 );
+this.Grid00.autoSizeRow( 0, 1 );
+this.Grid00.autoSizeRow( 0, -1, true);
 ```
 
 **Return**
@@ -6479,10 +6560,46 @@ Grid.blinkCell( nRow, vCell, nKeepMSec, nBlinkCnt );
 
 **Parameters**
 
-```
-깜빡임(Blink) 효과가 적용될 데이터 Row 의 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 깜빡임(Blink) 효과가 적용될 데이터 Row 의 인덱스를 숫자로 설정합니다.
 
-음수, 잘못된 값, 존재하지 않는 인덱스값 설정 시 메소드가 실행되지 않습니다.
+음수, 잘못된 값, 존재하지 않는 인덱스값 설정 시 메소드가 실행되지 않습니다. |
+| vCell | String, Number | 깜빡임(Blink) 효과가 적용될 Cell 의 인덱스 또는 ID 를 설정합니다.
+
+인덱스 설정 시 한 개의 Cell 만 설정할 수 있습니다.
+한 개 이상의 Cell 에 깜빡임 효과를 적용하려면 Cell 의 ID 를 콤마(",")로 구분하여 설정합니다.
+
+음수, 빈값, 존재하지 않는 인덱스값, 존재하지 않는 아이디 설정 시 메소드가 실행되지 않습니다. |
+| nKeepMSec | Number | 깜빡임(Blink) 효과가 적용될 전체 시간을 밀리초 단위의 숫자로 설정합니다.
+
+0 설정 시 nRow, vCell 에 설정된 Cell 영역에 적용된 깜빡임(Blink) 효과를 취소합니다.
+
+음수, 잘못된 값 설정 시 메소드가 실행되지 않습니다. |
+| nBlinkCnt | Number | nKeepMSec 에 설정한 시간동안 깜빡임(Blink) 효과가 적용될 횟수를 숫자로 설정합니다.
+
+0 설정 시 nRow, vCell 에 설정된 Cell 영역에 적용된 깜빡임(Blink) 효과를 취소합니다.
+
+음수, 잘못된 값 설정 시 메소드가 실행되지 않습니다. |
+
+**Sample Call**
+
+```javascript
+* XCSS
+.Grid .body .row .cell[userstatus=blinked]
+{
+	background : #125dae;
+	color : #ffffff;
+}
+
+* Script
+this.Grid00.blinkCell( 0, 0, 10000, 20 );
+this.Grid00.blinkCell( 0,"Column0,Column1", 10000, 20 );
+
+for( var iCnt = 0; iCnt < this.Grid00.getCellCount( "body" ); iCnt++ )
+{
+	this.Grid00.blinkCell( 0, iCnt, 10000, 20 );
+}
 ```
 
 **Return**
@@ -6530,10 +6647,47 @@ Grid.blinkCellByInterval( nRow, vCell, nInterMSec, nBlinkCnt );
 
 **Parameters**
 
-```
-깜빡임(Blink) 효과가 적용될 행의 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 깜빡임(Blink) 효과가 적용될 행의 인덱스를 숫자로 설정합니다.
 
-음수, 잘못된 값, 존재하지 않는 인덱스값 설정 시 메소드가 실행되지 않습니다.
+음수, 잘못된 값, 존재하지 않는 인덱스값 설정 시 메소드가 실행되지 않습니다. |
+| vCell | String, Number | 깜빡임(Blink) 효과가 적용될 Cell 의 인덱스 또는 ID 를 설정합니다.
+
+인덱스 설정 시 한 개의 Cell 만 설정할 수 있습니다.
+한 개 이상의 Cell 에 깜빡임 효과를 적용하려면 Cell 의 ID 를 콤마(",")로 구분하여 설정합니다.
+
+음수, 빈값, 존재하지 않는 인덱스값, 존재하지 않는 아이디 설정 시 메소드가 실행되지 않습니다. |
+| nInterMSec | Number | 깜빡임(Blink) 효과가 적용될 시간 간격을 밀리초 단위의 숫자로 설정합니다.
+
+깜빡임(Blink) 효과가 꺼진 후 다음 깜빡임(Blink) 효과가 적용될 때까지의 사이 시간을 설정합니다.
+0 설정 시 nRow, vCell 에 설정된 Cell 영역에 적용된 깜빡임(Blink) 효과를 취소합니다.
+
+음수, 잘못된 값 설정 시 메소드가 실행되지 않습니다. |
+| nBlinkCnt | Number | 깜빡임(Blink) 효과가 적용되어 Cell 이 깜빡이는 횟수를 숫자로 설정합니다.
+
+깜빡임(Blink) 효과는 500 밀리초 동안 적용되며, 적용시간을 변경할 수 없습니다.
+
+음수, 잘못된 값 설정 시 메소드가 실행되지 않습니다. |
+
+**Sample Call**
+
+```javascript
+* XCSS
+.Grid .body .row .cell[userstatus=blinked]
+{
+	background : #125dae;
+	color : #ffffff;
+}
+
+* Script
+this.Grid00.blinkCellByInterval( 0, 0, 1000, 20 );
+this.Grid00.blinkCellByInterval( 0,"Column0,Column1", 1000, 20 );
+
+for( var iCnt = 0; iCnt < this.Grid00.getCellCount( "body" ); iCnt++ )
+{
+	this.Grid00.blinkCellByInterval(0, iCnt, 1000, 20);
+}
 ```
 
 **Return**
@@ -6649,13 +6803,21 @@ Grid.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.Grid00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -6743,20 +6905,37 @@ Grid.deleteContentsCol( enumBand, nColIndex [, bBandIndex] )
 
 **Parameters**
 
-```
-현재 표시된 Grid 포맷에서 삭제될 Column 이 속한 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 현재 표시된 Grid 포맷에서 삭제될 Column 이 속한 밴드를 문자열로 설정합니다.
 
 "left" 설정 시 Column 이 Left 밴드 영역에서 삭제됩니다.
 "body" 설정 시 Column 이 Body 밴드 영역에서 삭제됩니다.
-"right" 설정 시 Column 이 Right 밴드 영역에서 삭제됩니다.
+"right" 설정 시 Column 이 Right 밴드 영역에서 삭제됩니다. |
+| nColIndex | Number | 삭제될 Column 의 인덱스를 숫자로 설정합니다. |
+| bBandIndex | Boolean | nColIndex 에 설정한 인덱스값이 밴드 기준인지 전체 Column 기준인지 설정합니다.
+
+true 설정 시 enumBand 에 설정한 밴드 영역 기준으로 nColIndex 값을 처리합니다.
+false 설정 시 enumBand 값에 관계없이 전체 Column 기준으로 nColIndex 값을 처리합니다.
+
+값을 설정하지 않으면 false 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nCol;
+nCol = this.Grid00.deleteContentsCol("left",2);
+nCol = this.Grid00.deleteContentsCol("body",3 ,false);
 ```
 
 **Return**
 
-전체 Column 을 기준으로 삭제된 Column 의 인덱스 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전체 Column 을 기준으로 삭제된 Column 의 인덱스 값을 반환합니다.
 enumBand 에 설정한 밴드 영역내의 인덱스가 아닙니다.
 
-정상적으로 삭제하지 못했을 경우 -1 을 반환합니다.
+정상적으로 삭제하지 못했을 경우 -1 을 반환합니다. |
 
 **Remark**
 
@@ -6787,19 +6966,28 @@ Grid.deleteContentsRow( enumBand, nSubRowIndex )
 
 **Parameters**
 
-```
-현재 Grid 포맷에서 삭제할 Sub Row 가 속한 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 현재 Grid 포맷에서 삭제할 Sub Row 가 속한 밴드를 문자열로 설정합니다.
 
 "head" 설정 시 Sub Row 가 Head 밴드 영역에서 삭제됩니다.
 "body" 설정 시 Sub Row 가 Body 밴드 영역에서 삭제됩니다.
-"summary" 설정 시 Sub Row 가 Summary 밴드 영역에서 삭제됩니다.
+"summary" 설정 시 Sub Row 가 Summary 밴드 영역에서 삭제됩니다. |
+| nSubRowIndex | Number | 삭제할 Sub Row 의 인덱스를 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nRow = this.Grid00.deleteContentsRow( "body", 1 );
 ```
 
 **Return**
 
-삭제된 Sub Row 가 밴드 내에서 위치했던 인덱스 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 삭제된 Sub Row 가 밴드 내에서 위치했던 인덱스 값을 반환합니다.
 
-정상적으로 삭제하지 못했을 경우 "-1"을 반환합니다.
+정상적으로 삭제하지 못했을 경우 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -6835,9 +7023,11 @@ var bSucc = this.Grid00.destroy();
 
 **Return**
 
-Grid 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Grid 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-Grid 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+Grid 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6870,8 +7060,10 @@ var bSucc = this.Grid00.dropdown();
 
 **Return**
 
-아이템 리스트가 정상적으로 표시되면 true를 반환합니다.
-아이템 리스트가 정상적으로 표시되지 않으면 false를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 아이템 리스트가 정상적으로 표시되면 true를 반환합니다.
+아이템 리스트가 정상적으로 표시되지 않으면 false를 반환합니다. |
 
 **Remark**
 
@@ -6903,9 +7095,11 @@ var bSucc = this.Grid00.dropdownCalendar();
 
 **Return**
 
-팝업달력이 정상적으로 표시되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 팝업달력이 정상적으로 표시되면 true 를 반환합니다.
 
-팝업달력이 정상적으로 표시되지 않으면 false 를 반환합니다.
+팝업달력이 정상적으로 표시되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6942,9 +7136,11 @@ var bSucc = this.Grid00.dropdownCombo();
 
 **Return**
 
-Combo 아이템 리스트가 정상적으로 표시되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Combo 아이템 리스트가 정상적으로 표시되면 true 를 반환합니다.
 
-Combo 아이템 리스트가 정상적으로 표시되지 않으면 false 를 반환합니다.
+Combo 아이템 리스트가 정상적으로 표시되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6970,15 +7166,27 @@ Grid.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00_onmove = function( obj:nexacro.Grid,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.Grid00.findEventHandler( "onmove", this.Grid00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -7003,17 +7211,26 @@ Grid.getBandProperty( enumBand, strPropID )
 
 **Parameters**
 
-```
-속성값을 가져올 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 속성값을 가져올 밴드를 문자열로 설정합니다.
 
 "head" 설정 시 Head 밴드에서 속성값을 반환합니다.
 "body" 설정 시 Body 밴드에서 속성값을 반환합니다.
-"summary" 설정 시 Summary 밴드에서 속성값을 반환합니다.
+"summary" 설정 시 Summary 밴드에서 속성값을 반환합니다. |
+| strPropID | String | 값을 가져올 속성의 속성명을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varProperty = this.Grid00.getBandProperty( "head", "cssclass" );
 ```
 
 **Return**
 
-특정 밴드에서 지정된 속성의 속성값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 특정 밴드에서 지정된 속성의 속성값을 반환합니다. |
 
 **Remark**
 
@@ -7039,19 +7256,28 @@ Grid.getBindCellIndex( enumBand, strColID )
 
 **Parameters**
 
-```
-현재 Grid 포맷에서 특정 Column 과 바인드 된 Cell 을 검색할 밴드 영역을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 현재 Grid 포맷에서 특정 Column 과 바인드 된 Cell 을 검색할 밴드 영역을 문자열로 설정합니다.
 
 "head" 설정 시 Head 밴드 영역에서 Cell 을 검색합니다.
 "body" 설정 시 Body 밴드 영역에서 Cell 을 검색합니다.
-"summary" 설정 시 Summary 밴드 영역에서 Cell 을 검색합니다.
+"summary" 설정 시 Summary 밴드 영역에서 Cell 을 검색합니다. |
+| strColID | String | DataSet 의 Column ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nIndex = this.Grid00.getBindCellIndex( "body", "Column00");
 ```
 
 **Return**
 
-ID 가 strColID 인 Column 과 바인드 된 첫번째 Cell 의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ID 가 strColID 인 Column 과 바인드 된 첫번째 Cell 의 인덱스를 반환합니다.
 
-ID 가 strColID 인 Column 과 바인드 된 Cell 이 없다면 -1 을 반환합니다.
+ID 가 strColID 인 Column 과 바인드 된 Cell 이 없다면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -7084,7 +7310,9 @@ this.Grid00.getBindDataset()
 
 **Return**
 
-binddataset 속성에 설정되어 있는 DataSet 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | binddataset 속성에 설정되어 있는 DataSet 오브젝트를 반환합니다. |
 
 
 ---
@@ -7105,17 +7333,25 @@ Grid.getCellCount( enumBand )
 
 **Parameters**
 
-```
-현재 Grid 포맷에 정의된 Cell 의 갯수를 구할 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 현재 Grid 포맷에 정의된 Cell 의 갯수를 구할 밴드를 문자열로 설정합니다.
 
 "head" 설정 시 Head 밴드 영역에 정의된 Cell 의 갯수를 구합니다.
 "body" 설정 시 Body 밴드 영역에 정의된 Cell 의 갯수를 구합니다.
-"summary" 설정 시 Summary 밴드 영역에 정의된 Cell 의 갯수를 구합니다.
+"summary" 설정 시 Summary 밴드 영역에 정의된 Cell 의 갯수를 구합니다. |
+
+**Sample Call**
+
+```javascript
+var nCount = this.Grid00.getCellCount( "head" );
 ```
 
 **Return**
 
-enumBand 에 설정한 밴드 영역에 정의된 Cell 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | enumBand 에 설정한 밴드 영역에 정의된 Cell 의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -7147,7 +7383,9 @@ var nIndex = this.Grid00.getCellPos();
 
 **Return**
 
-선택된 Cell 의 Cell 인덱스 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 선택된 Cell 의 Cell 인덱스 값을 반환합니다. |
 
 **Remark**
 
@@ -7179,17 +7417,27 @@ Grid.getCellProperty( enumBand, nCellIdx, strPropID )
 
 **Parameters**
 
-```
-속성값을 가져올 Cell 이 속한 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 속성값을 가져올 Cell 이 속한 밴드를 문자열로 설정합니다.
 
 "head" 설정 시 Head 밴드의 Cell 에서 속성값을 반환합니다.
 "body" 설정 시 Body 밴드의 Cell 에서 속성값을 반환합니다.
-"summary" 설정 시 Summary 밴드의 Cell 에서 속성값을 반환합니다.
+"summary" 설정 시 Summary 밴드의 Cell 에서 속성값을 반환합니다. |
+| nCellIdx | Number | 속성값을 가져올 Cell 의 Cell 인덱스를 설정합니다. |
+| strPropID | String | 값을 가져올 속성명을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varProperty = this.Grid00.getCellProperty( "head", 0, "color" );
 ```
 
 **Return**
 
-특정 Cell 의 특정 속성값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 특정 Cell 의 특정 속성값을 반환합니다. |
 
 **Remark**
 
@@ -7226,19 +7474,29 @@ Grid.getCellPropertyValue( nRowIdx, nCellIdx, strPropID )
 
 **Parameters**
 
-```
-속성값을 얻을 Cell 이 Grid 에서 위치한 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIdx | Number | 속성값을 얻을 Cell 이 Grid 에서 위치한 Row 의 인덱스를 설정합니다.
 
 "0 ~ Row 갯수-1" 설정 시 Body 밴드의 Row 인덱스로 적용됩니다.
 "-1" 설정 시 Head 밴드로 적용됩니다.
-"-2" 설정 시 Summary 밴드로 적용됩니다.
+"-2" 설정 시 Summary 밴드로 적용됩니다. |
+| nCellIdx | Number | 속성값을 얻을 Cell 의 Cell 인덱스를 설정합니다. |
+| strPropID | String | 값을 가져올 속성명을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var strVal = this.Grid00.getCellPropertyValue( 0, 1, "cssclass" );
 ```
 
 **Return**
 
-Cell 의 속성이 DataSet 에 바인드 되어 있다면 바인드된 DataSet 의 Column 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Cell 의 속성이 DataSet 에 바인드 되어 있다면 바인드된 DataSet 의 Column 값을 반환합니다.
 Cell 의 속성이 EXPR 형식으로 설정되어 있다면 EXPR 이 적용된 값을 반환합니다.
-Cell 의 속성에 값이 설정되어 있다면 설정된 값을 반환합니다.
+Cell 의 속성에 값이 설정되어 있다면 설정된 값을 반환합니다. |
 
 **Remark**
 
@@ -7270,17 +7528,26 @@ Grid.getCellRect( nRow, nCellIdx )
 
 **Parameters**
 
-```
-영역 정보를 얻을 Cell 이 위치한 Row의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 영역 정보를 얻을 Cell 이 위치한 Row의 인덱스를 설정합니다.
 
 "0~Row 갯수" 설정 시 Body 밴드의 Row 인덱스로 적용됩니다.
 "-1" 설정 시 Head 밴드로 적용됩니다.
-"-2" 설정 시 Summary 밴드로 적용됩니다.
+"-2" 설정 시 Summary 밴드로 적용됩니다. |
+| nCellIdx | Number | 영역 정보를 얻을 Cell 의 Cell 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objRect = this.Grid00.getCellRect( 0,0 );
 ```
 
 **Return**
 
-- 인수로 전달된 위치에 해당하는 Cell 오브젝트의 영역 정보를 나타내는 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | - 인수로 전달된 위치에 해당하는 Cell 오브젝트의 영역 정보를 나타내는 오브젝트를 반환합니다.
 반환되는 오브젝트는 left, top, right, bottom, width, height 속성을 가지며, 모든 속성값은 기준 좌표를 기준으로 계산됩니다.
 기준 좌표는 Grid 컴포넌트의 border 영역을 제외한 표시 영역의 좌측 상단(top:0, left:0)입니다.
 
@@ -7288,7 +7555,7 @@ Grid.getCellRect( nRow, nCellIdx )
 Cell 영역이 화면에 부분적으로 표시된 경우에는 표시된 Cell 영역을 기준으로 속성값을 처리합니다.
 Body 밴드 내 Cell 영역이 Head 밴드 영역 뒤로 숨겨지더라도 기준 좌표를 벗어나지 않는다면 정상적으로 속성값을 처리합니다.
 
-- 인수로 전달된 위치의 Cell이 존재하지 않는 경우 모든 속성값은 0으로 처리합니다.
+- 인수로 전달된 위치의 Cell이 존재하지 않는 경우 모든 속성값은 0으로 처리합니다. |
 
 **Remark**
 
@@ -7320,17 +7587,26 @@ Grid.getCellText( nRow, nCellIdx )
 
 **Parameters**
 
-```
-텍스트값을 얻을 Cell 이 위치한 Row의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 텍스트값을 얻을 Cell 이 위치한 Row의 인덱스를 설정합니다.
 
 "0~Row 갯수" 설정 시 Body 밴드의 Row 인덱스로 적용됩니다.
 "-1" 설정 시 Head 밴드로 적용됩니다.
-"-2" 설정 시 Summary 밴드로 적용됩니다.
+"-2" 설정 시 Summary 밴드로 적용됩니다. |
+| nCellIdx | Number | 텍스트값을 얻을 Cell 의 Cell 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var strText = this.Grid00.getCellText(0, 1);
 ```
 
 **Return**
 
-인수로 전달된 위치의 Cell 에 표시되는 텍스트값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 인수로 전달된 위치의 Cell 에 표시되는 텍스트값을 반환합니다. |
 
 **Remark**
 
@@ -7362,19 +7638,28 @@ Grid.getCellValue( nRow, nCellIdx )
 
 **Parameters**
 
-```
-text 속성값을 얻을 Cell 이 위치한 Row의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | text 속성값을 얻을 Cell 이 위치한 Row의 인덱스를 설정합니다.
 
 "0~Row 갯수" 설정 시 Body 밴드의 Row 인덱스로 적용됩니다.
 "-1" 설정 시 Head 밴드로 적용됩니다.
-"-2" 설정 시 Summary 밴드로 적용됩니다.
+"-2" 설정 시 Summary 밴드로 적용됩니다. |
+| nCellIdx | Number | text 속성값을 얻을 Cell 의 Cell 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varValue = this.Grid00.getCellValue(0, 1);
 ```
 
 **Return**
 
-Cell 의 text 속성이 DataSet 에 바인드 되어 있다면 바인드된 DataSet 의 Column 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Cell 의 text 속성이 DataSet 에 바인드 되어 있다면 바인드된 DataSet 의 Column 값을 반환합니다.
 Cell 의 text 속성에 값이 설정되어 있다면 설정된 값을 반환합니다.
-Cell 의 text 속성이 EXPR 형식으로 설정되어 있다면 EXPR 이 적용된 값을 반환합니다.
+Cell 의 text 속성이 EXPR 형식으로 설정되어 있다면 EXPR 이 적용된 값을 반환합니다. |
 
 **Remark**
 
@@ -7410,7 +7695,9 @@ var strEditType = this.Grid00.getCurEditType();
 
 **Return**
 
-선택된 Cell 의 editytype 속성값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 선택된 Cell 의 editytype 속성값을 반환합니다. |
 
 **Remark**
 
@@ -7435,28 +7722,35 @@ Grid.getCurFormatString( [bOrginal] )
 
 **Parameters**
 
-```
-동적으로 변경된 포맷을 반영하여 반환할 지 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bOrginal | Boolean | 동적으로 변경된 포맷을 반영하여 반환할 지 여부를 설정합니다.
 
 true 설정 시 동적으로 변경된 포맷은 무시하고, 디자인 시 설정한 포맷을 반환합니다.
 false 설정 시 동적으로 변경된 포맷을 반영하여 반환합니다.
 
-값을 설정하지 않으면 false 로 적용됩니다.
+값을 설정하지 않으면 false 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var strFormat = this.Grid00.getCurFormatString();
+var strFormat = this.Grid00.getCurFormatString( true );
 ```
 
 **Return**
 
-현재 Grid 에 표시되고 있는 포맷을 XML 형식의 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 현재 Grid 에 표시되고 있는 포맷을 XML 형식의 문자열로 반환합니다.
 
-기본적인 XML 형식은 아래와 같으며 Head, Body, Summary 정의는 포맷에 따라 없을 수 있습니다.
-
-<Format id="default">
+기본적인 XML 형식은 아래와 같으며 Head, Body, Summary 정의는 포맷에 따라 없을 수 있습니다. <Format id="default">
   <Columns>....</Columns>
   <Rows>....</Rows>
   <Band id="head">...</Band>
   <Band id="body">...</Band>
   <Band id="summary">..</Band>
-</Format>
+</Format> |
 
 **Remark**
 
@@ -7487,15 +7781,23 @@ Grid.getDatasetRow( nRowIndex )
 
 **Parameters**
 
-```
-Grid 의 Row 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | Grid 의 Row 인덱스를 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nRow = this.Grid00.getDatasetRow( 0 );
 ```
 
 **Return**
 
-Grid 의 Row 인덱스에 해당하는 DataSet 의 Row 인덱스값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Grid 의 Row 인덱스에 해당하는 DataSet 의 Row 인덱스값을 반환합니다.
 
-정상적으로 값을 구할 수 없을 경우는 -1 을 반환합니다.
+정상적으로 값을 구할 수 없을 경우는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -7525,9 +7827,11 @@ var nCaretPos = this.Grid00.getEditCaret();
 
 **Return**
 
-인덱스는 0 부터 시작하며 캐럿이 위치한 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 인덱스는 0 부터 시작하며 캐럿이 위치한 인덱스를 반환합니다.
 
-Cell 이 편집상태가 아니면 -1 을 반환합니다.
+Cell 이 편집상태가 아니면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -7556,10 +7860,12 @@ var strInputText = this.Grid00.getEditingText();
 
 **Return**
 
-Cell 에 표시된 편집모드용 컨트롤에 입력중인 text 값을 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Cell 에 표시된 편집모드용 컨트롤에 입력중인 text 값을 문자열로 반환합니다.
 
 Cell 의 edittype 속성값이 "checkbox", "tree" 이면 undefined 를 반환합니다.
-Cell 의 edittype 속성값이 "date", "mask" 이면 마스크 문자가 포함된 입력중인 값을 반환합니다.
+Cell 의 edittype 속성값이 "date", "mask" 이면 마스크 문자가 포함된 입력중인 값을 반환합니다. |
 
 **Remark**
 
@@ -7599,11 +7905,13 @@ var strInputValue = this.Grid00.getEditingValue();
 
 **Return**
 
-Cell 에 표시된 편집모드용 컨트롤에 입력중인 value 값을 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Cell 에 표시된 편집모드용 컨트롤에 입력중인 value 값을 문자열로 반환합니다.
 
 Cell 의 edittype 속성값이 "button", "checkbox", "tree" 이면 undefined 를 반환합니다.
 Cell 의 edittype 속성값이 "date" 이면 마스크 문자가 제외된 입력중인 원본값을 날짜형식에 맞게 보정하여 반환합니다.
-Cell 의 edittype 속성값이 "mask" 이면 마스크 문자가 제외된 입력중인 원본값만 반환합니다.
+Cell 의 edittype 속성값이 "mask" 이면 마스크 문자가 제외된 입력중인 원본값만 반환합니다. |
 
 **Remark**
 
@@ -7643,10 +7951,12 @@ var varArrSelect = this.Grid00.getEditSelect();
 
 **Return**
 
-선택된 텍스트의 시작 인덱스와 끝 인덱스를 각각 배열의 0번, 1번 원소로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | 선택된 텍스트의 시작 인덱스와 끝 인덱스를 각각 배열의 0번, 1번 원소로 반환합니다.
 선택된 텍스트가 없는 경우 현재 캐럿 위치를 배열의 0번, 1번 원소로 반환합니다.
 
-인덱스는 0 부터 시작합니다
+인덱스는 0 부터 시작합니다 |
 
 **Remark**
 
@@ -7675,9 +7985,11 @@ var strText = this.Grid00.getEditSelectedText();
 
 **Return**
 
-선택된 텍스트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 선택된 텍스트를 반환합니다.
 
-선택된 텍스트가 없을 경우 빈문자열(Empty String)을 반환합니다.
+선택된 텍스트가 없을 경우 빈문자열(Empty String)을 반환합니다. |
 
 **Remark**
 
@@ -7708,10 +8020,12 @@ var strText = this.Grid00.getEditText();
 
 **Return**
 
-Cell 에 표시된 편집모드용 컨트롤의 text 속성값을 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Cell 에 표시된 편집모드용 컨트롤의 text 속성값을 문자열로 반환합니다.
 
 Grid 의 edittype 속성값이 "checkbox", "tree" 이면 undefined 를 반환합니다.
-Grid 의 edittype 속성값이 "combo", "date" 이면 컨트롤에 입력중인 값이 아닌 원본 text 속성값을 반환합니다.
+Grid 의 edittype 속성값이 "combo", "date" 이면 컨트롤에 입력중인 값이 아닌 원본 text 속성값을 반환합니다. |
 
 **Remark**
 
@@ -7756,10 +8070,12 @@ var strValue = this.Grid00.getEditValue();
 
 **Return**
 
-Cell 에 표시된 편집모드용 컨트롤의 value 속성값을 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Cell 에 표시된 편집모드용 컨트롤의 value 속성값을 문자열로 반환합니다.
 
 Cell 의 edittype 속성값이 "button", "checkbox", "tree" 이면 undefined 를 반환합니다.
-Cell 의 edittype 속성값이 "combo", "date" 이면 컨트롤에 입력중인 값이 아닌 원본 value 속성값을 반환합니다.
+Cell 의 edittype 속성값이 "combo", "date" 이면 컨트롤에 입력중인 값이 아닌 원본 value 속성값을 반환합니다. |
 
 **Remark**
 
@@ -7800,15 +8116,26 @@ Grid.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = Grid00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -7833,7 +8160,9 @@ var nColCount = this.Grid00.getFormatColCount();
 
 **Return**
 
-현재 Grid 에 표시되고 있는 포맷에 정의된 Column 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 현재 Grid 에 표시되고 있는 포맷에 정의된 Column 의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -7858,15 +8187,26 @@ Grid.getFormatColProperty( nColIdx, strPropId )
 
 **Parameters**
 
-```
-현재 포맷에 정의된 전체 Column 을 기준으로 속성값을 가져올 Column 인덱스 값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nColIdx | Number | 현재 포맷에 정의된 전체 Column 을 기준으로 속성값을 가져올 Column 인덱스 값을 설정합니다.
 
-Column 인덱스는 "0" 부터 시작합니다.
+Column 인덱스는 "0" 부터 시작합니다. |
+| strPropId | String | 값을 가져올 속성명을 문자열로 설정합니다.
+
+Grid 의 Column 에는 "band"와 "size" 두가지 속성이 정의되어 있습니다. |
+
+**Sample Call**
+
+```javascript
+var varProperty = this.Grid00.getFormatColProperty(0,"size");
 ```
 
 **Return**
 
-특정 Column 의 특정 속성값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 특정 Column 의 특정 속성값을 반환합니다. |
 
 
 ---
@@ -7887,16 +8227,24 @@ Grid.getFormatColSize( nColIdx )
 
 **Parameters**
 
-```
-현재 포맷에 정의된 전체 Column 을 기준으로 속성값을 가져올 Column 인덱스 값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nColIdx | Number | 현재 포맷에 정의된 전체 Column 을 기준으로 속성값을 가져올 Column 인덱스 값을 설정합니다.
 
-Column 인덱스는 "0"부터 시작합니다.
+Column 인덱스는 "0"부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var nSize = this.Grid00.getFormatColSize(0);
 ```
 
 **Return**
 
-디자인 시 설정한 Column 의 너비를 반환합니다.
-존재하지 않는 인덱스를 지정하면 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 디자인 시 설정한 Column 의 너비를 반환합니다.
+존재하지 않는 인덱스를 지정하면 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -7928,8 +8276,10 @@ var arrFormatIdList = this.Grid00.getFormatIdList();
 
 **Return**
 
-Format id 목록을 배열로 반환합니다.
-값이 없는 경우에는 빈 배열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Format id 목록을 배열로 반환합니다.
+값이 없는 경우에는 빈 배열을 반환합니다. |
 
 
 ---
@@ -7954,10 +8304,12 @@ var nCurrnetRowCount = this.Grid00.getFormatRowCount();
 
 **Return**
 
-현재 Grid 에 표시되고 있는 포맷에 정의된 Row 또는 Sub Row 의 총 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 현재 Grid 에 표시되고 있는 포맷에 정의된 Row 또는 Sub Row 의 총 갯수를 반환합니다.
 
 Head, Body, Summary 밴드에 정의된 각 Row 의 총 갯수의 합을 반환합니다.
-Row 에 Sub Row 가 정의되어 있다면 Sub Row 의 갯수를 반영합니다.
+Row 에 Sub Row 가 정의되어 있다면 Sub Row 의 갯수를 반영합니다. |
 
 **Remark**
 
@@ -7986,17 +8338,28 @@ Grid.getFormatRowProperty( nRowIdx, strPropId )
 
 **Parameters**
 
-```
-현재 포맷에 정의된 전체 Row 를 기준으로 속성값을 가져올 Row의 인덱스 값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIdx | Number | 현재 포맷에 정의된 전체 Row 를 기준으로 속성값을 가져올 Row의 인덱스 값을 설정합니다.
 
 Head, Body, Summary 밴드에 정의된 전체 Row를 기준으로 인덱스를 설정합니다.
 Row 에 Sub Row 가 정의되어 있다면 Sub Row 도 인덱스에 포함됩니다.
-Row 인덱스는 "0"부터 시작합니다.
+Row 인덱스는 "0"부터 시작합니다. |
+| strPropId | String | 값을 가져올 속성명을 문자열로 설정합니다.
+
+Grid 의 Row 에는 "band"와 "size" 두가지 속성이 정의되어 있습니다. |
+
+**Sample Call**
+
+```javascript
+var varProperty = this.Grid00.getFormatRowProperty(0,"size");
 ```
 
 **Return**
 
-특정 Row 의 특정 속성값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 특정 Row 의 특정 속성값을 반환합니다. |
 
 **Remark**
 
@@ -8022,20 +8385,28 @@ Grid.getFormatRowSize( nRowIdx )
 
 **Parameters**
 
-```
-얻고자 하는 Format Rows의 Row 에 대한 Index 입니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIdx | Number | 얻고자 하는 Format Rows의 Row 에 대한 Index 입니다.
 
 현재 포맷에 정의된 전체 Row 를 기준으로 높이를 가져올 Row 의 인덱스 값을 설정합니다.
 
 Head, Body, Summary 밴드에 정의된 전체 Row를 기준으로 인덱스를 설정합니다.
 Row 에 Sub Row 가 정의되어 있다면 Sub Row 도 인덱스에 포함됩니다.
-Row 인덱스는 "0"부터 시작합니다.
+Row 인덱스는 "0"부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var nSize = this.Grid00.getFormatRowSize(0);
 ```
 
 **Return**
 
-디자인 시 설정한 Row 또는 Sub Row 의 높이를 반환합니다.
-존재하지 않는 인덱스를 지정하면 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 디자인 시 설정한 Row 또는 Sub Row 의 높이를 반환합니다.
+존재하지 않는 인덱스를 지정하면 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -8069,12 +8440,12 @@ var strContents = this.Grid00.getFormatString();
 
 **Return**
 
-디자인 시 정의된 전체 포맷을 XML 형식의 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 디자인 시 정의된 전체 포맷을 XML 형식의 문자열로 반환합니다.
 동적으로 변경된 포맷값은 반영되지 않습니다.
 
-기본적인 XML 형식은 아래와 같으며 Head, Body, Summary 정의는 포맷에 따라 없을 수 있습니다.
-
-<Formats>
+기본적인 XML 형식은 아래와 같으며 Head, Body, Summary 정의는 포맷에 따라 없을 수 있습니다. <Formats>
   <Format id="default">
     <Columns>....</Columns>
     <Rows>....</Rows>
@@ -8089,7 +8460,7 @@ var strContents = this.Grid00.getFormatString();
     <Band id="body">...</Band>
     <Band id="summary">..</Band>
   </Format>
-</Formats>
+</Formats> |
 
 
 ---
@@ -8110,18 +8481,26 @@ Grid.getHeadValue( nCellIdx )
 
 **Parameters**
 
-```
-text 속성값 또는 Cell 내부에서 관리하는 HeadValue 값을 얻을 Cell 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nCellIdx | Number | text 속성값 또는 Cell 내부에서 관리하는 HeadValue 값을 얻을 Cell 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varValue = this.Grid00.getHeadValue(0);
 ```
 
 **Return**
 
-Cell의 text 속성에 값이 설정되어 있다면 설정된 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Cell의 text 속성에 값이 설정되어 있다면 설정된 값을 반환합니다.
 Cell의 expr 속성이 설정되어 있다면 text 속성값에 EXPR 이 적용된 값을 반환합니다.
 Cell의 text 속성이 Dataset 오브젝트에 바인드되어 있다면 바인드된 Dataset 오브젝트에서 현재 선택된 Row의 Column 값을 반환합니다.
 Cell 내부에서 관리하는 HeadValue 값이 undefined가 아닌 경우에는 HeadValue 값을 반환합니다.
 
-존재하지 않는 Cell 인덱스를 설정하면 "null"을 반환합니다.
+존재하지 않는 Cell 인덱스를 설정하면 "null"을 반환합니다. |
 
 **Remark**
 
@@ -8167,7 +8546,9 @@ var nScrollPos = this.Grid00.getHScrollPos();
 
 **Return**
 
-수평스크롤바의 현재 트랙바 위치값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 수평스크롤바의 현재 트랙바 위치값을 반환합니다. |
 
 **Remark**
 
@@ -8202,7 +8583,9 @@ var nBottom = this.Grid.getOffsetBottom();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 Grid 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 Grid 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -8231,7 +8614,9 @@ var nHeight = this.Grid.getOffsetHeight();
 
 **Return**
 
-Grid 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Grid 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -8260,7 +8645,9 @@ var nleft = this.Grid.getOffsetLeft();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 Grid 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 Grid 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -8289,7 +8676,9 @@ var nRight = this.Grid.getOffsetRight();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 Grid 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 Grid 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -8318,7 +8707,9 @@ var nTop = this.Grid.getOffsetTop();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 Grid 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 Grid 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -8347,7 +8738,9 @@ var nWidth = this.Grid.getOffsetWidth();
 
 **Return**
 
-Grid 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Grid 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -8376,9 +8769,11 @@ var nbottom = this.Grid.getPixelBottom();
 
 **Return**
 
-Grid 의 bottom 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Grid 의 bottom 속성값을 픽셀단위로 반환합니다.
 
-bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -8407,9 +8802,11 @@ var nheight = this.Grid.getPixelHeight();
 
 **Return**
 
-Grid 의 height 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Grid 의 height 속성값을 픽셀단위로 반환합니다.
 
-height 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+height 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -8438,9 +8835,11 @@ var nleft = this.Grid.getPixelLeft();
 
 **Return**
 
-Grid 의 left 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Grid 의 left 속성값을 픽셀단위로 반환합니다.
 
-left 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+left 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -8469,9 +8868,11 @@ var nright = this.Grid.getPixelRight();
 
 **Return**
 
-Grid 의 right 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Grid 의 right 속성값을 픽셀단위로 반환합니다.
 
-right 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+right 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -8500,9 +8901,11 @@ var ntop = this.Grid.getPixelTop();
 
 **Return**
 
-Grid 의 top 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Grid 의 top 속성값을 픽셀단위로 반환합니다.
 
-top 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+top 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -8531,9 +8934,11 @@ var nwidth = this.Grid.getPixelWidth();
 
 **Return**
 
-Grid 의 width 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Grid 의 width 속성값을 픽셀단위로 반환합니다.
 
-width 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+width 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -8558,20 +8963,30 @@ Grid.getRealColFullSize( [enumBand] )
 
 **Parameters**
 
-```
-현재 Grid 포맷에서 전체 Column 의 너비를 구할 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 현재 Grid 포맷에서 전체 Column 의 너비를 구할 밴드를 문자열로 설정합니다.
 
 "left" 설정 시 Left 밴드 영역의 전체 Column 너비를 구합니다.
 "body" 설정 시 Body 밴드 영역의 전체 Column 너비를 구합니다.
 "right" 설정 시 Right 밴드 영역의 전체 Column 너비를 구합니다.
 
-값을 지정하지 않으면 밴드 영역에 관계없이 전체 Column 의 너비를 구합니다.
+값을 지정하지 않으면 밴드 영역에 관계없이 전체 Column 의 너비를 구합니다. |
+
+**Sample Call**
+
+```javascript
+var nSize;
+nSize = Grid00.getRealColFullSize();
+nSize = Grid00.getRealColFullSize("body");
 ```
 
 **Return**
 
-지정된 영역에서 전체 Column의 너비를 반환합니다.
-Column 의 너비를 구하지 못했을 경우 "0" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 지정된 영역에서 전체 Column의 너비를 반환합니다.
+Column 의 너비를 구하지 못했을 경우 "0" 을 반환합니다. |
 
 **Remark**
 
@@ -8596,16 +9011,32 @@ Grid.getRealColSize( nColIdx [, bBodyIdx] )
 
 **Parameters**
 
-```
-너비를 가져 올 Column 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nColIdx | Number | 너비를 가져 올 Column 의 인덱스를 설정합니다.
 
-Column 인덱스는 "0" 부터 시작합니다.
+Column 인덱스는 "0" 부터 시작합니다. |
+| bBodyIdx | Boolean | nColIdx 에 설정한 인덱스값이 Body 밴드 기준인지 전체 Column 기준인지 설정합니다.
+
+"true" 설정 시 Body 밴드 영역을 기준으로 nColIdx 값을 처리합니다.
+"false" 설정 시 밴드 영역에 관계없이 전체 Column 기준으로 nColIdx 값을 처리합니다.
+
+값을 설정하지 않으면 "false"로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nSize;
+nSize = this.Grid00.getRealColSize( 0, false );
+nSize = this.Grid00.getRealColSize( 5 );
 ```
 
 **Return**
 
-현재 표시되는 포맷에서 특정 Column의 너비를 반환합니다.
-Column 의 너비를 구하지 못했을 경우 "0" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 현재 표시되는 포맷에서 특정 Column의 너비를 반환합니다.
+Column 의 너비를 구하지 못했을 경우 "0" 을 반환합니다. |
 
 **Remark**
 
@@ -8633,20 +9064,30 @@ Grid.getRealRowFullSize( [enumBand] )
 
 **Parameters**
 
-```
-현재 Grid 포맷에서 전체 Row 의 높이를 구할 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 현재 Grid 포맷에서 전체 Row 의 높이를 구할 밴드를 문자열로 설정합니다.
 
 "head" 설정 시 Head 밴드 영역의 전체 Row 높이를 구합니다.
 "body" 설정 시 Body 밴드 영역의 전체 Row 높이를 구합니다.
 "summary" 설정 시 Summary 밴드 영역의 전체 Row 높이를 구합니다.
 
-값을 지정하지 않으면 밴드 영역에 관계없이 전체 Row 의 높이를 구합니다.
+값을 지정하지 않으면 밴드 영역에 관계없이 전체 Row 의 높이를 구합니다. |
+
+**Sample Call**
+
+```javascript
+var nSize;
+nSize = this.Grid00.getRealRowFullSize();
+nSize = this.Grid00.getRealRowFullSize("body");
 ```
 
 **Return**
 
-지정된 영역에서 전체 Row 의 높이를 반환합니다.
-Row 의 높이를 구하지 못했을 경우 "0" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 지정된 영역에서 전체 Row 의 높이를 반환합니다.
+Row 의 높이를 구하지 못했을 경우 "0" 을 반환합니다. |
 
 **Remark**
 
@@ -8671,22 +9112,47 @@ Grid.getRealRowSize( nRowIdx [, nSubRowIdx [, bBody]] )
 
 **Parameters**
 
-```
-높이를 가져 올 Row 의 인덱스 또는 밴드영역을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIdx | Number | 높이를 가져 올 Row 의 인덱스 또는 밴드영역을 설정합니다.
 
 "0~Row 갯수" 설정 시 bBody 값이 true 이면 Body 밴드영역의 Row 인덱스로 적용됩니다.
 "0~Row 갯수" 설정 시 bBody 값이 false 이면 밴드영역에 관계 없이 전체 Row 의 인덱스로 적용됩니다.
 -1 설정 시 bBody 값이 true 이면 Head 밴드영역으로 적용됩니다.
 -2 설정 시 bBody 값이 true 이면 Summary 밴드영역으로 적용됩니다.
 
-Row 인덱스는 0 부터 시작합니다.
+Row 인덱스는 0 부터 시작합니다. |
+| nSubRowIdx | Number | nRowIdx 값에 해당하는 Row 에서 높이를 가져 올 SubRow 의 인덱스를 설정합니다.
+
+"0~SubRow 갯수" 설정 시 해당 SubRow 의 높이를 반환합니다.
+-1 설정 시 nRowIdx 값에 해당하는 Row 의 전체 높이를 반환합니다.
+
+SubRow 의 인덱스는 0 부터 시작합니다.
+값을 생략하면 -1 로 적용됩니다. |
+| bBody | Boolean | nRowIdx 값이 적용될 영역을 설정합니다.
+
+true 설정 시 nRowIdx 값은 Body 밴드영역의 Row 인덱스로 적용됩니다.
+false 설정 시 nRowIdx 값은 밴드영역에 관계없이 전체 Row 의 인덱스로 적용됩니다.
+
+값을 생략하면 true 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nSize;
+nSize = this.Grid00.getRealRowSize( 5 );
+nSize = this.Grid00.getRealRowSize( 5, -1 );
+nSize = this.Grid00.getRealRowSize( -1, 1 );
+nSize = this.Grid00.getRealRowSize( 5, 3, false );
 ```
 
 **Return**
 
-파라미터로 지정한 Row 또는 SubRow 의 높이를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 파라미터로 지정한 Row 또는 SubRow 의 높이를 반환합니다.
 
-Row 또는 SubRow 의 높이를 구하지 못했을 경우 0 을 반환합니다.
+Row 또는 SubRow 의 높이를 구하지 못했을 경우 0 을 반환합니다. |
 
 **Remark**
 
@@ -8725,7 +9191,9 @@ var aDSRowidx = this.Grid00.getSelectedDatasetRows();
 
 **Return**
 
-Grid 에 선택된 Row 들에 해당하는 DataSet 의 Row 인덱스를 배열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | Grid 에 선택된 Row 들에 해당하는 DataSet 의 Row 인덱스를 배열로 반환합니다. |
 
 **Remark**
 
@@ -8754,9 +9222,11 @@ var arrRowidx = this.Grid00.getSelectedRows()
 
 **Return**
 
-Grid 에 선택되어 있는 Row 의 인덱스를 배열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | Grid 에 선택되어 있는 Row 의 인덱스를 배열로 반환합니다.
 
-선택된 Row 가 없을 경우 빈 배열을 반환합니다.
+선택된 Row 가 없을 경우 빈 배열을 반환합니다. |
 
 **Remark**
 
@@ -8784,19 +9254,28 @@ Grid.getSubCellCount( enumBand, nCellIdx )
 
 **Parameters**
 
-```
-nCellIdx 에 해당하는 Cell 이 속한 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | nCellIdx 에 해당하는 Cell 이 속한 밴드를 문자열로 설정합니다.
 
 "head" 설정 시 Head 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다.
 "body" 설정 시 Body 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다.
-"summary" 설정 시 Summary 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다.
+"summary" 설정 시 Summary 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다. |
+| nCelIldx | Number | Sub Cell 의 갯수를 확인 할 Cell 의 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nSubCellCount = this.Grid00.getSubCellCount("head",0);
 ```
 
 **Return**
 
-인수로 전달 된 Cell 의 Sub Cell 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 인수로 전달 된 Cell 의 Sub Cell 갯수를 반환합니다.
 
-Sub Cell 이 아닐 경우 "0" 을 반환합니다.
+Sub Cell 이 아닐 경우 "0" 을 반환합니다. |
 
 **Remark**
 
@@ -8834,17 +9313,28 @@ Grid.getSubCellProperty( enumBand, nCellIdx, nSubCellIdx, strPropID )
 
 **Parameters**
 
-```
-nCellIdx 에 해당하는 Cell 이 속한 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | nCellIdx 에 해당하는 Cell 이 속한 밴드를 문자열로 설정합니다.
 
 "head" 설정 시 Head 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다.
 "body" 설정 시 Body 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다.
-"summary" 설정 시 Summary 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다.
+"summary" 설정 시 Summary 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다. |
+| nCellIdx | Number | Sub Cell 로 구성된 Cell 의 인덱스를 설정합니다. |
+| nSubCellIdx | Number | 속성값을 가져 올 Sub Cell 의 인덱스를 설정합니다. |
+| strPropID | String | 값을 가져 올 Sub Cell 의 속성명을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varProperty = this.Grid00.getSubCellProperty("head",0,1,"align");
 ```
 
 **Return**
 
-특정 Sub Cell 의 속성값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 특정 Sub Cell 의 속성값을 반환합니다. |
 
 **Remark**
 
@@ -8886,19 +9376,30 @@ Grid.getSubCellPropertyValue( nRowIdx, nCellIdx, nSubCellIdx, strPropID )
 
 **Parameters**
 
-```
-속성값을 얻을 SubCell 이 Grid 에서 위치한 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIdx | Number | 속성값을 얻을 SubCell 이 Grid 에서 위치한 Row 의 인덱스를 설정합니다.
 
 "0 ~ Row 갯수-1" 설정 시 Body 밴드의 Row 인덱스로 적용됩니다.
 "-1" 설정 시 Head 밴드로 적용됩니다.
-"-2" 설정 시 Summary 밴드로 적용됩니다.
+"-2" 설정 시 Summary 밴드로 적용됩니다. |
+| nCellIdx | Number | 속성값을 얻을 SubCell 이 속한 Cell 의 인덱스를 설정합니다. |
+| nSubCellIdx | Number | 속성값을 얻을 SubCell 의 인덱스를 설정합니다. |
+| strPropID | String | 값을 가져올 속성명을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var strVal = this.Grid00.getSubCellPropertyValue( 0, 1, 1, "cssclass" );
 ```
 
 **Return**
 
-SubCell 의 속성이 DataSet 에 바인드 되어 있다면 바인드된 DataSet 의 Column 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | SubCell 의 속성이 DataSet 에 바인드 되어 있다면 바인드된 DataSet 의 Column 값을 반환합니다.
 SubCell 의 속성이 EXPR 형식으로 설정되어 있다면 EXPR 이 적용된 값을 반환합니다.
-SubCell 의 속성에 값이 설정되어 있다면 설정된 값을 반환합니다.
+SubCell 의 속성에 값이 설정되어 있다면 설정된 값을 반환합니다. |
 
 **Remark**
 
@@ -8930,21 +9431,31 @@ Grid.getSubCellRect(nRow,nCellIdx,nSubCellIdx)
 
 **Parameters**
 
-```
-영역 정보를 얻을 Sub Cell 이 위치한 Row의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 영역 정보를 얻을 Sub Cell 이 위치한 Row의 인덱스를 설정합니다.
 
 "0~Row 갯수" 설정 시 Body 밴드의 Row 인덱스로 적용됩니다.
 "-1" 설정 시 Head 밴드로 적용됩니다.
-"-2" 설정 시 Summary 밴드로 적용됩니다.
+"-2" 설정 시 Summary 밴드로 적용됩니다. |
+| nCellIdx | Number | 영역 정보를 얻을 Sub Cell 을 가진 Cell 의 Cell 인덱스를 설정합니다. |
+| nSubCellIdx | Number | 영역 정보를 얻을 Sub Cell 의 Sub Cell 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objRect = this.Grid00.getSubCellRect( 0,0,1 );
 ```
 
 **Return**
 
-특정 Cell 의 Sub Cell 영역 정보를 갖는 Rect 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 특정 Cell 의 Sub Cell 영역 정보를 갖는 Rect 오브젝트를 반환합니다.
 Sub Cell 이 아니거나 잘못된 위치의 Sub Cell 지정 시 모든 속성값이 "0" 인 Rect 오브젝트를 반환합니다.
 
 Rect 오브젝트는 "left", "top", "right", "bottom", "width", "height" 속성을 갖습니다.
-Cell 영역의 정보는 Rect 오브젝트의 각 속성에 저장됩니다.
+Cell 영역의 정보는 Rect 오브젝트의 각 속성에 저장됩니다. |
 
 **Remark**
 
@@ -8986,17 +9497,27 @@ Grid.getSubCellText( nRow, nCellIdx, nSubCellIdx )
 
 **Parameters**
 
-```
-텍스트값을 얻을 Sub Cell 이 위치한 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 텍스트값을 얻을 Sub Cell 이 위치한 Row 의 인덱스를 설정합니다.
 
 "0~Row 갯수" 설정 시 Body 밴드의 Row 인덱스로 적용됩니다.
 "-1" 설정 시 Head 밴드로 적용됩니다.
-"-2" 설정 시 Summary 밴드로 적용됩니다.
+"-2" 설정 시 Summary 밴드로 적용됩니다. |
+| nCellIdx | Number | 텍스트값을 얻을 Sub Cell 을 가진 Cell 의 Cell 인덱스를 설정합니다. |
+| nSubCellIdx | Number | 텍스트값을 얻을 Sub Cell 의 Sub Cell 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var strText = this.Grid00.getSubCellText( 0,0,1 );
 ```
 
 **Return**
 
-특정 Cell 의 Sub Cell 에 표시되는 텍스트값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 특정 Cell 의 Sub Cell 에 표시되는 텍스트값을 반환합니다. |
 
 **Remark**
 
@@ -9038,19 +9559,29 @@ Grid.getSubCellValue( nRow, nCellIdx, nSubCellIdx )
 
 **Parameters**
 
-```
-text 속성값을 얻을 Sub Cell 이 위치한 Row의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | text 속성값을 얻을 Sub Cell 이 위치한 Row의 인덱스를 설정합니다.
 
 "0~Row 갯수" 설정 시 Body 밴드의 Row 인덱스로 적용됩니다.
 "-1" 설정 시 Head 밴드로 적용됩니다.
-"-2" 설정 시 Summary 밴드로 적용됩니다.
+"-2" 설정 시 Summary 밴드로 적용됩니다. |
+| nCellIdx | Number | text 속성값을 얻을 Sub Cell 을 가진 Cell 의 Cell 인덱스를 설정합니다. |
+| nSubCellIdx | Number | text 속성값을 얻을 Sub Cell 의 Sub Cell 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varValue = Grid00.getSubCellValue( 0,0,1 );
 ```
 
 **Return**
 
-Sub Cell 의 text 속성이 DataSet 에 바인드 되어 있다면 바인드된 DataSet 의 Column 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Sub Cell 의 text 속성이 DataSet 에 바인드 되어 있다면 바인드된 DataSet 의 Column 값을 반환합니다.
 Sub Cell 의 text 속성에 값이 설정되어 있다면 설정된 값을 반환합니다.
-Sub Cell 의 expr 속성이 설정되어 있다면 text 속성값에 EXPR 이 적용된 값을 반환합니다.
+Sub Cell 의 expr 속성이 설정되어 있다면 text 속성값에 EXPR 이 적용된 값을 반환합니다. |
 
 **Remark**
 
@@ -9092,17 +9623,25 @@ Grid.getSummValue( nCellIdx )
 
 **Parameters**
 
-```
-text 속성값을 얻을 Cell 의 Cell 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nCellIdx | Number | text 속성값을 얻을 Cell 의 Cell 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varValue = this.Grid00.getSummValue(0);
 ```
 
 **Return**
 
-Cell 의 text 속성에 값이 설정되어 있다면 설정된 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Cell 의 text 속성에 값이 설정되어 있다면 설정된 값을 반환합니다.
 Cell 의 expr 속성이 설정되어 있다면 text 속성값에 EXPR 이 적용된 값을 반환합니다.
 Cell 의 text 속성이 DataSet 에 바인드 되어 있다면 바인드된 DataSet 에서 현재 선택된 Row의 Column 값을 반환합니다.
 
-존재하지 않는 Cell 인덱스를 설정하면 "null"을 반환합니다.
+존재하지 않는 Cell 인덱스를 설정하면 "null"을 반환합니다. |
 
 **Remark**
 
@@ -9134,16 +9673,32 @@ Grid.getTreeChildCount( nRowIndex [,bDatasetRow] )
 
 **Parameters**
 
-```
-자식 Row 의 갯수를 확인할 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | 자식 Row 의 갯수를 확인할 Row 의 인덱스를 설정합니다. |
+| bDatasetRow | Boolean | nRowIndex 값에 설정한 인덱스의 기준을 설정합니다.
+
+"true" 설정 시 nRowIndex 값은 DataSet 의 Row 인덱스를 의미합니다.
+"false" 설정 시 nRowIndex 값은 Grid 에 표시되는 Row 의 인덱스를 의미합니다.
+
+값 생략 시 "true"로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nChildCnt;
+nChildCnt = this.Grid00.getTreeChildCount(0);
+nChildCnt = this.Grid00.getTreeChildCount(0,true);
 ```
 
 **Return**
 
-특정 Row 의 자식 Row 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Row 의 자식 Row 갯수를 반환합니다.
 
 자식 Row 의 갯수를 구할 수 없거나 존재하는 자식 Row 가 없을 경우 "0"을 반환합니다.
-Grid 가 트리 형식이 아니어도 "0"을 반환합니다.
+Grid 가 트리 형식이 아니어도 "0"을 반환합니다. |
 
 
 ---
@@ -9164,15 +9719,35 @@ Grid.getTreeChildRow( nRowIndex, nChildIndex [,bDatasetRow] )
 
 **Parameters**
 
-```
-자식 Row 의 DataSet Row 값을 확인할 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | 자식 Row 의 DataSet Row 값을 확인할 Row 의 인덱스를 설정합니다. |
+| nChildIndex | Number | nRowIndex 값에 해당하는 Row 의 자식 Row 중 DataSet Row 값을 확인 할 자식 Row 의 인덱스를 설정합니다.
+
+"-1" 설정 시 nRowIndex 값에 해당하는 Row 의 마지막 자식 Row 로 처리됩니다.
+"0~자식 Row 갯수" 설정 시 nRowIndex 값에 해당하는 Row 의 자식 Row 인덱스로 처리됩니다. |
+| bDatasetRow | Boolean | nRowIndex 값에 설정한 인덱스의 기준을 설정합니다.
+
+"true" 설정 시 nRowIndex 값은 DataSet 의 Row 인덱스를 의미합니다.
+"false" 설정 시 nRowIndex 값은 Grid 에 표시되는 Row 의 인덱스를 의미합니다.
+
+값 생략 시 "true"로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nChildRow;
+nChildRow = this.Grid00.getTreeChildRow(0, 1);
+nChildRow = this.Grid00.getTreeChildRow(0, 1, true);
 ```
 
 **Return**
 
-특정 Row 의 자식 Row 에 해당하는 DataSet Row 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Row 의 자식 Row 에 해당하는 DataSet Row 값을 반환합니다.
 
-Grid 가 트리 형식이 아니거나 nRowIndex 에 해당하는 Row 가 단말(Leaf) Row 일 경우 "-1"을 반환합니다.
+Grid 가 트리 형식이 아니거나 nRowIndex 에 해당하는 Row 가 단말(Leaf) Row 일 경우 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -9199,15 +9774,31 @@ Grid.getTreeParentRow( nRowIndex[,bDatasetRow] )
 
 **Parameters**
 
-```
-부모 Row 의 DataSet Row 값을 확인할 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | 부모 Row 의 DataSet Row 값을 확인할 Row 의 인덱스를 설정합니다. |
+| bDatasetRow | Boolean | nRowIndex 값에 설정한 인덱스의 기준을 설정합니다.
+
+"true" 설정 시 nRowIndex 값은 DataSet 의 Row 인덱스를 의미합니다.
+"false" 설정 시 nRowIndex 값은 Grid 에 표시되는 Row 의 인덱스를 의미합니다.
+
+값 생략 시 "true"로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nParentRow;
+nParentRow = Grid00.getTreeParentRow(0);
+nParentRow = Grid00.getTreeParentRow(0, true);
 ```
 
 **Return**
 
-특정 Row 의 부모 Row 에 해당하는 DataSet Row 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Row 의 부모 Row 에 해당하는 DataSet Row 값을 반환합니다.
 
-Grid 가 트리 형식이 아니거나 nRowIndex 에 해당하는 Row 가 뿌리(Root) Row 일 경우 "-1"을 반환합니다.
+Grid 가 트리 형식이 아니거나 nRowIndex 에 해당하는 Row 가 뿌리(Root) Row 일 경우 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -9234,15 +9825,31 @@ Grid.getTreePath( nRowIndex [,bDatasetRow] )
 
 **Parameters**
 
-```
-뿌리(Root) Row 부터 경로를 구할 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | 뿌리(Root) Row 부터 경로를 구할 Row 의 인덱스를 설정합니다. |
+| bDatasetRow | Boolean | nRowIndex 값에 설정한 인덱스의 기준을 설정합니다.
+
+"true" 설정 시 nRowIndex 값은 DataSet 의 Row 인덱스를 의미합니다.
+"false" 설정 시 nRowIndex 값은 Grid 에 표시되는 Row 의 인덱스를 의미합니다.
+
+값 생략 시 "true"로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var strTreePath;
+strTreePath = this.Grid00.getTreePath(0);
+strTreePath = this.Grid00.getTreePath(0, true);
 ```
 
 **Return**
 
-뿌리(Root) Row 에서 특정 Row 까지 트리 Cell 에 표시되는 텍스트를 마침표(".")로 연결하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 뿌리(Root) Row 에서 특정 Row 까지 트리 Cell 에 표시되는 텍스트를 마침표(".")로 연결하여 반환합니다.
 
-Grid 가 트리  형식이 아니거나 뿌리(Root) Row 까지의 경로를 구할 수 없을 때는 빈 문자열을 반환합니다.
+Grid 가 트리  형식이 아니거나 뿌리(Root) Row 까지의 경로를 구할 수 없을 때는 빈 문자열을 반환합니다. |
 
 
 ---
@@ -9263,16 +9870,24 @@ Grid.getTreeRow( nDSRowIndex )
 
 **Parameters**
 
-```
-DataSet 의 Row 인덱스 값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nDSRowIndex | Number | DataSet 의 Row 인덱스 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nRow = this.Grid00.getTreeRow( 0 );
 ```
 
 **Return**
 
-DataSet 의 Row 값에 해당하는 데이터가 Grid 에 표시되는 위치의 Row 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | DataSet 의 Row 값에 해당하는 데이터가 Grid 에 표시되는 위치의 Row 값을 반환합니다.
 
 트리 Cell 이 Collapse 되어 Grid 에 데이터가 표시되지 않으면 "-1"을 반환합니다.
-Grid 가 트리 형식이 아니어도 "-1"을 반환합니다.
+Grid 가 트리 형식이 아니어도 "-1"을 반환합니다. |
 
 
 ---
@@ -9293,15 +9908,38 @@ Grid.getTreeSiblingRow( nRowIndex [,nOffset [,bDatasetRow]] )
 
 **Parameters**
 
-```
-형제(Sibling) Row 의 DataSet Row 값을 확인할 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | 형제(Sibling) Row 의 DataSet Row 값을 확인할 Row 의 인덱스를 설정합니다. |
+| nOffset | Number | nRowIndex 값에 해당하는 Row 에서 떨어진 위치를 설정합니다.
+
+양수로 설정 시 nRowIndex 값에 해당하는 Row 에서 아랫쪽에 위치한 형제(Sibling) Row를 찾습니다.
+음수로 설정 시 nRowIndex 값에 해당하는 Row 에서 윗쪽에 위치한 형제(Sibling) Row를 찾습니다.
+
+값을 설정하지 않으면 "1"로 적용됩니다. |
+| bDatasetRow | Boolean | nRowIndex 값에 설정한 인덱스의 기준을 설정합니다.
+
+"true" 설정 시 nRowIndex 값은 DataSet 의 Row 인덱스를 의미합니다.
+"false" 설정 시 nRowIndex 값은 Grid 에 표시되는 Row 의 인덱스를 의미합니다.
+
+값 생략 시 "true"로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nSiblingRow;
+nSiblingRow = this.Grid00.getTreeSiblingRow(0);
+nSiblingRow = this.Grid00.getTreeSiblingRow(0, 1);
+nSiblingRow = this.Grid00.getTreeSiblingRow(0, 1, true);
 ```
 
 **Return**
 
-특정 Row 의 형제 Row 에 해당하는 DataSet Row 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 Row 의 형제 Row 에 해당하는 DataSet Row 값을 반환합니다.
 
-Grid 가 트리 형식이 아니거나 형제(Sibling) Row 가 없을 경우 "-1"을 반환합니다
+Grid 가 트리 형식이 아니거나 형제(Sibling) Row 가 없을 경우 "-1"을 반환합니다 |
 
 **Remark**
 
@@ -9326,17 +9964,25 @@ Grid.getTreeStatus( nRowIndex )
 
 **Parameters**
 
-```
-트리 상태를 확인할 Row 의 인덱스를 현재 화면에 표시되는 Grid 기준으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | 트리 상태를 확인할 Row 의 인덱스를 현재 화면에 표시되는 Grid 기준으로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nTreeStatus = this.Grid00.getTreeStatus(0);
 ```
 
 **Return**
 
-Row 가 Collapse 상태이면 "0"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | Row 가 Collapse 상태이면 "0"을 반환합니다.
 Row 가 Expand 상태이면 "1"을 반환합니다.
 Row 가 Collapse/Expand 상태를 가질 수 없는 단말(Leaf) Row 이면 "3"을 반환합니다.
 
-Row 의 트리 상태를 얻지 못했을 경우 "-1"을 반환합니다.
+Row 의 트리 상태를 얻지 못했을 경우 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -9372,7 +10018,9 @@ var nScrollPos = this.Grid00.getVScrollPos();
 
 **Return**
 
-수직스크롤바의 현재 트랙바 위치값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 수직스크롤바의 현재 트랙바 위치값을 반환합니다. |
 
 **Remark**
 
@@ -9403,8 +10051,62 @@ Grid.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth
 
 **Parameters**
 
-```
-Grid 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | Grid 의 ID를 문자열로 설정합니다. |
+| vLeft | String, Number | Grid 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 Grid 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Grid 의 left 가 결정됩니다. |
+| vTop | String, Number | Grid 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 Grid 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Grid 의 top 이 결정됩니다. |
+| vWidth | String, Number | Grid 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Grid 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Grid 의 width 가 결정됩니다. |
+| vHeight | String, Number | Grid 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Grid 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Grid 의 height 가 결정됩니다. |
+| vRight | String, Number | Grid 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 Grid 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Grid 의 right 가 결정됩니다. |
+| vBottom | String, Number | Grid 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 Grid 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Grid 의 bottom 이 결정됩니다. |
+| vMinWidth | String, Number | Grid 이(가) 화면에 표시되는 최소 너비값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxWidth | String, Number | Grid 이(가) 화면에 표시되는 최대 너비값을 pixel 단위의 숫자로 설정합니다.
+
+vMinWidth 보다 작은 값을 설정하면 vMinWidth 값으로 설정됩니다. |
+| vMinHeight | String, Number | Grid 이(가) 화면에 표시되는 최소 높이값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxHeight | String, Number | Grid 이(가) 화면에 표시되는 최대 높이값을 pixel 단위의 숫자로 설정합니다.
+
+vMinHeight 보다 작은 값을 설정하면 vMinHeight 값으로 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = new Grid();
+
+objComp.init( "Grid00", 30, 120, 196, 46 );
+objComp.init( "Grid00", 30, 120, 196, 46, null, null );
+objComp.init( "Grid00", null, null, 300, "400px", "80%", 300 );
+objComp.init( "Grid00", 0, 0, 200, 100, null, null, 300, 500, 200, 500 );
+objComp.init( "Grid00", "Grid22:10", 300, null, null, "Grid33:10", "20%", 300, 500, 200, 500 );
 ```
 
 **Return**
@@ -9452,20 +10154,39 @@ Grid.insertContentsCol( enumBand, nColIndex [, bBandIndex] )
 
 **Parameters**
 
-```
-현재 표시된 Grid 포맷에 Column 이 삽입될 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 현재 표시된 Grid 포맷에 Column 이 삽입될 밴드를 문자열로 설정합니다.
 
 "left" 설정 시 Column 이 Left 밴드 영역에 삽입됩니다.
 "body" 설정 시 Column 이 Body 밴드 영역에 삽입됩니다.
-"right" 설정 시 Column 이 Right 밴드 영역에 삽입됩니다.
+"right" 설정 시 Column 이 Right 밴드 영역에 삽입됩니다. |
+| nColIndex | Number | 삽입될 Column 의 인덱스를 숫자로 설정합니다.
+
+nColIndex 값이 enumBand 영역 또는 전체 영역의 마지막 Column 인덱스보다 큰 경우 "마지막 인덱스+1" 로 처리됩니다. |
+| bBandIndex | Boolean | nColIndex 에 설정한 인덱스값이 밴드 기준인지 전체 Column 기준인지 설정합니다.
+
+true 설정 시 enumBand 에 설정한 밴드 영역 기준으로 nColIndex 값을 처리합니다.
+false 설정 시 밴드 영역에 관계없이 전체 Column 기준으로 nColIndex 값을 처리합니다.
+
+값을 설정하지 않으면 false 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nCol;
+nCol = this.Grid00.insertContentsCol("body",3);
+nCol = this.Grid00.insertContentsCol("left",2, true);
 ```
 
 **Return**
 
-전체 Column 을 기준으로 Column 이 삽입된 위치의 인덱스 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전체 Column 을 기준으로 Column 이 삽입된 위치의 인덱스 값을 반환합니다.
 enumBand 에 설정한 밴드 영역내의 인덱스가 아닙니다.
 
-정상적으로 삽입하지 못했을 경우 -1 을 반환합니다.
+정상적으로 삽입하지 못했을 경우 -1 을 반환합니다. |
 
 **Remark**
 
@@ -9495,20 +10216,33 @@ Grid.insertContentsRow( enumBand, nSubRowIndex )
 
 **Parameters**
 
-```
-현재 Grid 포맷에 Sub Row 가 추가될 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 현재 Grid 포맷에 Sub Row 가 추가될 밴드를 문자열로 설정합니다.
 
 "head" 설정 시 Sub Row 가 Head 밴드 영역에 추가됩니다.
 "body" 설정 시 Sub Row 가 Body 밴드 영역에 추가됩니다.
-"summary" 설정 시 Sub Row 가 Summary 밴드 영역에 추가됩니다.
+"summary" 설정 시 Sub Row 가 Summary 밴드 영역에 추가됩니다. |
+| nSubRowIndex | Number | enumBand 값에 해당하는 영역에서 Sub Row 가 삽입될 위치의 인덱스를 설정합니다.
+
+nSubRowIndex 값이 enumBand 영역의 마지막 Sub Row 인덱스보다 큰 경우 "마지막 인덱스+1"로 처리됩니다. |
+
+**Sample Call**
+
+```javascript
+var nRow;
+nRow = this.Grid00.insertContentsRow("body",1);
+nRow = this.Grid00.insertContentsRow("head",5,false);
 ```
 
 **Return**
 
-전체 Sub Row 를 기준으로 Sub Row 가 삽입된 위치의 인덱스 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 전체 Sub Row 를 기준으로 Sub Row 가 삽입된 위치의 인덱스 값을 반환합니다.
 enumBand 에 설정한 밴드 영역내의 인덱스가 아닙니다.
 
-정상적으로 추가하지 못했을 경우 "-1"을 반환합니다.
+정상적으로 추가하지 못했을 경우 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -9541,16 +10275,33 @@ Grid.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00_onmove = function( obj:nexacro.Grid,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.Grid00.insertEventHandler( "onmove", 0, this.Grid00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -9579,8 +10330,10 @@ var bRtn = this.Grid00.isDropdown()
 
 **Return**
 
-Grid 컴포넌트에 아이템 리스트가 표시되어 있으면 true를 반환합니다.
-Grid 컴포넌트에 아이템 리스트가 표시되어 있지 않으면 false를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Grid 컴포넌트에 아이템 리스트가 표시되어 있으면 true를 반환합니다.
+Grid 컴포넌트에 아이템 리스트가 표시되어 있지 않으면 false를 반환합니다. |
 
 **Remark**
 
@@ -9609,9 +10362,11 @@ var bRtn = this.Grid00.isDropdownCalendar()
 
 **Return**
 
-Grid 에 팝업달력이 표시되어 있으면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Grid 에 팝업달력이 표시되어 있으면 true 를 반환합니다.
 
-Grid 에 팝업달력이 표시되어 있지 않으면 false 를 반환합니다.
+Grid 에 팝업달력이 표시되어 있지 않으면 false 를 반환합니다. |
 
 
 ---
@@ -9636,9 +10391,11 @@ var bRtn = this.Grid00.isDropdownCombo()
 
 **Return**
 
-Grid 에 Combo 아이템 리스트가 표시되어 있으면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Grid 에 Combo 아이템 리스트가 표시되어 있으면 true 를 반환합니다.
 
-Grid 에 Combo 아이템 리스트가 표시되어 있지 않으면 false 를 반환합니다.
+Grid 에 Combo 아이템 리스트가 표시되어 있지 않으면 false 를 반환합니다. |
 
 
 ---
@@ -9659,14 +10416,35 @@ Grid.isSelectedCell( nCellIdx [,enumBand, [nRowIdx]] );
 
 **Parameters**
 
-```
-선택상태를 확인 할 Cell 의 Cell 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nCellIdx | Number | 선택상태를 확인 할 Cell 의 Cell 인덱스를 설정합니다. |
+| enumBand | String | nCellIdx 값에 해당하는 Cell 이 속한 밴드를 문자열로 설정합니다.
+
+"head" 설정 시 Head 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다.
+"body" 설정 시 Body 밴드 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다.
+"summary" 설정 시 Summary 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다.
+
+값을 생략하면 "body" 로 적용됩니다. |
+| nRowIdx | Number | nCellIdx 값에 해당하는 Cell 이 속한 Row 의 Row 인덱스를 설정합니다.
+
+값을 생략하면 "0"으로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bExist;
+bExist = this.Grid00.isSelectedCell(0);
+bExist = this.Grid00.isSelectedCell(0,"head");
+bExist = this.Grid00.isSelectedCell(0,"body",1);
 ```
 
 **Return**
 
-인수로 전달된 위치의 Cell 이 선택상태이면 "true"를 반환합니다.
-인수로 전달된 위치의 Cell 이 선택상태가 아니면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 인수로 전달된 위치의 Cell 이 선택상태이면 "true"를 반환합니다.
+인수로 전달된 위치의 Cell 이 선택상태가 아니면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -9702,16 +10480,32 @@ Grid.isTreeCollapsedRow( nRowIndex [,bDatasetRow] )
 
 **Parameters**
 
-```
-Collapse 상태 여부를 확인할 Row 의 Row 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | Collapse 상태 여부를 확인할 Row 의 Row 인덱스를 설정합니다. |
+| bDatasetRow | Boolean | nRowIndex 값에 설정한 인덱스의 기준을 설정합니다.
+
+"true" 설정 시 nRowIndex 값은 DataSet 의 Row 인덱스를 의미합니다.
+"false" 설정 시 nRowIndex 값은 Grid 에 표시되는 Row 의 인덱스를 의미합니다.
+
+값 생략 시 "true"로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bRet;
+bRet = this.Grid00.isTreeCollapsedRow(0);
+bRet = this.Grid00.isTreeCollapsedRow(0, true);
 ```
 
 **Return**
 
-특정 Row 의 부모 Row 가 Collapse 되어 Grid 에 특정 Row 가 표시되지 않으면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 특정 Row 의 부모 Row 가 Collapse 되어 Grid 에 특정 Row 가 표시되지 않으면 "true"를 반환합니다.
 
 특정 Row 의 부모 Row 가 Expand 되어 Grid 에 특정 Row 가 표시되어 있으면 "false"를 반환합니다.
-Grid 가 트리형식이 아니거나 nRowIndex 에 해당하는 Row 가 없는 경우 "false"를 반환합니다.
+Grid 가 트리형식이 아니거나 nRowIndex 에 해당하는 Row 가 없는 경우 "false"를 반환합니다. |
 
 
 ---
@@ -9732,16 +10526,32 @@ Grid.isTreeExpandedRow( nRowIndex [,bDatasetRow] )
 
 **Parameters**
 
-```
-Expand 상태 여부를 확인할 Row 의 Row 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | Expand 상태 여부를 확인할 Row 의 Row 인덱스를 설정합니다. |
+| bDatasetRow | Boolean | nRowIndex 값에 설정한 인덱스의 기준을 설정합니다.
+
+"true" 설정 시 nRowIndex 값은 DataSet 의 Row 인덱스를 의미합니다.
+"false" 설정 시 nRowIndex 값은 Grid 에 표시되는 Row 의 인덱스를 의미합니다.
+
+값 생략 시 "true"로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bRet;
+bRet = this.Grid00.isTreeExpandedRow(0);
+bRet = this.Grid00.isTreeExpandedRow(0, true);
 ```
 
 **Return**
 
-특정 Row 의 부모 Row 가 Expand 되어 Grid 에 특정 Row 가 표시되면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 특정 Row 의 부모 Row 가 Expand 되어 Grid 에 특정 Row 가 표시되면 "true"를 반환합니다.
 
 특정 Row 의 부모 Row 가 Collapse 되어 Grid 에 특정 Row 가 표시되지 않으면 "false"를 반환합니다.
-Grid 가 트리형식이 아니거나 nRowIndex 에 해당하는 Row 가 없는 경우 "false"를 반환합니다.
+Grid 가 트리형식이 아니거나 nRowIndex 에 해당하는 Row 가 없는 경우 "false"를 반환합니다. |
 
 
 ---
@@ -9762,16 +10572,32 @@ Grid.isTreeLeafRow( nRowIndex[,bDatasetRow] )
 
 **Parameters**
 
-```
-단말(Leaf) Row 여부를 확인할 Row 의 Row 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | 단말(Leaf) Row 여부를 확인할 Row 의 Row 인덱스를 설정합니다. |
+| bDatasetRow | Boolean | nRowIndex 값에 설정한 인덱스의 기준을 설정합니다.
+
+"true" 설정 시 nRowIndex 값은 DataSet 의 Row 인덱스를 의미합니다.
+"false" 설정 시 nRowIndex 값은 Grid 에 표시되는 Row 의 인덱스를 의미합니다.
+
+값 생략 시 "true"로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bRet;
+bRet = this.Grid00.isTreeLeafRow(0);
+bRet = this.Grid00.isTreeLeafRow(0, true);
 ```
 
 **Return**
 
-특정 Row 가 자식 Row 가 없는 단말(Leaf) Row 이면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 특정 Row 가 자식 Row 가 없는 단말(Leaf) Row 이면 "true"를 반환합니다.
 
 특정 Row 가 자식 Row 를 갖는 비단말 Row 이면 "false"를 반환합니다.
-Grid 가 트리형식이 아니거나 nRowIndex 에 해당하는 Row 가 없는 경우 "false"를 반환합니다.
+Grid 가 트리형식이 아니거나 nRowIndex 에 해당하는 Row 가 없는 경우 "false"를 반환합니다. |
 
 
 ---
@@ -9792,16 +10618,32 @@ Grid.isTreeRootRow( nRowIndex [,bDatasetRow] )
 
 **Parameters**
 
-```
-뿌리(Root) Row 여부를 확인할 Row 의 Row 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | 뿌리(Root) Row 여부를 확인할 Row 의 Row 인덱스를 설정합니다. |
+| bDatasetRow | Boolean | nRowIndex 값에 설정한 인덱스의 기준을 설정합니다.
+
+"true" 설정 시 nRowIndex 값은 DataSet 의 Row 인덱스를 의미합니다.
+"false" 설정 시 nRowIndex 값은 Grid 에 표시되는 Row 의 인덱스를 의미합니다.
+
+값 생략 시 "true"로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bRet;
+bRet = this.Grid00.isTreeRootRow(0);
+bRet = this.Grid00.isTreeRootRow(0, true);
 ```
 
 **Return**
 
-특정 Row 가 부모 Row 가 없는 뿌리(Root) Row 이면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 특정 Row 가 부모 Row 가 없는 뿌리(Root) Row 이면 "true"를 반환합니다.
 
 특정 Row 가 부모 Row 를 갖는 Row 이면 "false"를 반환합니다.
-Grid 가 트리형식이 아니거나 nRowIndex 에 해당하는 Row 가 없는 경우 "false"를 반환합니다.
+Grid 가 트리형식이 아니거나 nRowIndex 에 해당하는 Row 가 없는 경우 "false"를 반환합니다. |
 
 
 ---
@@ -9822,17 +10664,40 @@ Grid.mergeCell( nStartCol, nEndCol, nStartRow, nEndRow )
 
 **Parameters**
 
-```
-병합 하려는 Cell 중 왼쪽에 위치한 Cell 의 Column 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nStartCol | Number | 병합 하려는 Cell 중 왼쪽에 위치한 Cell 의 Column 인덱스를 숫자로 설정합니다.
 
-Grid 의 전체 Column 을 기준으로 Column 인덱스를 설정하여야 합니다.
+Grid 의 전체 Column 을 기준으로 Column 인덱스를 설정하여야 합니다. |
+| nEndCol | Number | 병합 하려는 Cell 중 오른쪽에 위치한 Cell 의 Column 인덱스를 숫자로 설정합니다.
+
+Grid 의 전체 Column 을 기준으로 Column 인덱스를 설정하여야 합니다. |
+| nStartRow | Number | 병합 하려는 Cell 중 상단에 위치한 Cell 이 속한 Row 의 인덱스를 숫자로 설정합니다.
+
+"0 ~ Row 갯수-1" 범위로 설정하면 Body 밴드를 대상으로 병합됩니다. 
+-1 설정 시 Head 밴드를 대상으로 병합됩니다.
+-2 설정 시 Summary 밴드를 대상으로 병합됩니다. |
+| nEndRow | Number | 병합 하려는 Cell 중 하단에 위치한 Cell 이 속한 Row 의 인덱스를 숫자로 설정합니다.
+
+"0 ~ Row 갯수-1" 범위로 설정하면 Body 밴드를 대상으로 병합됩니다. 
+-1 설정 시 Head 밴드를 대상으로 병합됩니다.
+-2 설정 시 Summary 밴드를 대상으로 병합됩니다.
+
+-1 또는 -2 설정 시 nStartRow 값과 다를 경우 메소드가 정상적으로 수행되지 않습니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00.mergeCell( 0, 5, 0, 200 );
 ```
 
 **Return**
 
-메소드가 정상적으로 수행되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드가 정상적으로 수행되면 true 를 반환합니다.
 
-메소드가 정상적으로 수행되지 않으면 false 를 반환합니다.
+메소드가 정상적으로 수행되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -9879,19 +10744,51 @@ Grid.mergeContentsCell( enumBand, nStartSubRow, nStartCol, nEndSubRow, nEndCol, 
 
 **Parameters**
 
-```
-병합(Merge) 하려는 Cell 이 속한 밴드 영역을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 병합(Merge) 하려는 Cell 이 속한 밴드 영역을 문자열로 설정합니다.
 
 "head" 설정 시 Head 밴드 영역의 Cell 을 병합(Merge) 합니다.
 "body" 설정 시 Body 밴드 영역의 Cell 을 병합(Merge) 합니다.
-"summary" 설정 시 Summary 밴드 영역의 Cell 을 병합(Merge) 합니다.
+"summary" 설정 시 Summary 밴드 영역의 Cell 을 병합(Merge) 합니다. |
+| nStartSubRow | Number | 병합(Merge) 하려는 Cell 중 좌상단 Cell 의 Sub Row 인덱스를 설정합니다.
+
+enumBand 값에 해당하는 밴드영역을 기준으로 Sub Row 인덱스를 설정하여야 합니다.
+유효하지 않은 인덱스 설정 시 가장 가까운 유효한 값으로 대치되어 적용됩니다. |
+| nStartCol | Number | 병합(Merge) 하려는 Cell 중 좌상단 Cell 의 Column 인덱스를 설정합니다.
+
+Grid 의 전체 Column 을 기준으로 Column 인덱스를 설정하여야 합니다.
+유효하지 않은 인덱스 설정 시 가장 가까운 유효한 값으로 대치되어 적용됩니다. |
+| nEndSubRow | Number | 병합(Merge) 하려는 Cell 중 우하단 Cell 의 Sub Row 인덱스를 설정합니다
+
+enumBand 값에 해당하는 밴드영역을 기준으로 Sub Row 인덱스를 설정하여야 합니다..
+유효하지 않은 인덱스 설정 시 가장 가까운 유효한 값으로 대치되어 적용됩니다. |
+| nEndCol | Number | 병합(Merge) 하려는 Cell 중 우하단 Cell 의 Column 인덱스를 설정합니다.
+
+Grid 의 전체 Column 을 기준으로 Column 인덱스를 설정하여야 합니다.
+유효하지 않은 인덱스 설정 시 가장 가까운 유효한 값으로 대치되어 적용됩니다. |
+| nFirstCell | Number | 병합(Merge) 된 Cell 에 적용할 속성의 기준이 되는 Cell 의 Cell 인덱스를 설정합니다.
+
+enumBand 값에 해당하는 밴드영역을 기준으로 Cell 인덱스를 설정하여야 합니다.. |
+| bKeepSubCell | Boolean | "true" 설정 시 병합(Merge) 된 Cell 은 Cell 인덱스는 공유 하지만 각 Cell 의 속성은 각자 유지합니다.
+"true" 설정 시 병합(Merge) 된 Cell 은 nFirstCell 값에 설정된 Cell 의 background 속성이 각 Sub Cell 에 적용됩니다.
+
+"false" 설정 시 병합(Merge) 된 Cell 은 하나의 Cell 이 되어 Cell 인덱스와 속성을 하나로 유지합니다.
+"false" 설정 시 병합(Merge) 된 Cell 은 nFirstCell 값에 설정된 Cell 의 속성이 모두 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var nCell = this.Grid00.mergeContentsCell("body",0,3,0,4,3,true);
 ```
 
 **Return**
 
-병합(Merge) 한 Cell 이 속한 밴드 영역을 기준으로 Cell 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 병합(Merge) 한 Cell 이 속한 밴드 영역을 기준으로 Cell 인덱스를 반환합니다.
 
-병합(Merge)에 실패했을 경우 "-1"을 반환합니다.
+병합(Merge)에 실패했을 경우 "-1"을 반환합니다. |
 
 
 ---
@@ -9912,12 +10809,49 @@ Grid.move( vLeft, vTop [, vWidth, vHeight [, vRight, vBottom]] )
 
 **Parameters**
 
-```
-Grid 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | Grid 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 Grid 의 left 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Grid 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Grid 의 left 가 결정됩니다. |
+| vTop | String, Number | Grid 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 Grid 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Grid 의 top 이 결정됩니다. |
+| vWidth | String, Number | Grid 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Grid 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Grid 의 width 가 결정됩니다. |
+| vHeight | String, Number | Grid 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Grid 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Grid 의 height 가 결정됩니다. |
+| vRight | String, Number | Grid 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 Grid 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Grid 의 right 가 결정됩니다. |
+| vBottom | String, Number | Grid 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 Grid 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Grid 의 bottom 이 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00.move(10,10);
+this.Grid00.move(10,10,100,100);
+this.Grid00.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -9954,8 +10888,16 @@ Grid.moveToNext( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid.moveToNext( this.Button00 );
+this.Grid.moveToNext( "Button00" );
 ```
 
 **Return**
@@ -9996,8 +10938,10 @@ var bSuccess = this.Grid00.moveToNextCell();
 
 **Return**
 
-Cell 포커스 이동에 성공하면 "true"를 반환합니다.
-Cell 포커스 이동에 실패하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Cell 포커스 이동에 성공하면 "true"를 반환합니다.
+Cell 포커스 이동에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -10027,8 +10971,16 @@ Grid.moveToPrev( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid.moveToPrev( this.Button00 );
+this.Grid.moveToPrev( "Button00" );
 ```
 
 **Return**
@@ -10069,8 +11021,10 @@ var bSuccess = this.Grid00.moveToPrevCell();
 
 **Return**
 
-Cell 포커스 이동에 성공하면 "true"를 반환합니다.
-Cell 포커스 이동에 실패하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Cell 포커스 이동에 성공하면 "true"를 반환합니다.
+Cell 포커스 이동에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -10099,14 +11053,21 @@ Grid.redrawExprCell( [enumBand] )
 
 **Parameters**
 
-```
-Cell 에 설정된 Expr 값을 갱신할 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | Cell 에 설정된 Expr 값을 갱신할 밴드를 문자열로 설정합니다.
 
 "head" 설정 시 Head 밴드 영역의 Cell 에 설정된 Expr 값을 갱신합니다.
 "body" 설정 시 Body 밴드 영역의 Cell 에 설정된 Expr 값을 갱신합니다.
 "summary" 설정 시 Summary 밴드 영역의 Cell 에 설정된 Expr 값을 갱신합니다.
 
-값을 설정하지 않으면 전체 밴드 영역의 Cell 에 설정된 Expr 값을 모두 갱신합니다.
+값을 설정하지 않으면 전체 밴드 영역의 Cell 에 설정된 Expr 값을 모두 갱신합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00.redrawExprCell();
+this.Grid00.redrawExprCell( "body" );
 ```
 
 **Return**
@@ -10136,15 +11097,23 @@ Grid.removeEvent( strEventID )
 
 **Parameters**
 
-```
-Grid 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | Grid 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.Grid00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -10175,15 +11144,26 @@ Grid.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00_onmove = function( obj:nexacro.Grid,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Grid00.removeEventHandler( "onmove", this.Grid00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -10210,15 +11190,27 @@ Grid.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00_onmove = function( obj:nexacro.Grid,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Grid00.removeEventHandlerLookup( "onmove", "Grid00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -10245,13 +11237,25 @@ Grid.resize( vWidth, vHeight )
 
 **Parameters**
 
-```
-Grid 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vWidth | String, Number | Grid 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 음수값을 설정할 수 없습니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Grid 의 width 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Grid 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 Grid 의 width 가 결정됩니다. |
+| vHeight | String, Number | Grid 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+음수값을 설정할 수 없습니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 Grid 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 Grid 의 height 가 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00.resize( 100,100 );
 ```
 
 **Return**
@@ -10299,14 +11303,27 @@ Grid.scrollBy( nHoffsetpos, nVoffsetpos )
 
 **Parameters**
 
-```
-수평스크롤바의 스크롤을 현재위치에서 이동시킬 값을 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHoffsetpos | Number | 수평스크롤바의 스크롤을 현재위치에서 이동시킬 값을 숫자로 설정합니다.
 
 음수로 설정 시 스크롤의 위치가 감소합니다.
 양수로 설정 시 스크롤의 위치가 증가합니다.
 
 값을 적용했을 때 수평스크롤바의 min 속성값보다 작을 경우 min 값으로 적용됩니다.
-값을 적용했을 때 수평스크롤바의 max 속성값보다 클 경우 max 값으로 적용됩니다.
+값을 적용했을 때 수평스크롤바의 max 속성값보다 클 경우 max 값으로 적용됩니다. |
+| nVoffsetpos | Number | 수직스크롤바의 스크롤을 현재위치에서 이동시킬 값을 숫자로 설정합니다.
+
+음수로 설정 시 스크롤의 위치가 감소합니다.
+양수로 설정 시 스크롤의 위치가 증가합니다.
+
+값을 적용했을 때 수직스크롤바의 min 속성값보다 작을 경우 min 값으로 적용됩니다.
+값을 적용했을 때 수직스크롤바의 max 속성값보다 클 경우 max 값으로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00.scrollBy( 20,20 );
 ```
 
 **Return**
@@ -10340,11 +11357,21 @@ Grid.scrollTo( nHpos, nVpos )
 
 **Parameters**
 
-```
-수평스크롤바의 스크롤이 위치할 값을 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHpos | Number | 수평스크롤바의 스크롤이 위치할 값을 숫자로 설정합니다.
 
 설정값이 수평스크롤바의 min 속성값보다 작을 경우 min 값으로 적용됩니다.
-설정값이 수평스크롤바의 max 속성값보다 클 경우 max 값으로 적용됩니다.
+설정값이 수평스크롤바의 max 속성값보다 클 경우 max 값으로 적용됩니다. |
+| nVpos | Number | 수직스크롤바의 스크롤이 위치할 값을 숫자로 설정합니다.
+
+설정값이 수직스크롤바의 min 속성값보다 작을 경우 min 값으로 적용됩니다.
+설정값이 수직스크롤바의 max 속성값보다 클 경우 max 값으로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00.scrollTo( 20,20 );
 ```
 
 **Return**
@@ -10378,15 +11405,26 @@ Grid.selectArea( nStartRow, nStartCellIdx, nEndRow, nEndCellIdx )
 
 **Parameters**
 
-```
-선택할 영역의 시작 Row  Index 를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nStartRow | Number | 선택할 영역의 시작 Row  Index 를 숫자로 설정합니다. |
+| nStartCellIdx | Number | 선택할 영역의 시작 Cell Index 를 숫자로 설정합니다. |
+| nEndRow | Number | 선택할 영역의 마지막 Row Index 를 숫자로 설정합니다. |
+| nEndCellIdx | Number | 선택할 영역의 마지막 Cell Index 를 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00.selectArea( 0, 0, 3, 3 )
 ```
 
 **Return**
 
-인수로 전달된 영역이 정상적으로 선택되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 인수로 전달된 영역이 정상적으로 선택되면 true 를 반환합니다.
 
-인수로 전달된 영역의 선택에 실패하면 false 를 반환합니다.
+인수로 전달된 영역의 선택에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -10415,14 +11453,21 @@ Grid.selectCell( nRowIdx, nCellIdx [,bSelect] )
 
 **Parameters**
 
-```
-Body 밴드 영역에서 선택상태를 변경 할 Cell 이 속한 Row 의 Row 인덱스를 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIdx | Number | Body 밴드 영역에서 선택상태를 변경 할 Cell 이 속한 Row 의 Row 인덱스를 설정합니다. |
+| nCellIdx | Number | Body 밴드 영역에서 선택상태를 변경 할 Cell 의 Cell 인덱스를 설정합니다. |
+| bSelect | Boolean | "true" 설정 시 Cell 의 선택상태와 관계없이 Cell 을 선택 합니다.
+"false" 설정 시 Cell 의 선택상태와 관계없이 Cell 을 선택해제 합니다.
+
+값 생략 시 "true"로 적용됩니다. |
 
 **Return**
 
-메소드 수행 후 Cell 이 선택상태이면 "true" 를 반환합니다.
-메소드 수행 후 Cell 이 선택해제 상태이면 "false" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 수행 후 Cell 이 선택상태이면 "true" 를 반환합니다.
+메소드 수행 후 Cell 이 선택해제 상태이면 "false" 를 반환합니다. |
 
 **Remark**
 
@@ -10449,15 +11494,24 @@ Grid.selectMultiRow(nStrarRow, nEndRow)
 
 **Parameters**
 
-```
-선택할 영역의 시작 Row index를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nStrarRow | Number | 선택할 영역의 시작 Row index를 숫자로 설정합니다. |
+| nEndRow | Number | 선택할 영역의 마지막 Row index를 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00.selectMultiRow(0, 100)
 ```
 
 **Return**
 
-파라미터로 전달된 영역이 정상적으로 선택되면 true를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 파라미터로 전달된 영역이 정상적으로 선택되면 true를 반환합니다.
 
-파라미터로 전달된 영역 선택에 실패하면 fasle를 반환합니다.
+파라미터로 전달된 영역 선택에 실패하면 fasle를 반환합니다. |
 
 **Remark**
 
@@ -10482,15 +11536,21 @@ Grid.selectRow( nRowIdx [,bSelect] )
 
 **Parameters**
 
-```
-Body 영역에서 선택상태를 변경 할 Grid 의 Row  인덱스를 숫자로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIdx | Number | Body 영역에서 선택상태를 변경 할 Grid 의 Row  인덱스를 숫자로 설정합니다. |
+| bSelect | Boolean | true 설정 시 Row 의 선택상태와 관계없이 Row 를 선택 합니다.
+false 설정 시 Row 의 선택상태와 관계없이 Row 를 선택해제 합니다.
+
+값 생략 시 true 로 적용됩니다. |
 
 **Return**
 
-Row 의 선택상태가 메소드 실행 전과 반대 상태로 변경되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Row 의 선택상태가 메소드 실행 전과 반대 상태로 변경되면 true 를 반환합니다.
 
-Row 의 선택상태가 메소드 실행 전과 동일하면 false 를 반환합니다.
+Row 의 선택상태가 메소드 실행 전과 동일하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -10585,18 +11645,28 @@ Grid.setBandProperty( enumBand, strPropID, varValue )
 
 **Parameters**
 
-```
-속성값을 설정하려는 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 속성값을 설정하려는 밴드를 문자열로 설정합니다.
 
 "head" 설정 시 Head 밴드의 속성값을 설정합니다.
 "body" 설정 시 Body 밴드의 속성값을 설정합니다.
-"summary" 설정 시 Summary 밴드의 속성값을 설정합니다.
+"summary" 설정 시 Summary 밴드의 속성값을 설정합니다. |
+| strPropID | String | 값을 설정하려는 속성명을 문자열로 설정합니다. |
+| varValue | String | strProgID 값에 해당하는 속성에 설정할 속성값 입니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc = this.Grid00.setBandProperty( "head", "color", "black" );
 ```
 
 **Return**
 
-특정 밴드의 속성값 설정에 성공하면 "true"를 반환합니다.
-특정 밴드의 속성값 설정에 실패하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 특정 밴드의 속성값 설정에 성공하면 "true"를 반환합니다.
+특정 밴드의 속성값 설정에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -10621,8 +11691,14 @@ Grid.setBindDataset( objDataset )
 
 **Parameters**
 
-```
-binddataset 속성에 설정할 DataSet을 오브젝트 형식으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDataset | Object | binddataset 속성에 설정할 DataSet을 오브젝트 형식으로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00.setBindDataset( this.DataSet00 );
 ```
 
 **Return**
@@ -10648,17 +11724,30 @@ Grid.setCellPos( nCellIdx [, nRowIdx] )
 
 **Parameters**
 
-```
-선택하려는 Cell 의 Cell 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nCellIdx | Number | 선택하려는 Cell 의 Cell 인덱스를 설정합니다.
 
-Body 밴드의 Cell 을 대상으로 합니다.
+Body 밴드의 Cell 을 대상으로 합니다. |
+| nRowIdx | Number | 선택하려는 Cell 이 Grid 에서 위치한 Row 의 인덱스를 설정합니다.
+
+"0 ~ Row 갯수-1" 범위로 설정하며 Body 밴드를 대상으로 합니다.
+값 생략 시 현재 선택된 Row 의 인덱스가 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc = this.Grid00.setCellPos( 1 );
+var bSucc = this.Grid00.setCellPos( 1, 1 );
 ```
 
 **Return**
 
-특정 Cell 선택에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 특정 Cell 선택에 성공하면 true 를 반환합니다.
 
-특정 Cell 선택에 실패하면 false 를 반환합니다.
+특정 Cell 선택에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -10693,18 +11782,29 @@ Grid.setCellProperty( enumBand, nCellIdx, strPropID, varValue )
 
 **Parameters**
 
-```
-속성값을 설정하려는 Cell 이 속한 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 속성값을 설정하려는 Cell 이 속한 밴드를 문자열로 설정합니다.
 
 "head" 설정 시 Head 밴드에 속한 Cell 의 속성값을 설정합니다.
 "body" 설정 시 Body 밴드에 속한 Cell 의 속성값을 설정합니다.
-"summary" 설정 시 Summary 밴드에 속한 Cell 의 속성값을 설정합니다.
+"summary" 설정 시 Summary 밴드에 속한 Cell 의 속성값을 설정합니다. |
+| nCellIdx | Number | 속성값을 설정할 Cell 의 Cell 인덱스를 설정합니다. |
+| strPropID | String | 값을 설정하려는 속성명을 문자열로 설정합니다. |
+| varValue | Variant | strPropID 파라미터값에 해당하는 속성에 설정할 속성값 입니다 |
+
+**Sample Call**
+
+```javascript
+var bSucc = this.Grid00.setCellProperty( "head", 0, "color", "black");
 ```
 
 **Return**
 
-Cell 의 특정 속성값 설정에 성공하면 "true"를 반환합니다.
-Cell 의 특정 속성값 설정에 실패하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Cell 의 특정 속성값 설정에 성공하면 "true"를 반환합니다.
+Cell 의 특정 속성값 설정에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -10738,12 +11838,12 @@ Grid.setEditingValue( strValue )
 
 **Parameters**
 
-```
-Cell 에 표시된 편집모드용 컨트롤 또는 서브컨트롤의 value 속성값을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strValue | String | Cell 에 표시된 편집모드용 컨트롤 또는 서브컨트롤의 value 속성값을 문자열로 설정합니다.
 
 Cell 의 edittype 속성값이 "combo" 이면 combodatacol 속성에 적용된 데이터값을 설정합니다.
-Cell 의 edittype 속성값이 "date", "mask" 이면 마스크 문자를 제외한 원본값을 설정합니다.
-```
+Cell 의 edittype 속성값이 "date", "mask" 이면 마스크 문자를 제외한 원본값을 설정합니다. |
 
 **Return**
 
@@ -10780,18 +11880,34 @@ Grid.setEditSelect( nBegin [,nEnd] )
 
 **Parameters**
 
-```
-선택할 영역의 시작 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBegin | Number | 선택할 영역의 시작 인덱스를 숫자로 설정합니다.
 
 인덱스는 0 부터 시작하며 "0 ~ 텍스트길이"까지 설정할 수 있습니다.
--1 을 설정하면 캐럿이 0 번 인덱스에 위치하고 영역을 선택하지 않습니다.
+-1 을 설정하면 캐럿이 0 번 인덱스에 위치하고 영역을 선택하지 않습니다. |
+| nEnd | Number | 선택할 영역의 끝 인덱스를 숫자로 설정합니다.
+
+인덱스는 0 부터 시작하며 "0 ~ 텍스트길이"까지 설정할 수 있습니다.
+-1 을 설정하면 선택할 영역의 끝 위치가 텍스트의 오른쪽 끝으로 설정됩니다.
+
+값 생략 시 -1 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSuccess;
+bSuccess = this.Grid00.setEditSelect( -1 );
+bSuccess = this.Grid00.setEditSelect( 1, -1 );
 ```
 
 **Return**
 
-텍스트의 영역선택에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 텍스트의 영역선택에 성공하면 true 를 반환합니다.
 
-텍스트의 영역선택에 실패하면 false 를 반환합니다.
+텍스트의 영역선택에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -10816,11 +11932,17 @@ Grid.setEditValue( strValue )
 
 **Parameters**
 
-```
-Cell 에 표시된 편집모드용 컨트롤의 value 속성값을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strValue | String | Cell 에 표시된 편집모드용 컨트롤의 value 속성값을 문자열로 설정합니다.
 
 Cell 의 edittype 속성값이 "combo" 이면 combocodecol 속성에 적용된 코드값을 설정합니다.
-Cell 의 edittype 속성값이 "date", "mask" 이면 마스크 문자를 제외한 원본값을 설정합니다.
+Cell 의 edittype 속성값이 "date", "mask" 이면 마스크 문자를 제외한 원본값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00.setEditValue( "NewText" );
 ```
 
 **Return**
@@ -10864,15 +11986,26 @@ Grid.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00_onmove = function( obj:nexacro.Grid,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.Grid00.setEventHandler( "onmove", this.Grid00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -10899,15 +12032,27 @@ Grid.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00_onmove = function( obj:nexacro.Grid,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.Grid00.setEventHandlerLookup( "onmove", "Grid00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -10934,12 +12079,22 @@ Grid.setFixedColumn( nColumnindex[, bKeepscroll] );
 
 **Parameters**
 
-```
-스크롤되지 않고 고정되어 표시될 Column의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nColumnindex | Number | 스크롤되지 않고 고정되어 표시될 Column의 인덱스를 설정합니다.
 설정한 Column 인덱스의 왼쪽에 위치한 모든 Column이 고정되어 표시됩니다.
 
--1로 설정하면 기존에 설정된 Column 고정이 해제됩니다.
-```
+-1로 설정하면 기존에 설정된 Column 고정이 해제됩니다. |
+| bKeepscroll | Boolean | 스크롤이 이동된 상태에서 메서드를 실행할 경우, 현재 스크롤 위치를 유지할지 여부를 설정합니다.
+값을 지정하지 않으면 기본값은 false입니다.
+
+- true
+nColumnindex에 해당하는 Column이 메서드 실행 전 위치에 고정되며, 스크롤해도 이동하지 않습니다.
+단, 해당 Column이 Grid 컴포넌트 영역에 표시되지 않은 상태에서는 메서드가 정상적으로 동작하지 않습니다.
+
+- false
+스크롤 위치는 첫 번째 Column 위치로 초기화되며, nColumnindex에 해당하는 Column까지는 스크롤해도 이동하지 않습니다.
+단, 해당 Column이 스크롤을 이동하지 않은 상태에서 Grid 컴포넌트 영역 밖에 표시되는 경우에는 메서드가 정상적으로 동작하지 않습니다. |
 
 **Return**
 
@@ -10971,11 +12126,11 @@ Grid.setFixedRow( nRowIndex );
 
 **Parameters**
 
-```
-Body 밴드영역에서 스크롤 되지않고 고정되어 표시될 Row 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | Body 밴드영역에서 스크롤 되지않고 고정되어 표시될 Row 의 인덱스를 설정합니다.
 
-"-1" 설정 시 기존에 설정된 행고정이 해제됩니다.
-```
+"-1" 설정 시 기존에 설정된 행고정이 해제됩니다. |
 
 **Return**
 
@@ -11008,19 +12163,28 @@ Grid.setFocus( [bMoveScroll] )
 
 **Parameters**
 
-```
-부모 컴포넌트에 스크롤이 있을 경우, Grid 기준으로 스크롤을 이동할지 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bMoveScroll | Boolean | 부모 컴포넌트에 스크롤이 있을 경우, Grid 기준으로 스크롤을 이동할지 여부를 설정합니다.
 
 true: Grid 이(가) 화면에 표시되도록 스크롤을 이동합니다.
 false: Grid 위치와 관계없이 스크롤을 이동하지 않습니다.
 
-값을 지정하지 않으면 기본값은 true입니다.
+값을 지정하지 않으면 기본값은 true입니다. |
+
+**Sample Call**
+
+```javascript
+var objBefComp = this.Grid00.setFocus();
+var objBefComp = this.Grid00.setFocus( false );
 ```
 
 **Return**
 
-Grid 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
-이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Grid 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
+이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다. |
 
 **Remark**
 
@@ -11045,14 +12209,22 @@ Grid.setFormat( strFormatID )
 
 **Parameters**
 
-```
-Grid 에 표시할 포맷의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strFormatID | String | Grid 에 표시할 포맷의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bRet = this.Grid00.setFormat("format2");
 ```
 
 **Return**
 
-화면에 표시되는 포맷 설정에 성공했을 경우 "true"를 반환합니다.
-화면에 표시되는 포맷 설정에 실패했을 경우 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 화면에 표시되는 포맷 설정에 성공했을 경우 "true"를 반환합니다.
+화면에 표시되는 포맷 설정에 실패했을 경우 "false"를 반환합니다. |
 
 **Remark**
 
@@ -11081,16 +12253,31 @@ Grid.setFormatColProperty( nColIdx, strPropID, varValue )
 
 **Parameters**
 
-```
-현재 포맷에 정의된 전체 Column 을 기준으로 속성값을 설정할 Column 의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nColIdx | Number | 현재 포맷에 정의된 전체 Column 을 기준으로 속성값을 설정할 Column 의 인덱스를 설정합니다.
 
-Column 인덱스는 "0" 부터 시작합니다.
+Column 인덱스는 "0" 부터 시작합니다. |
+| strPropID | String | 값을 설정할 속성명을 문자열로 설정합니다.
+
+Grid 의 Column 에는 "band"와 "size" 두가지 속성이 정의되어 있습니다. |
+| varValue | Variant | strPropID 값이 "band" 일 경우 값을 문자열로 설정합니다.
+strPropID 값이 "size" 일 경우 값을 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = this.Grid00.setFormatColProperty(1,"size",50);
+bSucc = this.Grid00.setFormatColProperty(0,"band","left");
 ```
 
 **Return**
 
-Column 의 속성값 설정에 성공하면 "true"를 반환합니다.
-Column 의 속성값 설정에 실패하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Column 의 속성값 설정에 성공하면 "true"를 반환합니다.
+Column 의 속성값 설정에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -11115,18 +12302,30 @@ Grid.setFormatRowProperty( nRowIdx, strPropID, varValue )
 
 **Parameters**
 
-```
-현재 포맷에 정의된 전체 Row 를 기준으로 속성값을 설정할 Row의 인덱스 값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIdx | Number | 현재 포맷에 정의된 전체 Row 를 기준으로 속성값을 설정할 Row의 인덱스 값을 설정합니다.
 
 Head, Body, Summary 밴드에 정의된 전체 Row를 기준으로 인덱스를 설정합니다.
 Row 에 Sub Row 가 정의되어 있다면 Sub Row 도 인덱스에 포함됩니다.
-Row 인덱스는 "0"부터 시작합니다.
+Row 인덱스는 "0"부터 시작합니다. |
+| strPropID | String | 값을 설정할 속성명을 문자열로 설정합니다.
+
+Grid 의 Row 에는 "band"와 "size" 두가지 속성이 정의되어 있지만 "size" 속성만 변경할 수 있습니다. |
+| varValue | Variant | strPropID 값이 "size" 일 경우 값을 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc = this.Grid00.setFormatRowProperty( 1,"size",50 );
 ```
 
 **Return**
 
-Row 의 속성값 설정에 성공하면 "true"를 반환합니다.
-Row 의 속성값 설정에 실패하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Row 의 속성값 설정에 성공하면 "true"를 반환합니다.
+Row 의 속성값 설정에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -11151,8 +12350,15 @@ Grid.setHeadValue( nCellIdx, varValue )
 
 **Parameters**
 
-```
-HeadValue 값을 설정하려는 Head 밴드 영역의 Cell 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nCellIdx | Number | HeadValue 값을 설정하려는 Head 밴드 영역의 Cell 인덱스를 설정합니다. |
+| varValue | String | 설정할 HeadValue 값입니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00.setHeadValue(0, "1");
 ```
 
 **Return**
@@ -11182,8 +12388,14 @@ Grid.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 Grid 의 bottom 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 컴포넌트의 Top 위치를 기준으로 Grid 의 bottom 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid.setOffsetBottom( 10 );
 ```
 
 **Return**
@@ -11216,8 +12428,14 @@ Grid.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-Grid 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | Grid 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid.setOffsetHeight( 10 );
 ```
 
 **Return**
@@ -11250,8 +12468,14 @@ Grid.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 Grid 의 left 값을 픽셀단위의 숫자로 설정합니다
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 컴포넌트의 Left 위치를 기준으로 Grid 의 left 값을 픽셀단위의 숫자로 설정합니다 |
+
+**Sample Call**
+
+```javascript
+this.Grid.setOffsetLeft( 10 );
 ```
 
 **Return**
@@ -11284,8 +12508,14 @@ Grid.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 Grid 의 right 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 컴포넌트의 Left 위치를 기준으로 Grid 의 right 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid.setOffsetRight( 600 );
 ```
 
 **Return**
@@ -11318,8 +12548,14 @@ Grid.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 Grid 의 top 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 컴포넌트의 Top 위치를 기준으로 Grid 의 top 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid.setOffsetTop( 10 );
 ```
 
 **Return**
@@ -11352,8 +12588,14 @@ Grid.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-Grid 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | Grid 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid.setOffsetWidth( 10 );
 ```
 
 **Return**
@@ -11386,18 +12628,40 @@ Grid.setRealColSize( enumBand, nColIndex, nSize [, bBandIndex] )
 
 **Parameters**
 
-```
-현재 Grid 포맷에서 너비를 변경 할 Column 이 속한 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 현재 Grid 포맷에서 너비를 변경 할 Column 이 속한 밴드를 문자열로 설정합니다.
 
 "left" 설정 시 Left 밴드 영역의 Column 이 적용됩니다.
 "body" 설정 시 Body 밴드 영역의 Column 이 적용됩니다.
-"right" 설정 시 Right 밴드 영역의 Column 이 적용됩니다.
+"right" 설정 시 Right 밴드 영역의 Column 이 적용됩니다. |
+| nColIndex | Number | 너비를 설정 할 Column 의 인덱스를 설정합니다.
+
+"0~Column 인덱스" 설정 시 Column 인덱스로 적용됩니다.
+"-1" 설정 시 Column 에 동일하게 nSize 값이 적용됩니다.
+Column 인덱스는 "0" 부터 시작합니다. |
+| nSize | Number | Column 의 너비를 pixel 단위의 숫자로 설정합니다. |
+| bBandIndex | Boolean | nColIndex 에 설정한 인덱스값이 밴드 기준인지 전체 Column 기준인지 설정합니다.
+
+"true" 설정 시 enumBand 에 설정한 밴드 영역 기준으로 nColIndex 값을 처리합니다.
+"false" 설정 시 enumBand 값에 관계없이 전체 Column 기준으로 nColIndex 값을 처리합니다.
+
+값을 설정하지 않으면 "false"로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = this.Grid00.setRealColSize( "body", 5, 18, false );
+bSucc = this.Grid00.setRealColSize( "body", 5, 18, true );
 ```
 
 **Return**
 
-특정 Column 의 너비 설정에 성공하면 "true"를 반환합니다.
-특정 Column 의 너비 설정에 실패하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 특정 Column 의 너비 설정에 성공하면 "true"를 반환합니다.
+특정 Column 의 너비 설정에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -11423,22 +12687,46 @@ Grid.setRealRowSize( nRowIdx, nSize [, nSubRowIdx [, bBody]] )
 
 **Parameters**
 
-```
-높이를 설정 할 Row 의 인덱스 또는 밴드영역을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIdx | Number | 높이를 설정 할 Row 의 인덱스 또는 밴드영역을 설정합니다.
 
 "0~Row 갯수" 설정 시 bBody 값이 true 이면 Body 밴드영역의 Row 인덱스로 적용됩니다.
 "0~Row 갯수" 설정 시 bBody 값이 false 이면 밴드영역에 관계 없이 전체 Row 의 인덱스로 적용됩니다.
 -1 설정 시 bBody 값이 true 이면 Head 밴드영역으로 적용됩니다.
 -2 설정 시 bBody 값이 true 이면 Summary 밴드영역으로 적용됩니다.
 
-Row 인덱스는 0 부터 시작합니다.
+Row 인덱스는 0 부터 시작합니다. |
+| nSize | Number | Row 또는 SubRow 의 높이를 Pixel 단위의 숫자로 설정합니다. |
+| nSubRowIdx | Number | nRowIdx 값에 해당하는 Row 에서 높이를 설정 할 SubRow 의 인덱스를 설정합니다.
+
+"0~SubRow 갯수" 설정 시 해당 SubRow 의 높이를 설정합니다.
+-1 설정 시 nRowIdx 값에 해당하는 Row 가 가진 전체 SubRow 의 높이를 설정합니다.
+
+SubRow 의 인덱스는 0 부터 시작합니다.
+값을 생략하면 -1 로 적용됩니다. |
+| bBody | Boolean | nRowIdx 값이 적용될 영역을 설정합니다.
+
+true 설정 시 nRowIdx 값은 Body 밴드영역의 Row 인덱스로 적용됩니다.
+false 설정 시 nRowIdx 값은 밴드영역에 관계없이 전체 Row 의 인덱스로 적용됩니다.
+
+값을 생략하면 true 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc;
+bSucc = this.Grid00.setRealRowSize( 0, 18 );
+bSucc = this.Grid00.setRealRowSize( 5, 18, 2, false );
 ```
 
 **Return**
 
-특정 Row 또는 SubRow 의 높이 설정에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 특정 Row 또는 SubRow 의 높이 설정에 성공하면 true 를 반환합니다.
 
-특정 Row 또는 SubRow 의 높이 설정에 실패하거나 동일한 높이를 설정하면 false 를 반환합니다.
+특정 Row 또는 SubRow 의 높이 설정에 실패하거나 동일한 높이를 설정하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -11473,18 +12761,30 @@ Grid.setSubCellProperty( enumBand, nCelIdx, nSubCellIdx, strPropID, varValue )
 
 **Parameters**
 
-```
-nCellIdx 에 해당하는 Cell 이 속한 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | nCellIdx 에 해당하는 Cell 이 속한 밴드를 문자열로 설정합니다.
 
 "head" 설정 시 Head 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다.
 "body" 설정 시 Body 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다.
-"summary" 설정 시 Summary 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다.
+"summary" 설정 시 Summary 밴드 영역에 속한 Cell 의 인덱스로 처리됩니다. |
+| nCelIdx | Number | Sub Cell 로 구성된 Cell 의 인덱스를 설정합니다. |
+| nSubCellIdx | Number | 속성값을 설정 할 Sub Cell 의 인덱스를 설정합니다. |
+| strPropID | String | 값을 설정 할 Sub Cell 의 속성명을 문자열로 설정합니다. |
+| varValue | String | strPropID 속성에 설정할 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc = Grid00.setSubCellProperty("body",1,0,"text","Tobesoft");
 ```
 
 **Return**
 
-특정 Sub Cell 의 속성값 설정에 성공하면 "true"를 반환합니다.
-특정 Sub Cell 의 속성값 설정에 실패하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 특정 Sub Cell 의 속성값 설정에 성공하면 "true"를 반환합니다.
+특정 Sub Cell 의 속성값 설정에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -11528,16 +12828,28 @@ Grid.setTreeStatus( nRowIndex, bTreeStatus )
 
 **Parameters**
 
-```
-트리 상태를 설정 할 Row 의 인덱스를 현재 화면에 표시되는 Grid 기준으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | 트리 상태를 설정 할 Row 의 인덱스를 현재 화면에 표시되는 Grid 기준으로 설정합니다. |
+| bTreeStatus | Boolean | nRowIndex 에 해당하는 Row 의 트리 상태를 설정합니다.
+
+"true" 설정 시 Row 의 트리 상태를 Expand 로 설정합니다.
+"false" 설정 시 Row 의 트리 상태를 Collapse 로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc = this.Grid00.setTreeStatus(0,true);
 ```
 
 **Return**
 
-특정 Row 의 트리 상태 설정에 성공하면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 특정 Row 의 트리 상태 설정에 성공하면 "true"를 반환합니다.
 
 특정 Row 의 트리 상태 설정에 실패하면 "false"를 반환합니다.
-Grid 가 트리형식이 아니거나 nRowIndex 에 해당하는 Row 가 없는 경우 "false"를 반환합니다.
+Grid 가 트리형식이 아니거나 nRowIndex 에 해당하는 Row 가 없는 경우 "false"를 반환합니다. |
 
 **Remark**
 
@@ -11605,17 +12917,25 @@ Grid.showEditor( bShow )
 
 **Parameters**
 
-```
-현재 선택된 Cell 에 편집기를 표시할지 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bShow | Boolean | 현재 선택된 Cell 에 편집기를 표시할지 설정합니다.
 
 true 설정 시 현재 선택된 Cell 이 편집상태가 되며 편집기가 표시됩니다.
-false 설정 시 현재 선택된 Cell 의 편집상태가 해제되고 편집기가 표시되지 않습니다.
+false 설정 시 현재 선택된 Cell 의 편집상태가 해제되고 편집기가 표시되지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var bSuccess = this.Grid00.showEditor( false );
 ```
 
 **Return**
 
-메소드가 정상적으로 수행되면 true 를 반환합니다.
-메소드가 정상적으로 수행되지 못하면 false 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드가 정상적으로 수행되면 true 를 반환합니다.
+메소드가 정상적으로 수행되지 못하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -11650,14 +12970,26 @@ Grid.showHeadEditor(nCellIdx, bShow);
 
 **Parameters**
 
-```
-편집상태를 지정할 Cell의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nCellIdx | Integer | 편집상태를 지정할 Cell의 인덱스를 설정합니다. |
+| bShow | Boolean | nCellIdx에 해당하는 Cell의 HeadValue를 편집할 수 있는 컨트롤을 표시할지 여부를 설정합니다.
+
+- true: nCellIdx에 해당하는 Cell이 편집 상태가 되며, HeadValue를 편집할 수 있는 컨트롤이 표시됩니다.
+- false: nCellIdx에 해당하는 Cell의 편집 상태가 해제됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSuccess = this.Grid00.showHeadEditor(0, true);
 ```
 
 **Return**
 
-메서드가 정상적으로 수행되면 true를 반환합니다.
-메서드가 정상적으로 수행되지 못하면 false를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메서드가 정상적으로 수행되면 true를 반환합니다.
+메서드가 정상적으로 수행되지 못하면 false를 반환합니다. |
 
 
 ---
@@ -11678,17 +13010,40 @@ Grid.splitCell( nStartCol, nEndCol, nStartRow, nEndRow )
 
 **Parameters**
 
-```
-병합 Cell 내에서 왼쪽에 위치한 Cell 의 Column 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nStartCol | Number | 병합 Cell 내에서 왼쪽에 위치한 Cell 의 Column 인덱스를 숫자로 설정합니다.
 
-Grid 의 전체 Column 을 기준으로 Column 인덱스를 설정하여야 합니다.
+Grid 의 전체 Column 을 기준으로 Column 인덱스를 설정하여야 합니다. |
+| nEndCol | Number | 병합 Cell 내에서 오른쪽에 위치한 Cell 의 Column 인덱스를 숫자로 설정합니다.
+
+Grid 의 전체 Column 을 기준으로 Column 인덱스를 설정하여야 합니다. |
+| nStartRow | Number | 병합 Cell 내에서 상단에 위치한 Cell 이 속한 Row 의 인덱스를 숫자로 설정합니다.
+
+"0 ~ Row 갯수-1" 범위로 설정하면 Body 밴드를 대상으로 분할됩니다. 
+-1 설정 시 Head 밴드를 대상으로 분할됩니다.
+-2 설정 시 Summary 밴드를 대상으로 분할됩니다. |
+| nEndRow | Number | 병합 Cell 내에서 하단에 위치한 Cell 이 속한 Row 의 인덱스를 숫자로 설정합니다.
+
+"0 ~ Row 갯수-1" 범위로 설정하면 Body 밴드를 대상으로 분할됩니다. 
+-1 설정 시 Head 밴드를 대상으로 분할됩니다.
+-2 설정 시 Summary 밴드를 대상으로 분할됩니다.
+
+-1 또는 -2 설정 시 nStartRow 값과 다를 경우 메소드가 정상적으로 수행되지 않습니다. |
+
+**Sample Call**
+
+```javascript
+this.Grid00.splitCell( 0, 10, 0, 200 );
 ```
 
 **Return**
 
-메소드가 정상적으로 수행되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드가 정상적으로 수행되면 true 를 반환합니다.
 
-메소드가 정상적으로 수행되지 않으면 false 를 반환합니다.
+메소드가 정상적으로 수행되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -11717,18 +13072,46 @@ Grid.splitContentsCell( enumBand, nStartSubRow, nStartCol, nEndSubRow, nEndCol, 
 
 **Parameters**
 
-```
-분할 하려는 Cell 이 속한 밴드 영역을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 분할 하려는 Cell 이 속한 밴드 영역을 문자열로 설정합니다.
 
 "head" 설정 시 Head 밴드 영역의 Cell 을 분할 합니다.
 "body" 설정 시 Body 밴드 밴드 영역의 Cell 을 분할 합니다.
-"summary" 설정 시 Summary 밴드 영역의 Cell 을 분할 합니다.
+"summary" 설정 시 Summary 밴드 영역의 Cell 을 분할 합니다. |
+| nStartRow | Number | 분할 하려는 Cell 의 Sub Cell 중 좌상단 Sub Cell 의 Sub Row 인덱스를 설정합니다.
+
+enumBand 값에 해당하는 밴드영역을 기준으로 Sub Row 인덱스를 설정하여야 합니다.
+유효하지 않은 인덱스 설정 시 가장 가까운 유효한 값으로 대치되어 적용됩니다. |
+| nStartCol | Number | 분할 하려는 Cell 의 Sub Cell 중 좌상단 Sub Cell 의 Column 인덱스를 설정합니다.
+
+Grid 의 전체 Column 을 기준으로 Column 인덱스를 설정하여야 합니다.
+유효하지 않은 인덱스 설정 시 가장 가까운 유효한 값으로 대치되어 적용됩니다. |
+| nEndSubRow | Number | 분할 하려는 Cell 의 Sub Cell 중 우하단 Sub Cell 의 Sub Row 인덱스를 설정합니다
+
+enumBand 값에 해당하는 밴드영역을 기준으로 Sub Row 인덱스를 설정하여야 합니다..
+유효하지 않은 인덱스 설정 시 가장 가까운 유효한 값으로 대치되어 적용됩니다. |
+| nEndCol | Number | 분할 하려는 Cell 의 Sub Cell 중 우하단 Sub Cell 의 Column 인덱스를 설정합니다.
+
+Grid 의 전체 Column 을 기준으로 Column 인덱스를 설정하여야 합니다.
+유효하지 않은 인덱스 설정 시 가장 가까운 유효한 값으로 대치되어 적용됩니다. |
+| bMakeSubCell | Boolean | Sub Cell 이 없는 Merge Cell을 분할할지 여부를 설정합니다.
+
+"true" 설정 시 Sub Cell 이 없는 Merge Cell 도 분할합니다.
+"false" 설정 시 Sub Cell 이 없는 Merge Cell 은 분할하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var nSubcellCnt = Grid00.splitContentsCell("body",0,3,0,4,true);
 ```
 
 **Return**
 
-병합(Merge) Cell 이 분할되어 생성된 Cell 의 갯수를 반환합니다.
-메소드가 정상적으로 수행되지 않은 경우 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 병합(Merge) Cell 이 분할되어 생성된 Cell 의 갯수를 반환합니다.
+메소드가 정상적으로 수행되지 않은 경우 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -11757,9 +13140,11 @@ var bSucc = this.Grid00.updateToDataset();
 
 **Return**
 
-Grid 에서 편집중인 값을 바인드 된 DataSet 에 반영하면 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Grid 에서 편집중인 값을 바인드 된 DataSet 에 반영하면 "true" 를 반환합니다.
 
-Grid 에서 편집중인 값을 바인드 된 DataSet 에 반영하지 못하거나 Grid 가 편집중이 아니면 "false" 를 반환합니다.
+Grid 에서 편집중인 값을 바인드 된 DataSet 에 반영하지 못하거나 Grid 가 편집중이 아니면 "false" 를 반환합니다. |
 
 **Remark**
 
@@ -11788,16 +13173,19 @@ cantreestatuschange(obj:nexacro.Grid,e:nexacro.GridTreeStatusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridTreeStatusEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 "true"를 반환하면 Grid 의 트리 상태가 변경됩니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 "true"를 반환하면 Grid 의 트리 상태가 변경됩니다.
 이벤트에서 리턴값으로 "false"를 반환하면 Grid 의 트리 상태를 변경하지 않습니다.
 
-이벤트에서 리턴값을 생략하면 "true"로 적용됩니다.
+이벤트에서 리턴값을 생략하면 "true"로 적용됩니다. |
 
 **Remark**
 
@@ -11826,9 +13214,10 @@ oncellclick(obj:nexacro.Grid,e:nexacro.GridClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridClickEventInfo | Event Object. |
 
 **Return**
 
@@ -11863,9 +13252,10 @@ oncelldblclick(obj:nexacro.Grid,e:nexacro.GridClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridClickEventInfo | Event Object. |
 
 **Return**
 
@@ -11900,9 +13290,10 @@ oncellimeaction(obj:nexacro.Grid,e:nexacro.GridKeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridKeyEventInfo | Event Object. |
 
 **Return**
 
@@ -11936,9 +13327,10 @@ oncellposchanged(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridSelectEventInfo | Event Object. |
 
 **Return**
 
@@ -11975,9 +13367,10 @@ onclick(obj:nexacro.Grid,e:nexacro.GridClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridClickEventInfo | Event Object. |
 
 **Return**
 
@@ -12011,9 +13404,10 @@ oncloseup(obj:nexacro.Grid,e:nexacro.GridEditEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridEditEventInfo | Event Object. |
 
 **Return**
 
@@ -12042,9 +13436,10 @@ oncolresized(obj:nexacro.Grid,e:nexacro.GridSizeChangedEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridSizeChangedEventInfo | Event Object. |
 
 **Return**
 
@@ -12069,9 +13464,10 @@ oncontextmenu(obj:nexacro.Grid,e:nexacro.GridContextMenuEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridContextMenuEventInfo | Event Object. |
 
 **Return**
 
@@ -12112,15 +13508,18 @@ ondevicebuttonup(obj:nexacro.Grid,e:nexacro.DeviceButtonEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | DeviceButtonEventInfo | Event Object. |
 
 **Return**
 
-true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
-반환값을 생략하면 false로 적용됩니다.
+반환값을 생략하면 false로 적용됩니다. |
 
 **Remark**
 
@@ -12149,16 +13548,19 @@ ondrag(obj:nexacro.Grid,e:nexacro.GridDragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridDragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 드래그 상태가 취소되고 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -12194,16 +13596,19 @@ ondragenter(obj:nexacro.Grid,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -12230,16 +13635,19 @@ ondragleave(obj:nexacro.Grid,e:nexacro.DragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | DragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -12266,16 +13674,19 @@ ondragmove(obj:nexacro.Grid,e:nexacro.GridDragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridDragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -12302,16 +13713,19 @@ ondrop(obj:nexacro.Grid,e:nexacro.GridDragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridDragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -12345,9 +13759,10 @@ ondropdown(obj:nexacro.Grid,e:nexacro.GridEditEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridEditEventInfo | Event Object. |
 
 **Return**
 
@@ -12380,9 +13795,10 @@ onenterdown(obj:nexacro.Grid,e:nexacro.GridEditEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridEditEventInfo | Event Object. |
 
 **Return**
 
@@ -12419,9 +13835,10 @@ onexpanddown(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridMouseEventInfo | Event Object. |
 
 **Return**
 
@@ -12454,9 +13871,10 @@ onexpandup(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridMouseEventInfo | Event Object. |
 
 **Return**
 
@@ -12489,9 +13907,10 @@ onheadclick(obj:nexacro.Grid,e:nexacro.GridClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridClickEventInfo | Event Object. |
 
 **Return**
 
@@ -12516,9 +13935,10 @@ onheaddblclick(obj:nexacro.Grid,e:nexacro.GridClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridClickEventInfo | Event Object. |
 
 **Return**
 
@@ -12543,9 +13963,10 @@ onheadvaluechanged(obj:nexacro.Grid,e:nexacro.GridHeadValueChangedEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridHeadValueChangedEventInfo | Event Object. |
 
 **Return**
 
@@ -12570,9 +13991,10 @@ onhscroll(obj:nexacro.Grid,e:nexacro.ScrollEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | ScrollEventInfo | Event Object. |
 
 **Return**
 
@@ -12601,9 +14023,10 @@ onimageerror(obj:nexacro.Grid,e:nexacro.GridImageErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridImageErrorEventInfo | Event Object. |
 
 **Return**
 
@@ -12628,9 +14051,10 @@ oninput(obj:nexacro.Grid,e:nexacro.GridInputEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridInputEventInfo | Event Object. |
 
 **Return**
 
@@ -12671,16 +14095,19 @@ onkeydown(obj:nexacro.Grid,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -12704,8 +14131,8 @@ Event가 발생한 Object.
 
 **Default Action**
 
-＊ 상하방향키 다운 : current row 변경
-＊ 좌우방향키 다운 : current cell 변경
+＊ 상하방향키 다운 : current row 변경
+＊ 좌우방향키 다운 : current cell 변경
 ＊ 엔터키 다운 : 디스플레이모드에서 편집모드로 변경
 
 
@@ -12727,16 +14154,19 @@ onkeyup(obj:nexacro.Grid,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -12769,9 +14199,10 @@ onkillfocus(obj:nexacro.Grid,e:nexacro.KillFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | KillFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -12803,16 +14234,19 @@ onlbuttondown(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -12853,16 +14287,19 @@ onlbuttonup(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -12907,16 +14344,19 @@ onmousedown(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -12948,16 +14388,19 @@ onmouseenter(obj:nexacro.Grid,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -12996,16 +14439,19 @@ onmouseleave(obj:nexacro.Grid,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -13041,16 +14487,19 @@ onmousemove(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -13086,16 +14535,19 @@ onmouseup(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다 |
 
 **Remark**
 
@@ -13129,16 +14581,19 @@ onmousewheel(obj:nexacro.Grid,e:nexacro.MouseWheelEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | MouseWheelEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 휠버튼 회전값이 무시되고, 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 휠버튼 회전값이 무시되고, 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 휠버튼 회전값이 처리되고, 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -13177,9 +14632,10 @@ onmove(obj:nexacro.Grid,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -13204,9 +14660,10 @@ onnodataareaclick(obj:nexacro.Grid,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
@@ -13231,9 +14688,10 @@ onnodataareadblclick(obj:nexacro.Grid,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
@@ -13258,16 +14716,19 @@ onrbuttondown(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -13313,16 +14774,19 @@ onrbuttonup(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -13367,9 +14831,10 @@ onrowresized(obj:nexacro.Grid,e:nexacro.GridSizeChangedEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridSizeChangedEventInfo | Event Object. |
 
 **Return**
 
@@ -13394,9 +14859,10 @@ onselectchanged(obj:nexacro.Grid,e:nexacro.GridSelectEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridSelectEventInfo | Event Object. |
 
 **Return**
 
@@ -13431,9 +14897,10 @@ onsetfocus(obj:nexacro.Grid,e:nexacro.SetFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | SetFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -13476,9 +14943,10 @@ onsize(obj:nexacro.Grid,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -13503,9 +14971,10 @@ onsummaryclick(obj:nexacro.Grid,e:nexacro.GridClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridClickEventInfo | Event Object. |
 
 **Return**
 
@@ -13530,9 +14999,10 @@ onsummarydblclick(obj:nexacro.Grid,e:nexacro.GridClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridClickEventInfo | Event Object. |
 
 **Return**
 
@@ -13557,16 +15027,19 @@ ontouchend(obj:nexacro.Grid,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -13591,16 +15064,19 @@ ontouchmove(obj:nexacro.Grid,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -13625,16 +15101,19 @@ ontouchstart(obj:nexacro.Grid,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -13671,9 +15150,10 @@ ontreestatuschanged(obj:nexacro.Grid,e:nexacro.GridTreeStatusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | GridTreeStatusEventInfo | Event Object. |
 
 **Return**
 
@@ -13706,9 +15186,10 @@ onvscroll(obj:nexacro.Grid,e:nexacro.ScrollEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Grid | Event가 발생한 Object. |
+| e | ScrollEventInfo | Event Object. |
 
 **Return**
 
@@ -14722,8 +16203,7 @@ GridBandControl.cssclass[= strcssclass]
 strcssclass ::= <ClassName> [ , &ltClassName> ]*
 ```
 ```javascript
-this.Grid00.head.cssclass = "TestClass";
-this.Grid00.body.cssclass = "TestClass,TestClass2";
+this.Grid00.head.cssclass = "TestClass";this.Grid00.body.cssclass = "TestClass,TestClass2";
 ```
 - **`<ClassName>`** — XCSS 에 정의된 classname 을 설정합니다.
 
@@ -15069,9 +16549,7 @@ GridBandControl.tooltiptext[= strToolTipText]
 **Setting Syntax**
 
 ```javascript
-this.Grid00.setBandProperty("body", "tooltiptext", "This is ToolTip Text')";
-this.Grid00.setBandProperty = "body", "tooltiptext", "";          // 풍선 도움말이 표시되지 않습니다.
-this.Grid00.setBandProperty("body", "tooltiptext", null);        // Grid 컴포넌트의 풍선 도움말이 표시됩니다.
+this.Grid00.setBandProperty("body", "tooltiptext", "This is ToolTip Text')";this.Grid00.setBandProperty = "body", "tooltiptext", "";          // 풍선 도움말이 표시되지 않습니다.this.Grid00.setBandProperty("body", "tooltiptext", null);        // Grid 컴포넌트의 풍선 도움말이 표시됩니다.
 ```
 - **`strToolTipText`** — 풍선도움말에 표시할 텍스트를 설정합니다.
 
@@ -16434,10 +17912,7 @@ GridCellControl.accessibilitylabel[= strLabel]
 **Setting Syntax**
 
 ```javascript
-this.Grid00.setCellProperty( "body", 0, "accessibilitylabel", "OK Button" );
-this.Grid00.setCellProperty( "body", 0, "accessibilitylabel", "[@static00]" );
-this.Grid00.setCellProperty( "body", 0, "accessibilitylabel", "[@static00][@static01]" );
-this.Grid00.setCellProperty( "body", 0, "accessibilitylabel", "[@static00][@static01] OK Button" );
+this.Grid00.setCellProperty( "body", 0, "accessibilitylabel", "OK Button" );this.Grid00.setCellProperty( "body", 0, "accessibilitylabel", "[@static00]" );this.Grid00.setCellProperty( "body", 0, "accessibilitylabel", "[@static00][@static01]" );this.Grid00.setCellProperty( "body", 0, "accessibilitylabel", "[@static00][@static01] OK Button" );
 ```
 - **`strLabel`** — accessibilitydescreadtype 속성값에 "label"이 포함된 경우 스크린 리더의 음성 출력 대상으로 포함할 값을 설정합니다.
 문자열로 설정하거나 Grid 컴포넌트와 부모가 같은 컴포넌트의 accessibilitylabel 속성값을 참조할 수 있습니다.
@@ -17017,8 +18492,7 @@ GridCellControl.calendarbuttonsize[= strSize]
 strSize ::= <strWidth> [ ' ' <strHeight> ]
 ```
 ```javascript
-this.Grid00.setCellProperty( "body", 0, "calendarbuttonsize", "30");
-this.Grid00.setCellProperty( "body", 0, "calendarbuttonsize", "30 20");
+this.Grid00.setCellProperty( "body", 0, "calendarbuttonsize", "30");this.Grid00.setCellProperty( "body", 0, "calendarbuttonsize", "30 20");
 ```
 - **`<strWidth>`** — 드롭다운 버튼의 너비를 pixel 단위의 문자열로 설정합니다.
 - **`<strHeight>`** — 드롭다운 버튼의 높이를 pixel 단위의 문자열로 설정합니다.
@@ -17120,8 +18594,7 @@ strFormat ::= <maskchar> | 'LONGDATE' | 'SHORTDATE'
 * <maskchar>는 날짜와 시간을 표시하기 위한 마스크 문자의 조합으로 각 요소의 순서변경과 생략이 가능합니다.
 ```
 ```javascript
-this.Grid00.setCellProperty( "body", 0, "calendardateformat", "yyyy-MM-dd ddd");
-this.Grid00.setCellProperty( "body", 0, "calendardateformat", "yyyy-MM-dd ddd HH:mm:ss");
+this.Grid00.setCellProperty( "body", 0, "calendardateformat", "yyyy-MM-dd ddd");this.Grid00.setCellProperty( "body", 0, "calendardateformat", "yyyy-MM-dd ddd HH:mm:ss");
 ```
 - **`<Year>`** — 연도를 표시하는 마스크 문자를 설정합니다.
 
@@ -17373,8 +18846,7 @@ strFormat ::= <maskchar> | 'LONGDATE' | 'SHORTDATE'
 * <maskchar>는 날짜와 시간을 입력하기 위한 마스크 문자의 조합으로 각 요소의 순서변경과 생략이 가능합니다.
 ```
 ```javascript
-this.Grid00.setCellProperty( "body", 0, "calendareditformat", "yyyy-MM-dd");
-this.Grid00.setCellProperty( "body", 0, "calendareditformat", "yyyy-MM-dd HH:mm:ss");
+this.Grid00.setCellProperty( "body", 0, "calendareditformat", "yyyy-MM-dd");this.Grid00.setCellProperty( "body", 0, "calendareditformat", "yyyy-MM-dd HH:mm:ss");
 ```
 - **`<Year>`** — 연도를 표시하는 마스크 문자를 설정합니다.
 
@@ -18027,8 +19499,7 @@ GridCellControl.combobuttonsize[= strSize]
 strSize ::= <strWidth> [ ' ' <strHeight> ]
 ```
 ```javascript
-this.Grid00.setCellProperty( "body", 0, "combobuttonsize", "30')";
-this.Grid00.setCellProperty( "body", 0, "combobuttonsize", "30 20')";
+this.Grid00.setCellProperty( "body", 0, "combobuttonsize", "30')";this.Grid00.setCellProperty( "body", 0, "combobuttonsize", "30 20')";
 ```
 - **`<strWidth>`** — 드롭다운 버튼의 너비를 pixel 단위의 문자열로 설정합니다.
 - **`<strHeight>`** — 드롭다운 버튼의 높이를 pixel 단위의 문자열로 설정합니다.
@@ -19055,9 +20526,7 @@ strInputfilter ::= 'none' | <filter>
 * 각 타입값을 콤마(",")로 구분하여 중복 설정할 수 있습니다.
 ```
 ```javascript
-this.Grid00.setCellProperty( "body", 0, "editinputfilter", "dot" );
-this.Grid00.setCellProperty( "body", 0, "editinputfilter", "dot,comma" );
-this.Grid00.setCellProperty( "body", 0, "editinputfilter", "dot,comma,sign" );
+this.Grid00.setCellProperty( "body", 0, "editinputfilter", "dot" );this.Grid00.setCellProperty( "body", 0, "editinputfilter", "dot,comma" );this.Grid00.setCellProperty( "body", 0, "editinputfilter", "dot,comma,sign" );
 ```
 - **`"none"`** — 입력 제한 없이 모든 문자를 입력할 수 있습니다.
 - **`"alpha"`** — 소문자 "a~z"와 대문자 "A~Z"를 입력 할 수 없습니다.
@@ -19142,9 +20611,7 @@ strInputtype ::= 'normal' | <type>
 * 각 타입값을 콤마(",")로 구분하여 중복 설정할 수 있습니다.
 ```
 ```javascript
-this.Grid00.setCellProperty( "body", 0, "editinputtype", "english" );                         // 영문자만 입력허용
-this.Grid00.setCellProperty( "body", 0, "editinputtype", "english,number" );             // 영문자와 숫자만 입력허용
-this.Grid00.setCellProperty( "body", 0, "editinputtype", "english,number,space" );   // 영문자, 숫자, 공백만 입력허용
+this.Grid00.setCellProperty( "body", 0, "editinputtype", "english" );                         // 영문자만 입력허용this.Grid00.setCellProperty( "body", 0, "editinputtype", "english,number" );             // 영문자와 숫자만 입력허용this.Grid00.setCellProperty( "body", 0, "editinputtype", "english,number,space" );   // 영문자, 숫자, 공백만 입력허용
 ```
 - **`"normal"`** — 모든 문자의 입력을 허용합니다.
 - **`"alpha"`** — 소문자 "a~z"와 대문자 "A~Z"를 입력 할 수 있습니다.
@@ -19371,12 +20838,7 @@ GridCellControl.expandimage[= strImage]
 strImage ::= 'URL(' <theme-Image> | <resource-image> | <web-Image> | <absolute-image> | <relative-image> ')'
 ```
 ```javascript
-this.Grid00.setCellProperty("body",0,"expandimage","URL('theme://images/V13_logo.png')')" ;                            // 테마 이미지
-this.Grid00.setCellProperty("body",0,"expandimage","URL('globalimageID')')" ;                                                   // Resource영역 이미지
-this.Grid00.setCellProperty("body",0,"expandimage","URL('http://www.tobesoft.com/images/gnb/btn_h1.gif')')" ;  // 웹 이미지
-this.Grid00.setCellProperty("body",0,"expandimage","URL('file://C:\\xplatform_logo.gif')')" ;                             // 절대경로 이미지
-this.Grid00.setCellProperty("body",0,"expandimage","URL('Base::test.jpg')')" ;                                                  // TypeDefinition Prefix 이미지
-this.Grid00.setCellProperty("body",0,"expandimage","URL('./test.jpg')')" ;                                                         // 상대경로 이미지
+this.Grid00.setCellProperty("body",0,"expandimage","URL('theme://images/V13_logo.png')')" ;                            // 테마 이미지this.Grid00.setCellProperty("body",0,"expandimage","URL('globalimageID')')" ;                                                   // Resource영역 이미지this.Grid00.setCellProperty("body",0,"expandimage","URL('http://www.tobesoft.com/images/gnb/btn_h1.gif')')" ;  // 웹 이미지this.Grid00.setCellProperty("body",0,"expandimage","URL('file://C:\\xplatform_logo.gif')')" ;                             // 절대경로 이미지this.Grid00.setCellProperty("body",0,"expandimage","URL('Base::test.jpg')')" ;                                                  // TypeDefinition Prefix 이미지this.Grid00.setCellProperty("body",0,"expandimage","URL('./test.jpg')')" ;                                                         // 상대경로 이미지
 ```
 - **`<theme-Image>`** — 테마에 정의된 이미지를 "theme://images/이미지명" 형식으로 설정합니다.
 
@@ -19497,8 +20959,7 @@ GridCellControl.expr[= strExpr]
 **Setting Syntax**
 
 ```javascript
-this.Grid00.setCellProperty( "body", 0, "expr", "Column2 == '1' ? 'true' : 'false' ')";
-this.Grid00.setCellProperty( "body", 0, "expr", "currow + '/' + dataset.rowcount')";
+this.Grid00.setCellProperty( "body", 0, "expr", "Column2 == '1' ? 'true' : 'false' ')";this.Grid00.setCellProperty( "body", 0, "expr", "currow + '/' + dataset.rowcount')";
 ```
 - **`strExpr`** — 텍스트로 적용될 수식을 설정합니다.
 접근 가능한 영역에 정의된 함수를 설정할 수 있습니다.
@@ -19840,9 +21301,7 @@ strFormat ::= <strSNummask> | <strStringmask>
 <strSNummask> ::= [<strSignmask>] <strNumbermask>
 ```
 ```javascript
-this.Grid00.setCellProperty("body",0,"maskeditformat", "@@@@')" ;
-this.Grid00.setCellProperty("body",0,"maskeditformat","###,000.00##')" ;
-this.Grid00.setCellProperty("body",0,"maskeditformat","999,000.0099')" ;
+this.Grid00.setCellProperty("body",0,"maskeditformat", "@@@@')" ;this.Grid00.setCellProperty("body",0,"maskeditformat","###,000.00##')" ;this.Grid00.setCellProperty("body",0,"maskeditformat","999,000.0099')" ;
 ```
 - **`<strSignmask>`** — Cell 의 editype 속성값이 "mask" 이고, maskedittype 속성값이 "number" 일 때 숫자 앞에 사용될 부호 마스크를 설정합니다.
 
@@ -20172,8 +21631,7 @@ GridCellControl.maskedittype[= enumType]
 enumType ::= 'number' | 'string'
 ```
 ```javascript
-this.Grid00.setCellProperty( "body", 0, "maskedittype", "number" );
-this.Grid00.setCellProperty( "body", 0, "maskedittype", "string" );
+this.Grid00.setCellProperty( "body", 0, "maskedittype", "number" );this.Grid00.setCellProperty( "body", 0, "maskedittype", "string" );
 ```
 - **`"number"`** — Cell 에서 숫자 형식으로 입력을 받습니다.
 
@@ -21297,9 +22755,7 @@ GridCellControl.subsumtext[= strSubText]
 **Setting Syntax**
 
 ```javascript
-this.Grid00.setCellProperty( "body", 0, "subsumtext", "Sum')";
-this.Grid00.setCellProperty( "body", 0, "subsumtext", "expr:dataset.getRowLevel(currow) == '1'? 'SubSum':'Total')";
-this.Grid00.setCellProperty( "body", 0, "subsumtext", "bind:Column0')";
+this.Grid00.setCellProperty( "body", 0, "subsumtext", "Sum')";this.Grid00.setCellProperty( "body", 0, "subsumtext", "expr:dataset.getRowLevel(currow) == '1'? 'SubSum':'Total')";this.Grid00.setCellProperty( "body", 0, "subsumtext", "bind:Column0')";
 ```
 - **`strSubText`** — 논리적 레코드(Logical Record)에 표시할 텍스트를 문자열, "expr:", "bind:" 방식으로 설정합니다.
 
@@ -21593,9 +23049,7 @@ strInputfilter ::= 'none' | <filter>
 * 각 타입값을 콤마(",")로 구분하여 중복 설정할 수 있습니다.
 ```
 ```javascript
-this.Grid00.setCellProperty( "body", 0, "textareainputfilter", "dot" );
-this.Grid00.setCellProperty( "body", 0, "textareainputfilter", "dot,comma" );
-this.Grid00.setCellProperty( "body", 0, "textareainputfilter", "dot,comma,sign" );
+this.Grid00.setCellProperty( "body", 0, "textareainputfilter", "dot" );this.Grid00.setCellProperty( "body", 0, "textareainputfilter", "dot,comma" );this.Grid00.setCellProperty( "body", 0, "textareainputfilter", "dot,comma,sign" );
 ```
 - **`"none"`** — 입력 제한 없이 모든 문자를 입력할 수 있습니다.
 - **`"alpha"`** — 소문자 "a~z"와 대문자 "A~Z"를 입력 할 수 없습니다.
@@ -21680,9 +23134,7 @@ strInputtype ::= 'normal' | <type>
 * 각 타입값을 콤마(",")로 구분하여 중복 설정할 수 있습니다.
 ```
 ```javascript
-this.Grid00.setCellProperty( "body", 0, "textareainputtype", "english" );                         // 영문자만 입력허용
-this.Grid00.setCellProperty( "body", 0, "textareainputtype", "english,number" );             // 영문자와 숫자만 입력허용
-this.Grid00.setCellProperty( "body", 0, "textareainputtype", "english,number,space" );   // 영문자, 숫자, 공백만 입력허용
+this.Grid00.setCellProperty( "body", 0, "textareainputtype", "english" );                         // 영문자만 입력허용this.Grid00.setCellProperty( "body", 0, "textareainputtype", "english,number" );             // 영문자와 숫자만 입력허용this.Grid00.setCellProperty( "body", 0, "textareainputtype", "english,number,space" );   // 영문자, 숫자, 공백만 입력허용
 ```
 - **`"normal"`** — 모든 문자의 입력을 허용합니다.
 - **`"alpha"`** — 소문자 "a~z"와 대문자 "A~Z"를 입력 할 수 있습니다.
@@ -21825,10 +23277,7 @@ strBartype ::= <scrolltype> | <pairtype>
 <mobiletype> ::= 'default' | 'none' | 'indicator' | 'autoindicator'
 ```
 ```javascript
-this.Grid00.setCellProperty( "body", 0, "textareascrollbartype", "none" );
-this.Grid00.setCellProperty( "body", 0, "textareascrollbartype", "default autoindicator" );
-this.Grid00.setCellProperty( "body", 0, "textareascrollbartype", "auto fixed" );
-this.Grid00.setCellProperty( "body", 0, "textareascrollbartype", "indicator none" );
+this.Grid00.setCellProperty( "body", 0, "textareascrollbartype", "none" );this.Grid00.setCellProperty( "body", 0, "textareascrollbartype", "default autoindicator" );this.Grid00.setCellProperty( "body", 0, "textareascrollbartype", "auto fixed" );this.Grid00.setCellProperty( "body", 0, "textareascrollbartype", "indicator none" );
 ```
 - **`<scrolltype>`** — textareascrollbartype 속성값을 하나만 설정하면 가로/세로 스크롤바에 동일한 값이 적용됩니다.
 - **`<pairtype>`** — textareascrollbartype 속성값을 빈칸으로 구분한 두개의 값으로 설정합니다.
@@ -21917,9 +23366,7 @@ GridCellControl.tooltiptext[= strToolTipText]
 **Setting Syntax**
 
 ```javascript
-this.Grid00.setCellProperty( "body", 0, "tooltiptext", "ToolTip" );
-this.Grid00.setCellProperty( "body", 0, "tooltiptext", "" );          // 풍선 도움말이 표시되지 않습니다.
-this.Grid00.setCellProperty( "body", 0, "tooltiptext", null );        // 상위영역의 풍선 도움말이 표시됩니다.
+this.Grid00.setCellProperty( "body", 0, "tooltiptext", "ToolTip" );this.Grid00.setCellProperty( "body", 0, "tooltiptext", "" );          // 풍선 도움말이 표시되지 않습니다.this.Grid00.setCellProperty( "body", 0, "tooltiptext", null );        // 상위영역의 풍선 도움말이 표시됩니다.
 ```
 - **`strToolTipText`** — 풍선도움말에 표시할 텍스트를 설정합니다.
 
@@ -23891,10 +25338,7 @@ CellSubCellControl.accessibilitylabel[= strLabel]
 **Setting Syntax**
 
 ```javascript
-this.Grid00.setSubCellProperty( "body", 0, "accessibilitylabel", "OK Button" );
-this.Grid00.setSubCellProperty( "body", 0, "accessibilitylabel", "[@static00]" );
-this.Grid00.setSubCellProperty( "body", 0, "accessibilitylabel", "[@static00][@static01]" );
-this.Grid00.setSubCellProperty( "body", 0, "accessibilitylabel", "[@static00][@static01] OK Button" );
+this.Grid00.setSubCellProperty( "body", 0, "accessibilitylabel", "OK Button" );this.Grid00.setSubCellProperty( "body", 0, "accessibilitylabel", "[@static00]" );this.Grid00.setSubCellProperty( "body", 0, "accessibilitylabel", "[@static00][@static01]" );this.Grid00.setSubCellProperty( "body", 0, "accessibilitylabel", "[@static00][@static01] OK Button" );
 ```
 - **`strLabel`** — accessibilitydescreadtype 속성값에 "label"이 포함된 경우 스크린 리더의 음성 출력 대상으로 포함할 값을 설정합니다.
 문자열로 설정하거나 Grid 컴포넌트와 부모가 같은 컴포넌트의 accessibilitylabel 속성값을 참조할 수 있습니다.
@@ -24474,8 +25918,7 @@ CellSubCellControl.calendarbuttonsize[= strSize]
 strSize ::= <strWidth> [ ' ' <strHeight> ]
 ```
 ```javascript
-this.Grid00.setSubCellProperty( "body", 0, 0, "calendarbuttonsize", "30");
-this.Grid00.setSubCellProperty( "body", 0, 0, "calendarbuttonsize", "30 20");
+this.Grid00.setSubCellProperty( "body", 0, 0, "calendarbuttonsize", "30");this.Grid00.setSubCellProperty( "body", 0, 0, "calendarbuttonsize", "30 20");
 ```
 - **`<strWidth>`** — 드롭다운 버튼의 너비를 pixel 단위의 문자열로 설정합니다.
 - **`<strHeight>`** — 드롭다운 버튼의 높이를 pixel 단위의 문자열로 설정합니다.
@@ -24577,8 +26020,7 @@ strFormat ::= <maskchar> | 'LONGDATE' | 'SHORTDATE'
 * <maskchar>는 날짜와 시간을 표시하기 위한 마스크 문자의 조합으로 각 요소의 순서변경과 생략이 가능합니다.
 ```
 ```javascript
-this.Grid00.setSubCellProperty( "body", 0, 0, "calendardateformat", "yyyy-MM-dd ddd");
-this.Grid00.setSubCellProperty( "body", 0, 0, "calendardateformat", "yyyy-MM-dd ddd HH:mm:ss");
+this.Grid00.setSubCellProperty( "body", 0, 0, "calendardateformat", "yyyy-MM-dd ddd");this.Grid00.setSubCellProperty( "body", 0, 0, "calendardateformat", "yyyy-MM-dd ddd HH:mm:ss");
 ```
 - **`<Year>`** — 연도를 표시하는 마스크 문자를 설정합니다.
 
@@ -24830,8 +26272,7 @@ strFormat ::= <maskchar> | 'LONGDATE' | 'SHORTDATE'
 * <maskchar>는 날짜와 시간을 입력하기 위한 마스크 문자의 조합으로 각 요소의 순서변경과 생략이 가능합니다.
 ```
 ```javascript
-this.Grid00.setSubCellProperty( "body", 0, 0, "calendareditformat", "yyyy-MM-dd");
-this.Grid00.setSubCellProperty( "body", 0, 0, "calendareditformat", "yyyy-MM-dd HH:mm:ss");
+this.Grid00.setSubCellProperty( "body", 0, 0, "calendareditformat", "yyyy-MM-dd");this.Grid00.setSubCellProperty( "body", 0, 0, "calendareditformat", "yyyy-MM-dd HH:mm:ss");
 ```
 - **`<Year>`** — 연도를 표시하는 마스크 문자를 설정합니다.
 
@@ -25484,8 +26925,7 @@ CellSubCellControl.combobuttonsize[= strSize]
 strSize ::= <strWidth> [ ' ' <strHeight> ]
 ```
 ```javascript
-this.Grid00.setSubCellProperty( "body", 0, 0, "combobuttonsize", "30");
-this.Grid00.setSubCellProperty( "body", 0, 0, "combobuttonsize", "30 20");
+this.Grid00.setSubCellProperty( "body", 0, 0, "combobuttonsize", "30");this.Grid00.setSubCellProperty( "body", 0, 0, "combobuttonsize", "30 20");
 ```
 - **`<strWidth>`** — 드롭다운 버튼의 너비를 pixel 단위의 문자열로 설정합니다.
 - **`<strHeight>`** — 드롭다운 버튼의 높이를 pixel 단위의 문자열로 설정합니다.
@@ -26515,9 +27955,7 @@ strInputfilter ::= 'none' | <filter>
 * 각 타입값을 콤마(",")로 구분하여 중복 설정할 수 있습니다.
 ```
 ```javascript
-this.Grid00.setSubCellProperty( "body", 0, 0, "editinputfilter", "dot" );
-this.Grid00.setSubCellProperty( "body", 0, 0, "editinputfilter", "dot,comma" );
-this.Grid00.setSubCellProperty( "body", 0, 0, "editinputfilter", "dot,comma,sign" );
+this.Grid00.setSubCellProperty( "body", 0, 0, "editinputfilter", "dot" );this.Grid00.setSubCellProperty( "body", 0, 0, "editinputfilter", "dot,comma" );this.Grid00.setSubCellProperty( "body", 0, 0, "editinputfilter", "dot,comma,sign" );
 ```
 - **`"none"`** — 입력 제한 없이 모든 문자를 입력할 수 있습니다.
 - **`"alpha"`** — 소문자 "a~z"와 대문자 "A~Z"를 입력 할 수 없습니다.
@@ -26602,9 +28040,7 @@ strInputtype ::= 'normal' | <type>
 * 각 타입값을 콤마(",")로 구분하여 중복 설정할 수 있습니다.
 ```
 ```javascript
-this.Grid00.setSubCellProperty( "body", 0, 0, "editinputtype", "english" );                         // 영문자만 입력허용
-this.Grid00.setSubCellProperty( "body", 0, 0, "editinputtype", "english,number" );             // 영문자와 숫자만 입력허용
-this.Grid00.setSubCellProperty( "body", 0, 0, "editinputtype", "english,number,space" );   // 영문자, 숫자, 공백만 입력허용
+this.Grid00.setSubCellProperty( "body", 0, 0, "editinputtype", "english" );                         // 영문자만 입력허용this.Grid00.setSubCellProperty( "body", 0, 0, "editinputtype", "english,number" );             // 영문자와 숫자만 입력허용this.Grid00.setSubCellProperty( "body", 0, 0, "editinputtype", "english,number,space" );   // 영문자, 숫자, 공백만 입력허용
 ```
 - **`"normal"`** — 모든 문자의 입력을 허용합니다.
 - **`"alpha"`** — 소문자 "a~z"와 대문자 "A~Z"를 입력 할 수 있습니다.
@@ -26818,14 +28254,11 @@ CellSubCellControl.expandimage[= strImage]
 strImage ::= 'URL(' <theme-Image> | <resource-image> | <web-Image> | <absolute-image> | <relative-image> ')'
 ```
 ```javascript
-this.Grid00.setSubCellProperty("body",0,0,"expandimage","URL('theme://images/V13_logo.png')") ;                            // 테마 이미지
-this.Grid00.setSubCellProperty("body",0,0,"expandimage","URL('globalimageID')") ;                                                   // Resource영역 이미지 
+this.Grid00.setSubCellProperty("body",0,0,"expandimage","URL('theme://images/V13_logo.png')") ;                            // 테마 이미지this.Grid00.setSubCellProperty("body",0,0,"expandimage","URL('globalimageID')") ;                                                   // Resource영역 이미지 
 
-this.Grid00.setSubCellProperty("body",0,0,"expandimage","URL('http://www.tobesoft.com/images/gnb/btn_h1.gif')") ;  // 웹 이미지
-this.Grid00.setSubCellProperty("body",0,0,"expandimage","URL('file://C:\\xplatform_logo.gif')") ;                             // 절대경로 이미지 
+this.Grid00.setSubCellProperty("body",0,0,"expandimage","URL('http://www.tobesoft.com/images/gnb/btn_h1.gif')") ;  // 웹 이미지this.Grid00.setSubCellProperty("body",0,0,"expandimage","URL('file://C:\\xplatform_logo.gif')") ;                             // 절대경로 이미지 
 
-this.Grid00.setSubCellProperty("body",0,0,"expandimage","URL('Base::test.jpg')") ;                                                  // TypeDefinition Prefix 이미지
-this.Grid00.setSubCellProperty("body",0,0,"expandimage","URL('./test.jpg')") ;                                                         // 상대경로 이미지
+this.Grid00.setSubCellProperty("body",0,0,"expandimage","URL('Base::test.jpg')") ;                                                  // TypeDefinition Prefix 이미지this.Grid00.setSubCellProperty("body",0,0,"expandimage","URL('./test.jpg')") ;                                                         // 상대경로 이미지
 ```
 - **`<theme-Image>`** — 테마에 정의된 이미지를 "theme://images/이미지명" 형식으로 설정합니다.
 
@@ -26942,8 +28375,7 @@ CellSubCellControl.expr[= strExpr]
 **Setting Syntax**
 
 ```javascript
-this.Grid00.setSubCellProperty( "body", 0, 0, "expr", "Column2 == '1' ? 'true' : 'false' ");
-this.Grid00.setSubCellProperty( "body", 0, 0, "expr", "currow + '/' + dataset.rowcount");
+this.Grid00.setSubCellProperty( "body", 0, 0, "expr", "Column2 == '1' ? 'true' : 'false' ");this.Grid00.setSubCellProperty( "body", 0, 0, "expr", "currow + '/' + dataset.rowcount");
 ```
 - **`strExpr`** — 텍스트로 적용될 수식을 설정합니다.
 접근 가능한 영역에 정의된 함수를 설정할 수 있습니다.
@@ -27286,9 +28718,7 @@ strFormat ::= <strSNummask> | <strStringmask>
 <strSNummask> ::= [<strSignmask>] <strNumbermask>
 ```
 ```javascript
-this.Grid00.setSubCellProperty("body",0,0,"maskeditformat", "@@@@") ;
-this.Grid00.setSubCellProperty("body",0,0,"maskeditformat","###,000.00##") ;
-this.Grid00.setSubCellProperty("body",0,0,"maskeditformat","999,000.0099") ;
+this.Grid00.setSubCellProperty("body",0,0,"maskeditformat", "@@@@") ;this.Grid00.setSubCellProperty("body",0,0,"maskeditformat","###,000.00##") ;this.Grid00.setSubCellProperty("body",0,0,"maskeditformat","999,000.0099") ;
 ```
 - **`<strSignmask>`** — SubCell 의 editype 속성값이 "mask" 이고, maskedittype 속성값이 "number" 일 때 숫자 앞에 사용될 부호 마스크를 설정합니다.
 
@@ -27618,8 +29048,7 @@ CellSubCellControl.maskedittype[= enumType]
 enumType ::= 'number' | 'string'
 ```
 ```javascript
-this.Grid00.setSubCellProperty( "body", 0, 0, "maskedittype", "number" );
-this.Grid00.setSubCellProperty( "body", 0, 0, "maskedittype", "string" );
+this.Grid00.setSubCellProperty( "body", 0, 0, "maskedittype", "number" );this.Grid00.setSubCellProperty( "body", 0, 0, "maskedittype", "string" );
 ```
 - **`"number"`** — SubCell 에서 숫자 형식으로 입력을 받습니다.
 
@@ -29003,8 +30432,7 @@ strInputfilter ::= 'none' | <filter>
 * 각 타입값을 콤마(",")로 구분하여 중복 설정할 수 있습니다.
 ```
 ```javascript
-this.Grid00.setSubCellProperty( "body", 0, 0, "textareainputfilter", "dot" );
-this.Grid00.setSubCellProperty( "body", 0, 0, "textareainputfilter", "dot,comma" ); this.Grid00.setSubCellProperty( "body", 0, 0, "textareainputfilter", "dot,comma,sign" );
+this.Grid00.setSubCellProperty( "body", 0, 0, "textareainputfilter", "dot" );this.Grid00.setSubCellProperty( "body", 0, 0, "textareainputfilter", "dot,comma" ); this.Grid00.setSubCellProperty( "body", 0, 0, "textareainputfilter", "dot,comma,sign" );
 ```
 - **`"none"`** — 입력 제한 없이 모든 문자를 입력할 수 있습니다.
 - **`"alpha"`** — 소문자 "a~z"와 대문자 "A~Z"를 입력 할 수 없습니다.
@@ -29089,9 +30517,7 @@ strInputtype ::= 'normal' | <type>
 * 각 타입값을 콤마(",")로 구분하여 중복 설정할 수 있습니다.
 ```
 ```javascript
-this.Grid00.setSubCellProperty( "body", 0, 0, "textareainputtype", "english" );                         // 영문자만 입력허용
-this.Grid00.setSubCellProperty( "body", 0, 0, "textareainputtype", "english,number" );             // 영문자와 숫자만 입력허용
-this.Grid00.setSubCellProperty( "body", 0, 0, "textareainputtype", "english,number,space" );   // 영문자, 숫자, 공백만 입력허용
+this.Grid00.setSubCellProperty( "body", 0, 0, "textareainputtype", "english" );                         // 영문자만 입력허용this.Grid00.setSubCellProperty( "body", 0, 0, "textareainputtype", "english,number" );             // 영문자와 숫자만 입력허용this.Grid00.setSubCellProperty( "body", 0, 0, "textareainputtype", "english,number,space" );   // 영문자, 숫자, 공백만 입력허용
 ```
 - **`"normal"`** — 모든 문자의 입력을 허용합니다.
 - **`"alpha"`** — 소문자 "a~z"와 대문자 "A~Z"를 입력 할 수 있습니다.
@@ -29234,10 +30660,7 @@ strBartype ::= <scrolltype> | <pairtype>
 <mobiletype> ::= 'default' | 'none' | 'indicator' | 'autoindicator'
 ```
 ```javascript
-this.Grid00.setSubCellProperty( "body", 0, 0, "textareascrollbartype", "none" );
-this.Grid00.setSubCellProperty( "body", 0, 0, "textareascrollbartype", "default autoindicator" );
-this.Grid00.setSubCellProperty( "body", 0, 0, "textareascrollbartype", "auto fixed" );
-this.Grid00.setSubCellProperty( "body", 0, 0, "textareascrollbartype", "indicator none" );
+this.Grid00.setSubCellProperty( "body", 0, 0, "textareascrollbartype", "none" );this.Grid00.setSubCellProperty( "body", 0, 0, "textareascrollbartype", "default autoindicator" );this.Grid00.setSubCellProperty( "body", 0, 0, "textareascrollbartype", "auto fixed" );this.Grid00.setSubCellProperty( "body", 0, 0, "textareascrollbartype", "indicator none" );
 ```
 - **`<scrolltype>`** — textareascrollbartype 속성값을 하나만 설정하면 가로/세로 스크롤바에 동일한 값이 적용됩니다.
 - **`<pairtype>`** — textareascrollbartype 속성값을 빈칸으로 구분한 두개의 값으로 설정합니다.
@@ -29326,9 +30749,7 @@ CellSubCellControl.tooltiptext[= strToolTipText]
 **Setting Syntax**
 
 ```javascript
-this.Grid00.setSubCellProperty( "body", 0, 0, "tooltiptext", "ToolTip" );
-this.Grid00.setSubCellProperty( "body", 0, 0, "tooltiptext", "" );          // 풍선 도움말이 표시되지 않습니다.
-this.Grid00.setSubCellProperty( "body", 0, 0, "tooltiptext", null );        // 상위영역의 풍선 도움말이 표시됩니다.
+this.Grid00.setSubCellProperty( "body", 0, 0, "tooltiptext", "ToolTip" );this.Grid00.setSubCellProperty( "body", 0, 0, "tooltiptext", "" );          // 풍선 도움말이 표시되지 않습니다.this.Grid00.setSubCellProperty( "body", 0, 0, "tooltiptext", null );        // 상위영역의 풍선 도움말이 표시됩니다.
 ```
 - **`strToolTipText`** — 풍선도움말에 표시할 텍스트를 설정합니다.
 

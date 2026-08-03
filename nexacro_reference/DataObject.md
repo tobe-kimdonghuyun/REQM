@@ -345,15 +345,23 @@ DataObject.addEvent( strEventID )
 
 **Parameters**
 
-```
-DataObject 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | DataObject 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.DataObject00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -380,15 +388,26 @@ DataObject.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DataObject00_onmove = function( obj:nexacro.DataObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DataObject00.addEventHandler( "onmove", this.DataObject00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -409,15 +428,27 @@ DataObject.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.DataObject00_onmove = function( obj:nexacro.DataObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DataObject00.addEventHandlerLookup( "onmove", "DataObject00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -464,13 +495,21 @@ DataObject.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.DataObject00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -499,9 +538,11 @@ var bSucc = this.DataObject00.destroy();
 
 **Return**
 
-DataObject 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | DataObject 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-DataObject 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+DataObject 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -530,15 +571,27 @@ DataObject.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DataObject00_onmove = function( obj:nexacro.DataObject,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.DataObject00.findEventHandler( "onmove", this.DataObject00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -563,7 +616,9 @@ DataObject00.getAllResponseHeaders()
 
 **Return**
 
-header, value 쌍으로 구성된 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | header, value 쌍으로 구성된 오브젝트를 반환합니다. |
 
 **Remark**
 
@@ -589,8 +644,10 @@ DataObject.getChangedInfo()
 
 **Return**
 
-Infoarray 형식의 배열을 반환합니다.
-Infoarray 각 속성은 아래 표를 참고하세요.
+| Type | Description |
+| --- | --- |
+| Array | Infoarray 형식의 배열을 반환합니다.
+Infoarray 각 속성은 아래 표를 참고하세요. |
 
 **Remark**
 
@@ -662,15 +719,26 @@ DataObject.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = DataObject00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -691,13 +759,21 @@ DataObject00.getObjectByPath(strJsonpath)
 
 **Parameters**
 
-```
-jsonpath 값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strJsonpath | String | jsonpath 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DataObject00.getObjectByPath("$.data[*]");
 ```
 
 **Return**
 
-필터링된 데이터 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 필터링된 데이터 오브젝트를 반환합니다. |
 
 **Remark**
 
@@ -723,7 +799,9 @@ DataObject00.getResponse()
 
 **Return**
 
-데이터 통신 후 서버에서 받은 데이터값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 데이터 통신 후 서버에서 받은 데이터값을 반환합니다. |
 
 **Remark**
 
@@ -750,15 +828,17 @@ DataObject.getResponseHeader(strHeaderName)
 
 **Parameters**
 
-```
-반환 받을 header 이름을 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strHeaderName | String | 반환 받을 header 이름을 설정합니다. |
 
 **Return**
 
-파라미터로 설정한 header 이름에 해당하는 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 파라미터로 설정한 header 이름에 해당하는 값을 반환합니다.
 대소문자 구분 없이 설정한 header 이름과 일치하는 값을 반환합니다.
-일치하는 header 정보가 없는 경우에는 null을 반환합니다.
+일치하는 header 정보가 없는 경우에는 null을 반환합니다. |
 
 **Remark**
 
@@ -783,16 +863,33 @@ DataObject.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DataObject00_onmove = function( obj:nexacro.DataObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.DataObject00.insertEventHandler( "onmove", 0, this.DataObject00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -817,9 +914,16 @@ DataObject00.load([bAsync])
 
 **Parameters**
 
-```
-비동기 처리 여부를 설정합니다.
-기본값은 true이며 비동기 방식으로 동작합니다. 데이터 로드 완료와 관계없이 스크립트가 수행됩니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bAsync | Boolean | 비동기 처리 여부를 설정합니다.
+기본값은 true이며 비동기 방식으로 동작합니다. 데이터 로드 완료와 관계없이 스크립트가 수행됩니다. |
+
+**Sample Call**
+
+```javascript
+this.DataObject00.load(); 
+this.DataObject00.load(false);
 ```
 
 **Return**
@@ -854,8 +958,14 @@ DataObject.removeChangedInfo(uid)
 
 **Parameters**
 
-```
-삭제할 변경 정보의 uid를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| uid | String | 삭제할 변경 정보의 uid를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DataObject00.removeChangedInfo("update_25017468");
 ```
 
 **Return**
@@ -885,15 +995,23 @@ DataObject.removeEvent( strEventID )
 
 **Parameters**
 
-```
-DataObject 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | DataObject 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.DataObject00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -924,15 +1042,26 @@ DataObject.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DataObject00_onmove = function( obj:nexacro.DataObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DataObject00.removeEventHandler( "onmove", this.DataObject00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -959,15 +1088,27 @@ DataObject.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.DataObject00_onmove = function( obj:nexacro.DataObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DataObject00.removeEventHandlerLookup( "onmove", "DataObject00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -994,8 +1135,32 @@ DataObject00.request(strServiceid, strMethod, strUrl[, objParam])
 
 **Parameters**
 
-```
-서비스 ID 값을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strServiceid | String | 서비스 ID 값을 설정합니다. |
+| strMethod | String | 요청 시 처리할 메소드를 설정합니다.
+아래 메소드를 지정할 수 있습니다.
+GET, POST, PUT, DELETE, HEAD, PATCH |
+| strUrl | String | JSON 데이터를 호출할 URL을 설정합니다. |
+| objParam | Object | header, postdata, async 정보를 저장한 JSON 오브젝트를 설정합니다.
+JSON 오브젝트는 아래와 같은 형식으로 처리할 수 있습니다.
+var json_param = {
+    "httpheader" : header,
+    "postdata" : "test",
+    "async" : true
+}
+async 정보를 설정하지 않으면 true로 처리합니다. |
+
+**Sample Call**
+
+```javascript
+var header = {"Content-Type" : "application/x-www-form-urlencoded"};
+var json_param = {
+    "httpheader" : header,
+    "postdata" : "test",
+    "async" : true
+}
+this.DataObject00.request("no2", "GET", "http://localhost:8080/api/employees", json_param);
 ```
 
 **Return**
@@ -1031,13 +1196,35 @@ DataObject00.serializeToString([funcReplacer | arrReplacer[, strSpace | nSpace]]
 
 **Parameters**
 
-```
-key, value 값을 매개변수로 받는 함수로 반환값에 따라 문자열 결과에 포함할 속성을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| funcReplacer | Object | key, value 값을 매개변수로 받는 함수로 반환값에 따라 문자열 결과에 포함할 속성을 설정합니다. |
+| arrReplacer | Array | 문자열 결과에 포함할 속성 이름을 배열로 설정합니다. |
+| strSpace | String | 문자열 출력 시 공백을 대체할 문자열을 설정합니다.
+문자열의 길이가 10보다 큰 경우에는 10번째 문자까지만 사용합니다. |
+| nSpace | Number | 문자열 출력 시 사용할 공백문자의 숫자를 설정합니다.
+10보다 큰 경우에는 10으로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.funcReplacer = function(key, value)  {
+    if(typeof value == "string") {
+        return undefined;
+    }
+    return value;
+}
+this.DataObject00.serializeToString(funcReplacer); 
+this.DataObject00.serializeToString(['employee_name','id']);
+this.DataObject00.serializeToString(null, '##');
+this.DataObject00.serializeToString(null, 2);
 ```
 
 **Return**
 
-데이터를 변환한 문자열
+| Type | Description |
+| --- | --- |
+| String | 데이터를 변환한 문자열 |
 
 **Remark**
 
@@ -1064,15 +1251,26 @@ DataObject.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.DataObject00_onmove = function( obj:nexacro.DataObject,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.DataObject00.setEventHandler( "onmove", this.DataObject00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -1099,15 +1297,27 @@ DataObject.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.DataObject00_onmove = function( obj:nexacro.DataObject,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.DataObject00.setEventHandlerLookup( "onmove", "DataObject00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -1136,9 +1346,10 @@ ondatachanged(obj:nexacro.DataObject,e:nexacro.DataObjectDataChangedEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DataObject | Event가 발생한 Object. |
+| e | DataObjectDataChangedEventInfo | Event Object. |
 
 **Return**
 
@@ -1175,19 +1386,22 @@ onerror(obj:nexacro.DataObject,e:nexacro.DataObjectErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DataObject | Event가 발생한 Object. |
+| e | DataObjectErrorEventInfo | Event Object. |
 
 **Return**
 
-true 값을 반환하면 
+| Type | Description |
+| --- | --- |
+| Boolean | true 값을 반환하면 
 > load, request 메서드 실행 상태를 유지합니다. 
 
 false 값을 반환하면 
 > load, request 메서드 실행을 중지합니다. 
 
-반환값을 따로 지정하지 않으면 false 값으로 적용됩니다.
+반환값을 따로 지정하지 않으면 false 값으로 적용됩니다. |
 
 **Remark**
 
@@ -1212,9 +1426,10 @@ onload(obj:nexacro.DataObject,e:nexacro.DataObjectLoadEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DataObject | Event가 발생한 Object. |
+| e | DataObjectLoadEventInfo | Event Object. |
 
 **Return**
 
@@ -1245,9 +1460,10 @@ onloaddatasets(obj:nexacro.DataObject,e:nexacro.DataObjectLoadDatasetsEventInfo)
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DataObject | Event가 발생한 Object. |
+| e | DataObjectLoadDatasetsEventInfo | Event Object. |
 
 **Return**
 
@@ -1281,9 +1497,10 @@ onsuccess(obj:nexacro.DataObject,e:nexacro.DataObjectEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DataObject | Event가 발생한 Object. |
+| e | DataObjectEventInfo | Event Object. |
 
 **Return**
 
@@ -1331,9 +1548,10 @@ onvaluechanged(obj:nexacro.DataObject,e:nexacro.DataObjectValueChangedEventInfo)
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | DataObject | Event가 발생한 Object. |
+| e | DataObjectValueChangedEventInfo | Event Object. |
 
 **Return**
 

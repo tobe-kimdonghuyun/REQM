@@ -261,15 +261,28 @@ Application.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo) { // 수행할 스크립트 };
+
+var objApp = nexacro.getApplication() ; 
+var nIndex = objApp.addEventHandler( "onload", this.application_onload, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 
 ---
@@ -290,15 +303,29 @@ Application.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다 |
+
+**Sample Call**
+
+```javascript
+this.application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo) { // 수행할 스크립트 };
+
+var objApp = nexacro.getApplication() ; 
+var nIndex = objApp.addEventHandlerLookup( "onload", "application_onload", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -324,15 +351,29 @@ Application.addTray(strTrayID, objTray)
 
 **Parameters**
 
-```
-Application 에 추가될 Tray 오브젝트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strTrayID | String | Application 에 추가될 Tray 오브젝트의 ID 를 설정합니다. |
+| objTray | Object | Application 에 추가될 Tray 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objTray = new Tray("Tray00", objApp);
+
+objTray.init("Tray00", "information", "Tray Tooltip");
+var nIndex = objApp.addTray("Tray00", objTray);
+objTray.show();
 ```
 
 **Return**
 
-trays 속성에 추가된 Tray 오브젝트의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | trays 속성에 추가된 Tray 오브젝트의 인덱스를 반환합니다.
 
-Tray 오브젝트 추가에 실패했을 경우 "-1" 을 반환합니다.
+Tray 오브젝트 추가에 실패했을 경우 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -357,15 +398,27 @@ Application.addVariable( strID, varValue )
 
 **Parameters**
 
-```
-추가될 변수의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 추가될 변수의 ID를 설정합니다. |
+| varValue | String | 추가될 변수가 갖는 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication();
+var nSucc;
+nSucc = objApp.addVariable("aa", "test1");
+nSucc = objApp.addVariable("aa", "test1");
 ```
 
 **Return**
 
-변수 추가에 성공하면 "1" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 변수 추가에 성공하면 "1" 을 반환합니다.
 변수 추가에 실패하면 "0" 을 반환합니다.
-동일한 변수가 존재하면 "-1" 을 반환합니다.
+동일한 변수가 존재하면 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -394,8 +447,15 @@ Application.alert( strText )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다 |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+objApp.alert( "warning" );
 ```
 
 **Return**
@@ -425,11 +485,11 @@ cancelTransaction( [strSvcID] )
 
 **Parameters**
 
-```
-중지 시킬 트랜잭션의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strSvcID | String | 중지 시킬 트랜잭션의 ID 를 설정합니다.
 
-값 생략 시 트랜잭션 중 ESC 키를 입력했을 때와 동일하게 통신을 강제로 중지시킵니다.
-```
+값 생략 시 트랜잭션 중 ESC 키를 입력했을 때와 동일하게 통신을 강제로 중지시킵니다. |
 
 **Return**
 
@@ -458,13 +518,22 @@ Application.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication();
+var nCnt = objApp.clearEventHandler( "onload" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -489,14 +558,41 @@ Application.confirm( strText [,strCaption [,strType]] )
 
 **Parameters**
 
-```
-대화상자에 표시할 텍스트를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strText | String | 대화상자에 표시할 텍스트를 설정합니다. |
+| strCaption | String | 대화상자의 TitleBar 에 표시할 텍스트를 설정합니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+| strType | String | 대화상자의 왼쪽 영역에 표시될 아이콘 종류를 문자열로 설정합니다.
+
+"error" 설정 시 빨간색 "X" 모양 아이콘이 표시됩니다.
+"question" 설정 시 물음표("?") 모양 아이콘이 표시됩니다.
+"warning" 설정 시 노랑색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+"information" 설정 시 파란색 바탕에 느낌표("!") 모양 아이콘이 표시됩니다.
+
+값을 설정하지 않으면 아이콘을 표시하지 않습니다.
+
+- WRE에서 지원하지 않는 파라미터입니다.
+  WRE에서는 설정된 값을 무시하고 처리합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var bOK;
+bOK = objApp.confirm( "Please check it carefully." );
+bOK = objApp.confirm( "Please check it carefully." , "TitleTest");
+bOK = objApp.confirm( "Please check it carefully." , "TitleTest", "error" );
 ```
 
 **Return**
 
-표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
-표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 표시된 선택 대화상자에서 "확인" 버튼을 선택하면 "true"를 반환합니다.
+표시된 선택 대화상자에서 "취소" 버튼을 선택하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -565,15 +661,28 @@ Application.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo) { // 수행할 스크립트 };
+
+var objApp = nexacro.getApplication() ; 
+var nIndex = objApp.findEventHandler( "onload", this.application_onload, this);
 ```
 
 **Return**
 
-이벤트에서 찾으려고 하는 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에서 찾으려고 하는 핸들러 함수의 인덱스를 반환합니다.
 
-찾으려고 하는 핸들러 함수가 존재하지 않는다면 "-1"을 반환합니다.
+찾으려고 하는 핸들러 함수가 존재하지 않는다면 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -603,9 +712,11 @@ var objForm = objApp.getActiveForm() ;
 
 **Return**
 
-현재 포커스를 가진 컴포넌트의 부모 Form 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 현재 포커스를 가진 컴포넌트의 부모 Form 을 반환합니다.
 
-Div 와 같은 컨테이너 컴포넌트에 속한 컴포넌트에 포커스가 있을 경우 Div 의 부모 Form 을 반환합니다.
+Div 와 같은 컨테이너 컴포넌트에 속한 컴포넌트에 포커스가 있을 경우 Div 의 부모 Form 을 반환합니다. |
 
 
 ---
@@ -631,14 +742,16 @@ var objForm = objApp.getActiveFrame() ;
 
 **Return**
 
-현재 포커스를 가진 Form 의 부모 Frame 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 현재 포커스를 가진 Form 의 부모 Frame 을 반환합니다.
 
-Modal, Modeless 자식 Frame 을 포함하여 현재 포커스를 가진 Frame 이 반환됩니다.
+Modal, Modeless 자식 Frame 을 포함하여 현재 포커스를 가진 Frame 이 반환됩니다. |
 
 **Remark**
 
-모달, 모덜리스 자식프레임을 포함하여 현재 포커스를 가진 프레임이 반환됩니다.
-
+모달, 모덜리스 자식프레임을 포함하여 현재 포커스를 가진 프레임이 반환됩니다.
+
 프레임세트내 프레임이 활성화된 경우, 활성화된 폼을 담고 있는 프레임이 반환됩니다.
 
 
@@ -660,15 +773,27 @@ Application.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+인덱스는 "0"부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication();
+var objFunc = objApp.getEventHandler( "onload", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 "null"을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 "null"을 반환합니다. |
 
 
 ---
@@ -689,16 +814,34 @@ Application.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo) { // 수행할 스크립트 };
+
+var objApp = nexacro.getApplication() ; 
+var nIndex = objApp.insertEventHandler( "onload", 0, this.application_onload, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -723,14 +866,23 @@ Application.isExistVariable( strID );
 
 **Parameters**
 
-```
-존재여부를 확인할 변수의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 존재여부를 확인할 변수의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication();
+var bExist = objApp.isExistVariable("aa");
 ```
 
 **Return**
 
-변수가 AppVariables 영역에 존재하면 "true" 를 반환합니다.
-변수가 AppVariables 영역에 존재하지 않으면 "false" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 변수가 AppVariables 영역에 존재하면 "true" 를 반환합니다.
+변수가 AppVariables 영역에 존재하지 않으면 "false" 를 반환합니다. |
 
 
 ---
@@ -751,13 +903,15 @@ Application.lookup( strObjectID )
 
 **Parameters**
 
-```
-검색하여 찾고자 하는 오브젝트의 ID를 문자열로 설정합니다.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strObjectID | String | 검색하여 찾고자 하는 오브젝트의 ID를 문자열로 설정합니다. |
 
 **Return**
 
-검색하여 찾아낸 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 검색하여 찾아낸 오브젝트를 반환합니다. |
 
 
 ---
@@ -778,14 +932,27 @@ Application.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo) { // 수행할 스크립트 };
+
+var objApp = nexacro.getApplication() ; 
+var nIndex = objApp.removeEventHandler( "onload", this.application_onload, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 "1"을 반환합니다.
-핸들러 함수 제거에 실패하면 "0"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 "1"을 반환합니다.
+핸들러 함수 제거에 실패하면 "0"을 반환합니다. |
 
 **Remark**
 
@@ -810,14 +977,28 @@ Application.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo) { // 수행할 스크립트 };
+
+var objApp = nexacro.getApplication() ; 
+var nIndex = objApp.removeEventHandlerLookup( "onload", "application_onload", this );
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 "1"을 반환합니다.
-핸들러 함수 제거에 실패하면 "0"을 반환합니다
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 "1"을 반환합니다.
+핸들러 함수 제거에 실패하면 "0"을 반환합니다 |
 
 **Remark**
 
@@ -844,10 +1025,19 @@ application.removeTray([strID]);
 
 **Parameters**
 
-```
-Application 의 trays 속성에서 삭제될 Tray 오브젝트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strId | String | Application 의 trays 속성에서 삭제될 Tray 오브젝트의 ID 를 설정합니다.
 
-값을 설정하지 않으면 등록된 전체 Tray 오브젝트가 삭제됩니다.
+값을 설정하지 않으면 등록된 전체 Tray 오브젝트가 삭제됩니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication();
+
+objApp.removeTray("Tray00");
+objApp.removeTray();
 ```
 
 **Return**
@@ -873,8 +1063,15 @@ Application.removeVariable( strID )
 
 **Parameters**
 
-```
-제거될 변수의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 제거될 변수의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+objApp.removeVariable("aa") ;
 ```
 
 **Return**
@@ -906,14 +1103,27 @@ Application.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo) { // 수행할 스크립트 };
+
+var objApp = nexacro.getApplication() ; 
+var nIndex = objApp.setEventHandler( "onload", this.application_onload, this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 "0"을 반환합니다.
-첫번째 핸들러 함수 변경에 실패하면 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 "0"을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -940,14 +1150,28 @@ Application.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo) { // 수행할 스크립트 };
+
+var objApp = nexacro.getApplication() ; 
+var nIndex = objApp.setEventHandlerLookup( "onload", "application_onload", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 "0"을 반환합니다.
-첫번째 핸들러 함수 변경에 실패하면 "-1"을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 "0"을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -974,15 +1198,25 @@ Application.setVariable( strID, varValue )
 
 **Parameters**
 
-```
-추가될 변수명을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 추가될 변수명을 설정합니다. |
+| varValue | String | 추가될 변수가 갖는 값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var nSucc = objApp.setVariable("aa", "test1");
 ```
 
 **Return**
 
-변수 추가에 성공하면 "1" 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 변수 추가에 성공하면 "1" 을 반환합니다.
 변수 추가에 실패하면 "0" 을 반환합니다.
-동일한 변수가 존재하면 "-1" 을 반환합니다.
+동일한 변수가 존재하면 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -1011,8 +1245,15 @@ Application.trace( strLog )
 
 **Parameters**
 
-```
-로그로 출력할 문자열을 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strLog | String | 로그로 출력할 문자열을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+objApp.trace( "Check - first position" ) ;
 ```
 
 **Return**
@@ -1046,17 +1287,113 @@ Application.transaction(strSvcID,strURL,strInDatasets,strOutDatasets,strArgument
 
 **Parameters**
 
-```
-트랜잭션을 구분하기 위한 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strSvcID | String | 트랜잭션을 구분하기 위한 ID를 문자열로 설정합니다. |
+| strURL | String | 트랜잭션을 요청할 서버페이지 주소를 문자열로 설정합니다.
+
+strURL ::= <absolute-url> | <relative-url>
+
+<absolute-url>
+서버에 배포된 페이지 주소를 문자열로 설정합니다.
+웹에 접근 가능한 환경이어야 하고, Cross Domain 상황이면 사용에 제한이 있습니다.
+
+<relative-url>
+TypeDefinition 의 Services 영역에 정의된 Prefix 를 사용한 형식으로 설정합니다.
+또는 ADL 위치를 기준으로 한 상대경로를 사용하여 설정합니다. |
+| strInDatasets | String | 데이터 처리를 위해 서버로 보낼 DataSet 의 ID를 문자열로 설정합니다.
+DataSet 은 Application 의 AppVariables 영역에 정의되어 있어야 합니다.
+"입력ID=DataSet ID" 형식으로 설정하며, 빈칸으로 구분하여 여러개의 DataSet 을 보낼 수 있습니다.
+
+ex) "input1=DataSet00 input2=DataSet01"
+
+Application 하위 오브젝트의 Dataset 오브젝트는 아래와 같이 설정할 수 있습니다.
+
+ex) "input1=mainframe.frame.form.Dataset00 input2=Dataset01" |
+| strOutDatasets | String | 서버에서 보내는 데이터를 받을 DataSet 의 ID를 문자열로 설정합니다.
+DataSet 은 Application 의 AppVariables 영역에 정의되어 있어야 합니다.
+"DataSet ID=출력ID" 형식으로 설정하며, 빈칸으로 구분하여 여러개의 DataSet 을 받을 수 있습니다.
+
+ex) "DataSet00=output0 DataSet01=output1"
+
+아래와 같은 형식으로 하나의 Ouput Dataset(출력ID)을 여러 개의 Dataset에서 받을 수 있습니다.
+
+ex) "DataSet00=output0 DataSet01=output0"
+
+Application 하위 오브젝트의 Dataset 오브젝트는 아래와 같이 설정할 수 있습니다.
+
+ex) "mainframe.frame.form.Dataset00=ouput0 Dataset01=output1" |
+| strArgument | String | 서버페이지에 보낼 정보를 문자열로 설정합니다.
+"변수ID=변수값" 형식으로 설정하며, 빈칸으로 구분하여 여러개의 인수값을 보낼 수 있습니다.
+
+ex) "argu0=test argu1=30" |
+| strCallbackFunc | String | 트랜젝션 결과를 받을 때 호출될 콜백함수명을 문자열로 설정합니다.
+콜백함수는 Application 영역에 정의되어 있어야 합니다.
+
+strCallbackFunc 파라미터값을 설정하지 않으면 Promise 오브젝트를 반환합니다. |
+| bAsync | Boolean | 트랜잭션을 비동기(ASync)로 처리할지 설정합니다.
+
+true 설정 시 트랜잭션을 비동기(ASync)로 처리하여 트랜잭션의 완료와 관계없이 스크립트가 수행됩니다.
+false 설정 시 트랜잭션을 동기(Sync)로 처리하여 트랜잭션이 완료될 때까지 스크립트 수행이 중단됩니다.
+
+값을 설정하지 않으면 true로 적용됩니다. |
+| nDataType | Number | 트랜잭션 시 클라이언트에서 서버로 보내는 데이터의 형태를 설정합니다.
+
+"0" : XML 형식
+"1" : Binary 형식
+"2" : SSV 형식
+"3" : JSON 형식
+
+값을 설정하지 않으면 "0" 으로 적용됩니다. |
+| bCompress | Boolean | 트랜잭션 시 데이터를 압축시킬지 설정합니다.
+
+true 설정 시 데이터를 압축하여 송수신합니다.
+false 설정 시 데이터를 압축하지 않고 송수신합니다.
+
+값을 설정하지 않으면 false로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+objApp.transaction( "MyService01" ,"DataSrv::samplexml.jsp","input1=Dataset02","Dataset03=output1","a=b","callbackFunction" );
+objApp.transaction( "MyService01" ,"DataSrv::samplexml.jsp","input1=Dataset02","Dataset03=output1","a=b","callbackFunction",false,1,false );
+
+const req = objApp.transaction("MyService01","DataSrv::samplexml.jsp","input1=Dataset02","Dataset03=output","a=b");
+if(req) 
+{
+    req.then(([code, msg]) => { 
+        objApp.callbackFunction("MyService01", code, msg);
+    })
+    .catch(([code, msg]) => trace(code, msg));
+}
+
+async function loadData(app) 
+{
+    try {
+        const [code, msg] = await app.transaction("MyService01","DataSrv::samplexml.jsp","input1=Dataset02","Dataset03=output","a=b");
+        trace("after transaction message", code, msg);
+     } catch ([code, msg]) {
+        trace(code, msg);
+    }
+}
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+    var objApp = nexacro.getApplication() ;
+    loadData(objApp );
+}
 ```
 
 **Return**
 
-strCallbackFunc 파라미터값을 설정하지 않은 경우에만 반환값이 있습니다.
+| Type | Description |
+| --- | --- |
+| Object | strCallbackFunc 파라미터값을 설정하지 않은 경우에만 반환값이 있습니다.
 
 Promise 오브젝트를 반환합니다.
 Promise 오브젝트는 자바스크립트 표준 내장 객체입니다.
-내부적으로 resolve 수행 시점은 transaction 수행이 완료되는 시점입니다.
+내부적으로 resolve 수행 시점은 transaction 수행이 완료되는 시점입니다. |
 
 **Remark**
 
@@ -1151,9 +1488,10 @@ onafteruserconfirm(obj:nexacro.Application,e:nexacro.EventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Application | Event가 발생한 Object. |
+| e | EventInfo | Event Object. |
 
 **Return**
 
@@ -1182,19 +1520,22 @@ onbeforeexit(obj:nexacro.Application,e:nexacro.ExitEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Application | Event가 발생한 Object. |
+| e | ExitEventInfo | Event Object. |
 
 **Return**
 
-- 확인창 표시
+| Type | Description |
+| --- | --- |
+| String | - 확인창 표시
 (NRE에서만 지원하는 기능입니다).
 
 이벤트 핸들러 함수에서 리턴값으로 문자열 설정 시 Application 종료를 위한 확인창이 표시됩니다.
 리턴값으로 설정한 문자열이 종료를 위한 확인창에 사용됩니다.
 
-이벤트 핸들러 함수에서 리턴값을 생략하거나 null, undefined, 빈문자열("") 으로 설정 시 확인창이 표시되지 않습니다.
+이벤트 핸들러 함수에서 리턴값을 생략하거나 null, undefined, 빈문자열("") 으로 설정 시 확인창이 표시되지 않습니다. |
 
 **Remark**
 
@@ -1235,9 +1576,10 @@ onbeforeuserconfirm(obj:nexacro.Application,e:nexacro.EventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Application | Event가 발생한 Object. |
+| e | EventInfo | Event Object. |
 
 **Return**
 
@@ -1266,9 +1608,10 @@ onduplicateexecution(obj:nexacro.Application,e:nexacro.DuplicateExecutionEventIn
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Application | Event가 발생한 Object. |
+| e | DuplicateExecutionEventInfo | Event Object. |
 
 **Return**
 
@@ -1302,13 +1645,16 @@ onerror(obj:nexacro.Application,e:nexacro.ErrorEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Application | Event가 발생한 Object. |
+| e | ErrorEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면
   > Environment 의 onerror 로 이벤트를 전파하지 않습니다.
   > 실행중인 Transaction 을 중지시키지 않고 유지합니다.
 
@@ -1317,7 +1663,7 @@ Event가 발생한 Object.
   > 실행중인 Transaction 의 중지여부는 Environment 의 onerror 에서 리턴값으로 결정됩니다.
   > Environment 에 onerror 이벤트가 정의되어 있지 않으면 실행중인 Transaction 은 중지됩니다.
 
-이벤트의 리턴값을 생략하면 false 로 적용됩니다.
+이벤트의 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -1345,9 +1691,10 @@ onexit(obj:nexacro.Application,e:nexacro.ExitEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Application | Event가 발생한 Object. |
+| e | ExitEventInfo | Event Object. |
 
 **Return**
 
@@ -1383,9 +1730,10 @@ onload(obj:nexacro.Application,e:nexacro.LoadEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Application | Event가 발생한 Object. |
+| e | LoadEventInfo | Event Object. |
 
 **Return**
 
@@ -1416,9 +1764,10 @@ onloadforms(obj:nexacro.Application,e:nexacro.LoadEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Application | Event가 발생한 Object. |
+| e | LoadEventInfo | Event Object. |
 
 **Return**
 
@@ -1443,9 +1792,10 @@ onloadingappvariables(obj:nexacro.Application,e:nexacro.LoadEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Application | Event가 발생한 Object. |
+| e | LoadEventInfo | Event Object. |
 
 **Return**
 
@@ -1475,9 +1825,10 @@ onnotification(obj:nexacro.Application,e:nexacro.NotificationEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Application | Event가 발생한 Object. |
+| e | NotificationEventInfo | Event Object. |
 
 **Return**
 
@@ -1650,8 +2001,7 @@ Tray.tooltip[= strTooltip]
 **Setting Syntax**
 
 ```javascript
-var objApp = nexacro.getApplication();
-objApp.trays["Tray0"].tooltip = "Tray ToolTip";
+var objApp = nexacro.getApplication();objApp.trays["Tray0"].tooltip = "Tray ToolTip";
 ```
 - **`strTooltip`** — 풍선도움말에 표시할 텍스트를 설정합니다.
 
@@ -1682,15 +2032,27 @@ Tray.addItem(strID,objPopupMenu)
 
 **Parameters**
 
-```
-Tray 의 Items 속성에 추가될 TrayPopupMenu 오브젝트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | Tray 의 Items 속성에 추가될 TrayPopupMenu 오브젝트의 ID 를 설정합니다. |
+| objPopupMenu | Object | Tray 의 items 속성에 추가할 TrayPopupMenu 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objTrayMenu = new TrayPopupMenu();
+...    // TrayPopupMenu 설정
+var objApp = nexacro.getApplication() ;
+objApp.trays["Tray0"].addItem("item00", objTrayMenu);
 ```
 
 **Return**
 
-items 속성에 추가된 TrayPopupMenu 오브젝트의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | items 속성에 추가된 TrayPopupMenu 오브젝트의 인덱스를 반환합니다.
 
-TrayPopupMenu 오브젝트 추가에 실패했을 경우 "-1" 을 반환합니다.
+TrayPopupMenu 오브젝트 추가에 실패했을 경우 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -1715,15 +2077,24 @@ Tray.deleteItem( strID )
 
 **Parameters**
 
-```
-Tray 의 Items 속성에서 삭제될 TrayPopupMenu 오브젝트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | Tray 의 Items 속성에서 삭제될 TrayPopupMenu 오브젝트의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+objApp.trays["Tray0"].deleteItem("popupmenu00");
 ```
 
 **Return**
 
-items 속성에서 삭제된 TrayPopupMenu 오브젝트의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | items 속성에서 삭제된 TrayPopupMenu 오브젝트의 인덱스를 반환합니다.
 
-TrayPopupMenu 오브젝트 삭제에 실패했을 경우 -1 을 반환합니다.
+TrayPopupMenu 오브젝트 삭제에 실패했을 경우 -1 을 반환합니다. |
 
 
 ---
@@ -1748,8 +2119,10 @@ objTray.destroy();
 
 **Return**
 
-Tray 가 정상적으로 삭제되면 "true"를 반환합니다.
-Tray 가 정상적으로 삭제되지 않으면 "false"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Tray 가 정상적으로 삭제되면 "true"를 반환합니다.
+Tray 가 정상적으로 삭제되지 않으면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -1774,13 +2147,22 @@ Tray.findItem(strID)
 
 **Parameters**
 
-```
-items 속성에 등록된 TrayPopupMenu 오브젝트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | items 속성에 등록된 TrayPopupMenu 오브젝트의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+objApp.trays["Tray0"].findItem("item00");
 ```
 
 **Return**
 
-items 속성에 등록된 strID 의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | items 속성에 등록된 strID 의 인덱스를 반환합니다. |
 
 
 ---
@@ -1806,7 +2188,9 @@ var nItemCnt = objApp.trays["Tray0"].getItemCount();
 
 **Return**
 
-items 속성에 등록된 TrayPopupMenu 오브젝트의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | items 속성에 등록된 TrayPopupMenu 오브젝트의 갯수를 반환합니다. |
 
 
 ---
@@ -1852,8 +2236,22 @@ Tray.init(strID, icon, tooltip);
 
 **Parameters**
 
-```
-동적 생성된 Tray 의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | 동적 생성된 Tray 의 ID 를 설정합니다. |
+| icon | String | Tray 에서 사용할 Icon 을 설정합니다. |
+| tooltip | String | Tray 의 풍선도움말에 표시될 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objTray = new nexacro.Tray("Tray00", objApp);
+
+objTray.init("Tray00", "information", "Tray Tooltip");
+
+var nIndex = objApp.addTray("Tray00", objTray);
+objTray.show();
 ```
 
 **Return**
@@ -1889,15 +2287,28 @@ Tray.insertItem(nIndex, strID, objPopupMenu)
 
 **Parameters**
 
-```
-TrayPopupMenu 오브젝트가 추가될 위치의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nIndex | Number | TrayPopupMenu 오브젝트가 추가될 위치의 인덱스를 설정합니다. |
+| strID | String | TrayPopupMenu 오브젝트의 ID 를 설정합니다. |
+| objPopupMenu | Object | 추가될 TrayPopupMenu 오브젝트를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+var objTrayMenu = new TrayPopupMenu();
+...    // TrayPopupMenu 설정
+var nIndex = objApp.trays["Tray0"].insertItem(1, "item00", objTrayMenu );
 ```
 
 **Return**
 
-TrayPopupMenu 오브젝트가 추가된 위치의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | TrayPopupMenu 오브젝트가 추가된 위치의 인덱스를 반환합니다.
 
-TrayPopupMenu 오브젝트 추가에 실패했을 경우 "-1" 을 반환합니다.
+TrayPopupMenu 오브젝트 추가에 실패했을 경우 "-1" 을 반환합니다. |
 
 **Remark**
 
@@ -1962,10 +2373,27 @@ Tray.showBalloonTip(strTitleIcon, strTitle, strText [, bNoSound])
 
 **Parameters**
 
-```
-풍선팁의 타이틀 왼편에 나타나는 아이콘의 이름 및 경로를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strTitleIcon | String | 풍선팁의 타이틀 왼편에 나타나는 아이콘의 이름 및 경로를 설정합니다.
 
-아이콘으로 사용 가능한 시스템 아이콘은 "information", "warning", "error", "none" 입니다.
+아이콘으로 사용 가능한 시스템 아이콘은 "information", "warning", "error", "none" 입니다. |
+| strTitle | String | 풍선팁에 나타나는 제목을 설정합니다.
+48자 미만으로 설정할 수 있습니다. |
+| strText | String | 풍선팁에 표시할 텍스트를 설정합니다.
+200자 미만으로 설정할 수 있습니다. |
+| bNoSound | Boolean | true 설정 시 풍선팁이 나타날 때 소리가 나오지 않습니다.
+false 설정 시 풍선팁이 나타날 때 소리가 나옵니다.
+
+값 생략 시 false로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var objApp = nexacro.getApplication() ;
+
+objApp.trays["Tray0"].showBalloonTip("information", "안내", "업데이트가 준비되었습니다.");
+objApp.trays["Tray0"].showBalloonTip("information", "안내", "업데이트가 준비되었습니다.", false);
 ```
 
 **Return**
@@ -1997,9 +2425,10 @@ onballoontipclick(obj:nexacro.Tray,e:nexacro.ClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tray | Event가 발생한 Object. |
+| e | ClickEventInfo | Event Object. |
 
 **Return**
 
@@ -2029,9 +2458,10 @@ onballoontiphide(obj:nexacro.Tray,e:nexacro.TrayBalloonTipHideEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tray | Event가 발생한 Object. |
+| e | TrayBalloonTipHideEventInfo | Event Object. |
 
 **Return**
 
@@ -2060,9 +2490,10 @@ onballoontipshow(obj:nexacro.Tray,e:nexacro.EventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tray | Event가 발생한 Object. |
+| e | EventInfo | Event Object. |
 
 **Return**
 
@@ -2087,9 +2518,10 @@ ondblclick(obj:nexacro.Tray,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tray | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
@@ -2118,9 +2550,10 @@ onlbuttonup(obj:nexacro.Tray,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tray | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
@@ -2145,9 +2578,10 @@ onrbuttonup(obj:nexacro.Tray,e:nexacro.MouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Tray | Event가 발생한 Object. |
+| e | MouseEventInfo | Event Object. |
 
 **Return**
 
@@ -2531,9 +2965,10 @@ oninnerdatachanged(obj:nexacro.TrayPopupMenu,e:nexacro.InnerdataChangedEventInfo
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TrayPopupMenu | Event가 발생한 Object. |
+| e | InnerdataChangedEventInfo | Event Object. |
 
 **Return**
 
@@ -2566,9 +3001,10 @@ onmenuclick(obj:nexacro.TrayPopupMenu,e:nexacro.MenuClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | TrayPopupMenu | Event가 발생한 Object. |
+| e | MenuClickEventInfo | Event Object. |
 
 **Return**
 

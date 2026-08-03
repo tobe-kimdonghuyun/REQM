@@ -1483,8 +1483,7 @@ strSize ::= <strWidth> [ ' ' <strHeight> ]
 ```
 ```javascript
 this.ListView00.cellcalendarbuttonsize = "30"; 
-
-this.ListView00.cellcalendarbuttonsize = "30 20";
+this.ListView00.cellcalendarbuttonsize = "30 20";
 ```
 - **`<strWidth>`** — 드롭다운 버튼의 너비를 pixel 단위의 문자열로 설정합니다.
 - **`<strHeight>`** — 드롭다운 버튼의 높이를 pixel 단위의 문자열로 설정합니다.
@@ -1681,8 +1680,7 @@ strSize ::= <strWidth> [ ' ' <strHeight> ]
 ```
 ```javascript
 this.ListView00.cellcombobuttonsize = "30"; 
-
-this.ListView00.cellcombobuttonsize = "30 20";
+this.ListView00.cellcombobuttonsize = "30 20";
 ```
 - **`<strWidth>`** — 드롭다운 버튼의 너비를 pixel 단위의 문자열로 설정합니다.
 - **`<strHeight>`** — 드롭다운 버튼의 높이를 pixel 단위의 문자열로 설정합니다.
@@ -2183,8 +2181,7 @@ bEvent ::= 'true' | 'false'
 ```
 ```javascript
 this.ListView00.enableevent = true;  
-
-this.ListView00.enableevent = false;
+this.ListView00.enableevent = false;
 ```
 - **`true`** — ListView 에서 이벤트가 발생하도록 설정합니다.
 - **`false`** — ListView 에서 이벤트가 발생하지 않도록 설정합니다.
@@ -2216,8 +2213,7 @@ ListView.enableredraw[= bRedraw]
 bRedraw ::= 'true' | 'false'
 ```
 ```javascript
-this.ListView00.enableredraw = true;
-this.ListView00.enableredraw = false;
+this.ListView00.enableredraw = true;this.ListView00.enableredraw = false;
 ```
 - **`"true"`** — ListView 에 변경이 발생하면 화면을 자동으로 다시 그립니다.
 - **`"false"`** — ListView 에 변경이 발생하여도 화면을 자동으로 다시 그리지 않습니다.
@@ -3850,9 +3846,7 @@ ListView.tooltiptext[= strToolTipText]
 **Setting Syntax**
 
 ```javascript
-this.ListView00.tooltiptext = "This is ToolTip Text";
-this.ListView00.tooltiptext = "";          // 풍선 도움말이 표시되지 않습니다.
-this.ListView00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
+this.ListView00.tooltiptext = "This is ToolTip Text";this.ListView00.tooltiptext = "";          // 풍선 도움말이 표시되지 않습니다.this.ListView00.tooltiptext = null;        // 상위 컴포넌트의 풍선 도움말이 표시됩니다.
 ```
 - **`strToolTipText`** — 풍선도움말에 표시할 텍스트를 설정합니다.
 
@@ -4265,15 +4259,23 @@ ListView.addEvent( strEventID )
 
 **Parameters**
 
-```
-ListView 에 추가할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | ListView 에 추가할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.ListView00.addEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 추가에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 추가에 성공하면 true 를 반환합니다.
 
-이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 추가에 실패하거나 선언되어 있는 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -4300,15 +4302,26 @@ ListView.addEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00_onmove = function( obj:nexacro.ListView,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ListView00.addEventHandler( "onmove", this.ListView00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 
 ---
@@ -4329,15 +4342,27 @@ ListView.addEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 추가될 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 추가될 이벤트의 ID를 설정합니다. |
+| strFunc | String | 이벤트 발생 시 수행될 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00_onmove = function( obj:nexacro.ListView,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ListView00.addEventHandlerLookup( "onmove", "ListView00_onmove", this);
 ```
 
 **Return**
 
-이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 추가된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
-정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다.
+정상적으로 추가되지 않은 경우에는 "-1"을 반환합니다. |
 
 **Remark**
 
@@ -4431,13 +4456,21 @@ ListView.clearEventHandler( strEventID )
 
 **Parameters**
 
-```
-모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 모든 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nCnt = this.ListView00.clearEventHandler( "onmove" );
 ```
 
 **Return**
 
-특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 제거된 핸들러 함수의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -4528,9 +4561,11 @@ var bSucc = this.ListView00.destroy();
 
 **Return**
 
-ListView 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | ListView 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-ListView 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+ListView 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -4563,8 +4598,10 @@ var bSucc = this.ListView00.dropdown();
 
 **Return**
 
-아이템 리스트가 정상적으로 표시되면 true를 반환합니다.
-아이템 리스트가 정상적으로 표시되지 않으면 false를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 아이템 리스트가 정상적으로 표시되면 true를 반환합니다.
+아이템 리스트가 정상적으로 표시되지 않으면 false를 반환합니다. |
 
 **Remark**
 
@@ -4596,9 +4633,11 @@ var bSucc = this.ListView00.dropdownCalendar();
 
 **Return**
 
-팝업달력이 정상적으로 표시되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 팝업달력이 정상적으로 표시되면 true 를 반환합니다.
 
-팝업달력이 정상적으로 표시되지 않으면 false 를 반환합니다.
+팝업달력이 정상적으로 표시되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -4635,9 +4674,11 @@ var bSucc = this.ListView00.dropdownCombo();
 
 **Return**
 
-Combo 아이템 리스트가 정상적으로 표시되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Combo 아이템 리스트가 정상적으로 표시되면 true 를 반환합니다.
 
-Combo 아이템 리스트가 정상적으로 표시되지 않으면 false 를 반환합니다.
+Combo 아이템 리스트가 정상적으로 표시되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -4663,15 +4704,27 @@ ListView.findEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 찾을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 찾을 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 찾으려고 하는 핸들러 함수를 설정합니다. |
+| objTarget | Object | 찾으려고 하는 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00_onmove = function( obj:nexacro.ListView,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+
+var nIndex = this.ListView00.findEventHandler( "onmove", this.ListView00_onmove, this );
 ```
 
 **Return**
 
-특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 특정 이벤트에서 찾은 핸들러 함수의 인덱스를 반환합니다.
 
-특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다.
+특정 이벤트에 찾으려는 핸들러 함수가 존재하지 않으면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -4696,16 +4749,24 @@ ListView.getBandExpandStatus( nRow )
 
 **Parameters**
 
-```
-Detail 밴드의 표시여부를 확인하려는 아이템의 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | Detail 밴드의 표시여부를 확인하려는 아이템의 인덱스를 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bBandExpand = this.ListView00.getBandExpandStatus( 2 );
 ```
 
 **Return**
 
-특정 아이템의 Detail 밴드가 표시되어 있으면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 특정 아이템의 Detail 밴드가 표시되어 있으면 true 를 반환합니다.
 특정 아이템의 Detail 밴드가 표시되어 있지 않으면 false 를 반환합니다.
 
-Detail 밴드가 존재하지 않거나 nRow 파라미터를 잘 못 설정한 경우 false 를 반환합니다.
+Detail 밴드가 존재하지 않거나 nRow 파라미터를 잘 못 설정한 경우 false 를 반환합니다. |
 
 **Remark**
 
@@ -4730,16 +4791,25 @@ ListView.getBandProperty( enumBand, strPropID )
 
 **Parameters**
 
-```
-속성값을 가져올 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 속성값을 가져올 밴드를 문자열로 설정합니다.
 
 "body" 설정 시 Body 밴드에서 속성값을 반환합니다.
-"detail" 설정 시 Detail 밴드에서 속성값을 반환합니다.
+"detail" 설정 시 Detail 밴드에서 속성값을 반환합니다. |
+| strPropID | String | 값을 가져올 속성의 속성명을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varProperty = this.ListView00.getBandProperty( "body", "cssclass" );
 ```
 
 **Return**
 
-특정 밴드에서 지정된 속성의 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 특정 밴드에서 지정된 속성의 값을 반환합니다. |
 
 **Remark**
 
@@ -4765,18 +4835,27 @@ ListView.getBindCellId( enumBand, strColID )
 
 **Parameters**
 
-```
-현재 ListView 포맷에서 특정 Column 과 바인드 된 Cell 을 검색할 밴드 영역을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 현재 ListView 포맷에서 특정 Column 과 바인드 된 Cell 을 검색할 밴드 영역을 문자열로 설정합니다.
 
 "body" 설정 시 Body 밴드 영역에서 Cell 을 검색합니다.
-"detail" 설정 시 Detail 밴드 영역에서 Cell 을 검색합니다.
+"detail" 설정 시 Detail 밴드 영역에서 Cell 을 검색합니다. |
+| strColID | String | DataSet 의 Column ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nIndex = this.ListView00.getBindCellId( "body", "Column00");
 ```
 
 **Return**
 
-ID 가 strColID 인 Column 과 바인드 된 첫번째 Cell 의 ID 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | ID 가 strColID 인 Column 과 바인드 된 첫번째 Cell 의 ID 를 반환합니다.
 
-ID 가 strColID 인 Column 과 바인드 된 Cell 이 없다면 빈문자열(Empty String) 을 반환합니다.
+ID 가 strColID 인 Column 과 바인드 된 Cell 이 없다면 빈문자열(Empty String) 을 반환합니다. |
 
 **Remark**
 
@@ -4806,7 +4885,9 @@ this.ListView00.getBindDataset()
 
 **Return**
 
-binddataset 속성에 설정되어 있는 DataSet 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | binddataset 속성에 설정되어 있는 DataSet 오브젝트를 반환합니다. |
 
 
 ---
@@ -4827,16 +4908,24 @@ ListView.getCellCount( enumBand )
 
 **Parameters**
 
-```
-현재 ListView 포맷에 정의된 Cell 의 갯수를 구할 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 현재 ListView 포맷에 정의된 Cell 의 갯수를 구할 밴드를 문자열로 설정합니다.
 
 "body" 설정 시 Body 밴드 영역에 정의된 Cell 의 갯수를 구합니다.
-"detail" 설정 시 Detail 밴드 영역에 정의된 Cell 의 갯수를 구합니다.
+"detail" 설정 시 Detail 밴드 영역에 정의된 Cell 의 갯수를 구합니다. |
+
+**Sample Call**
+
+```javascript
+var nCount = this.ListView00.getCellCount( "body" );
 ```
 
 **Return**
 
-enumBand 에 설정한 밴드 영역에 정의된 Cell 의 갯수를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | enumBand 에 설정한 밴드 영역에 정의된 Cell 의 갯수를 반환합니다. |
 
 **Remark**
 
@@ -4861,16 +4950,26 @@ ListView.getCellProperty( enumBand, strCellID, strPropID )
 
 **Parameters**
 
-```
-속성값을 가져올 Cell 이 속한 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 속성값을 가져올 Cell 이 속한 밴드를 문자열로 설정합니다.
 
 "body" 설정 시 Body 밴드의 Cell 에서 속성값을 반환합니다.
-"detail" 설정 시 Detail 밴드의 Cell 에서 속성값을 반환합니다.
+"detail" 설정 시 Detail 밴드의 Cell 에서 속성값을 반환합니다. |
+| strCellID | String | 속성값을 가져올 Cell 의 ID 를 문자열로 설정합니다. |
+| strPropID | String | 값을 가져올 속성명을 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var varValue = this.ListView00.getCellProperty( "body", "cell00", "color" );
 ```
 
 **Return**
 
-특정 Cell 의 특정 속성값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 특정 Cell 의 특정 속성값을 반환합니다. |
 
 **Remark**
 
@@ -4899,17 +4998,30 @@ ListView.getCellRect( nRow, strBandID, strCellID )
 
 **Parameters**
 
-```
-영역 정보를 얻을 Cell 이 위치한 아이템의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 영역 정보를 얻을 Cell 이 위치한 아이템의 인덱스를 설정합니다. |
+| strBandID | String | 영역 정보를 얻을 Cell 이 위치한 밴드를 문자열로 설정합니다.
+
+"body" 설정 시 Body 밴드로 적용됩니다.
+"detail" 설정 시 Detail 밴드로 적용됩니다. |
+| strCellID | String | 영역 정보를 얻을 Cell 의 ID 를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var objRect = this.ListView00.getCellRect( 0, "body", "cell00" );
 ```
 
 **Return**
 
-인수로 전달된 Cell 의 위치영역 정보를 갖는 Rect 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 인수로 전달된 Cell 의 위치영역 정보를 갖는 Rect 오브젝트를 반환합니다.
 잘못된 Cell 지정 시 모든 속성값이 "0" 인 Rect 오브젝트를 반환합니다.
 
 Rect 오브젝트는 "left", "top", "right", "bottom", "width", "height" 속성을 갖습니다.
-Cell 영역의 정보는 Rect 오브젝트의 각 속성에 저장됩니다.
+Cell 영역의 정보는 Rect 오브젝트의 각 속성에 저장됩니다. |
 
 **Remark**
 
@@ -4934,13 +5046,26 @@ ListView.getCellText( nRow, strBandID, strCellID )
 
 **Parameters**
 
-```
-텍스트값을 얻을 Cell 이 위치한 아이템의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | 텍스트값을 얻을 Cell 이 위치한 아이템의 인덱스를 설정합니다. |
+| strBandID | String | 텍스트값을 얻을 Cell 이 위치한 밴드를 문자열로 설정합니다.
+
+"body" 설정 시 Body 밴드로 적용됩니다.
+"detail" 설정 시 Detail 밴드로 적용됩니다. |
+| strCellID | String | 텍스트값을 얻을 Cell 의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var strText = this.ListView00.getCellText( 0, "body", "cell00" );
 ```
 
 **Return**
 
-인수로 전달된 Cell 에 표시되는 텍스트값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 인수로 전달된 Cell 에 표시되는 텍스트값을 반환합니다. |
 
 **Remark**
 
@@ -4969,15 +5094,28 @@ ListView.getCellValue( nRow, strBandID, strCellID )
 
 **Parameters**
 
-```
-text 속성값을 얻을 Cell 이 위치한 아이템의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | text 속성값을 얻을 Cell 이 위치한 아이템의 인덱스를 설정합니다. |
+| strCellID | String | text 속성값을 얻을 Cell 의 ID 를 문자열로 설정합니다. |
+| strBandID | String | text 속성값을 얻을 Cell 이 위치한 밴드를 문자열로 설정합니다.
+
+"body" 설정 시 Body 밴드로 적용됩니다.
+"detail" 설정 시 Detail 밴드로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var varValue = this.ListView00.getCellValue( 0, "body", "cell00" );
 ```
 
 **Return**
 
-Cell 의 text 속성이 DataSet 에 바인드 되어 있다면 바인드된 DataSet 의 Column 값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Cell 의 text 속성이 DataSet 에 바인드 되어 있다면 바인드된 DataSet 의 Column 값을 반환합니다.
 Cell 의 text 속성에 값이 설정되어 있다면 설정된 값을 반환합니다.
-Cell 의 text 속성이 EXPR 형식으로 설정되어 있다면 EXPR 이 적용된 값을 반환합니다.
+Cell 의 text 속성이 EXPR 형식으로 설정되어 있다면 EXPR 이 적용된 값을 반환합니다. |
 
 **Remark**
 
@@ -5010,7 +5148,9 @@ var strEditType = this.ListView00.getCurEditType();
 
 **Return**
 
-현재 선택된 Cell 의 editytype 속성값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 현재 선택된 Cell 의 editytype 속성값을 반환합니다. |
 
 
 ---
@@ -5031,25 +5171,32 @@ ListView.getCurFormatString( [bOrginal] )
 
 **Parameters**
 
-```
-동적으로 변경된 포맷을 반영하여 반환할 지 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bOrginal | Boolean | 동적으로 변경된 포맷을 반영하여 반환할 지 여부를 설정합니다.
 
 true 설정 시 동적으로 변경된 포맷은 무시하고, 디자인 시 설정한 포맷을 반환합니다.
 false 설정 시 동적으로 변경된 포맷을 반영하여 반환합니다.
 
-값을 설정하지 않으면 false 로 적용됩니다.
+값을 설정하지 않으면 false 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var strFormat = this.ListView00.getCurFormatString();
+var strFormat = this.ListView00.getCurFormatString( true );
 ```
 
 **Return**
 
-현재 ListView 에 표시되고 있는 포맷을 XML 형식의 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 현재 ListView 에 표시되고 있는 포맷을 XML 형식의 문자열로 반환합니다.
 
-기본적인 XML 형식은 아래와 같으며 Body, Detail 정의는 포맷에 따라 없을 수 있습니다.
-
-<Format id="default">
+기본적인 XML 형식은 아래와 같으며 Body, Detail 정의는 포맷에 따라 없을 수 있습니다. <Format id="default">
   <Band id="body">...</Band>
   <Band id="detail">..</Band>
-</Format>
+</Format> |
 
 **Remark**
 
@@ -5080,15 +5227,23 @@ ListView.getDatasetRow( nRowIndex )
 
 **Parameters**
 
-```
-ListView 의 아이템 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIndex | Number | ListView 의 아이템 인덱스를 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var nRow = this.ListView00.getDatasetRow( 0 );
 ```
 
 **Return**
 
-ListView 의 아이템 인덱스에 해당하는 DataSet 의 Row 인덱스값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ListView 의 아이템 인덱스에 해당하는 DataSet 의 Row 인덱스값을 반환합니다.
 
-정상적으로 값을 구할 수 없을 경우는 -1 을 반환합니다.
+정상적으로 값을 구할 수 없을 경우는 -1 을 반환합니다. |
 
 
 ---
@@ -5113,9 +5268,11 @@ var nCaretPos = this.ListView00.getEditCaret();
 
 **Return**
 
-인덱스는 0 부터 시작하며 캐럿이 위치한 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 인덱스는 0 부터 시작하며 캐럿이 위치한 인덱스를 반환합니다.
 
-Cell 이 편집상태가 아니면 -1 을 반환합니다.
+Cell 이 편집상태가 아니면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -5144,10 +5301,12 @@ var strInputText = this.ListView00.getEditingText();
 
 **Return**
 
-Cell 에 표시된 편집모드용 컨트롤에 입력중인 text 값을 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Cell 에 표시된 편집모드용 컨트롤에 입력중인 text 값을 문자열로 반환합니다.
 
 Cell 의 edittype 속성값이 "checkbox" 이면 undefined 를 반환합니다.
-Cell 의 edittype 속성값이 "date", "mask" 이면 마스크 문자가 포함된 입력중인 값을 반환합니다.
+Cell 의 edittype 속성값이 "date", "mask" 이면 마스크 문자가 포함된 입력중인 값을 반환합니다. |
 
 **Remark**
 
@@ -5183,11 +5342,13 @@ var strInputValue = this.ListView00.getEditingValue();
 
 **Return**
 
-Cell 에 표시된 편집모드용 컨트롤에 입력중인 value 값을 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Cell 에 표시된 편집모드용 컨트롤에 입력중인 value 값을 문자열로 반환합니다.
 
 Cell 의 edittype 속성값이 "button", "checkbox" 이면 undefined 를 반환합니다.
 Cell 의 edittype 속성값이 "date" 이면 마스크 문자가 제외된 입력중인 원본값을 날짜형식에 맞게 보정하여 반환합니다.
-Cell 의 edittype 속성값이 "mask" 이면 마스크 문자가 제외된 입력중인 원본값만 반환합니다.
+Cell 의 edittype 속성값이 "mask" 이면 마스크 문자가 제외된 입력중인 원본값만 반환합니다. |
 
 **Remark**
 
@@ -5223,10 +5384,12 @@ var varArrSelect = this.ListView00.getEditSelect();
 
 **Return**
 
-선택된 텍스트의 시작 인덱스와 끝 인덱스를 각각 배열의 0번, 1번 원소로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | 선택된 텍스트의 시작 인덱스와 끝 인덱스를 각각 배열의 0번, 1번 원소로 반환합니다.
 선택된 텍스트가 없는 경우 현재 캐럿 위치를 배열의 0번, 1번 원소로 반환합니다.
 
-인덱스는 0 부터 시작합니다
+인덱스는 0 부터 시작합니다 |
 
 **Remark**
 
@@ -5255,9 +5418,11 @@ var strText = this.ListView00.getEditSelectedText();
 
 **Return**
 
-선택된 텍스트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 선택된 텍스트를 반환합니다.
 
-선택된 텍스트가 없을 경우 빈문자열(Empty String)을 반환합니다.
+선택된 텍스트가 없을 경우 빈문자열(Empty String)을 반환합니다. |
 
 **Remark**
 
@@ -5288,10 +5453,12 @@ var strText = this.ListView00.getEditText();
 
 **Return**
 
-Cell 에 표시된 편집모드용 컨트롤의 text 속성값을 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Cell 에 표시된 편집모드용 컨트롤의 text 속성값을 문자열로 반환합니다.
 
 ListView 의 edittype 속성값이 "checkbox" 인 경우 undefined 를 반환합니다.
-ListView 의 edittype 속성값이 "combo", "date" 인 경우 컨트롤에 입력중인 값이 아닌 원본 text 속성값을 반환합니다.
+ListView 의 edittype 속성값이 "combo", "date" 인 경우 컨트롤에 입력중인 값이 아닌 원본 text 속성값을 반환합니다. |
 
 **Remark**
 
@@ -5332,10 +5499,12 @@ var strValue = this.ListView00.getEditValue();
 
 **Return**
 
-Cell 에 표시된 편집모드용 컨트롤의 value 속성값을 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | Cell 에 표시된 편집모드용 컨트롤의 value 속성값을 문자열로 반환합니다.
 
 Cell 의 edittype 속성값이 "button", "checkbox" 이면 undefined 를 반환합니다.
-Cell 의 edittype 속성값이 "combo", "date" 이면 컨트롤에 입력중인 값이 아닌 원본 value 속성값을 반환합니다.
+Cell 의 edittype 속성값이 "combo", "date" 이면 컨트롤에 입력중인 값이 아닌 원본 value 속성값을 반환합니다. |
 
 **Remark**
 
@@ -5372,15 +5541,26 @@ ListView.getEventHandler( strEventID, nIdx )
 
 **Parameters**
 
-```
-핸들러 함수를 얻을 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 얻을 이벤트의 ID를 설정합니다. |
+| nIdx | Number | 얻으려고 하는 핸들러 함수의 인덱스를 설정합니다.
+
+핸들러 함수의 인덱스는 0 부터 시작합니다. |
+
+**Sample Call**
+
+```javascript
+var objFunc = ListView00.getEventHandler( "onmove", 0 );
 ```
 
 **Return**
 
-지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | 지정된 인덱스의 핸들러 함수 오브젝트를 반환합니다.
 
-지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다.
+지정된 인덱스에 핸들러 함수가 존재하지 않는다면 null 을 반환합니다. |
 
 
 ---
@@ -5405,8 +5585,10 @@ var arrFormatIdList = this.ListView00.getFormatIdList();
 
 **Return**
 
-Format id 목록을 배열로 반환합니다.
-값이 없는 경우에는 빈 배열을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Format id 목록을 배열로 반환합니다.
+값이 없는 경우에는 빈 배열을 반환합니다. |
 
 
 ---
@@ -5431,12 +5613,12 @@ var strContents = this.ListView00.getFormatString();
 
 **Return**
 
-디자인 시 정의된 전체 포맷을 XML 형식의 문자열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| String | 디자인 시 정의된 전체 포맷을 XML 형식의 문자열로 반환합니다.
 동적으로 변경된 포맷값은 반영되지 않습니다.
 
-기본적인 XML 형식은 아래와 같으며 Body, Detail 정의는 포맷에 따라 없을 수 있습니다.
-
-<Formats>
+기본적인 XML 형식은 아래와 같으며 Body, Detail 정의는 포맷에 따라 없을 수 있습니다. <Formats>
   <Format id="default">
     <Band id="body">...</Band>
     <Band id="detail">..</Band>
@@ -5445,7 +5627,7 @@ var strContents = this.ListView00.getFormatString();
     <Band id="body">...</Band>
     <Band id="detail">..</Band>
   </Format>
-</Formats>
+</Formats> |
 
 **Remark**
 
@@ -5474,7 +5656,9 @@ var nBottom = this.ListView.getOffsetBottom();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 ListView 의 bottom 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 ListView 의 bottom 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -5503,7 +5687,9 @@ var nHeight = this.ListView.getOffsetHeight();
 
 **Return**
 
-ListView 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ListView 의 높이를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -5532,7 +5718,9 @@ var nleft = this.ListView.getOffsetLeft();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 ListView 의 left 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 ListView 의 left 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -5561,7 +5749,9 @@ var nRight = this.ListView.getOffsetRight();
 
 **Return**
 
-부모 컴포넌트의 Left 위치를 기준으로 ListView 의 right 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Left 위치를 기준으로 ListView 의 right 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -5590,7 +5780,9 @@ var nTop = this.ListView.getOffsetTop();
 
 **Return**
 
-부모 컴포넌트의 Top 위치를 기준으로 ListView 의 top 값을 픽셀단위의 숫자로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 부모 컴포넌트의 Top 위치를 기준으로 ListView 의 top 값을 픽셀단위의 숫자로 반환합니다. |
 
 **Remark**
 
@@ -5619,7 +5811,9 @@ var nWidth = this.ListView.getOffsetWidth();
 
 **Return**
 
-ListView 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ListView 의 너비를 픽셀단위의 숫자로 변환하여 반환합니다. |
 
 **Remark**
 
@@ -5648,9 +5842,11 @@ var nbottom = this.ListView.getPixelBottom();
 
 **Return**
 
-ListView 의 bottom 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ListView 의 bottom 속성값을 픽셀단위로 반환합니다.
 
-bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+bottom 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -5679,9 +5875,11 @@ var nheight = this.ListView.getPixelHeight();
 
 **Return**
 
-ListView 의 height 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ListView 의 height 속성값을 픽셀단위로 반환합니다.
 
-height 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+height 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -5710,9 +5908,11 @@ var nleft = this.ListView.getPixelLeft();
 
 **Return**
 
-ListView 의 left 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ListView 의 left 속성값을 픽셀단위로 반환합니다.
 
-left 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+left 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -5741,9 +5941,11 @@ var nright = this.ListView.getPixelRight();
 
 **Return**
 
-ListView 의 right 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ListView 의 right 속성값을 픽셀단위로 반환합니다.
 
-right 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+right 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -5772,9 +5974,11 @@ var ntop = this.ListView.getPixelTop();
 
 **Return**
 
-ListView 의 top 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ListView 의 top 속성값을 픽셀단위로 반환합니다.
 
-top 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+top 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -5803,9 +6007,11 @@ var nwidth = this.ListView.getPixelWidth();
 
 **Return**
 
-ListView 의 width 속성값을 픽셀단위로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | ListView 의 width 속성값을 픽셀단위로 반환합니다.
 
-width 속성값을 설정하지 않았을 경우 null 을 반환합니다.
+width 속성값을 설정하지 않았을 경우 null 을 반환합니다. |
 
 **Remark**
 
@@ -5834,9 +6040,11 @@ var arrRowidx = this.ListView00.getSelectedRows()
 
 **Return**
 
-ListView 에 선택되어 있는 아이템의 인덱스를 배열로 반환합니다.
+| Type | Description |
+| --- | --- |
+| Array | ListView 에 선택되어 있는 아이템의 인덱스를 배열로 반환합니다.
 
-선택된 아이템이 없을 경우 빈 배열을 반환합니다.
+선택된 아이템이 없을 경우 빈 배열을 반환합니다. |
 
 
 ---
@@ -5861,7 +6069,9 @@ var nScrollPos = this.ListView00.getVScrollPos();
 
 **Return**
 
-수직스크롤바의 현재 트랙바 위치값을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 수직스크롤바의 현재 트랙바 위치값을 반환합니다. |
 
 **Remark**
 
@@ -5886,8 +6096,14 @@ ListView.hideDetailBand( nRow )
 
 **Parameters**
 
-```
-Detail 밴드를 숨기려는 아이템의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | Detail 밴드를 숨기려는 아이템의 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00.hideDetailBand( 1 );
 ```
 
 **Return**
@@ -5917,8 +6133,62 @@ ListView.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinW
 
 **Parameters**
 
-```
-ListView 의 ID를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strName | String | ListView 의 ID를 문자열로 설정합니다. |
+| vLeft | String, Number | ListView 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 ListView 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 ListView 의 left 가 결정됩니다. |
+| vTop | String, Number | ListView 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 ListView 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 ListView 의 top 이 결정됩니다. |
+| vWidth | String, Number | ListView 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 ListView 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 ListView 의 width 가 결정됩니다. |
+| vHeight | String, Number | ListView 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 ListView 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 ListView 의 height 가 결정됩니다. |
+| vRight | String, Number | ListView 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 ListView 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 ListView 의 right 가 결정됩니다. |
+| vBottom | String, Number | ListView 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 ListView 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 ListView 의 bottom 이 결정됩니다. |
+| vMinWidth | String, Number | ListView 이(가) 화면에 표시되는 최소 너비값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxWidth | String, Number | ListView 이(가) 화면에 표시되는 최대 너비값을 pixel 단위의 숫자로 설정합니다.
+
+vMinWidth 보다 작은 값을 설정하면 vMinWidth 값으로 설정됩니다. |
+| vMinHeight | String, Number | ListView 이(가) 화면에 표시되는 최소 높이값을 pixel 단위의 숫자로 설정합니다. |
+| vMaxHeight | String, Number | ListView 이(가) 화면에 표시되는 최대 높이값을 pixel 단위의 숫자로 설정합니다.
+
+vMinHeight 보다 작은 값을 설정하면 vMinHeight 값으로 설정됩니다. |
+
+**Sample Call**
+
+```javascript
+var objComp = new ListView();
+
+objComp.init( "ListView00", 30, 120, 196, 46 );
+objComp.init( "ListView00", 30, 120, 196, 46, null, null );
+objComp.init( "ListView00", null, null, 300, "400px", "80%", 300 );
+objComp.init( "ListView00", 0, 0, 200, 100, null, null, 300, 500, 200, 500 );
+objComp.init( "ListView00", "ListView22:10", 300, null, null, "ListView33:10", "20%", 300, 500, 200, 500 );
 ```
 
 **Return**
@@ -5966,16 +6236,33 @@ ListView.insertEventHandler( strEventID, nIndex, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수가 삽입될 이벤트의 ID 를 설정합니다. |
+| nIndex | Number | 핸들러 함수가 삽입될 위치를 인덱스로 설정합니다.
+
+-1 값 설정 시 마지막에 추가됩니다.
+이벤트에 설정된 핸들러 함수의 갯수보다 큰 값을 설정한 경우 마지막에 추가됩니다.
+NaN 값을 입력하면 ECMA 의 정수 변환 규칙에 따라 0 이 설정됩니다. |
+| objFunc | Object | 이벤트 발생 시 수행될 핸들러 함수를 설정합니다. |
+| objTarget | Object | 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00_onmove = function( obj:nexacro.ListView,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+
+var nIndex = this.ListView00.insertEventHandler( "onmove", 0, this.ListView00_onmove, this);
 ```
 
 **Return**
 
-이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 이벤트에 삽입된 핸들러 함수의 인덱스를 반환합니다.
 동일한 핸들러 함수가 이미 있다면 해당 핸들러 함수의 인덱스를 반환합니다.
 
-핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다.
+핸들러 함수가 정상적으로 삽입되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -6004,8 +6291,10 @@ var bRtn = this.ListView00.isDropdown()
 
 **Return**
 
-ListView 컴포넌트에 아이템 리스트가 표시되어 있으면 true를 반환합니다.
-ListView 컴포넌트에 아이템 리스트가 표시되어 있지 않으면 false를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | ListView 컴포넌트에 아이템 리스트가 표시되어 있으면 true를 반환합니다.
+ListView 컴포넌트에 아이템 리스트가 표시되어 있지 않으면 false를 반환합니다. |
 
 **Remark**
 
@@ -6034,9 +6323,11 @@ var bRtn = this.ListView00.isDropdownCalendar()
 
 **Return**
 
-ListView 에 팝업달력이 표시되어 있으면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | ListView 에 팝업달력이 표시되어 있으면 true 를 반환합니다.
 
-ListView 에 팝업달력이 표시되어 있지 않으면 false 를 반환합니다.
+ListView 에 팝업달력이 표시되어 있지 않으면 false 를 반환합니다. |
 
 
 ---
@@ -6061,9 +6352,11 @@ var bRtn = this.ListView00.isDropdownCombo()
 
 **Return**
 
-ListView 에 Combo 아이템 리스트가 표시되어 있으면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | ListView 에 Combo 아이템 리스트가 표시되어 있으면 true 를 반환합니다.
 
-ListView 에 Combo 아이템 리스트가 표시되어 있지 않으면 false 를 반환합니다.
+ListView 에 Combo 아이템 리스트가 표시되어 있지 않으면 false 를 반환합니다. |
 
 
 ---
@@ -6084,12 +6377,49 @@ ListView.move( vLeft, vTop [, vWidth, vHeight [, vRight, vBottom]] )
 
 **Parameters**
 
-```
-ListView 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vLeft | String, Number | ListView 의 left 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트의 right 속성값을 기준으로 ListView 의 left 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 ListView 의 left 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 ListView 의 left 가 결정됩니다. |
+| vTop | String, Number | ListView 의 top 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 bottom 속성값을 기준으로 ListView 의 top 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 ListView 의 top 이 결정됩니다. |
+| vWidth | String, Number | ListView 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 ListView 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 ListView 의 width 가 결정됩니다. |
+| vHeight | String, Number | ListView 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 ListView 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 ListView 의 height 가 결정됩니다. |
+| vRight | String, Number | ListView 의 right 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 left 속성값을 기준으로 ListView 의 right 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 ListView 의 right 가 결정됩니다. |
+| vBottom | String, Number | ListView 의 bottom 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+
+vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시됩니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트의 top 속성값을 기준으로 ListView 의 bottom 이 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 ListView 의 bottom 이 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00.move(10,10);
+this.ListView00.move(10,10,100,100);
+this.ListView00.move(null, null, 300, "400px", "80%", 300 );
 ```
 
 **Return**
@@ -6126,8 +6456,16 @@ ListView.moveToNext( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView.moveToNext( this.Button00 );
+this.ListView.moveToNext( "Button00" );
 ```
 
 **Return**
@@ -6168,9 +6506,11 @@ var bSuccess = this.ListView00.moveToNextCell();
 
 **Return**
 
-Cell 포커스 이동에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Cell 포커스 이동에 성공하면 true 를 반환합니다.
 
-Cell 포커스 이동에 실패하면 false 를 반환합니다.
+Cell 포커스 이동에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6205,8 +6545,16 @@ ListView.moveToPrev( strComp )
 
 **Parameters**
 
-```
-기준이 되는 컴포넌트를 오브젝트로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objComp | Object | 기준이 되는 컴포넌트를 오브젝트로 설정합니다. |
+| strComp | String | 기준이 되는 컴포넌트의 ID를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView.moveToPrev( this.Button00 );
+this.ListView.moveToPrev( "Button00" );
 ```
 
 **Return**
@@ -6241,9 +6589,11 @@ var bSuccess = this.ListView00.moveToPrevCell();
 
 **Return**
 
-Cell 포커스 이동에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Cell 포커스 이동에 성공하면 true 를 반환합니다.
 
-Cell 포커스 이동에 실패하면 false 를 반환합니다.
+Cell 포커스 이동에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6277,13 +6627,20 @@ ListView.redrawExprCell( [enumBand] )
 
 **Parameters**
 
-```
-Cell에 설정한 Expr 값을 갱신할 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | Cell에 설정한 Expr 값을 갱신할 밴드를 문자열로 설정합니다.
 
 "body" 설정 시 Body 밴드 영역의 Cell에 설정된 Expr 값을 갱신합니다.
 "detail" 설정 시 Detail 밴드 영역의 Cell에 설정된 Expr 값을 갱신합니다.
 
-값을 설정하지 않으면 전체 밴드 영역의 Cell에 설정된 Expr 값을 모두 갱신합니다.
+값을 설정하지 않으면 전체 밴드 영역의 Cell에 설정된 Expr 값을 모두 갱신합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00.redrawExprCell();
+this.ListView00.redrawExprCell( "body" );
 ```
 
 **Return**
@@ -6309,15 +6666,23 @@ ListView.removeEvent( strEventID )
 
 **Parameters**
 
-```
-ListView 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | ListView 에서 삭제할 이벤트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bResult = this.ListView00.removeEvent( "onmove" );
 ```
 
 **Return**
 
-이벤트 삭제에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트 삭제에 성공하면 true 를 반환합니다.
 
-이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다.
+이벤트 삭제에 실패하거나 선언되지 않은 이벤트 ID 설정 시 false 를 반환합니다. |
 
 **Remark**
 
@@ -6348,15 +6713,26 @@ ListView.removeEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 제거할 핸들러 함수를 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00_onmove = function( obj:nexacro.ListView,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ListView00.removeEventHandler( "onmove", this.ListView00_onmove, this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -6383,15 +6759,27 @@ ListView.removeEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 제거할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 제거할 이벤트의 ID를 설정합니다. |
+| strFunc | String | 제거할 핸들러 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 제거할 핸들러 함수가 정의된 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00_onmove = function( obj:nexacro.ListView,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ListView00.removeEventHandlerLookup( "onmove", "ListView00_onmove", this);
 ```
 
 **Return**
 
-핸들러 함수 제거에 성공하면 1 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 핸들러 함수 제거에 성공하면 1 을 반환합니다.
 
-핸들러 함수 제거에 실패하면 0 을 반환합니다.
+핸들러 함수 제거에 실패하면 0 을 반환합니다. |
 
 **Remark**
 
@@ -6418,13 +6806,25 @@ ListView.resize( vWidth, vHeight )
 
 **Parameters**
 
-```
-ListView 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| vWidth | String, Number | ListView 의 width 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
 음수값을 설정할 수 없습니다.
 
 * 값에 기준 컴포넌트를 포함하여 설정했을 때 :
 pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 ListView 의 width 가 결정됩니다.
-비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 ListView 의 width 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 width 속성값을 기준으로 ListView 의 width 가 결정됩니다. |
+| vHeight | String, Number | ListView 의 height 속성값을 pixel 또는 비율("%") 단위의 숫자로 설정합니다.
+음수값을 설정할 수 없습니다.
+
+* 값에 기준 컴포넌트를 포함하여 설정했을 때 :
+pixel 단위로 설정 시 기준 컴포넌트값은 무시되고 pixel 값으로 ListView 의 height 가 결정됩니다.
+비율("%") 단위로 설정 시 기준 컴포넌트의 height 속성값을 기준으로 ListView 의 height 가 결정됩니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00.resize( 100,100 );
 ```
 
 **Return**
@@ -6472,17 +6872,23 @@ ListView.selectRow( nRowIdx [,bSelect] )
 
 **Parameters**
 
-```
-선택상태를 변경 할 ListView 아이템의 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRowIdx | Number | 선택상태를 변경 할 ListView 아이템의 인덱스를 숫자로 설정합니다.
 
-전체 아이템 갯수보다 큰값 또는 음수를 설정할 경우 선택이 모두 해제됩니다.
-```
+전체 아이템 갯수보다 큰값 또는 음수를 설정할 경우 선택이 모두 해제됩니다. |
+| bSelect | Boolean | true 설정 시 아이템의 선택상태와 관계없이 아이템을 선택 합니다.
+false 설정 시 아이템의 선택상태와 관계없이 아이템을 선택해제 합니다.
+
+값 생략 시 true 로 적용됩니다. |
 
 **Return**
 
-아이템의 선택상태가 메소드 실행 전과 반대 상태로 변경되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 아이템의 선택상태가 메소드 실행 전과 반대 상태로 변경되면 true 를 반환합니다.
 
-아이템의 선택상태가 메소드 실행 전과 동일하면 false 를 반환합니다.
+아이템의 선택상태가 메소드 실행 전과 동일하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6575,18 +6981,28 @@ ListView.setBandProperty( enumBand, strPropID, varValue )
 
 **Parameters**
 
-```
-속성값을 설정하려는 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 속성값을 설정하려는 밴드를 문자열로 설정합니다.
 
 "body" 설정 시 Body 밴드의 속성값을 설정합니다.
-"detail" 설정 시 Detail 밴드의 속성값을 설정합니다.
+"detail" 설정 시 Detail 밴드의 속성값을 설정합니다. |
+| strPropID | String | 값을 설정하려는 속성명을 문자열로 설정합니다. |
+| varValue | String | strProgID 로 지정한 속성에 설정할 속성값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc = this.ListView00.setBandProperty( "body", "color", "black" );
 ```
 
 **Return**
 
-지정한 밴드의 속성값 설정에 성공하면 "true" 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 지정한 밴드의 속성값 설정에 성공하면 "true" 를 반환합니다.
 
-지정한 밴드의 속성값 설정에 실패하면 "false" 를 반환합니다.
+지정한 밴드의 속성값 설정에 실패하면 "false" 를 반환합니다. |
 
 **Remark**
 
@@ -6611,8 +7027,14 @@ ListView.setBindDataset( objDataset )
 
 **Parameters**
 
-```
-binddataset 속성에 설정할 DataSet 을 오브젝트 형식으로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| objDataset | Object | binddataset 속성에 설정할 DataSet 을 오브젝트 형식으로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00.setBindDataset( this.DataSet00 );
 ```
 
 **Return**
@@ -6638,18 +7060,27 @@ ListView.setCellPos( strBandID, strCellID )
 
 **Parameters**
 
-```
-포커스를 이동할 Cell 이 속한 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strBandID | String | 포커스를 이동할 Cell 이 속한 밴드를 문자열로 설정합니다.
 
 "body" 설정 시 Body 밴드의 Cell 로 포커스가 이동합니다.
-"detail" 설정 시 Detail 밴드의 Cell 로 포커스가 이동합니다.
+"detail" 설정 시 Detail 밴드의 Cell 로 포커스가 이동합니다. |
+| strCellID | String | 포커스를 이동시킬 Cell 의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bSucc = this.ListView00.setCellPos( "body", "cell00" );
 ```
 
 **Return**
 
-Cell 포커스 이동에 성공하면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Cell 포커스 이동에 성공하면 "true"를 반환합니다.
 
-Cell 포커스 이동에 실패하면 "false"를 반환합니다.
+Cell 포커스 이동에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -6676,18 +7107,29 @@ ListView.setCellProperty( enumBand, strCellID, strPropID, varValue )
 
 **Parameters**
 
-```
-속성값을 설정하려는 Cell 이 속한 밴드를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| enumBand | String | 속성값을 설정하려는 Cell 이 속한 밴드를 문자열로 설정합니다.
 
 "body" 설정 시 Body 밴드에 속한 Cell 의 속성값을 설정합니다.
-"detail" 설정 시 Detail 밴드에 속한 Cell 의 속성값을 설정합니다.
+"detail" 설정 시 Detail 밴드에 속한 Cell 의 속성값을 설정합니다. |
+| strCellID | String | 속성값을 설정할 Cell 의 ID 를 문자열로 설정합니다. |
+| strPropID | String | 값을 설정하려는 속성명을 문자열로 설정합니다. |
+| varValue | Variant | strPropID 파라미터값에 해당하는 속성에 설정할 속성값 입니다 |
+
+**Sample Call**
+
+```javascript
+var bSucc = this.ListView00.setCellProperty( "body", "cell00", "color", "black");
 ```
 
 **Return**
 
-특정 Cell 의 속성값 설정에 성공하면 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 특정 Cell 의 속성값 설정에 성공하면 "true"를 반환합니다.
 
-특정 Cell 의 속성값 설정에 실패하면 "false"를 반환합니다.
+특정 Cell 의 속성값 설정에 실패하면 "false"를 반환합니다. |
 
 **Remark**
 
@@ -6714,12 +7156,12 @@ ListView.setEditingValue( strValue )
 
 **Parameters**
 
-```
-Cell 에 표시된 편집모드용 컨트롤 또는 서브컨트롤의 value 속성값을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strValue | String | Cell 에 표시된 편집모드용 컨트롤 또는 서브컨트롤의 value 속성값을 문자열로 설정합니다.
 
 Cell 의 edittype 속성값이 "combo" 이면 combodatacol 속성에 적용된 데이터값을 설정합니다.
-Cell 의 edittype 속성값이 "date", "mask" 이면 마스크 문자를 제외한 원본값을 설정합니다.
-```
+Cell 의 edittype 속성값이 "date", "mask" 이면 마스크 문자를 제외한 원본값을 설정합니다. |
 
 **Return**
 
@@ -6756,18 +7198,34 @@ ListView.setEditSelect( nBegin [,nEnd] )
 
 **Parameters**
 
-```
-선택할 영역의 시작 인덱스를 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBegin | Number | 선택할 영역의 시작 인덱스를 숫자로 설정합니다.
 
 인덱스는 0 부터 시작하며 "0 ~ 텍스트길이"까지 설정할 수 있습니다.
--1 을 설정하면 캐럿이 0 번 인덱스에 위치하고 영역을 선택하지 않습니다.
+-1 을 설정하면 캐럿이 0 번 인덱스에 위치하고 영역을 선택하지 않습니다. |
+| nEnd | Number | 선택할 영역의 끝 인덱스를 숫자로 설정합니다.
+
+인덱스는 0 부터 시작하며 "0 ~ 텍스트길이"까지 설정할 수 있습니다.
+-1 을 설정하면 선택할 영역의 끝 위치가 텍스트의 오른쪽 끝으로 설정됩니다.
+
+값 생략 시 -1 로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+var bSuccess;
+bSuccess = this.ListView00.setEditSelect( -1 );
+bSuccess = this.ListView00.setEditSelect( 1, -1 );
 ```
 
 **Return**
 
-텍스트의 영역선택에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 텍스트의 영역선택에 성공하면 true 를 반환합니다.
 
-텍스트의 영역선택에 실패하면 false 를 반환합니다.
+텍스트의 영역선택에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -6792,11 +7250,17 @@ ListView.setEditValue( strValue )
 
 **Parameters**
 
-```
-Cell 에 표시된 편집모드용 컨트롤의 value 속성값을 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strValue | String | Cell 에 표시된 편집모드용 컨트롤의 value 속성값을 문자열로 설정합니다.
 
 Cell 의 edittype 속성값이 "combo" 이면 combocodecol 속성에 적용된 코드값을 설정합니다.
-Cell 의 edittype 속성값이 "date", "mask" 이면 마스크 문자를 제외한 원본값을 설정합니다.
+Cell 의 edittype 속성값이 "date", "mask" 이면 마스크 문자를 제외한 원본값을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00.setEditValue( "NewText" );
 ```
 
 **Return**
@@ -6836,15 +7300,26 @@ ListView.setEventHandler( strEventID, objFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| objFunc | Object | 기존 핸들러 함수를 대체할 함수를 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수가 정의된 영역을 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00_onmove = function( obj:nexacro.ListView,  e:nexacro.MoveEventInfo ) { //수행할 스크립트 };
+var nIndex = this.ListView00.setEventHandler( "onmove", this.ListView00_onmove, this );
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -6871,15 +7346,27 @@ ListView.setEventHandlerLookup( strEventID, strFunc, objTarget )
 
 **Parameters**
 
-```
-핸들러 함수를 변경할 이벤트의 ID를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strEventID | String | 핸들러 함수를 변경할 이벤트의 ID를 설정합니다. |
+| strFunc | Object | 기존 핸들러 함수를 대체할 함수의 이름을 문자열로 설정합니다. |
+| objTarget | Object | 대체할 핸들러 함수를 검색할 영역을 설정합니다.
+해당 영역에 함수가 정의되지 않았다면 상위 영역으로 올라가며 검색을 합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00_onmove = function( obj:nexacro.ListView,  e:nexacro.MoveEventInfo) { // 수행할 스크립트 };
+var nIndex = this.ListView00.setEventHandlerLookup( "onmove", "ListView00_onmove", this);
 ```
 
 **Return**
 
-첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 첫번째 핸들러 함수 변경에 성공하면 0 을 반환합니다.
 
-첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다.
+첫번째 핸들러 함수 변경에 실패하면 -1 을 반환합니다. |
 
 **Remark**
 
@@ -6906,19 +7393,28 @@ ListView.setFocus( [bMoveScroll] )
 
 **Parameters**
 
-```
-부모 컴포넌트에 스크롤이 있을 경우, ListView 기준으로 스크롤을 이동할지 여부를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bMoveScroll | Boolean | 부모 컴포넌트에 스크롤이 있을 경우, ListView 기준으로 스크롤을 이동할지 여부를 설정합니다.
 
 true: ListView 이(가) 화면에 표시되도록 스크롤을 이동합니다.
 false: ListView 위치와 관계없이 스크롤을 이동하지 않습니다.
 
-값을 지정하지 않으면 기본값은 true입니다.
+값을 지정하지 않으면 기본값은 true입니다. |
+
+**Sample Call**
+
+```javascript
+var objBefComp = this.ListView00.setFocus();
+var objBefComp = this.ListView00.setFocus( false );
 ```
 
 **Return**
 
-ListView 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
-이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | ListView 이(가) 포커스를 얻기 전에 포커스를 가지고 있던 컴포넌트를 반환합니다.
+이전에 포커스를 가진 컴포넌트가 없거나 메소드 실행에 실패한 경우에는 null을 반환합니다. |
 
 **Remark**
 
@@ -6943,15 +7439,23 @@ ListView.setFormat( strFormatID )
 
 **Parameters**
 
-```
-ListView 에 표시 할 포맷의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strFormatID | String | ListView 에 표시 할 포맷의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+var bRet = this.ListView00.setFormat( "format2" );
 ```
 
 **Return**
 
-ListView 에 표시할 포맷의 ID 설정에 성공했을 경우 "true"를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | ListView 에 표시할 포맷의 ID 설정에 성공했을 경우 "true"를 반환합니다.
 
-ListView 에 표시할 포맷의 ID 설정에 실패했을 경우 "false"를 반환합니다.
+ListView 에 표시할 포맷의 ID 설정에 실패했을 경우 "false"를 반환합니다. |
 
 **Remark**
 
@@ -6982,8 +7486,14 @@ ListView.setOffsetBottom( nBottom );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 ListView 의 bottom 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nBottom | Number | 부모 컴포넌트의 Top 위치를 기준으로 ListView 의 bottom 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView.setOffsetBottom( 10 );
 ```
 
 **Return**
@@ -7016,8 +7526,14 @@ ListView.setOffsetHeight( nHeight );
 
 **Parameters**
 
-```
-ListView 의 높이를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nHeight | Number | ListView 의 높이를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView.setOffsetHeight( 10 );
 ```
 
 **Return**
@@ -7050,8 +7566,14 @@ ListView.setOffsetLeft( nLeft );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 ListView 의 left 값을 픽셀단위의 숫자로 설정합니다
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nLeft | Number | 부모 컴포넌트의 Left 위치를 기준으로 ListView 의 left 값을 픽셀단위의 숫자로 설정합니다 |
+
+**Sample Call**
+
+```javascript
+this.ListView.setOffsetLeft( 10 );
 ```
 
 **Return**
@@ -7084,8 +7606,14 @@ ListView.setOffsetRight( nRight );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Left 위치를 기준으로 ListView 의 right 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRight | Number | 부모 컴포넌트의 Left 위치를 기준으로 ListView 의 right 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView.setOffsetRight( 600 );
 ```
 
 **Return**
@@ -7118,8 +7646,14 @@ ListView.setOffsetTop( nTop );
 
 **Parameters**
 
-```
-부모 컴포넌트의 Top 위치를 기준으로 ListView 의 top 값을 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nTop | Number | 부모 컴포넌트의 Top 위치를 기준으로 ListView 의 top 값을 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView.setOffsetTop( 10 );
 ```
 
 **Return**
@@ -7152,8 +7686,14 @@ ListView.setOffsetWidth( nWidth );
 
 **Parameters**
 
-```
-ListView 의 너비를 픽셀단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nWidth | Number | ListView 의 너비를 픽셀단위의 숫자로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView.setOffsetWidth( 10 );
 ```
 
 **Return**
@@ -7222,8 +7762,14 @@ ListView.showDetailBand( nRow );
 
 **Parameters**
 
-```
-Detail 밴드를 표시하려는 아이템의 인덱스를 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nRow | Number | Detail 밴드를 표시하려는 아이템의 인덱스를 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.ListView00.showDetailBand( 1 );
 ```
 
 **Return**
@@ -7253,18 +7799,26 @@ ListView.showEditor( bShow )
 
 **Parameters**
 
-```
-현재 선택된 Cell 에 편집모드용 컨트롤을 표시할지 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| bShow | Boolean | 현재 선택된 Cell 에 편집모드용 컨트롤을 표시할지 설정합니다.
 
 true 설정 시 현재 선택된 Cell 이 편집가능한 상태이면 편집모드용 컨트롤을 표시합니다.
-false 설정 시 현재 선택된 Cell 의 편집모드가 해제되고 편집모드용 컨트롤을 표시하지 않습니다.
+false 설정 시 현재 선택된 Cell 의 편집모드가 해제되고 편집모드용 컨트롤을 표시하지 않습니다. |
+
+**Sample Call**
+
+```javascript
+var bSuccess = this.ListView00.showEditor( false );
 ```
 
 **Return**
 
-메소드가 정상적으로 수행되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드가 정상적으로 수행되면 true 를 반환합니다.
 
-메소드가 정상적으로 수행되지 못하면 false 를 반환합니다.
+메소드가 정상적으로 수행되지 못하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -7301,9 +7855,10 @@ onbandclick(obj:nexacro.ListView,e:nexacro.ListViewClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewClickEventInfo | Event Object. |
 
 **Return**
 
@@ -7332,9 +7887,10 @@ onbanddblclick(obj:nexacro.ListView,e:nexacro.ListViewClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewClickEventInfo | Event Object. |
 
 **Return**
 
@@ -7363,9 +7919,10 @@ onbandexpandclick(obj:nexacro.ListView,e:nexacro.ListViewClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewClickEventInfo | Event Object. |
 
 **Return**
 
@@ -7398,9 +7955,10 @@ onbandstatuschanged(obj:nexacro.ListView,e:nexacro.ListViewBandStatusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewBandStatusEventInfo | Event Object. |
 
 **Return**
 
@@ -7429,9 +7987,10 @@ oncellclick(obj:nexacro.ListView,e:nexacro.ListViewClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewClickEventInfo | Event Object. |
 
 **Return**
 
@@ -7464,9 +8023,10 @@ oncelldblclick(obj:nexacro.ListView,e:nexacro.ListViewClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewClickEventInfo | Event Object. |
 
 **Return**
 
@@ -7498,9 +8058,10 @@ oncellexpandclick(obj:nexacro.ListView,e:nexacro.ListViewClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewClickEventInfo | Event Object. |
 
 **Return**
 
@@ -7529,9 +8090,10 @@ oncellimeaction(obj:nexacro.ListView,e:nexacro.ListViewKeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewKeyEventInfo | Event Object. |
 
 **Return**
 
@@ -7565,9 +8127,10 @@ onclick(obj:nexacro.ListView,e:nexacro.ListViewClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewClickEventInfo | Event Object. |
 
 **Return**
 
@@ -7601,9 +8164,10 @@ oncloseup(obj:nexacro.ListView,e:nexacro.ListViewEditEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewEditEventInfo | Event Object. |
 
 **Return**
 
@@ -7636,9 +8200,10 @@ oncontextmenu(obj:nexacro.ListView,e:nexacro.ListViewContextMenuEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewContextMenuEventInfo | Event Object. |
 
 **Return**
 
@@ -7669,15 +8234,18 @@ ondevicebuttonup(obj:nexacro.ListView,e:nexacro.DeviceButtonEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | DeviceButtonEventInfo | Event Object. |
 
 **Return**
 
-true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
-반환값을 생략하면 false로 적용됩니다.
+반환값을 생략하면 false로 적용됩니다. |
 
 **Remark**
 
@@ -7706,16 +8274,19 @@ ondrag(obj:nexacro.ListView,e:nexacro.ListViewDragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewDragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 드래그 상태가 되고 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 드래그 상태가 취소되고 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7749,16 +8320,19 @@ ondragenter(obj:nexacro.ListView,e:nexacro.ListViewDragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewDragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7785,16 +8359,19 @@ ondragleave(obj:nexacro.ListView,e:nexacro.ListViewDragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewDragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7821,16 +8398,19 @@ ondragmove(obj:nexacro.ListView,e:nexacro.ListViewDragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewDragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7857,16 +8437,19 @@ ondrop(obj:nexacro.ListView,e:nexacro.ListViewDragEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewDragEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -7900,9 +8483,10 @@ ondropdown(obj:nexacro.ListView,e:nexacro.ListViewEditEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewEditEventInfo | Event Object. |
 
 **Return**
 
@@ -7935,9 +8519,10 @@ onenterdown(obj:nexacro.ListView,e:nexacro.ListViewEditEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewEditEventInfo | Event Object. |
 
 **Return**
 
@@ -7974,9 +8559,10 @@ oninput(obj:nexacro.ListView,e:nexacro.ListViewInputEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewInputEventInfo | Event Object. |
 
 **Return**
 
@@ -8015,16 +8601,19 @@ onkeydown(obj:nexacro.ListView,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -8065,16 +8654,19 @@ onkeyup(obj:nexacro.ListView,e:nexacro.KeyEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | KeyEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -8107,9 +8699,10 @@ onkillfocus(obj:nexacro.ListView,e:nexacro.KillFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | KillFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -8141,16 +8734,19 @@ onlbuttondown(obj:nexacro.ListView,e:nexacro.ListViewMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -8188,16 +8784,19 @@ onlbuttonup(obj:nexacro.ListView,e:nexacro.ListViewMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -8241,16 +8840,19 @@ onmousedown(obj:nexacro.ListView,e:nexacro.ListViewMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -8282,16 +8884,19 @@ onmouseenter(obj:nexacro.ListView,e:nexacro.ListViewMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -8330,16 +8935,19 @@ onmouseleave(obj:nexacro.ListView,e:nexacro.ListViewMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -8375,16 +8983,19 @@ onmousemove(obj:nexacro.ListView,e:nexacro.ListViewMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -8420,16 +9031,19 @@ onmouseup(obj:nexacro.ListView,e:nexacro.ListViewMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다 |
 
 **Remark**
 
@@ -8463,16 +9077,19 @@ onmousewheel(obj:nexacro.ListView,e:nexacro.MouseWheelEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | MouseWheelEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 휠버튼 회전값이 무시되고, 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 휠버튼 회전값이 무시되고, 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 휠버튼 회전값이 처리되고, 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -8511,9 +9128,10 @@ onmove(obj:nexacro.ListView,e:nexacro.MoveEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | MoveEventInfo | Event Object. |
 
 **Return**
 
@@ -8538,9 +9156,10 @@ onnodataareaclick(obj:nexacro.ListView,e:nexacro.ClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ClickEventInfo | Event Object. |
 
 **Return**
 
@@ -8565,9 +9184,10 @@ onnodataareadblclick(obj:nexacro.ListView,e:nexacro.ClickEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ClickEventInfo | Event Object. |
 
 **Return**
 
@@ -8592,16 +9212,19 @@ onrbuttondown(obj:nexacro.ListView,e:nexacro.ListViewMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -8642,16 +9265,19 @@ onrbuttonup(obj:nexacro.ListView,e:nexacro.ListViewMouseEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewMouseEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -8691,9 +9317,10 @@ onselectchanged(obj:nexacro.ListView,e:nexacro.ListViewSelectEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ListViewSelectEventInfo | Event Object. |
 
 **Return**
 
@@ -8722,9 +9349,10 @@ onsetfocus(obj:nexacro.ListView,e:nexacro.SetFocusEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | SetFocusEventInfo | Event Object. |
 
 **Return**
 
@@ -8767,9 +9395,10 @@ onsize(obj:nexacro.ListView,e:nexacro.SizeEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | SizeEventInfo | Event Object. |
 
 **Return**
 
@@ -8794,16 +9423,19 @@ ontouchend(obj:nexacro.ListView,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -8828,16 +9460,19 @@ ontouchmove(obj:nexacro.ListView,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -8862,16 +9497,19 @@ ontouchstart(obj:nexacro.ListView,e:nexacro.TouchEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | TouchEventInfo | Event Object. |
 
 **Return**
 
-이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 이벤트에서 리턴값으로 true 를 반환하면 상위 컴포넌트로 이벤트가 전파되지 않습니다.
 이벤트에서 리턴값으로 false 를 반환하면 상위 컴포넌트로 이벤트가 전파됩니다.
 
-이벤트에서 리턴값을 생략하면 false 로 적용됩니다.
+이벤트에서 리턴값을 생략하면 false 로 적용됩니다. |
 
 **Remark**
 
@@ -8896,9 +9534,10 @@ onvscroll(obj:nexacro.ListView,e:nexacro.ScrollEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | ListView | Event가 발생한 Object. |
+| e | ScrollEventInfo | Event Object. |
 
 **Return**
 
@@ -13371,8 +14010,7 @@ strSize ::= <strWidth> [<strHeight>]
 ```
 ```javascript
 this.ListView00.setCellProperty( "body", "col00", "calendarbuttonsize", "30"); 
-
-this.ListView00.setCellProperty( "body", "col00", "calendarbuttonsize", "30 20");
+this.ListView00.setCellProperty( "body", "col00", "calendarbuttonsize", "30 20");
 ```
 - **`<strWidth>`** — 드롭다운 버튼의 너비를 픽셀 단위의 문자열로 설정합니다.
 - **`<strHeight>`** — 드롭다운 버튼의 높이를 픽셀 단위의 문자열로 설정합니다.
@@ -13477,8 +14115,7 @@ strFormat ::= <maskchar> | 'LONGDATE' | 'SHORTDATE'
 ```
 ```javascript
 this.ListView00.setCellProperty( "body", "cell00", "calendardateformat", "yyyy-MM-dd ddd"); 
-
-this.ListView00.setCellProperty( "body", "cell00", "calendardateformat", "yyyy-MM-dd ddd HH:mm:ss");
+this.ListView00.setCellProperty( "body", "cell00", "calendardateformat", "yyyy-MM-dd ddd HH:mm:ss");
 ```
 - **`<Year>`** — 연도를 표시하는 마스크 문자를 설정합니다.
 
@@ -13723,8 +14360,7 @@ strFormat ::= <maskchar> | 'LONGDATE' | 'SHORTDATE'
 ```
 ```javascript
 this.ListView00.setCellProperty( "body", "cell00", "calendareditformat", "yyyy-MM-dd"); 
-
-this.ListView00.setCellProperty( "body", "cell00", "calendareditformat", "yyyy-MM-dd HH:mm:ss");
+this.ListView00.setCellProperty( "body", "cell00", "calendareditformat", "yyyy-MM-dd HH:mm:ss");
 ```
 - **`<Year>`** — 연도를 표시하는 마스크 문자를 설정합니다.
 
@@ -14254,8 +14890,7 @@ strSize ::= <strWidth> [ ' ' <strHeight> ]
 ```
 ```javascript
 this.ListView00.setCellProperty( "body", "cell00", "combobuttonsize", "30"); 
-
-this.ListView00.setCellProperty( "body", "cell00", "combobuttonsize", "30 20");
+this.ListView00.setCellProperty( "body", "cell00", "combobuttonsize", "30 20");
 ```
 - **`<strWidth>`** — 드롭다운 버튼의 너비를 픽셀 단위의 문자열로 설정합니다.
 - **`<strHeight>`** — 드롭다운 버튼의 높이를 픽셀 단위의 문자열로 설정합니다.
@@ -15225,10 +15860,8 @@ strInputfilter ::= 'none' | <filter>
 ```
 ```javascript
 this.ListView00.setCellProperty( "body", "col00", "editinputfilter", "dot" ); 
-
-this.ListView00.setCellProperty( "body", "col00", "editinputfilter", "dot,comma" ); 
-
-this.ListView00.setCellProperty( "body", "col00", "editinputfilter", "dot,comma,sign" );
+this.ListView00.setCellProperty( "body", "col00", "editinputfilter", "dot,comma" ); 
+this.ListView00.setCellProperty( "body", "col00", "editinputfilter", "dot,comma,sign" );
 ```
 - **`"none"`** — 입력 제한 없이 모든 문자를 입력할 수 있습니다.
 - **`"alpha"`** — 소문자 "a~z"와 대문자 "A~Z"를 입력 할 수 없습니다.
@@ -15314,10 +15947,8 @@ strInputtype ::= 'normal' | <type>
 ```
 ```javascript
 this.ListView00.setCellProperty( "body", "col00", "editinputtype", "english" );                         // 영문자만 입력허용 
-
-this.ListView00.setCellProperty( "body", "col00", "editinputtype", "english,number" );             // 영문자와 숫자만 입력허용 
-
-this.ListView00.setCellProperty( "body", "col00", "editinputtype", "english,number,space" );   // 영문자, 숫자, 공백만 입력허용
+this.ListView00.setCellProperty( "body", "col00", "editinputtype", "english,number" );             // 영문자와 숫자만 입력허용 
+this.ListView00.setCellProperty( "body", "col00", "editinputtype", "english,number,space" );   // 영문자, 숫자, 공백만 입력허용
 ```
 - **`"normal"`** — 모든 문자의 입력을 허용합니다.
 - **`"alpha"`** — 소문자 "a~z"와 대문자 "A~Z"를 입력 할 수 있습니다.
@@ -16430,8 +17061,7 @@ enumType ::= 'number' | 'string'
 ```
 ```javascript
 this.ListView00.setCellProperty( "body", "col00", "maskedittype", "number" ); 
-
-this.ListView00.setCellProperty( "body", "col00", "maskedittype", "string" );
+this.ListView00.setCellProperty( "body", "col00", "maskedittype", "string" );
 ```
 - **`"number"`** — Cell 에서 숫자 형식으로 입력을 받습니다.
 
@@ -16468,8 +17098,7 @@ nMaxHeight ::= <nVal> ['px']
 ```
 ```javascript
 this.ListView00.setCellProperty("body", "col00", "maxheight", "10"); 
-
-this.ListView00.setCellProperty("body", "col00", "maxheight", "10px");
+this.ListView00.setCellProperty("body", "col00", "maxheight", "10px");
 ```
 - **`<nVal>`** — Cell 이 화면에 표시되는 높이의 최대값을 픽셀 단위의 숫자로 설정합니다.
 
@@ -16510,8 +17139,7 @@ nMaxWidth ::= <nVal> ['px']
 ```
 ```javascript
 this.ListView00.setCellProperty("body", "col00", "maxwidth", "10"); 
-
-this.ListView00.setCellProperty("body", "col00", "maxwidth", "10px");
+this.ListView00.setCellProperty("body", "col00", "maxwidth", "10px");
 ```
 - **`<nVal>`** — Cell 이 화면에 표시되는 너비의 최대값을 픽셀 단위의 숫자로 설정합니다.
 
@@ -16552,8 +17180,7 @@ nMinHeight ::= <nVal> ['px']
 ```
 ```javascript
 this.ListView00.setCellProperty("body", "col00", "minheight", "10"); 
-
-this.ListView00.setCellProperty("body", "col00", "minheight", "10px");
+this.ListView00.setCellProperty("body", "col00", "minheight", "10px");
 ```
 - **`<nVal>`** — Cell 이 화면에 표시되는 높이의 최소값을 픽셀 단위의 숫자로 설정합니다.
 
@@ -16594,8 +17221,7 @@ nMinWidth ::= <nVal> ['px']
 ```
 ```javascript
 this.ListView00.setCellProperty("body", "col00", "minwidth", "10"); 
-
-this.ListView00.setCellProperty("body", "col00", "minwidth", "10px");
+this.ListView00.setCellProperty("body", "col00", "minwidth", "10px");
 ```
 - **`<nVal>`** — Cell 이 화면에 표시되는 너비의 최소값을 픽셀 단위의 숫자로 설정합니다.
 

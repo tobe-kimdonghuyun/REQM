@@ -488,15 +488,27 @@ Animation.addTarget( strID, objComp, strProps );
 
 **Parameters**
 
-```
-Animation 오브젝트에 추가될 AnimationItem 오브젝트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | Animation 오브젝트에 추가될 AnimationItem 오브젝트의 ID 를 문자열로 설정합니다. |
+| objComp | Object | 애니메이션 효과가 적용될 컴포넌트를 오브젝트 형태로 설정합니다. |
+| strProps | String | 애니메이션 효과가 적용될 속성과 속성값을 문자열로 설정합니다.
+
+파라미터값 설정방법은 AnimationItem 오브젝트의 props 속성 페이지를 참조하세요. |
+
+**Sample Call**
+
+```javascript
+this.Animation00.addTarget( "AnimationItem00", this.Button00, "left:[100,600]" );
 ```
 
 **Return**
 
-추가된 AnimationItem 오브젝트의 인덱스를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 추가된 AnimationItem 오브젝트의 인덱스를 반환합니다.
 
-AnimationItem 오브젝트가 정상적으로 추가되지 않은 경우에는 -1 을 반환합니다.
+AnimationItem 오브젝트가 정상적으로 추가되지 않은 경우에는 -1 을 반환합니다. |
 
 **Remark**
 
@@ -525,9 +537,11 @@ Animation.destroy()
 
 **Return**
 
-Animation 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | Animation 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-Animation 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+Animation 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
@@ -560,9 +574,11 @@ this.Animation00.pause();
 
 **Return**
 
-메소드 실행에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 true 를 반환합니다.
 
-메소드 실행에 실패하면 false 를 반환합니다.
+메소드 실행에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -596,9 +612,11 @@ this.Animation00.play();
 
 **Return**
 
-메소드 실행에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 true 를 반환합니다.
 
-메소드 실행에 실패하면 false 를 반환합니다.
+메소드 실행에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -633,13 +651,21 @@ Animation.removeTarget( strID );
 
 **Parameters**
 
-```
-Animation 오브젝트에 등록된 아이템에서 제거할 AnimationItem 오브젝트의 ID 를 문자열로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| strID | String | Animation 오브젝트에 등록된 아이템에서 제거할 AnimationItem 오브젝트의 ID 를 문자열로 설정합니다. |
+
+**Sample Call**
+
+```javascript
+this.Animation00.removeTarget( "AnimationItem00" );
 ```
 
 **Return**
 
-Animation 오브젝트에서 제거된 AnimationItem 오브젝트를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Object | Animation 오브젝트에서 제거된 AnimationItem 오브젝트를 반환합니다. |
 
 **Remark**
 
@@ -668,9 +694,11 @@ this.Animation00.reverse()
 
 **Return**
 
-메소드 실행에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 true 를 반환합니다.
 
-메소드 실행에 실패하면 false 를 반환합니다.
+메소드 실행에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -700,16 +728,24 @@ Animation.seek( nMSecond )
 
 **Parameters**
 
-```
-이동시킬 위치의 시간을 밀리세컨드 단위의 숫자로 설정합니다.
+| Parameters | Type | Description |
+| --- | --- | --- |
+| nMSecond | Number | 이동시킬 위치의 시간을 밀리세컨드 단위의 숫자로 설정합니다.
 
 duration 속성에 설정된 전체 진행시간 범위 안의 값을 설정하여야 합니다.
-진행시간을 벗어난 값을 설정하면 최소 또는 최대값으로 적용됩니다.
+진행시간을 벗어난 값을 설정하면 최소 또는 최대값으로 적용됩니다. |
+
+**Sample Call**
+
+```javascript
+this.Animation00.seek( 1500 )
 ```
 
 **Return**
 
-메소드 실행에 의해 실제로 변경된 위치의 진행시간을 반환합니다.
+| Type | Description |
+| --- | --- |
+| Number | 메소드 실행에 의해 실제로 변경된 위치의 진행시간을 반환합니다. |
 
 **Remark**
 
@@ -738,9 +774,11 @@ this.Animation00.stop()
 
 **Return**
 
-메소드 실행에 성공하면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | 메소드 실행에 성공하면 true 를 반환합니다.
 
-메소드 실행에 실패하면 false 를 반환합니다.
+메소드 실행에 실패하면 false 를 반환합니다. |
 
 **Remark**
 
@@ -771,9 +809,10 @@ onbegin(obj:nexacro.Animation,e:nexacro.AnimationEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Animation | Event가 발생한 Object. |
+| e | AnimationEventInfo | Event Object. |
 
 **Return**
 
@@ -803,9 +842,10 @@ oncomplete(obj:nexacro.Animation,e:nexacro.AnimationEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Animation | Event가 발생한 Object. |
+| e | AnimationEventInfo | Event Object. |
 
 **Return**
 
@@ -830,9 +870,10 @@ onrun(obj:nexacro.Animation,e:nexacro.AnimationEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Animation | Event가 발생한 Object. |
+| e | AnimationEventInfo | Event Object. |
 
 **Return**
 
@@ -865,9 +906,10 @@ onupdate(obj:nexacro.Animation,e:nexacro.AnimationEventInfo);
 
 **Parameters**
 
-```
-Event가 발생한 Object.
-```
+| Parameters | Type | Description |
+| --- | --- | --- |
+| obj | Animation | Event가 발생한 Object. |
+| e | AnimationEventInfo | Event Object. |
 
 **Return**
 
@@ -1068,9 +1110,11 @@ AnimationItem.destroy()
 
 **Return**
 
-AnimationItem 이(가) 정상적으로 삭제되면 true 를 반환합니다.
+| Type | Description |
+| --- | --- |
+| Boolean | AnimationItem 이(가) 정상적으로 삭제되면 true 를 반환합니다.
 
-AnimationItem 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다.
+AnimationItem 이(가) 정상적으로 삭제되지 않으면 false 를 반환합니다. |
 
 **Remark**
 
