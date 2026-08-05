@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Work" width="1160" height="200" titletext="Form_Work" background="lightsteelblue" onload="Form_Work_onload">
+    <Layouts>
+      <Layout width="1160" height="200" screenid="Desktop_screen">
+        <Static id="Static00" taborder="0" text="nexacroK_mfe_sub3" left="36" top="4" width="334" height="70" font="36px/normal &quot;Malgun Gothic&quot;"/>
+        <Static id="Static00_00" taborder="1" text="nexacroK_mfe_sub3" left="390" top="4" width="750" height="70" font="36px/normal &quot;Malgun Gothic&quot;"/>
+        <Button id="Button00" taborder="2" text="Form_Work_copy1" left="15" top="99" width="125" height="81" onclick="Button00_onclick"/>
+        <Button id="Button01" taborder="3" text="Form_Work_copy1_copy0" left="150" top="100" width="150" height="80" onclick="Button01_onclick"/>
+        <Button id="btn_showmodal" taborder="4" text="showmodal" left="540" top="102" width="110" height="75" onclick="btn_showmodal_onclick"/>
+        <Button id="btn_open2" taborder="5" text="nexacro.open" left="660" top="100" width="110" height="75" onclick="btn_open2_onclick"/>
+        <Button id="btn_open2_00" taborder="6" text="nexacro.setWheelZoom( objFrame, 150 )" left="790" top="100" width="260" height="75" onclick="btn_open2_00_onclick"/>
+        <Button id="Button02" taborder="7" text="ALT+SHIFT+S" left="310" top="100" width="217" height="80" hotkey="ALT+SHIFT+S" onclick="Button02_onclick"/>
+        <TextArea id="TextArea00" taborder="8" left="791" top="12" width="308" height="74"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Form_Work_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.Static00_00.text ="tabkeycirculation = "+ nexacro.getEnvironment().tabkeycirculation;
+};
+
+this.btn_loadstyle_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	//nexacro.loadStyle( "xcssrc::test_678.xcss" ); 
+};
+
+this.btn_showmodal_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objFrame = new nexacro.ChildFrame();
+	var objParentFrame = this.getOwnerFrame();
+
+	objFrame.init( "modal00", 0, 0, 500, 500 );
+	objFrame.formurl = "FrameBase::sub_form.xfdl";
+	this.TextArea00.deleteText();
+	var ret1 = objFrame.showModal( objParentFrame, {a:'aaa', b:'bbb'}, this )
+	.then((result1) => {
+	  trace("Closed showmodal with args: "+ " return1 = " + ret1 + ", result1 = " + result1.arg);
+	  this.TextArea00.insertText("showmodal :" +result1.arg);
+	 
+	}).catch((err) => {
+		this.TextArea00.insertText("Failed to open popup promise_open_test1 : " + err.message + " return = " + ret1);
+	});
+};
+
+this.btn_open2_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.TextArea00.deleteText();
+	let ret1 = nexacro.open("promise_open_test1","FrameBase::sub_form.xfdl", this.getOwnerFrame(), { user:"이몽룡" }, "resizable=false showstatusbar=true", 150, 150, "promise")
+	.then((result1) => {
+	  trace("Closed popup with args: "+ " return1 = " + ret1 + ", result1 = " + result1);
+	 this.TextArea00.insertText("nexacro.open  : "+result1);
+	 
+	}).catch((err) => {
+		this.TextArea00.insertText("Failed to open popup promise_open_test1 : " + err.message + " return = " + ret1);
+	});
+};
+
+this.btn_open2_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objFrame = this.getOwnerFrame();
+	nexacro.setWheelZoom( objFrame, 150 );
+};
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	nexacro.getApplication().mainframe.VFrameSet00.WorkFrame.formurl ="FrameBase::Form_Work_copy1.xfdl";
+};
+
+this.Button02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	obj.setSelectStatus(true);
+};
+
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	nexacro.getApplication().mainframe.VFrameSet00.WorkFrame.formurl ="FrameBase::Form_Work_copy1_copy0.xfdl";
+};
+]]></Script>
+  </Form>
+</FDL>
